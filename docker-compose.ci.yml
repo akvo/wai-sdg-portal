@@ -18,7 +18,8 @@ services:
   backend:
     network_mode: service:mainnetwork
     image: eu.gcr.io/akvo-lumen/wai-ethiopia/backend:latest
-    command: ["sh", "dev.sh"]
+    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+    restart: always
     depends_on:
       - db
   ci:
