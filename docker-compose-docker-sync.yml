@@ -1,0 +1,9 @@
+---
+version: "3"
+services:
+  frontend:
+    volumes:
+      - wai-ethiopia-docker-sync:/app/node_modules:nocopy
+volumes:
+  wai-ethiopia-docker-sync:
+    external: true
