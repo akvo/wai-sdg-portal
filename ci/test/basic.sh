@@ -13,4 +13,4 @@ http_get() {
     curl --verbose --url "${url}" "$@" 2>&1 | grep "< HTTP.*${code}"
 }
 
-http_get "http://localhost:8000" 200
+http_get "http://backend:8000" 200
