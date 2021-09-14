@@ -29,5 +29,12 @@ services:
       - POSTGRES_USER=wai
       - POSTGRES_PASSWORD=password
     network_mode: service:mainnetwork
+  frontend:
+    network_mode: service:mainnetwork
+    image: akvo/akvo-node-14-alpine:20210106.152005.1864760
+    command: ["./start.sh"]
+    volumes:
+      - ./frontend:/app:delegated
+    working_dir: /app
 volumes:
   pg-data:

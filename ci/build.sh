@@ -20,6 +20,21 @@ dci () {
        -f docker-compose.ci.yml "$@"
 }
 
+frontend_build () {
+
+    echo "PUBLIC_URL=/" > frontend/.env
+
+    dc run \
+       --rm \
+       --no-deps \
+       frontend \
+       bash release.sh
+
+    docker build \
+        --tag "${image_prefix}/frontend:latest" \
+        --tag "${image_prefix}/frontend:${CI_COMMIT}" frontend
+}
+
 backend_build () {
 
     docker build \
@@ -29,6 +44,8 @@ backend_build () {
 
 
 backend_build
+
+frontend_build
 
 #test-connection
 if ! dci run -T ci ./basic.sh; then

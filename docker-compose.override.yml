@@ -3,6 +3,7 @@ version: "3"
 services:
   mainnetwork:
     ports:
+      - 3000:3000
       - 8000:8000
       - 5050:5050
   pgadmin:
