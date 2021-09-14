@@ -17,17 +17,22 @@ services:
       - POSTGRES_PASSWORD=password
       - POSTGRES_HOST_AUTH_METHOD=trust
   backend:
-    image: python:3.9.7-alpine
-    command: ["./dev.sh"]
+    build: ./backend
+    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
     depends_on:
       - db
     working_dir: /app
     volumes:
       - ./backend:/app:delegated
     environment:
+      - DEBUG=1
+      - DATABASE=postgres
+      - POSTGRES_ENGINE=django.db.backends.postgresql
       - POSTGRES_DB=ethiopia
       - POSTGRES_USER=wai
       - POSTGRES_PASSWORD=password
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
     network_mode: service:mainnetwork
   frontend:
     network_mode: service:mainnetwork

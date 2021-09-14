@@ -1,4 +1,5 @@
 /.pip
+/env
 *.log
 *.pot
 *.pyc

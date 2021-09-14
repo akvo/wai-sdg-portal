@@ -15,3 +15,11 @@ RUN set -e; \
     pip -q install --upgrade pip && \
     pip -q install --no-cache-dir -r requirements.txt && \
     pip check
+
+COPY ./entrypoint.sh .
+RUN sed -i 's/\r$//g' /usr/src/app/entrypoint.sh
+RUN chmod +x /usr/src/app/entrypoint.sh
+
+COPY . .
+
+ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
