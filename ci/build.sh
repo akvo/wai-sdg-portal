@@ -5,7 +5,7 @@ set -exuo pipefail
 
 [[ -n "${CI_TAG:=}" ]] && { echo "Skip build"; exit 0; }
 
-image_prefix="eu.gcr.io/akvo-lumen/idh-ipd"
+image_prefix="eu.gcr.io/akvo-lumen/wai-ethiopia"
 
 # Normal Docker Compose
 dc () {
