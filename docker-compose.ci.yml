@@ -11,6 +11,7 @@ services:
     command: "postgres -c 'shared_buffers=128MB' -c 'fsync=off' -c 'synchronous_commit=off' -c 'full_page_writes=off' -c 'max_connections=100' -c 'bgwriter_lru_maxpages=0' -c 'client_min_messages=warning'"
     restart: always
   frontend:
+    network_mode: service:mainnetwork
     image: eu.gcr.io/akvo-lumen/wai-ethiopia/frontend:latest
     command: ["nginx", "-g", "daemon off;"]
     depends_on:
