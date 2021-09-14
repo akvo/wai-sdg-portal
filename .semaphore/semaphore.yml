@@ -1,6 +1,6 @@
 ---
 version: v1.0
-name: 'WAI Ethiopia'
+name: 'wai-ethiopia'
 agent:
   machine:
     type: e1-standard-2
@@ -14,8 +14,7 @@ blocks:
         - name: idh-ipd
       prologue:
         commands:
-          - echo "${DOCKER_PASSWORD}" \
-                | docker login --username "${DOCKER_USERNAME}" --password-stdin
+          - echo "${DOCKER_PASSWORD}" | docker login --username "${DOCKER_USERNAME}" --password-stdin
           - export CI_COMMIT="${SEMAPHORE_GIT_SHA:0:7}"
           - export CI_BRANCH="${SEMAPHORE_GIT_BRANCH}"
           - export CI_TAG="${SEMAPHORE_GIT_TAG_NAME}"
