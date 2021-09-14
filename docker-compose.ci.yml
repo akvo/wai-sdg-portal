@@ -31,6 +31,4 @@ services:
     working_dir: /test
     entrypoint: ./entrypoint.sh
     depends_on:
-      - db
-      - backend
       - frontend
