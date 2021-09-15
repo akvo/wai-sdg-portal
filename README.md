@@ -1,2 +1,38 @@
 # wai-ethiopia
 Wash Dataportal for WAI Ethiopia
+
+[![Build Status](https://akvo.semaphoreci.com/badges/wai-ethiopia/branches/main.svg?style=shields)](https://akvo.semaphoreci.com/projects/wai-ethiopia) [![Repo Size](https://img.shields.io/github/repo-size/akvo/wai-ethiopia)](https://img.shields.io/github/repo-size/akvo/wai-ethiopia) [![Languages](https://img.shields.io/github/languages/count/akvo/wai-ethiopia
+)](https://img.shields.io/github/languages/count/akvo/wai-ethiopia
+) [![Issues](https://img.shields.io/github/issues/akvo/wai-ethiopia
+)](https://img.shields.io/github/issues/akvo/wai-ethiopia
+) [![Last Commit](https://img.shields.io/github/last-commit/akvo/wai-ethiopia/main
+)](https://img.shields.io/github/last-commit/akvo/wai-ethiopia/main)
+
+# Development
+
+```bash
+docker-compose up -d
+```
+
+The app should be running at: [localhost:3000](http://localhost:3000). Any endpoints with prefix `/api` will be redirected to [localhost:8000](http://localhost:8000)
+
+see: [setupProxy.js](https://github.com/akvo/wai-ethiopia/blob/main/frontend/src/setupProxy.js)
+
+# Production
+
+```bash
+export CI_COMMIT='local'
+./ci/build.sh
+```
+This will generate two docker images with prefix `eu.gcr.io/akvo-lumen/wai-ethiopia` for backend and frontend
+
+```bash
+docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d
+```
+
+Then visit: [localhost:8080](http://localhost:8080). Any endpoints with prefix `/api` is redirected to `http://backend:8000` inside the network container
+
+see:
+- [nginx](https://github.com/akvo/wai-ethiopia/blob/main/frontend/nginx/conf.d/default.conf) config
+- [mainnetwork](https://github.com/akvo/wai-ethiopia/blob/7b5364b09ff96356b516b6738d99feb9a8d71f29/docker-compose.ci.yml#L4-L8) container setup
+
