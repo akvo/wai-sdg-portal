@@ -2,8 +2,6 @@
 version: "3"
 services:
   mainnetwork:
-    image: alpine:3.14
-    command: ["tail", "-f", "/dev/null"]
     ports:
       - 8000:8000
       - 3000:3000
@@ -31,3 +29,5 @@ services:
     entrypoint: ./entrypoint.sh
     depends_on:
       - frontend
+      - backend
+      - db

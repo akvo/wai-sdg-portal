@@ -34,11 +34,11 @@ services:
       - POSTGRES_PORT=5432
     network_mode: service:mainnetwork
   frontend:
-    network_mode: service:mainnetwork
     image: akvo/akvo-node-14-alpine:20210106.152005.1864760
     command: ["./start.sh"]
     volumes:
       - ./frontend:/app:delegated
     working_dir: /app
+    network_mode: service:mainnetwork
 volumes:
   pg-data:
