@@ -5,6 +5,8 @@ set -euo pipefail
 
 wait4ports -q -s 1 -t 60 tcp://localhost:80 tcp://localhost:3000 tcp://localhost:8000
 
+echo "Basic test is running"
+
 http_get() {
     url="${1}"
     shift
