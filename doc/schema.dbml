@@ -1,0 +1,160 @@
+Project wai_ethiopia {
+  database_type: 'PostgreSQL'
+  Note: '''
+    # WAI Ethiopia
+    Database Schema for WAI Ethiopia
+  '''
+}
+Enum "questions_type_enum" {
+  "geo"
+  "free"
+  "numeric"
+  "option"
+  "cascade"
+  "photo"
+  "date"
+}
+Enum "access_role_enum" {
+  "admin"
+  "user"
+}
+
+Table "user" {
+  "id" bigint [pk]
+  "email" varchar [unique, not null]
+}
+
+Table "access" {
+  "id" bigint [pk]
+  "user_id" bigint [not null]
+  "adm_level_id" varchar [ not null]
+  "role" user_role_enum [not null]
+  indexes {
+    (user_id, adm_level_id) [unique]
+  }
+}
+
+Table "answer" {
+  "id" bigint [pk]
+  "data_id" bigint [not null]
+  "question_id" bigint [not null]
+  "name" text
+  "value" bigint [default: NULL]
+  "options" "varchar[]" [default: NULL]
+  "created_by" timestamp [default: NULL]
+  "created_at" timestamp [default: NULL]
+  "updated_at" timestamp [default: NULL]
+}
+
+Table "answer_history" {
+  "id" bigint [pk]
+  "data_id" bigint [not null]
+  "question_id" bigint [not null]
+  "name" text
+  "value" bigint [default: NULL]
+  "options" "varchar[]" [default: NULL]
+  "created_by" timestamp [default: NULL]
+  "created_at" timestamp [default: NULL]
+}
+
+Table "adm_level" {
+  "id" bigint [pk]
+  "parent_id" bigint [default: NULL]
+  "code" varchar(255) [default: NULL]
+  "name" text [not null]
+  "level" tinyint [default: NULL]
+  "level_name" text
+}
+
+Table "data" {
+  "id" bigint [pk]
+  "identifier" varchar(255) [not null]
+  "form_id" bigint [not null]
+  "display_name" text [not null]
+  "adm_level_id" bigint [not null]
+  "position" "int[]" [default: NULL]
+  "created_by" bigint [not null]
+  "updated_by" bigint [not null]
+  "created_at" timestamp [default: NULL]
+  "updated_at" timestamp [default: NULL]
+}
+
+Table "form" {
+  "id" bigint [pk]
+  "name" text [not null]
+}
+
+Table "option" {
+  "id" bigint [pk]
+  "question_id" bigint [not null]
+  "code" varchar(255) [default: NULL]
+  "name" text [not null]
+  "other" tinyint(1) [not null]
+  "created_at" timestamp [default: NULL]
+  "updated_at" timestamp [default: NULL]
+}
+
+Table "question" {
+  "id" bigint [not null]
+  "question_group_id" bigint [not null]
+  "text" text [not null]
+  "name" varchar [not null]
+  "type" questions_type_enum [not null]
+}
+
+Table "question_group" {
+  "id" bigint [not null]
+  "form_id" bigint [not null]
+  "name" text [not null]
+}
+
+
+
+Ref {
+  data.adm_level_id > adm_level.id
+}
+Ref {
+  adm_level.parent_id > adm_level.id
+}
+Ref {
+  question_group.form_id > form.id
+}
+Ref {
+  question.question_group_id > question_group.id
+}
+Ref {
+  option.question_id > question.id
+}
+Ref {
+  answer.data_id > data.id
+}
+Ref {
+  answer.question_id > question.id
+}
+Ref {
+  answer_history.data_id > data.id
+}
+Ref {
+  answer_history.question_id > question.id
+}
+Ref {
+  data.form_id > form.id
+}
+Ref {
+  data.created_by - user.id
+}
+Ref {
+  data.updated_by - user.id
+}
+Ref {
+  answer.created_by - user.id
+}
+Ref {
+  answer_history.created_by - user.id
+}
+Ref {
+  access.user_id > user.id
+}
+Ref {
+  access.adm_level_id > adm_level.id
+}
