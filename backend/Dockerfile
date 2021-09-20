@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM python:3.9.7-slim-buster
+FROM python:3.9.7-alpine
 
 WORKDIR /usr/src/app
 
@@ -8,8 +8,8 @@ ENV PYTHONUNBUFFERED 1
 
 COPY . .
 
-RUN apt-get update \
-    && apt-get install postgresql-dev gcc python3-dev musl-dev
+RUN apk update \
+    && apk add postgresql-dev gcc python3-dev musl-dev
 
 RUN set -e; \
     pip -q install --upgrade pip && \
