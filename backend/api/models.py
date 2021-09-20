@@ -5,13 +5,26 @@ from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
 
 
+class Administration(models.Model):
+    class Level(models.TextChoices):
+        WOREDA = 'WOREDA', _('Woreda')
+        KEBELE = 'KEBELE', _('Kebele')
+
+    parent_id = models.ForeignKey('self', models.DO_NOTHING)
+    name = models.CharField(max_length=30)
+    level = models.CharField(choices=Level.choices, max_length=6, default=Level.WOREDA)
+    users = models.ManyToManyField(User)
+
+
 class Form(models.Model):
     name = models.CharField(max_length=100)
+
 
 class QuestionGroup(models.Model):
     form = models.ForeignKey(Form, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     text = models.TextField()
+
 
 class Question(models.Model):
 
@@ -33,21 +46,12 @@ class Question(models.Model):
                 default=QuestionType.FREE
            )
 
+
 class Option(models.Model):
 
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     text = models.TextField()
-
-
-class Administration(models.Model):
-    class Level(models.TextChoices):
-        WOREDA = 'WOREDA', _('Woreda')
-        KEBELE = 'KEBELE', _('Kebele')
-
-    parent_id = models.ForeignKey('self', models.DO_NOTHING)
-    name = models.CharField(max_length=30)
-    level = models.CharField(choices=Level.choices, max_length=6, default=Level.WOREDA)
 
 
 class Data(models.Model):
@@ -74,6 +78,7 @@ class Answer(models.Model):
             related_name='user_answer_created', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
 
 class AnswerHistory(models.Model):
     form = models.ForeignKey(Form, on_delete=models.CASCADE)
