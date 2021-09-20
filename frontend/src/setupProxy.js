@@ -11,4 +11,18 @@ module.exports = function (app) {
       },
     })
   );
+  app.use(
+    ["/static"],
+    createProxyMiddleware({
+      target: "http://localhost:8000",
+      changeOrigin: true,
+    })
+  );
+  app.use(
+    ["/api-auth"],
+    createProxyMiddleware({
+      target: "http://localhost:8000",
+      changeOrigin: true,
+    })
+  );
 };
