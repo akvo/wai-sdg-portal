@@ -45,6 +45,9 @@ backend_build () {
 
 backend_build
 
+#pytest
+docker-compose -f docker-compose.test.yml run -T backend pytest
+
 frontend_build
 
 #test-connection
@@ -53,3 +56,4 @@ if ! dci run -T ci ./basic.sh; then
   echo "Build failed when running basic.sh"
   exit 1
 fi
+

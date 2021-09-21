@@ -1,5 +1,5 @@
 ---
-version: "3"
+version: "3.9"
 services:
   mainnetwork:
     ports:
@@ -18,5 +18,11 @@ services:
     depends_on:
       - db
     network_mode: service:mainnetwork
+  backend:
+    environment:
+      - AUTH0_DOMAIN=$WAI_AUTH0_DOMAIN
+      - AUTH0_CLIENT_ID=$WAI_AUTH0_CLIENT_ID
+      - AUTH0_AUDIENCE=$WAI_AUTH0_AUDIENCE
+      - AUTH0_SECRET=$WAI_AUTH0_SECRET
 volumes:
   pg-admin-data:

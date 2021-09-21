@@ -1,13 +1,10 @@
 ---
 version: "3.9"
-
 services:
   mainnetwork:
     image: alpine:3.14.0
     command: ["tail", "-f", "/dev/null"]
   db:
-    ports:
-      - 5432:5432
     image: postgres:12-alpine
     volumes:
       - ./db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
@@ -15,30 +12,25 @@ services:
       - ./db/script:/script:ro
     environment:
       - POSTGRES_PASSWORD=password
+    ports:
+      - 5432:5432
   backend:
-    build: ./backend
-    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
-    depends_on:
-      - db
+    image: amancevice/pandas:0.24.2-slim
     working_dir: /app
+    command: ["./dev.sh"]
     volumes:
       - ./backend:/app:delegated
     environment:
-      - DEBUG=1
-      - DATABASE=postgres
-      - POSTGRES_ENGINE=django.db.backends.postgresql
-      - POSTGRES_DB=ethiopia
-      - POSTGRES_USER=wai
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_HOST=db
-      - POSTGRES_PORT=5432
+      - DATABASE_URL=postgresql://wai:password@db:5432/wai_ethiopia
+    depends_on:
+      - db
     network_mode: service:mainnetwork
   frontend:
     image: akvo/akvo-node-14-alpine:20210106.152005.1864760
+    working_dir: /app
     command: ["./start.sh"]
     volumes:
       - ./frontend:/app:delegated
-    working_dir: /app
     network_mode: service:mainnetwork
 volumes:
   pg-data:

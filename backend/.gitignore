@@ -1,8 +1,4 @@
+/.ipynb_checkpoints
 /.pip
-/env
-*.log
-*.pot
-*.pyc
-__pycache__/
-local_settings.py
-
+/.mypy_cache
+__pycache__

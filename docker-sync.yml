@@ -1,5 +1,5 @@
 ---
-version: "3"
+version: "3.9"
 syncs:
   idh-wai-ethiopia-docker-sync:
     src: "./frontend/node_modules"
