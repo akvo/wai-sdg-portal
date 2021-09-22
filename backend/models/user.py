@@ -1,39 +1,13 @@
-from typing import List
-from typing_extensions import TypedDict
 import enum
+from pydantic import BaseModel
 from datetime import datetime
-from sqlalchemy import Column, Integer, Boolean, Float, String
-from sqlalchemy import Text, Enum, DateTime
-from sqlalchemy import ForeignKey
+from typing import List, Optional
+from typing_extensions import TypedDict
+from sqlalchemy import Column, Integer, Boolean, String
+from sqlalchemy import Enum, DateTime
 from sqlalchemy.orm import relationship
-from .connection import Base
-
-
-class AccessDict(TypedDict):
-    id: int
-    user: int
-    administration: int
-
-
-class Access(Base):
-    __tablename__ = "access"
-    id = Column(Integer, primary_key=True, index=True, nullable=True)
-    user = Column(Integer, ForeignKey('user.id'))
-    administration = Column(Integer, ForeignKey('administration.id'))
-
-    def __init__(self, user: int, administration: int):
-        self.user = user
-        self.administration = administration
-
-    def __repr__(self) -> int:
-        return f"<Access {self.id}>"
-
-    @property
-    def serialize(self) -> AccessDict:
-        return {"id": self.id, "user": self.user, "administration": self.administration}
-
-
-# BEGIN USER
+from db.connection import Base
+from models.access import AccessDict, AccessBase
 
 
 class UserRole(enum.Enum):
@@ -78,3 +52,34 @@ class User(Base):
             "active": self.active,
             "access": self.access
         }
+
+
+class UserBase(BaseModel):
+    id: int
+    email: str
+    role: UserRole
+    active: Optional[bool] = False
+    email_verified: Optional[bool] = False
+    picture: Optional[str] = None
+    name: Optional[str] = None
+
+    class Config:
+        orm_mode = True
+
+
+class UserResponse(BaseModel):
+    current: int
+    data: List[UserBase]
+    total: int
+    total_page: int
+
+
+class UserAccessBase(BaseModel):
+    id: int
+    email: str
+    role: UserRole
+    active: Optional[bool] = False
+    access: List[AccessBase]
+
+    class Config:
+        orm_mode = True

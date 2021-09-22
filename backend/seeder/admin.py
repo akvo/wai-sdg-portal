@@ -1,7 +1,6 @@
 import os
 import sys
-from db.connection import SessionLocal, engine
-from db import models
+from db.connection import Base, SessionLocal, engine
 from db import crud_user
 
 if len(sys.argv) < 2:
@@ -11,7 +10,7 @@ if len(sys.argv) == 2:
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     sys.path.append(BASE_DIR)
 
-    models.Base.metadata.create_all(bind=engine)
+    Base.metadata.create_all(bind=engine)
     session = SessionLocal()
     user = crud_user.add_user(session=session,
                               email=sys.argv[1],

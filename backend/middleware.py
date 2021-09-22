@@ -5,7 +5,7 @@ from fastapi import HTTPException
 from fastapi_auth0 import Auth0, Auth0User
 from os import environ, path
 from db import crud_user
-from db.models import UserRole
+from models.user import UserRole
 from datetime import datetime
 
 AUTH0_DOMAIN = environ['AUTH0_DOMAIN']

@@ -4,7 +4,7 @@ from sqlalchemy import pool, create_engine
 from alembic import context
 import os
 import sys
-import db.models as models
+from db.connection import Base
 from psycopg2 import DatabaseError
 import logging
 
@@ -22,7 +22,7 @@ DATABASE_URL = os.environ["DATABASE_URL"].replace('%', '%%')
 # sets up loggers
 fileConfig(config.config_file_name)
 
-target_metadata = models.Base.metadata
+target_metadata = Base.metadata
 logger = logging.getLogger("alembic.env")
 
 

@@ -12,8 +12,7 @@ from alembic.config import Config
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
 
-from db import models
-from db.connection import get_session, get_db_url
+from db.connection import Base, get_session, get_db_url
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
@@ -33,7 +32,7 @@ def apply_migrations():
 def app(apply_migrations: None) -> FastAPI:
     from core.config import app
     engine = create_engine(get_db_url())
-    models.Base.metadata.create_all(bind=engine)
+    Base.metadata.create_all(bind=engine)
     TestingSessionLocal = sessionmaker(autocommit=False,
                                        autoflush=False,
                                        bind=engine)
@@ -53,7 +52,7 @@ def app(apply_migrations: None) -> FastAPI:
 @pytest.fixture
 def session() -> Session:
     engine = create_engine(get_db_url())
-    models.Base.metadata.create_all(bind=engine)
+    Base.metadata.create_all(bind=engine)
     TestingSessionLocal = sessionmaker(autocommit=False,
                                        autoflush=False,
                                        bind=engine)

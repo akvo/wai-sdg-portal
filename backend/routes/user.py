@@ -6,10 +6,10 @@ from fastapi.security import HTTPBasicCredentials as credentials
 from typing import List
 from sqlalchemy.orm import Session
 from db import crud_user
-from db.schema import UserBase, UserAccessBase, AccessBase, UserResponse
-from db.models import UserRole
 from db.connection import get_session
 from middleware import verify_token, verify_admin, verify_user, get_auth0_user
+from models.access import AccessBase
+from models.user import UserRole, UserBase, UserAccessBase, UserResponse
 
 security = HTTPBearer()
 user_route = APIRouter()

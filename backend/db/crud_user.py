@@ -2,7 +2,8 @@ import pandas as pd
 from typing import List
 from sqlalchemy.orm import Session
 from sqlalchemy import desc
-from .models import User, UserRole, UserDict, Access, AccessDict
+from models.user import User, UserRole, UserDict
+from models.access import Access, AccessDict
 
 
 def add_user(session: Session,

@@ -1,9 +1,9 @@
 import os
 import sys
-from db.connection import SessionLocal, engine
-from db import models
-from db import crud_user
+from db.connection import SessionLocal, Base, engine
+from db import crud_user, crud_administration
 from faker import Faker
+from models.access import Access
 
 if len(sys.argv) < 2:
     print("You should provide number of fake user")
@@ -12,7 +12,7 @@ if len(sys.argv) == 2:
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     sys.path.append(BASE_DIR)
 
-    models.Base.metadata.create_all(bind=engine)
+    Base.metadata.create_all(bind=engine)
     session = SessionLocal()
     fake = Faker()
     administration = crud_administration.get_administration(session=session)
@@ -26,7 +26,7 @@ if len(sys.argv) == 2:
         if active:
             access = []
             for c in administration:
-                access.append(models.Access(user=user.id, administration=c['id']))
+                access.append(Access(user=user.id, administration=c['id']))
             session.add_all(access)
             session.commit()
         print(f"{user.email} added | active: {active}")
