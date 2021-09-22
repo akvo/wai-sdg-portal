@@ -44,7 +44,7 @@ class PostQueryParams:
         ),
         form_name: str = Query(
             enum=get_form_list(),
-            default=get_form_list()[0],
+            default=None,
             alias="Form Name",
             description="Existing form, must create form if you don't have one"
         ),
