@@ -1,6 +1,6 @@
 from typing import List
 from sqlalchemy.orm import Session
-from models.form import Form, FormDict
+from models.form import Form, FormDict, FormBase
 
 
 def add_form(session: Session, name: str) -> FormDict:
@@ -12,9 +12,9 @@ def add_form(session: Session, name: str) -> FormDict:
     return form
 
 
-def get_form(session: Session) -> List[Form]:
+def get_form(session: Session) -> List[FormDict]:
     return session.query(Form).all()
 
 
-def get_form_by_id(session: Session, id: int) -> Form:
+def get_form_by_id(session: Session, id: int) -> FormBase:
     return session.query(Form).filter(Form.id == id).first()

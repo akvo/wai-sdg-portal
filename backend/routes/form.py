@@ -5,7 +5,7 @@ from typing import List
 from sqlalchemy.orm import Session
 import db.crud_form as crud
 from db.connection import get_session
-from models.form import FormBase, FormDict
+from models.form import FormDict, FormBase
 from middleware import verify_admin
 
 security = HTTPBearer()
@@ -18,7 +18,7 @@ form_route = APIRouter()
                 tags=["Form"])
 def get_form(req: Request, session: Session = Depends(get_session)):
     form = crud.get_form(session=session)
-    return form
+    return [f.serialize for f in form]
 
 
 @form_route.get("/form/{id:path}",
@@ -29,7 +29,7 @@ def get_form_by_id(req: Request,
                    id: int,
                    session: Session = Depends(get_session)):
     form = crud.get_form_by_id(session=session, id=id)
-    return form
+    return form.serialize
 
 
 @form_route.post("/form/",
@@ -43,4 +43,4 @@ def add_form(req: Request,
              credentials: credentials = Depends(security)):
     verify_admin(req.state.authenticated, session)
     form = crud.add_form(session=session, name=name)
-    return form
+    return form.serialize
