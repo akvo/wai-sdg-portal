@@ -1,7 +1,7 @@
 import os
 import sys
 from db.connection import Base, SessionLocal, engine
-from db import crud_user
+import db.crud_user as crud
 
 if len(sys.argv) < 2:
     print("You should provide email address")
@@ -12,9 +12,9 @@ if len(sys.argv) == 2:
 
     Base.metadata.create_all(bind=engine)
     session = SessionLocal()
-    user = crud_user.add_user(session=session,
-                              email=sys.argv[1],
-                              role="admin",
-                              active=True)
+    user = crud.add_user(session=session,
+                         email=sys.argv[1],
+                         role="admin",
+                         active=True)
     print(f"{user.email} added")
     session.close()

@@ -7,7 +7,7 @@ app = FastAPI(
     root_path="/api",
     title="WAI - Ethiopia",
     description="Auth Client ID: 99w2F1wVLZq8GqJwZph1kE42GuAZFvlF",
-    version="0.0.1",
+    version="1.0.0",
     contact={
         "name": "Akvo",
         "url": "https://akvo.org",
