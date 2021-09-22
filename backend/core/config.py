@@ -1,5 +1,6 @@
 import jwt
 from fastapi import FastAPI, Request
+from routes.administration import administration_route
 from routes.user import user_route
 
 app = FastAPI(
@@ -18,7 +19,9 @@ app = FastAPI(
     },
 )
 
+app.include_router(administration_route)
 app.include_router(user_route)
+
 
 @app.get("/", tags=["Dev"])
 def read_main():
