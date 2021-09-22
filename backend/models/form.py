@@ -4,7 +4,6 @@ from pydantic import BaseModel
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 from db.connection import Base
-from models.question import QuestionBase
 from models.question_group import QuestionGroupBase
 
 

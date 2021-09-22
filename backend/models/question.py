@@ -7,14 +7,14 @@ from db.connection import Base
 
 
 class QuestionType(enum.Enum):
-    text: 'text'
-    number: 'number'
-    option: 'option'
-    multiple_option: 'multiple_option'
-    photo: 'photo'
-    date: 'date'
-    geo: 'geo'
-    administration: 'administration'
+    text = 'text'
+    number = 'number'
+    option = 'option'
+    multiple_option = 'multiple_option'
+    photo = 'photo'
+    date = 'date'
+    geo = 'geo'
+    administration = 'administration'
 
 
 class QuestionDict(TypedDict):
@@ -33,7 +33,7 @@ class Question(Base):
     question_group = Column(Integer, ForeignKey('question_group.id'))
     name = Column(String)
     meta = Column(Boolean, default=False)
-    type = Column(Enum(QuestionType), default='text')
+    type = Column(Enum(QuestionType), default=QuestionType.text)
 
     def __init__(self, name: str, meta: bool, type: QuestionType):
         self.name = name

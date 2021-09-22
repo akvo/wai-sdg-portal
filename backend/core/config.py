@@ -3,6 +3,7 @@ from fastapi import FastAPI, Request
 from routes.administration import administration_route
 from routes.user import user_route
 from routes.form import form_route
+from routes.question import question_route
 
 app = FastAPI(
     root_path="/api",
@@ -23,6 +24,7 @@ app = FastAPI(
 app.include_router(administration_route)
 app.include_router(user_route)
 app.include_router(form_route)
+app.include_router(question_route)
 
 
 @app.get("/", tags=["Dev"])
