@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from models.administration import Administration, AdministrationDict
 
 
-def AddAdministration(session, data) -> AdministrationDict:
+def add_administration(session, data) -> AdministrationDict:
     session.add(data)
     session.commit()
     session.flush()
@@ -11,10 +11,10 @@ def AddAdministration(session, data) -> AdministrationDict:
     return data
 
 
-def GetAdministration(session: Session) -> List[Administration]:
+def get_administration(session: Session) -> List[Administration]:
     return session.query(Administration).all()
 
 
-def GetAdministrationById(session: Session, id: int) -> Administration:
+def get_administration_by_id(session: Session, id: int) -> Administration:
     return session.query(Administration).filter(
         Administration.id == id).first()

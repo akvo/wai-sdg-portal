@@ -5,7 +5,7 @@ from fastapi.security import HTTPBearer
 from fastapi.security import HTTPBasicCredentials as credentials
 from typing import List
 from sqlalchemy.orm import Session
-from db import crud_user
+import db.crud_user as crud
 from db.connection import get_session
 from middleware import verify_token, verify_admin, verify_user, get_auth0_user
 from models.access import AccessBase
@@ -35,9 +35,7 @@ def add_user(req: Request,
              session: Session = Depends(get_session),
              credentials: credentials = Depends(security)):
     user = verify_token(req.state.authenticated)
-    user = crud_user.add_user(session=session,
-                              email=user.get("email"),
-                              role="user")
+    user = crud.add_user(session=session, email=user.get("email"), role="user")
     return user
 
 
@@ -51,12 +49,12 @@ def get_user(req: Request,
              session: Session = Depends(get_session),
              credentials: credentials = Depends(security)):
     verify_admin(req.state.authenticated, session)
-    user = crud_user.get_user(session=session,
-                              skip=(10 * (page - 1)),
-                              active=active)
+    user = crud.get_user(session=session,
+                         skip=(10 * (page - 1)),
+                         active=active)
     if not user:
         raise HTTPException(status_code=404, detail="Not found")
-    total = crud_user.count(session=session, active=active)
+    total = crud.count(session=session, active=active)
     user = [i.serialize for i in user]
     if not active:
         auth0_data = get_auth0_user()
@@ -89,7 +87,7 @@ def get_user_by_id(req: Request,
                    session: Session = Depends(get_session),
                    credentials: credentials = Depends(security)):
     verify_admin(req.state.authenticated, session)
-    user = crud_user.get_user_by_id(session=session, id=id)
+    user = crud.get_user_by_id(session=session, id=id)
     if user is None:
         raise HTTPException(status_code=404, detail="Not Found")
     return user.serialize
@@ -107,13 +105,13 @@ def update_user_by_id(req: Request,
                       session: Session = Depends(get_session),
                       credentials: credentials = Depends(security)):
     verify_admin(req.state.authenticated, session)
-    access = crud_user.add_access(session=session, user=id, access=access)
-    user = crud_user.update_user_by_id(session=session,
-                                       id=id,
-                                       active=active,
-                                       role=role)
+    access = crud.add_access(session=session, user=id, access=access)
+    user = crud.update_user_by_id(session=session,
+                                  id=id,
+                                  active=active,
+                                  role=role)
     if user is None:
         raise HTTPException(status_code=404, detail="Not Found")
     if user.role == UserRole.admin:
-        crud_user.delete_all_access(session=session, user=user.id)
+        crud.delete_all_access(session=session, user=user.id)
     return user.serialize

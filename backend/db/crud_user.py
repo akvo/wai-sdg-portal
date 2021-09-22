@@ -62,7 +62,9 @@ def add_access(session: Session, user: int,
         access = pd.DataFrame(access)
         if len(curr):
             curr = pd.DataFrame([c.serialize for c in curr])
-            access = curr.merge(access, on=['user', 'administration'], how='outer')
+            access = curr.merge(access,
+                                on=['user', 'administration'],
+                                how='outer')
             access['id'] = access['id'].fillna(0).astype(int)
             to_be_deleted = access[access['new'] != access['new']]
             access = access[access['id'] == 0]
@@ -72,7 +74,8 @@ def add_access(session: Session, user: int,
                 session.flush()
         access = access.to_dict('records')
         for acc in access:
-            acc = Access(user=acc["user"], administration=acc["administration"])
+            acc = Access(user=acc["user"],
+                         administration=acc["administration"])
             session.add(acc)
             session.commit()
             session.flush()

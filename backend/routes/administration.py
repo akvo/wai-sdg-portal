@@ -1,7 +1,7 @@
 from fastapi import Depends, Request, APIRouter
 from typing import List
 from sqlalchemy.orm import Session
-from db.crud_administration import GetAdministration, GetAdministrationById
+import db.crud_administration as crud
 from db.connection import get_session
 from models.administration import AdministrationBase, AdministrationResponse
 
@@ -13,7 +13,7 @@ administration_route = APIRouter()
                           summary="get all administrations",
                           tags=["administration"])
 def get_administration(req: Request, session: Session = Depends(get_session)):
-    administration = GetAdministration(session=session)
+    administration = crud.get_administration(session=session)
     return administration
 
 
@@ -24,5 +24,5 @@ def get_administration(req: Request, session: Session = Depends(get_session)):
 def get_administration_by_id(req: Request,
                              id: int,
                              session: Session = Depends(get_session)):
-    administration = GetAdministrationById(session=session, id=id)
+    administration = crud.get_administration_by_id(session=session, id=id)
     return administration
