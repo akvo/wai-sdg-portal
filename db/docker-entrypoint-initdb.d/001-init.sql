@@ -114,7 +114,7 @@ ALTER SEQUENCE public.access_id_seq OWNED BY public.access.id;
 
 CREATE TABLE public.administration (
     id integer NOT NULL,
-    parent_id integer,
+    parent integer,
     name character varying
 );
 
@@ -490,7 +490,106 @@ COPY public.access (id, "user", administration) FROM stdin;
 -- Data for Name: administration; Type: TABLE DATA; Schema: public; Owner: wai
 --
 
-COPY public.administration (id, parent_id, name) FROM stdin;
+COPY public.administration (id, parent, name) FROM stdin;
+1	\N	Arsi Negele
+2	\N	Shashemene Town
+3	\N	Shashemene
+4	1	Arsi Negele Town
+5	1	Golije  Town
+6	2	Shashemene Town
+7	3	Kuyera Town
+8	1	Muda Arja
+9	1	Alge
+10	1	Shala Bila
+11	1	Balena Kilo
+12	1	Dega Argemo
+13	1	Dega Hora Kilo
+14	1	Hadi Bossa
+15	1	Kerero
+16	1	Kelo Tulu
+17	1	Sirba Lenda
+18	1	Gerbi Arba
+19	1	Gebta Arjo
+20	1	Rafa Hrgesa
+21	1	Ali Wayo
+22	1	Edo Jagesa
+23	1	Gerbo Derar
+24	1	Meko Oda
+25	1	Chri Elalu
+26	1	Besko Elala
+27	1	Lepeso
+28	1	Gambelto
+29	1	Sayo Menja
+30	1	Kersa Meja
+31	1	Kersa Gera
+32	1	Kersa Elala
+33	1	Terge Galo
+34	1	Danshe
+35	1	Adeba Tita
+36	1	Bombaso Rja
+37	1	Asheka
+38	1	Aga
+39	1	Gude Dura
+40	1	Werro Awelo
+41	1	Gunde Gurate
+42	1	Wetera
+43	1	Tufa
+44	1	Amibagodasideni
+45	1	Semiberorogicha
+46	1	Dawe
+47	1	Bukuwelida
+48	1	Degaga
+49	1	Arigedashalido
+50	1	Shababulitumi
+51	3	Chulule Habera
+52	3	Kubi guta
+53	3	Obenso Jilo
+54	3	Jelo Dida
+55	3	Faji Gole
+56	3	Chefageta
+57	3	Korerogicha
+58	3	Fajigeba
+59	3	Hagugeta Keni
+60	3	Ilalal Korke
+61	3	Wetera Shegule
+62	3	Turre Wetera Elemo
+63	3	kerara Felicha
+64	3	Bute Felicha
+65	3	Ale Luilu
+66	3	Oine Chefo Unbule
+67	3	Chebidi Dangata
+68	3	Bura Borema
+69	3	Tatesa Dedesa
+70	3	Kori Borejeta
+71	3	Daleti Guracha Bishen
+72	3	Toga Weransa
+73	3	Meja Dema
+74	3	Bulchana Deneba
+75	3	Sheleche Harlate
+76	3	Shere Borara
+77	3	Mudeta
+78	3	Ido Laburka
+79	3	Owa Shodongu
+80	3	Jegesa Korke
+81	3	Meraro
+82	3	Faji Sole
+83	3	Abaro
+84	3	Jengele Wendere
+85	3	Hursa Sinbo
+86	3	Danisa
+87	3	Gonde Kerso
+88	3	Aredano Shifa
+89	3	Ethiopia Adventist College
+90	3	Toga Military Camp
+91	3	Yeasa Den
+92	3	Kure Beke Den
+93	3	Hamele Den
+94	3	Hansewe Den
+95	3	Sole Den
+96	3	Bejetu Den
+97	3	Baro Den
+98	3	Alamudin Gtosh Meret (Elfora)
+99	3	Shalo Mrt Drjit
 \.
 
 
@@ -821,11 +920,11 @@ ALTER TABLE ONLY public.data
 
 
 --
--- Name: administration administration_parent_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wai
+-- Name: administration administration_parent_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wai
 --
 
 ALTER TABLE ONLY public.administration
-    ADD CONSTRAINT administration_parent_id_fkey FOREIGN KEY (parent_id) REFERENCES public.administration(id);
+    ADD CONSTRAINT administration_parent_fkey FOREIGN KEY (parent) REFERENCES public.administration(id);
 
 
 --

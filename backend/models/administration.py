@@ -6,18 +6,18 @@ from db.connection import Base
 
 class AdministrationDict(TypedDict):
     id: int
-    parent_id: int
+    parent: int
     name: str
 
 
 class Administration(Base):
     __tablename__ = "administration"
     id = Column(Integer, primary_key=True, index=True, nullable=True)
-    parent_id = Column(Integer, ForeignKey('administration.id'))
+    parent = Column(Integer, ForeignKey('administration.id'))
     name = Column(String)
 
-    def __init__(self, parent_id: int, name: str):
-        self.parent_id = parent_id
+    def __init__(self, parent: int, name: str):
+        self.parent = parent
         self.name = name
 
     def __repr__(self) -> int:
@@ -25,4 +25,4 @@ class Administration(Base):
 
     @property
     def serialize(self) -> AdministrationDict:
-        return {"id": self.id, "parent_id": self.parent_id, "name": self.name}
+        return {"id": self.id, "parent": self.parent, "name": self.name}
