@@ -4,6 +4,7 @@ from fastapi.security import HTTPBasicCredentials as credentials
 from typing import List, Optional
 from sqlalchemy.orm import Session
 import db.crud_question as crud
+import db.crud_question_group as crud_question_group
 from db.crud_form import get_form_list
 from db.connection import get_session
 from models.question import QuestionDict, QuestionBase, QuestionType
@@ -26,6 +27,7 @@ class PostQueryParams:
     def __init__(
         self,
         name: str = Query(None, alias="Question Text"),
+        order: int = None,
         type: QuestionType = Query(default=QuestionType.text,
                                    alias="Question Type"),
         meta: bool = Query(default=False, alias="Question is Metadata"),
@@ -63,5 +65,15 @@ def add_question(req: Request,
                  session: Session = Depends(get_session),
                  credentials: credentials = Depends(security)):
     verify_admin(req.state.authenticated, session)
-    # question = crud.add_question(session=session, name=params.name)
-    return params
+    question_group = crud_question_group.search_question_group(
+        session=session, form=params.form, name=params.question_group)
+    if not question_group:
+        question_group = crud_question_group.add_question_group(
+            name=params.question_group, form=params.form)
+    question = crud.add_question(session=session,
+                                 name=params.name,
+                                 order=params.order,
+                                 form=params.form,
+                                 question_group=question_group.id,
+                                 option=params.option)
+    return question
