@@ -24,6 +24,7 @@ class QuestionDict(TypedDict):
     id: int
     form: int
     question_group: int
+    order: int
     name: str
     meta: bool
     type: QuestionType
@@ -35,6 +36,7 @@ class Question(Base):
     form = Column(Integer, ForeignKey('form.id'))
     question_group = Column(Integer, ForeignKey('question_group.id'))
     name = Column(String)
+    order = Column(Integer, nullable=True)
     meta = Column(Boolean, default=False)
     type = Column(Enum(QuestionType), default=QuestionType.text)
     option = relationship("Option",
@@ -57,6 +59,7 @@ class Question(Base):
             "form": self.form,
             "question_group": self.question_group,
             "name": self.name,
+            "order": self.order,
             "meta": self.meta,
             "type": self.type,
             "option": self.option
@@ -65,10 +68,10 @@ class Question(Base):
 
 class QuestionBase(BaseModel):
     id: int
-    name: str
     form: int
     question_group: int
     name: str
+    order: int
     meta: bool
     type: QuestionType
     option: List[OptionDict]

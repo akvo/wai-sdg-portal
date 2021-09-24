@@ -8,6 +8,7 @@ from db.connection import Base
 class OptionDict(TypedDict):
     id: int
     name: str
+    order: int
 
 
 class Option(Base):
@@ -15,6 +16,7 @@ class Option(Base):
     id = Column(Integer, primary_key=True, index=True, nullable=True)
     question = Column(Integer, ForeignKey('question.id'))
     name = Column(String)
+    order = Column(Integer, nullable=True)
 
     def __init__(self, name: str):
         self.name = name
@@ -27,6 +29,7 @@ class Option(Base):
         return {
             "id": self.id,
             "name": self.name,
+            "order": self.order
         }
 
 
@@ -34,6 +37,7 @@ class OptionBase(BaseModel):
     id: int
     question: int
     name: str
+    order: int
 
     class Config:
         orm_mode = True

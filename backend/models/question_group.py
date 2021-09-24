@@ -11,6 +11,7 @@ class QuestionGroupDict(TypedDict):
     id: int
     form: int
     name: str
+    order: int
 
 
 class QuestionGroup(Base):
@@ -34,8 +35,9 @@ class QuestionGroup(Base):
         return {
             "id": self.id,
             "form": self.form,
+            "question": self.question,
             "name": self.name,
-            "question": self.question
+            "order": self.order
         }
 
 
@@ -43,6 +45,7 @@ class QuestionGroupBase(BaseModel):
     id: int
     form: int
     name: str
+    order: int
     question: List[QuestionBase]
 
     class Config:
