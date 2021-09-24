@@ -277,7 +277,8 @@ ALTER SEQUENCE public.form_id_seq OWNED BY public.form.id;
 CREATE TABLE public.option (
     id integer NOT NULL,
     name character varying,
-    question integer
+    question integer,
+    "order" integer
 );
 
 
@@ -315,7 +316,8 @@ CREATE TABLE public.question (
     form integer,
     meta boolean NOT NULL,
     type public.questiontype,
-    question_group integer
+    question_group integer,
+    "order" integer
 );
 
 
@@ -328,7 +330,8 @@ ALTER TABLE public.question OWNER TO wai;
 CREATE TABLE public.question_group (
     id integer NOT NULL,
     name character varying,
-    form integer
+    form integer,
+    "order" integer
 );
 
 
@@ -598,7 +601,7 @@ COPY public.administration (id, parent, name) FROM stdin;
 --
 
 COPY public.alembic_version (version_num) FROM stdin;
-a9132038e44f
+40799b50f65c
 \.
 
 
@@ -630,7 +633,7 @@ COPY public.form (id, name) FROM stdin;
 -- Data for Name: option; Type: TABLE DATA; Schema: public; Owner: wai
 --
 
-COPY public.option (id, name, question) FROM stdin;
+COPY public.option (id, name, question, "order") FROM stdin;
 \.
 
 
@@ -638,7 +641,7 @@ COPY public.option (id, name, question) FROM stdin;
 -- Data for Name: question; Type: TABLE DATA; Schema: public; Owner: wai
 --
 
-COPY public.question (id, name, form, meta, type, question_group) FROM stdin;
+COPY public.question (id, name, form, meta, type, question_group, "order") FROM stdin;
 \.
 
 
@@ -646,7 +649,7 @@ COPY public.question (id, name, form, meta, type, question_group) FROM stdin;
 -- Data for Name: question_group; Type: TABLE DATA; Schema: public; Owner: wai
 --
 
-COPY public.question_group (id, name, form) FROM stdin;
+COPY public.question_group (id, name, form, "order") FROM stdin;
 \.
 
 

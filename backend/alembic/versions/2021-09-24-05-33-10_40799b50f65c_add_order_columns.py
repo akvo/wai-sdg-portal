@@ -17,14 +17,14 @@ depends_on = None
 
 def upgrade():
     op.add_column('question_group',
-                  sa.Column('order', sa.Boolean(), default=None))
+                  sa.Column('order', sa.Integer(), default=None))
     op.add_column('question',
-                  sa.Column('order', sa.Boolean(), default=None))
+                  sa.Column('order', sa.Integer(), default=None))
     op.add_column('option',
-                  sa.Column('order', sa.Boolean(), default=None))
+                  sa.Column('order', sa.Integer(), default=None))
 
 
 def downgrade():
-    op.drop_column('question_group', 'active')
-    op.drop_column('question', 'active')
-    op.drop_column('option', 'active')
+    op.drop_column('question_group', 'order')
+    op.drop_column('question', 'order')
+    op.drop_column('option', 'order')
