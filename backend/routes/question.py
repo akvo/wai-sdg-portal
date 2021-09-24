@@ -65,15 +65,16 @@ def add_question(req: Request,
                  session: Session = Depends(get_session),
                  credentials: credentials = Depends(security)):
     verify_admin(req.state.authenticated, session)
+    form = int(params.form.split(" - ")[0])
     question_group = crud_question_group.search_question_group(
-        session=session, form=params.form, name=params.question_group)
+        session=session, form=form, name=params.question_group)
     if not question_group:
         question_group = crud_question_group.add_question_group(
-            name=params.question_group, form=params.form)
+            name=params.question_group, form=form)
     question = crud.add_question(session=session,
                                  name=params.name,
                                  order=params.order,
-                                 form=params.form,
+                                 form=form,
                                  question_group=question_group.id,
                                  option=params.option)
     return question
