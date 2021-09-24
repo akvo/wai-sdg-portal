@@ -31,8 +31,8 @@ class PostQueryParams:
         type: QuestionType = Query(default=QuestionType.text,
                                    alias="Question Type"),
         meta: bool = Query(default=False, alias="Question is Metadata"),
-        form: int = Query(
-            enum=get_form_list(),
+        form: str = Query(
+            enum= get_form_list(),
             default=None,
             alias="Form ID",
             description="Existing form, must create form if you don't have one"
@@ -48,6 +48,7 @@ class PostQueryParams:
             "Only applies when question type is option or multiple_option"),
     ):
         self.name = name
+        self.order = order
         self.form = form
         self.question_group = question_group
         self.type = type
@@ -70,11 +71,13 @@ def add_question(req: Request,
         session=session, form=form, name=params.question_group)
     if not question_group:
         question_group = crud_question_group.add_question_group(
-            name=params.question_group, form=form)
+            session=session, name=params.question_group, form=form)
     question = crud.add_question(session=session,
                                  name=params.name,
                                  order=params.order,
                                  form=form,
+                                 meta=params.meta,
+                                 type=params.type,
                                  question_group=question_group.id,
                                  option=params.option)
-    return question
+    return question.serialize

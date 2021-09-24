@@ -1,3 +1,4 @@
+from typing import Optional
 from typing_extensions import TypedDict
 from pydantic import BaseModel
 from sqlalchemy import Column, ForeignKey
@@ -8,7 +9,7 @@ from db.connection import Base
 class OptionDict(TypedDict):
     id: int
     name: str
-    order: int
+    order: Optional[int] = None
 
 
 class Option(Base):
@@ -28,6 +29,7 @@ class Option(Base):
     def serialize(self) -> OptionDict:
         return {
             "id": self.id,
+            "question": self.question,
             "name": self.name,
             "order": self.order
         }
@@ -37,7 +39,7 @@ class OptionBase(BaseModel):
     id: int
     question: int
     name: str
-    order: int
+    order: Optional[int] = None
 
     class Config:
         orm_mode = True
