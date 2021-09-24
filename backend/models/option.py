@@ -7,7 +7,6 @@ from db.connection import Base
 
 class OptionDict(TypedDict):
     id: int
-    question: int
     name: str
 
 
@@ -27,7 +26,6 @@ class Option(Base):
     def serialize(self) -> OptionDict:
         return {
             "id": self.id,
-            "question": self.question,
             "name": self.name,
         }
 

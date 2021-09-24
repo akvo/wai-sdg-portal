@@ -1,4 +1,5 @@
 from typing import List
+from db.connection import engine
 from sqlalchemy.orm import Session
 from models.form import Form, FormDict, FormBase
 
@@ -18,3 +19,10 @@ def get_form(session: Session) -> List[FormDict]:
 
 def get_form_by_id(session: Session, id: int) -> FormBase:
     return session.query(Form).filter(Form.id == id).first()
+
+
+# UTIL
+def get_form_list():
+    session = Session(engine)
+    form = session.query(Form).all()
+    return [f"{f.id} - {f.name}" for f in form]

@@ -1,9 +1,12 @@
 import enum
+from typing import List
 from typing_extensions import TypedDict
 from pydantic import BaseModel
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy import Boolean, Integer, String, Enum
+from sqlalchemy.orm import relationship
 from db.connection import Base
+from models.option import OptionDict
 
 
 class QuestionType(enum.Enum):
@@ -34,6 +37,10 @@ class Question(Base):
     name = Column(String)
     meta = Column(Boolean, default=False)
     type = Column(Enum(QuestionType), default=QuestionType.text)
+    option = relationship("Option",
+                          cascade="all, delete",
+                          passive_deletes=True,
+                          backref="option")
 
     def __init__(self, name: str, meta: bool, type: QuestionType):
         self.name = name
@@ -51,7 +58,8 @@ class Question(Base):
             "question_group": self.question_group,
             "name": self.name,
             "meta": self.meta,
-            "type": self.type
+            "type": self.type,
+            "option": self.option
         }
 
 
@@ -63,6 +71,7 @@ class QuestionBase(BaseModel):
     name: str
     meta: bool
     type: QuestionType
+    option: List[OptionDict]
 
     class Config:
         orm_mode = True
