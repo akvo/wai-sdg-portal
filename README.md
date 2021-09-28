@@ -36,3 +36,21 @@ see:
 - [nginx](https://github.com/akvo/wai-ethiopia/blob/main/frontend/nginx/conf.d/default.conf) config
 - [mainnetwork](https://github.com/akvo/wai-ethiopia/blob/7b5364b09ff96356b516b6738d99feb9a8d71f29/docker-compose.ci.yml#L4-L8) container setup
 
+# Database Seeder
+
+### Add Super Admin
+Note you wont be able to use some of the backend API if you haven't confirmed your email address with **Auth0 WAI Ethiopia** tenant which you received from Auth0 once your account is registered.
+```
+docker-compose exec backend python -m seeder.admin youremail@akvo.org
+```
+
+### Form Seeder
+Assuming that you have `form_eth_*.json` inside `./backend/source` folder you will be able to run.
+```
+docker-compose exec backend python -m seeder.form
+```
+
+### Seed Random User
+```
+docker-compose exec backend python -m seeder.user <number_of_user>
+```
