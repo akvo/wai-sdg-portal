@@ -4,7 +4,7 @@ import numpy as np
 from openpyxl import load_workbook
 from IPython.core.display import display, HTML
 from pathlib import Path
-
+import json
 ```
 
 
@@ -18,28 +18,24 @@ HTML('<style>' + css_rules + '</style>')
 
 <style>/* title of columns */
 table {
-  width: 100%;
-  display: table !important;
   min-width: 100%;
 }
 table.dataframe thead th {
-  font-size: .8em !important;
+  font-size: 1.2em !important;
   padding-top: 0.2em !important;
   padding-bottom: 0.2em !important;
 }
 
 /* title of rows */
 table.dataframe tbody th {
-  font-size: .8em !important;
-  text-align: right;
-  vertical-align: top;
+  font-size: 1.2em !important;
+  border: 1px solid black !important;
 }
 
 /* style for each cell */
 table.dataframe td {
-  font-size: .8em !important;
-  text-align: right;
-  vertical-align: top;
+  font-size: 1.15em !important;
+  border: 1px solid black !important;
 }
 
 /* disable zebra-style */
@@ -84,39 +80,76 @@ source_filter = 'Eth'
 
 
 ```python
+def generate_json_file(data, name):
+    name = name.replace(" ","_").lower()
+    json_object = json.dumps(data, indent = 4)
+    with open(f"../backend/source/form_{name}.json", "w") as outfile:
+        outfile.write(json_object)
+```
+
+
+```python
 def get_definitions(data, form_name, location):
     forms = []
+    jsonforms = []
+    metaforms = []
     for index, col in enumerate(list(data)):
         datatype = data[col].dtypes
         formtype = "text"
         options = None
+        meta = False
         if datatype == int:
             formtype = "number"
         if datatype == np.float64:
-            formtype = "decimal"
+            formtype = "number"
         if datatype == object:
             test = data[col].dropna()
-            test = test.str.capitalize()
+            test = test.str.lower()
             options = list(test.unique())
             if len(options) > 8:
                 options = None
                 formtype = "text"
             else:
                 formtype = "option"
-        if col in location:
-            options = None
-            formtype = "cascade"
-        cname = col.replace("_"," ").title()
+                if len(options) == 1:
+                    for yn in ["yes","no"]:
+                        if options[0].lower() == yn:
+                            options = ["yes","no"]
+                else:
+                    options = [str(o).lower() for o in options]
+        if col.strip().lower() in ['latitude','longitude']:
+            col = 'geolocation'
+            formtype = 'geo'
+        if col.strip().lower() in location:
+            formtype = 'administration'
+        cname = col.replace("_"," ").lower().strip()
         if "|" in cname:
-            cname = cname.split("|")[1]
+            cname = cname.split("|")[1].strip()
+        if "name" in cname:
+            meta = True
         if formtype == "option":
+            jsonforms.append({"order": index + 1,"question": cname, "type": formtype, "meta": meta, "options": options})
             for opt in options:
                 forms.append({"ID": index + 1,"QUESTION": cname, "TYPE": formtype.upper(), "OPTIONS": opt})
+        elif formtype in ["geo","administration"]:
+            cname = formtype
+            if formtype == "geo":
+                cname += "location"
+            if formtype == "administration":
+                cname = "location"
+            if cname not in metaforms:
+                metaforms.append(cname)
+                jsonforms.append({"order": index + 1, "question": cname, "type": formtype, "meta": True, "options": None})
+                forms.append({"ID": index + 1,"QUESTION": cname, "TYPE": formtype.upper(), "OPTIONS": " - " })
         else:
+            jsonforms.append({"order": index + 1,"question": cname, "type": formtype, "meta": meta, "options": None})
             forms.append({"ID":  index + 1, "QUESTION": cname, "TYPE": formtype.upper(), "OPTIONS": " - "})
+    generate_json_file(jsonforms, form_name)
+    results = pd.DataFrame(forms).groupby(['ID','QUESTION','TYPE','OPTIONS']).first()
     display(HTML(f"<h1>{form_name}</h1>"))
-    display(HTML(pd.DataFrame(forms).groupby(['ID','QUESTION','TYPE','OPTIONS']).first().to_html()))
+    display(HTML(results.to_html()))
     display(HTML(f"<hr/>"))
+    return results
 ```
 
 
@@ -127,7 +160,7 @@ sheets = list(filter(lambda x: 'Eth' in x, all_sheets))
 for sheet in sheets:
     data = pd.read_excel(source, sheet)
     data.drop(data.filter(regex="Unnamed"),axis=1, inplace=True)
-    get_definitions(data, sheet, ["Woreda","Kebele"])
+    get_definitions(data, sheet, ["woreda","kebele"])
 ```
 
 
@@ -137,6 +170,12 @@ for sheet in sheets:
 
 <table border="1" class="dataframe">
   <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
     <tr>
       <th>ID</th>
       <th>QUESTION</th>
@@ -147,213 +186,207 @@ for sheet in sheets:
   <tbody>
     <tr>
       <th>1</th>
-      <th>Woreda</th>
-      <th>CASCADE</th>
-      <th>-</th>
-    </tr>
-    <tr>
-      <th>2</th>
-      <th>Kebele</th>
-      <th>CASCADE</th>
+      <th>location</th>
+      <th>ADMINISTRATION</th>
       <th>-</th>
     </tr>
     <tr>
       <th>3</th>
-      <th>Village</th>
+      <th>village</th>
       <th>TEXT</th>
       <th>-</th>
     </tr>
     <tr>
       <th>4</th>
-      <th>Name Of Respondent</th>
+      <th>name of respondent</th>
       <th>TEXT</th>
       <th>-</th>
     </tr>
     <tr>
       <th>5</th>
-      <th>Household Size</th>
+      <th>household size</th>
       <th>NUMBER</th>
       <th>-</th>
     </tr>
     <tr>
       <th>6</th>
-      <th>Main Source Of Drinking Water</th>
+      <th>main source of drinking water</th>
       <th>TEXT</th>
       <th>-</th>
     </tr>
     <tr>
       <th rowspan="4" valign="top">7</th>
-      <th rowspan="4" valign="top">Water Service Level</th>
+      <th rowspan="4" valign="top">water service level</th>
       <th rowspan="4" valign="top">OPTION</th>
-      <th>Basic</th>
+      <th>basic</th>
     </tr>
     <tr>
-      <th>Limited</th>
+      <th>limited</th>
     </tr>
     <tr>
-      <th>Surface water</th>
+      <th>surface water</th>
     </tr>
     <tr>
-      <th>Unimproved</th>
+      <th>unimproved</th>
     </tr>
     <tr>
       <th rowspan="3" valign="top">8</th>
-      <th rowspan="3" valign="top">Specific Location Of Water Collection</th>
+      <th rowspan="3" valign="top">specific location of water collection</th>
       <th rowspan="3" valign="top">OPTION</th>
-      <th>Elsewhere</th>
+      <th>elsewhere</th>
     </tr>
     <tr>
-      <th>In own dwelling</th>
+      <th>in own dwelling</th>
     </tr>
     <tr>
-      <th>In own yard / plot</th>
+      <th>in own yard / plot</th>
     </tr>
     <tr>
       <th rowspan="2" valign="top">9</th>
-      <th rowspan="2" valign="top">Time To Collect Water</th>
+      <th rowspan="2" valign="top">time to collect water</th>
       <th rowspan="2" valign="top">OPTION</th>
-      <th>Less than 30 minutes</th>
+      <th>less than 30 minutes</th>
     </tr>
     <tr>
-      <th>More than 30 minutes</th>
+      <th>more than 30 minutes</th>
     </tr>
     <tr>
       <th rowspan="3" valign="top">10</th>
-      <th rowspan="3" valign="top">Times In Last Month When Drinking Water Quantity Was Insufficient</th>
+      <th rowspan="3" valign="top">times in last month when drinking water quantity was insufficient</th>
       <th rowspan="3" valign="top">OPTION</th>
-      <th>Don't know</th>
+      <th>don't know</th>
     </tr>
     <tr>
-      <th>No, always sufficient</th>
+      <th>no, always sufficient</th>
     </tr>
     <tr>
-      <th>Yes, at least once</th>
+      <th>yes, at least once</th>
     </tr>
     <tr>
       <th rowspan="4" valign="top">11</th>
-      <th rowspan="4" valign="top">Sanitation Service Level</th>
+      <th rowspan="4" valign="top">sanitation service level</th>
       <th rowspan="4" valign="top">OPTION</th>
-      <th>Basic</th>
+      <th>basic</th>
     </tr>
     <tr>
-      <th>Limited</th>
+      <th>limited</th>
     </tr>
     <tr>
-      <th>Safely managed</th>
+      <th>safely managed</th>
     </tr>
     <tr>
-      <th>Unimproved</th>
+      <th>unimproved</th>
     </tr>
     <tr>
       <th rowspan="8" valign="top">12</th>
-      <th rowspan="8" valign="top">Type Of Toilet Facility</th>
+      <th rowspan="8" valign="top">type of toilet facility</th>
       <th rowspan="8" valign="top">OPTION</th>
-      <th>Bucket</th>
+      <th>bucket</th>
     </tr>
     <tr>
-      <th>Pit latrine with slab</th>
+      <th>pit latrine with slab</th>
     </tr>
     <tr>
-      <th>Pit latrine without slab/open pit</th>
+      <th>pit latrine without slab/open pit</th>
     </tr>
     <tr>
-      <th>There is no latrine</th>
+      <th>there is no latrine</th>
     </tr>
     <tr>
-      <th>Toilet that flush/pour to flush piped sewer system</th>
+      <th>toilet that flush/pour to flush piped sewer system</th>
     </tr>
     <tr>
-      <th>Toilet that flush/pour to pit latrine</th>
+      <th>toilet that flush/pour to pit latrine</th>
     </tr>
     <tr>
-      <th>Twinpit offset latrine</th>
+      <th>twinpit offset latrine</th>
     </tr>
     <tr>
-      <th>Ventilated improved pit latrine (vip)</th>
+      <th>ventilated improved pit latrine (vip)</th>
     </tr>
     <tr>
       <th rowspan="2" valign="top">13</th>
-      <th rowspan="2" valign="top">Facility Is Shared With Others Outside Of The Household</th>
+      <th rowspan="2" valign="top">facility is shared with others outside of the household</th>
       <th rowspan="2" valign="top">OPTION</th>
-      <th>No</th>
+      <th>no</th>
     </tr>
     <tr>
-      <th>Yes</th>
+      <th>yes</th>
     </tr>
     <tr>
       <th rowspan="3" valign="top">14</th>
-      <th rowspan="3" valign="top">Location Of Sanitation Facility</th>
+      <th rowspan="3" valign="top">location of sanitation facility</th>
       <th rowspan="3" valign="top">OPTION</th>
-      <th>Elsewhere</th>
+      <th>elsewhere</th>
     </tr>
     <tr>
-      <th>In own dwelling</th>
+      <th>in own dwelling</th>
     </tr>
     <tr>
-      <th>In own plot/yard</th>
+      <th>in own plot/yard</th>
     </tr>
     <tr>
       <th rowspan="3" valign="top">15</th>
-      <th rowspan="3" valign="top">Emptying Of On-Site Sanitation Facilities</th>
+      <th rowspan="3" valign="top">emptying of on-site sanitation facilities</th>
       <th rowspan="3" valign="top">OPTION</th>
-      <th>Don't know</th>
+      <th>don't know</th>
     </tr>
     <tr>
-      <th>No, never emptied</th>
+      <th>no, never emptied</th>
     </tr>
     <tr>
-      <th>Yes, but don't know when</th>
+      <th>yes, but don't know when</th>
     </tr>
     <tr>
       <th rowspan="3" valign="top">16</th>
-      <th rowspan="3" valign="top">Hygiene Service Level</th>
+      <th rowspan="3" valign="top">hygiene service level</th>
       <th rowspan="3" valign="top">OPTION</th>
-      <th>Basic</th>
+      <th>basic</th>
     </tr>
     <tr>
-      <th>Limited</th>
+      <th>limited</th>
     </tr>
     <tr>
-      <th>No facility</th>
+      <th>no facility</th>
     </tr>
     <tr>
       <th rowspan="5" valign="top">17</th>
-      <th rowspan="5" valign="top">Type Of Handwashing Facility Used Most Often</th>
+      <th rowspan="5" valign="top">type of handwashing facility used most often</th>
       <th rowspan="5" valign="top">OPTION</th>
-      <th>Fixed facility observed in dwelling</th>
+      <th>fixed facility observed in dwelling</th>
     </tr>
     <tr>
-      <th>Fixed facility observed in plot/yard</th>
+      <th>fixed facility observed in plot/yard</th>
     </tr>
     <tr>
-      <th>Mobile object observed (bucket, jug, kettle)</th>
+      <th>mobile object observed (bucket, jug, kettle)</th>
     </tr>
     <tr>
-      <th>No handwashing place available in dwelling/plot/yard</th>
+      <th>no handwashing place available in dwelling/plot/yard</th>
     </tr>
     <tr>
-      <th>No permission to see</th>
+      <th>no permission to see</th>
     </tr>
     <tr>
       <th rowspan="2" valign="top">18</th>
-      <th rowspan="2" valign="top">Water Available At Handwashing Facility</th>
+      <th rowspan="2" valign="top">water available at handwashing facility</th>
       <th rowspan="2" valign="top">OPTION</th>
-      <th>Water is available</th>
+      <th>water is available</th>
     </tr>
     <tr>
-      <th>Water is not available</th>
+      <th>water is not available</th>
     </tr>
     <tr>
       <th rowspan="3" valign="top">19</th>
-      <th rowspan="3" valign="top">Soap Is Available</th>
+      <th rowspan="3" valign="top">soap is available</th>
       <th rowspan="3" valign="top">OPTION</th>
-      <th>Ash/mud/sand is present</th>
+      <th>ash/mud/sand is present</th>
     </tr>
     <tr>
-      <th>No, not present</th>
+      <th>no, not present</th>
     </tr>
     <tr>
-      <th>Yes, soap or detergent are present</th>
+      <th>yes, soap or detergent are present</th>
     </tr>
   </tbody>
 </table>
@@ -370,6 +403,12 @@ for sheet in sheets:
 
 <table border="1" class="dataframe">
   <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
     <tr>
       <th>ID</th>
       <th>QUESTION</th>
@@ -380,147 +419,150 @@ for sheet in sheets:
   <tbody>
     <tr>
       <th>1</th>
-      <th>Woreda</th>
-      <th>CASCADE</th>
-      <th>-</th>
-    </tr>
-    <tr>
-      <th>2</th>
-      <th>Kebele</th>
-      <th>CASCADE</th>
+      <th>location</th>
+      <th>ADMINISTRATION</th>
       <th>-</th>
     </tr>
     <tr>
       <th>3</th>
-      <th>Name Of Health Facility</th>
+      <th>name of health facility</th>
       <th>TEXT</th>
       <th>-</th>
     </tr>
     <tr>
       <th>4</th>
-      <th>Latitude</th>
-      <th>DECIMAL</th>
-      <th>-</th>
-    </tr>
-    <tr>
-      <th>5</th>
-      <th>Longitude</th>
-      <th>DECIMAL</th>
+      <th>geolocation</th>
+      <th>GEO</th>
       <th>-</th>
     </tr>
     <tr>
       <th rowspan="2" valign="top">6</th>
-      <th rowspan="2" valign="top">Type Of Healthy Facility</th>
+      <th rowspan="2" valign="top">type of healthy facility</th>
       <th rowspan="2" valign="top">OPTION</th>
-      <th>Health post</th>
+      <th>health post</th>
     </tr>
     <tr>
-      <th>Other</th>
+      <th>other</th>
     </tr>
     <tr>
       <th rowspan="4" valign="top">7</th>
-      <th rowspan="4" valign="top">Description Of Water Supply In Health Facilities</th>
+      <th rowspan="4" valign="top">description of water supply in health facilities</th>
       <th rowspan="4" valign="top">OPTION</th>
-      <th>No water supply in premises</th>
+      <th>no water supply in premises</th>
     </tr>
     <tr>
-      <th>Pipeline connections</th>
+      <th>pipeline connections</th>
     </tr>
     <tr>
-      <th>Protected wells</th>
+      <th>protected wells</th>
     </tr>
     <tr>
-      <th>Rain water harvesting</th>
+      <th>rain water harvesting</th>
     </tr>
     <tr>
       <th rowspan="3" valign="top">8</th>
-      <th rowspan="3" valign="top">Water</th>
+      <th rowspan="3" valign="top">water</th>
       <th rowspan="3" valign="top">OPTION</th>
-      <th>Basic</th>
+      <th>basic</th>
     </tr>
     <tr>
-      <th>Limited</th>
+      <th>limited</th>
     </tr>
     <tr>
-      <th>No service</th>
+      <th>no service</th>
     </tr>
     <tr>
       <th rowspan="3" valign="top">9</th>
-      <th rowspan="3" valign="top">Latrine Description</th>
+      <th rowspan="3" valign="top">latrine description</th>
       <th rowspan="3" valign="top">OPTION</th>
-      <th>No latrine</th>
+      <th>no latrine</th>
     </tr>
     <tr>
-      <th>Simple pit latrine</th>
+      <th>simple pit latrine</th>
     </tr>
     <tr>
-      <th>Vip</th>
+      <th>vip</th>
     </tr>
     <tr>
       <th rowspan="3" valign="top">10</th>
-      <th rowspan="3" valign="top">Sanitation</th>
+      <th rowspan="3" valign="top">sanitation</th>
       <th rowspan="3" valign="top">OPTION</th>
-      <th>Limited</th>
+      <th>limited</th>
     </tr>
     <tr>
-      <th>No service</th>
+      <th>no service</th>
     </tr>
     <tr>
-      <th>Usable</th>
+      <th>usable</th>
     </tr>
     <tr>
-      <th>11</th>
-      <th>Physically Separate Latrines For Male Female Patients</th>
-      <th>OPTION</th>
-      <th>No</th>
+      <th rowspan="2" valign="top">11</th>
+      <th rowspan="2" valign="top">physically separate latrines for male female patients</th>
+      <th rowspan="2" valign="top">OPTION</th>
+      <th>no</th>
     </tr>
     <tr>
-      <th>12</th>
-      <th>Facilitated Access For Disabled</th>
-      <th>OPTION</th>
-      <th>No</th>
+      <th>yes</th>
+    </tr>
+    <tr>
+      <th rowspan="2" valign="top">12</th>
+      <th rowspan="2" valign="top">facilitated access for disabled</th>
+      <th rowspan="2" valign="top">OPTION</th>
+      <th>no</th>
+    </tr>
+    <tr>
+      <th>yes</th>
     </tr>
     <tr>
       <th rowspan="3" valign="top">13</th>
-      <th rowspan="3" valign="top">Latrine Condition</th>
+      <th rowspan="3" valign="top">latrine condition</th>
       <th rowspan="3" valign="top">OPTION</th>
-      <th>Clean, used</th>
+      <th>clean, used</th>
     </tr>
     <tr>
-      <th>Dirty but used</th>
+      <th>dirty but used</th>
     </tr>
     <tr>
-      <th>Filthy ,unused</th>
+      <th>filthy ,unused</th>
     </tr>
     <tr>
       <th>14</th>
-      <th>Is There Hand Washing Facility With In 5M Of The Toilet</th>
+      <th>is there hand washing facility with in 5m of the toilet</th>
       <th>OPTION</th>
-      <th>No facility</th>
+      <th>no facility</th>
     </tr>
     <tr>
       <th>15</th>
-      <th>Hygiene</th>
+      <th>hygiene</th>
       <th>OPTION</th>
-      <th>No service</th>
+      <th>no service</th>
     </tr>
     <tr>
-      <th>16</th>
-      <th>Is Hand Washing Facility Operating I.E With Water</th>
-      <th>OPTION</th>
-      <th>Yes</th>
+      <th rowspan="2" valign="top">16</th>
+      <th rowspan="2" valign="top">is hand washing facility operating i.e with water</th>
+      <th rowspan="2" valign="top">OPTION</th>
+      <th>no</th>
     </tr>
     <tr>
-      <th>17</th>
-      <th>Is Soap Available At Each Hand Washing Stand</th>
-      <th>OPTION</th>
-      <th>No</th>
+      <th>yes</th>
     </tr>
     <tr>
-      <th>18</th>
-      <th>Is There A Toilet For Staff</th>
-      <th>OPTION</th>
-      <th>No</th>
+      <th rowspan="2" valign="top">17</th>
+      <th rowspan="2" valign="top">is soap available at each hand washing stand</th>
+      <th rowspan="2" valign="top">OPTION</th>
+      <th>no</th>
+    </tr>
+    <tr>
+      <th>yes</th>
+    </tr>
+    <tr>
+      <th rowspan="2" valign="top">18</th>
+      <th rowspan="2" valign="top">is there a toilet for staff</th>
+      <th rowspan="2" valign="top">OPTION</th>
+      <th>no</th>
+    </tr>
+    <tr>
+      <th>yes</th>
     </tr>
   </tbody>
 </table>
@@ -537,6 +579,12 @@ for sheet in sheets:
 
 <table border="1" class="dataframe">
   <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
     <tr>
       <th>ID</th>
       <th>QUESTION</th>
@@ -547,228 +595,222 @@ for sheet in sheets:
   <tbody>
     <tr>
       <th>1</th>
-      <th>Woreda</th>
-      <th>CASCADE</th>
-      <th>-</th>
-    </tr>
-    <tr>
-      <th>2</th>
-      <th>Kebele</th>
-      <th>CASCADE</th>
+      <th>location</th>
+      <th>ADMINISTRATION</th>
       <th>-</th>
     </tr>
     <tr>
       <th>3</th>
-      <th>School Name</th>
+      <th>school name</th>
       <th>TEXT</th>
       <th>-</th>
     </tr>
     <tr>
       <th>4</th>
-      <th>Latitude</th>
-      <th>DECIMAL</th>
-      <th>-</th>
-    </tr>
-    <tr>
-      <th>5</th>
-      <th>Longitude</th>
-      <th>DECIMAL</th>
+      <th>geolocation</th>
+      <th>GEO</th>
       <th>-</th>
     </tr>
     <tr>
       <th rowspan="3" valign="top">6</th>
-      <th rowspan="3" valign="top">School Type</th>
+      <th rowspan="3" valign="top">school type</th>
       <th rowspan="3" valign="top">OPTION</th>
-      <th>High school 9-10</th>
+      <th>high school 9-10</th>
     </tr>
     <tr>
-      <th>Primary(1-4)</th>
+      <th>primary(1-4)</th>
     </tr>
     <tr>
-      <th>Primary(1-8)</th>
+      <th>primary(1-8)</th>
     </tr>
     <tr>
       <th>7</th>
-      <th>Male Pupils</th>
+      <th>male pupils</th>
       <th>NUMBER</th>
       <th>-</th>
     </tr>
     <tr>
       <th>8</th>
-      <th>Female Pupils</th>
-      <th>DECIMAL</th>
+      <th>female pupils</th>
+      <th>NUMBER</th>
       <th>-</th>
     </tr>
     <tr>
       <th rowspan="2" valign="top">9</th>
-      <th rowspan="2" valign="top">Reason For Inventory</th>
+      <th rowspan="2" valign="top">reason for inventory</th>
       <th rowspan="2" valign="top">OPTION</th>
-      <th>New scheme</th>
+      <th>new scheme</th>
     </tr>
     <tr>
-      <th>Repair</th>
+      <th>repair</th>
     </tr>
     <tr>
       <th rowspan="4" valign="top">10</th>
-      <th rowspan="4" valign="top">Water Supply Source</th>
+      <th rowspan="4" valign="top">water supply source</th>
       <th rowspan="4" valign="top">OPTION</th>
-      <th>No water scheme</th>
+      <th>no water scheme</th>
     </tr>
     <tr>
-      <th>No water supply in premises</th>
+      <th>no water supply in premises</th>
     </tr>
     <tr>
-      <th>Pipeline connection</th>
+      <th>pipeline connection</th>
     </tr>
     <tr>
-      <th>Shallow well fitted with pump</th>
+      <th>shallow well fitted with pump</th>
     </tr>
     <tr>
       <th rowspan="3" valign="top">11</th>
-      <th rowspan="3" valign="top">Water</th>
+      <th rowspan="3" valign="top">water</th>
       <th rowspan="3" valign="top">OPTION</th>
-      <th>Basic</th>
+      <th>basic</th>
     </tr>
     <tr>
-      <th>Limited</th>
+      <th>limited</th>
     </tr>
     <tr>
-      <th>No service</th>
+      <th>no service</th>
     </tr>
     <tr>
       <th>12</th>
-      <th>Year Commisioned</th>
-      <th>DECIMAL</th>
+      <th>year commisioned</th>
+      <th>NUMBER</th>
       <th>-</th>
     </tr>
     <tr>
       <th rowspan="2" valign="top">13</th>
-      <th rowspan="2" valign="top">Functionality Status Of Water Supply</th>
+      <th rowspan="2" valign="top">functionality status of water supply</th>
       <th rowspan="2" valign="top">OPTION</th>
-      <th>Functional</th>
+      <th>functional</th>
     </tr>
     <tr>
-      <th>Non functional - mechanical</th>
+      <th>non functional - mechanical</th>
     </tr>
     <tr>
       <th>14</th>
-      <th>Yield</th>
-      <th>DECIMAL</th>
+      <th>yield</th>
+      <th>NUMBER</th>
       <th>-</th>
     </tr>
     <tr>
       <th rowspan="2" valign="top">15</th>
-      <th rowspan="2" valign="top">Type Of Latrine</th>
+      <th rowspan="2" valign="top">type of latrine</th>
       <th rowspan="2" valign="top">OPTION</th>
-      <th>No latrine</th>
+      <th>no latrine</th>
     </tr>
     <tr>
-      <th>Simple pit latrine</th>
+      <th>simple pit latrine</th>
     </tr>
     <tr>
       <th rowspan="2" valign="top">16</th>
-      <th rowspan="2" valign="top">Sanitation</th>
+      <th rowspan="2" valign="top">sanitation</th>
       <th rowspan="2" valign="top">OPTION</th>
-      <th>Limited</th>
+      <th>limited</th>
     </tr>
     <tr>
-      <th>No service</th>
+      <th>no service</th>
     </tr>
     <tr>
       <th rowspan="2" valign="top">17</th>
-      <th rowspan="2" valign="top">Latrine For Boys And Girls Separate</th>
+      <th rowspan="2" valign="top">latrine for boys and girls separate</th>
       <th rowspan="2" valign="top">OPTION</th>
-      <th>No</th>
+      <th>no</th>
     </tr>
     <tr>
-      <th>Yes</th>
+      <th>yes</th>
     </tr>
     <tr>
       <th>18</th>
-      <th>Number Of Boy Pupils</th>
+      <th>number of boy pupils</th>
       <th>NUMBER</th>
       <th>-</th>
     </tr>
     <tr>
       <th>19</th>
-      <th>Number Of Girl Pupils</th>
-      <th>DECIMAL</th>
+      <th>number of girl pupils</th>
+      <th>NUMBER</th>
       <th>-</th>
     </tr>
     <tr>
       <th rowspan="2" valign="top">20</th>
-      <th rowspan="2" valign="top">Are There Latrines For Disabled?</th>
+      <th rowspan="2" valign="top">are there latrines for disabled?</th>
       <th rowspan="2" valign="top">OPTION</th>
-      <th>No</th>
+      <th>no</th>
     </tr>
     <tr>
-      <th>Yes</th>
+      <th>yes</th>
     </tr>
     <tr>
       <th rowspan="3" valign="top">21</th>
-      <th rowspan="3" valign="top">Latrine Condition</th>
+      <th rowspan="3" valign="top">latrine condition</th>
       <th rowspan="3" valign="top">OPTION</th>
-      <th>Clean, used</th>
+      <th>clean, used</th>
     </tr>
     <tr>
-      <th>Dirty but used</th>
+      <th>dirty but used</th>
     </tr>
     <tr>
-      <th>No latrine</th>
+      <th>no latrine</th>
     </tr>
     <tr>
       <th>22</th>
-      <th>Hygiene Service Level</th>
+      <th>hygiene service level</th>
       <th>OPTION</th>
-      <th>No service</th>
+      <th>no service</th>
     </tr>
     <tr>
       <th rowspan="2" valign="top">23</th>
-      <th rowspan="2" valign="top">Presence Of Handwashingfacility</th>
+      <th rowspan="2" valign="top">presence of handwashingfacility</th>
       <th rowspan="2" valign="top">OPTION</th>
-      <th>No</th>
+      <th>no</th>
     </tr>
     <tr>
-      <th>Yes</th>
+      <th>yes</th>
     </tr>
     <tr>
-      <th>24</th>
-      <th>Hand Washing In Use</th>
-      <th>OPTION</th>
-      <th>No</th>
+      <th rowspan="2" valign="top">24</th>
+      <th rowspan="2" valign="top">hand washing in use</th>
+      <th rowspan="2" valign="top">OPTION</th>
+      <th>no</th>
     </tr>
     <tr>
-      <th>25</th>
-      <th>Availability Of Soap</th>
-      <th>OPTION</th>
-      <th>No</th>
+      <th>yes</th>
+    </tr>
+    <tr>
+      <th rowspan="2" valign="top">25</th>
+      <th rowspan="2" valign="top">availability of soap</th>
+      <th rowspan="2" valign="top">OPTION</th>
+      <th>no</th>
+    </tr>
+    <tr>
+      <th>yes</th>
     </tr>
     <tr>
       <th rowspan="2" valign="top">26</th>
-      <th rowspan="2" valign="top">Urinal Present Girls</th>
+      <th rowspan="2" valign="top">urinal present girls</th>
       <th rowspan="2" valign="top">OPTION</th>
-      <th>No</th>
+      <th>no</th>
     </tr>
     <tr>
-      <th>Yes</th>
+      <th>yes</th>
     </tr>
     <tr>
       <th rowspan="2" valign="top">27</th>
-      <th rowspan="2" valign="top">Urinal Present Boys</th>
+      <th rowspan="2" valign="top">urinal present boys</th>
       <th rowspan="2" valign="top">OPTION</th>
-      <th>No</th>
+      <th>no</th>
     </tr>
     <tr>
-      <th>Yes</th>
+      <th>yes</th>
     </tr>
     <tr>
       <th rowspan="2" valign="top">28</th>
-      <th rowspan="2" valign="top">Separate Latrine For Tolitet Staff</th>
+      <th rowspan="2" valign="top">separate latrine for tolitet staff</th>
       <th rowspan="2" valign="top">OPTION</th>
-      <th>No</th>
+      <th>no</th>
     </tr>
     <tr>
-      <th>Yes</th>
+      <th>yes</th>
     </tr>
   </tbody>
 </table>
@@ -785,6 +827,12 @@ for sheet in sheets:
 
 <table border="1" class="dataframe">
   <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
     <tr>
       <th>ID</th>
       <th>QUESTION</th>
@@ -795,185 +843,176 @@ for sheet in sheets:
   <tbody>
     <tr>
       <th>1</th>
-      <th>Woreda</th>
-      <th>CASCADE</th>
-      <th>-</th>
-    </tr>
-    <tr>
-      <th>2</th>
-      <th>Kebele</th>
-      <th>CASCADE</th>
+      <th>location</th>
+      <th>ADMINISTRATION</th>
       <th>-</th>
     </tr>
     <tr>
       <th>3</th>
-      <th>Village</th>
+      <th>village</th>
       <th>TEXT</th>
       <th>-</th>
     </tr>
     <tr>
       <th>4</th>
-      <th>Site Name</th>
+      <th>site name</th>
       <th>TEXT</th>
       <th>-</th>
     </tr>
     <tr>
       <th>5</th>
-      <th>Latitude</th>
-      <th>DECIMAL</th>
-      <th>-</th>
-    </tr>
-    <tr>
-      <th>6</th>
-      <th>Longitude</th>
-      <th>DECIMAL</th>
+      <th>geolocation</th>
+      <th>GEO</th>
       <th>-</th>
     </tr>
     <tr>
       <th rowspan="4" valign="top">7</th>
-      <th rowspan="4" valign="top">Water Source Type 1</th>
+      <th rowspan="4" valign="top">water source type 1</th>
       <th rowspan="4" valign="top">OPTION</th>
-      <th>Deep well with distribution</th>
+      <th>deep well with distribution</th>
     </tr>
     <tr>
-      <th>Hand dug well fitted with pump or windlass</th>
+      <th>hand dug well fitted with pump or windlass</th>
     </tr>
     <tr>
-      <th>Protected spring</th>
+      <th>protected spring</th>
     </tr>
     <tr>
-      <th>Shallow well fitted with hand pump</th>
+      <th>shallow well fitted with hand pump</th>
     </tr>
     <tr>
       <th rowspan="5" valign="top">8</th>
-      <th rowspan="5" valign="top">Water Source Type</th>
+      <th rowspan="5" valign="top">water source type</th>
       <th rowspan="5" valign="top">OPTION</th>
-      <th>Deep wel</th>
+      <th>deep wel</th>
     </tr>
     <tr>
-      <th>Hand dug well</th>
+      <th>hand dug well</th>
     </tr>
     <tr>
-      <th>Protected spring</th>
+      <th>protected spring</th>
     </tr>
     <tr>
-      <th>Shallow well</th>
+      <th>shallow well</th>
     </tr>
     <tr>
-      <th>Spring</th>
+      <th>spring</th>
     </tr>
     <tr>
       <th rowspan="4" valign="top">9</th>
-      <th rowspan="4" valign="top">Functionality Status</th>
+      <th rowspan="4" valign="top">functionality status</th>
       <th rowspan="4" valign="top">OPTION</th>
-      <th>Functional</th>
+      <th>functional</th>
     </tr>
     <tr>
-      <th>No data</th>
+      <th>no data</th>
     </tr>
     <tr>
-      <th>Non functional</th>
+      <th>non functional</th>
     </tr>
     <tr>
-      <th>Not functional</th>
+      <th>not functional</th>
     </tr>
     <tr>
       <th rowspan="6" valign="top">10</th>
-      <th rowspan="6" valign="top">Souce Of Energy</th>
+      <th rowspan="6" valign="top">souce of energy</th>
       <th rowspan="6" valign="top">OPTION</th>
-      <th>Diesel</th>
+      <th>diesel</th>
     </tr>
     <tr>
-      <th>Electricity and grid</th>
+      <th>electricity and grid</th>
     </tr>
     <tr>
-      <th>Gravity</th>
+      <th>gravity</th>
     </tr>
     <tr>
-      <th>Manual operation</th>
+      <th>manual operation</th>
     </tr>
     <tr>
-      <th>Other</th>
+      <th>other</th>
     </tr>
     <tr>
-      <th>Solar</th>
+      <th>solar</th>
     </tr>
     <tr>
-      <th>11</th>
-      <th>Estimated Number Of Users</th>
-      <th>OPTION</th>
-      <th>Don't know</th>
+      <th rowspan="2" valign="top">11</th>
+      <th rowspan="2" valign="top">estimated number of users</th>
+      <th rowspan="2" valign="top">OPTION</th>
+      <th>don't know</th>
+    </tr>
+    <tr>
+      <th>nan</th>
     </tr>
     <tr>
       <th rowspan="3" valign="top">12</th>
-      <th rowspan="3" valign="top">Hand Pump Type</th>
+      <th rowspan="3" valign="top">hand pump type</th>
       <th rowspan="3" valign="top">OPTION</th>
-      <th>Afridev</th>
+      <th>afridev</th>
     </tr>
     <tr>
-      <th>Indian mark ii</th>
+      <th>indian mark ii</th>
     </tr>
     <tr>
-      <th>Submersible</th>
+      <th>submersible</th>
     </tr>
     <tr>
       <th rowspan="3" valign="top">13</th>
-      <th rowspan="3" valign="top">Organisation That Installed The Water Pump</th>
+      <th rowspan="3" valign="top">organisation that installed the water pump</th>
       <th rowspan="3" valign="top">OPTION</th>
-      <th>Cda</th>
+      <th>cda</th>
     </tr>
     <tr>
-      <th>Government</th>
+      <th>government</th>
     </tr>
     <tr>
-      <th>Kale hiwot</th>
+      <th>kale hiwot</th>
     </tr>
     <tr>
       <th>14</th>
-      <th>Year Commisioned</th>
-      <th>DECIMAL</th>
+      <th>year commisioned</th>
+      <th>NUMBER</th>
       <th>-</th>
     </tr>
     <tr>
       <th rowspan="5" valign="top">15</th>
-      <th rowspan="5" valign="top">Reason For Inventory</th>
+      <th rowspan="5" valign="top">reason for inventory</th>
       <th rowspan="5" valign="top">OPTION</th>
-      <th>Extension</th>
+      <th>extension</th>
     </tr>
     <tr>
-      <th>Inspection</th>
+      <th>inspection</th>
     </tr>
     <tr>
-      <th>National wash inventory</th>
+      <th>national wash inventory</th>
     </tr>
     <tr>
-      <th>New scheme</th>
+      <th>new scheme</th>
     </tr>
     <tr>
-      <th>Repair</th>
+      <th>repair</th>
     </tr>
     <tr>
       <th>16</th>
-      <th>Functional Taps In The Scheme</th>
-      <th>DECIMAL</th>
+      <th>functional taps in the scheme</th>
+      <th>NUMBER</th>
       <th>-</th>
     </tr>
     <tr>
       <th>17</th>
-      <th>Number Of Non Functionaltaps In The Scheme</th>
-      <th>DECIMAL</th>
+      <th>number of non functionaltaps in the scheme</th>
+      <th>NUMBER</th>
       <th>-</th>
     </tr>
     <tr>
       <th>18</th>
-      <th>Depth</th>
-      <th>DECIMAL</th>
+      <th>depth</th>
+      <th>NUMBER</th>
       <th>-</th>
     </tr>
     <tr>
       <th>19</th>
-      <th>Yield</th>
-      <th>DECIMAL</th>
+      <th>yield</th>
+      <th>NUMBER</th>
       <th>-</th>
     </tr>
   </tbody>
@@ -991,6 +1030,12 @@ for sheet in sheets:
 
 <table border="1" class="dataframe">
   <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
     <tr>
       <th>ID</th>
       <th>QUESTION</th>
@@ -1001,114 +1046,93 @@ for sheet in sheets:
   <tbody>
     <tr>
       <th>1</th>
-      <th>Woreda</th>
-      <th>CASCADE</th>
-      <th>-</th>
-    </tr>
-    <tr>
-      <th>2</th>
-      <th>Kebele</th>
-      <th>CASCADE</th>
+      <th>location</th>
+      <th>ADMINISTRATION</th>
       <th>-</th>
     </tr>
     <tr>
       <th>3</th>
-      <th>Village</th>
+      <th>village</th>
       <th>TEXT</th>
       <th>-</th>
     </tr>
     <tr>
       <th>4</th>
-      <th>Latitude</th>
-      <th>DECIMAL</th>
-      <th>-</th>
-    </tr>
-    <tr>
-      <th>5</th>
-      <th>Longitude</th>
-      <th>DECIMAL</th>
+      <th>geolocation</th>
+      <th>GEO</th>
       <th>-</th>
     </tr>
     <tr>
       <th>6</th>
-      <th>No. Of Hhs</th>
-      <th>DECIMAL</th>
+      <th>no. of hhs</th>
+      <th>NUMBER</th>
       <th>-</th>
     </tr>
     <tr>
       <th>7</th>
-      <th>Initial Number Latrines</th>
-      <th>DECIMAL</th>
+      <th>initial number latrines</th>
+      <th>NUMBER</th>
       <th>-</th>
     </tr>
     <tr>
       <th>8</th>
-      <th>Final Number Of Latrines</th>
-      <th>DECIMAL</th>
+      <th>final number of latrines</th>
+      <th>NUMBER</th>
       <th>-</th>
     </tr>
     <tr>
       <th>9</th>
-      <th>Date Triggered</th>
+      <th>date triggered</th>
       <th>TEXT</th>
       <th>-</th>
     </tr>
     <tr>
       <th rowspan="3" valign="top">10</th>
-      <th rowspan="3" valign="top">Odf Status</th>
+      <th rowspan="3" valign="top">odf status</th>
       <th rowspan="3" valign="top">OPTION</th>
-      <th>Declared</th>
+      <th>declared</th>
     </tr>
     <tr>
-      <th>Triggered</th>
+      <th>triggered</th>
     </tr>
     <tr>
-      <th>Verified</th>
+      <th>verified</th>
     </tr>
     <tr>
       <th>11</th>
-      <th>Date Of Declared</th>
-      <th>DECIMAL</th>
+      <th>date of declared</th>
+      <th>NUMBER</th>
       <th>-</th>
     </tr>
     <tr>
       <th>12</th>
-      <th>Date Of Verification</th>
+      <th>date of verification</th>
       <th>TEXT</th>
       <th>-</th>
     </tr>
     <tr>
       <th rowspan="2" valign="top">13</th>
-      <th rowspan="2" valign="top">Implementing Partner</th>
+      <th rowspan="2" valign="top">implementing partner</th>
       <th rowspan="2" valign="top">OPTION</th>
-      <th>Amref</th>
+      <th>amref</th>
     </tr>
     <tr>
-      <th>Amref &amp; local gov't</th>
+      <th>amref &amp; local gov't</th>
     </tr>
     <tr>
       <th rowspan="2" valign="top">14</th>
-      <th rowspan="2" valign="top">Remarks</th>
+      <th rowspan="2" valign="top">remarks</th>
       <th rowspan="2" valign="top">OPTION</th>
-      <th>Phase i</th>
+      <th>phase i</th>
     </tr>
     <tr>
-      <th>Phase ii</th>
+      <th>phase ii</th>
     </tr>
     <tr>
       <th>15</th>
-      <th>Time To Complete (Days)</th>
-      <th>OPTION</th>
-      <th>Sum only numbers showing/count of numbers showing</th>
-    </tr>
-    <tr>
-      <th rowspan="2" valign="top">16</th>
-      <th rowspan="2" valign="top">Progress Time</th>
-      <th rowspan="2" valign="top">OPTION</th>
-      <th>Current day - date triggered date</th>
-    </tr>
-    <tr>
-      <th>Current day' - date triggered</th>
+      <th>time to complete (days)</th>
+      <th>NUMBER</th>
+      <th>-</th>
     </tr>
   </tbody>
 </table>
