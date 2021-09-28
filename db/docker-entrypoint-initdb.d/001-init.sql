@@ -205,6 +205,7 @@ CREATE TABLE public.data (
     name character varying,
     form integer,
     administration integer,
+    geo character varying[],
     created_by integer,
     updated_by integer,
     created timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
@@ -276,9 +277,9 @@ ALTER SEQUENCE public.form_id_seq OWNED BY public.form.id;
 
 CREATE TABLE public.option (
     id integer NOT NULL,
+    "order" integer,
     name character varying,
-    question integer,
-    "order" integer
+    question integer
 );
 
 
@@ -312,12 +313,12 @@ ALTER SEQUENCE public.option_id_seq OWNED BY public.option.id;
 
 CREATE TABLE public.question (
     id integer NOT NULL,
+    "order" integer,
     name character varying,
     form integer,
     meta boolean NOT NULL,
     type public.questiontype,
-    question_group integer,
-    "order" integer
+    question_group integer
 );
 
 
@@ -329,9 +330,9 @@ ALTER TABLE public.question OWNER TO wai;
 
 CREATE TABLE public.question_group (
     id integer NOT NULL,
+    "order" integer,
     name character varying,
-    form integer,
-    "order" integer
+    form integer
 );
 
 
@@ -601,7 +602,7 @@ COPY public.administration (id, parent, name) FROM stdin;
 --
 
 COPY public.alembic_version (version_num) FROM stdin;
-40799b50f65c
+a9132038e44f
 \.
 
 
@@ -617,7 +618,7 @@ COPY public.answer (id, question, data, value, text, options, created_by, update
 -- Data for Name: data; Type: TABLE DATA; Schema: public; Owner: wai
 --
 
-COPY public.data (id, name, form, administration, created_by, updated_by, created, updated) FROM stdin;
+COPY public.data (id, name, form, administration, geo, created_by, updated_by, created, updated) FROM stdin;
 \.
 
 
@@ -633,7 +634,7 @@ COPY public.form (id, name) FROM stdin;
 -- Data for Name: option; Type: TABLE DATA; Schema: public; Owner: wai
 --
 
-COPY public.option (id, name, question, "order") FROM stdin;
+COPY public.option (id, "order", name, question) FROM stdin;
 \.
 
 
@@ -641,7 +642,7 @@ COPY public.option (id, name, question, "order") FROM stdin;
 -- Data for Name: question; Type: TABLE DATA; Schema: public; Owner: wai
 --
 
-COPY public.question (id, name, form, meta, type, question_group, "order") FROM stdin;
+COPY public.question (id, "order", name, form, meta, type, question_group) FROM stdin;
 \.
 
 
@@ -649,7 +650,7 @@ COPY public.question (id, name, form, meta, type, question_group, "order") FROM 
 -- Data for Name: question_group; Type: TABLE DATA; Schema: public; Owner: wai
 --
 
-COPY public.question_group (id, name, form, "order") FROM stdin;
+COPY public.question_group (id, "order", name, form) FROM stdin;
 \.
 
 

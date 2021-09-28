@@ -19,6 +19,7 @@ def upgrade():
     op.create_table(
         'question_group',
         sa.Column('id', sa.Integer(), nullable=False),
+        sa.Column('order', sa.Integer(), default=None),
         sa.Column('name', sa.String()),
         sa.Column('form', sa.Integer(), sa.ForeignKey('form.id')),
         sa.PrimaryKeyConstraint('id'),

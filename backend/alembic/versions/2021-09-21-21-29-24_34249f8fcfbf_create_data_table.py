@@ -7,6 +7,7 @@ Create Date: 2021-09-21 21:29:24.991344
 """
 from alembic import op
 import sqlalchemy as sa
+import sqlalchemy.dialects.postgresql as pg
 
 # revision identifiers, used by Alembic.
 revision = '34249f8fcfbf'
@@ -23,6 +24,7 @@ def upgrade():
         sa.Column('form', sa.Integer(), sa.ForeignKey('form.id')),
         sa.Column('administration', sa.Integer(),
                   sa.ForeignKey('administration.id')),
+        sa.Column('geo', pg.ARRAY(sa.String()), nullable=True),
         sa.Column('created_by', sa.Integer(), sa.ForeignKey('user.id')),
         sa.Column('updated_by', sa.Integer(), sa.ForeignKey('user.id')),
         sa.Column('created',

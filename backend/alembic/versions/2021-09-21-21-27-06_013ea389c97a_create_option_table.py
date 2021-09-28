@@ -19,6 +19,7 @@ def upgrade():
     op.create_table(
         'option',
         sa.Column('id', sa.Integer(), nullable=False),
+        sa.Column('order', sa.Integer(), default=None),
         sa.Column('name', sa.String()),
         sa.Column('question', sa.Integer(), sa.ForeignKey('question.id')),
         sa.PrimaryKeyConstraint('id'),
