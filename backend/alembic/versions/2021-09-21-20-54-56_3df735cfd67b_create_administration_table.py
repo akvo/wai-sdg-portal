@@ -17,7 +17,7 @@ depends_on = None
 
 
 def seed():
-    data = pd.read_csv('./data/administration-ethiopia.csv')
+    data = pd.read_csv('./source/administration-ethiopia.csv')
     parents = list(data['UNIT_TYPE'].unique())
     parents = pd.DataFrame(parents, columns=['name'])
     parents['parent'] = None
