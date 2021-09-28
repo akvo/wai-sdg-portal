@@ -5,7 +5,6 @@ from typing import List, Optional
 from sqlalchemy.orm import Session
 import db.crud_question as crud
 import db.crud_question_group as crud_question_group
-from db.crud_form import get_form_list
 from db.connection import get_session
 from models.question import QuestionDict, QuestionBase, QuestionType
 from middleware import verify_admin
@@ -26,24 +25,24 @@ def get_question(req: Request, session: Session = Depends(get_session)):
 class PostQueryParams:
     def __init__(
         self,
-        name: str = Query(None, alias="Question Text"),
+        name: str = Query(None, alias="question text"),
         order: int = None,
         type: QuestionType = Query(default=QuestionType.text,
-                                   alias="Question Type"),
-        meta: bool = Query(default=False, alias="Question is Metadata"),
-        form: str = Query(
-            enum= get_form_list(),
-            default=None,
-            alias="Form ID",
-            description="Existing form, must create form if you don't have one"
-        ),
+                                   alias="question type"),
+        meta: bool = Query(default=False,
+                           description="Wether question is metadata or not"),
+        form: int = Query(
+            None,
+            alias="form id",
+            description=
+            "Existing form id, must create form if you don't have one"),
         question_group: str = Query(
             None,
-            alias="Question Group",
+            alias="question group",
             description="Append existing or Create Question Group"),
         option: Optional[List[str]] = Query(
             None,
-            alias="Question Options",
+            alias="options",
             description=
             "Only applies when question type is option or multiple_option"),
     ):
@@ -66,18 +65,20 @@ def add_question(req: Request,
                  session: Session = Depends(get_session),
                  credentials: credentials = Depends(security)):
     verify_admin(req.state.authenticated, session)
-    form = int(params.form.split(" - ")[0])
     question_group = crud_question_group.search_question_group(
-        session=session, form=form, name=params.question_group)
+        session=session, form=params.form, name=params.question_group)
     if not question_group:
         question_group = crud_question_group.add_question_group(
-            session=session, name=params.question_group, form=form)
+            session=session, name=params.question_group, form=params.form)
+    option = params.option
+    if params.type != QuestionType.option:
+        option = None
     question = crud.add_question(session=session,
                                  name=params.name,
                                  order=params.order,
-                                 form=form,
+                                 form=params.form,
                                  meta=params.meta,
                                  type=params.type,
                                  question_group=question_group.id,
-                                 option=params.option)
+                                 option=option)
     return question.serialize
