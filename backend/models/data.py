@@ -28,6 +28,13 @@ class DataDict(TypedDict):
     answer: List[AnswerDict]
 
 
+class DataResponse(BaseModel):
+    current: int
+    data: List[DataDict]
+    total: int
+    total_page: int
+
+
 class Data(Base):
     __tablename__ = "data"
     id = Column(Integer, primary_key=True, index=True, nullable=True)

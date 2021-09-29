@@ -1,8 +1,9 @@
 from datetime import datetime
-from fastapi import Depends, Request, APIRouter
+from math import ceil
+from fastapi import Depends, Request, APIRouter, HTTPException
 from fastapi.security import HTTPBearer
 from fastapi.security import HTTPBasicCredentials as credentials
-from typing import List
+from typing import List, Optional
 from sqlalchemy.orm import Session
 import db.crud_data as crud
 from db import crud_question
@@ -10,7 +11,7 @@ from db import crud_administration
 from models.answer import Answer, AnswerDict
 from models.question import QuestionType
 from db.connection import get_session
-from models.data import DataDict
+from models.data import DataResponse, DataDict
 from middleware import verify_admin
 
 security = HTTPBearer()
@@ -35,17 +36,37 @@ def transform_data(d):
 
 
 @data_route.get("/data/{form_id:path}",
-                response_model=List[DataDict],
+                response_model=DataResponse,
                 summary="get all datas",
                 tags=["Data"])
 def get_data(req: Request,
              form_id: int,
+             page: int = 1,
+             perpage: int = 10,
+             administration: Optional[int] = None,
              session: Session = Depends(get_session)):
-    data = crud.get_data(session=session, form=form_id)
+    data = crud.get_data(session=session,
+                         form=form_id,
+                         administration=administration,
+                         skip=(perpage * (page - 1)),
+                         perpage=perpage)
+    if not data:
+        raise HTTPException(status_code=404, detail="Not found")
     data = [f.serialize for f in data]
     for d in data:
         d = transform_data(d)
-    return data
+    total = crud.count(session=session,
+                       form=form_id,
+                       administration=administration)
+    total_page = ceil(total / 10) if total > 0 else 0
+    if total_page < page:
+        raise HTTPException(status_code=404, detail="Not found")
+    return {
+        'current': page,
+        'data': data,
+        'total': total,
+        'total_page': total_page
+    }
 
 
 @data_route.post("/data/{form_id}",
