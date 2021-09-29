@@ -44,6 +44,6 @@ def get_question(session: Session,
     return session.query(Question).all()
 
 
-def get_question_type(session: Session, id: int) -> QuestionType:
+def get_question_type(session: Session, id: int) -> QuestionDict:
     question = session.query(Question).filter(Question.id == id).first()
-    return question.type
+    return question

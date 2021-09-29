@@ -2,7 +2,7 @@ from datetime import datetime
 from typing_extensions import TypedDict
 from typing import Optional, List, Union
 from pydantic import BaseModel
-from sqlalchemy import Column, Integer, Float, Text
+from sqlalchemy import Column, Integer, Float, Text, String
 from sqlalchemy import ForeignKey, DateTime
 import sqlalchemy.dialects.postgresql as pg
 from db.connection import Base
@@ -20,15 +20,22 @@ class Answer(Base):
     data = Column(Integer, ForeignKey('data.id'))
     text = Column(Text, nullable=True)
     value = Column(Float, nullable=True)
-    options = Column(pg.ARRAY(Float), nullable=True)
+    options = Column(pg.ARRAY(String), nullable=True)
     created_by = Column(Integer, ForeignKey('user.id'))
     updated_by = Column(Integer, ForeignKey('user.id'), nullable=True)
     created = Column(DateTime, nullable=True)
     updated = Column(DateTime, nullable=True)
 
-    def __init__(self, question: int, data: int, text: str, value: float,
-                 options: List[str], created_by: int, updated_by: int,
-                 updated: datetime, created: datetime):
+    def __init__(self,
+                 question: int,
+                 created_by: int,
+                 created: datetime,
+                 data: Optional[int] = None,
+                 text: Optional[str] = None,
+                 value: Optional[float] = None,
+                 options: Optional[List[str]] = None,
+                 updated: Optional[datetime] = None,
+                 updated_by: Optional[int] = None):
         self.question = question
         self.data = data
         self.text = text

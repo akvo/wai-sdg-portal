@@ -7,7 +7,7 @@ from sqlalchemy import Column, Integer, Float, String, ForeignKey, DateTime
 import sqlalchemy.dialects.postgresql as pg
 from sqlalchemy.orm import relationship
 from db.connection import Base
-from models.answer import AnswerDict
+from models.answer import AnswerDict, AnswerBase
 
 
 class GeoData(BaseModel):
@@ -25,7 +25,7 @@ class DataDict(TypedDict):
     updated_by: Optional[int] = None
     created: Optional[datetime] = None
     updated: Optional[datetime] = None
-    answers: List[AnswerDict]
+    answer: List[AnswerDict]
 
 
 class Data(Base):
@@ -39,10 +39,10 @@ class Data(Base):
     updated_by = Column(Integer, ForeignKey('user.id'), nullable=True)
     created = Column(DateTime, nullable=True)
     updated = Column(DateTime, nullable=True)
-    answers = relationship("Answer",
-                           cascade="all, delete",
-                           passive_deletes=True,
-                           backref="answer")
+    answer = relationship("Answer",
+                          cascade="all, delete",
+                          passive_deletes=True,
+                          backref="answer")
 
     def __init__(self, name: str, form: int, administration: int,
                  geo: List[float], created_by: int, updated_by: int,
@@ -71,7 +71,7 @@ class Data(Base):
             "updated_by": self.updated_by,
             "created": self.created,
             "updated": self.updated,
-            "answers": self.answers,
+            "answer": self.answer,
         }
 
 
@@ -85,7 +85,7 @@ class DataBase(BaseModel):
     updated_by: Optional[int] = None
     created: Optional[datetime] = None
     updated: Optional[datetime] = None
-    answers: List[AnswerDict]
+    answer: List[AnswerBase]
 
     class Config:
         orm_mode = True
