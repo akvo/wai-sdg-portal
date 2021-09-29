@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from models.answer import Answer, AnswerDict, AnswerBase
 
 
-def add_answer(
+def add_or_update_answer(
     session: Session,
     question: int,
     data: int,
