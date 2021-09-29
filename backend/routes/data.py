@@ -6,6 +6,7 @@ from typing import List
 from sqlalchemy.orm import Session
 import db.crud_data as crud
 from db import crud_question
+from db import crud_administration
 from models.answer import Answer, AnswerDict
 from models.question import QuestionType
 from db.connection import get_session
@@ -61,6 +62,7 @@ def add_data(req: Request,
     administration = None
     geo = None
     answerlist = []
+    names = []
     for a in answers:
         q = crud_question.get_question_type(session=session, id=a["question"])
         answer = Answer(question=q.id,
@@ -69,17 +71,27 @@ def add_data(req: Request,
         if q.type == QuestionType.administration:
             administration = a["value"]
             answer.value = a["value"]
+            if q.meta:
+                adm_name = crud_administration.get_administration_by_id(
+                    session, id=administration)
+                names.append(adm_name.name)
         if q.type == QuestionType.geo:
             geo = a["value"]
             answer.text = ("{}|{}").format(a["value"][0], a["value"][1])
         if q.type == QuestionType.text:
             answer.text = a["value"]
+            if q.meta:
+                names.append(a["value"])
+        if q.type == QuestionType.number:
+            answer.value = a["value"]
+            if q.meta:
+                names.append(str(a["value"]))
         if q.type == QuestionType.option:
             answer.options = a["value"]
         if q.type == QuestionType.multiple_option:
             answer.options = a["value"]
         answerlist.append(answer)
-    name = "Testing Mantap"
+    name = " - ".join(names)
     data = crud.add_data(session=session,
                          form=form_id,
                          name=name,
