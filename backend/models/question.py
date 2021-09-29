@@ -1,3 +1,6 @@
+# Please don't use **kwargs
+# Keep the code clean and CLEAR
+
 import enum
 from typing import Optional, List
 from typing_extensions import TypedDict

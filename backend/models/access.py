@@ -1,3 +1,6 @@
+# Please don't use **kwargs
+# Keep the code clean and CLEAR
+
 from typing import Optional
 from pydantic import BaseModel
 from typing_extensions import TypedDict
