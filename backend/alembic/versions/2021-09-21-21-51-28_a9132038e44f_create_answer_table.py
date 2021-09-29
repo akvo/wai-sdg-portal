@@ -25,7 +25,6 @@ def upgrade():
         sa.Column('value', sa.Float(), nullable=True),
         sa.Column('text', sa.Text(), nullable=True),
         sa.Column('options', pg.ARRAY(sa.String()), nullable=True),
-        sa.Column('question', sa.Integer(), sa.ForeignKey('question.id')),
         sa.Column('created_by', sa.Integer(), sa.ForeignKey('user.id')),
         sa.Column('updated_by', sa.Integer(), sa.ForeignKey('user.id')),
         sa.Column('created',

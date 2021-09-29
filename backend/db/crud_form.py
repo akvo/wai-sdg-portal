@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from models.form import Form, FormDict, FormBase
 
 
-def add_form(session: Session, name: str) -> FormDict:
+def add_form(session: Session, name: str, answers: List) -> FormDict:
     form = Form(name=name)
     session.add(form)
     session.commit()
