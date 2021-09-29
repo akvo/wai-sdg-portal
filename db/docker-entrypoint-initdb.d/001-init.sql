@@ -205,7 +205,7 @@ CREATE TABLE public.data (
     name character varying,
     form integer,
     administration integer,
-    geo character varying[],
+    geo double precision[],
     created_by integer,
     updated_by integer,
     created timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
