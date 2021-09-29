@@ -1,10 +1,12 @@
-from fastapi import Depends, Request, APIRouter, Query
+from fastapi import Depends, Request, APIRouter
 from fastapi.security import HTTPBearer
 from fastapi.security import HTTPBasicCredentials as credentials
 from typing import List
 from sqlalchemy.orm import Session
 import db.crud_data as crud
+from db import crud_question
 from models.answer import AnswerDict
+from models.question import QuestionType
 from db.connection import get_session
 from models.data import DataDict
 from middleware import verify_admin
@@ -35,15 +37,24 @@ def add_data(req: Request,
              session: Session = Depends(get_session),
              credentials: credentials = Depends(security)):
     user = verify_admin(req.state.authenticated, session)
-    administration = 54
-    name = "Testing - of Testing"
-    geo = [0.7893, 113.9312]
+    administration = None
+    geo = None
+    for answer in answers:
+        qtype = crud_question.get_question_type(session=session,
+                                                id=answer["question"])
+        answer.update({"type": qtype})
+        if qtype == QuestionType.administration:
+            administration = answer["value"]
+        if qtype == QuestionType.geo:
+            geo = answer["value"]
+    name = "Testing OK"
     data = crud.add_data(session=session,
                          form=form_id,
                          name=name,
                          geo=geo,
                          administration=administration,
-                         created_by=user.id)
+                         created_by=user.id,
+                         answer=answers)
     data = data.serialize
     if data["geo"]:
         data.update({"geo": {"lat": data["geo"][0], "long": data["geo"][1]}})

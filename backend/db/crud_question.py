@@ -37,5 +37,13 @@ def add_question(session: Session,
     return question
 
 
-def get_question(session: Session) -> List[QuestionDict]:
+def get_question(session: Session,
+                 form: Optional[int] = None) -> List[QuestionDict]:
+    if form:
+        return session.query(Question).filter(form=form).all()
     return session.query(Question).all()
+
+
+def get_question_type(session: Session, id: int) -> QuestionType:
+    question = session.query(Question).filter(Question.id == id).first()
+    return question.type

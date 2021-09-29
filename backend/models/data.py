@@ -71,6 +71,7 @@ class Data(Base):
             "updated_by": self.updated_by,
             "created": self.created,
             "updated": self.updated,
+            "answers": self.answers,
         }
 
 
