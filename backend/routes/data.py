@@ -8,6 +8,7 @@ from sqlalchemy.orm import Session
 import db.crud_data as crud
 from db import crud_question
 from db import crud_administration
+from db import crud_answer
 from models.answer import Answer, AnswerDict
 from models.question import QuestionType
 from db.connection import get_session
@@ -18,9 +19,9 @@ security = HTTPBearer()
 data_route = APIRouter()
 
 
-def transform_data(d):
+def transform_answer(aw: List):
     answers = []
-    for a in d["answer"]:
+    for a in aw:
         answer = {"question": a.question}
         if a.text:
             answer.update({"value": a.text})
@@ -29,7 +30,11 @@ def transform_data(d):
         if a.options:
             answer.update({"value": a.options})
         answers.append(answer)
-    d.update({"answer": answers})
+    return answers
+
+
+def transform_data(d):
+    d.update({"answer": transform_answer(d["answer"])})
     if d["geo"]:
         d.update({"geo": {"lat": d["geo"][0], "long": d["geo"][1]}})
     return d
@@ -122,3 +127,15 @@ def add_data(req: Request,
                          answers=answerlist)
     data = transform_data(data.serialize)
     return data
+
+
+@data_route.put("/data/{id:path}", summary="update data", tags=["Data"])
+def update_data_by_id(req: Request,
+                      id: int,
+                      answers: List[AnswerDict],
+                      session: Session = Depends(get_session),
+                      credentials: credentials = Depends(security)):
+    verify_admin(req.state.authenticated, session)
+    answer = crud_answer.get_answer_by_data_and_question(
+        session=session, data=id, questions=[a["question"] for a in answers])
+    return transform_answer(answer)

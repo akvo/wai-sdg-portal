@@ -1,6 +1,7 @@
 from datetime import datetime
 from typing import List, Optional
 from sqlalchemy.orm import Session
+from sqlalchemy import and_
 from models.answer import Answer, AnswerDict, AnswerBase
 
 
@@ -30,5 +31,7 @@ def get_answer(session: Session) -> List[AnswerDict]:
     return session.query(Answer).all()
 
 
-def get_answer_by_id(session: Session, id: int) -> AnswerBase:
-    return session.query(Answer).filter(Answer.id == id).first()
+def get_answer_by_data_and_question(session: Session, data: int,
+                                    questions: List[int]) -> List[AnswerBase]:
+    return session.query(Answer).filter(
+        and_(Answer.question.in_(questions), Answer.data == data)).all()
