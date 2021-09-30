@@ -1,0 +1,103 @@
+[
+    {
+        "order": 1,
+        "question": "location",
+        "type": "administration",
+        "meta": true,
+        "options": null
+    },
+    {
+        "order": 3,
+        "question": "village",
+        "type": "text",
+        "meta": false,
+        "options": null
+    },
+    {
+        "order": 4,
+        "question": "geolocation",
+        "type": "geo",
+        "meta": true,
+        "options": null
+    },
+    {
+        "order": 6,
+        "question": "no. of hhs",
+        "type": "number",
+        "meta": false,
+        "options": null
+    },
+    {
+        "order": 7,
+        "question": "initial number latrines",
+        "type": "number",
+        "meta": false,
+        "options": null
+    },
+    {
+        "order": 8,
+        "question": "final number of latrines",
+        "type": "number",
+        "meta": false,
+        "options": null
+    },
+    {
+        "order": 9,
+        "question": "date triggered",
+        "type": "text",
+        "meta": false,
+        "options": null
+    },
+    {
+        "order": 10,
+        "question": "odf status",
+        "type": "option",
+        "meta": false,
+        "options": [
+            "triggered",
+            "declared",
+            "verified"
+        ]
+    },
+    {
+        "order": 11,
+        "question": "date of declared",
+        "type": "number",
+        "meta": false,
+        "options": null
+    },
+    {
+        "order": 12,
+        "question": "date of verification",
+        "type": "text",
+        "meta": false,
+        "options": null
+    },
+    {
+        "order": 13,
+        "question": "implementing partner",
+        "type": "option",
+        "meta": false,
+        "options": [
+            "amref & local gov't",
+            "amref"
+        ]
+    },
+    {
+        "order": 14,
+        "question": "remarks",
+        "type": "option",
+        "meta": false,
+        "options": [
+            "phase ii",
+            "phase i"
+        ]
+    },
+    {
+        "order": 15,
+        "question": "time to complete (days)",
+        "type": "number",
+        "meta": false,
+        "options": null
+    }
+]

@@ -1,0 +1,239 @@
+[
+    {
+        "order": 1,
+        "question": "location",
+        "type": "administration",
+        "meta": true,
+        "options": null
+    },
+    {
+        "order": 3,
+        "question": "school name",
+        "type": "text",
+        "meta": true,
+        "options": null
+    },
+    {
+        "order": 4,
+        "question": "geolocation",
+        "type": "geo",
+        "meta": true,
+        "options": null
+    },
+    {
+        "order": 6,
+        "question": "school type",
+        "type": "option",
+        "meta": false,
+        "options": [
+            "primary(1-8)",
+            "primary(1-4)",
+            "high school 9-10"
+        ]
+    },
+    {
+        "order": 7,
+        "question": "male pupils",
+        "type": "number",
+        "meta": false,
+        "options": null
+    },
+    {
+        "order": 8,
+        "question": "female pupils",
+        "type": "number",
+        "meta": false,
+        "options": null
+    },
+    {
+        "order": 9,
+        "question": "reason for inventory",
+        "type": "option",
+        "meta": false,
+        "options": [
+            "new scheme",
+            "repair"
+        ]
+    },
+    {
+        "order": 10,
+        "question": "water supply source",
+        "type": "option",
+        "meta": false,
+        "options": [
+            "pipeline connection",
+            "no water scheme",
+            "shallow well fitted with pump",
+            "no water supply in premises"
+        ]
+    },
+    {
+        "order": 11,
+        "question": "water",
+        "type": "option",
+        "meta": false,
+        "options": [
+            "basic",
+            "no service",
+            "limited"
+        ]
+    },
+    {
+        "order": 12,
+        "question": "year commisioned",
+        "type": "number",
+        "meta": false,
+        "options": null
+    },
+    {
+        "order": 13,
+        "question": "functionality status of water supply",
+        "type": "option",
+        "meta": false,
+        "options": [
+            "functional",
+            "non functional - mechanical"
+        ]
+    },
+    {
+        "order": 14,
+        "question": "yield",
+        "type": "number",
+        "meta": false,
+        "options": null
+    },
+    {
+        "order": 15,
+        "question": "type of latrine",
+        "type": "option",
+        "meta": false,
+        "options": [
+            "simple pit latrine",
+            "no latrine"
+        ]
+    },
+    {
+        "order": 16,
+        "question": "sanitation",
+        "type": "option",
+        "meta": false,
+        "options": [
+            "limited",
+            "no service"
+        ]
+    },
+    {
+        "order": 17,
+        "question": "latrine for boys and girls separate",
+        "type": "option",
+        "meta": false,
+        "options": [
+            "no",
+            "yes"
+        ]
+    },
+    {
+        "order": 18,
+        "question": "number of boy pupils",
+        "type": "number",
+        "meta": false,
+        "options": null
+    },
+    {
+        "order": 19,
+        "question": "number of girl pupils",
+        "type": "number",
+        "meta": false,
+        "options": null
+    },
+    {
+        "order": 20,
+        "question": "are there latrines for disabled?",
+        "type": "option",
+        "meta": false,
+        "options": [
+            "no",
+            "yes"
+        ]
+    },
+    {
+        "order": 21,
+        "question": "latrine condition",
+        "type": "option",
+        "meta": false,
+        "options": [
+            "clean, used",
+            "dirty but used",
+            "no latrine"
+        ]
+    },
+    {
+        "order": 22,
+        "question": "hygiene service level",
+        "type": "option",
+        "meta": false,
+        "options": [
+            "no service"
+        ]
+    },
+    {
+        "order": 23,
+        "question": "presence of handwashingfacility",
+        "type": "option",
+        "meta": false,
+        "options": [
+            "yes",
+            "no"
+        ]
+    },
+    {
+        "order": 24,
+        "question": "hand washing in use",
+        "type": "option",
+        "meta": false,
+        "options": [
+            "yes",
+            "no"
+        ]
+    },
+    {
+        "order": 25,
+        "question": "availability of soap",
+        "type": "option",
+        "meta": false,
+        "options": [
+            "yes",
+            "no"
+        ]
+    },
+    {
+        "order": 26,
+        "question": "urinal present girls",
+        "type": "option",
+        "meta": false,
+        "options": [
+            "no",
+            "yes"
+        ]
+    },
+    {
+        "order": 27,
+        "question": "urinal present boys",
+        "type": "option",
+        "meta": false,
+        "options": [
+            "no",
+            "yes"
+        ]
+    },
+    {
+        "order": 28,
+        "question": "separate latrine for tolitet staff",
+        "type": "option",
+        "meta": false,
+        "options": [
+            "no",
+            "yes"
+        ]
+    }
+]

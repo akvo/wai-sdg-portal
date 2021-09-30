@@ -1,0 +1,186 @@
+[
+    {
+        "order": 1,
+        "question": "location",
+        "type": "administration",
+        "meta": true,
+        "options": null
+    },
+    {
+        "order": 3,
+        "question": "village",
+        "type": "text",
+        "meta": false,
+        "options": null
+    },
+    {
+        "order": 4,
+        "question": "name of respondent",
+        "type": "text",
+        "meta": true,
+        "options": null
+    },
+    {
+        "order": 5,
+        "question": "household size",
+        "type": "number",
+        "meta": false,
+        "options": null
+    },
+    {
+        "order": 6,
+        "question": "main source of drinking water",
+        "type": "text",
+        "meta": false,
+        "options": null
+    },
+    {
+        "order": 7,
+        "question": "water service level",
+        "type": "option",
+        "meta": false,
+        "options": [
+            "basic",
+            "limited",
+            "unimproved",
+            "surface water"
+        ]
+    },
+    {
+        "order": 8,
+        "question": "specific location of water collection",
+        "type": "option",
+        "meta": false,
+        "options": [
+            "in own dwelling",
+            "elsewhere",
+            "in own yard / plot"
+        ]
+    },
+    {
+        "order": 9,
+        "question": "time to collect water",
+        "type": "option",
+        "meta": false,
+        "options": [
+            "less than 30 minutes",
+            "more than 30 minutes"
+        ]
+    },
+    {
+        "order": 10,
+        "question": "times in last month when drinking water quantity was insufficient",
+        "type": "option",
+        "meta": false,
+        "options": [
+            "no, always sufficient",
+            "yes, at least once",
+            "don't know"
+        ]
+    },
+    {
+        "order": 11,
+        "question": "sanitation service level",
+        "type": "option",
+        "meta": false,
+        "options": [
+            "safely managed",
+            "basic",
+            "unimproved",
+            "limited"
+        ]
+    },
+    {
+        "order": 12,
+        "question": "type of toilet facility",
+        "type": "option",
+        "meta": false,
+        "options": [
+            "toilet that flush/pour to flush piped sewer system",
+            "pit latrine with slab",
+            "there is no latrine",
+            "toilet that flush/pour to pit latrine",
+            "pit latrine without slab/open pit",
+            "bucket",
+            "ventilated improved pit latrine (vip)",
+            "twinpit offset latrine"
+        ]
+    },
+    {
+        "order": 13,
+        "question": "facility is shared with others outside of the household",
+        "type": "option",
+        "meta": false,
+        "options": [
+            "yes",
+            "no"
+        ]
+    },
+    {
+        "order": 14,
+        "question": "location of sanitation facility",
+        "type": "option",
+        "meta": false,
+        "options": [
+            "in own dwelling",
+            "in own plot/yard",
+            "elsewhere"
+        ]
+    },
+    {
+        "order": 15,
+        "question": "emptying of on-site sanitation facilities",
+        "type": "option",
+        "meta": false,
+        "options": [
+            "no, never emptied",
+            "don't know",
+            "yes, but don't know when"
+        ]
+    },
+    {
+        "order": 16,
+        "question": "hygiene service level",
+        "type": "option",
+        "meta": false,
+        "options": [
+            "basic",
+            "no facility",
+            "limited"
+        ]
+    },
+    {
+        "order": 17,
+        "question": "type of handwashing facility used most often",
+        "type": "option",
+        "meta": false,
+        "options": [
+            "fixed facility observed in dwelling",
+            "mobile object observed (bucket, jug, kettle)",
+            "no handwashing place available in dwelling/plot/yard",
+            "no permission to see",
+            "fixed facility observed in plot/yard"
+        ]
+    },
+    {
+        "order": 18,
+        "question": "water available at handwashing facility",
+        "type": "option",
+        "meta": false,
+        "options": [
+            "water is available",
+            "water is not available"
+        ]
+    },
+    {
+        "order": 19,
+        "question": "soap is available",
+        "type": "option",
+        "meta": false,
+        "options": [
+            "yes, soap or detergent are present",
+            "no, not present",
+            "ash/mud/sand is present"
+        ]
+    }
+]
