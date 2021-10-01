@@ -11,6 +11,7 @@ from db import crud_administration
 from db import crud_answer
 from models.answer import Answer, AnswerDict
 from models.question import QuestionType
+from models.history import History
 from db.connection import get_session
 from models.data import DataResponse, DataDict
 from middleware import verify_admin
@@ -111,32 +112,38 @@ def update_data_by_id(req: Request,
                       answers: List[AnswerDict],
                       session: Session = Depends(get_session),
                       credentials: credentials = Depends(security)):
-    verify_admin(req.state.authenticated, session)
-    current_data = crud.get_data_by_id(session=session, id=id)
-    list_of_questions = current_data.form_detail.list_of_questions
+    user = verify_admin(req.state.authenticated, session)
+    data = crud.get_data_by_id(session=session, id=id)
+    questions = data.form_detail.list_of_questions
     current_answers = crud_answer.get_answer_by_data_and_question(
         session=session, data=id, questions=[a["question"] for a in answers])
     checked = {}
     [checked.update(a.dicted) for a in current_answers]
     for a in answers:
-        update = False
-        create = False
+        execute = "update"
+        if a["question"] not in list(questions):
+            raise HTTPException(
+                status_code=401,
+                detail="question {} is not part of this form".format(
+                    a["question"]))
+        a.update({"type": questions[a["question"]]})
         if a['question'] in list(checked):
-            update = True
-            if a['value'] == checked[a['question']]:
-                update = False
+            execute = "update"
         else:
-            if a["question"] in list(list_of_questions):
-                create = True
-            else:
-                raise HTTPException(
-                    status_code=401,
-                    detail="question {} is not part of this form".format(
-                        a["question"]))
-        if update:
-            a.update({"method": "update"})
-        elif create:
-            a.update({"method": "create"})
-        else:
-            a.update({"method": None})
-    return answers
+            execute = "new"
+        if execute == "update" and a["value"] != checked[
+                a["question"]]["value"]:
+            answer = checked[a["question"]]["data"]
+            history = answer.serialize
+            del history['id']
+            history = History(**history)
+            data.updated_by = user.id
+            data.updated = datetime.now()
+            crud_answer.update_answer(session=session,
+                                      answer=answer,
+                                      history=history,
+                                      user=user.id,
+                                      type=questions[a["question"]],
+                                      value=a["value"])
+
+    return data

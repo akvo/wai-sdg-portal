@@ -11,7 +11,6 @@ import sqlalchemy.dialects.postgresql as pg
 from sqlalchemy.orm import relationship
 from db.connection import Base
 from models.answer import AnswerDict, AnswerBase
-from models.form import FormBase
 
 
 class GeoData(BaseModel):

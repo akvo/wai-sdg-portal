@@ -80,7 +80,12 @@ class Answer(Base):
 
     @property
     def dicted(self) -> TypedDict:
-        return {self.question: self.text or self.value or self.options}
+        return {
+            self.question: {
+                "value": self.text or self.value or self.options,
+                "data": self
+            }
+        }
 
 
 class AnswerBase(BaseModel):

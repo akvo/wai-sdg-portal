@@ -1,26 +1,32 @@
 from datetime import datetime
-from typing import List, Optional
+from typing import List, Union
 from sqlalchemy.orm import Session
 from sqlalchemy import and_
 from models.answer import Answer, AnswerDict, AnswerBase
+from models.history import History
+from models.question import QuestionType
 
 
-def add_or_update_answer(
-    session: Session,
-    question: int,
-    data: int,
-    updated_by: int,
-    text: Optional[str] = None,
-    value: Optional[float] = None,
-    option: Optional[List] = None,
+def update_answer(
+    session: Session, answer: Answer, history: History, user: int,
+    type: QuestionType, value: Union[int, float, str, bool, List[str],
+                                     List[int], List[float]]
 ) -> AnswerDict:
-    answer = Answer(question=question,
-                    data=int,
-                    text=text,
-                    value=value,
-                    updated_by=updated_by,
-                    created=datetime.now())
-    session.add(answer)
+    answer.updated_by = user
+    answer.updated = datetime.now()
+    if type == QuestionType.administration:
+        answer.value = value
+    if type == QuestionType.number:
+        answer.value = value
+    if type == QuestionType.text:
+        answer.text = value
+    if type == QuestionType.geo:
+        answer.text = ("{}|{}").format(value[0], value[1])
+    if type == QuestionType.option:
+        answer.options = value
+    if type == QuestionType.multiple_option:
+        answer.options = value
+    session.add(history)
     session.commit()
     session.flush()
     session.refresh(answer)

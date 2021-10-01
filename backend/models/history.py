@@ -17,7 +17,7 @@ class HistoryDict(TypedDict):
 
 
 class History(Base):
-    __tablename__ = "answer"
+    __tablename__ = "history"
     id = Column(Integer, primary_key=True, index=True, nullable=True)
     question = Column(Integer, ForeignKey('question.id'))
     data = Column(Integer, ForeignKey('data.id'))
