@@ -19,9 +19,9 @@ user_route = APIRouter()
                 response_model=UserAccessBase,
                 summary="get account information",
                 tags=["User"])
-def get_me(req: Request,
-           session: Session = Depends(get_session),
-           credentials: credentials = Depends(security)):
+def me(req: Request,
+       session: Session = Depends(get_session),
+       credentials: credentials = Depends(security)):
     user = verify_user(req.state.authenticated, session)
     return user
 
@@ -31,9 +31,9 @@ def get_me(req: Request,
                  summary="register new user",
                  name="user:register",
                  tags=["User"])
-def add_user(req: Request,
-             session: Session = Depends(get_session),
-             credentials: credentials = Depends(security)):
+def add(req: Request,
+        session: Session = Depends(get_session),
+        credentials: credentials = Depends(security)):
     user = verify_token(req.state.authenticated)
     user = crud.add_user(session=session, email=user.get("email"), role="user")
     return user
@@ -43,11 +43,11 @@ def add_user(req: Request,
                 response_model=UserResponse,
                 summary="get all users",
                 tags=["User"])
-def get_user(req: Request,
-             active: int = 0,
-             page: int = 1,
-             session: Session = Depends(get_session),
-             credentials: credentials = Depends(security)):
+def get(req: Request,
+        active: int = 0,
+        page: int = 1,
+        session: Session = Depends(get_session),
+        credentials: credentials = Depends(security)):
     verify_admin(req.state.authenticated, session)
     user = crud.get_user(session=session,
                          skip=(10 * (page - 1)),
@@ -82,10 +82,10 @@ def get_user(req: Request,
                 response_model=UserAccessBase,
                 summary="get user detail",
                 tags=["User"])
-def get_user_by_id(req: Request,
-                   id: int,
-                   session: Session = Depends(get_session),
-                   credentials: credentials = Depends(security)):
+def get_by_id(req: Request,
+              id: int,
+              session: Session = Depends(get_session),
+              credentials: credentials = Depends(security)):
     verify_admin(req.state.authenticated, session)
     user = crud.get_user_by_id(session=session, id=id)
     if user is None:
@@ -97,13 +97,13 @@ def get_user_by_id(req: Request,
                 response_model=UserAccessBase,
                 summary="Update user",
                 tags=["User"])
-def update_user_by_id(req: Request,
-                      id: int,
-                      active: bool,
-                      role: UserRole,
-                      access: List[AccessBase] = [],
-                      session: Session = Depends(get_session),
-                      credentials: credentials = Depends(security)):
+def update_by_id(req: Request,
+                 id: int,
+                 active: bool,
+                 role: UserRole,
+                 access: List[AccessBase] = [],
+                 session: Session = Depends(get_session),
+                 credentials: credentials = Depends(security)):
     verify_admin(req.state.authenticated, session)
     access = crud.add_access(session=session, user=id, access=access)
     user = crud.update_user_by_id(session=session,

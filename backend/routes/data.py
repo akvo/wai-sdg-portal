@@ -9,6 +9,7 @@ import db.crud_data as crud
 from db import crud_question
 from db import crud_administration
 from db import crud_answer
+from models.data import Data
 from models.answer import Answer, AnswerDict
 from models.question import QuestionType
 from models.history import History
@@ -20,16 +21,16 @@ security = HTTPBearer()
 data_route = APIRouter()
 
 
-@data_route.get("/data/{form_id:path}",
+@data_route.get("/data/form/{form_id:path}",
                 response_model=DataResponse,
                 summary="get all datas",
                 tags=["Data"])
-def get_data(req: Request,
-             form_id: int,
-             page: int = 1,
-             perpage: int = 10,
-             administration: Optional[int] = None,
-             session: Session = Depends(get_session)):
+def get(req: Request,
+        form_id: int,
+        page: int = 1,
+        perpage: int = 10,
+        administration: Optional[int] = None,
+        session: Session = Depends(get_session)):
     data = crud.get_data(session=session,
                          form=form_id,
                          administration=administration,
@@ -52,16 +53,16 @@ def get_data(req: Request,
     }
 
 
-@data_route.post("/data/{form_id}",
+@data_route.post("/data/form/{form_id}",
                  response_model=DataDict,
                  summary="add new data",
                  name="data:create",
                  tags=["Data"])
-def add_data(req: Request,
-             form_id: int,
-             answers: List[AnswerDict],
-             session: Session = Depends(get_session),
-             credentials: credentials = Depends(security)):
+def add(req: Request,
+        form_id: int,
+        answers: List[AnswerDict],
+        session: Session = Depends(get_session),
+        credentials: credentials = Depends(security)):
     user = verify_admin(req.state.authenticated, session)
     administration = None
     geo = None
@@ -106,12 +107,21 @@ def add_data(req: Request,
     return data.serialized
 
 
+@data_route.get("/data/{id:path}",
+                response_model=DataDict,
+                summary="get data by id",
+                tags=["Data"])
+def get_by_id(req: Request, id: int, session: Session = Depends(get_session)):
+    data = crud.get_data_by_id(session=session, id=id)
+    return data.serialize
+
+
 @data_route.put("/data/{id:path}", summary="update data", tags=["Data"])
-def update_data_by_id(req: Request,
-                      id: int,
-                      answers: List[AnswerDict],
-                      session: Session = Depends(get_session),
-                      credentials: credentials = Depends(security)):
+def update_by_id(req: Request,
+                 id: int,
+                 answers: List[AnswerDict],
+                 session: Session = Depends(get_session),
+                 credentials: credentials = Depends(security)):
     user = verify_admin(req.state.authenticated, session)
     data = crud.get_data_by_id(session=session, id=id)
     questions = data.form_detail.list_of_questions
@@ -137,13 +147,23 @@ def update_data_by_id(req: Request,
             history = answer.serialize
             del history['id']
             history = History(**history)
+            a = crud_answer.update_answer(session=session,
+                                          answer=answer,
+                                          history=history,
+                                          user=user.id,
+                                          type=questions[a["question"]],
+                                          value=a["value"])
+        if execute == "new":
+            answer = Answer(question=a["question"],
+                            data=data.id,
+                            created_by=user.id,
+                            created=datetime.now())
+            a = crud_answer.add_answer(session=session,
+                                       answer=answer,
+                                       type=questions[a["question"]],
+                                       value=a["value"])
+        if execute:
             data.updated_by = user.id
             data.updated = datetime.now()
-            crud_answer.update_answer(session=session,
-                                      answer=answer,
-                                      history=history,
-                                      user=user.id,
-                                      type=questions[a["question"]],
-                                      value=a["value"])
-
-    return data
+            data = crud.update_data(session=session, data=data)
+    return data.serialize

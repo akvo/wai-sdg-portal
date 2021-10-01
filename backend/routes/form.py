@@ -16,7 +16,7 @@ form_route = APIRouter()
                 response_model=List[FormDict],
                 summary="get all forms",
                 tags=["Form"])
-def get_form(req: Request, session: Session = Depends(get_session)):
+def get(req: Request, session: Session = Depends(get_session)):
     form = crud.get_form(session=session)
     return [f.serialize for f in form]
 
@@ -25,9 +25,7 @@ def get_form(req: Request, session: Session = Depends(get_session)):
                 response_model=FormBase,
                 summary="get form by id",
                 tags=["Form"])
-def get_form_by_id(req: Request,
-                   id: int,
-                   session: Session = Depends(get_session)):
+def get_by_id(req: Request, id: int, session: Session = Depends(get_session)):
     form = crud.get_form_by_id(session=session, id=id)
     return form.serialize
 
@@ -37,10 +35,10 @@ def get_form_by_id(req: Request,
                  summary="add new form",
                  name="form:create",
                  tags=["Form"])
-def add_form(req: Request,
-             name: str,
-             session: Session = Depends(get_session),
-             credentials: credentials = Depends(security)):
+def add(req: Request,
+        name: str,
+        session: Session = Depends(get_session),
+        credentials: credentials = Depends(security)):
     verify_admin(req.state.authenticated, session)
     form = crud.add_form(session=session, name=name)
     return form.serialize

@@ -17,7 +17,7 @@ question_route = APIRouter()
                     response_model=List[QuestionDict],
                     summary="get all questions",
                     tags=["Form"])
-def get_question(req: Request, session: Session = Depends(get_session)):
+def get(req: Request, session: Session = Depends(get_session)):
     question = crud.get_question(session=session)
     return [f.serialize for f in question]
 
@@ -60,10 +60,10 @@ class PostQueryParams:
                      summary="add new question",
                      name="question:create",
                      tags=["Form"])
-def add_question(req: Request,
-                 params: PostQueryParams = Depends(),
-                 session: Session = Depends(get_session),
-                 credentials: credentials = Depends(security)):
+def add(req: Request,
+        params: PostQueryParams = Depends(),
+        session: Session = Depends(get_session),
+        credentials: credentials = Depends(security)):
     verify_admin(req.state.authenticated, session)
     question_group = crud_question_group.search_question_group(
         session=session, form=params.form, name=params.question_group)

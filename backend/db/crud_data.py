@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import List, Optional
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, desc
-from models.data import Data, DataDict, DataBase
+from models.data import Data, DataDict
 from models.answer import AnswerBase
 
 
@@ -30,6 +30,13 @@ def add_data(session: Session,
     return data
 
 
+def update_data(session: Session, data: Data) -> DataDict:
+    session.commit()
+    session.flush()
+    session.refresh(data)
+    return data
+
+
 def get_data(session: Session,
              form: int,
              skip: int,
@@ -44,7 +51,7 @@ def get_data(session: Session,
     return data.order_by(desc(Data.id)).offset(skip).limit(perpage).all()
 
 
-def get_data_by_id(session: Session, id: int) -> DataBase:
+def get_data_by_id(session: Session, id: int) -> DataDict:
     return session.query(Data).filter(Data.id == id).first()
 
 

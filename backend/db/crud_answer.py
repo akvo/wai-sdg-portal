@@ -7,13 +7,9 @@ from models.history import History
 from models.question import QuestionType
 
 
-def update_answer(
-    session: Session, answer: Answer, history: History, user: int,
-    type: QuestionType, value: Union[int, float, str, bool, List[str],
-                                     List[int], List[float]]
-) -> AnswerDict:
-    answer.updated_by = user
-    answer.updated = datetime.now()
+def append_value(answer: Answer, value: Union[int, float, str, bool, List[str],
+                                              List[int], List[float]],
+                 type: QuestionType) -> Answer:
     if type == QuestionType.administration:
         answer.value = value
     if type == QuestionType.number:
@@ -26,6 +22,29 @@ def update_answer(
         answer.options = value
     if type == QuestionType.multiple_option:
         answer.options = value
+    return answer
+
+
+def add_answer(
+    session: Session, answer: Answer, type: QuestionType,
+    value: Union[int, float, str, bool, List[str], List[int], List[float]]
+) -> AnswerDict:
+    answer = append_value(answer, value, type)
+    session.add(answer)
+    session.commit()
+    session.flush()
+    session.refresh(answer)
+    return answer
+
+
+def update_answer(
+    session: Session, answer: Answer, history: History, user: int,
+    type: QuestionType, value: Union[int, float, str, bool, List[str],
+                                     List[int], List[float]]
+) -> AnswerDict:
+    answer.updated_by = user
+    answer.updated = datetime.now()
+    answer = append_value(answer, value, type)
     session.add(history)
     session.commit()
     session.flush()

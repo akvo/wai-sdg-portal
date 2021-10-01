@@ -12,7 +12,7 @@ administration_route = APIRouter()
                           response_model=List[AdministrationBase],
                           summary="get all administrations",
                           tags=["Administration"])
-def get_administration(req: Request, session: Session = Depends(get_session)):
+def get(req: Request, session: Session = Depends(get_session)):
     administration = crud.get_administration(session=session)
     return administration
 
@@ -21,8 +21,6 @@ def get_administration(req: Request, session: Session = Depends(get_session)):
                           response_model=AdministrationResponse,
                           summary="get administration by id",
                           tags=["Administration"])
-def get_administration_by_id(req: Request,
-                             id: int,
-                             session: Session = Depends(get_session)):
+def get_by_id(req: Request, id: int, session: Session = Depends(get_session)):
     administration = crud.get_administration_by_id(session=session, id=id)
     return administration
