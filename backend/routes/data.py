@@ -19,27 +19,6 @@ security = HTTPBearer()
 data_route = APIRouter()
 
 
-def transform_answer(aw: List):
-    answers = []
-    for a in aw:
-        answer = {"question": a.question}
-        if a.text:
-            answer.update({"value": a.text})
-        if a.value:
-            answer.update({"value": a.value})
-        if a.options:
-            answer.update({"value": a.options})
-        answers.append(answer)
-    return answers
-
-
-def transform_data(d):
-    d.update({"answer": transform_answer(d["answer"])})
-    if d["geo"]:
-        d.update({"geo": {"lat": d["geo"][0], "long": d["geo"][1]}})
-    return d
-
-
 @data_route.get("/data/{form_id:path}",
                 response_model=DataResponse,
                 summary="get all datas",
@@ -58,8 +37,6 @@ def get_data(req: Request,
     if not data:
         raise HTTPException(status_code=404, detail="Not found")
     data = [f.serialize for f in data]
-    for d in data:
-        d = transform_data(d)
     total = crud.count(session=session,
                        form=form_id,
                        administration=administration)
@@ -125,8 +102,7 @@ def add_data(req: Request,
                          administration=administration,
                          created_by=user.id,
                          answers=answerlist)
-    data = transform_data(data.serialize)
-    return data
+    return data.serialized
 
 
 @data_route.put("/data/{id:path}", summary="update data", tags=["Data"])
@@ -138,4 +114,4 @@ def update_data_by_id(req: Request,
     verify_admin(req.state.authenticated, session)
     answer = crud_answer.get_answer_by_data_and_question(
         session=session, data=id, questions=[a["question"] for a in answers])
-    return transform_answer(answer)
+    return answer.formatted

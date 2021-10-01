@@ -67,6 +67,17 @@ class Answer(Base):
             "updated": self.updated,
         }
 
+    @property
+    def formatted(self) -> AnswerDict:
+        answer = {"question": self.question}
+        if self.text:
+            answer.update({"value": self.text})
+        if self.value:
+            answer.update({"value": self.value})
+        if self.options:
+            answer.update({"value": self.options})
+        return answer
+
 
 class AnswerBase(BaseModel):
     id: int

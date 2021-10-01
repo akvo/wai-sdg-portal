@@ -76,12 +76,15 @@ class Data(Base):
             "name": self.name,
             "form": self.form,
             "administration": self.administration,
-            "geo": self.geo,
+            "geo": {
+                "lat": self.geo[0],
+                "long": self.geo[1]
+            } if self.geo else None,
             "created_by": self.created_by,
             "updated_by": self.updated_by,
             "created": self.created,
             "updated": self.updated,
-            "answer": self.answer,
+            "answer": [a.formatted for a in self.answer],
         }
 
 
