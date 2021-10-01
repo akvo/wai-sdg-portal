@@ -23,6 +23,10 @@ class Form(Base):
                                   cascade="all, delete",
                                   passive_deletes=True,
                                   backref="question_group")
+    data = relationship("Data",
+                        cascade="all, delete",
+                        passive_deletes=True,
+                        backref="data")
 
     def __init__(self, name: str):
         self.name = name
@@ -37,6 +41,14 @@ class Form(Base):
             "name": self.name,
             "question_group": self.question_group,
         }
+
+    @property
+    def list_of_questions(self) -> TypedDict:
+        question_list = {}
+        for qg in self.question_group:
+            for q in qg.question:
+                question_list.update({q.id: q.type})
+        return question_list
 
 
 class FormBase(BaseModel):

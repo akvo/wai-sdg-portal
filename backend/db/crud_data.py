@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import List, Optional
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, desc
-from models.data import Data, DataDict
+from models.data import Data, DataDict, DataBase
 from models.answer import AnswerBase
 
 
@@ -42,6 +42,10 @@ def get_data(session: Session,
     else:
         data = data.filter(Data.form == form)
     return data.order_by(desc(Data.id)).offset(skip).limit(perpage).all()
+
+
+def get_data_by_id(session: Session, id: int) -> DataBase:
+    return session.query(Data).filter(Data.id == id).first()
 
 
 def count(session: Session, form: int, administration: int = None) -> int:

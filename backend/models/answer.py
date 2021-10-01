@@ -78,6 +78,10 @@ class Answer(Base):
             answer.update({"value": self.options})
         return answer
 
+    @property
+    def dicted(self) -> TypedDict:
+        return {self.question: self.text or self.value or self.options}
+
 
 class AnswerBase(BaseModel):
     id: int
