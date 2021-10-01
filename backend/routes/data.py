@@ -9,7 +9,6 @@ import db.crud_data as crud
 from db import crud_question
 from db import crud_administration
 from db import crud_answer
-from models.data import Data
 from models.answer import Answer, AnswerDict
 from models.question import QuestionType
 from models.history import History
@@ -53,7 +52,7 @@ def get(req: Request,
     }
 
 
-@data_route.post("/data/form/{form_id}",
+@data_route.post("/data/form/{form_id:path}",
                  response_model=DataDict,
                  summary="add new data",
                  name="data:create",
@@ -113,10 +112,16 @@ def add(req: Request,
                 tags=["Data"])
 def get_by_id(req: Request, id: int, session: Session = Depends(get_session)):
     data = crud.get_data_by_id(session=session, id=id)
+    if not data:
+        raise HTTPException(status_code=404,
+                            detail="data {} is not found".format(id))
     return data.serialize
 
 
-@data_route.put("/data/{id:path}", summary="update data", tags=["Data"])
+@data_route.put("/data/{id:path}",
+                response_model=DataDict,
+                summary="update data",
+                tags=["Data"])
 def update_by_id(req: Request,
                  id: int,
                  answers: List[AnswerDict],
@@ -167,3 +172,16 @@ def update_by_id(req: Request,
             data.updated = datetime.now()
             data = crud.update_data(session=session, data=data)
     return data.serialize
+
+
+@data_route.get("/history/{data_id:path}/{question_id:path}",
+                summary="get answer with it's history",
+                tags=["Data"])
+def get_history(req: Request,
+                data_id: int,
+                question_id: int,
+                session: Session = Depends(get_session)):
+    answer = crud_answer.get_history(session=session,
+                                     data=data_id,
+                                     question=question_id)
+    return answer

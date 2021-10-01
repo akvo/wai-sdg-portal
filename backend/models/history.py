@@ -67,6 +67,14 @@ class History(Base):
             "updated": self.updated,
         }
 
+    @property
+    def simplified(self) -> TypedDict:
+        return {
+            "value": self.text or self.value or self.options,
+            "date": self.updated or self.created,
+            "user": self.updated_by or self.created_by
+        }
+
 
 class HistoryBase(BaseModel):
     id: int
