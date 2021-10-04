@@ -272,6 +272,48 @@ ALTER SEQUENCE public.form_id_seq OWNED BY public.form.id;
 
 
 --
+-- Name: history; Type: TABLE; Schema: public; Owner: wai
+--
+
+CREATE TABLE public.history (
+    id integer NOT NULL,
+    question integer,
+    data integer,
+    value double precision,
+    text text,
+    options character varying[],
+    created_by integer,
+    updated_by integer,
+    created timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    updated timestamp without time zone
+);
+
+
+ALTER TABLE public.history OWNER TO wai;
+
+--
+-- Name: history_id_seq; Type: SEQUENCE; Schema: public; Owner: wai
+--
+
+CREATE SEQUENCE public.history_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.history_id_seq OWNER TO wai;
+
+--
+-- Name: history_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: wai
+--
+
+ALTER SEQUENCE public.history_id_seq OWNED BY public.history.id;
+
+
+--
 -- Name: option; Type: TABLE; Schema: public; Owner: wai
 --
 
@@ -455,6 +497,13 @@ ALTER TABLE ONLY public.form ALTER COLUMN id SET DEFAULT nextval('public.form_id
 
 
 --
+-- Name: history id; Type: DEFAULT; Schema: public; Owner: wai
+--
+
+ALTER TABLE ONLY public.history ALTER COLUMN id SET DEFAULT nextval('public.history_id_seq'::regclass);
+
+
+--
 -- Name: option id; Type: DEFAULT; Schema: public; Owner: wai
 --
 
@@ -602,7 +651,7 @@ COPY public.administration (id, parent, name) FROM stdin;
 --
 
 COPY public.alembic_version (version_num) FROM stdin;
-a9132038e44f
+adbe1fcfc7bc
 \.
 
 
@@ -627,6 +676,14 @@ COPY public.data (id, name, form, administration, geo, created_by, updated_by, c
 --
 
 COPY public.form (id, name) FROM stdin;
+\.
+
+
+--
+-- Data for Name: history; Type: TABLE DATA; Schema: public; Owner: wai
+--
+
+COPY public.history (id, question, data, value, text, options, created_by, updated_by, created, updated) FROM stdin;
 \.
 
 
@@ -695,6 +752,13 @@ SELECT pg_catalog.setval('public.data_id_seq', 1, false);
 --
 
 SELECT pg_catalog.setval('public.form_id_seq', 1, false);
+
+
+--
+-- Name: history_id_seq; Type: SEQUENCE SET; Schema: public; Owner: wai
+--
+
+SELECT pg_catalog.setval('public.history_id_seq', 1, false);
 
 
 --
@@ -782,6 +846,14 @@ ALTER TABLE ONLY public.form
 
 
 --
+-- Name: history history_pkey; Type: CONSTRAINT; Schema: public; Owner: wai
+--
+
+ALTER TABLE ONLY public.history
+    ADD CONSTRAINT history_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: option option_pkey; Type: CONSTRAINT; Schema: public; Owner: wai
 --
 
@@ -854,6 +926,13 @@ CREATE UNIQUE INDEX ix_data_id ON public.data USING btree (id);
 --
 
 CREATE UNIQUE INDEX ix_form_id ON public.form USING btree (id);
+
+
+--
+-- Name: ix_history_id; Type: INDEX; Schema: public; Owner: wai
+--
+
+CREATE UNIQUE INDEX ix_history_id ON public.history USING btree (id);
 
 
 --
@@ -980,6 +1059,14 @@ ALTER TABLE ONLY public.data
 
 
 --
+-- Name: history created_by_history_constraint; Type: FK CONSTRAINT; Schema: public; Owner: wai
+--
+
+ALTER TABLE ONLY public.history
+    ADD CONSTRAINT created_by_history_constraint FOREIGN KEY (created_by) REFERENCES public."user"(id) ON DELETE CASCADE;
+
+
+--
 -- Name: data data_administration_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wai
 --
 
@@ -1012,6 +1099,14 @@ ALTER TABLE ONLY public.data
 
 
 --
+-- Name: history data_history_constraint; Type: FK CONSTRAINT; Schema: public; Owner: wai
+--
+
+ALTER TABLE ONLY public.history
+    ADD CONSTRAINT data_history_constraint FOREIGN KEY (data) REFERENCES public.data(id) ON DELETE CASCADE;
+
+
+--
 -- Name: data data_updated_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wai
 --
 
@@ -1041,6 +1136,38 @@ ALTER TABLE ONLY public.question
 
 ALTER TABLE ONLY public.question_group
     ADD CONSTRAINT form_question_group_constraint FOREIGN KEY (form) REFERENCES public.form(id) ON DELETE CASCADE;
+
+
+--
+-- Name: history history_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wai
+--
+
+ALTER TABLE ONLY public.history
+    ADD CONSTRAINT history_created_by_fkey FOREIGN KEY (created_by) REFERENCES public."user"(id);
+
+
+--
+-- Name: history history_data_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wai
+--
+
+ALTER TABLE ONLY public.history
+    ADD CONSTRAINT history_data_fkey FOREIGN KEY (data) REFERENCES public.data(id);
+
+
+--
+-- Name: history history_question_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wai
+--
+
+ALTER TABLE ONLY public.history
+    ADD CONSTRAINT history_question_fkey FOREIGN KEY (question) REFERENCES public.question(id);
+
+
+--
+-- Name: history history_updated_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wai
+--
+
+ALTER TABLE ONLY public.history
+    ADD CONSTRAINT history_updated_by_fkey FOREIGN KEY (updated_by) REFERENCES public."user"(id);
 
 
 --
@@ -1084,6 +1211,14 @@ ALTER TABLE ONLY public.question
 
 
 --
+-- Name: history question_history_constraint; Type: FK CONSTRAINT; Schema: public; Owner: wai
+--
+
+ALTER TABLE ONLY public.history
+    ADD CONSTRAINT question_history_constraint FOREIGN KEY (question) REFERENCES public.question(id) ON DELETE CASCADE;
+
+
+--
 -- Name: option question_option_constraint; Type: FK CONSTRAINT; Schema: public; Owner: wai
 --
 
@@ -1113,6 +1248,14 @@ ALTER TABLE ONLY public.answer
 
 ALTER TABLE ONLY public.data
     ADD CONSTRAINT updated_by_data_constraint FOREIGN KEY (updated_by) REFERENCES public."user"(id) ON DELETE CASCADE;
+
+
+--
+-- Name: history updated_by_history_constraint; Type: FK CONSTRAINT; Schema: public; Owner: wai
+--
+
+ALTER TABLE ONLY public.history
+    ADD CONSTRAINT updated_by_history_constraint FOREIGN KEY (updated_by) REFERENCES public."user"(id) ON DELETE CASCADE;
 
 
 --
