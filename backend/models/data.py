@@ -53,7 +53,6 @@ class Data(Base):
                           cascade="all, delete",
                           passive_deletes=True,
                           backref="answer")
-    form_detail = relationship("Form", back_populates="data")
 
     def __init__(self, name: str, form: int, administration: int,
                  geo: List[float], created_by: int, updated_by: int,

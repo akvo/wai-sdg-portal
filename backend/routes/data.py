@@ -9,6 +9,7 @@ import db.crud_data as crud
 from db import crud_question
 from db import crud_administration
 from db import crud_answer
+from db import crud_form
 from models.answer import Answer, AnswerDict
 from models.question import QuestionType
 from models.history import History
@@ -103,7 +104,7 @@ def add(req: Request,
                          administration=administration,
                          created_by=user.id,
                          answers=answerlist)
-    return data.serialized
+    return data.serialize
 
 
 @data_route.get("/data/{id:path}",
@@ -129,7 +130,8 @@ def update_by_id(req: Request,
                  credentials: credentials = Depends(security)):
     user = verify_admin(req.state.authenticated, session)
     data = crud.get_data_by_id(session=session, id=id)
-    questions = data.form_detail.list_of_questions
+    form = crud_form.get_form_by_id(session=session, id=data.form)
+    questions = form.list_of_questions
     current_answers = crud_answer.get_answer_by_data_and_question(
         session=session, data=id, questions=[a["question"] for a in answers])
     checked = {}
