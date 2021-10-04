@@ -26,3 +26,4 @@ blocks:
         - name: 'Build & Test'
           commands:
             - ./ci/build.sh
+            - ./ci/deploy.sh
