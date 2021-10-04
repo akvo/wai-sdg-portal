@@ -23,6 +23,10 @@ class Form(Base):
                                   cascade="all, delete",
                                   passive_deletes=True,
                                   backref="question_group")
+    data = relationship("Data",
+                        cascade="all, delete",
+                        passive_deletes=True,
+                        backref="data")
 
     def __init__(self, name: str):
         self.name = name
