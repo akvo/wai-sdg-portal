@@ -56,4 +56,3 @@ if ! dci run -T ci ./basic.sh; then
   echo "Build failed when running basic.sh"
   exit 1
 fi
-
