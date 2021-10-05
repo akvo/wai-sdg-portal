@@ -44,7 +44,7 @@
     {
         "order": 9,
         "question": "date triggered",
-        "type": "text",
+        "type": "date",
         "meta": false,
         "options": null
     },
@@ -71,14 +71,14 @@
     {
         "order": 11,
         "question": "date of declared",
-        "type": "number",
+        "type": "date",
         "meta": false,
         "options": null
     },
     {
         "order": 12,
         "question": "date of verification",
-        "type": "text",
+        "type": "date",
         "meta": false,
         "options": null
     },
