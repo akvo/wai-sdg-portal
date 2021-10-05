@@ -42,7 +42,17 @@ class TestAuthorizationSetup:
             app.url_path_for("user:register"),
             headers={"Authorization": f"Bearer {account.token}"})
         assert res.status_code == 200
-        user = crud_user.get_user_by_id(session=session, id=1)
         res = res.json()
+        user = crud_user.update_user_by_id(session=session,
+                                           id=1,
+                                           role="admin",
+                                           active=True)
         assert res["email"] == user.email
         assert res["active"] is False
+        res = await client.get(
+            app.url_path_for("user:me"),
+            headers={"Authorization": f"Bearer {account.token}"})
+        assert res.status_code == 200
+        res = res.json()
+        assert res["active"] is user.active
+        assert res["role"] == "admin"
