@@ -46,7 +46,7 @@ backend_build () {
 backend_build
 
 #pytest
-docker-compose -f docker-compose.test.yml run -T backend pytest
+docker-compose -f docker-compose.test.yml run -T backend pytest -rPvvv
 
 frontend_build
 
