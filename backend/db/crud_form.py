@@ -21,6 +21,10 @@ def get_form_by_id(session: Session, id: int) -> FormBase:
     return session.query(Form).filter(Form.id == id).first()
 
 
+def get_form_by_name(session: Session, name: str) -> FormBase:
+    return session.query(Form).filter(Form.name == name.upper()).first()
+
+
 # UTIL
 def get_form_list():
     session = Session(engine)

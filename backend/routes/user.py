@@ -18,6 +18,7 @@ user_route = APIRouter()
 @user_route.get("/user/me",
                 response_model=UserAccessBase,
                 summary="get account information",
+                name="user:me",
                 tags=["User"])
 def me(req: Request,
        session: Session = Depends(get_session),
