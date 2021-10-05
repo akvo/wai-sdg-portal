@@ -100,20 +100,25 @@
         "type": "option",
         "meta": false,
         "options": [
+          {
+            "name": "advanced",
+            "color": "#CFD8DB",
+            "order": 1
+        },
             {
                 "name": "basic",
-                "color": null,
-                "order": 1
+                "color": "#40B1E6",
+                "order": 2
             },
             {
                 "name": "no service",
-                "color": null,
-                "order": 3
+                "color": "#F9CA29",
+                "order": 4
             },
             {
                 "name": "limited",
-                "color": null,
-                "order": 2
+                "color": "#FCF176",
+                "order": 3
             }
         ]
     },
@@ -174,19 +179,24 @@
         "meta": false,
         "options": [
           {
+            "name": "advanced",
+            "color": "#CFD8DB",
+            "order": 1
+        },
+          {
               "name": "basic",
-              "color": null,
-              "order": 1
+              "color": "#67B769",
+              "order": 2
           },
           {
                 "name": "limited",
-                "color": null,
-                "order": 2
+                "color": "#FCF176",
+                "order": 3
             },
             {
                 "name": "no service",
-                "color": null,
-                "order": 3
+                "color": "#F9CA29",
+                "order": 4
             }
         ]
     },
@@ -266,19 +276,24 @@
         "meta": false,
         "options": [
           {
+           "name": "advanced",
+           "color": "#CFD8DB",
+           "order": 1
+       },
+          {
               "name": "basic",
-              "color": null,
-              "order": 1
+              "color": "#AB47BC",
+              "order": 2
           },
           {
                 "name": "limited",
-                "color": null,
-                "order": 2
+                "color": "#FCF176",
+                "order": 3
             },
             {
                 "name": "no service",
-                "color": null,
-                "order": 3
+                "color": "#F9CA29",
+                "order": 4
             }
         ]
     },
