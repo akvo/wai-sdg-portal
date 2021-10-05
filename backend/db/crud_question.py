@@ -47,3 +47,11 @@ def get_question(session: Session,
 def get_question_type(session: Session, id: int) -> QuestionDict:
     question = session.query(Question).filter(Question.id == id).first()
     return question
+
+
+def get_question_by_name(session: Session, form: int,
+                         name: str) -> QuestionDict:
+    name = name.replace("_", " ").lower().strip()
+    question = session.query(Question).filter(
+        and_(Question.name == name, Question.form == form)).first()
+    return question

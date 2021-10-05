@@ -12,3 +12,5 @@ pytest-asyncio==0.15.1
 databases==0.4.3
 httpx==0.18.2
 asgi-lifespan==1.0.1
+openpyxl==3.0.5
+xlrd==1.2.0

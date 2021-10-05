@@ -24,6 +24,7 @@ def get(req: Request, session: Session = Depends(get_session)):
 @form_route.get("/form/{id:path}",
                 response_model=FormBase,
                 summary="get form by id",
+                name="form:get_by_id",
                 tags=["Form"])
 def get_by_id(req: Request, id: int, session: Session = Depends(get_session)):
     form = crud.get_form_by_id(session=session, id=id)

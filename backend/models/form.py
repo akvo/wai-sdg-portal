@@ -8,6 +8,7 @@ from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 from db.connection import Base
 from models.question_group import QuestionGroupBase
+from models.question import QuestionBase
 
 
 class FormDict(TypedDict):
@@ -44,6 +45,14 @@ class Form(Base):
         for qg in self.question_group:
             for q in qg.question:
                 question_list.update({q.id: q.type})
+        return question_list
+
+    @property
+    def questions(self) -> List[QuestionBase]:
+        question_list = []
+        for qg in self.question_group:
+            for q in qg.question:
+                question_list.append(q.serialize)
         return question_list
 
 
