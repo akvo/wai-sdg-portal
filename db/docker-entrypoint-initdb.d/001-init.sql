@@ -321,7 +321,8 @@ CREATE TABLE public.option (
     id integer NOT NULL,
     "order" integer,
     name character varying,
-    question integer
+    question integer,
+    color character varying
 );
 
 
@@ -651,7 +652,7 @@ COPY public.administration (id, parent, name) FROM stdin;
 --
 
 COPY public.alembic_version (version_num) FROM stdin;
-adbe1fcfc7bc
+422f13fbe888
 \.
 
 
@@ -691,7 +692,7 @@ COPY public.history (id, question, data, value, text, options, created_by, updat
 -- Data for Name: option; Type: TABLE DATA; Schema: public; Owner: wai
 --
 
-COPY public.option (id, "order", name, question) FROM stdin;
+COPY public.option (id, "order", name, question, color) FROM stdin;
 \.
 
 
