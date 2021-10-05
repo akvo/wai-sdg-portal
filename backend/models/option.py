@@ -13,6 +13,7 @@ class OptionDict(TypedDict):
     id: int
     name: str
     order: Optional[int] = None
+    color: Optional[str] = None
 
 
 class Option(Base):
@@ -21,9 +22,15 @@ class Option(Base):
     question = Column(Integer, ForeignKey('question.id'))
     name = Column(String)
     order = Column(Integer, nullable=True)
+    color = Column(String)
 
-    def __init__(self, name: str):
+    def __init__(self,
+                 name: str,
+                 order: Optional[int] = None,
+                 color: Optional[str] = None):
         self.name = name
+        self.order = order
+        self.color = color
 
     def __repr__(self) -> int:
         return f"<Option {self.id}>"
@@ -34,7 +41,8 @@ class Option(Base):
             "id": self.id,
             "question": self.question,
             "name": self.name,
-            "order": self.order
+            "order": self.order,
+            "color": self.color
         }
 
 
@@ -43,6 +51,7 @@ class OptionBase(BaseModel):
     question: int
     name: str
     order: Optional[int] = None
+    color: Optional[str] = None
 
     class Config:
         orm_mode = True
