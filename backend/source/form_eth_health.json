@@ -68,15 +68,18 @@
         "options": [
             {
                 "name": "no service",
-                "color": null
+                "color": null,
+                "order":3
             },
             {
                 "name": "basic",
-                "color": null
+                "color": null,
+                "order":1
             },
             {
                 "name": "limited",
-                "color": null
+                "color": null,
+                "order":2
             }
         ]
     },
@@ -116,6 +119,10 @@
             },
             {
                 "name": "usable",
+                "color": null
+            },
+            {
+                "name": "basic",
                 "color": null
             }
         ]
