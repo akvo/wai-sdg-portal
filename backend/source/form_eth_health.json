@@ -26,8 +26,14 @@
         "type": "option",
         "meta": false,
         "options": [
-            "health post",
-            "other"
+            {
+                "name": "health post",
+                "color": null
+            },
+            {
+                "name": "other",
+                "color": null
+            }
         ]
     },
     {
@@ -36,10 +42,22 @@
         "type": "option",
         "meta": false,
         "options": [
-            "no water supply in premises",
-            "protected wells",
-            "pipeline connections",
-            "rain water harvesting"
+            {
+                "name": "no water supply in premises",
+                "color": null
+            },
+            {
+                "name": "protected wells",
+                "color": null
+            },
+            {
+                "name": "pipeline connections",
+                "color": null
+            },
+            {
+                "name": "rain water harvesting",
+                "color": null
+            }
         ]
     },
     {
@@ -48,9 +66,18 @@
         "type": "option",
         "meta": false,
         "options": [
-            "no service",
-            "basic",
-            "limited"
+            {
+                "name": "no service",
+                "color": null
+            },
+            {
+                "name": "basic",
+                "color": null
+            },
+            {
+                "name": "limited",
+                "color": null
+            }
         ]
     },
     {
@@ -59,9 +86,18 @@
         "type": "option",
         "meta": false,
         "options": [
-            "no latrine",
-            "simple pit latrine",
-            "vip"
+            {
+                "name": "no latrine",
+                "color": null
+            },
+            {
+                "name": "simple pit latrine",
+                "color": null
+            },
+            {
+                "name": "vip",
+                "color": null
+            }
         ]
     },
     {
@@ -70,9 +106,18 @@
         "type": "option",
         "meta": false,
         "options": [
-            "no service",
-            "limited",
-            "usable"
+            {
+                "name": "no service",
+                "color": null
+            },
+            {
+                "name": "limited",
+                "color": null
+            },
+            {
+                "name": "usable",
+                "color": null
+            }
         ]
     },
     {
@@ -81,8 +126,14 @@
         "type": "option",
         "meta": false,
         "options": [
-            "yes",
-            "no"
+            {
+                "name": "yes",
+                "color": null
+            },
+            {
+                "name": "no",
+                "color": null
+            }
         ]
     },
     {
@@ -91,8 +142,14 @@
         "type": "option",
         "meta": false,
         "options": [
-            "yes",
-            "no"
+            {
+                "name": "yes",
+                "color": null
+            },
+            {
+                "name": "no",
+                "color": null
+            }
         ]
     },
     {
@@ -101,9 +158,18 @@
         "type": "option",
         "meta": false,
         "options": [
-            "filthy ,unused",
-            "clean, used",
-            "dirty but used"
+            {
+                "name": "filthy ,unused",
+                "color": null
+            },
+            {
+                "name": "clean, used",
+                "color": null
+            },
+            {
+                "name": "dirty but used",
+                "color": null
+            }
         ]
     },
     {
@@ -112,7 +178,10 @@
         "type": "option",
         "meta": false,
         "options": [
-            "no facility"
+            {
+                "name": "no facility",
+                "color": null
+            }
         ]
     },
     {
@@ -121,7 +190,10 @@
         "type": "option",
         "meta": false,
         "options": [
-            "no service"
+            {
+                "name": "no service",
+                "color": null
+            }
         ]
     },
     {
@@ -130,8 +202,14 @@
         "type": "option",
         "meta": false,
         "options": [
-            "yes",
-            "no"
+            {
+                "name": "yes",
+                "color": null
+            },
+            {
+                "name": "no",
+                "color": null
+            }
         ]
     },
     {
@@ -140,8 +218,14 @@
         "type": "option",
         "meta": false,
         "options": [
-            "yes",
-            "no"
+            {
+                "name": "yes",
+                "color": null
+            },
+            {
+                "name": "no",
+                "color": null
+            }
         ]
     },
     {
@@ -150,8 +234,14 @@
         "type": "option",
         "meta": false,
         "options": [
-            "yes",
-            "no"
+            {
+                "name": "yes",
+                "color": null
+            },
+            {
+                "name": "no",
+                "color": null
+            }
         ]
     }
 ]

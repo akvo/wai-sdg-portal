@@ -40,10 +40,22 @@
         "type": "option",
         "meta": false,
         "options": [
-            "basic",
-            "limited",
-            "unimproved",
-            "surface water"
+            {
+                "name": "basic",
+                "color": null
+            },
+            {
+                "name": "limited",
+                "color": null
+            },
+            {
+                "name": "unimproved",
+                "color": null
+            },
+            {
+                "name": "surface water",
+                "color": null
+            }
         ]
     },
     {
@@ -52,9 +64,18 @@
         "type": "option",
         "meta": false,
         "options": [
-            "in own dwelling",
-            "elsewhere",
-            "in own yard / plot"
+            {
+                "name": "in own dwelling",
+                "color": null
+            },
+            {
+                "name": "elsewhere",
+                "color": null
+            },
+            {
+                "name": "in own yard / plot",
+                "color": null
+            }
         ]
     },
     {
@@ -63,8 +84,14 @@
         "type": "option",
         "meta": false,
         "options": [
-            "less than 30 minutes",
-            "more than 30 minutes"
+            {
+                "name": "less than 30 minutes",
+                "color": null
+            },
+            {
+                "name": "more than 30 minutes",
+                "color": null
+            }
         ]
     },
     {
@@ -73,9 +100,18 @@
         "type": "option",
         "meta": false,
         "options": [
-            "no, always sufficient",
-            "yes, at least once",
-            "don't know"
+            {
+                "name": "no, always sufficient",
+                "color": null
+            },
+            {
+                "name": "yes, at least once",
+                "color": null
+            },
+            {
+                "name": "don't know",
+                "color": null
+            }
         ]
     },
     {
@@ -84,10 +120,22 @@
         "type": "option",
         "meta": false,
         "options": [
-            "safely managed",
-            "basic",
-            "unimproved",
-            "limited"
+            {
+                "name": "safely managed",
+                "color": null
+            },
+            {
+                "name": "basic",
+                "color": null
+            },
+            {
+                "name": "unimproved",
+                "color": null
+            },
+            {
+                "name": "limited",
+                "color": null
+            }
         ]
     },
     {
@@ -96,14 +144,38 @@
         "type": "option",
         "meta": false,
         "options": [
-            "toilet that flush/pour to flush piped sewer system",
-            "pit latrine with slab",
-            "there is no latrine",
-            "toilet that flush/pour to pit latrine",
-            "pit latrine without slab/open pit",
-            "bucket",
-            "ventilated improved pit latrine (vip)",
-            "twinpit offset latrine"
+            {
+                "name": "toilet that flush/pour to flush piped sewer system",
+                "color": null
+            },
+            {
+                "name": "pit latrine with slab",
+                "color": null
+            },
+            {
+                "name": "there is no latrine",
+                "color": null
+            },
+            {
+                "name": "toilet that flush/pour to pit latrine",
+                "color": null
+            },
+            {
+                "name": "pit latrine without slab/open pit",
+                "color": null
+            },
+            {
+                "name": "bucket",
+                "color": null
+            },
+            {
+                "name": "ventilated improved pit latrine (vip)",
+                "color": null
+            },
+            {
+                "name": "twinpit offset latrine",
+                "color": null
+            }
         ]
     },
     {
@@ -112,8 +184,14 @@
         "type": "option",
         "meta": false,
         "options": [
-            "yes",
-            "no"
+            {
+                "name": "yes",
+                "color": null
+            },
+            {
+                "name": "no",
+                "color": null
+            }
         ]
     },
     {
@@ -122,9 +200,18 @@
         "type": "option",
         "meta": false,
         "options": [
-            "in own dwelling",
-            "in own plot/yard",
-            "elsewhere"
+            {
+                "name": "in own dwelling",
+                "color": null
+            },
+            {
+                "name": "in own plot/yard",
+                "color": null
+            },
+            {
+                "name": "elsewhere",
+                "color": null
+            }
         ]
     },
     {
@@ -133,9 +220,18 @@
         "type": "option",
         "meta": false,
         "options": [
-            "no, never emptied",
-            "don't know",
-            "yes, but don't know when"
+            {
+                "name": "no, never emptied",
+                "color": null
+            },
+            {
+                "name": "don't know",
+                "color": null
+            },
+            {
+                "name": "yes, but don't know when",
+                "color": null
+            }
         ]
     },
     {
@@ -144,9 +240,18 @@
         "type": "option",
         "meta": false,
         "options": [
-            "basic",
-            "no facility",
-            "limited"
+            {
+                "name": "basic",
+                "color": null
+            },
+            {
+                "name": "no facility",
+                "color": null
+            },
+            {
+                "name": "limited",
+                "color": null
+            }
         ]
     },
     {
@@ -155,11 +260,26 @@
         "type": "option",
         "meta": false,
         "options": [
-            "fixed facility observed in dwelling",
-            "mobile object observed (bucket, jug, kettle)",
-            "no handwashing place available in dwelling/plot/yard",
-            "no permission to see",
-            "fixed facility observed in plot/yard"
+            {
+                "name": "fixed facility observed in dwelling",
+                "color": null
+            },
+            {
+                "name": "mobile object observed (bucket, jug, kettle)",
+                "color": null
+            },
+            {
+                "name": "no handwashing place available in dwelling/plot/yard",
+                "color": null
+            },
+            {
+                "name": "no permission to see",
+                "color": null
+            },
+            {
+                "name": "fixed facility observed in plot/yard",
+                "color": null
+            }
         ]
     },
     {
@@ -168,8 +288,14 @@
         "type": "option",
         "meta": false,
         "options": [
-            "water is available",
-            "water is not available"
+            {
+                "name": "water is available",
+                "color": null
+            },
+            {
+                "name": "water is not available",
+                "color": null
+            }
         ]
     },
     {
@@ -178,9 +304,18 @@
         "type": "option",
         "meta": false,
         "options": [
-            "yes, soap or detergent are present",
-            "no, not present",
-            "ash/mud/sand is present"
+            {
+                "name": "yes, soap or detergent are present",
+                "color": null
+            },
+            {
+                "name": "no, not present",
+                "color": null
+            },
+            {
+                "name": "ash/mud/sand is present",
+                "color": null
+            }
         ]
     }
 ]

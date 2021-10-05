@@ -35,6 +35,7 @@ for file in files:
                 type=q["type"],
                 meta=q["meta"],
                 order=q["order"],
-                option=q["options"])
+                option=[o["name"]
+                        for o in q["options"]] if q["options"] else None)
             print(f"{i}.{question.name}")
     print("------------------------------------------")

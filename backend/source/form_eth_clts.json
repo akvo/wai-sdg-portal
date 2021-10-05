@@ -54,9 +54,18 @@
         "type": "option",
         "meta": false,
         "options": [
-            "triggered",
-            "declared",
-            "verified"
+            {
+                "name": "triggered",
+                "color": null
+            },
+            {
+                "name": "declared",
+                "color": null
+            },
+            {
+                "name": "verified",
+                "color": null
+            }
         ]
     },
     {
@@ -79,8 +88,14 @@
         "type": "option",
         "meta": false,
         "options": [
-            "amref & local gov't",
-            "amref"
+            {
+                "name": "amref & local gov't",
+                "color": null
+            },
+            {
+                "name": "amref",
+                "color": null
+            }
         ]
     },
     {
@@ -89,8 +104,14 @@
         "type": "option",
         "meta": false,
         "options": [
-            "phase ii",
-            "phase i"
+            {
+                "name": "phase ii",
+                "color": null
+            },
+            {
+                "name": "phase i",
+                "color": null
+            }
         ]
     },
     {

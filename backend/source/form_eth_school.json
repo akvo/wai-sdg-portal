@@ -26,9 +26,18 @@
         "type": "option",
         "meta": false,
         "options": [
-            "primary(1-8)",
-            "primary(1-4)",
-            "high school 9-10"
+            {
+                "name": "primary(1-8)",
+                "color": null
+            },
+            {
+                "name": "primary(1-4)",
+                "color": null
+            },
+            {
+                "name": "high school 9-10",
+                "color": null
+            }
         ]
     },
     {
@@ -51,8 +60,14 @@
         "type": "option",
         "meta": false,
         "options": [
-            "new scheme",
-            "repair"
+            {
+                "name": "new scheme",
+                "color": null
+            },
+            {
+                "name": "repair",
+                "color": null
+            }
         ]
     },
     {
@@ -61,10 +76,22 @@
         "type": "option",
         "meta": false,
         "options": [
-            "pipeline connection",
-            "no water scheme",
-            "shallow well fitted with pump",
-            "no water supply in premises"
+            {
+                "name": "pipeline connection",
+                "color": null
+            },
+            {
+                "name": "no water scheme",
+                "color": null
+            },
+            {
+                "name": "shallow well fitted with pump",
+                "color": null
+            },
+            {
+                "name": "no water supply in premises",
+                "color": null
+            }
         ]
     },
     {
@@ -73,9 +100,18 @@
         "type": "option",
         "meta": false,
         "options": [
-            "basic",
-            "no service",
-            "limited"
+            {
+                "name": "basic",
+                "color": null
+            },
+            {
+                "name": "no service",
+                "color": null
+            },
+            {
+                "name": "limited",
+                "color": null
+            }
         ]
     },
     {
@@ -91,8 +127,14 @@
         "type": "option",
         "meta": false,
         "options": [
-            "functional",
-            "non functional - mechanical"
+            {
+                "name": "functional",
+                "color": null
+            },
+            {
+                "name": "non functional - mechanical",
+                "color": null
+            }
         ]
     },
     {
@@ -108,8 +150,14 @@
         "type": "option",
         "meta": false,
         "options": [
-            "simple pit latrine",
-            "no latrine"
+            {
+                "name": "simple pit latrine",
+                "color": null
+            },
+            {
+                "name": "no latrine",
+                "color": null
+            }
         ]
     },
     {
@@ -118,8 +166,14 @@
         "type": "option",
         "meta": false,
         "options": [
-            "limited",
-            "no service"
+            {
+                "name": "limited",
+                "color": null
+            },
+            {
+                "name": "no service",
+                "color": null
+            }
         ]
     },
     {
@@ -128,8 +182,14 @@
         "type": "option",
         "meta": false,
         "options": [
-            "no",
-            "yes"
+            {
+                "name": "no",
+                "color": null
+            },
+            {
+                "name": "yes",
+                "color": null
+            }
         ]
     },
     {
@@ -152,8 +212,14 @@
         "type": "option",
         "meta": false,
         "options": [
-            "no",
-            "yes"
+            {
+                "name": "no",
+                "color": null
+            },
+            {
+                "name": "yes",
+                "color": null
+            }
         ]
     },
     {
@@ -162,9 +228,18 @@
         "type": "option",
         "meta": false,
         "options": [
-            "clean, used",
-            "dirty but used",
-            "no latrine"
+            {
+                "name": "clean, used",
+                "color": null
+            },
+            {
+                "name": "dirty but used",
+                "color": null
+            },
+            {
+                "name": "no latrine",
+                "color": null
+            }
         ]
     },
     {
@@ -173,7 +248,10 @@
         "type": "option",
         "meta": false,
         "options": [
-            "no service"
+            {
+                "name": "no service",
+                "color": null
+            }
         ]
     },
     {
@@ -182,8 +260,14 @@
         "type": "option",
         "meta": false,
         "options": [
-            "yes",
-            "no"
+            {
+                "name": "yes",
+                "color": null
+            },
+            {
+                "name": "no",
+                "color": null
+            }
         ]
     },
     {
@@ -192,8 +276,14 @@
         "type": "option",
         "meta": false,
         "options": [
-            "yes",
-            "no"
+            {
+                "name": "yes",
+                "color": null
+            },
+            {
+                "name": "no",
+                "color": null
+            }
         ]
     },
     {
@@ -202,8 +292,14 @@
         "type": "option",
         "meta": false,
         "options": [
-            "yes",
-            "no"
+            {
+                "name": "yes",
+                "color": null
+            },
+            {
+                "name": "no",
+                "color": null
+            }
         ]
     },
     {
@@ -212,8 +308,14 @@
         "type": "option",
         "meta": false,
         "options": [
-            "no",
-            "yes"
+            {
+                "name": "no",
+                "color": null
+            },
+            {
+                "name": "yes",
+                "color": null
+            }
         ]
     },
     {
@@ -222,8 +324,14 @@
         "type": "option",
         "meta": false,
         "options": [
-            "no",
-            "yes"
+            {
+                "name": "no",
+                "color": null
+            },
+            {
+                "name": "yes",
+                "color": null
+            }
         ]
     },
     {
@@ -232,8 +340,14 @@
         "type": "option",
         "meta": false,
         "options": [
-            "no",
-            "yes"
+            {
+                "name": "no",
+                "color": null
+            },
+            {
+                "name": "yes",
+                "color": null
+            }
         ]
     }
 ]

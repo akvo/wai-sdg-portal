@@ -33,10 +33,22 @@
         "type": "option",
         "meta": false,
         "options": [
-            "hand dug well fitted with pump or windlass",
-            "protected spring",
-            "shallow well fitted with hand pump",
-            "deep well with distribution"
+            {
+                "name": "hand dug well fitted with pump or windlass",
+                "color": null
+            },
+            {
+                "name": "protected spring",
+                "color": null
+            },
+            {
+                "name": "shallow well fitted with hand pump",
+                "color": null
+            },
+            {
+                "name": "deep well with distribution",
+                "color": null
+            }
         ]
     },
     {
@@ -45,11 +57,26 @@
         "type": "option",
         "meta": false,
         "options": [
-            "hand dug well",
-            "protected spring",
-            "shallow well",
-            "deep wel",
-            "spring"
+            {
+                "name": "hand dug well",
+                "color": null
+            },
+            {
+                "name": "protected spring",
+                "color": null
+            },
+            {
+                "name": "shallow well",
+                "color": null
+            },
+            {
+                "name": "deep wel",
+                "color": null
+            },
+            {
+                "name": "spring",
+                "color": null
+            }
         ]
     },
     {
@@ -58,10 +85,22 @@
         "type": "option",
         "meta": false,
         "options": [
-            "functional",
-            "non functional",
-            "no data",
-            "not functional"
+            {
+                "name": "functional",
+                "color": null
+            },
+            {
+                "name": "non functional",
+                "color": null
+            },
+            {
+                "name": "no data",
+                "color": null
+            },
+            {
+                "name": "not functional",
+                "color": null
+            }
         ]
     },
     {
@@ -70,12 +109,30 @@
         "type": "option",
         "meta": false,
         "options": [
-            "manual operation",
-            "gravity",
-            "electricity and grid",
-            "solar",
-            "diesel",
-            "other"
+            {
+                "name": "manual operation",
+                "color": null
+            },
+            {
+                "name": "gravity",
+                "color": null
+            },
+            {
+                "name": "electricity and grid",
+                "color": null
+            },
+            {
+                "name": "solar",
+                "color": null
+            },
+            {
+                "name": "diesel",
+                "color": null
+            },
+            {
+                "name": "other",
+                "color": null
+            }
         ]
     },
     {
@@ -84,8 +141,14 @@
         "type": "option",
         "meta": false,
         "options": [
-            "nan",
-            "don't know"
+            {
+                "name": "nan",
+                "color": null
+            },
+            {
+                "name": "don't know",
+                "color": null
+            }
         ]
     },
     {
@@ -94,9 +157,18 @@
         "type": "option",
         "meta": false,
         "options": [
-            "afridev",
-            "indian mark ii",
-            "submersible"
+            {
+                "name": "afridev",
+                "color": null
+            },
+            {
+                "name": "indian mark ii",
+                "color": null
+            },
+            {
+                "name": "submersible",
+                "color": null
+            }
         ]
     },
     {
@@ -105,9 +177,18 @@
         "type": "option",
         "meta": false,
         "options": [
-            "cda",
-            "kale hiwot",
-            "government"
+            {
+                "name": "cda",
+                "color": null
+            },
+            {
+                "name": "kale hiwot",
+                "color": null
+            },
+            {
+                "name": "government",
+                "color": null
+            }
         ]
     },
     {
@@ -123,11 +204,26 @@
         "type": "option",
         "meta": false,
         "options": [
-            "inspection",
-            "new scheme",
-            "repair",
-            "extension",
-            "national wash inventory"
+            {
+                "name": "inspection",
+                "color": null
+            },
+            {
+                "name": "new scheme",
+                "color": null
+            },
+            {
+                "name": "repair",
+                "color": null
+            },
+            {
+                "name": "extension",
+                "color": null
+            },
+            {
+                "name": "national wash inventory",
+                "color": null
+            }
         ]
     },
     {
