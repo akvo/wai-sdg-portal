@@ -138,18 +138,9 @@
     {
         "order": 11,
         "question": "estimated number of users",
-        "type": "option",
+        "type": "number",
         "meta": false,
-        "options": [
-            {
-                "name": "nan",
-                "color": null
-            },
-            {
-                "name": "don't know",
-                "color": null
-            }
-        ]
+        "options": null
     },
     {
         "order": 12,
