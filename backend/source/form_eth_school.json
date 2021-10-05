@@ -276,25 +276,25 @@
         "meta": false,
         "options": [
           {
-           "name": "advanced",
-           "color": "#CFD8DB",
-           "order": 1
-       },
-          {
-              "name": "basic",
-              "color": "#AB47BC",
-              "order": 2
+            "name": "advanced",
+            "color": "#CFD8DB",
+            "order": 1
           },
           {
-                "name": "limited",
-                "color": "#FCF176",
-                "order": 3
-            },
-            {
-                "name": "no service",
-                "color": "#F9CA29",
-                "order": 4
-            }
+            "name": "basic",
+            "color": "#AB47BC",
+            "order": 2
+          },
+          {
+            "name": "limited",
+            "color": "#FCF176",
+            "order": 3
+          },
+          {
+            "name": "no service",
+            "color": "#F9CA29",
+            "order": 4
+          }
         ]
     },
     {
