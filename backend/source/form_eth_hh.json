@@ -32,7 +32,48 @@
         "question": "main source of drinking water",
         "type": "text",
         "meta": false,
-        "options": null
+        "options":  [
+            {
+                "name": "Public tap/standpipe",
+                "color": null
+            },
+            {
+                "name": "Deep tubewell/borehole",
+                "color": null
+            },
+            {
+                "name": "Cart with small tank/drum",
+                "color": null
+            },
+            {
+                "name": "Surface water",
+                "color": null
+            },
+            {
+                "name": "Unprotected spring",
+                "color": null
+            },
+            {
+                "name": "Piped water to yard/plot",
+                "color": null
+            },
+            {
+                "name": "Piped water into dwelling (household connection)",
+                "color": null
+            },
+            {
+                "name": "Protected spring",
+                "color": null
+            },
+            {
+                "name": "Protected dug well",
+                "color": null
+            },
+            {
+                "name": "Unprotected dug well",
+                "color": null
+            }
+        ]
     },
     {
         "order": 7,
@@ -42,19 +83,23 @@
         "options": [
             {
                 "name": "basic",
-                "color": null
+                "color": null,
+                "order":1
             },
             {
                 "name": "limited",
-                "color": null
+                "color": null,
+                "order":2
             },
             {
                 "name": "unimproved",
-                "color": null
+                "color": null,
+                "order":3
             },
             {
                 "name": "surface water",
-                "color": null
+                "color": null,
+                "order":4
             }
         ]
     },
@@ -66,15 +111,18 @@
         "options": [
             {
                 "name": "in own dwelling",
-                "color": null
+                "color": null,
+                "order":1
             },
             {
                 "name": "elsewhere",
-                "color": null
+                "color": null,
+                "order":3
             },
             {
                 "name": "in own yard / plot",
-                "color": null
+                "color": null,
+                "order":2
             }
         ]
     },
@@ -86,11 +134,13 @@
         "options": [
             {
                 "name": "less than 30 minutes",
-                "color": null
+                "color": null,
+                "order":1
             },
             {
                 "name": "more than 30 minutes",
-                "color": null
+                "color": null,
+                "order":2
             }
         ]
     },
@@ -102,15 +152,18 @@
         "options": [
             {
                 "name": "no, always sufficient",
-                "color": null
+                "color": null,
+                "order":1
             },
             {
                 "name": "yes, at least once",
-                "color": null
+                "color": null,
+                "order":2
             },
             {
                 "name": "don't know",
-                "color": null
+                "color": null,
+                "order":3
             }
         ]
     },
@@ -122,19 +175,23 @@
         "options": [
             {
                 "name": "safely managed",
-                "color": null
+                "color": null,
+                "order":1
             },
             {
                 "name": "basic",
-                "color": null
+                "color": null,
+                "order":2
             },
             {
                 "name": "unimproved",
-                "color": null
+                "color": null,
+                "order":4
             },
             {
                 "name": "limited",
-                "color": null
+                "color": null,
+                "order":3
             }
         ]
     },
@@ -242,15 +299,18 @@
         "options": [
             {
                 "name": "basic",
-                "color": null
+                "color": null,
+                "order":1
             },
             {
                 "name": "no facility",
-                "color": null
+                "color": null,
+                "order":3
             },
             {
                 "name": "limited",
-                "color": null
+                "color": null,
+                "order":2
             }
         ]
     },
@@ -262,23 +322,28 @@
         "options": [
             {
                 "name": "fixed facility observed in dwelling",
-                "color": null
+                "color": null,
+                "order":1
             },
             {
                 "name": "mobile object observed (bucket, jug, kettle)",
-                "color": null
+                "color": null,
+                "order":3
             },
             {
                 "name": "no handwashing place available in dwelling/plot/yard",
-                "color": null
+                "color": null,
+                "order":4
             },
             {
                 "name": "no permission to see",
-                "color": null
+                "color": null,
+                "order":5
             },
             {
                 "name": "fixed facility observed in plot/yard",
-                "color": null
+                "color": null,
+                "order":2
             }
         ]
     },
@@ -290,11 +355,13 @@
         "options": [
             {
                 "name": "water is available",
-                "color": null
+                "color": null,
+                "order":1
             },
             {
                 "name": "water is not available",
-                "color": null
+                "color": null,
+                "order":2
             }
         ]
     },
@@ -306,15 +373,18 @@
         "options": [
             {
                 "name": "yes, soap or detergent are present",
-                "color": null
+                "color": null,
+                "order":1
             },
             {
                 "name": "no, not present",
-                "color": null
+                "color": null,
+                "order":3
             },
             {
                 "name": "ash/mud/sand is present",
-                "color": null
+                "color": null,
+                "order":2
             }
         ]
     }
