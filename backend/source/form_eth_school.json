@@ -102,15 +102,18 @@
         "options": [
             {
                 "name": "basic",
-                "color": null
+                "color": null,
+                "order": 1
             },
             {
                 "name": "no service",
-                "color": null
+                "color": null,
+                "order": 3
             },
             {
                 "name": "limited",
-                "color": null
+                "color": null,
+                "order": 2
             }
         ]
     },
@@ -129,11 +132,13 @@
         "options": [
             {
                 "name": "functional",
-                "color": null
+                "color": null,
+                "order": 1
             },
             {
                 "name": "non functional - mechanical",
-                "color": null
+                "color": null,
+                "order": 2
             }
         ]
     },
@@ -152,11 +157,13 @@
         "options": [
             {
                 "name": "simple pit latrine",
-                "color": null
+                "color": null,
+                "order": 1
             },
             {
                 "name": "no latrine",
-                "color": null
+                "color": null,
+                "order": 2
             }
         ]
     },
@@ -166,13 +173,20 @@
         "type": "option",
         "meta": false,
         "options": [
-            {
+          {
+              "name": "basic",
+              "color": null,
+              "order": 1
+          },
+          {
                 "name": "limited",
-                "color": null
+                "color": null,
+                "order": 2
             },
             {
                 "name": "no service",
-                "color": null
+                "color": null,
+                "order": 3
             }
         ]
     },
@@ -230,15 +244,18 @@
         "options": [
             {
                 "name": "clean, used",
-                "color": null
+                "color": null,
+                "order":1
             },
             {
                 "name": "dirty but used",
-                "color": null
+                "color": null,
+                "order":2
             },
             {
                 "name": "no latrine",
-                "color": null
+                "color": null,
+                "order":3
             }
         ]
     },
@@ -248,9 +265,20 @@
         "type": "option",
         "meta": false,
         "options": [
+          {
+              "name": "basic",
+              "color": null,
+              "order": 1
+          },
+          {
+                "name": "limited",
+                "color": null,
+                "order": 2
+            },
             {
                 "name": "no service",
-                "color": null
+                "color": null,
+                "order": 3
             }
         ]
     },
