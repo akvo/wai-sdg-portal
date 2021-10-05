@@ -180,22 +180,22 @@
         "options": [
             {
                 "name": "safely managed",
-                "color": null,
+                "color": "#388E3C",
                 "order":1
             },
             {
                 "name": "basic",
-                "color": null,
+                "color": "#81C784",
                 "order":2
             },
             {
                 "name": "unimproved",
-                "color": null,
+                "color": "#FAD54F",
                 "order":4
             },
             {
                 "name": "limited",
-                "color": null,
+                "color": "#FCF176",
                 "order":3
             }
         ]
@@ -304,17 +304,17 @@
         "options": [
             {
                 "name": "basic",
-                "color": null,
+                "color": "#AB47BC",
                 "order":1
             },
             {
                 "name": "no facility",
-                "color": null,
+                "color": "#F9CA29",
                 "order":3
             },
             {
                 "name": "limited",
-                "color": null,
+                "color": "#FCF176",
                 "order":2
             }
         ]
