@@ -56,6 +56,11 @@ def get_answer(session: Session) -> List[AnswerDict]:
     return session.query(Answer).all()
 
 
+def get_answer_by_question(session: Session,
+                           question: int) -> List[AnswerDict]:
+    return session.query(Answer).filter(Answer.question == question).all()
+
+
 def get_answer_by_data_and_question(session: Session, data: int,
                                     questions: List[int]) -> List[AnswerBase]:
     return session.query(Answer).filter(

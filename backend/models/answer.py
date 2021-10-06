@@ -95,6 +95,10 @@ class Answer(Base):
             }
         }
 
+    @property
+    def only_value(self) -> List:
+        return self.text or self.value or self.options
+
 
 class AnswerBase(BaseModel):
     id: int

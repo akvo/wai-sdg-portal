@@ -5,6 +5,7 @@ from routes.user import user_route
 from routes.form import form_route
 from routes.question import question_route
 from routes.data import data_route
+from routes.chart import chart_route
 
 app = FastAPI(
     root_path="/api",
@@ -27,6 +28,7 @@ app.include_router(user_route)
 app.include_router(form_route)
 app.include_router(question_route)
 app.include_router(data_route)
+app.include_router(chart_route)
 
 
 @app.get("/", tags=["Dev"])
