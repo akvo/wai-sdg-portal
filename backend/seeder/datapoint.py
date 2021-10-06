@@ -12,6 +12,7 @@ from models.question import QuestionType
 from models.answer import Answer
 from models.user import UserRole
 from db.connection import Base, SessionLocal, engine
+from db.truncator import truncate
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 Base.metadata.create_all(bind=engine)
@@ -175,6 +176,10 @@ def record(answers, form, user):
                               answers=answerlist)
     return data
 
+
+for table in ["data", "answer", "history"]:
+    action = truncate(session=session, table=table)
+    print(action)
 
 for sheet in sheets:
     data = pd.read_excel(source, sheet)

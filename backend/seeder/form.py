@@ -4,6 +4,7 @@ from db import crud_form
 from db import crud_question_group
 from db import crud_question
 from db.connection import Base, SessionLocal, engine
+from db.truncator import truncate
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 Base.metadata.create_all(bind=engine)
@@ -13,6 +14,10 @@ file_prefix = "form_eth"
 
 files = os.listdir(path)
 files = list(filter(lambda x: file_prefix in x, files))
+
+for table in ["form", "question_group", "question", "option"]:
+    action = truncate(session=session, table=table)
+    print(action)
 
 for file in files:
     form_name = file
