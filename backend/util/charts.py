@@ -8,6 +8,18 @@ from db.crud_question import get_question_by_name
 from db.crud_answer import get_answer_by_question
 from models.question import QuestionType
 
+# CHART TYPE
+# bar: number, option, multiple options
+#   axis: when number -> administration level, else unique answer
+# pie: number, option, multiple options
+#   category : when number -> administration level, else unique answer
+# stack: option and multiple option question only
+#   axis : administration
+#   stack: unique answer
+# line: number only
+#   axis: date of submission
+#   stack: administration
+
 
 class ChartType(TypedDict):
     bar = "bar"
@@ -45,7 +57,7 @@ class Charts(TypedDict):
         "example_charts": example_charts,
         "water_service_level": water_service_level,
     }
-    list = ["example_charts", "water_service_level"]
+    list = list(get)
 
 
 def get_chart_value(session: Session, chart: ChartDict):
