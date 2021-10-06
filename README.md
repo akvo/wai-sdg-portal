@@ -14,7 +14,7 @@ Wash Dataportal for WAI Ethiopia
 docker-compose up -d
 ```
 
-The app should be running at: [localhost:3000](http://localhost:3000). Any endpoints with prefix `/api` will be redirected to [localhost:8000](http://localhost:8000)
+The app should be running at: [localhost:3000](http://localhost:3000). Any endpoints with prefix `/api` will be redirected to [localhost:5000](http://localhost:5000)
 
 see: [setupProxy.js](https://github.com/akvo/wai-ethiopia/blob/main/frontend/src/setupProxy.js)
 
@@ -38,19 +38,28 @@ see:
 
 # Database Seeder
 
+### Administration Level Seeder
+Assuming that you have `administration-ethiopia.csv` inside `./backend/source` folder you will be able to run.
+```
+docker-compose exec backend python -m seeder.administration
+```
 ### Add Super Admin
 Note you wont be able to use some of the backend API if you haven't confirmed your email address with **Auth0 WAI Ethiopia** tenant which you received from Auth0 once your account is registered.
 ```
 docker-compose exec backend python -m seeder.admin youremail@akvo.org
 ```
-
+### Seed Random User
+```
+docker-compose exec backend python -m seeder.user <number_of_user>
+```
 ### Form Seeder
 Assuming that you have `form_eth_*.json` inside `./backend/source` folder you will be able to run.
 ```
 docker-compose exec backend python -m seeder.form
 ```
+### Datapoint Seeder
+Assuming that you have `data-input.xlsx` inside `./backend/source` folder you will be able to run.
+```
+docker-compose exec backend python -m seeder.datapoint
+```
 
-### Seed Random User
-```
-docker-compose exec backend python -m seeder.user <number_of_user>
-```
