@@ -20,14 +20,42 @@ source = './source/data-input.xlsx'
 sheet_prefix = 'Eth'
 all_sheets = load_workbook(source, read_only=True).sheetnames
 sheets = list(filter(lambda x: sheet_prefix in x, all_sheets))
-administration_level = ['Woreda', 'Kebele']
-lat_long = ["Latitude", "Longitude"]
+administration_level = ['woreda', 'kebele']
+lat_long = ["latitude", "longitude"]
 
 corrections = {
+    "Negele Arsi": "Arsi Negele",
+    "Shahamene": "Shahemene",
     "Jigessa Korke": "Jegesa Korke",
+    "Jigesa qorke": "Jegesa Korke",
     "Kersa Maja": "Kersa Meja",
-    "Bute Filicha": "Bute Felicha"
+    "Bute Filicha": "Bute Felicha",
+    "Turufe Watara elemo": "Turre Wetera Elemo",
+    "Mararo": "Meraro",
+    "Hursa Simbo": "Hursa Sinbo",
+    "Jalo Dida": "Jelo Dida",
+    "Aradano Shifa": "Aredano Shifa",
+    "Kubi Guta": "Kubi guta",
+    "Oine Cafo umbure": "Oine Chefo Unbule",
+    "Bulchana Danaba": "Bulchana Deneba",
+    "Bura Borama": "Bura Borema",
+    "Obenso Jalo": "Obenso Jilo",
+    "Cabi Dida": "Jelo Dida",
+    "Cabi Dida nyataa": "Jelo Dida",
+    "Gonde Qarso": "Gonde Kerso",
+    "Faji Goba": "Faji Gole",
+    "Wayo Danisa": "Danisa",
+    "Turge Galo": "Terge Galo",
+    "Kersa Gara": "Kersa Gera",
+    "Ali": "Ali Wayo",
+    "Alge lak 2": "Alge",
+    "Bila": "Shala Bila",
+    "Arjo": "Gebta Arjo",
+    "Gorbi Arba": "Gerbi Arba",
+    "Edo Jigessa": "Edo Jigessa"
 }
+
+corrections = {}
 
 if len(sys.argv) < 2:
     print("You should provide admin address")
@@ -43,23 +71,28 @@ if user.role != UserRole.admin:
     sys.exit()
 
 
-def get_location(x):
-    parent_name = x[administration_level[0]]
-    child_name = x[administration_level[1]]
+def get_location(sheet, x):
+    parent_name = x[administration_level[0]].strip()
+    child_name = x[administration_level[1]].strip()
+    if parent_name in list(corrections):
+        parent_name = corrections[parent_name]
     if child_name in list(corrections):
         child_name = corrections[child_name]
     parent = crud_administration.get_administration_by_name(session=session,
                                                             name=parent_name)
     message = ""
     if not parent:
-        message = "{} Not Found".format(parent_name)
+        message = "{}, {}, {} Not Found".format(sheet, x["ix"], parent_name)
         for pname in parent_name.split(" "):
             parent = crud_administration.get_administration_by_keyword(
                 session=session, name=pname)
             if parent and not message:
-                message = "{} Not Found, perhaps {} ?".format(
-                    parent_name, " / ".join([p.name for p in parent]))
-        raise ValueError(message)
+                message = "{}, {},{} Not Found, perhaps {} ?".format(
+                    sheet, x["ix"], parent_name,
+                    " / ".join([p.name for p in parent]))
+        # raise ValueError(message)
+        # print(message)
+        return None
     children = crud_administration.get_administration_by_name(session=session,
                                                               name=child_name,
                                                               parent=parent.id)
@@ -70,11 +103,14 @@ def get_location(x):
         children = crud_administration.get_administration_by_keyword(
             session=session, name=cname, parent=parent.id)
         if children and not len(message):
-            message = "{} Not Found, perhaps {} ?".format(
-                child_name, " / ".join([c.name for c in children]))
+            message = "{}, {}, {} Not Found, perhaps {} ?".format(
+                sheet, x["ix"], child_name,
+                " / ".join([c.name for c in children]))
     if not len(message):
-        message = "{} Not Found".format(child_name)
-    raise ValueError(message)
+        message = "{}, {}, {} Not Found".format(sheet, x["ix"], child_name)
+    # raise ValueError(message)
+    # print(message)
+    return None
 
 
 def record(answers, form, user):
@@ -85,9 +121,16 @@ def record(answers, form, user):
     for a in answers:
         # Only get all non np.NaN value
         if answers[a] == answers[a]:
+            valid = True
+            qname = a.replace("_", " ").lower().strip()
+            if "|" in qname:
+                # to handle flow data
+                qname = qname.split("|")[1]
             q = crud_question.get_question_by_name(session=session,
-                                                   name=a,
+                                                   name=qname,
                                                    form=form.id)
+            if not q:
+                print(a)
             answer = Answer(question=q.id,
                             created_by=user.id,
                             created=datetime.now())
@@ -106,14 +149,22 @@ def record(answers, form, user):
                 if q.meta:
                     names.append(answers[a])
             if q.type == QuestionType.number:
-                answer.value = answers[a]
-                if q.meta:
-                    names.append(str(answers[a]))
+                # changes: 0437ade9f8c1aa8ae6e1f23667d7975b958fd5a9
+                try:
+                    float(answers[a])
+                    valid = True
+                except ValueError:
+                    valid = False
+                if valid:
+                    answer.value = answers[a]
+                    if q.meta:
+                        names.append(str(answers[a]))
             if q.type == QuestionType.option:
                 answer.options = [answers[a]]
             if q.type == QuestionType.multiple_option:
                 answer.options = answers[a]
-            answerlist.append(answer)
+            if valid:
+                answerlist.append(answer)
     name = " - ".join([str(n) for n in names])
     data = crud_data.add_data(session=session,
                               form=form.id,
@@ -125,25 +176,37 @@ def record(answers, form, user):
     return data
 
 
-# TODO: Add forloop
-sheet = sheets[0]
-data = pd.read_excel(source, sheet)
-data.drop(data.filter(regex="Unnamed"), axis=1, inplace=True)
-data['location'] = data.apply(lambda x: get_location(x), axis=1)
-for adm in administration_level:
-    data.drop(data.filter(regex=adm), axis=1, inplace=True)
-geo = False
-for g in lat_long:
-    if g not in list(data):
+for sheet in sheets:
+    data = pd.read_excel(source, sheet)
+    data.drop(data.filter(regex="Unnamed"), axis=1, inplace=True)
+    data = data.rename(
+        columns={
+            "Latitude": "latitude",
+            "Longitude": "longitude",
+            "Woreda": "woreda",
+            "Kebele": "kebele"
+        })
+    data.dropna(subset=administration_level, inplace=True)
+    data['ix'] = data.index + 1
+    data['location'] = data.apply(lambda x: get_location(sheet, x), axis=1)
+    data = data.drop(columns=['ix'], axis=1)
+    data = data.dropna(subset=["location"])
+    if data.shape[0]:
+        for adm in administration_level:
+            data.drop(data.filter(regex=adm), axis=1, inplace=True)
         geo = False
-if geo:
-    data['geolocation'] = data.apply(lambda x: [x["Latitude"], x["Longitude"]],
-                                     axis=1)
-    for g in lat_long:
-        data.drop(data.filter(regex=g), axis=1, inplace=True)
-
-form_name = sheet.replace(sheet_prefix, '').strip().upper()
-form = crud_form.get_form_by_name(session=session, name=form_name)
-data = data.to_dict("records")
-for d in data:
-    rec = record(d, form, user)
+        for g in lat_long:
+            geo = True
+            if g not in list(data):
+                geo = False
+        if geo:
+            data['geolocation'] = data.apply(
+                lambda x: [x["latitude"], x["longitude"]]
+                if x["latitude"] and x["longitude"] else None,
+                axis=1)
+            data = data.drop(columns=lat_long, axis=1)
+        form_name = sheet.replace(sheet_prefix, '').strip().upper()
+        form = crud_form.get_form_by_name(session=session, name=form_name)
+        data = data.to_dict("records")
+        for d in data:
+            rec = record(d, form, user)
