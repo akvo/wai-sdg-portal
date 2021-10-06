@@ -33,13 +33,25 @@ class TestFormRoutes():
         res = await client.post(
             app.url_path_for("question:create"),
             params={
-                "question text": "Test Question",
-                "form id": 1,
-                "question group": "Test Question Group",
+                "name": "Test Question",
+                "form": 1,
+                "question_group": "Test Question Group",
                 "meta": True,
-                "question type": "option",
-                "options": ["Option 1", "Option 2"]
+                "type": "option"
             },
+            json=[{
+                "name": "Option 1",
+                "color": "#333",
+                "order": 1
+            }, {
+                "name": "Option 2",
+                "color": "#333",
+                "order": 2
+            }, {
+                "name": "Option 3",
+                "color": None,
+                "order": None
+            }],
             headers={"Authorization": f"Bearer {account.token}"},
         )
         assert res.status_code == 200
@@ -52,15 +64,15 @@ class TestFormRoutes():
         assert res["meta"] is True
         assert res["type"] == "option"
         assert res["option"] == [{
-            "id": 1,
-            "question": 1,
-            "color": None,
-            "order": None,
-            "name": "Option 1"
-        }, {
-            "id": 2,
-            "question": 1,
-            "color": None,
-            "order": None,
-            "name": "Option 2"
-        }]
+                "color": "#333",
+                "order": 1,
+                "name": "Option 1"
+                }, {
+                "color": "#333",
+                "order": 2,
+                "name": "Option 2"
+                }, {
+                "color": None,
+                "order": None,
+                "name": "Option 3"
+            }]

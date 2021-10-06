@@ -10,7 +10,6 @@ from db.connection import Base
 
 
 class OptionDict(TypedDict):
-    id: int
     name: str
     order: Optional[int] = None
     color: Optional[str] = None
@@ -22,7 +21,7 @@ class Option(Base):
     question = Column(Integer, ForeignKey('question.id'))
     name = Column(String)
     order = Column(Integer, nullable=True)
-    color = Column(String)
+    color = Column(String, nullable=True)
 
     def __init__(self,
                  name: str,
@@ -38,8 +37,6 @@ class Option(Base):
     @property
     def serialize(self) -> OptionDict:
         return {
-            "id": self.id,
-            "question": self.question,
             "name": self.name,
             "order": self.order,
             "color": self.color
@@ -47,8 +44,6 @@ class Option(Base):
 
 
 class OptionBase(BaseModel):
-    id: int
-    question: int
     name: str
     order: Optional[int] = None
     color: Optional[str] = None

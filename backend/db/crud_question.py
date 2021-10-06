@@ -2,7 +2,7 @@ from typing import List, Optional
 from sqlalchemy import and_
 from sqlalchemy.orm import Session
 from models.question import Question, QuestionDict, QuestionBase, QuestionType
-from models.option import Option
+from models.option import Option, OptionDict
 
 
 def add_question(session: Session,
@@ -12,7 +12,7 @@ def add_question(session: Session,
                  type: QuestionType,
                  meta: bool,
                  order: Optional[int] = None,
-                 option: Optional[List[str]] = None) -> QuestionBase:
+                 option: Optional[List[OptionDict]] = None) -> QuestionBase:
     last_question = session.query(Question).filter(
         and_(Question.form == form,
              Question.question_group == question_group)).order_by(
@@ -29,7 +29,12 @@ def add_question(session: Session,
                         type=type)
     if option:
         for o in option:
-            question.option.append(Option(name=o))
+            opt = Option(name=o["name"])
+            if "order" in o:
+                opt.order = o["order"]
+            if "color" in o:
+                opt.color = o["color"]
+            question.option.append(opt)
     session.add(question)
     session.commit()
     session.flush()
