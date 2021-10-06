@@ -42,22 +42,43 @@ class ChartDict(TypedDict):
 
 class Charts(TypedDict):
     example_charts = {
-        "question": "main source of drinking water",
-        "form": "hh",
-        "type": ChartType.stack,
-        "methood": ChartMethod.count
+    "question": "main source of drinking water",
+    "form": "hh",
+    "type": ChartType.stack,
+    "methood": ChartMethod.count
     }
-    water_service_level = {
-        "question": "water service level",
-        "form": "hh",
-        "type": ChartType.stack,
-        "methood": ChartMethod.count
+    water_point_functionality = {
+    "question": "Functionality Status",
+    "form": "wp",
+    "type": ChartType.stack,
+    "methood": ChartMethod.count
+    }
+    water_service_level_households = {
+    "question": "water service level",
+    "form": "hh",
+    "type": ChartType.stack,
+    "methood": ChartMethod.count
+    }
+    water_service_level_health_facility = {
+    "question": "water",
+    "form": "health",
+    "type": ChartType.stack,
+    "methood": ChartMethod.count
+    }
+    water_service_level_school = {
+    "question": "water",
+    "form": "school",
+    "type": ChartType.stack,
+    "methood": ChartMethod.count
     }
     get = {
         "example_charts": example_charts,
-        "water_service_level": water_service_level,
+        "water_point_functionality": water_point_functionality,
+        "water_service_level_households": water_service_level_households,
+        "water_service_level_health_facility": water_service_level_health_facility,
+        "water_service_level_school": water_service_level_school,
     }
-    list = list(get)
+    list = ["example_charts", "water_point_functionality", "water_service_level_households", "water_service_level_health_facility", "water_service_level_school"]
 
 
 def get_chart_value(session: Session, chart: ChartDict):
