@@ -226,7 +226,7 @@
   },
   {
     "order": 17,
-    "question": "number of non functionaltaps in the scheme",
+    "question": "number of non functional taps in the scheme",
     "type": "number",
     "meta": false,
     "options": null
