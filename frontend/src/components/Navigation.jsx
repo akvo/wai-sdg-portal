@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Drawer, Space, Avatar, Menu, Row, Col, Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { UIState } from "../state/ui";
+import { Link } from "react-router-dom";
 import startCase from "lodash/startCase";
 
 const { SubMenu, Divider } = Menu;
@@ -9,9 +10,15 @@ const { SubMenu, Divider } = Menu;
 const Navigation = ({ logout, loginWithPopup, isAuthenticated }) => {
   const { page, user } = UIState.useState((c) => c);
   const visible = UIState.useState((s) => s.showNav);
+
   const onClose = () => {
     UIState.update((s) => {
       s.showNav = false;
+    });
+  };
+  const changePage = ({ key }) => {
+    UIState.update((s) => {
+      s.page = key;
     });
   };
 
@@ -35,7 +42,12 @@ const Navigation = ({ logout, loginWithPopup, isAuthenticated }) => {
         onClose={onClose}
         visible={visible}
       >
-        <Menu mode="inline" defaultOpenKeys="jmp">
+        <Menu
+          mode="inline"
+          onSelect={changePage}
+          defaultOpenKeys="jmp"
+          selectedKeys={[page]}
+        >
           <Menu.Item key="water">Water</Menu.Item>
           <Divider />
           <Menu.Item key="clts">CLTS</Menu.Item>
@@ -49,6 +61,10 @@ const Navigation = ({ logout, loginWithPopup, isAuthenticated }) => {
           <Menu.Item key="admin">Admin</Menu.Item>
           <Divider />
           <Menu.Item key="about">About</Menu.Item>
+          <Divider />
+          <Menu.Item key="documentation">
+            <Link to="/documentation">Documentation</Link>
+          </Menu.Item>
         </Menu>
         <Row
           className="auth-button-wrapper"

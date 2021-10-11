@@ -1,18 +1,20 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Switch, Route } from "react-router-dom";
 
 import Home from "../pages/home/Home";
+import Doc from "../pages/doc/Doc";
 
 const Content = () => {
   //! Route here
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
-      </Switch>
-    </Router>
+    <>
+      <Route exact path="/">
+        <Home />
+      </Route>
+      <Route exact path="/documentation">
+        <Doc />
+      </Route>
+    </>
   );
 };
 

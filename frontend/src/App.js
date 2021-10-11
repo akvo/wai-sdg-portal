@@ -7,7 +7,11 @@ import Content from "./components/Content";
 import { UIState } from "./state/ui";
 import api from "./util/api";
 import { useAuth0 } from "@auth0/auth0-react";
+import { createBrowserHistory } from "history";
+import { Router } from "react-router-dom";
 import "./App.scss";
+
+const history = createBrowserHistory();
 
 function App() {
   const {
@@ -61,24 +65,26 @@ function App() {
   }, [getIdTokenClaims, isAuthenticated, loginWithPopup, user]);
 
   return (
-    <div className="App">
-      <Navigation
-        loginWithPopup={loginWithPopup}
-        isAuthenticated={isAuthenticated}
-        logout={logout}
-      />
-      <Layout theme="light">
-        <Layout.Header>
-          <Header />
-        </Layout.Header>
-        <Layout.Content>
-          <Content />
-        </Layout.Content>
-        <Layout.Footer>
-          <Footer />
-        </Layout.Footer>
-      </Layout>
-    </div>
+    <Router history={history}>
+      <div className="App">
+        <Navigation
+          loginWithPopup={loginWithPopup}
+          isAuthenticated={isAuthenticated}
+          logout={logout}
+        />
+        <Layout theme="light">
+          <Layout.Header>
+            <Header />
+          </Layout.Header>
+          <Layout.Content>
+            <Content />
+          </Layout.Content>
+          <Layout.Footer>
+            <Footer />
+          </Layout.Footer>
+        </Layout>
+      </div>
+    </Router>
   );
 }
 
