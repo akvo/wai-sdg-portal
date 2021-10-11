@@ -1,0 +1,75 @@
+.App {
+  .ant-layout {
+    background-color: #fff;
+
+    .ant-layout-header {
+      background-color: #fafafa;
+
+      .header-logo {
+      }
+
+      .header-menu {
+        text-align: right;
+
+        .menu-outlined {
+          color: #45add9;
+        }
+      }
+    }
+
+    .ant-layout-content {
+      padding: 20px 40px;
+    }
+
+    .ant-layout-footer {
+      background-color: #45add9;
+      color: #fff;
+      font-size: 14px;
+      padding: 20px 0px 0px 0px;
+
+      .footer-start,
+      .footer-end {
+        padding: 0 40px;
+      }
+
+      h2 {
+        color: #fff;
+        font-size: 18px;
+        text-transform: uppercase;
+        font-weight: bold;
+      }
+
+      .footer-end {
+        margin-top: 20px;
+        background-color: #0288d1b7;
+        color: #fff;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-weight: bold;
+
+        a {
+          color: #fff;
+          text-decoration: none;
+        }
+
+        .start {
+          a {
+            margin-right: 10px;
+          }
+        }
+
+        .middle {
+          text-align: center;
+        }
+
+        .end {
+          text-align: right;
+
+          a {
+            margin-left: 10px;
+          }
+        }
+      }
+    }
+  }
+}
