@@ -1,12 +1,18 @@
 import React from "react";
-import { Row, Col } from "antd";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
+import Home from "../pages/home/Home";
 
 const Content = () => {
+  //! Route here
   return (
-    <Row>
-      <Col lg={12}>Col 1</Col>
-      <Col lg={12}>Col 2</Col>
-    </Row>
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+      </Switch>
+    </Router>
   );
 };
 
