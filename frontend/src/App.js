@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Layout, Divider, notification } from "antd";
+import { Layout, notification } from "antd";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
@@ -21,7 +21,6 @@ function App() {
     user,
     getIdTokenClaims,
   } = useAuth0();
-  const [token, setToken] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -30,7 +29,6 @@ function App() {
         const response = await getIdTokenClaims();
         if (response) {
           api.setToken(response.__raw);
-          setToken(response.__raw);
         }
         api
           .get("/user/me")
