@@ -1,17 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Drawer, Space, Avatar, Menu, Row, Col, Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { UIState } from "../state/ui";
+import startCase from "lodash/startCase";
 
 const { SubMenu, Divider } = Menu;
 
-const Navigation = () => {
+const Navigation = ({ logout, loginWithPopup, isAuthenticated }) => {
+  const { page, user } = UIState.useState((c) => c);
   const visible = UIState.useState((s) => s.showNav);
   const onClose = () => {
     UIState.update((s) => {
       s.showNav = false;
     });
   };
+
+  useEffect(() => {
+    document.title = startCase(page !== "" ? page : "Home", "-");
+  }, [page]);
+
   return (
     <>
       <Drawer
@@ -49,12 +56,29 @@ const Navigation = () => {
           justify="space-around"
           wrap={true}
         >
-          <Col span={6}>
-            <Button icon={<UserOutlined />}>Login</Button>
-          </Col>
-          <Col span={6}>
-            <Button type="link">Signup</Button>
-          </Col>
+          {!isAuthenticated ? (
+            <>
+              <Col span={6}>
+                <Button icon={<UserOutlined />} onClick={loginWithPopup}>
+                  Login
+                </Button>
+              </Col>
+              <Col span={6}>
+                <Button type="link">Signup</Button>
+              </Col>
+            </>
+          ) : (
+            <>
+              <Col span={12}>
+                <Button
+                  icon={<UserOutlined />}
+                  onClick={() => logout({ returnTo: window.location.origin })}
+                >
+                  Logout
+                </Button>
+              </Col>
+            </>
+          )}
         </Row>
       </Drawer>
     </>

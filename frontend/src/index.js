@@ -8,7 +8,7 @@ import "antd/dist/antd.css";
 ReactDOM.render(
   <Auth0Provider
     domain="wai-ethiopia.eu.auth0.com"
-    clientId="ZleK9aLp6J0jy6OplqLAfMxzw35PWG7x"
+    clientId="OlqShNF3knpLpwX7iPLUHFTr9BlrrkHF"
     redirectUri={window.location.origin}
     cacheLocation="localstorage"
   >

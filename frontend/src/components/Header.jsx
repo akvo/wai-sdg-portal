@@ -8,7 +8,7 @@ import {
 import { UIState } from "../state/ui";
 
 const Header = () => {
-  const visible = UIState.useState((s) => s.visible);
+  const { page, user, visible } = UIState.useState((c) => c);
   const onOpen = () => {
     UIState.update((s) => {
       s.showNav = true;
@@ -25,7 +25,14 @@ const Header = () => {
       <Col span={8} className="header-menu">
         <Space size={20}>
           <Button icon={<FieldTimeOutlined />}>Activity Log</Button>
-          <Avatar icon={<UserOutlined />} alt="user-avatar" />
+          {user && user?.picture ? (
+            <Avatar
+              src={user.picture.replace("https://", "")}
+              alt="user-avatar"
+            />
+          ) : (
+            user && <Avatar icon={<UserOutlined />} alt="user-avatar" />
+          )}
           <MenuOutlined onClick={onOpen} className="menu-outlined" />
         </Space>
       </Col>
