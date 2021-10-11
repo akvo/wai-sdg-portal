@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Button, Avatar, Space } from "antd";
+import { Row, Col, Button, Badge, Avatar, Space } from "antd";
 import {
   MenuOutlined,
   FieldTimeOutlined,
@@ -24,14 +24,20 @@ const Header = () => {
       </Col>
       <Col span={8} className="header-menu">
         <Space size={20}>
-          <Button icon={<FieldTimeOutlined />}>Activity Log</Button>
-          {user && user?.picture ? (
-            <Avatar
-              src={user.picture.replace("https://", "")}
-              alt="user-avatar"
-            />
-          ) : (
-            user && <Avatar icon={<UserOutlined />} alt="user-avatar" />
+          {user && (
+            <>
+              <Badge count={5}>
+                <Button icon={<FieldTimeOutlined />}>Activity Log</Button>
+              </Badge>
+              {user?.picture ? (
+                <Avatar
+                  src={`${user.picture}#${window.location.origin}/img.jpg`}
+                  alt="user-avatar"
+                />
+              ) : (
+                <Avatar icon={<UserOutlined />} alt="user-avatar" />
+              )}
+            </>
           )}
           <MenuOutlined onClick={onOpen} className="menu-outlined" />
         </Space>
