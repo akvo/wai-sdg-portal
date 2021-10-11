@@ -1,0 +1,146 @@
+$primary: #45add9;
+$primaryhover: #4bb946;
+$secondary: #4bb946;
+$font: "Helvetica", "Arial", sans-serif !important;
+
+.swagger-ui {
+  font-family: $font;
+  margin-bottom: 40px;
+
+  .opblock {
+    margin: 5px;
+    border-radius: 0px;
+    box-shadow: none;
+
+    .opblock-summary-description {
+      font-family: $font;
+    }
+
+    &.opblock-get {
+      border-color: $primary;
+
+      .opblock-summary-method {
+        border-radius: 0px;
+        font-family: $font;
+        background: $primary;
+      }
+    }
+
+    &.opblock-post {
+      border-color: $secondary;
+
+      .opblock-summary-method {
+        border-radius: 0px;
+        font-family: $font;
+        background: $secondary;
+      }
+    }
+
+    .opblock-section-header {
+      h4 {
+        font-family: $font;
+      }
+    }
+  }
+
+  .opblock-body {
+    pre {
+      &.microlight {
+        border-radius: 0px;
+        margin-bottom: 16px;
+      }
+    }
+  }
+
+  .response-col_status {
+    font-family: $font;
+    font-size: 16px;
+  }
+
+  .response-col_links {
+    font-family: $font;
+    font-size: 16px;
+  }
+
+  .opblock-tag {
+    font-family: $font;
+  }
+
+  .btn {
+    border-radius: 0px;
+    font-family: $font;
+
+    &.authorize {
+      color: #fff;
+      border-color: $primary;
+      background: $primary;
+      box-shadow: 0 2px #0000000b;
+
+      svg {
+        fill: #fff;
+      }
+    }
+  }
+
+  button,
+  select {
+    border-radius: 0px !important;
+    font-family: $font;
+  }
+
+  a {
+    &.nostyle {
+      font-family: $font;
+    }
+  }
+
+  .response-col_links {
+    font-family: $font;
+  }
+
+  .tab {
+    li {
+      font-family: $font;
+
+      a {
+        color: #000;
+      }
+    }
+  }
+
+  table {
+    thead {
+      tr {
+        td {
+          font-family: $font;
+          font-size: 16px;
+        }
+
+        th {
+          font-family: $font;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+
+  .parameter__name {
+    font-family: $font;
+  }
+
+  .parameter__default {
+    font-size: 12px;
+
+    p {
+      margin-bottom: 8px;
+    }
+  }
+
+  .info {
+    display: none;
+  }
+
+  .models {
+    display: none;
+  }
+}
