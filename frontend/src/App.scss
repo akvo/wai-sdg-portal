@@ -1,4 +1,8 @@
 .App {
+  .container {
+    padding: 24px 40px;
+  }
+
   .ant-layout {
     background-color: #fff;
 
@@ -18,7 +22,7 @@
     }
 
     .ant-layout-content {
-      padding: 20px 40px;
+      // padding: 20px 40px;
     }
 
     .ant-layout-footer {
