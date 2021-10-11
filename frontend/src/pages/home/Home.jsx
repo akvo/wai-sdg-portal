@@ -36,7 +36,7 @@ const Home = () => {
         <Row className="container jumbotron-wrapper" gutter={[24, 24]}>
           <Col lg={10}>
             <h1 className="jumbotron-text">
-              This portal is used by Wordedas to see the relative WASH
+              This portal is used by Woredas to see the relative WASH
               vulnerability of communities and institutions, and track the
               status of water and sanitation infrastructure
             </h1>
@@ -55,7 +55,7 @@ const Home = () => {
             <Row align="middle" justify="space-around" wrap={true}>
               {datasetsInPortal.map(
                 ({ title, description, readmore, explore }) => (
-                  <Col key={title} span={6}>
+                  <Col key={title} sm={24} md={18} lg={7}>
                     <Card className="dataset-item">
                       <h2>{title}</h2>
                       <p>{description}</p>
