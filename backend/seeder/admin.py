@@ -16,8 +16,10 @@ if len(sys.argv) == 4:
     org = crud_organisation.get_organisation_by_name(session=session,
                                                      name=sys.argv[3])
     if not org:
-        print("Organisation named {} not found".format(sys.argv[3]))
-        sys.exit()
+        org = crud_organisation.add_organisation(session=session,
+                                                 name=sys.argv[3],
+                                                 type="iNGO")
+        print("Organisation named {} created".format(sys.argv[3]))
     user = crud.add_user(session=session,
                          email=sys.argv[1],
                          name=sys.argv[2],
