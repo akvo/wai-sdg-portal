@@ -62,7 +62,9 @@ const Navigation = ({ logout, loginWithPopup, isAuthenticated }) => {
             <Menu.Item key="health-facilities">Health Facilities</Menu.Item>
           </SubMenu>
           <Divider />
-          <Menu.Item key="admin">Admin</Menu.Item>
+          <Menu.Item key="admin">
+            <Link to="/admin">Admin</Link>
+          </Menu.Item>
           <Divider />
           <Menu.Item key="about">About</Menu.Item>
           <Divider />

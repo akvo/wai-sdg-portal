@@ -24,7 +24,7 @@ const Water = () => {
       <Col span={24}>
         <Row align="middle" className="filter-wrapper">
           <Col span={24} className="container">
-            <Space size={20} align="middle">
+            <Space size={20} align="center" wrap={true}>
               <SelectFilter placeholder="Select Dataset" />
               <SelectFilter placeholder="Select Woreda" />
               <SelectFilter placeholder="Select Kebele" />
