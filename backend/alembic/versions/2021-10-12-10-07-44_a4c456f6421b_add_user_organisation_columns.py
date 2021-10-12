@@ -19,8 +19,7 @@ def upgrade():
     op.add_column(
         'user',
         sa.Column('organisation', sa.Integer(),
-                  sa.ForeignKey('organisation.id')),
-        )
+                  sa.ForeignKey('organisation.id')))
     op.create_foreign_key(u'user_organisation_constraint', 'user',
                           'organisation', ['organisation'], ['id'])
 
