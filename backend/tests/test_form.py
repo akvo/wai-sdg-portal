@@ -64,15 +64,15 @@ class TestFormRoutes():
         assert res["meta"] is True
         assert res["type"] == "option"
         assert res["option"] == [{
-                "color": "#333",
-                "order": 1,
-                "name": "Option 1"
-                }, {
-                "color": "#333",
-                "order": 2,
-                "name": "Option 2"
-                }, {
-                "color": None,
-                "order": None,
-                "name": "Option 3"
-            }]
+            "color": "#333",
+            "order": 1,
+            "name": "Option 1"
+        }, {
+            "color": "#333",
+            "order": 2,
+            "name": "Option 2"
+        }, {
+            "color": None,
+            "order": None,
+            "name": "Option 3"
+        }]

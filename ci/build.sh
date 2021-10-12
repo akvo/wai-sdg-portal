@@ -45,8 +45,10 @@ backend_build () {
 
 backend_build
 
-#pytest
+# Pytest
 docker-compose -f docker-compose.test.yml run -T backend pytest -rPvvv
+# Code Quality
+docker-compose -f docker-compose.test.yml run -T backend python -m flake8 --select E123
 
 frontend_build
 

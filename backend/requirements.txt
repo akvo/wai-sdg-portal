@@ -14,3 +14,4 @@ httpx==0.18.2
 asgi-lifespan==1.0.1
 openpyxl==3.0.5
 xlrd==1.2.0
+flake8==4.0.1
