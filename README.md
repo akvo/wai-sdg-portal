@@ -49,13 +49,13 @@ Assuming that you have `organisation-list.csv` inside `./backend/source` folder 
 docker-compose exec backend python -m seeder.organisation
 ```
 ### Add Super Admin
-Note you wont be able to use some of the backend API if you haven't confirmed your email address with **Auth0 WAI Ethiopia** tenant which you received from Auth0 once your account is registered.
+Note you wont be able to use some of the backend API if you haven't confirmed your email address with **Auth0 WAI Ethiopia** tenant which you received from Auth0 once your account is registered. You also have to perform [Administration](#administration-level-seeder) and [Organisation Seeder](#organisation-seeder) first
 ```
-docker-compose exec backend python -m seeder.admin youremail@akvo.org
+docker-compose exec backend python -m seeder.admin youremail@akvo.org "Your Name" Akvo
 ```
 ### Seed Random User
 ```
-docker-compose exec backend python -m seeder.user <number_of_user>
+docker-compose exec backend python -m seeder.user <number_of_user> Akvo
 ```
 ### Form Seeder
 Assuming that you have `form_eth_*.json` inside `./backend/source` folder you will be able to run.

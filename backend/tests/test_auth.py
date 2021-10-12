@@ -7,6 +7,8 @@ from middleware import verify_token
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 from db import crud_user
+from db import crud_organisation
+from models.organisation import OrganisationType
 
 sys.path.append("..")
 
@@ -37,9 +39,21 @@ class TestAuthorizationSetup:
     @pytest.mark.asyncio
     async def test_user_get_registered(self, app: FastAPI, session: Session,
                                        client: AsyncClient) -> None:
+        org = crud_organisation.add_organisation(session=session,
+                                                 name="Akvo",
+                                                 type="iNGO")
+        org = org.serialize
+        assert org["id"] == 1
+        assert org["name"] == "Akvo"
+        assert org["type"] == OrganisationType.iNGO
         account = Acc(True)
         res = await client.post(
             app.url_path_for("user:register"),
+            params={
+                "first_name": "Akvo",
+                "last_name": "Support",
+                "organisation": org["id"]
+            },
             headers={"Authorization": f"Bearer {account.token}"})
         assert res.status_code == 200
         res = res.json()
