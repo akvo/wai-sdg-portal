@@ -22,7 +22,7 @@ const Content = () => {
       <Route exact path="/">
         <Home />
       </Route>
-      <ProtectedContent exact path="/water" component={<Water />} />
+      <ProtectedContent exact path="/water" component={Water} />
       <ProtectedContent exact path="/documentation" component={Doc} />
     </>
   );
