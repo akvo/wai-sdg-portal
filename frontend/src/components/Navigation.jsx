@@ -31,10 +31,12 @@ const Navigation = ({ logout, loginWithPopup, isAuthenticated }) => {
       <Drawer
         title={
           <div className="header-logo">
-            <Space size={20}>
-              <Avatar src="./wai-logo.png" alt="wai-logo" />
-              WAI Ethiopia
-            </Space>
+            <Link to="/">
+              <Space size={20}>
+                <Avatar src="./wai-logo.png" alt="wai-logo" />
+                WAI Ethiopia
+              </Space>
+            </Link>
           </div>
         }
         className="menu-drawer-container"

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Row, Col, Button, Badge, Avatar, Space } from "antd";
 import {
   MenuOutlined,
@@ -17,10 +18,12 @@ const Header = () => {
   return (
     <Row align="middle" justify="space-between" wrap={true}>
       <Col span={8} className="header-logo">
-        <Space size={20}>
-          <Avatar src="./wai-logo.png" alt="wai-logo" />
-          WAI Ethiopia
-        </Space>
+        <Link to="/">
+          <Space size={20}>
+            <Avatar src="./wai-logo.png" alt="wai-logo" />
+            WAI Ethiopia
+          </Space>
+        </Link>
       </Col>
       <Col span={8} className="header-menu">
         <Space size={20}>

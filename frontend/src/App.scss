@@ -9,9 +9,6 @@
     .ant-layout-header {
       background-color: #fafafa;
 
-      .header-logo {
-      }
-
       .header-menu {
         text-align: right;
 
@@ -103,6 +100,18 @@
       border: 1px solid #45add9;
       border-radius: 50%;
       padding: 0.5px;
+    }
+  }
+}
+
+.header-logo {
+  a {
+    color: #000000;
+    text-decoration: none;
+    font-weight: 600;
+
+    &:hover {
+      color: #000000;
     }
   }
 }
