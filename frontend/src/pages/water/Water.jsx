@@ -1,6 +1,15 @@
 import React from "react";
-import { Row, Col, Select, Button, Space, Divider, Input } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+import {
+  Row,
+  Col,
+  Select,
+  Button,
+  Space,
+  Divider,
+  Input,
+  Carousel,
+  Card,
+} from "antd";
 
 import "./water.scss";
 import Map from "../../components/Map";
@@ -49,6 +58,21 @@ const Water = () => {
               </Row>
               <Divider />
             </div>
+          </Col>
+        </Row>
+      </Col>
+      {/* Carousel */}
+      <Col span={24}>
+        <Row align="middle" className="carousel-wrapper">
+          <Col span={24} className="container">
+            <Carousel autoplay effect="fade">
+              {["Facility 1", "Facility 2"].map((x) => (
+                <div key={x} className="carousel-item-wrapper">
+                  <h1>{x}</h1>
+                  <Card className="carousel-item-card">Content {x}</Card>
+                </div>
+              ))}
+            </Carousel>
           </Col>
         </Row>
       </Col>
