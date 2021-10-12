@@ -71,8 +71,86 @@
     }
 
     .overview-content-wrapper {
+      min-height: 360px;
       padding: 24px 40px;
       background: rgba(2, 136, 209, 0.06);
+      .overview-item-col {
+      }
+      .overview-item-row {
+        .overview-item-card {
+          border-radius: 8px;
+          border: none;
+          height: 100%;
+
+          .overview-item {
+            min-height: 230px;
+          }
+
+          &.water-point {
+            color: #45add9;
+          }
+
+          &.odf {
+            color: #000000;
+          }
+
+          &.health-facilities {
+            color: #ff9d00;
+          }
+
+          &.schools {
+            color: #0288d1;
+          }
+
+          div {
+            &.area {
+              font-size: 20px;
+              text-transform: uppercase;
+            }
+            &.count {
+              font-size: 48px;
+              font-weight: bold;
+            }
+            &.text {
+              font-size: 24px;
+              text-transform: uppercase;
+            }
+            &.explore {
+              color: #45add9;
+              margin-top: 30px;
+            }
+          }
+        }
+      }
+
+      .ant-carousel .slick-dots-bottom {
+        bottom: -48px;
+      }
+
+      .ant-carousel .slick-dots li {
+        height: 12px;
+        width: 12px;
+      }
+
+      .ant-carousel .slick-dots li button {
+        display: block;
+        height: 12px;
+        width: 12px;
+        background: #0288d1;
+        border: 2px solid #0288d1;
+        border-radius: 50%;
+        opacity: 1;
+        transition: all 0.5s;
+      }
+
+      .ant-carousel .slick-dots li.slick-active {
+        width: 12px;
+      }
+
+      .ant-carousel .slick-dots li.slick-active button {
+        background: transparent;
+        opacity: 1;
+      }
     }
   }
 }

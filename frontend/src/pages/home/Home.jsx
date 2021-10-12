@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Row, Col, Card, Space } from "antd";
+import { Row, Col, Card, Space, Carousel } from "antd";
 import { RightOutlined, ArrowRightOutlined } from "@ant-design/icons";
+import CountUp from "react-countup";
 
 import "./home.scss";
 import ethGeoUrl from "../../sources/eth-filtered.topo.json";
@@ -31,12 +32,85 @@ const datasetsInPortal = [
   },
 ];
 
+const overviews = [
+  [
+    {
+      type: "chart",
+      category: "water-point",
+    },
+    {
+      type: "info",
+      category: "water-point",
+      icon: null,
+      woreda: 2,
+      percent: 78,
+      count: 282,
+      text: "OF ##count## WATER POINTS ARE FUNCTIONAL",
+      explore: "#",
+    },
+  ],
+  [
+    {
+      type: "info",
+      category: "odf",
+      icon: null,
+      woreda: 1,
+      percent: 81,
+      count: null,
+      text: "OF ODF VILLAGES PER WOREDA",
+      explore: "#",
+    },
+    {
+      type: "chart",
+      category: "odf",
+    },
+  ],
+  [
+    {
+      type: "chart",
+      category: "health-facilities",
+    },
+    {
+      type: "info",
+      category: "health-facilities",
+      icon: null,
+      woreda: 1,
+      percent: 4.5,
+      count: null,
+      text: "OF HEALTH FACILITIES HAVE BASIC WATER ACCESS",
+      explore: "#",
+    },
+  ],
+  [
+    {
+      type: "info",
+      category: "schools",
+      icon: null,
+      woreda: 1,
+      percent: 3.5,
+      count: null,
+      text: "OF SCHOOLS HAVE BASIC WATER ACCESS",
+      explore: "#",
+    },
+    {
+      type: "chart",
+      category: "schools",
+    },
+  ],
+];
+
 const Home = () => {
   return (
     <Row className="home-container">
+      {/* Jumbotron */}
       <Col span={24}>
-        <Row className="container jumbotron-wrapper" gutter={[24, 24]}>
-          <Col lg={10}>
+        <Row
+          className="container jumbotron-wrapper"
+          align="top"
+          justify="space-between"
+          wrap={true}
+        >
+          <Col lg={9}>
             <h1 className="jumbotron-text">
               This portal is used by Woredas to see the relative WASH
               vulnerability of communities and institutions, and track the
@@ -50,6 +124,7 @@ const Home = () => {
           </Col>
         </Row>
       </Col>
+      {/* Dataset Card */}
       <Col span={24}>
         <Row className="dataset-container" align="middle">
           <Col className="container dataset-col" span={24}>
@@ -85,15 +160,80 @@ const Home = () => {
           </Col>
         </Row>
       </Col>
+      {/* Overview Caraousel */}
       <Col span={24}>
         <Row className="overview-container">
           <Col span={24} className="container">
-            <h1>Overview of Wordedas</h1>
+            <h1>Overview of Woredas</h1>
           </Col>
           <Col span={24} className="overview-content-wrapper">
-            <p>Carousel here...</p>
-            <p>Carousel here...</p>
-            <p>Carousel here...</p>
+            <Carousel autoplay effect="fade">
+              {overviews.map((items, i) => (
+                <div key={`overview-${i}`}>
+                  <Row
+                    align="middle"
+                    justify="space-between"
+                    wrap={true}
+                    gutter={[24, 24]}
+                    className="overview-item-row"
+                  >
+                    {items.map(
+                      ({
+                        type,
+                        category,
+                        icon,
+                        woreda,
+                        percent,
+                        count,
+                        text,
+                        explore,
+                      }) => {
+                        return type === "chart" ? (
+                          <Col span={12} className="overview-item-col">
+                            <Card className={`overview-item-card ${category}`}>
+                              <Row className="overview-item">
+                                <Col span={24}>Chart here</Col>
+                              </Row>
+                            </Card>
+                          </Col>
+                        ) : (
+                          <Col span={12} className="overview-item-col">
+                            <Card className={`overview-item-card ${category}`}>
+                              <Row className="overview-item">
+                                <Col span={8}>{icon || "Icon here"}</Col>
+                                <Col span={16}>
+                                  <div className="area">
+                                    Across{" "}
+                                    {woreda > 1
+                                      ? `${woreda} Woredas`
+                                      : "the country"}
+                                  </div>
+                                  <div className="count">
+                                    <CountUp decimals={1} end={percent} />%
+                                  </div>
+                                  <div className="text">
+                                    {!count
+                                      ? text
+                                      : text.replace("##count##", count)}
+                                  </div>
+                                  <div className="explore">
+                                    <Link to={explore}>
+                                      <Space align="center" size="small">
+                                        Explore <ArrowRightOutlined />
+                                      </Space>
+                                    </Link>
+                                  </div>
+                                </Col>
+                              </Row>
+                            </Card>
+                          </Col>
+                        );
+                      }
+                    )}
+                  </Row>
+                </div>
+              ))}
+            </Carousel>
           </Col>
         </Row>
       </Col>
