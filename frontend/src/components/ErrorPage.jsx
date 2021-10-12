@@ -20,6 +20,12 @@ const pageProps = (status) => {
         title: "Page not found",
         subTitle: "Sorry, we couldn't find that page",
       };
+    case 401:
+      return {
+        status: "warning",
+        title: "Not Authorized",
+        subTitle: "Sorry, you are not allowed to access this page",
+      };
     default:
       return {
         status: "info",

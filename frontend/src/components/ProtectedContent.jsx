@@ -5,7 +5,7 @@ import { UIState } from "../state/ui";
 import { isAuthCookie } from "../util/auth";
 
 const ProtectedContent = ({ component: Component, ...rest }) => {
-  const { user } = UIState.currentState;
+  const { user } = UIState.useState((s) => s);
 
   return (
     <Route
@@ -17,7 +17,7 @@ const ProtectedContent = ({ component: Component, ...rest }) => {
           return (
             <Redirect
               to={{
-                pathname: "/",
+                pathname: "/not-found",
                 state: {
                   from: props.location,
                 },

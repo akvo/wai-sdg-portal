@@ -1,6 +1,8 @@
 import React from "react";
 import { Row, Col } from "antd";
 import { FacebookFilled, TwitterOutlined } from "@ant-design/icons";
+import { UIState } from "../state/ui";
+import { Link } from "react-router-dom";
 
 const FooterContent = ({ title, text }) => {
   return (
@@ -12,6 +14,12 @@ const FooterContent = ({ title, text }) => {
 };
 
 const FooterEnd = () => {
+  const { user } = UIState.useState((c) => c);
+  const changePage = ({ key }) => {
+    UIState.update((s) => {
+      s.page = key;
+    });
+  };
   return (
     <Row className="footer-end" align="space-between">
       <Col span={8} className="start">
@@ -28,6 +36,11 @@ const FooterEnd = () => {
       <Col span={8} className="end">
         <a href="#">Privacy Policy</a>
         <a href="#">Terms of Service</a>
+        {user && (
+          <Link to="/documentation" onClick={() => changePage("documentation")}>
+            Developer
+          </Link>
+        )}
       </Col>
     </Row>
   );

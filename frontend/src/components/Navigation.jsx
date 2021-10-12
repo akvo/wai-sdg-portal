@@ -64,9 +64,6 @@ const Navigation = ({ logout, loginWithPopup, isAuthenticated }) => {
           <Divider />
           <Menu.Item key="about">About</Menu.Item>
           <Divider />
-          <Menu.Item key="documentation">
-            <Link to="/documentation">Documentation</Link>
-          </Menu.Item>
         </Menu>
         <Row
           className="auth-button-wrapper"
