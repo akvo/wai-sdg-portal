@@ -39,7 +39,6 @@ def add(req: Request,
         session: Session = Depends(get_session),
         credentials: credentials = Depends(security)):
     name = f"{first_name} {last_name}"
-    print(name)
     user = verify_token(req.state.authenticated)
     user = crud.add_user(session=session,
                          name=name,
