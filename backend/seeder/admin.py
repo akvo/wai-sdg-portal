@@ -20,6 +20,17 @@ if len(sys.argv) == 4:
                                                  name=sys.argv[3],
                                                  type="iNGO")
         print("Organisation named {} created".format(sys.argv[3]))
+    user = crud.get_user_by_email(session=session, email=sys.argv[1])
+    if user:
+        user = crud.update_user_by_id(session=session,
+                                      id=user.id,
+                                      name=sys.argv[2],
+                                      role="admin",
+                                      active=1,
+                                      organisation=org.id)
+        print(f"{user.email} of {org.name} updated")
+        session.close()
+        sys.exit()
     user = crud.add_user(session=session,
                          email=sys.argv[1],
                          name=sys.argv[2],

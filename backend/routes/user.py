@@ -110,13 +110,27 @@ def update_by_id(req: Request,
                  id: int,
                  active: bool,
                  role: UserRole,
+                 first_name: str = "",
+                 last_name: str = "",
                  access: List[AccessBase] = [],
+                 organisation: int = None,
                  session: Session = Depends(get_session),
                  credentials: credentials = Depends(security)):
     verify_admin(req.state.authenticated, session)
+    name = ""
+    if len(first_name):
+        name = first_name
+    if len(last_name) and len(first_name):
+        name = f"{first_name} {last_name}"
+    elif len(last_name) and not len(first_name):
+        name = last_name
+    else:
+        name = ""
     access = crud.add_access(session=session, user=id, access=access)
     user = crud.update_user_by_id(session=session,
                                   id=id,
+                                  name=name,
+                                  organisation=organisation,
                                   active=active,
                                   role=role)
     if user is None:

@@ -1,5 +1,5 @@
 import pandas as pd
-from typing import List
+from typing import List, Optional
 from sqlalchemy.orm import Session
 from sqlalchemy import desc
 from models.user import User, UserRole, UserDict
@@ -36,11 +36,19 @@ def get_user(session: Session,
         desc(User.id)).offset(skip).limit(limit).all()
 
 
-def update_user_by_id(session: Session, id: int, role: UserRole,
-                      active: bool) -> UserDict:
+def update_user_by_id(session: Session,
+                      id: int,
+                      role: UserRole,
+                      active: bool,
+                      name: Optional[str] = None,
+                      organisation: Optional[int] = None) -> UserDict:
     user = session.query(User).filter(User.id == id).first()
     user.role = role
     user.active = active
+    if organisation:
+        user.organisation = organisation
+    if name:
+        user.name = name
     session.flush()
     session.commit()
     session.refresh(user)
