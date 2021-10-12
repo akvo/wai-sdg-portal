@@ -40,6 +40,32 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: organisation_type; Type: TYPE; Schema: public; Owner: wai
+--
+
+CREATE TYPE public.organisation_type AS ENUM (
+    'Company',
+    'iNGO',
+    'Government'
+);
+
+
+ALTER TYPE public.organisation_type OWNER TO wai;
+
+--
+-- Name: organisationtype; Type: TYPE; Schema: public; Owner: wai
+--
+
+CREATE TYPE public.organisationtype AS ENUM (
+    'iNGO',
+    'Company',
+    'Government'
+);
+
+
+ALTER TYPE public.organisationtype OWNER TO wai;
+
+--
 -- Name: questiontype; Type: TYPE; Schema: public; Owner: wai
 --
 
@@ -63,7 +89,8 @@ ALTER TYPE public.questiontype OWNER TO wai;
 
 CREATE TYPE public.userrole AS ENUM (
     'user',
-    'admin'
+    'admin',
+    'editor'
 );
 
 
@@ -351,6 +378,42 @@ ALTER SEQUENCE public.option_id_seq OWNED BY public.option.id;
 
 
 --
+-- Name: organisation; Type: TABLE; Schema: public; Owner: wai
+--
+
+CREATE TABLE public.organisation (
+    id integer NOT NULL,
+    name character varying(254),
+    type public.organisation_type,
+    created timestamp without time zone
+);
+
+
+ALTER TABLE public.organisation OWNER TO wai;
+
+--
+-- Name: organisation_id_seq; Type: SEQUENCE; Schema: public; Owner: wai
+--
+
+CREATE SEQUENCE public.organisation_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.organisation_id_seq OWNER TO wai;
+
+--
+-- Name: organisation_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: wai
+--
+
+ALTER SEQUENCE public.organisation_id_seq OWNED BY public.organisation.id;
+
+
+--
 -- Name: question; Type: TABLE; Schema: public; Owner: wai
 --
 
@@ -434,7 +497,9 @@ CREATE TABLE public."user" (
     email character varying(254),
     active boolean,
     role public.userrole,
-    created timestamp without time zone
+    created timestamp without time zone,
+    organisation integer,
+    name character varying
 );
 
 
@@ -509,6 +574,13 @@ ALTER TABLE ONLY public.history ALTER COLUMN id SET DEFAULT nextval('public.hist
 --
 
 ALTER TABLE ONLY public.option ALTER COLUMN id SET DEFAULT nextval('public.option_id_seq'::regclass);
+
+
+--
+-- Name: organisation id; Type: DEFAULT; Schema: public; Owner: wai
+--
+
+ALTER TABLE ONLY public.organisation ALTER COLUMN id SET DEFAULT nextval('public.organisation_id_seq'::regclass);
 
 
 --
@@ -652,7 +724,7 @@ COPY public.administration (id, parent, name) FROM stdin;
 --
 
 COPY public.alembic_version (version_num) FROM stdin;
-422f13fbe888
+8f5d1ad55412
 \.
 
 
@@ -697,6 +769,14 @@ COPY public.option (id, "order", name, question, color) FROM stdin;
 
 
 --
+-- Data for Name: organisation; Type: TABLE DATA; Schema: public; Owner: wai
+--
+
+COPY public.organisation (id, name, type, created) FROM stdin;
+\.
+
+
+--
 -- Data for Name: question; Type: TABLE DATA; Schema: public; Owner: wai
 --
 
@@ -716,7 +796,7 @@ COPY public.question_group (id, "order", name, form) FROM stdin;
 -- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: wai
 --
 
-COPY public."user" (id, email, active, role, created) FROM stdin;
+COPY public."user" (id, email, active, role, created, organisation, name) FROM stdin;
 \.
 
 
@@ -767,6 +847,13 @@ SELECT pg_catalog.setval('public.history_id_seq', 1, false);
 --
 
 SELECT pg_catalog.setval('public.option_id_seq', 1, false);
+
+
+--
+-- Name: organisation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: wai
+--
+
+SELECT pg_catalog.setval('public.organisation_id_seq', 1, false);
 
 
 --
@@ -863,6 +950,22 @@ ALTER TABLE ONLY public.option
 
 
 --
+-- Name: organisation organisation_name_key; Type: CONSTRAINT; Schema: public; Owner: wai
+--
+
+ALTER TABLE ONLY public.organisation
+    ADD CONSTRAINT organisation_name_key UNIQUE (name);
+
+
+--
+-- Name: organisation organisation_pkey; Type: CONSTRAINT; Schema: public; Owner: wai
+--
+
+ALTER TABLE ONLY public.organisation
+    ADD CONSTRAINT organisation_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: question_group question_group_pkey; Type: CONSTRAINT; Schema: public; Owner: wai
 --
 
@@ -941,6 +1044,13 @@ CREATE UNIQUE INDEX ix_history_id ON public.history USING btree (id);
 --
 
 CREATE UNIQUE INDEX ix_option_id ON public.option USING btree (id);
+
+
+--
+-- Name: ix_organisation_name; Type: INDEX; Schema: public; Owner: wai
+--
+
+CREATE UNIQUE INDEX ix_organisation_name ON public.organisation USING btree (name);
 
 
 --
@@ -1265,6 +1375,22 @@ ALTER TABLE ONLY public.history
 
 ALTER TABLE ONLY public.access
     ADD CONSTRAINT user_access_constraint FOREIGN KEY ("user") REFERENCES public."user"(id) ON DELETE CASCADE;
+
+
+--
+-- Name: user user_organisation_constraint; Type: FK CONSTRAINT; Schema: public; Owner: wai
+--
+
+ALTER TABLE ONLY public."user"
+    ADD CONSTRAINT user_organisation_constraint FOREIGN KEY (organisation) REFERENCES public.organisation(id);
+
+
+--
+-- Name: user user_organisation_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wai
+--
+
+ALTER TABLE ONLY public."user"
+    ADD CONSTRAINT user_organisation_fkey FOREIGN KEY (organisation) REFERENCES public.organisation(id);
 
 
 --
