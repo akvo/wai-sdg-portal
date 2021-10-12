@@ -189,7 +189,11 @@ const Home = () => {
                         explore,
                       }) => {
                         return type === "chart" ? (
-                          <Col span={12} className="overview-item-col">
+                          <Col
+                            key={`${type}-${category}`}
+                            span={12}
+                            className="overview-item-col"
+                          >
                             <Card className={`overview-item-card ${category}`}>
                               <Row className="overview-item">
                                 <Col span={24}>Chart here</Col>
@@ -197,7 +201,11 @@ const Home = () => {
                             </Card>
                           </Col>
                         ) : (
-                          <Col span={12} className="overview-item-col">
+                          <Col
+                            key={`${type}-${category}`}
+                            span={12}
+                            className="overview-item-col"
+                          >
                             <Card className={`overview-item-card ${category}`}>
                               <Row className="overview-item">
                                 <Col span={8}>{icon || "Icon here"}</Col>
