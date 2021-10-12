@@ -4,6 +4,8 @@ import { Row, Col, Card, Space } from "antd";
 import { RightOutlined, ArrowRightOutlined } from "@ant-design/icons";
 
 import "./home.scss";
+import ethGeoUrl from "../../sources/eth-filtered.topo.json";
+import Map from "../../components/Map";
 
 const datasetsInPortal = [
   {
@@ -43,7 +45,7 @@ const Home = () => {
           </Col>
           <Col lg={14}>
             <Card className="map-wrapper">
-              <p>Map here...</p>
+              <Map geoUrl={ethGeoUrl} mapHeight={550} />
             </Card>
           </Col>
         </Row>
