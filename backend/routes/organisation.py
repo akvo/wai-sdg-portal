@@ -1,0 +1,26 @@
+from fastapi import Depends, Request, APIRouter
+from typing import List
+from sqlalchemy.orm import Session
+import db.crud_organisation as crud
+from db.connection import get_session
+from models.organisation import OrganisationBase
+
+organisation_route = APIRouter()
+
+
+@organisation_route.get("/organisation/",
+                        response_model=List[OrganisationBase],
+                        summary="get all organisations",
+                        tags=["Organisation"])
+def get(req: Request, session: Session = Depends(get_session)):
+    organisation = crud.get_organisation(session=session)
+    return organisation
+
+
+@organisation_route.get("/organisation/{id:path}",
+                        response_model=OrganisationBase,
+                        summary="get organisation by id",
+                        tags=["Organisation"])
+def get_by_id(req: Request, id: int, session: Session = Depends(get_session)):
+    organisation = crud.get_organisation_by_id(session=session, id=id)
+    return organisation

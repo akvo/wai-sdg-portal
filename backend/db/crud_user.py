@@ -8,9 +8,13 @@ from models.access import Access, AccessDict
 
 def add_user(session: Session,
              email: str,
+             organisation: int,
              role: UserRole,
              active: bool = False) -> UserDict:
-    user = User(role=role, email=email, active=active)
+    user = User(role=role,
+                email=email,
+                active=active,
+                organisation=organisation)
     session.add(user)
     session.commit()
     session.flush()

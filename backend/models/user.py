@@ -9,6 +9,7 @@ from typing_extensions import TypedDict
 from sqlalchemy import Column, Integer, Boolean, String
 from sqlalchemy import Enum, DateTime
 from sqlalchemy.orm import relationship
+from sqlalchemy import ForeignKey
 from db.connection import Base
 from models.access import AccessDict, AccessBase
 
@@ -16,6 +17,7 @@ from models.access import AccessDict, AccessBase
 class UserRole(enum.Enum):
     user = 'user'
     admin = 'admin'
+    editor = 'editor'
 
 
 class UserDict(TypedDict):
@@ -24,6 +26,13 @@ class UserDict(TypedDict):
     role: UserRole
     active: bool
     access: List[AccessDict]
+    organisation: int
+
+
+class UserSimple(TypedDict):
+    email: str
+    role: UserRole
+    active: bool
 
 
 class User(Base):
@@ -33,15 +42,18 @@ class User(Base):
     role = Column(Enum(UserRole))
     active = Column(Boolean, nullable=True, default=True)
     created = Column(DateTime, default=datetime.utcnow)
+    organisation = Column(Integer, ForeignKey('organisation.id'))
     access = relationship("Access",
                           cascade="all, delete",
                           passive_deletes=True,
                           backref="access")
 
-    def __init__(self, email: str, role: UserRole, active: bool):
+    def __init__(self, email: str, role: UserRole, active: bool,
+                 organisation: int):
         self.email = email
         self.active = active
         self.role = role
+        self.organisation = organisation
 
     def __repr__(self) -> int:
         return f"<User {self.id}>"
@@ -53,7 +65,8 @@ class User(Base):
             "email": self.email,
             "role": self.role,
             "active": self.active,
-            "access": self.access
+            "access": self.access,
+            "organisation": self.organisation
         }
 
 
@@ -65,6 +78,7 @@ class UserBase(BaseModel):
     email_verified: Optional[bool] = False
     picture: Optional[str] = None
     name: Optional[str] = None
+    organisation: int
 
     class Config:
         orm_mode = True
@@ -83,6 +97,7 @@ class UserAccessBase(BaseModel):
     role: UserRole
     active: Optional[bool] = False
     access: List[AccessBase]
+    organisation: int
 
     class Config:
         orm_mode = True

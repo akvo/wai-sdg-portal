@@ -33,10 +33,14 @@ def me(req: Request,
                  name="user:register",
                  tags=["User"])
 def add(req: Request,
+        organisation: int,
         session: Session = Depends(get_session),
         credentials: credentials = Depends(security)):
     user = verify_token(req.state.authenticated)
-    user = crud.add_user(session=session, email=user.get("email"), role="user")
+    user = crud.add_user(session=session,
+                         email=user.get("email"),
+                         role="user",
+                         organisation=organisation)
     return user
 
 
