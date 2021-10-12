@@ -50,7 +50,9 @@ const Navigation = ({ logout, loginWithPopup, isAuthenticated }) => {
           defaultOpenKeys="jmp"
           selectedKeys={[page]}
         >
-          <Menu.Item key="water">Water</Menu.Item>
+          <Menu.Item key="water">
+            <Link to="/water">Water</Link>
+          </Menu.Item>
           <Divider />
           <Menu.Item key="clts">CLTS</Menu.Item>
           <Divider />

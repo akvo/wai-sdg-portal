@@ -5,9 +5,9 @@ import ProtectedContent from "./ProtectedContent";
 import Home from "../pages/home/Home";
 import Doc from "../pages/doc/Doc";
 import ErrorPage from "./ErrorPage";
+import Water from "../pages/water/Water";
 
 const Content = () => {
-  //! Route here
   return (
     <>
       <Route exact path="/not-found">
@@ -22,6 +22,7 @@ const Content = () => {
       <Route exact path="/">
         <Home />
       </Route>
+      <ProtectedContent exact path="/water" component={<Water />} />
       <ProtectedContent exact path="/documentation" component={Doc} />
     </>
   );

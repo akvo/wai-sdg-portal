@@ -1,0 +1,30 @@
+.water-container {
+  .filter-wrapper {
+    background: #70707026;
+
+    .filter-select {
+      width: 200px;
+    }
+
+    .filter-select,
+    .remove-filter-button {
+      background: #ffffff 0% 0% no-repeat padding-box;
+      border: 1px solid #70707080;
+      border-radius: 4px;
+    }
+  }
+
+  .data-container {
+    min-height: 585px;
+    .map-wrapper {
+      .map-search {
+        margin-bottom: 24px;
+      }
+    }
+
+    .table-wrapper {
+      min-height: 585px;
+      background: #7070701a;
+    }
+  }
+}
