@@ -34,14 +34,19 @@ def me(req: Request,
                  tags=["User"])
 def add(req: Request,
         organisation: int,
+        first_name: str,
+        last_name: str = "",
         session: Session = Depends(get_session),
         credentials: credentials = Depends(security)):
+    name = f"{first_name} {last_name}"
+    print(name)
     user = verify_token(req.state.authenticated)
     user = crud.add_user(session=session,
+                         name=name,
                          email=user.get("email"),
                          role="user",
                          organisation=organisation)
-    return user
+    return user.serialize
 
 
 @user_route.get("/user/",

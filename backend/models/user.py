@@ -23,6 +23,7 @@ class UserRole(enum.Enum):
 class UserDict(TypedDict):
     id: int
     email: str
+    name: str
     role: UserRole
     active: bool
     access: List[AccessDict]
@@ -31,6 +32,7 @@ class UserDict(TypedDict):
 
 class UserSimple(TypedDict):
     email: str
+    name: str
     role: UserRole
     active: bool
 
@@ -39,6 +41,7 @@ class User(Base):
     __tablename__ = "user"
     id = Column(Integer, primary_key=True, index=True, nullable=True)
     email = Column(String, unique=True)
+    name = Column(String)
     role = Column(Enum(UserRole))
     active = Column(Boolean, nullable=True, default=True)
     created = Column(DateTime, default=datetime.utcnow)
@@ -48,9 +51,10 @@ class User(Base):
                           passive_deletes=True,
                           backref="access")
 
-    def __init__(self, email: str, role: UserRole, active: bool,
+    def __init__(self, email: str, name: str, role: UserRole, active: bool,
                  organisation: int):
         self.email = email
+        self.name = name
         self.active = active
         self.role = role
         self.organisation = organisation
@@ -63,6 +67,7 @@ class User(Base):
         return {
             "id": self.id,
             "email": self.email,
+            "name": self.name,
             "role": self.role,
             "active": self.active,
             "access": self.access,
@@ -73,6 +78,7 @@ class User(Base):
 class UserBase(BaseModel):
     id: int
     email: str
+    name: str
     role: UserRole
     active: Optional[bool] = False
     email_verified: Optional[bool] = False
@@ -94,6 +100,7 @@ class UserResponse(BaseModel):
 class UserAccessBase(BaseModel):
     id: int
     email: str
+    name: str
     role: UserRole
     active: Optional[bool] = False
     access: List[AccessBase]
