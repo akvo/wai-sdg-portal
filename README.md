@@ -43,6 +43,11 @@ Assuming that you have `administration-ethiopia.csv` inside `./backend/source` f
 ```
 docker-compose exec backend python -m seeder.administration
 ```
+### Organisation Seeder
+Assuming that you have `organisation-list.csv` inside `./backend/source` folder you will be able to run.
+```
+docker-compose exec backend python -m seeder.organisation
+```
 ### Add Super Admin
 Note you wont be able to use some of the backend API if you haven't confirmed your email address with **Auth0 WAI Ethiopia** tenant which you received from Auth0 once your account is registered.
 ```
