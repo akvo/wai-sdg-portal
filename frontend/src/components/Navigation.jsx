@@ -50,24 +50,25 @@ const Navigation = ({ logout, loginWithPopup, isAuthenticated }) => {
           defaultOpenKeys="jmp"
           selectedKeys={[page]}
         >
-          <Menu.Item key="water">
-            <Link to="/water">Water</Link>
-          </Menu.Item>
-          <Divider />
-          <Menu.Item key="clts">CLTS</Menu.Item>
-          <Divider />
-          <SubMenu key="jmp" title="JMP">
-            <Menu.Item key="households">Households</Menu.Item>
-            <Menu.Item key="schools">Schools</Menu.Item>
-            <Menu.Item key="health-facilities">Health Facilities</Menu.Item>
-          </SubMenu>
-          <Divider />
-          <Menu.Item key="admin">
-            <Link to="/admin">Admin</Link>
-          </Menu.Item>
-          <Divider />
+          {user?.active && (
+            <>
+              <Menu.Item key="water">
+                <Link to="/water">Water</Link>
+              </Menu.Item>
+              <Menu.Item key="clts">CLTS</Menu.Item>
+              <SubMenu key="jmp" title="JMP">
+                <Menu.Item key="households">Households</Menu.Item>
+                <Menu.Item key="schools">Schools</Menu.Item>
+                <Menu.Item key="health-facilities">Health Facilities</Menu.Item>
+              </SubMenu>
+            </>
+          )}
+          {(user?.role === "admin" || user?.role === "editor") && (
+            <Menu.Item key="admin">
+              <Link to="/admin">Admin</Link>
+            </Menu.Item>
+          )}
           <Menu.Item key="about">About</Menu.Item>
-          <Divider />
         </Menu>
         <Row
           className="auth-button-wrapper"

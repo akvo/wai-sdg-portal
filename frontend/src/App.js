@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Layout, notification } from "antd";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
@@ -13,6 +13,22 @@ import "./App.scss";
 
 const history = createBrowserHistory();
 
+const NonActiveUserMessage = ({ user }) => {
+  return (
+    <p>
+      {user?.email_verified === false && (
+        <b>
+          Click on the link we sent in your email to verify your email address.
+        </b>
+      )}
+      We will review your sign-up request
+      {user?.email_verified === false &&
+        " as soon as you verify your email address"}
+      . Please, allow for 1 business day.
+    </p>
+  );
+};
+
 function App() {
   const {
     isAuthenticated,
@@ -21,7 +37,6 @@ function App() {
     user,
     getIdTokenClaims,
   } = useAuth0();
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async function () {
@@ -37,10 +52,18 @@ function App() {
             UIState.update((u) => {
               u.user = { ...user, ...data };
             });
+            if (!active) {
+              notification.warning({
+                message: <NonActiveUserMessage user={user} />,
+              });
+            }
           })
           .catch((e) => {
             switch (e.response?.status) {
               case 404:
+                UIState.update((u) => {
+                  u.registrationPopup = true;
+                });
                 break;
               case 401:
                 notification.error({
@@ -53,7 +76,6 @@ function App() {
       } else {
         api.setToken(null);
         setTimeout(() => {
-          setLoading(false);
           UIState.update((c) => {
             c.loading = false;
           });
