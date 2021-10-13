@@ -8,6 +8,7 @@ import {
   Input,
   Avatar,
   Select,
+  Button,
   notification,
 } from "antd";
 import { UserOutlined } from "@ant-design/icons";
@@ -20,22 +21,31 @@ const { Option } = Select;
 const RegistrationPopup = ({ user }) => {
   const [form] = Form.useForm();
   const [formLoading, setFormLoading] = useState(true);
-  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [confirmAwait, setConfirmAwait] = useState(false);
   const [organisation, setOrganisation] = useState([]);
   const visible = UIState.useState((s) => s.registrationPopup);
 
   const register = () => {
-    setConfirmLoading(true);
+    setConfirmAwait(true);
     const data = form.getFieldsValue(fieldValues);
-    api.post("user", null, { params: data }).then((res) => {
-      UIState.update((s) => {
-        s.registrationPopup = false;
+    api
+      .post("user", null, { params: data })
+      .then(() => {
+        setTimeout(() => {
+          UIState.update((s) => {
+            s.registrationPopup = false;
+          });
+          notification.warning({
+            message: <NonActiveUserMessage user={user} />,
+          });
+        }, 2000);
+      })
+      .catch(() => {
+        notification.warning({
+          message: "Oops, Something Wrong!",
+        });
+        setConfirmAwait(false);
       });
-      setConfirmLoading(false);
-      notification.warning({
-        message: <NonActiveUserMessage user={user} />,
-      });
-    });
   };
 
   useEffect(() => {
@@ -61,9 +71,7 @@ const RegistrationPopup = ({ user }) => {
       title="Register your account"
       centered
       visible={visible}
-      onOk={register}
-      okText="Register"
-      confirmLoading={confirmLoading}
+      footer={null}
     >
       <Row style={{ paddingBottom: "20px" }}>
         <Col span={24} align="center">
@@ -82,7 +90,12 @@ const RegistrationPopup = ({ user }) => {
           )}
         </Col>
       </Row>
-      <Form layout="vertical" form={form} name="registration-form">
+      <Form
+        layout="vertical"
+        form={form}
+        name="registration-form"
+        onFinish={register}
+      >
         <Form.Item name="email" label="Email">
           <Input disabled />
         </Form.Item>
@@ -97,11 +110,7 @@ const RegistrationPopup = ({ user }) => {
             </Form.Item>
           </Col>
           <Col span={11}>
-            <Form.Item
-              name="last_name"
-              label="Last Name"
-              rules={[{ required: true, message: "Please input your name!" }]}
-            >
+            <Form.Item name="last_name" label="Last Name">
               <Input />
             </Form.Item>
           </Col>
@@ -119,6 +128,20 @@ const RegistrationPopup = ({ user }) => {
             ))}
           </Select>
         </Form.Item>
+        <Row style={{ paddingTop: "20px" }}>
+          <Col span={24} align="center">
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                loading={confirmAwait}
+                disabled={confirmAwait}
+              >
+                Submit
+              </Button>
+            </Form.Item>
+          </Col>
+        </Row>
       </Form>
     </Modal>
   );
