@@ -8,7 +8,7 @@ from models.organisation import OrganisationBase, OrganisationDict
 organisation_route = APIRouter()
 
 
-@organisation_route.get("/organisation/",
+@organisation_route.get("/organisation",
                         response_model=List[OrganisationBase],
                         summary="get all organisations",
                         tags=["Organisation"])

@@ -27,7 +27,7 @@ def me(req: Request,
     return user
 
 
-@user_route.post("/user/",
+@user_route.post("/user",
                  response_model=UserBase,
                  summary="register new user",
                  name="user:register",

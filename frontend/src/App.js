@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Layout, notification } from "antd";
+import { NonActiveUserMessage } from "./components/Notifications";
 import Navigation from "./components/Navigation";
 import RegistrationPopup from "./components/RegistrationPopup";
 import Footer from "./components/Footer";
@@ -14,22 +15,6 @@ import "./App.scss";
 
 const history = createBrowserHistory();
 
-const NonActiveUserMessage = ({ user }) => {
-  return (
-    <p>
-      {user?.email_verified === false && (
-        <b>
-          Click on the link we sent in your email to verify your email address.
-        </b>
-      )}
-      We will review your sign-up request
-      {user?.email_verified === false &&
-        " as soon as you verify your email address"}
-      . Please, allow for 1 business day.
-    </p>
-  );
-};
-
 function App() {
   const {
     isAuthenticated,
@@ -38,6 +23,7 @@ function App() {
     user,
     getIdTokenClaims,
   } = useAuth0();
+  const { registrationPopup } = UIState.useState((s) => s);
 
   useEffect(() => {
     (async function () {
@@ -105,7 +91,7 @@ function App() {
           </Layout.Footer>
         </Layout>
       </div>
-      <RegistrationPopup user={user} />
+      {registrationPopup && <RegistrationPopup user={user} />}
     </Router>
   );
 }
