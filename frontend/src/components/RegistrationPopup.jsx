@@ -18,7 +18,7 @@ import api from "../util/api";
 const fieldValues = ["email", "first_name", "last_name", "organisation"];
 const { Option } = Select;
 
-const RegistrationPopup = ({ user }) => {
+const RegistrationPopup = ({ user, logout, loginWithPopup }) => {
   const [form] = Form.useForm();
   const [formLoading, setFormLoading] = useState(true);
   const [confirmAwait, setConfirmAwait] = useState(false);
@@ -46,6 +46,10 @@ const RegistrationPopup = ({ user }) => {
         });
         setConfirmAwait(false);
       });
+  };
+
+  const cancel = () => {
+    logout({ returnTo: `${window.location.origin}/login` });
   };
 
   useEffect(() => {
@@ -96,7 +100,18 @@ const RegistrationPopup = ({ user }) => {
         name="registration-form"
         onFinish={register}
       >
-        <Form.Item name="email" label="Email">
+        <Form.Item
+          name="email"
+          label="Email"
+          tooltip={{
+            title: (
+              <Button icon={<UserOutlined />} onClick={cancel} type="link">
+                Use other email
+              </Button>
+            ),
+            color: "#FFF",
+          }}
+        >
           <Input disabled />
         </Form.Item>
         <Row justify="space-between" wrap={true}>
@@ -128,8 +143,8 @@ const RegistrationPopup = ({ user }) => {
             ))}
           </Select>
         </Form.Item>
-        <Row style={{ paddingTop: "20px" }}>
-          <Col span={24} align="center">
+        <Row style={{ paddingTop: "20px" }} justify="center">
+          <Col span={6} align="center">
             <Form.Item>
               <Button
                 type="primary"

@@ -23,6 +23,9 @@ const Content = () => {
       <Route exact path="/">
         <Home />
       </Route>
+      <Route exact path="/login">
+        <Home />
+      </Route>
       <Route exact path="/water">
         <Water />
       </Route>

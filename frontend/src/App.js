@@ -66,6 +66,10 @@ function App() {
           UIState.update((c) => {
             c.loading = false;
           });
+          if (window.location.pathname === "/login") {
+            loginWithPopup();
+            history.push("/");
+          }
         }, 1000);
       }
     })();
@@ -91,7 +95,13 @@ function App() {
           </Layout.Footer>
         </Layout>
       </div>
-      {registrationPopup && <RegistrationPopup user={user} />}
+      {registrationPopup && (
+        <RegistrationPopup
+          user={user}
+          logout={logout}
+          loginWithPopup={loginWithPopup}
+        />
+      )}
     </Router>
   );
 }

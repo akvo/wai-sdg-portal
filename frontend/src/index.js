@@ -6,16 +6,16 @@ import reportWebVitals from "./reportWebVitals";
 import "antd/dist/antd.css";
 
 ReactDOM.render(
-  <Auth0Provider
-    domain="wai-ethiopia.eu.auth0.com"
-    clientId="OlqShNF3knpLpwX7iPLUHFTr9BlrrkHF"
-    redirectUri={window.location.origin}
-    cacheLocation="localstorage"
-  >
-    <React.StrictMode>
+  <React.StrictMode>
+    <Auth0Provider
+      domain="wai-ethiopia.eu.auth0.com"
+      clientId="OlqShNF3knpLpwX7iPLUHFTr9BlrrkHF"
+      redirectUri={window.location.origin}
+      cacheLocation="localstorage"
+    >
       <App />
-    </React.StrictMode>
-  </Auth0Provider>,
+    </Auth0Provider>
+  </React.StrictMode>,
   document.getElementById("root")
 );
 
