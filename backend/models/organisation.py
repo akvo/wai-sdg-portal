@@ -18,12 +18,6 @@ class OrganisationType(enum.Enum):
     Government = 'Government'
 
 
-class OrganisationResponse(TypedDict):
-    id: int
-    name: str
-    type: OrganisationType
-
-
 class OrganisationDict(TypedDict):
     id: int
     name: str
@@ -62,7 +56,6 @@ class OrganisationBase(BaseModel):
     id: Optional[int]
     name: str
     type: OrganisationType
-    user: List[UserBase]
 
     class Config:
         orm_mode = True

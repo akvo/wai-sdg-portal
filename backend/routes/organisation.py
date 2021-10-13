@@ -3,7 +3,7 @@ from typing import List
 from sqlalchemy.orm import Session
 import db.crud_organisation as crud
 from db.connection import get_session
-from models.organisation import OrganisationBase
+from models.organisation import OrganisationBase, OrganisationDict
 
 organisation_route = APIRouter()
 
@@ -18,9 +18,9 @@ def get(req: Request, session: Session = Depends(get_session)):
 
 
 @organisation_route.get("/organisation/{id:path}",
-                        response_model=OrganisationBase,
+                        response_model=OrganisationDict,
                         summary="get organisation by id",
                         tags=["Organisation"])
 def get_by_id(req: Request, id: int, session: Session = Depends(get_session)):
     organisation = crud.get_organisation_by_id(session=session, id=id)
-    return organisation
+    return organisation.serialize
