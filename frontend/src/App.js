@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Layout, notification } from "antd";
 import Navigation from "./components/Navigation";
+import RegistrationPopup from "./components/RegistrationPopup";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Content from "./components/Content";
@@ -104,6 +105,7 @@ function App() {
           </Layout.Footer>
         </Layout>
       </div>
+      <RegistrationPopup user={user} />
     </Router>
   );
 }

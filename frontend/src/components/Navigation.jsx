@@ -5,7 +5,7 @@ import { UIState } from "../state/ui";
 import { Link } from "react-router-dom";
 import startCase from "lodash/startCase";
 
-const { SubMenu, Divider } = Menu;
+const { SubMenu } = Menu;
 
 const Navigation = ({ logout, loginWithPopup, isAuthenticated }) => {
   const { page, user } = UIState.useState((c) => c);
