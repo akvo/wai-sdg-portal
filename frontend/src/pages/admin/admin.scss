@@ -76,7 +76,7 @@
     }
 
     .filter-wrapper {
-      margin: 24px 0;
+      margin: 12px 0 24px 0;
       .search,
       .filter-select {
         width: 200px;
@@ -93,6 +93,22 @@
       margin-bottom: 8px;
       .export-filter-button {
         border-radius: 0 8px 0 0;
+      }
+    }
+
+    .checkbox-wrapper {
+      margin-bottom: 12px;
+      .checkbox-label {
+        color: #707070;
+        margin-right: -15px;
+        font-weight: 600;
+      }
+      .checkbox-input {
+        .ant-checkbox-inner {
+          border: 1px solid #70707080;
+          border-radius: 4px;
+          box-shadow: inset 0px 1px 3px #00000029;
+        }
       }
     }
 
