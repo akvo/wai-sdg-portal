@@ -89,7 +89,20 @@
       }
     }
 
+    .button-wrapper {
+      margin-bottom: 8px;
+      .export-filter-button {
+        border-radius: 0 8px 0 0;
+      }
+    }
+
     .table-wrapper {
+      .ant-table-thead > tr > th {
+        color: #0288d1;
+        font-weight: 600;
+        background: #fff;
+        border-bottom: 2px solid #0288d1;
+      }
     }
   }
 }

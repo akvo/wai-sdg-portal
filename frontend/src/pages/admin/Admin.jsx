@@ -56,11 +56,25 @@ const ManageData = () => {
           <SelectFilter placeholder="Select Woreda" />
           <SelectFilter placeholder="Select Kebele" />
           <Button className="remove-filter-button">Remove Filter</Button>
-          <Button className="advances-filter-button" icon={<FilterOutlined />}>
-            Advanced Filters
-          </Button>
         </Space>
       </div>
+      <Row
+        className="button-wrapper"
+        align="middle"
+        justify="space-between"
+        wrap={true}
+      >
+        <Col span={4} align="start">
+          <Button className="advanced-filter-button" icon={<FilterOutlined />}>
+            Advanced Filters
+          </Button>
+        </Col>
+        <Col span={4} align="end">
+          <Button type="primary" className="export-filter-button">
+            Export Filtered Data
+          </Button>
+        </Col>
+      </Row>
       <div className="table-wrapper">
         <Table
           dataSource={manageDataSources}
