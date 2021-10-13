@@ -79,27 +79,55 @@
   .ant-drawer-body {
     padding: 0;
   }
+
   .ant-drawer-close {
     color: #45add9;
   }
+
   .ant-menu-sub.ant-menu-inline {
     background: #fff;
     color: #45add9;
   }
+
   .ant-menu-submenu-arrow {
     visibility: hidden;
   }
+
   .auth-button-wrapper {
     padding: 24px;
     background: rgba(69, 173, 217, 0.15);
+
     .ant-btn {
       color: #45add9;
       border: none;
     }
+
     .anticon {
       border: 1px solid #45add9;
       border-radius: 50%;
       padding: 0.5px;
+    }
+  }
+
+  .ant-drawer-body {
+    .ant-menu.ant-menu-root {
+      .ant-menu-item {
+        border-bottom: 1px solid #f0f0f0;
+        margin-bottom: 0px;
+        padding-bottom: 5px;
+      }
+    }
+
+    .ant-menu-submenu-title {
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .ant-menu.ant-menu-sub {
+      border-bottom: 1px solid #f0f0f0;
+
+      .ant-menu-item {
+        border-bottom: none;
+      }
     }
   }
 }
