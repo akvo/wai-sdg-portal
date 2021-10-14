@@ -22,7 +22,11 @@
 
   .data-container {
     min-height: 585px;
+    background: #7070701a;
+
     .map-wrapper {
+      background: #fff;
+
       .map-search {
         margin-bottom: 24px;
       }
@@ -30,7 +34,6 @@
 
     .table-wrapper {
       min-height: 585px;
-      background: #7070701a;
     }
   }
 
@@ -43,6 +46,7 @@
 
     .carousel-item-wrapper {
       min-height: 405px;
+
       .carousel-item-card {
         min-height: 300px;
         border-radius: 8px;

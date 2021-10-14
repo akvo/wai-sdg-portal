@@ -57,10 +57,12 @@ const Water = () => {
                   <span className="info">Last submitted 18.00 by User</span>
                 </Col>
               </Row>
-              <Row align="middle" justify="space-between" wrap={true}>
-                <Link to="/form/water-point-data-upload/1">Add New</Link>
-              </Row>
               <Divider />
+              <Row align="middle" justify="space-between" wrap={true}>
+                <Link to="/form/water-point-data-upload/5">
+                  <Button>Add New</Button>
+                </Link>
+              </Row>
             </div>
           </Col>
         </Row>
