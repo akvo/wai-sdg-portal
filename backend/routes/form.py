@@ -4,8 +4,10 @@ from fastapi.security import HTTPBasicCredentials as credentials
 from typing import List
 from sqlalchemy.orm import Session
 import db.crud_form as crud
+import db.crud_administration as crud_administration
 from db.connection import get_session
 from models.form import FormDict, FormBase
+from models.question import QuestionType
 from middleware import verify_admin
 
 security = HTTPBearer()
@@ -29,6 +31,31 @@ def get(req: Request, session: Session = Depends(get_session)):
 def get_by_id(req: Request, id: int, session: Session = Depends(get_session)):
     form = crud.get_form_by_id(session=session, id=id)
     return form.serialize
+
+
+@form_route.get("/webform/{id:path}",
+                summary="get form by id",
+                name="form:get_by_id",
+                tags=["Form"])
+def get_webform_by_id(req: Request,
+                      id: int,
+                      session: Session = Depends(get_session)):
+    form = crud.get_form_by_id(session=session, id=id)
+    form = form.serialize
+    form["question_group"] = [qg.serialize for qg in form["question_group"]]
+    for qg in form["question_group"]:
+        qg["question"] = [q.serialize for q in qg["question"]]
+        for q in qg["question"]:
+            if q["type"] == QuestionType.administration:
+                q.update({"option": "administration"})
+                q.update({"type": "cascade"})
+    administration = crud_administration.get_parent_administration(
+        session=session)
+    form.update(
+        {"cascade": {
+            "administration": [a.cascade for a in administration]
+        }})
+    return form
 
 
 @form_route.post("/form/",

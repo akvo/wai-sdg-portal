@@ -16,6 +16,12 @@ class AdministrationDict(TypedDict):
     children: Optional[List] = []
 
 
+class AdministrationCascade(BaseModel):
+    value: int
+    label: str
+    children: Optional[List] = []
+
+
 class Administration(Base):
     __tablename__ = "administration"
     id = Column(Integer, primary_key=True, index=True, nullable=True)
@@ -37,6 +43,19 @@ class Administration(Base):
             "parent": self.parent,
             "name": self.name,
             "children": self.children
+        }
+
+    @property
+    def cascade(self) -> AdministrationCascade:
+        if len(self.children):
+            return {
+                "value": self.id,
+                "label": self.name,
+                "children": [c.cascade for c in self.children]
+            }
+        return {
+            "value": self.id,
+            "label": self.name,
         }
 
 
