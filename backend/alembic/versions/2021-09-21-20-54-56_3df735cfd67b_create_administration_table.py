@@ -7,7 +7,6 @@ Create Date: 2021-09-21 20:54:56.990541
 """
 from alembic import op
 import sqlalchemy as sa
-import pandas as pd
 
 # revision identifiers, used by Alembic.
 revision = '3df735cfd67b'

@@ -1,10 +1,9 @@
 from typing import List
-from typing_extensions import TypedDict
 from fastapi import Request, APIRouter
 from fastapi import Depends
 from sqlalchemy.orm import Session
 from db.connection import get_session
-from util.charts import Charts, ChartDict
+from util.charts import Charts
 from util.charts import get_chart_value
 
 chart_route = APIRouter()

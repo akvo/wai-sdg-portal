@@ -47,7 +47,9 @@ def get_token(generate=False):
 
 def get_auth0_user():
     access_token = get_token()
-    fields = "fields=email%2Cname%2Cemail_verified%2Cpicture&include_fields=true"
+    fields = [
+        "fields=email", "name", "email_verified", "picture&include_fields=true"
+    ].join("%2C")
     user = r.get(f"https://{AUTH0_DOMAIN}/api/v2/users?{fields}",
                  headers={"Authorization": "Bearer {}".format(access_token)})
     if user.status_code != 200:

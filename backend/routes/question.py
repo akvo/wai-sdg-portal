@@ -34,13 +34,9 @@ class PostQueryParams:
                            description="Wether question is metadata or not"),
         form: int = Query(
             None,
-            description=
-            "Existing form id, must create form if you don't have one"),
+            description="Existing form id, create if you don't have one"),
         question_group: str = Query(
-            None,
-            description=
-            "Name of Question Group, Appendexisting or Create Question Group")
-    ):
+            None, description="Name of Question Group, Append or Create")):
         self.name = name
         self.order = order
         self.form = form
