@@ -14,7 +14,7 @@ def add_administration(session, data) -> AdministrationDict:
 
 def get_parent_administration(session: Session) -> List[Administration]:
     return session.query(Administration).filter(
-        Administration.parent == None).all()
+        Administration.parent.is_(None)).all()
 
 
 def get_administration(session: Session) -> List[Administration]:
