@@ -70,7 +70,7 @@ corrections = {
     "Edola Burqa": "Ido Laburka",
     "Watara Shagule": "Wetera Shegule",
     "Wotara Shagule": "Wetera Shegule",
-    "Xaxesa dadesa	Tatesa Dedesa"
+    "Xaxesa dadesa": "Tatesa Dedesa"
 }
 
 corrections = {}
