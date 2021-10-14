@@ -2366,10 +2366,10 @@ ajv@^7.0.2:
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
-akvo-react-form@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/akvo-react-form/-/akvo-react-form-1.0.1.tgz#b9288f4d46c766ac8a60042a1ddd397657eda9e3"
-  integrity sha512-6AA7W+UDncCy8KnfqOE+wvwXc/L+XdsBozEupIzmyUdklnyooimspHtyw3ZGmizFjGtQa+RwM4dZQ7mMmd115g==
+akvo-react-form@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/akvo-react-form/-/akvo-react-form-1.0.2.tgz#fdb2a8e88d683773e3fec04a7b436f1a6583a45f"
+  integrity sha512-fL3Uf4uCKzp0yvAAIwpgVusa5VMn9fCi4l9Msy9WIKGA4YEIGVlGxrN0Fyjld7kJ0CT9zMkRfXkukxAr6LTLig==
   dependencies:
     antd "^4.16.13"
     axios "^0.23.0"
