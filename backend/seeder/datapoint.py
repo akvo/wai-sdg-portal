@@ -160,12 +160,21 @@ def record(answers, form, user):
                         session, id=administration)
                     names.append(adm_name.name)
             if q.type == QuestionType.geo:
-                geo = answers[a]
-                answer.text = ("{}|{}").format(answers[a][0], answers[a][1])
+                if answers[a]:
+                    geo = answers[a]
+                    answer.text = ("{}|{}").format(answers[a][0],
+                                                   answers[a][1])
+                else:
+                    valid = False
             if q.type == QuestionType.text:
                 answer.text = answers[a]
                 if q.meta:
                     names.append(answers[a])
+            if q.type == QuestionType.date:
+                if answers[a]:
+                    answer.text = answers[a]
+                else:
+                    valid = False
             if q.type == QuestionType.number:
                 # changes: 0437ade9f8c1aa8ae6e1f23667d7975b958fd5a9
                 try:
@@ -224,7 +233,8 @@ for sheet in sheets:
         if geo:
             data['geolocation'] = data.apply(
                 lambda x: [x["latitude"], x["longitude"]]
-                if x["latitude"] and x["longitude"] else None,
+                if x["latitude"] == x["latitude"] and x["longitude"] == x[
+                    "longitude"] else None,
                 axis=1)
             data = data.drop(columns=lat_long, axis=1)
         form_name = sheet.replace(sheet_prefix, '').strip().upper()

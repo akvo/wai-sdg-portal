@@ -24,9 +24,8 @@ for file in files:
     for s in [file_prefix, "_", ".json"]:
         form_name = form_name.replace(s, "")
     form = crud_form.add_form(session=session, name=form_name.upper())
-    question_group = crud_question_group.add_question_group(session=session,
-                                                            name="Base Data",
-                                                            form=form.id)
+    question_group = crud_question_group.add_question_group(
+        session=session, name="Registration", form=form.id)
     print(f"Form: {form.name}")
     print(f"Question Group: {question_group.name}")
     with open(f'{path}{file}') as json_file:
