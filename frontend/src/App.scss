@@ -143,3 +143,22 @@
     }
   }
 }
+
+.webform {
+  .blue-header {
+    background-color: #0288d133;
+    height: 300px;
+    width: 100%;
+    position: absolute;
+  }
+
+  h1 {
+    font-weight: bold;
+    padding: 50px 0px;
+    color: #0288d1;
+  }
+
+  .form-container {
+    padding-bottom: 50px;
+  }
+}

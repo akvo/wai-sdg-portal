@@ -7,6 +7,7 @@ import Doc from "../pages/doc/Doc";
 import ErrorPage from "./ErrorPage";
 import Water from "../pages/water/Water";
 import Admin from "../pages/admin/Admin";
+import Forms from "../pages/Forms";
 
 const Content = () => {
   return (
@@ -31,6 +32,7 @@ const Content = () => {
       </Route>
       <ProtectedContent exact path="/admin" component={Admin} />
       <ProtectedContent exact path="/documentation" component={Doc} />
+      <Route path="/form/:title/:id" component={Forms} />
     </>
   );
 };

@@ -20,7 +20,7 @@ const Header = () => {
       <Col span={8} className="header-logo">
         <Link to="/">
           <Space size={20}>
-            <Avatar src="./wai-logo.png" alt="wai-logo" />
+            <Avatar src="/wai-logo.png" alt="wai-logo" />
             WAI Ethiopia
           </Space>
         </Link>

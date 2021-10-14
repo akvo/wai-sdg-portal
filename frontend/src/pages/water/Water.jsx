@@ -10,6 +10,7 @@ import {
   Carousel,
   Card,
 } from "antd";
+import { Link } from "react-router-dom";
 
 import "./water.scss";
 import Map from "../../components/Map";
@@ -55,6 +56,9 @@ const Water = () => {
                 <Col span={12} align="end">
                   <span className="info">Last submitted 18.00 by User</span>
                 </Col>
+              </Row>
+              <Row align="middle" justify="space-between" wrap={true}>
+                <Link to="/form/water-point-data-upload/1">Add New</Link>
               </Row>
               <Divider />
             </div>
