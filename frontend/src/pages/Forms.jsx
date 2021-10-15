@@ -21,13 +21,13 @@ const Forms = ({ match }) => {
     api
       .post(`data/form/${match.params.id}`, data)
       .then((res) => {
-        notification.success({
-          message: `${res.data.name} Saved`,
-        });
         setLoading(true);
+        notification.success({
+          message: `Data ID: ${res.data.id} - ${res.data.name} Saved`,
+        });
         setTimeout(() => {
           history.goBack();
-        }, 2000);
+        }, 3000);
       })
       .catch((err) => {
         console.log(err);
