@@ -1,15 +1,40 @@
 import React, { useEffect, useState } from "react";
 import { Webform } from "akvo-react-form";
-import api from "../util/api";
-import { Row, Col, Card } from "antd";
+import { Row, Col, notification } from "antd";
 import startCase from "lodash/startCase";
+import api from "../util/api";
+import { useHistory } from "react-router-dom";
 
 const Forms = ({ match }) => {
+  let history = useHistory();
   const [loading, setLoading] = useState(true);
   const [forms, setForms] = useState([]);
 
-  const onFinish = (d) => {
-    console.log("onfinish");
+  const onFinish = (values) => {
+    let data = Object.keys(values).map((v) => {
+      if (values[v]) {
+        return { question: parseInt(v), value: values[v] };
+      }
+      return false;
+    });
+    data = data.filter((x) => x);
+    api
+      .post(`data/form/${match.params.id}`, data)
+      .then((res) => {
+        notification.success({
+          message: `${res.data.name} Saved`,
+        });
+        setLoading(true);
+        setTimeout(() => {
+          history.goBack();
+        }, 2000);
+      })
+      .catch((err) => {
+        console.log(err);
+        notification.success({
+          message: "Ops, something went wrong",
+        });
+      });
   };
 
   useEffect(() => {

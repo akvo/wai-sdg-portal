@@ -74,15 +74,17 @@ def add(req: Request,
                         created_by=user.id,
                         created=datetime.now())
         if q.type == QuestionType.administration:
-            administration = a["value"]
-            answer.value = a["value"]
-            if q.meta:
-                adm_name = crud_administration.get_administration_by_id(
-                    session, id=administration)
-                names.append(adm_name.name)
+            if len(a["value"]) == 2:
+                administration = int(a["value"][1])
+                answer.value = administration
+                if q.meta:
+                    adm_name = crud_administration.get_administration_by_id(
+                        session, id=administration)
+                    names.append(adm_name.name)
         if q.type == QuestionType.geo:
-            geo = a["value"]
-            answer.text = ("{}|{}").format(a["value"][0], a["value"][1])
+            if "|" in a["value"]:
+                geo = a["value"].split("|")
+                answer.text = ("{}|{}").format(geo[0], geo[1])
         if q.type == QuestionType.text:
             answer.text = a["value"]
             if q.meta:
