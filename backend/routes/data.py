@@ -94,7 +94,7 @@ def add(req: Request,
             if q.meta:
                 names.append(str(a["value"]))
         if q.type == QuestionType.option:
-            answer.options = a["value"]
+            answer.options = [a["value"]]
         if q.type == QuestionType.multiple_option:
             answer.options = a["value"]
         answerlist.append(answer)
