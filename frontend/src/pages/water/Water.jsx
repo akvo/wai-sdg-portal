@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import "./water.scss";
 import Map from "../../components/Map";
 import ethGeoUrl from "../../sources/eth-filtered.topo.json";
+import { SelectFilter } from "../../components/common";
 
 const { Search } = Input;
 
@@ -83,21 +84,6 @@ const Water = () => {
         </Row>
       </Col>
     </Row>
-  );
-};
-
-const SelectFilter = ({ placeholder }) => {
-  return (
-    <Select
-      showSearch
-      placeholder={placeholder}
-      options={[]}
-      optionFilterProp="label"
-      filterOption={(input, option) =>
-        option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-      }
-      className="filter-select"
-    />
   );
 };
 

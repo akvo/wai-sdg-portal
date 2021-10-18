@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col, Space, Input, Button, Table } from "antd";
 import { FilterOutlined } from "@ant-design/icons";
 
-import { SelectFilter } from "./common";
+import { SelectFilter } from "../../components/common";
 
 import { manageDataColumns, manageDataSources } from "./admin-static";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Tabs, Button, Space } from "antd";
+import { Row, Col, Tabs } from "antd";
 
 import "./admin.scss";
 import ManageData from "./ManageData";

@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col, Space, Button } from "antd";
 import { FilterOutlined } from "@ant-design/icons";
 
-import { SelectFilter } from "./common";
+import { SelectFilter } from "../../components/common";
 
 const Export = () => {
   return (
