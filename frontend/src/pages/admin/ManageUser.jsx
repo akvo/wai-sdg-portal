@@ -1,5 +1,14 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Row, Col, Space, Button, Checkbox, Table, notification } from "antd";
+import {
+  Row,
+  Col,
+  Space,
+  Button,
+  Checkbox,
+  Table,
+  notification,
+  Tag,
+} from "antd";
 import api from "../../util/api";
 import capitalize from "lodash/capitalize";
 import isEmpty from "lodash/isEmpty";
@@ -22,23 +31,68 @@ const ManageUser = () => {
 
   const active = showPendingUser ? 0 : 1;
 
+  const handleApproveButton = (user) => {
+    api
+      .put(`/user/${user.id}?active=1&role=${user.role}`)
+      .then((res) => {
+        notification.success({
+          message: "User approved",
+        });
+        getUsers(active, 1);
+      })
+      .catch((err) => {
+        console.error(err);
+        setUsers(defUsers);
+        notification.error({
+          message: "Ops, something went wrong",
+        });
+      });
+  };
+
   const getUsers = useCallback((active, page) => {
     setLoading(true);
     api
       .get(`/user/?active=${active}&page=${page}`)
       .then((res) => {
-        const data = res.data?.data?.map((x) => ({
-          ...x,
-          organisation: organisations?.find((org) => org.id === x.organisation)
-            ?.name,
-          role: capitalize(x.role),
-          action: (
-            <Space size="small" align="center" wrap={true}>
-              <Button type="link">Edit</Button>
-              <Button type="link">Delete</Button>
-            </Space>
-          ),
-        }));
+        const data = res.data?.data?.map((x) => {
+          const emailStatus = (
+            <Tag color={x.email_verified ? "green" : "red"}>
+              {x.email_verified ? "verified" : "not verified"}
+            </Tag>
+          );
+          return {
+            ...x,
+            email: !active ? (
+              <Space size="small">
+                {x.email} {emailStatus}
+              </Space>
+            ) : (
+              x.email
+            ),
+            organisation: organisations?.find(
+              (org) => org.id === x.organisation
+            )?.name,
+            role: capitalize(x.role),
+            action: (
+              <Space size="small" align="center" wrap={true}>
+                {active ? (
+                  <>
+                    <Button type="link">Edit</Button>
+                    <Button type="link">Delete</Button>
+                  </>
+                ) : (
+                  <Button
+                    type="default"
+                    disabled={!x.email_verified}
+                    onClick={() => handleApproveButton(x)}
+                  >
+                    Approve
+                  </Button>
+                )}
+              </Space>
+            ),
+          };
+        });
         setUsers({ ...res.data, data: data });
       })
       .catch((err) => {
