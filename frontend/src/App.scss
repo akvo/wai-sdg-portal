@@ -24,6 +24,13 @@
 
       .ant-result {
         padding: 25vh 24px;
+
+        &.loading {
+          padding: 10vh 24px;
+          .ant-result-icon > .anticon {
+            font-size: 40px;
+          }
+        }
       }
     }
 
