@@ -13,7 +13,7 @@ from middleware import verify_admin
 security = HTTPBearer()
 form_route = APIRouter()
 
-geo_center = {"lat": 9.145,"lng": 40.4897}
+geo_center = {"lat": 9.145, "lng": 40.4897}
 
 
 @form_route.get("/form/",
@@ -52,7 +52,7 @@ def get_webform_by_id(req: Request,
                 q.update({"option": "administration"})
                 q.update({"type": "cascade"})
             if q["type"] == QuestionType.geo:
-                q.update({"center":geo_center})
+                q.update({"center": geo_center})
     administration = crud_administration.get_parent_administration(
         session=session)
     form.update(
