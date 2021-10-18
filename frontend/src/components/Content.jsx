@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import ProtectedContent from "./ProtectedContent";
 
 import Home from "../pages/home/Home";
@@ -11,16 +11,7 @@ import Forms from "../pages/Forms";
 
 const Content = () => {
   return (
-    <>
-      <Route exact path="/not-found">
-        <ErrorPage status={404} />
-      </Route>
-      <Route exact path="/not-authorized">
-        <ErrorPage status={401} />
-      </Route>
-      <Route exact path="/error">
-        <ErrorPage />
-      </Route>
+    <Switch>
       <Route exact path="/">
         <Home />
       </Route>
@@ -31,8 +22,18 @@ const Content = () => {
       <ProtectedContent exact path="/admin" component={Admin} />
       <ProtectedContent exact path="/documentation" component={Doc} />
       <Route path="/form/:title/:id" component={Forms} />
+
+      <Route exact path="/not-found">
+        <ErrorPage status={404} />
+      </Route>
+      <Route exact path="/not-authorized">
+        <ErrorPage status={401} />
+      </Route>
+      <Route exact path="/error">
+        <ErrorPage />
+      </Route>
       <Route component={(props) => <ErrorPage {...props} status={404} />} />
-    </>
+    </Switch>
   );
 };
 
