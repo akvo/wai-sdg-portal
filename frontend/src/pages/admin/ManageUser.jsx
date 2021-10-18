@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Row, Col, Space, Button, Checkbox, Table } from "antd";
+import { Row, Col, Space, Button, Checkbox, Table, notification } from "antd";
 import api from "../../util/api";
 import capitalize from "lodash/capitalize";
+import isEmpty from "lodash/isEmpty";
+import { UIState } from "../../state/ui";
 
 import { userColumns } from "./admin-static";
 
@@ -13,6 +15,7 @@ const defUsers = {
 };
 
 const ManageUser = () => {
+  const organisations = UIState.useState((s) => s.organisations);
   const [showPendingUser, setShowPendingUser] = useState(true);
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState(defUsers);
@@ -26,6 +29,8 @@ const ManageUser = () => {
       .then((res) => {
         const data = res.data?.data?.map((x) => ({
           ...x,
+          organisation: organisations?.find((org) => org.id === x.organisation)
+            ?.name,
           role: capitalize(x.role),
           action: (
             <Space size="small" align="center" wrap={true}>
@@ -39,6 +44,9 @@ const ManageUser = () => {
       .catch((err) => {
         console.error(err);
         setUsers(defUsers);
+        notification.error({
+          message: "Ops, something went wrong",
+        });
       })
       .finally(() => {
         setLoading(false);
@@ -46,12 +54,12 @@ const ManageUser = () => {
   }, []);
 
   useEffect(() => {
-    getUsers(active, defUsers.current);
-  }, [getUsers, active]);
+    !isEmpty(organisations) && getUsers(active, defUsers.current);
+  }, [getUsers, active, organisations]);
 
   const handleTableChange = (pagination, filters, sorter) => {
     const { current } = pagination;
-    getUsers(active, current);
+    !isEmpty(organisations) && getUsers(active, current);
   };
 
   return (
@@ -70,7 +78,7 @@ const ManageUser = () => {
               className="checkbox-input"
               onChange={(e) => setShowPendingUser(e.target.checked)}
               checked={showPendingUser}
-              disabled={loading}
+              disabled={isEmpty(organisations) || loading}
             />
           </Space>
         </Col>

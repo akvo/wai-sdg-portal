@@ -1,5 +1,7 @@
 import React from "react";
 import { Row, Col, Tabs } from "antd";
+import { UIState } from "../../state/ui";
+import api from "../../util/api";
 
 import "./admin.scss";
 import ManageData from "./ManageData";
@@ -7,6 +9,17 @@ import ManageUser from "./ManageUser";
 import Export from "./Export";
 
 const { TabPane } = Tabs;
+
+api
+  .get("/organisation")
+  .then((res) => {
+    UIState.update((s) => {
+      s.organisations = res.data;
+    });
+  })
+  .catch((err) => {
+    console.error(err);
+  });
 
 const Admin = () => {
   return (
