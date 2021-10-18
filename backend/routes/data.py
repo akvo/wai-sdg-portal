@@ -82,8 +82,8 @@ def add(req: Request,
                         session, id=administration)
                     names.append(adm_name.name)
         if q.type == QuestionType.geo:
-            if "|" in a["value"]:
-                geo = a["value"].split("|")
+            if "lat" in a["value"] and "lng" in a["value"]:
+                geo = [a["value"]["lat"], a["value"]["lng"]]
                 answer.text = ("{}|{}").format(geo[0], geo[1])
         if q.type == QuestionType.text:
             answer.text = a["value"]
