@@ -20,6 +20,11 @@
 
     .ant-layout-content {
       // padding: 20px 40px;
+      min-height: 70vh;
+
+      .ant-result {
+        padding: 25vh 24px;
+      }
     }
 
     .ant-layout-footer {
