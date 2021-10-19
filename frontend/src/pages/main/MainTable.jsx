@@ -50,7 +50,7 @@ const MainTable = ({ current, loading, data, question, total, changePage }) => {
             )}
           </Col>
           <Col span={4}>
-            <Link to={`/form/-upload/${formId}`}>
+            <Link to={`/form/new-${title.toLowerCase()}/${formId}`}>
               <Button>Add New</Button>
             </Link>
           </Col>
