@@ -22,6 +22,7 @@ import Map from "../../components/Map";
 import ethGeoUrl from "../../sources/eth-filtered.topo.json";
 import { SelectFilter } from "../../components/common";
 import { UIState } from "../../state/ui";
+import takeRight from "lodash/takeRight";
 
 const { Search } = Input;
 const { Option } = Select;
@@ -116,17 +117,24 @@ const ChildTable = ({ question, data }) => {
 };
 
 const Water = () => {
-  const { user, selectedAdministration } = UIState.useState((s) => s);
+  const { user, administration, selectedAdministration } = UIState.useState(
+    (s) => s
+  );
   const [data, setData] = useState([]);
   const [question, setQuestion] = useState([]);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(1);
   const [loading, setLoading] = useState(true);
 
-  const fetch = (p) => {
+  const fetch = () => {
     setLoading(true);
+    const adminId = takeRight(selectedAdministration)[0];
+    let url = `data/form/5?page=${page}`;
+    if (adminId) {
+      url += `&administration=${adminId}`;
+    }
     api
-      .get(`data/form/5?page=${p}`)
+      .get(url)
       .then((d) => {
         const tableData = d.data.data.map((x) => {
           return {
@@ -148,18 +156,24 @@ const Water = () => {
   };
 
   useEffect(() => {
-    if (!question.length) {
+    if (loading && user && !question.length && administration.length) {
       api.get(`form/5`).then((d) => {
         setQuestion(d.data.question_group);
       });
     }
-  }, []);
+  }, [user, loading, administration]);
 
   useEffect(() => {
-    if (loading && user) {
-      fetch(page);
+    if (loading && user && question.length && administration.length) {
+      fetch();
     }
-  }, [user, page]);
+  }, [user, page, question, administration]);
+
+  useEffect(() => {
+    if (!loading) {
+      fetch();
+    }
+  }, [selectedAdministration]);
 
   const changePage = (p) => {
     setPage(p);
