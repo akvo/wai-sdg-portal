@@ -6,12 +6,15 @@ import {
   Button,
   Space,
   Divider,
+  Form,
   Input,
+  InputNumber,
   Carousel,
   Card,
   Table,
   Pagination,
 } from "antd";
+import { CheckOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import api from "../../util/api";
 
@@ -22,6 +25,7 @@ import { SelectFilter } from "../../components/common";
 import { UIState } from "../../state/ui";
 
 const { Search } = Input;
+const { Option } = Select;
 
 const columns = [
   { title: "Water Points", dataIndex: "name", key: "name" },
@@ -31,19 +35,83 @@ const columns = [
 ];
 
 const childcolumns = [
-  { title: "Name", dataIndex: "name", key: "name" },
-  { title: "Value", dataIndex: "value", key: "value" },
+  { dataIndex: "name", key: "name" },
+  { dataIndex: "value", key: "value" },
+  { dataIndex: "action", key: "action" },
 ];
 
+const EditColumn = ({ value, question, edited, setEdited }) => {
+  const [fieldActive, setFieldActive] = useState(null);
+  const [newValue, setNewValue] = useState(null);
+  const onSave = () => {
+    setFieldActive(false);
+    setEdited({ ...edited, [question.id]: newValue });
+  };
+  if (fieldActive) {
+    return (
+      <Row>
+        <Col>
+          {question.type === "option" ? (
+            <Select
+              defaultValue={newValue || value}
+              style={{ width: "100%" }}
+              onChange={setNewValue}
+            >
+              {question.option.map((o, oi) => (
+                <Option key={oi} value={o.name}>
+                  {o.name}
+                </Option>
+              ))}
+            </Select>
+          ) : question.type === "number" ? (
+            <InputNumber value={newValue || value} onChange={setNewValue} />
+          ) : (
+            <Input value={newValue || value} onChange={setNewValue} />
+          )}
+        </Col>
+        <Col>
+          <Button type="link" onClick={onSave}>
+            Save
+          </Button>
+        </Col>
+      </Row>
+    );
+  }
+  return (
+    <div onClick={() => setFieldActive(true)}>{newValue || value || " - "}</div>
+  );
+};
+
 const ChildTable = ({ question, data }) => {
+  const [edited, setEdited] = useState({});
   return question.map((g, gi) => {
-    const source = g.question.map((q) => ({
+    const source = g.question.map((q, qi) => ({
       name: q.name,
-      value: data.detail.find((d) => d.question === q.id)?.value || " - ",
-      key: gi,
+      value: (
+        <EditColumn
+          value={data.detail.find((d) => d.question === q.id)?.value || null}
+          question={q}
+          edited={edited}
+          setEdited={setEdited}
+        />
+      ),
+      action: (
+        <div>
+          {edited?.[q.id] && <Button type={"link"}>Reset</Button>}
+          <Button type={"link"}>History</Button>
+        </div>
+      ),
+      key: qi,
     }));
     return (
-      <Table columns={childcolumns} dataSource={source} pagination={false} />
+      <Table
+        key={gi}
+        showHeader={false}
+        columns={childcolumns}
+        dataSource={source}
+        pagination={false}
+        bordered={false}
+      />
     );
   });
 };
@@ -131,7 +199,11 @@ const Water = () => {
             <div className="container">
               <Row align="middle" justify="space-between" wrap={true}>
                 <Col span={8}>
-                  <span className="title">Water Points</span>
+                  <span className="title">
+                    Water Points: {"("}
+                    {total}
+                    {")"}
+                  </span>
                 </Col>
                 <Col span={12} align="end">
                   <span className="info">Last submitted 18.00 by User</span>
