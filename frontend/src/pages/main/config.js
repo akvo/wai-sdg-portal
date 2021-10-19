@@ -12,7 +12,9 @@ const water = {
 const config = {
   water: {
     ...water,
-    tableheader: water.table.map((x) => x.dataIndex),
+    values: water.table
+      .filter((x) => !isNaN(x.dataIndex))
+      .map((x) => x.dataIndex),
   },
 };
 

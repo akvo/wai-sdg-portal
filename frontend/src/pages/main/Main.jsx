@@ -22,7 +22,7 @@ const Main = ({ match }) => {
   const [total, setTotal] = useState(1);
   const [loading, setLoading] = useState(true);
 
-  const columns = config?.[match.params.page]?.table;
+  const columns = config?.[match.params.page];
 
   const changePage = (p) => {
     setPage(p);
@@ -49,13 +49,18 @@ const Main = ({ match }) => {
         .get(url)
         .then((d) => {
           const tableData = d.data.data.map((x) => {
+            const values = columns?.values?.reduce(
+              (o, key) =>
+                Object.assign(o, {
+                  [key]: x.answer.find((a) => a.question === key)?.value,
+                }),
+              {}
+            );
             return {
               key: x.id,
               name: x.name,
-              82: x.answer.find((a) => a.question === 82)?.value,
-              79: x.answer.find((a) => a.question === 79)?.value,
-              81: x.answer.find((a) => a.question === 81)?.value,
               detail: x.answer,
+              ...values,
             };
           });
           setData(tableData);
@@ -101,7 +106,7 @@ const Main = ({ match }) => {
           </Col>
           <MainTable
             loading={loading}
-            columns={columns}
+            columns={columns.table}
             data={data}
             question={question}
             dataSource={data}
