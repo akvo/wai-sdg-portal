@@ -6,7 +6,7 @@ import "./main.scss";
 import config from "./config";
 import Map from "../../components/Map";
 import ethGeoUrl from "../../sources/eth-filtered.topo.json";
-import { SelectFilter } from "../../components/common";
+import { SelectLevel } from "../../components/common";
 import ErrorPage from "../../components/ErrorPage";
 import { UIState } from "../../state/ui";
 import takeRight from "lodash/takeRight";
@@ -22,8 +22,7 @@ const Main = ({ match }) => {
   const [total, setTotal] = useState(1);
   const [loading, setLoading] = useState(true);
 
-  const columns = config?.[match.params.page];
-
+  const current = config?.[match.params.page];
   const changePage = (p) => {
     setPage(p);
     setLoading(true);
@@ -31,17 +30,17 @@ const Main = ({ match }) => {
 
   useEffect(() => {
     if (user && !question.length) {
-      api.get(`form/5`).then((d) => {
+      api.get(`form/${current.formId}`).then((d) => {
         setQuestion(d.data.question_group);
       });
     }
   }, [user, question]);
 
   useEffect(() => {
-    if (user && columns) {
+    if (user && current) {
       const adminId = takeRight(selectedAdministration)[0];
       setLoading(true);
-      let url = `data/form/5?page=${page}`;
+      let url = `data/form/${current.formId}?page=${page}`;
       if (adminId) {
         url += `&administration=${adminId}`;
       }
@@ -49,7 +48,7 @@ const Main = ({ match }) => {
         .get(url)
         .then((d) => {
           const tableData = d.data.data.map((x) => {
-            const values = columns?.values?.reduce(
+            const values = current?.values?.reduce(
               (o, key) =>
                 Object.assign(o, {
                   [key]: x.answer.find((a) => a.question === key)?.value,
@@ -73,20 +72,20 @@ const Main = ({ match }) => {
           setLoading(false);
         });
     }
-  }, [page, user, columns, selectedAdministration]);
+  }, [page, user, current, selectedAdministration]);
 
-  if (!columns) {
+  if (!current) {
     return <ErrorPage status={404} />;
   }
 
   return (
-    <Row className="water-container">
+    <Row className="main-container">
       {/* Filter */}
       <Col span={24}>
         <Row align="middle" className="filter-wrapper">
           <Col span={24} className="container">
             <Space size={20} align="center" wrap={true}>
-              <SelectFilter placeholder="Select Woreda" />
+              <SelectLevel />
             </Space>
           </Col>
         </Row>
@@ -98,15 +97,15 @@ const Main = ({ match }) => {
             <div className="container">
               <Search
                 className="map-search"
-                placeholder="Search Water point"
+                placeholder={`${current.title}`}
                 onSearch={() => console.log("search")}
               />
               <Map geoUrl={ethGeoUrl} mapHeight={525} />
             </div>
           </Col>
           <MainTable
+            current={current}
             loading={loading}
-            columns={columns.table}
             data={data}
             question={question}
             dataSource={data}

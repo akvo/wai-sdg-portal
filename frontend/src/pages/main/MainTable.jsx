@@ -2,16 +2,16 @@ import { Row, Col, Button, Divider, Table, Pagination } from "antd";
 import { Link } from "react-router-dom";
 import MainTableChild from "./MainTableChild";
 
-const MainTable = ({ loading, data, columns, question, total, changePage }) => {
+const MainTable = ({ current, loading, data, question, total, changePage }) => {
+  const { columns, formId, title } = current;
   return (
     <Col span={12} className="table-wrapper">
       <div className="container">
         <Row align="middle" justify="space-between" wrap={true}>
           <Col span={8}>
             <span className="title">
-              Water Points: {"("}
-              {total}
-              {")"}
+              {title}
+              {` (${total})`}
             </span>
           </Col>
           <Col span={12} align="end">
@@ -50,7 +50,7 @@ const MainTable = ({ loading, data, columns, question, total, changePage }) => {
             )}
           </Col>
           <Col span={4}>
-            <Link to="/form/water-point-data-upload/5">
+            <Link to={`/form/-upload/${formId}`}>
               <Button>Add New</Button>
             </Link>
           </Col>

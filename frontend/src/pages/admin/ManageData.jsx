@@ -1,8 +1,7 @@
 import React from "react";
 import { Row, Col, Space, Input, Button, Table } from "antd";
 import { FilterOutlined } from "@ant-design/icons";
-
-import { SelectFilter } from "../../components/common";
+import { SelectLevel } from "../../components/common";
 
 import { manageDataColumns, manageDataSources } from "./admin-static";
 
@@ -18,10 +17,7 @@ const ManageData = () => {
             placeholder="Search"
             onSearch={() => console.log("search")}
           />
-          <SelectFilter placeholder="Select Dataset" />
-          <SelectFilter placeholder="Select Woreda" />
-          <SelectFilter placeholder="Select Kebele" />
-          <Button className="remove-filter-button">Remove Filter</Button>
+          <SelectLevel />
         </Space>
       </div>
       <Row

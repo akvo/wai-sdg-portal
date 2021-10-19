@@ -3,7 +3,9 @@ import { Select, Button, Result, Space } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { UIState } from "../state/ui";
 
-export const SelectFilter = ({ placeholder }) => {
+const levels = ["Woreda", "Kebele"];
+
+export const SelectLevel = () => {
   const { administration, selectedAdministration } = UIState.useState((s) => s);
   return (
     <Space>
@@ -31,7 +33,7 @@ export const SelectFilter = ({ placeholder }) => {
               key={si}
               value={selectedAdministration[si + 1]}
               showSearch
-              placeholder={placeholder}
+              placeholder={`Select ${levels[si]}`}
               options={list}
               optionFilterProp="label"
               onSelect={onSelect}
