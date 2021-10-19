@@ -8,7 +8,7 @@ from models.administration import AdministrationBase, AdministrationResponse
 administration_route = APIRouter()
 
 
-@administration_route.get("/administration/",
+@administration_route.get("/administration",
                           response_model=List[AdministrationBase],
                           summary="get all administrations",
                           tags=["Administration"])

@@ -14,7 +14,6 @@ import {
   Table,
   Pagination,
 } from "antd";
-import { CheckOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import api from "../../util/api";
 
@@ -117,7 +116,7 @@ const ChildTable = ({ question, data }) => {
 };
 
 const Water = () => {
-  const { user } = UIState.useState((s) => s);
+  const { user, selectedAdministration } = UIState.useState((s) => s);
   const [data, setData] = useState([]);
   const [question, setQuestion] = useState([]);
   const [page, setPage] = useState(1);
@@ -174,10 +173,7 @@ const Water = () => {
         <Row align="middle" className="filter-wrapper">
           <Col span={24} className="container">
             <Space size={20} align="center" wrap={true}>
-              <SelectFilter placeholder="Select Dataset" />
               <SelectFilter placeholder="Select Woreda" />
-              <SelectFilter placeholder="Select Kebele" />
-              <Button className="remove-filter-button">Remove Filter</Button>
             </Space>
           </Col>
         </Row>
