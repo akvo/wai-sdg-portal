@@ -1,5 +1,6 @@
 import json
 import os
+import sys
 from db import crud_form
 from db import crud_question_group
 from db import crud_question
@@ -19,10 +20,11 @@ for table in ["form", "question_group", "question", "option"]:
     action = truncate(session=session, table=table)
     print(action)
 
-for file in files:
+for file in sorted(files):
     form_name = file
     for s in [file_prefix, "_", ".json"]:
         form_name = form_name.replace(s, "")
+    form_name = form_name.split("-")[1]
     form = crud_form.add_form(session=session, name=form_name.upper())
     question_group = crud_question_group.add_question_group(
         session=session, name="Registration", form=form.id)
