@@ -1,6 +1,5 @@
 import json
 import os
-import sys
 from db import crud_form
 from db import crud_question_group
 from db import crud_question
