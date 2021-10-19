@@ -16,6 +16,8 @@ def append_value(answer: Answer, value: Union[int, float, str, bool, List[str],
         answer.value = value
     if type == QuestionType.text:
         answer.text = value
+    if type == QuestionType.date:
+        answer.text = value
     if type == QuestionType.geo:
         answer.text = ("{}|{}").format(value[0], value[1])
     if type == QuestionType.option:
