@@ -1,7 +1,6 @@
 import SwaggerUI from "swagger-ui-react";
 import "swagger-ui-react/swagger-ui.css";
 import "./doc.scss";
-import { UIState } from "../../state/ui";
 import api from "../../util/api";
 
 const Doc = () => {

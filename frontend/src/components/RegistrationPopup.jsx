@@ -64,7 +64,7 @@ const RegistrationPopup = ({ user, logout, loginWithPopup }) => {
         setFormLoading(false);
       });
     }
-  }, [user, organisation]);
+  }, [form, user, organisation]);
 
   if (formLoading) {
     return "";

@@ -31,87 +31,90 @@ const ManageUser = () => {
 
   const active = showPendingUser ? 0 : 1;
 
-  const handleApproveButton = (user) => {
-    api
-      .put(`/user/${user.id}?active=1&role=${user.role}`)
-      .then((res) => {
-        notification.success({
-          message: "User approved",
-        });
-        getUsers(active, 1);
-      })
-      .catch((err) => {
-        console.error(err);
-        setUsers(defUsers);
-        notification.error({
-          message: "Ops, something went wrong",
-        });
-      });
-  };
-
-  const getUsers = useCallback((active, page) => {
-    setLoading(true);
-    api
-      .get(`/user/?active=${active}&page=${page}`)
-      .then((res) => {
-        const data = res.data?.data?.map((x) => {
-          const emailStatus = (
-            <Tag color={x.email_verified ? "green" : "red"}>
-              {x.email_verified ? "verified" : "not verified"}
-            </Tag>
-          );
-          return {
-            ...x,
-            email: !active ? (
-              <Space size="small">
-                {x.email} {emailStatus}
-              </Space>
-            ) : (
-              x.email
-            ),
-            organisation: organisations?.find(
-              (org) => org.id === x.organisation
-            )?.name,
-            role: capitalize(x.role),
-            action: (
-              <Space size="small" align="center" wrap={true}>
-                {active ? (
-                  <>
-                    <Button type="link">Edit</Button>
-                    <Button type="link">Delete</Button>
-                  </>
-                ) : (
-                  <Button
-                    type="default"
-                    disabled={!x.email_verified}
-                    onClick={() => handleApproveButton(x)}
-                  >
-                    Approve
-                  </Button>
-                )}
-              </Space>
-            ),
+  const getUsers = useCallback(
+    (active, page) => {
+      setLoading(true);
+      api
+        .get(`/user/?active=${active}&page=${page}`)
+        .then((res) => {
+          const handleApproveButton = (user) => {
+            api
+              .put(`/user/${user.id}?active=1&role=${user.role}`)
+              .then((res) => {
+                notification.success({
+                  message: "User approved",
+                });
+                getUsers(active, 1);
+              })
+              .catch((err) => {
+                console.error(err);
+                setUsers(defUsers);
+                notification.error({
+                  message: "Ops, something went wrong",
+                });
+              });
           };
+
+          const data = res.data?.data?.map((x) => {
+            const emailStatus = (
+              <Tag color={x.email_verified ? "green" : "red"}>
+                {x.email_verified ? "verified" : "not verified"}
+              </Tag>
+            );
+            return {
+              ...x,
+              email: !active ? (
+                <Space size="small">
+                  {x.email} {emailStatus}
+                </Space>
+              ) : (
+                x.email
+              ),
+              organisation: organisations?.find(
+                (org) => org.id === x.organisation
+              )?.name,
+              role: capitalize(x.role),
+              action: (
+                <Space size="small" align="center" wrap={true}>
+                  {active ? (
+                    <>
+                      <Button type="link">Edit</Button>
+                      <Button type="link">Delete</Button>
+                    </>
+                  ) : (
+                    <Button
+                      type="default"
+                      disabled={!x.email_verified}
+                      onClick={() => handleApproveButton(x)}
+                    >
+                      Approve
+                    </Button>
+                  )}
+                </Space>
+              ),
+            };
+          });
+          setUsers({ ...res.data, data: data });
+        })
+        .catch((err) => {
+          console.error(err);
+          setUsers(defUsers);
+          notification.error({
+            message: "Ops, something went wrong",
+          });
+        })
+        .finally(() => {
+          setLoading(false);
         });
-        setUsers({ ...res.data, data: data });
-      })
-      .catch((err) => {
-        console.error(err);
-        setUsers(defUsers);
-        notification.error({
-          message: "Ops, something went wrong",
-        });
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+    },
+    [organisations]
+  );
 
   useEffect(() => {
     !isEmpty(organisations) && getUsers(active, defUsers.current);
   }, [getUsers, active, organisations]);
 
-  const handleTableChange = (pagination, filters, sorter) => {
+  const handleTableChange = (pagination) => {
     const { current } = pagination;
     !isEmpty(organisations) && getUsers(active, current);
   };

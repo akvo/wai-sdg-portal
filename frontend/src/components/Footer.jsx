@@ -23,19 +23,19 @@ const FooterEnd = () => {
   return (
     <Row className="footer-end" align="space-between">
       <Col span={8} className="start">
-        <a href="#">
+        <Link to="/facebook">
           <FacebookFilled />
-        </a>
-        <a href="#">
+        </Link>
+        <Link to="/twitter">
           <TwitterOutlined />
-        </a>
+        </Link>
       </Col>
       <Col span={8} className="middle">
         © 2021
       </Col>
       <Col span={8} className="end">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Service</a>
+        <Link to="/privacy-policy">Privacy Policy</Link>
+        <Link to="/tos">Terms of Service</Link>
         {user && (
           <Link to="/documentation" onClick={() => changePage("documentation")}>
             Developer

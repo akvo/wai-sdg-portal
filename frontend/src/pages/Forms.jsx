@@ -46,7 +46,7 @@ const Forms = ({ match }) => {
         });
       }
     })();
-  }, [match]);
+  }, [match, loading]);
 
   if (loading) {
     return "";

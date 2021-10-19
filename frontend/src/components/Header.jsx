@@ -9,7 +9,7 @@ import {
 import { UIState } from "../state/ui";
 
 const Header = () => {
-  const { page, user, visible } = UIState.useState((c) => c);
+  const { user } = UIState.useState((c) => c);
   const onOpen = () => {
     UIState.update((s) => {
       s.showNav = true;

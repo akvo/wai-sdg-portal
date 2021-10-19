@@ -17,6 +17,7 @@ const Navigation = ({ logout, loginWithPopup, isAuthenticated }) => {
     });
   };
   const changePage = ({ key }) => {
+    console.log(key);
     UIState.update((s) => {
       s.page = key;
     });
@@ -58,7 +59,7 @@ const Navigation = ({ logout, loginWithPopup, isAuthenticated }) => {
               <Menu.Item key="clts">
                 <Link to="/data/clts">CLTS</Link>
               </Menu.Item>
-              <SubMenu key="jmp" title="JMP">
+              <Menu.ItemGroup key="jmp" title="JMP">
                 <Menu.Item key="households">
                   <Link to="/data/households">Households</Link>
                 </Menu.Item>
@@ -68,7 +69,7 @@ const Navigation = ({ logout, loginWithPopup, isAuthenticated }) => {
                 <Menu.Item key="health-facilities">
                   <Link to="/data/health-facilities">Health Facilities</Link>
                 </Menu.Item>
-              </SubMenu>
+              </Menu.ItemGroup>
             </>
           )}
           {(user?.role === "admin" || user?.role === "editor") && (

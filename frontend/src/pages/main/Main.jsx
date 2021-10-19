@@ -15,9 +15,7 @@ import MainTable from "./MainTable";
 const { Search } = Input;
 
 const Main = ({ match }) => {
-  const { user, administration, selectedAdministration } = UIState.useState(
-    (s) => s
-  );
+  const { user, selectedAdministration } = UIState.useState((s) => s);
   const [data, setData] = useState([]);
   const [question, setQuestion] = useState([]);
   const [page, setPage] = useState(1);
@@ -26,61 +24,51 @@ const Main = ({ match }) => {
 
   const columns = config?.[match.params.page]?.table;
 
-  const fetch = () => {
-    setLoading(true);
-    const adminId = takeRight(selectedAdministration)[0];
-    let url = `data/form/5?page=${page}`;
-    if (adminId) {
-      url += `&administration=${adminId}`;
-    }
-    api
-      .get(url)
-      .then((d) => {
-        const tableData = d.data.data.map((x) => {
-          return {
-            key: x.id,
-            name: x.name,
-            82: x.answer.find((a) => a.question === 82)?.value,
-            79: x.answer.find((a) => a.question === 79)?.value,
-            81: x.answer.find((a) => a.question === 81)?.value,
-            detail: x.answer,
-          };
-        });
-        setData(tableData);
-        setTotal(d.data.total_page);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setData([]);
-        setTotal(0);
-        setLoading(false);
-      });
-  };
-
-  useEffect(() => {
-    if (loading && user && !question.length && administration.length) {
-      api.get(`form/5`).then((d) => {
-        setQuestion(d.data.question_group);
-      });
-    }
-  }, [user, loading, administration]);
-
-  useEffect(() => {
-    if (loading && user && question.length && administration.length) {
-      fetch();
-    }
-  }, [user, page, question, administration]);
-
-  useEffect(() => {
-    if (!loading) {
-      fetch();
-    }
-  }, [selectedAdministration]);
-
   const changePage = (p) => {
     setPage(p);
     setLoading(true);
   };
+
+  useEffect(() => {
+    if (user && !question.length) {
+      api.get(`form/5`).then((d) => {
+        setQuestion(d.data.question_group);
+      });
+    }
+  }, [user, question]);
+
+  useEffect(() => {
+    if (user && columns) {
+      const adminId = takeRight(selectedAdministration)[0];
+      setLoading(true);
+      let url = `data/form/5?page=${page}`;
+      if (adminId) {
+        url += `&administration=${adminId}`;
+      }
+      api
+        .get(url)
+        .then((d) => {
+          const tableData = d.data.data.map((x) => {
+            return {
+              key: x.id,
+              name: x.name,
+              82: x.answer.find((a) => a.question === 82)?.value,
+              79: x.answer.find((a) => a.question === 79)?.value,
+              81: x.answer.find((a) => a.question === 81)?.value,
+              detail: x.answer,
+            };
+          });
+          setData(tableData);
+          setTotal(d.data.total_page);
+          setLoading(false);
+        })
+        .catch((err) => {
+          setData([]);
+          setTotal(0);
+          setLoading(false);
+        });
+    }
+  }, [page, user, columns, selectedAdministration]);
 
   if (!columns) {
     return <ErrorPage status={404} />;

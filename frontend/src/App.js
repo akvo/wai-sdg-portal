@@ -35,7 +35,7 @@ function App() {
         api
           .get("user/me")
           .then(({ data }) => {
-            const { active, access, role } = data || {};
+            const { active } = data || {};
             UIState.update((u) => {
               u.user = { ...user, ...data };
             });

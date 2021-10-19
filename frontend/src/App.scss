@@ -27,6 +27,7 @@
 
         &.loading {
           padding: 10vh 24px;
+
           .ant-result-icon > .anticon {
             font-size: 40px;
           }
@@ -96,13 +97,9 @@
     color: #45add9;
   }
 
-  .ant-menu-sub.ant-menu-inline {
+  .ant-menu-item-group {
     background: #fff;
     color: #45add9;
-  }
-
-  .ant-menu-submenu-arrow {
-    visibility: hidden;
   }
 
   .auth-button-wrapper {
@@ -128,17 +125,18 @@
         margin-bottom: 0px;
         padding-bottom: 5px;
       }
-    }
 
-    .ant-menu-submenu-title {
-      border-bottom: 1px solid #f0f0f0;
-    }
+      .ant-menu-item-group {
+        .ant-menu-item-group-title {
+          padding-left: 24px;
+          border-bottom: 1px solid #f0f0f0;
+        }
 
-    .ant-menu.ant-menu-sub {
-      border-bottom: 1px solid #f0f0f0;
-
-      .ant-menu-item {
-        border-bottom: none;
+        ul.ant-menu-item-group-list {
+          li.ant-menu-item a {
+            padding-left: 24px;
+          }
+        }
       }
     }
   }
