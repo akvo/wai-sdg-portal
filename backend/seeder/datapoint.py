@@ -1,7 +1,8 @@
 import os
 import sys
+import time
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timedelta
 from openpyxl import load_workbook
 from db import crud_administration
 from db import crud_form
@@ -14,6 +15,7 @@ from models.user import UserRole
 from db.connection import Base, SessionLocal, engine
 from db.truncator import truncate
 
+start_time = time.process_time()
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 Base.metadata.create_all(bind=engine)
 session = SessionLocal()
@@ -242,3 +244,7 @@ for sheet in sheets:
         data = data.to_dict("records")
         for d in data:
             rec = record(d, form, user)
+
+elapsed_time = time.process_time() - start_time
+elapsed_time = str(timedelta(seconds=elapsed_time)).split(".")[0]
+print(f"\n-- DONE IN {elapsed_time}\n")

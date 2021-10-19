@@ -1,5 +1,7 @@
 import json
 import os
+import time
+from datetime import timedelta
 from db import crud_form
 from db import crud_question_group
 from db import crud_question
@@ -14,6 +16,7 @@ file_prefix = "form_eth"
 
 files = os.listdir(path)
 files = list(filter(lambda x: file_prefix in x, files))
+start_time = time.process_time()
 
 for table in ["form", "question_group", "question", "option"]:
     action = truncate(session=session, table=table)
@@ -43,3 +46,7 @@ for file in sorted(files):
                 option=q["options"])
             print(f"{i}.{question.name}")
     print("------------------------------------------")
+
+elapsed_time = time.process_time() - start_time
+elapsed_time = str(timedelta(seconds=elapsed_time)).split(".")[0]
+print(f"\n-- DONE IN {elapsed_time}\n")
