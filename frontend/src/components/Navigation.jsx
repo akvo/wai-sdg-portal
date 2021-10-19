@@ -53,13 +53,21 @@ const Navigation = ({ logout, loginWithPopup, isAuthenticated }) => {
           {user?.active && (
             <>
               <Menu.Item key="water">
-                <Link to="/water">Water</Link>
+                <Link to="/data/water">Water</Link>
               </Menu.Item>
-              <Menu.Item key="clts">CLTS</Menu.Item>
+              <Menu.Item key="clts">
+                <Link to="/data/clts">CLTS</Link>
+              </Menu.Item>
               <SubMenu key="jmp" title="JMP">
-                <Menu.Item key="households">Households</Menu.Item>
-                <Menu.Item key="schools">Schools</Menu.Item>
-                <Menu.Item key="health-facilities">Health Facilities</Menu.Item>
+                <Menu.Item key="households">
+                  <Link to="/data/households">Households</Link>
+                </Menu.Item>
+                <Menu.Item key="schools">
+                  <Link to="/data/schools">Schools</Link>
+                </Menu.Item>
+                <Menu.Item key="health-facilities">
+                  <Link to="/data/health-facilities">Health Facilities</Link>
+                </Menu.Item>
               </SubMenu>
             </>
           )}

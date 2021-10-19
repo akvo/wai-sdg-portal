@@ -5,9 +5,9 @@ import ProtectedContent from "./ProtectedContent";
 import Home from "../pages/home/Home";
 import Doc from "../pages/doc/Doc";
 import ErrorPage from "./ErrorPage";
-import Water from "../pages/water/Water";
 import Admin from "../pages/admin/Admin";
 import Forms from "../pages/Forms";
+import Main from "../pages/main/Main";
 
 const Content = () => {
   return (
@@ -18,11 +18,10 @@ const Content = () => {
       <Route exact path="/login">
         <Home />
       </Route>
-      <ProtectedContent exact path="/water" component={Water} />
+      <ProtectedContent path="/data/:page" component={Main} />
       <ProtectedContent exact path="/admin" component={Admin} />
       <ProtectedContent exact path="/documentation" component={Doc} />
       <Route path="/form/:title/:id" component={Forms} />
-
       <Route exact path="/not-found">
         <ErrorPage status={404} />
       </Route>
