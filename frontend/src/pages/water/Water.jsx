@@ -151,6 +151,8 @@ const Water = () => {
         setLoading(false);
       })
       .catch((err) => {
+        setData([]);
+        setTotal(0);
         setLoading(false);
       });
   };
@@ -240,11 +242,15 @@ const Water = () => {
               <Divider />
               <Row align="middle" justify="space-between" wrap={true}>
                 <Col span={20}>
-                  <Pagination
-                    defaultCurrent={1}
-                    total={total}
-                    onChange={changePage}
-                  />
+                  {total ? (
+                    <Pagination
+                      defaultCurrent={1}
+                      total={total}
+                      onChange={changePage}
+                    />
+                  ) : (
+                    ""
+                  )}
                 </Col>
                 <Col span={4}>
                   <Link to="/form/water-point-data-upload/5">
