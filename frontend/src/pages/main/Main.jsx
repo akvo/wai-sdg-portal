@@ -29,12 +29,12 @@ const Main = ({ match }) => {
   };
 
   useEffect(() => {
-    if (user && !question.length) {
+    if (user && current?.formId) {
       api.get(`form/${current.formId}`).then((d) => {
         setQuestion(d.data.question_group);
       });
     }
-  }, [user, question]);
+  }, [user, current]);
 
   useEffect(() => {
     if (user && current) {
