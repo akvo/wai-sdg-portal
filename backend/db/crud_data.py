@@ -41,11 +41,11 @@ def get_data(session: Session,
              form: int,
              skip: int,
              perpage: int,
-             administration: int = None) -> List[DataDict]:
+             administration: List[int] = None) -> List[DataDict]:
     data = session.query(Data)
     if administration:
         data = data.filter(
-            and_(Data.form == form, Data.administration == administration))
+            and_(Data.form == form, Data.administration.in_(administration)))
     else:
         data = data.filter(Data.form == form)
     return data.order_by(desc(Data.id)).offset(skip).limit(perpage).all()
@@ -55,11 +55,13 @@ def get_data_by_id(session: Session, id: int) -> DataDict:
     return session.query(Data).filter(Data.id == id).first()
 
 
-def count(session: Session, form: int, administration: int = None) -> int:
+def count(session: Session,
+          form: int,
+          administration: List[int] = None) -> int:
     data = session.query(Data)
     if administration:
         data = session.query(Data).filter(
-            and_(Data.form == form, Data.administration == administration))
+            and_(Data.form == form, Data.administration.in_(administration)))
     else:
         data = data.filter(Data.form == form)
     return data.count()

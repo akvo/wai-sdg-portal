@@ -31,9 +31,17 @@ def get(req: Request,
         perpage: int = 10,
         administration: Optional[int] = None,
         session: Session = Depends(get_session)):
+    administration_ids = False
+    if administration:
+        administration = crud_administration.get_administration_by_id(
+            session, id=administration)
+        administration_ids = [administration.id]
+        if administration.children:
+            for a in administration.cascade["children"]:
+                administration_ids.append(a["value"])
     data = crud.get_data(session=session,
                          form=form_id,
-                         administration=administration,
+                         administration=administration_ids,
                          skip=(perpage * (page - 1)),
                          perpage=perpage)
     if not data:
@@ -41,7 +49,7 @@ def get(req: Request,
     data = [f.serialize for f in data]
     total = crud.count(session=session,
                        form=form_id,
-                       administration=administration)
+                       administration=administration_ids)
     total_page = ceil(total / 10) if total > 0 else 0
     if total_page < page:
         raise HTTPException(status_code=404, detail="Not found")
