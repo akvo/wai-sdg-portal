@@ -17,7 +17,6 @@ const Navigation = ({ logout, loginWithPopup, isAuthenticated }) => {
     });
   };
   const changePage = ({ key }) => {
-    console.log(key);
     UIState.update((s) => {
       s.page = key;
     });
