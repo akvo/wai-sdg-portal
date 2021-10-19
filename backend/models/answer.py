@@ -5,8 +5,10 @@ from datetime import datetime
 from typing_extensions import TypedDict
 from typing import Optional, List, Union
 from pydantic import BaseModel
+from .question import QuestionType
 from sqlalchemy import Column, Integer, Float, Text, String
 from sqlalchemy import ForeignKey, DateTime
+from sqlalchemy.orm import relationship
 import sqlalchemy.dialects.postgresql as pg
 from db.connection import Base
 
@@ -14,7 +16,7 @@ from db.connection import Base
 class AnswerDict(TypedDict):
     question: int
     value: Union[int, float, str, bool, dict, List[str], List[int],
-                 List[float]]
+                 List[float], None]
 
 
 class Answer(Base):
@@ -29,6 +31,7 @@ class Answer(Base):
     updated_by = Column(Integer, ForeignKey('user.id'), nullable=True)
     created = Column(DateTime, nullable=True)
     updated = Column(DateTime, nullable=True)
+    question_detail = relationship("Question", backref="answer")
 
     def __init__(self,
                  question: int,
@@ -71,12 +74,19 @@ class Answer(Base):
     @property
     def formatted(self) -> AnswerDict:
         answer = {"question": self.question}
-        if self.text:
-            answer.update({"value": self.text})
-        if self.value:
+        type = self.question_detail.type
+        if type == QuestionType.administration:
             answer.update({"value": self.value})
-        if self.options:
+        if type in [QuestionType.text, QuestionType.geo, QuestionType.date]:
+            answer.update({"value": self.text})
+        if type == QuestionType.number:
+            answer.update({"value": self.value})
+        if type == QuestionType.option:
+            answer.update({"value": self.options[0]})
+        if type == QuestionType.multiple_option:
             answer.update({"value": self.options})
+        if type == QuestionType.photo:
+            answer.update({"value": self.value})
         return answer
 
     @property
