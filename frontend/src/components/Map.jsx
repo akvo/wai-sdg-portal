@@ -42,13 +42,13 @@ const Map = ({ geoUrl, mapHeight = 350 }) => {
                 <Geography
                   key={geo.rsmKey}
                   geography={geo}
-                  stroke="#79B0CC"
-                  strokeWidth="0.5"
+                  stroke="#FFFFFF"
+                  strokeWidth="0.8"
                   strokeOpacity="0.6"
                   cursor="pointer"
                   style={{
                     default: {
-                      fill: "green",
+                      fill: "#d3d3d3",
                       outline: "none",
                     },
                     hover: {
