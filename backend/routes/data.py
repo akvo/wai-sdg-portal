@@ -93,7 +93,7 @@ def add(req: Request,
             if "lat" in a["value"] and "lng" in a["value"]:
                 geo = [a["value"]["lat"], a["value"]["lng"]]
                 answer.text = ("{}|{}").format(geo[0], geo[1])
-        if q.type == QuestionType.text:
+        if q.type in [QuestionType.text, QuestionType.date]:
             answer.text = a["value"]
             if q.meta:
                 names.append(a["value"])
