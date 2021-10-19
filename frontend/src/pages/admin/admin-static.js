@@ -54,7 +54,6 @@ export const userSources = ["joy", "deden", "galih"].map((x, i) => {
     email: `${x}@akvo.org`,
     organisation: "Akvo",
     role: "admin",
-    region: "Sheshamane",
     action: (
       <Space size="small" align="center" wrap={true}>
         <Button type="link">Edit</Button>
@@ -84,11 +83,6 @@ export const userColumns = [
     title: "Role",
     dataIndex: "role",
     key: "role",
-  },
-  {
-    title: "Region",
-    dataIndex: "region",
-    key: "region",
   },
   {
     title: "",

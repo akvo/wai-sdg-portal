@@ -13,7 +13,8 @@ from db.connection import Base
 
 class AnswerDict(TypedDict):
     question: int
-    value: Union[int, float, str, bool, List[str], List[int], List[float]]
+    value: Union[int, float, str, bool, dict, List[str], List[int],
+                 List[float]]
 
 
 class Answer(Base):

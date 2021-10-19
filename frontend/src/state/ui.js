@@ -7,6 +7,9 @@ const defaultUIState = {
   user: null,
   loading: true,
   page: "home",
+  organisations: [],
+  administration: [],
+  selectedAdministration: [null],
 };
 
 export const UIState = new Store(defaultUIState);

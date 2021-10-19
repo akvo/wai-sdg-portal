@@ -17,7 +17,7 @@ const ProtectedContent = ({ component: Component, ...rest }) => {
           return (
             <Redirect
               to={{
-                pathname: "/not-found",
+                pathname: "/not-authorized",
                 state: {
                   from: props.location,
                 },

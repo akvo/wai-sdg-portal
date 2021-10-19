@@ -8,7 +8,7 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
-    "akvo-react-form": "^1.0.2",
+    "akvo-react-form": "^1.0.8",
     "antd": "^4.16.9",
     "axios": "^0.21.1",
     "currency-formatter": "^1.5.8",
@@ -30,6 +30,7 @@
     "web-vitals": "^1.0.1"
   },
   "devDependencies": {
+    "@babel/plugin-syntax-object-rest-spread": "^7.8.3",
     "eslint-config-prettier": "8.1.0",
     "http-proxy-middleware": "^1.0.6",
     "node-sass": "^4.0.0",
@@ -47,16 +48,9 @@
       "react-app/jest"
     ]
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ]
 }

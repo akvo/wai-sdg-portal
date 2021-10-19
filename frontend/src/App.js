@@ -33,7 +33,7 @@ function App() {
           api.setToken(response.__raw);
         }
         api
-          .get("/user/me")
+          .get("user/me")
           .then(({ data }) => {
             const { active, access, role } = data || {};
             UIState.update((u) => {
@@ -42,6 +42,13 @@ function App() {
             if (!active) {
               notification.warning({
                 message: <NonActiveUserMessage user={user} />,
+              });
+            }
+            if (active) {
+              api.get("administration").then((a) => {
+                UIState.update((u) => {
+                  u.administration = a.data;
+                });
               });
             }
           })
