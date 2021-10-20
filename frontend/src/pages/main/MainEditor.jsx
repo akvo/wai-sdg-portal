@@ -9,7 +9,7 @@ import {
   Input,
   DatePicker,
 } from "antd";
-import { UndoOutlined } from "@ant-design/icons";
+import { UndoOutlined, SaveOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { startCase, pickBy } from "lodash";
 
@@ -33,13 +33,14 @@ const MainEditor = ({ value, question, edited, setEdited }) => {
   };
   if (fieldActive) {
     return (
-      <Row className="editor" justify="space-around">
+      <Row className="editor" justify="space-around" align="middle">
         <Col span={18}>
           {question.type === "option" ? (
             <Select
-              defaultValue={newValue || value.toLowerCase()}
+              defaultValue={newValue || value?.toLowerCase() || null}
               style={{ width: "100%" }}
               onChange={setNewValue}
+              size="small"
             >
               {question.option.map((o, oi) => (
                 <Option key={oi} value={o.name}>
@@ -49,20 +50,26 @@ const MainEditor = ({ value, question, edited, setEdited }) => {
             </Select>
           ) : question.type === "date" ? (
             <DatePicker
+              size="small"
               defaultValue={moment(newValue || value, "YY-MM-DD")}
               onChange={(d, ds) => setNewValue(ds)}
             />
           ) : question.type === "number" ? (
-            <InputNumber value={newValue || value} onChange={setNewValue} />
+            <InputNumber
+              value={newValue || value}
+              onChange={setNewValue}
+              size="small"
+            />
           ) : (
             <Input
+              size="small"
               value={newValue || value}
               onChange={(e) => setNewValue(e.target.value)}
             />
           )}
         </Col>
         <Col span={6}>
-          <Button type="link" onClick={onSave}>
+          <Button size="small" onClick={onSave} icon={<SaveOutlined />}>
             Save
           </Button>
         </Col>
