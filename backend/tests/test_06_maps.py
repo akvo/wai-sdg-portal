@@ -1,6 +1,5 @@
 import sys
 import pytest
-from datetime import datetime
 from fastapi import FastAPI
 from httpx import AsyncClient
 from tests.test_01_auth import Acc
