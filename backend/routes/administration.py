@@ -11,6 +11,7 @@ administration_route = APIRouter()
 @administration_route.get("/administration",
                           response_model=List[AdministrationBase],
                           summary="get all administrations",
+                          name="administration:get",
                           tags=["Administration"])
 def get(req: Request, session: Session = Depends(get_session)):
     administration = crud.get_administration(session=session)
