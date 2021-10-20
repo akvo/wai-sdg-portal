@@ -2,20 +2,41 @@ import { Row, Col, Button, Divider, Table, Pagination } from "antd";
 import { Link } from "react-router-dom";
 import MainTableChild from "./MainTableChild";
 
-const MainTable = ({ current, loading, data, question, total, changePage }) => {
+const MainTable = ({
+  current,
+  loading,
+  data,
+  question,
+  total,
+  changePage,
+  lastSubmitted,
+}) => {
   const { columns, formId, title } = current;
   return (
     <Col span={12} className="table-wrapper">
       <div className="container">
-        <Row align="middle" justify="space-between" wrap={true}>
+        <Row
+          align="middle"
+          justify="space-between"
+          wrap={true}
+          className="data-info"
+        >
           <Col span={8}>
-            <span className="title">
+            <span className="info title">
               {title}
               {` (${total})`}
             </span>
           </Col>
-          <Col span={12} align="end">
-            <span className="info">Last submitted 18.00 by User</span>
+          <Col span={16} align="end">
+            {total ? (
+              <div className="info">
+                Last submitted: {lastSubmitted.at}
+                <br />
+                by: {lastSubmitted.by}
+              </div>
+            ) : (
+              ""
+            )}
           </Col>
         </Row>
         <Divider />

@@ -35,6 +35,27 @@
     .table-wrapper {
       min-height: 585px;
       background: #7070701a;
+
+      .data-info {
+        .info {
+          font-size: 12px;
+        }
+      }
+
+      .ant-table-thead {
+        th {
+          font-size: 13px;
+        }
+      }
+
+      .editor {
+        .ant-col {
+          .ant-input,
+          .ant-input-number {
+            width: 100%;
+          }
+        }
+      }
     }
   }
 

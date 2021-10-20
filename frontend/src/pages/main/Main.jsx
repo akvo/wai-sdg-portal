@@ -21,6 +21,7 @@ const Main = ({ match }) => {
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [lastSubmitted, setLastSubmitted] = useState({ by: "", at: "" });
 
   const current = config?.[match.params.page];
   const changePage = (p) => {
@@ -66,13 +67,31 @@ const Main = ({ match }) => {
           setTotal(d.data.total_page);
           setLoading(false);
         })
-        .catch((err) => {
+        .catch(() => {
           setData([]);
           setTotal(0);
           setLoading(false);
         });
     }
   }, [page, user, current, selectedAdministration]);
+
+  useEffect(() => {
+    if (user && current) {
+      const adminId = takeRight(selectedAdministration)[0];
+      let url = `last-submitted?form_id=${current.formId}`;
+      if (adminId) {
+        url += `&administration=${adminId}`;
+      }
+      api
+        .get(url)
+        .then((res) => {
+          setLastSubmitted(res.data);
+        })
+        .catch(() => {
+          setLastSubmitted({ by: "", at: "" });
+        });
+    }
+  }, [user, current, selectedAdministration]);
 
   if (!current) {
     return <ErrorPage status={404} />;
@@ -111,6 +130,7 @@ const Main = ({ match }) => {
             dataSource={data}
             total={total}
             changePage={changePage}
+            lastSubmitted={lastSubmitted}
           />
         </Row>
       </Col>
