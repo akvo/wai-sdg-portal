@@ -48,6 +48,13 @@
         }
       }
 
+      .main-child-table {
+        .ant-table {
+          margin: 0px 0px 0px 32px !important;
+          border: 1px solid #eee;
+        }
+      }
+
       .editor {
         .ant-col {
           .ant-input,

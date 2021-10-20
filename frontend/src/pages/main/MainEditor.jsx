@@ -11,7 +11,7 @@ import {
 } from "antd";
 import { UndoOutlined } from "@ant-design/icons";
 import moment from "moment";
-import pickBy from "lodash/pickBy";
+import { startCase, pickBy } from "lodash";
 
 const { Option } = Select;
 
@@ -34,16 +34,16 @@ const MainEditor = ({ value, question, edited, setEdited }) => {
   if (fieldActive) {
     return (
       <Row className="editor" justify="space-around">
-        <Col span={20}>
+        <Col span={18}>
           {question.type === "option" ? (
             <Select
-              defaultValue={newValue || value}
+              defaultValue={newValue || value.toLowerCase()}
               style={{ width: "100%" }}
               onChange={setNewValue}
             >
               {question.option.map((o, oi) => (
                 <Option key={oi} value={o.name}>
-                  {o.name}
+                  {startCase(o.name)}
                 </Option>
               ))}
             </Select>
@@ -61,7 +61,7 @@ const MainEditor = ({ value, question, edited, setEdited }) => {
             />
           )}
         </Col>
-        <Col span={4}>
+        <Col span={6}>
           <Button type="link" onClick={onSave}>
             Save
           </Button>
@@ -78,12 +78,16 @@ const MainEditor = ({ value, question, edited, setEdited }) => {
   }
   if (edited?.[question.id]) {
     return (
-      <Space>
-        <div onClick={() => setFieldActive(true)}>{newValue}</div>
-        <Button type="link" onClick={onReset}>
-          <UndoOutlined /> Reset
-        </Button>
-      </Space>
+      <Row justify="space-around" align="middle">
+        <Col span={18}>
+          <div onClick={() => setFieldActive(true)}>{startCase(newValue)}</div>
+        </Col>
+        <Col span={6}>
+          <Button size="small" onClick={onReset} icon={<UndoOutlined />}>
+            Undo
+          </Button>
+        </Col>
+      </Row>
     );
   }
   return <div onClick={() => setFieldActive(true)}>{value || " - "}</div>;

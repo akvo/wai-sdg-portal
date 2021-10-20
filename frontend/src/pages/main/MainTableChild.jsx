@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Button, Table } from "antd";
+import { FieldTimeOutlined } from "@ant-design/icons";
 import MainEditor from "./MainEditor";
 
 const changeColBackground = (dt, edited) => {
   if (edited?.[dt.props.question.id]) {
     return {
       props: {
-        style: { background: "#FEFEBE" },
+        style: { background: "#fefebe" },
       },
       children: dt,
     };
@@ -16,21 +17,37 @@ const changeColBackground = (dt, edited) => {
   };
 };
 
+const NormalCol = ({ value, question, edited }) => {
+  return value;
+};
+
 const MainTableChild = ({ question, data }) => {
   const [edited, setEdited] = useState({});
   const childcolumns = [
-    { dataIndex: "name", key: "name", width: "30%" },
+    {
+      dataIndex: "name",
+      key: "name",
+      width: "30%",
+      render: (dt) => changeColBackground(dt, edited),
+    },
     {
       dataIndex: "value",
       key: "value",
       render: (dt) => changeColBackground(dt, edited),
     },
-    { dataIndex: "action", key: "action" },
+    {
+      dataIndex: "action",
+      key: "action",
+      align: "right",
+      render: (dt) => changeColBackground(dt, edited),
+    },
   ];
 
   return question.map((g, gi) => {
     const source = g.question.map((q, qi) => ({
-      name: q.name,
+      name: (
+        <NormalCol value={<div>{q.name}</div>} question={q} edited={edited} />
+      ),
       value: (
         <MainEditor
           value={data.detail.find((d) => d.question === q.id)?.value || null}
@@ -40,14 +57,17 @@ const MainTableChild = ({ question, data }) => {
         />
       ),
       action: (
-        <div>
-          <Button type={"link"}>History</Button>
-        </div>
+        <NormalCol
+          value={<Button size="small" icon={<FieldTimeOutlined />} />}
+          question={q}
+          edited={edited}
+        />
       ),
       key: qi,
     }));
     return (
       <Table
+        className={"main-child-table"}
         size="small"
         key={gi}
         showHeader={false}
