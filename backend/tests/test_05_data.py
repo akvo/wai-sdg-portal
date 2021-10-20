@@ -1,5 +1,6 @@
 import sys
 import pytest
+from datetime import datetime
 from fastapi import FastAPI
 from httpx import AsyncClient
 from tests.test_01_auth import Acc
@@ -25,28 +26,41 @@ class TestDataRoutes():
         first_data = res["data"][0]
         del first_data["created"]
         assert first_data == {
-                    "id": 1,
-                    "name": "Arsi Negele Town - Garut",
-                    "administration": 4,
-                    "created_by": 1,
-                    "form": 1,
-                    "geo": {
-                        "lat": -7.836114,
-                        "long": 110.331143
-                    },
-                    "updated": None,
-                    "updated_by": None,
-                    "answer": [{
-                        "question": 1,
-                        "value": "Option 1"
-                    }, {
-                        "question": 2,
-                        "value": 4
-                    }, {
-                        "question": 3,
-                        "value": "-7.836114|110.331143"
-                    }, {
-                        "question": 4,
-                        "value": "Garut"
-                    }]
-                }
+            "id": 1,
+            "name": "Arsi Negele Town - Garut",
+            "administration": 4,
+            "created_by": 1,
+            "form": 1,
+            "geo": {
+                "lat": -7.836114,
+                "long": 110.331143
+            },
+            "updated": None,
+            "updated_by": None,
+            "answer": [{
+                "question": 1,
+                "value": "Option 1"
+            }, {
+                "question": 2,
+                "value": 4
+            }, {
+                "question": 3,
+                "value": "-7.836114|110.331143"
+            }, {
+                "question": 4,
+                "value": "Garut"
+            }]
+        }
+
+    async def test_get_last_submitted(self, app: FastAPI, session: Session,
+                                      client: AsyncClient) -> None:
+        print(account)
+        res = await client.get(
+            app.url_path_for("data:last-submitted"),
+            params={"form_id": 1})
+        assert res.status_code == 200
+        res = res.json()
+        assert res == {
+                "at": datetime.today().strftime("%B %d, %Y"),
+                "by": account.decoded["name"]
+            }
