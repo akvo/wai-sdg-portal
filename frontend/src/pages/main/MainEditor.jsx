@@ -1,6 +1,17 @@
 import React, { useState } from "react";
-import { Row, Col, Button, Select, InputNumber, Input, DatePicker } from "antd";
+import {
+  Row,
+  Col,
+  Button,
+  Select,
+  InputNumber,
+  Space,
+  Input,
+  DatePicker,
+} from "antd";
+import { UndoOutlined } from "@ant-design/icons";
 import moment from "moment";
+import pickBy from "lodash/pickBy";
 
 const { Option } = Select;
 
@@ -10,6 +21,14 @@ const MainEditor = ({ value, question, edited, setEdited }) => {
   const onSave = () => {
     setFieldActive(false);
     setEdited({ ...edited, [question.id]: newValue });
+  };
+
+  const onReset = () => {
+    setEdited(
+      pickBy(edited, (v, k) => {
+        return parseInt(k) !== question.id;
+      })
+    );
   };
   if (fieldActive) {
     return (
@@ -57,7 +76,14 @@ const MainEditor = ({ value, question, edited, setEdited }) => {
     }
   }
   if (edited?.[question.id]) {
-    return <div onClick={() => setFieldActive(true)}>{newValue}</div>;
+    return (
+      <Space>
+        <div onClick={() => setFieldActive(true)}>{newValue}</div>
+        <Button type="link" onClick={onReset}>
+          <UndoOutlined /> Reset
+        </Button>
+      </Space>
+    );
   }
   return <div onClick={() => setFieldActive(true)}>{value || " - "}</div>;
 };
