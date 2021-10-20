@@ -3,7 +3,7 @@ import pytest
 import pandas as pd
 from fastapi import FastAPI
 from httpx import AsyncClient
-from tests.test_auth import Acc
+from tests.test_01_auth import Acc
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 from db.connection import get_db_url

@@ -34,6 +34,7 @@ def get_administration_list(session: Session, id: int) -> List[int]:
 
 @data_route.get("/data/form/{form_id:path}",
                 response_model=DataResponse,
+                name="data:get",
                 summary="get all datas",
                 tags=["Data"])
 def get(req: Request,
@@ -195,6 +196,7 @@ def update_by_id(req: Request,
 
 @data_route.get("/history/{data_id:path}/{question_id:path}",
                 summary="get answer with it's history",
+                name="data:history",
                 tags=["Data"])
 def get_history(req: Request,
                 data_id: int,
@@ -209,6 +211,7 @@ def get_history(req: Request,
 @data_route.get("/last-submitted",
                 response_model=SubmissionInfo,
                 summary="get last submission",
+                name="data:last-submitted",
                 tags=["Data"])
 def get_last_submission(req: Request,
                         form_id: int,
