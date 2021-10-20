@@ -58,6 +58,7 @@ class Data(Base):
                           cascade="all, delete",
                           passive_deletes=True,
                           backref="answer")
+    administration_detail = relationship("Administration", backref="data")
 
     def __init__(self, name: str, form: int, administration: int,
                  geo: List[float], created_by: int, updated_by: int,
@@ -99,6 +100,14 @@ class Data(Base):
     @property
     def updates_info(self):
         return {"by": self.updated_by, "at": self.updated}
+
+    @property
+    def to_maps(self):
+        return {
+            "id": self.id,
+            "loc": self.administration_detail.name,
+            "geo": [self.geo[0], self.geo[1]] if self.geo else None,
+        }
 
 
 class DataBase(BaseModel):

@@ -110,6 +110,20 @@ class Answer(Base):
     def only_value(self) -> List:
         return self.text or self.value or self.options
 
+    @property
+    def to_maps(self) -> List:
+        if not self.value and self.options:
+            return {
+                "data": self.data,
+                "value": self.options[0],
+                "question": self.question
+            }
+        return {
+            "data": self.data,
+            "value": self.value,
+            "question": self.question
+        }
+
 
 class AnswerBase(BaseModel):
     id: int
