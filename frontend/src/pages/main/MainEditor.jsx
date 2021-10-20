@@ -24,6 +24,7 @@ const MainEditor = ({ value, question, edited, setEdited }) => {
   };
 
   const onReset = () => {
+    setNewValue(null);
     setEdited(
       pickBy(edited, (v, k) => {
         return parseInt(k) !== question.id;

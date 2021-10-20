@@ -2,14 +2,32 @@ import React, { useState } from "react";
 import { Button, Table } from "antd";
 import MainEditor from "./MainEditor";
 
-const childcolumns = [
-  { dataIndex: "name", key: "name", width: "30%" },
-  { dataIndex: "value", key: "value" },
-  { dataIndex: "action", key: "action" },
-];
+const changeColBackground = (dt, edited) => {
+  if (edited?.[dt.props.question.id]) {
+    return {
+      props: {
+        style: { background: "#FEFEBE" },
+      },
+      children: dt,
+    };
+  }
+  return {
+    children: dt,
+  };
+};
 
 const MainTableChild = ({ question, data }) => {
   const [edited, setEdited] = useState({});
+  const childcolumns = [
+    { dataIndex: "name", key: "name", width: "30%" },
+    {
+      dataIndex: "value",
+      key: "value",
+      render: (dt) => changeColBackground(dt, edited),
+    },
+    { dataIndex: "action", key: "action" },
+  ];
+
   return question.map((g, gi) => {
     const source = g.question.map((q, qi) => ({
       name: q.name,
