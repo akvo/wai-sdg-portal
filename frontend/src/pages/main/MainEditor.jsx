@@ -13,8 +13,8 @@ const MainEditor = ({ value, question, edited, setEdited }) => {
   };
   if (fieldActive) {
     return (
-      <Row>
-        <Col>
+      <Row className="editor" justify="space-around">
+        <Col span={20}>
           {question.type === "option" ? (
             <Select
               defaultValue={newValue || value}
@@ -35,10 +35,13 @@ const MainEditor = ({ value, question, edited, setEdited }) => {
           ) : question.type === "number" ? (
             <InputNumber value={newValue || value} onChange={setNewValue} />
           ) : (
-            <Input value={newValue || value} onChange={setNewValue} />
+            <Input
+              value={newValue || value}
+              onChange={(e) => setNewValue(e.target.value)}
+            />
           )}
         </Col>
-        <Col>
+        <Col span={4}>
           <Button type="link" onClick={onSave}>
             Save
           </Button>
@@ -53,9 +56,10 @@ const MainEditor = ({ value, question, edited, setEdited }) => {
       return <div onClick={() => setFieldActive(true)}>{dateValue}</div>;
     }
   }
-  return (
-    <div onClick={() => setFieldActive(true)}>{newValue || value || " - "}</div>
-  );
+  if (edited?.[question.id]) {
+    return <div onClick={() => setFieldActive(true)}>{newValue}</div>;
+  }
+  return <div onClick={() => setFieldActive(true)}>{value || " - "}</div>;
 };
 
 export default MainEditor;

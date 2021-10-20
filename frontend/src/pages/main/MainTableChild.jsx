@@ -3,7 +3,7 @@ import { Button, Table } from "antd";
 import MainEditor from "./MainEditor";
 
 const childcolumns = [
-  { dataIndex: "name", key: "name" },
+  { dataIndex: "name", key: "name", width: "30%" },
   { dataIndex: "value", key: "value" },
   { dataIndex: "action", key: "action" },
 ];
@@ -23,7 +23,6 @@ const MainTableChild = ({ question, data }) => {
       ),
       action: (
         <div>
-          {edited?.[q.id] && <Button type={"link"}>Reset</Button>}
           <Button type={"link"}>History</Button>
         </div>
       ),
@@ -31,6 +30,7 @@ const MainTableChild = ({ question, data }) => {
     }));
     return (
       <Table
+        size="small"
         key={gi}
         showHeader={false}
         columns={childcolumns}
