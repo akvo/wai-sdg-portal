@@ -10,15 +10,26 @@ from db import crud_question
 from db import crud_administration
 from db import crud_answer
 from db import crud_form
+from db import crud_user
 from models.answer import Answer, AnswerDict
 from models.question import QuestionType
 from models.history import History
 from db.connection import get_session
-from models.data import DataResponse, DataDict
+from models.data import DataResponse, DataDict, SubmissionInfo
 from middleware import verify_admin
 
 security = HTTPBearer()
 data_route = APIRouter()
+
+
+def get_administration_list(session: Session, id: int) -> List[int]:
+    administration_ids = [id]
+    administration = crud_administration.get_administration_by_id(session,
+                                                                  id=id)
+    if administration.children:
+        for a in administration.cascade["children"]:
+            administration_ids.append(a["value"])
+    return administration_ids
 
 
 @data_route.get("/data/form/{form_id:path}",
@@ -33,12 +44,8 @@ def get(req: Request,
         session: Session = Depends(get_session)):
     administration_ids = False
     if administration:
-        administration = crud_administration.get_administration_by_id(
-            session, id=administration)
-        administration_ids = [administration.id]
-        if administration.children:
-            for a in administration.cascade["children"]:
-                administration_ids.append(a["value"])
+        administration_ids = get_administration_list(session=session,
+                                                     id=administration)
     data = crud.get_data(session=session,
                          form=form_id,
                          administration=administration_ids,
@@ -57,7 +64,7 @@ def get(req: Request,
         'current': page,
         'data': data,
         'total': total,
-        'total_page': total_page
+        'total_page': total_page,
     }
 
 
@@ -197,3 +204,30 @@ def get_history(req: Request,
                                      data=data_id,
                                      question=question_id)
     return answer
+
+
+@data_route.get("/last-submitted",
+                response_model=SubmissionInfo,
+                summary="get last submission",
+                tags=["Data"])
+def get_last_submission(req: Request,
+                        form_id: int,
+                        administration: Optional[int] = None,
+                        session: Session = Depends(get_session)):
+    administration_ids = False
+    if administration:
+        administration_ids = get_administration_list(session=session,
+                                                     id=administration)
+    last_submitted = crud.get_last_submitted(session=session,
+                                             form=form_id,
+                                             administration=administration_ids)
+    if not last_submitted:
+        raise HTTPException(status_code=404, detail="Not found")
+    last_submitted = last_submitted.submission_info
+    last_submitted_user = crud_user.get_user_by_id(session=session,
+                                                   id=last_submitted["by"])
+    last_submitted.update({
+        'by': last_submitted_user.name,
+        'at': last_submitted["at"].strftime("%B %d, %Y")
+    })
+    return last_submitted

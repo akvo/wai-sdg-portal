@@ -65,3 +65,15 @@ def count(session: Session,
     else:
         data = data.filter(Data.form == form)
     return data.count()
+
+
+def get_last_submitted(session: Session,
+                       form: int,
+                       administration: List[int] = None) -> DataDict:
+    data = session.query(Data)
+    if administration:
+        data = session.query(Data).filter(
+            and_(Data.form == form, Data.administration.in_(administration)))
+    else:
+        data = data.filter(Data.form == form)
+    return data.order_by(Data.id.desc()).first()

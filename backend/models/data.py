@@ -31,6 +31,11 @@ class DataDict(TypedDict):
     answer: List[AnswerDict]
 
 
+class SubmissionInfo(TypedDict):
+    by: str
+    at: str
+
+
 class DataResponse(BaseModel):
     current: int
     data: List[DataDict]
@@ -86,6 +91,14 @@ class Data(Base):
             "updated": self.updated,
             "answer": [a.formatted for a in self.answer],
         }
+
+    @property
+    def submission_info(self):
+        return {"by": self.created_by, "at": self.created}
+
+    @property
+    def updates_info(self):
+        return {"by": self.updated_by, "at": self.updated}
 
 
 class DataBase(BaseModel):
