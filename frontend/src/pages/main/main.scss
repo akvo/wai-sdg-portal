@@ -49,6 +49,12 @@
       .data-info {
         .info {
           font-size: 12px;
+
+          &.title {
+            color: #00989f !important;
+            font-weight: bold;
+            font-size: 18px;
+          }
         }
       }
 

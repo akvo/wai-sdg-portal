@@ -50,6 +50,7 @@ const MainTable = ({
               scroll={{ y: 320 }}
               pagination={false}
               expandable={{
+                expandIconColumnIndex: columns.length,
                 expandedRowRender: (record) => (
                   <MainTableChild questionGroup={questionGroup} data={record} />
                 ),
