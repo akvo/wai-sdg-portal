@@ -147,6 +147,7 @@ const Main = ({ match }) => {
                 mapHeight={525}
                 question={question}
                 loading={loading}
+                current={current}
                 data={mapsProperty}
               />
             </div>
