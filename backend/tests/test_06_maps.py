@@ -17,8 +17,8 @@ class TestMapsRoutes():
                             client: AsyncClient) -> None:
         res = await client.get(app.url_path_for("maps:get", form_id=1),
                                params={
-                                   "color_by": 1,
-                                   "count_by": 2
+                                   "marker": 1,
+                                   "shape": 2
                                })
         assert res.status_code == 200
         res = res.json()
@@ -26,6 +26,6 @@ class TestMapsRoutes():
             "id": 1,
             "geo": [110.331143, -7.836114],
             "loc": "Arsi Negele Town",
-            "color_by": "Option 1",
-            "count_by": 4,
+            "marker": "Option 1",
+            "shape": 4,
         }]

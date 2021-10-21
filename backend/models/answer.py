@@ -112,17 +112,21 @@ class Answer(Base):
 
     @property
     def to_maps(self) -> List:
-        if not self.value and self.options:
-            return {
-                "data": self.data,
-                "value": self.options[0],
-                "question": self.question
-            }
-        return {
-            "data": self.data,
-            "value": self.value,
-            "question": self.question
-        }
+        answer = {"question": self.question, "data": self.data}
+        type = self.question_detail.type
+        if type == QuestionType.administration:
+            answer.update({"value": self.value})
+        if type in [QuestionType.text, QuestionType.geo, QuestionType.date]:
+            answer.update({"value": self.text})
+        if type == QuestionType.number:
+            answer.update({"value": self.value})
+        if type == QuestionType.option:
+            answer.update({"value": self.options[0]})
+        if type == QuestionType.multiple_option:
+            answer.update({"value": self.options})
+        if type == QuestionType.photo:
+            answer.update({"value": self.value})
+        return answer
 
 
 class AnswerBase(BaseModel):
