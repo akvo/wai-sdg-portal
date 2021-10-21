@@ -21,7 +21,7 @@ const NormalCol = ({ value, question, edited }) => {
   return value;
 };
 
-const MainTableChild = ({ question, data }) => {
+const MainTableChild = ({ questionGroup, data }) => {
   const [edited, setEdited] = useState({});
   const childcolumns = [
     {
@@ -43,7 +43,7 @@ const MainTableChild = ({ question, data }) => {
     },
   ];
 
-  return question.map((g, gi) => {
+  return questionGroup.map((g, gi) => {
     const source = g.question.map((q, qi) => ({
       name: (
         <NormalCol value={<div>{q.name}</div>} question={q} edited={edited} />

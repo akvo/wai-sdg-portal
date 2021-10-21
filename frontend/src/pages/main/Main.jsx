@@ -19,12 +19,11 @@ const { Panel } = Collapse;
 const Main = ({ match }) => {
   const { user, selectedAdministration } = UIState.useState((s) => s);
   const [data, setData] = useState([]);
-  const [question, setQuestion] = useState([]);
+  const [questionGroup, setQuestionGroup] = useState([]);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(1);
   const [loading, setLoading] = useState(true);
   const [lastSubmitted, setLastSubmitted] = useState({ by: "", at: "" });
-  const [mapsProperty, setMapsProperty] = useState([]);
 
   const current = config?.[match.params.page];
   const changePage = (p) => {
@@ -35,7 +34,7 @@ const Main = ({ match }) => {
   useEffect(() => {
     if (user && current?.formId) {
       api.get(`form/${current.formId}`).then((d) => {
-        setQuestion(d.data.question_group);
+        setQuestionGroup(d.data.question_group);
       });
     }
   }, [user, current]);
@@ -96,26 +95,6 @@ const Main = ({ match }) => {
     }
   }, [user, current, selectedAdministration]);
 
-  useEffect(() => {
-    if (user && current) {
-      let url = `maps/${current.formId}`;
-      if (current.maps.shape) {
-        url += `?count_by=${current.maps.shape.id}`;
-      }
-      if (current.maps.shape) {
-        url += `&color_by=${current.maps.marker.id}`;
-      }
-      api
-        .get(url)
-        .then((res) => {
-          setMapsProperty(res.data);
-        })
-        .catch(() => {
-          setMapsProperty([]);
-        });
-    }
-  }, [user, current]);
-
   if (!current) {
     return <ErrorPage status={404} />;
   }
@@ -145,10 +124,11 @@ const Main = ({ match }) => {
               <MainMaps
                 geoUrl={ethGeoUrl}
                 mapHeight={525}
-                question={question}
-                loading={loading}
+                question={questionGroup
+                  .map((q) => q.question)
+                  .flatMap((x) => x)}
                 current={current}
-                data={mapsProperty}
+                user={user}
               />
             </div>
           </Col>
@@ -156,7 +136,7 @@ const Main = ({ match }) => {
             current={current}
             loading={loading}
             data={data}
-            question={question}
+            questionGroup={questionGroup}
             dataSource={data}
             total={total}
             changePage={changePage}

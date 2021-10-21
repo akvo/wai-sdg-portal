@@ -19,6 +19,7 @@ const Navigation = ({ logout, loginWithPopup, isAuthenticated }) => {
   const changePage = ({ key }) => {
     UIState.update((s) => {
       s.page = key;
+      s.showNav = false;
     });
   };
 

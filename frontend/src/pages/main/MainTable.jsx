@@ -6,7 +6,7 @@ const MainTable = ({
   current,
   loading,
   data,
-  question,
+  questionGroup,
   total,
   changePage,
   lastSubmitted,
@@ -50,7 +50,7 @@ const MainTable = ({
               pagination={false}
               expandable={{
                 expandedRowRender: (record) => (
-                  <MainTableChild question={question} data={record} />
+                  <MainTableChild questionGroup={questionGroup} data={record} />
                 ),
               }}
               dataSource={data}
