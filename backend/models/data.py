@@ -106,7 +106,7 @@ class Data(Base):
         return {
             "id": self.id,
             "loc": self.administration_detail.name,
-            "geo": [self.geo[0], self.geo[1]] if self.geo else None,
+            "geo": [self.geo[1], self.geo[0]] if self.geo else None,
         }
 
 

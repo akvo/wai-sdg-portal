@@ -24,7 +24,7 @@ class TestMapsRoutes():
         res = res.json()
         assert res == [{
             "id": 1,
-            "geo": [-7.836114, 110.331143],
+            "geo": [110.331143, -7.836114],
             "loc": "Arsi Negele Town",
             "color_by": "Option 1",
             "count_by": 4,
