@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Space, Input, Carousel, Card } from "antd";
+import { Row, Col, Space, Input, Collapse } from "antd";
+import { PlusSquareOutlined } from "@ant-design/icons";
 import api from "../../util/api";
 
 import "./main.scss";
@@ -13,6 +14,7 @@ import takeRight from "lodash/takeRight";
 import MainTable from "./MainTable";
 
 const { Search } = Input;
+const { Panel } = Collapse;
 
 const Main = ({ match }) => {
   const { user, selectedAdministration } = UIState.useState((s) => s);
@@ -134,18 +136,33 @@ const Main = ({ match }) => {
           />
         </Row>
       </Col>
-      {/* Carousel */}
+      {/* Collapsable Charts*/}
       <Col span={24}>
-        <Row align="middle" className="carousel-wrapper">
+        <Row align="middle" className="collapse-wrapper">
           <Col span={24} className="container">
-            <Carousel autoplay effect="fade">
-              {["Facility 1", "Facility 2"].map((x) => (
-                <div key={x} className="carousel-item-wrapper">
-                  <h1>{x}</h1>
-                  <Card className="carousel-item-card">Content {x}</Card>
-                </div>
-              ))}
-            </Carousel>
+            {current?.charts.map((c, ci) => (
+              <Collapse
+                key={`collapse-${ci}`}
+                expandIcon={() => (
+                  <PlusSquareOutlined style={{ fontSize: 18 }} />
+                )}
+                expandIconPosition="right"
+                bordered={false}
+              >
+                <Panel header={c.title} key={ci}>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                    ac consectetur diam. Pellentesque lacinia, erat ac efficitur
+                    molestie, sapien odio efficitur purus, non ornare sem massa
+                    euismod metus. Maecenas at dolor tortor. Praesent sit amet
+                    mauris augue. Curabitur rutrum ipsum eget augue accumsan, in
+                    porta velit dignissim. Integer mattis vulputate arcu, in
+                    aliquet tellus lobortis auctor. Phasellus lacus augue,
+                    ultrices mattis ultrices et, euismod quis erat.
+                  </p>
+                </Panel>
+              </Collapse>
+            ))}
           </Col>
         </Row>
       </Col>

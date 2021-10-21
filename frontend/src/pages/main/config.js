@@ -21,6 +21,12 @@ const clts = {
     { title: "ODF Status", key: 8 },
     { title: "Declared", key: 9 },
   ],
+  charts: [
+    { title: "CLTS Charts 01" },
+    { title: "CLTS Charts 02" },
+    { title: "CLTS Charts 03" },
+    { title: "CLTS Charts 04" },
+  ],
   formId: 1,
 };
 
@@ -31,6 +37,12 @@ const health = {
     { title: "Water", key: 19 },
     { title: "Sanitation", key: 21 },
     { title: "Hygiene", key: 26 },
+  ],
+  charts: [
+    { title: "Health Facility Charts 01" },
+    { title: "Health Facility Charts 02" },
+    { title: "Health Facility Charts 03" },
+    { title: "Health Facility Charts 04" },
   ],
   formId: 2,
 };
@@ -43,6 +55,12 @@ const households = {
     { title: "Sanitation", key: 39 },
     { title: "Hygiene", key: 44 },
   ],
+  charts: [
+    { title: "Household Charts 01" },
+    { title: "Household Charts 02" },
+    { title: "Household Charts 03" },
+    { title: "Household Charts 04" },
+  ],
   formId: 3,
 };
 
@@ -54,6 +72,12 @@ const schools = {
     { title: "Sanitation", key: 61 },
     { title: "Hygiene", key: 67 },
   ],
+  charts: [
+    { title: "School Charts 01" },
+    { title: "School Charts 02" },
+    { title: "School Charts 03" },
+    { title: "School Charts 04" },
+  ],
   formId: 4,
 };
 
@@ -64,6 +88,12 @@ const water = {
     { title: "Number of Users", key: 82 },
     { title: "Water Source Type", key: 79 },
     { title: "Energy Source", key: 81 },
+  ],
+  charts: [
+    { title: "Water Point Charts 01" },
+    { title: "Water Point Charts 02" },
+    { title: "Water Point Charts 03" },
+    { title: "Water Point Charts 04" },
   ],
   formId: 5,
 };
