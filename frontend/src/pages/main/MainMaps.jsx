@@ -8,6 +8,8 @@ import {
 } from "react-simple-maps";
 import { Spin } from "antd";
 import api from "../../util/api";
+import { scaleQuantize } from "d3-scale";
+import _ from "lodash";
 
 const mapMaxZoom = 4;
 const defCenter = [38.6682, 7.3942];
@@ -62,6 +64,22 @@ const MainMaps = ({ geoUrl, question, user, current, mapHeight = 350 }) => {
     }
   }, [user, current]);
 
+  const shapeColor = _.chain(_.groupBy(data, "loc"))
+    .map((v, k) => {
+      return {
+        name: k,
+        values: _.sumBy(v, "count_by"),
+      };
+    })
+    .value();
+
+  const colorScale = scaleQuantize()
+    .domain([
+      _.minBy(shapeColor, "values")?.values,
+      _.maxBy(shapeColor, "values")?.values,
+    ])
+    .range(colorRange);
+
   return (
     <>
       {loading && (
@@ -89,6 +107,9 @@ const MainMaps = ({ geoUrl, question, user, current, mapHeight = 350 }) => {
           <Geographies geography={geoUrl}>
             {({ geographies }) =>
               geographies.map((geo) => {
+                const sc = shapeColor.find(
+                  (s) => s.name === geo.properties.UNIT_NAME
+                );
                 return (
                   <Geography
                     key={geo.rsmKey}
@@ -99,7 +120,7 @@ const MainMaps = ({ geoUrl, question, user, current, mapHeight = 350 }) => {
                     cursor="pointer"
                     style={{
                       default: {
-                        fill: "#d3d3d3",
+                        fill: sc ? colorScale(sc.values) : "#d3d3d3",
                         outline: "none",
                       },
                       hover: {
