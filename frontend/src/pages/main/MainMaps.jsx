@@ -12,6 +12,7 @@ import { scaleQuantize } from "d3-scale";
 import { UIState } from "../../state/ui";
 import _ from "lodash";
 
+const shapeLevels = ["UNIT_TYPE", "UNIT_NAME"];
 const mapMaxZoom = 4;
 const defCenter = [38.6682, 7.3942];
 const colorRange = ["#bbedda", "#a7e1cb", "#92d5bd", "#7dcaaf", "#67bea1"];
@@ -87,9 +88,16 @@ const MainMaps = ({ geoUrl, question, current, mapHeight = 350 }) => {
   const adminName = administration.find(
     (a) => a.id === _.takeRight(selectedAdministration)[0]
   );
-  const adminLevel = [false, "UNIT_TYPE", "UNIT_NAME"][
-    selectedAdministration.length - 1
-  ];
+  const adminLevel = [false, ...shapeLevels][selectedAdministration.length - 1];
+
+  const onShapeClick = (geoProp) => {
+    const selectedShape = shapeLevels.map(
+      (s) => administration.find((a) => a.name === geoProp[s])?.id
+    );
+    UIState.update((u) => {
+      u.selectedAdministration = [null, ...selectedShape];
+    });
+  };
 
   return (
     <>
@@ -119,7 +127,9 @@ const MainMaps = ({ geoUrl, question, current, mapHeight = 350 }) => {
             {({ geographies }) =>
               geographies.map((geo) => {
                 let sc = shapeColor.find(
-                  (s) => s.name === geo.properties.UNIT_NAME
+                  (s) =>
+                    s.name ===
+                    geo.properties[shapeLevels[shapeLevels.length - 1]]
                 );
                 if (adminLevel && adminName) {
                   sc =
@@ -129,6 +139,7 @@ const MainMaps = ({ geoUrl, question, current, mapHeight = 350 }) => {
                   <Geography
                     key={geo.rsmKey}
                     geography={geo}
+                    onClick={() => onShapeClick(geo.properties)}
                     stroke="#FFFFFF"
                     strokeWidth="0.8"
                     strokeOpacity="0.6"
