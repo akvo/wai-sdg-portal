@@ -91,7 +91,8 @@ const schools = {
     { title: "School Charts 04" },
   ],
   maps: {
-    shape: { id: 53, name: "Female Pupils" },
+    //shape: { id: 53, name: "Female Pupils" },
+    shape: { id: 48, name: "Female Pupils" },
     marker: { id: 56, title: "Water Service Level" },
   },
   formId: 4,

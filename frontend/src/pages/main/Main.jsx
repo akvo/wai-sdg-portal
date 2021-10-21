@@ -142,7 +142,13 @@ const Main = ({ match }) => {
                 placeholder={`${current.title}`}
                 onSearch={() => console.log("search")}
               />
-              <MainMaps geoUrl={ethGeoUrl} mapHeight={525} />
+              <MainMaps
+                geoUrl={ethGeoUrl}
+                mapHeight={525}
+                question={question}
+                loading={loading}
+                data={mapsProperty}
+              />
             </div>
           </Col>
           <MainTable

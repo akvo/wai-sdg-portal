@@ -11,7 +11,16 @@ const mapMaxZoom = 4;
 const defCenter = [38.6682, 7.3942];
 const colorRange = ["#bbedda", "#a7e1cb", "#92d5bd", "#7dcaaf", "#67bea1"];
 
-const MainMaps = ({ geoUrl, mapHeight = 350 }) => {
+const Markers = ({ data }) => {
+  data = data.filter((d) => d.geo);
+  return data.map(({ id, geo }) => (
+    <Marker key={id} coordinates={geo}>
+      <circle r={3} fill="#F00" stroke="#fff" strokeWidth={1} />
+    </Marker>
+  ));
+};
+
+const MainMaps = ({ geoUrl, question, loading, data, mapHeight = 350 }) => {
   const [position, setPosition] = useState({
     coordinates: defCenter,
     zoom: 1.8,
@@ -65,6 +74,7 @@ const MainMaps = ({ geoUrl, mapHeight = 350 }) => {
             })
           }
         </Geographies>
+        <Markers data={data} />
       </ZoomableGroup>
     </ComposableMap>
   );
