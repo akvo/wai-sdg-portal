@@ -19,10 +19,10 @@ const colorRange = ["#bbedda", "#a7e1cb", "#92d5bd", "#7dcaaf", "#67bea1"];
 
 const Markers = ({ data, colors }) => {
   data = data.filter((d) => d.geo);
-  return data.map(({ id, geo, color_by }) => {
+  return data.map(({ id, geo, marker }) => {
     let fill = "#F00";
     if (colors) {
-      fill = colors.find((c) => c.name === color_by.toLowerCase());
+      fill = colors.find((c) => c.name === marker.toLowerCase());
       fill = fill ? fill.color : "#FF0";
     }
     return (
@@ -51,10 +51,10 @@ const MainMaps = ({ geoUrl, question, current, mapHeight = 350 }) => {
     if (user && current) {
       let url = `maps/${current.formId}`;
       if (current.maps.shape) {
-        url += `?count_by=${current.maps.shape.id}`;
+        url += `?shape=${current.maps.shape.id}`;
       }
       if (current.maps.shape) {
-        url += `&color_by=${current.maps.marker.id}`;
+        url += `&marker=${current.maps.marker.id}`;
       }
       api
         .get(url)
@@ -73,7 +73,7 @@ const MainMaps = ({ geoUrl, question, current, mapHeight = 350 }) => {
     .map((v, k) => {
       return {
         name: k,
-        values: _.sumBy(v, "count_by"),
+        values: _.sumBy(v, "shape"),
       };
     })
     .value();
@@ -146,7 +146,7 @@ const MainMaps = ({ geoUrl, question, current, mapHeight = 350 }) => {
                     cursor="pointer"
                     style={{
                       default: {
-                        fill: sc ? colorScale(sc.values) : "#d3d3d3",
+                        fill: sc ? colorScale(sc.values || 0) : "#d3d3d3",
                         outline: "none",
                       },
                       hover: {
