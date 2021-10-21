@@ -39,7 +39,7 @@ const MainMaps = ({
     coordinates: defCenter,
     zoom: 1.8,
   });
-  const colors = question?.[0].question.find(
+  const colors = question?.[0]?.question.find(
     (q) => q.id === current.maps?.marker?.id
   )?.option;
 
