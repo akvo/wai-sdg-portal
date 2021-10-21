@@ -4,12 +4,10 @@ import {
   Geographies,
   Geography,
   ZoomableGroup,
-  Marker,
 } from "react-simple-maps";
 
 const mapMaxZoom = 4;
 const defCenter = [38.6682, 7.3942];
-const colorRange = ["#bbedda", "#a7e1cb", "#92d5bd", "#7dcaaf", "#67bea1"];
 
 const Map = ({ geoUrl, mapHeight = 350 }) => {
   const [position, setPosition] = useState({

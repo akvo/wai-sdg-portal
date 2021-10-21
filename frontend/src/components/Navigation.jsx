@@ -5,8 +5,6 @@ import { UIState } from "../state/ui";
 import { Link } from "react-router-dom";
 import startCase from "lodash/startCase";
 
-const { SubMenu } = Menu;
-
 const Navigation = ({ logout, loginWithPopup, isAuthenticated }) => {
   const { page, user } = UIState.useState((c) => c);
   const visible = UIState.useState((s) => s.showNav);
