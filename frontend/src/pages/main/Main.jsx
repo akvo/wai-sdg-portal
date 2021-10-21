@@ -5,13 +5,13 @@ import api from "../../util/api";
 
 import "./main.scss";
 import config from "./config";
-import Map from "../../components/Map";
 import ethGeoUrl from "../../sources/eth-filtered.topo.json";
 import { SelectLevel } from "../../components/common";
 import ErrorPage from "../../components/ErrorPage";
 import { UIState } from "../../state/ui";
 import takeRight from "lodash/takeRight";
 import MainTable from "./MainTable";
+import MainMaps from "./MainMaps";
 
 const { Search } = Input;
 const { Panel } = Collapse;
@@ -24,6 +24,7 @@ const Main = ({ match }) => {
   const [total, setTotal] = useState(1);
   const [loading, setLoading] = useState(true);
   const [lastSubmitted, setLastSubmitted] = useState({ by: "", at: "" });
+  const [mapsProperty, setMapsProperty] = useState([]);
 
   const current = config?.[match.params.page];
   const changePage = (p) => {
@@ -95,6 +96,26 @@ const Main = ({ match }) => {
     }
   }, [user, current, selectedAdministration]);
 
+  useEffect(() => {
+    if (user && current) {
+      let url = `maps/${current.formId}`;
+      if (current.maps.shape) {
+        url += `?count_by=${current.maps.shape.id}`;
+      }
+      if (current.maps.shape) {
+        url += `&color_by=${current.maps.marker.id}`;
+      }
+      api
+        .get(url)
+        .then((res) => {
+          setMapsProperty(res.data);
+        })
+        .catch(() => {
+          setMapsProperty([]);
+        });
+    }
+  }, [user, current]);
+
   if (!current) {
     return <ErrorPage status={404} />;
   }
@@ -121,7 +142,7 @@ const Main = ({ match }) => {
                 placeholder={`${current.title}`}
                 onSearch={() => console.log("search")}
               />
-              <Map geoUrl={ethGeoUrl} mapHeight={525} />
+              <MainMaps geoUrl={ethGeoUrl} mapHeight={525} />
             </div>
           </Col>
           <MainTable

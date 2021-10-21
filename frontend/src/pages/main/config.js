@@ -27,6 +27,10 @@ const clts = {
     { title: "CLTS Charts 03" },
     { title: "CLTS Charts 04" },
   ],
+  maps: {
+    shape: { id: 4, name: "Number of HHS" },
+    marker: { id: 8, title: "ODF Status" },
+  },
   formId: 1,
 };
 
@@ -44,6 +48,10 @@ const health = {
     { title: "Health Facility Charts 03" },
     { title: "Health Facility Charts 04" },
   ],
+  maps: {
+    shape: false,
+    marker: { id: 19, name: "Water Service Level" },
+  },
   formId: 2,
 };
 
@@ -61,6 +69,10 @@ const households = {
     { title: "Household Charts 03" },
     { title: "Household Charts 04" },
   ],
+  maps: {
+    shape: { id: 33, name: "Household Size" },
+    marker: { id: 35, title: "Water Service Level" },
+  },
   formId: 3,
 };
 
@@ -78,6 +90,10 @@ const schools = {
     { title: "School Charts 03" },
     { title: "School Charts 04" },
   ],
+  maps: {
+    shape: { id: 53, name: "Female Pupils" },
+    marker: { id: 56, title: "Water Service Level" },
+  },
   formId: 4,
 };
 
@@ -95,6 +111,10 @@ const water = {
     { title: "Water Point Charts 03" },
     { title: "Water Point Charts 04" },
   ],
+  maps: {
+    shape: { id: 82, name: "Number of Users" },
+    marker: { id: 80, title: "Functionality Status" },
+  },
   formId: 5,
 };
 
