@@ -128,7 +128,6 @@ const Main = ({ match }) => {
                   .map((q) => q.question)
                   .flatMap((x) => x)}
                 current={current}
-                user={user}
               />
             </div>
           </Col>

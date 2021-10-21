@@ -9,6 +9,7 @@ import {
 import { Spin } from "antd";
 import api from "../../util/api";
 import { scaleQuantize } from "d3-scale";
+import { UIState } from "../../state/ui";
 import _ from "lodash";
 
 const mapMaxZoom = 4;
@@ -31,7 +32,10 @@ const Markers = ({ data, colors }) => {
   });
 };
 
-const MainMaps = ({ geoUrl, question, user, current, mapHeight = 350 }) => {
+const MainMaps = ({ geoUrl, question, current, mapHeight = 350 }) => {
+  const { user, administration, selectedAdministration } = UIState.useState(
+    (s) => s
+  );
   const [position, setPosition] = useState({
     coordinates: defCenter,
     zoom: 1.8,
@@ -80,6 +84,13 @@ const MainMaps = ({ geoUrl, question, user, current, mapHeight = 350 }) => {
     ])
     .range(colorRange);
 
+  const adminName = administration.find(
+    (a) => a.id === _.takeRight(selectedAdministration)[0]
+  );
+  const adminLevel = [false, "UNIT_TYPE", "UNIT_NAME"][
+    selectedAdministration.length - 1
+  ];
+
   return (
     <>
       {loading && (
@@ -107,9 +118,13 @@ const MainMaps = ({ geoUrl, question, user, current, mapHeight = 350 }) => {
           <Geographies geography={geoUrl}>
             {({ geographies }) =>
               geographies.map((geo) => {
-                const sc = shapeColor.find(
+                let sc = shapeColor.find(
                   (s) => s.name === geo.properties.UNIT_NAME
                 );
+                if (adminLevel && adminName) {
+                  sc =
+                    geo.properties[adminLevel] === adminName.name ? sc : false;
+                }
                 return (
                   <Geography
                     key={geo.rsmKey}
