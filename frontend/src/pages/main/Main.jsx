@@ -21,7 +21,8 @@ const Main = ({ match }) => {
   const [data, setData] = useState([]);
   const [questionGroup, setQuestionGroup] = useState([]);
   const [page, setPage] = useState(1);
-  const [total, setTotal] = useState(1);
+  const [total, setTotal] = useState(0);
+  const [perPage, setPerPage] = useState(10);
   const [loading, setLoading] = useState(true);
   const [lastSubmitted, setLastSubmitted] = useState({ by: "", at: "" });
 
@@ -43,7 +44,7 @@ const Main = ({ match }) => {
     if (user && current) {
       const adminId = takeRight(selectedAdministration)[0];
       setLoading(true);
-      let url = `data/form/${current.formId}?page=${page}`;
+      let url = `data/form/${current.formId}?page=${page}&perpage=${perPage}`;
       if (adminId) {
         url += `&administration=${adminId}`;
       }
@@ -66,7 +67,7 @@ const Main = ({ match }) => {
             };
           });
           setData(tableData);
-          setTotal(d.data.total_page);
+          setTotal(d.data.total);
           setLoading(false);
         })
         .catch(() => {
@@ -75,7 +76,7 @@ const Main = ({ match }) => {
           setLoading(false);
         });
     }
-  }, [page, user, current, selectedAdministration]);
+  }, [page, perPage, user, current, selectedAdministration]);
 
   useEffect(() => {
     if (user && current) {
@@ -138,6 +139,7 @@ const Main = ({ match }) => {
             questionGroup={questionGroup}
             dataSource={data}
             total={total}
+            setPerPage={setPerPage}
             changePage={changePage}
             lastSubmitted={lastSubmitted}
           />

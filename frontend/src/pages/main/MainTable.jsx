@@ -9,6 +9,7 @@ const MainTable = ({
   questionGroup,
   total,
   changePage,
+  setPerPage,
   lastSubmitted,
 }) => {
   const { columns, formId, title } = current;
@@ -64,6 +65,10 @@ const MainTable = ({
               <Pagination
                 defaultCurrent={1}
                 total={total}
+                onShowSizeChange={(e, s) => {
+                  setPerPage(s);
+                }}
+                pageSizeOptions={[10, 20, 50]}
                 onChange={changePage}
               />
             ) : (
