@@ -65,6 +65,6 @@ docker-compose exec backend python -m seeder.form
 ### Datapoint Seeder
 Assuming that you have `data-input.xlsx` inside `./backend/source` folder you will be able to run.
 ```
-docker-compose exec backend python -m seeder.datapoint
+docker-compose exec backend python -m seeder.datapoint youremail@akvo.org
 ```
 
