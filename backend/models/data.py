@@ -61,7 +61,8 @@ class Data(Base):
     answer = relationship("Answer",
                           cascade="all, delete",
                           passive_deletes=True,
-                          backref="answer")
+                          backref="answer",
+                          order_by="Answer.id.asc()")
     created_by_user = relationship("User", foreign_keys=[created_by])
     updated_by_user = relationship("User", foreign_keys=[updated_by])
     administration_detail = relationship("Administration", backref="data")

@@ -42,14 +42,14 @@ class TestDataUpdateRoutes():
             "updated_by": "Akvo Support",
             "updated": today,
             "answer": [{
+                "question": 1,
+                "value": "Option 2"
+            }, {
                 "question": 2,
                 "value": 4
             }, {
                 "question": 3,
                 "value": "-7.836114|110.331143"
-            }, {
-                "question": 1,
-                "value": "Option 2"
             }, {
                 "question": 4,
                 "value": "Bandung"
@@ -101,6 +101,10 @@ class TestHistoryRoutes():
             "updated": today,
             "updated_by": "Akvo Support",
             "answer": [{
+                "question": 1,
+                "value": "Option 2",
+                "history": True,
+            }, {
                 "question": 2,
                 "value": 4,
                 "history": False,
@@ -108,10 +112,6 @@ class TestHistoryRoutes():
                 "question": 3,
                 "value": "-7.836114|110.331143",
                 "history": False,
-            }, {
-                "question": 1,
-                "value": "Option 2",
-                "history": True,
             }, {
                 "question": 4,
                 "value": "Bandung",
