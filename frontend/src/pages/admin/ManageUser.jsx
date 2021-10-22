@@ -19,7 +19,7 @@ import isEmpty from "lodash/isEmpty";
 import { UIState } from "../../state/ui";
 
 const ManageUser = () => {
-  const organisations = UIState.useState((s) => s.organisations);
+  const { organisations, administration } = UIState.useState((s) => s);
   const [form] = Form.useForm();
   const [showPendingUser, setShowPendingUser] = useState(true);
   const [tableLoading, setTableLoading] = useState(false);
@@ -38,7 +38,7 @@ const ManageUser = () => {
     api
       .put(
         `/user/${selectedValue.id}?active=1&role=${values.role}&organisation=${values.organisation}`,
-        []
+        values.access
       )
       .then((res) => {
         notification.success({
@@ -131,7 +131,7 @@ const ManageUser = () => {
   const getUsers = useCallback((active, page = 1, pageSize = 10) => {
     setTableLoading(true);
     api
-      .get(`/user/?active=${active}&page=${page}`)
+      .get(`/user?active=${active}&page=${page}`)
       .then((res) => {
         setUsers(res.data?.data);
         setPaginate({
@@ -169,6 +169,11 @@ const ManageUser = () => {
   const onOrganisationChange = (value) => {
     form.setFieldsValue({ organisation: value });
     setSelectedValue({ ...selectedValue, organisation: value });
+  };
+
+  const onAccessChange = (value) => {
+    form.setFieldsValue({ access: value });
+    setSelectedValue({ ...selectedValue, access: value });
   };
 
   return (
@@ -237,6 +242,22 @@ const ManageUser = () => {
               <Select.Option value="admin">Admin</Select.Option>
               <Select.Option value="editor">Editor</Select.Option>
               <Select.Option value="user">User</Select.Option>
+            </Select>
+          </Form.Item>
+
+          <Form.Item label="Access" name="access" valuePropName="access">
+            <Select
+              mode="multiple"
+              onChange={onAccessChange}
+              value={selectedValue?.access}
+            >
+              {administration
+                .filter((a) => a.parent === null)
+                .map((a, ai) => (
+                  <Select.Option key={ai} value={a.id}>
+                    {a.name}
+                  </Select.Option>
+                ))}
             </Select>
           </Form.Item>
 

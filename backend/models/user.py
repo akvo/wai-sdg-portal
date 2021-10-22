@@ -11,7 +11,7 @@ from sqlalchemy import Enum, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy import ForeignKey
 from db.connection import Base
-from models.access import AccessDict, AccessBase
+from models.access import AccessDict
 
 
 class UserRole(enum.Enum):
@@ -70,7 +70,7 @@ class User(Base):
             "name": self.name,
             "role": self.role,
             "active": self.active,
-            "access": self.access,
+            "access": [a.administration for a in self.access],
             "organisation": self.organisation
         }
 
@@ -103,7 +103,7 @@ class UserAccessBase(BaseModel):
     name: str
     role: UserRole
     active: Optional[bool] = False
-    access: List[AccessBase]
+    access: List[int]
     organisation: int
 
     class Config:
