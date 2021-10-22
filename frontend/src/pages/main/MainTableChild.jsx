@@ -17,8 +17,17 @@ const changeColBackground = (dt, edited) => {
   };
 };
 
-const NormalCol = ({ value, question, edited }) => {
+const NormalCol = ({ value }) => {
   return value;
+};
+
+const HistoryCol = ({ history }) => {
+  if (history) {
+    return <Button size="small" icon={<FieldTimeOutlined />} />;
+  }
+  return (
+    <Button size="small" type="dashed" icon={<FieldTimeOutlined />} disabled />
+  );
 };
 
 const MainTableChild = ({ questionGroup, data }) => {
@@ -44,27 +53,26 @@ const MainTableChild = ({ questionGroup, data }) => {
   ];
 
   return questionGroup.map((g, gi) => {
-    const source = g.question.map((q, qi) => ({
-      name: (
-        <NormalCol value={<div>{q.name}</div>} question={q} edited={edited} />
-      ),
-      value: (
-        <MainEditor
-          value={data.detail.find((d) => d.question === q.id)?.value || null}
-          question={q}
-          edited={edited}
-          setEdited={setEdited}
-        />
-      ),
-      action: (
-        <NormalCol
-          value={<Button size="small" icon={<FieldTimeOutlined />} />}
-          question={q}
-          edited={edited}
-        />
-      ),
-      key: qi,
-    }));
+    const source = g.question.map((q, qi) => {
+      const answer = data.detail.find((d) => d.question === q.id);
+      return {
+        name: (
+          <NormalCol value={<div>{q.name}</div>} question={q} edited={edited} />
+        ),
+        value: (
+          <MainEditor
+            value={answer?.value || null}
+            question={q}
+            edited={edited}
+            setEdited={setEdited}
+          />
+        ),
+        action: (
+          <HistoryCol question={q} edited={edited} history={answer?.history} />
+        ),
+        key: qi,
+      };
+    });
     return (
       <Table
         className={"main-child-table"}
