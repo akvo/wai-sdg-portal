@@ -22,6 +22,7 @@ api
   });
 
 const Admin = () => {
+  const { user } = UIState.useState((e) => e);
   return (
     <Row className="admin-container">
       {/* Jumbotron */}
@@ -45,9 +46,11 @@ const Admin = () => {
             <TabPane tab="Data Upload" key="data-upload">
               <ManageData />
             </TabPane>
-            <TabPane tab="Manage Users" key="manage-users">
-              <ManageUser />
-            </TabPane>
+            {user?.role === "admin" && (
+              <TabPane tab="Manage Users" key="manage-users">
+                <ManageUser />
+              </TabPane>
+            )}
           </Tabs>
         </div>
       </Col>
