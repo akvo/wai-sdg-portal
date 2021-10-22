@@ -165,7 +165,6 @@ def update_by_id(req: Request,
         a.update({"type": questions[a["question"]]})
         if a["type"] == QuestionType.option:
             a.update({"value": [a["value"]]})
-        print(a)
         if a['question'] in list(checked):
             execute = "update"
         else:
