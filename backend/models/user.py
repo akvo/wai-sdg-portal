@@ -11,7 +11,7 @@ from sqlalchemy import Enum, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy import ForeignKey
 from db.connection import Base
-from models.access import AccessDict, AccessBase
+from models.access import AccessDict
 
 
 class UserRole(enum.Enum):
