@@ -8,6 +8,10 @@ import {
   Table,
   notification,
   Tag,
+  Form,
+  Modal,
+  Select,
+  Input,
 } from "antd";
 import api from "../../util/api";
 import capitalize from "lodash/capitalize";
@@ -16,6 +20,7 @@ import { UIState } from "../../state/ui";
 
 const ManageUser = () => {
   const organisations = UIState.useState((s) => s.organisations);
+  const [form] = Form.useForm();
   const [showPendingUser, setShowPendingUser] = useState(true);
   const [tableLoading, setTableLoading] = useState(false);
   const [users, setUsers] = useState([]);
@@ -24,17 +29,22 @@ const ManageUser = () => {
     current: 1,
     pageSize: 10,
   });
+  const [selectedValue, setSelectedValue] = useState({});
+  const [isUserModalVisible, setIsUserModalVisible] = useState(false);
 
   const active = showPendingUser ? 0 : 1;
 
-  const handleApproveButton = (user) => {
+  const onFinish = (values) => {
     api
-      .put(`/user/${user.id}?active=1&role=${user.role}`)
+      .put(
+        `/user/${selectedValue.id}?active=1&role=${values.role}&organisation=${values.organisation}`,
+        []
+      )
       .then((res) => {
         notification.success({
-          message: "User approved",
+          message: active ? "Update process has been applied" : "User approved",
         });
-        getUsers(active, 1);
+        getUsers(active, paginate.current);
       })
       .catch((err) => {
         console.error(err);
@@ -42,7 +52,21 @@ const ManageUser = () => {
         notification.error({
           message: "Ops, something went wrong",
         });
+      })
+      .finally(() => {
+        setIsUserModalVisible(false);
       });
+  };
+
+  const fetchUserDetail = (id) => {
+    api.get(`/user/${id}`).then((res) => {
+      setIsUserModalVisible(true);
+      const u = {
+        ...res.data,
+      };
+      form.setFieldsValue(u);
+      setSelectedValue(u);
+    });
   };
 
   const userColumns = [
@@ -82,20 +106,19 @@ const ManageUser = () => {
     },
     {
       title: "",
-      dataIndex: "action",
-      key: "action",
-      render: (val, prop) => (
+      dataIndex: "id",
+      key: "id",
+      render: (id, prop) => (
         <Space size="small" align="center" wrap={true}>
           {active ? (
-            <>
-              <Button type="link">Edit</Button>
-              <Button type="link">Delete</Button>
-            </>
+            <Button type="link" onClick={() => fetchUserDetail(id)}>
+              Edit
+            </Button>
           ) : (
             <Button
               type="default"
               disabled={!prop.email_verified}
-              onClick={() => handleApproveButton(prop)}
+              onClick={() => fetchUserDetail(id)}
             >
               Approve
             </Button>
@@ -138,6 +161,16 @@ const ManageUser = () => {
     !isEmpty(organisations) && getUsers(active, current, pageSize);
   };
 
+  const onRoleChange = (value) => {
+    form.setFieldsValue({ role: value });
+    setSelectedValue({ ...selectedValue, role: value });
+  };
+
+  const onOrganisationChange = (value) => {
+    form.setFieldsValue({ organisation: value });
+    setSelectedValue({ ...selectedValue, organisation: value });
+  };
+
   return (
     <>
       <Row align="middle" className="checkbox-wrapper">
@@ -172,6 +205,58 @@ const ManageUser = () => {
           }}
         />
       </div>
+
+      <Modal
+        title={`${active ? "Edit" : "Approve"} User`}
+        centered
+        visible={isUserModalVisible}
+        onOk={() => {
+          form.submit();
+        }}
+        onCancel={() => setIsUserModalVisible(false)}
+        okText={selectedValue?.active ? "Confirm Changes" : "Approve"}
+      >
+        <Form
+          form={form}
+          name="user-form"
+          labelCol={{ span: 6 }}
+          wrapperCol={{ span: 16 }}
+          initialValue={selectedValue}
+          onFinish={onFinish}
+        >
+          <Form.Item label="Name" name="name" valuePropName="name">
+            <Input value={selectedValue?.name} disabled bordered={false} />
+          </Form.Item>
+
+          <Form.Item label="Email" name="email" valuePropName="email">
+            <Input value={selectedValue?.email} disabled bordered={false} />
+          </Form.Item>
+
+          <Form.Item label="Role" name="role" valuePropName="role">
+            <Select onChange={onRoleChange} value={selectedValue?.role}>
+              <Select.Option value="admin">Admin</Select.Option>
+              <Select.Option value="editor">Editor</Select.Option>
+              <Select.Option value="user">User</Select.Option>
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            label="Organisation"
+            name="organisation"
+            valuePropName="organisation"
+          >
+            <Select
+              showSearch
+              onChange={onOrganisationChange}
+              options={organisations.map((x) => ({
+                label: x.name,
+                value: x.id,
+              }))}
+              value={selectedValue?.organisation}
+            />
+          </Form.Item>
+        </Form>
+      </Modal>
     </>
   );
 };
