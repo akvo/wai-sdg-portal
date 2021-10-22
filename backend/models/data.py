@@ -89,7 +89,8 @@ class Data(Base):
                 "long": self.geo[1]
             } if self.geo else None,
             "created_by": self.created_by_user.name,
-            "updated_by": self.updated_by_user.name if self.updated_by else None,
+            "updated_by":
+            self.updated_by_user.name if self.updated_by else None,
             "created": self.created.strftime("%B %d, %Y"),
             "updated":
             self.updated.strftime("%B %d, %Y") if self.updated else None,
