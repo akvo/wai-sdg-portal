@@ -1,5 +1,6 @@
 import sys
 import pytest
+from datetime import datetime
 from fastapi import FastAPI
 from httpx import AsyncClient
 from tests.test_01_auth import Acc
@@ -10,11 +11,11 @@ sys.path.append("..")
 
 account = Acc(True)
 
+today = datetime.today().strftime("%B %d, %Y")
 
 class TestDataUpdateRoutes():
-
     @pytest.mark.asyncio
-    async def test_submit_data(self, app: FastAPI, session: Session,
+    async def test_update_data(self, app: FastAPI, session: Session,
                                client: AsyncClient) -> None:
         res = await client.put(
             app.url_path_for("data:update", id=1),
@@ -55,3 +56,23 @@ class TestDataUpdateRoutes():
                 "value": "Bandung"
             }]
         }
+
+
+class TestHistoryRoutes():
+    @pytest.mark.asyncio
+    async def test_get_history(self, app: FastAPI, session: Session,
+                               client: AsyncClient) -> None:
+        res = await client.get(
+            app.url_path_for("data:history", data_id=1, question_id=1))
+        assert res.status_code == 200
+        res = res.json()
+        assert res == {
+                "date": today,
+                "history": [{
+                    "date": today,
+                    "user": "Akvo Support",
+                    "value": "Option 1"
+                    }],
+                "user": "Akvo Support",
+                "value": "Option 2"
+            }
