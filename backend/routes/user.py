@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 import db.crud_user as crud
 from db.connection import get_session
 from middleware import verify_token, verify_admin, verify_user, get_auth0_user
-from models.access import AccessBase
+from models.access import Access
 from models.user import UserRole, UserBase, UserAccessBase, UserResponse
 
 security = HTTPBearer()
@@ -24,7 +24,7 @@ def me(req: Request,
        session: Session = Depends(get_session),
        credentials: credentials = Depends(security)):
     user = verify_user(req.state.authenticated, session)
-    return user
+    return user.serialize
 
 
 @user_route.post("/user",
@@ -48,7 +48,7 @@ def add(req: Request,
     return user.serialize
 
 
-@user_route.get("/user/",
+@user_route.get("/user",
                 response_model=UserResponse,
                 summary="get all users",
                 tags=["User"])
@@ -112,11 +112,12 @@ def update_by_id(req: Request,
                  role: UserRole,
                  first_name: str = "",
                  last_name: str = "",
-                 access: List[AccessBase] = [],
+                 access: List[int] = [],
                  organisation: int = None,
                  session: Session = Depends(get_session),
                  credentials: credentials = Depends(security)):
     verify_admin(req.state.authenticated, session)
+    print(access)
     name = ""
     if len(first_name):
         name = first_name
@@ -126,6 +127,7 @@ def update_by_id(req: Request,
         name = last_name
     else:
         name = ""
+    access = [Access(user=id, administration=a) for a in access]
     access = crud.add_access(session=session, user=id, access=access)
     user = crud.update_user_by_id(session=session,
                                   id=id,
