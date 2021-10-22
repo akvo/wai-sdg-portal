@@ -19,6 +19,13 @@ class AnswerDict(TypedDict):
                  List[float], None]
 
 
+class AnswerDictWithHistory(TypedDict):
+    history: bool
+    question: int
+    value: Union[int, float, str, bool, dict, List[str], List[int],
+                 List[float], None]
+
+
 class Answer(Base):
     __tablename__ = "answer"
     id = Column(Integer, primary_key=True, index=True, nullable=True)
@@ -31,6 +38,8 @@ class Answer(Base):
     updated_by = Column(Integer, ForeignKey('user.id'), nullable=True)
     created = Column(DateTime, nullable=True)
     updated = Column(DateTime, nullable=True)
+    created_by_user = relationship("User", foreign_keys=[created_by])
+    updated_by_user = relationship("User", foreign_keys=[updated_by])
     question_detail = relationship("Question", backref="answer")
 
     def __init__(self,
@@ -72,8 +81,11 @@ class Answer(Base):
         }
 
     @property
-    def formatted(self) -> AnswerDict:
-        answer = {"question": self.question}
+    def formatted(self) -> AnswerDictWithHistory:
+        answer = {
+            "question": self.question,
+            "history": True if self.updated_by else False
+        }
         type = self.question_detail.type
         if type == QuestionType.administration:
             answer.update({"value": self.value})
@@ -90,14 +102,6 @@ class Answer(Base):
         return answer
 
     @property
-    def simplified(self) -> TypedDict:
-        return {
-            "value": self.text or self.value or self.options,
-            "date": self.updated,
-            "user": self.updated_by
-        }
-
-    @property
     def dicted(self) -> TypedDict:
         return {
             self.question: {
@@ -108,7 +112,46 @@ class Answer(Base):
 
     @property
     def only_value(self) -> List:
-        return self.text or self.value or self.options
+        type = self.question_detail.type
+        if type in [QuestionType.administration, QuestionType.number]:
+            return self.value
+        if type in [QuestionType.text, QuestionType.geo, QuestionType.date]:
+            return self.text
+        if type == QuestionType.number:
+            return self.value
+        if type == QuestionType.option:
+            if self.options:
+                return self.options[0]
+            return None
+        if type == QuestionType.multiple_option:
+            return self.options
+        if type == QuestionType.photo:
+            return self.text
+        return None
+
+    @property
+    def simplified(self) -> TypedDict:
+        user = self.updated_by_user or self.created_by_user
+        date = self.updated or self.created
+        type = self.question_detail.type
+        answer = None
+        if type == QuestionType.administration:
+            answer = self.value
+        if type in [QuestionType.text, QuestionType.geo, QuestionType.date]:
+            answer = self.text
+        if type == QuestionType.number:
+            answer = self.value
+        if type == QuestionType.option:
+            answer = self.options[0]
+        if type == QuestionType.multiple_option:
+            answer = self.options
+        if type == QuestionType.photo:
+            answer = self.text
+        return {
+            "value": answer,
+            "date": date.strftime("%B %d, %Y"),
+            "user": user.name
+        }
 
     @property
     def to_maps(self) -> List:
@@ -125,7 +168,7 @@ class Answer(Base):
         if type == QuestionType.multiple_option:
             answer.update({"value": self.options})
         if type == QuestionType.photo:
-            answer.update({"value": self.value})
+            answer.update({"value": self.text})
         return answer
 
 

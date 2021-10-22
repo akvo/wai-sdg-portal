@@ -8,8 +8,8 @@ from sqlalchemy.orm import Session
 
 pytestmark = pytest.mark.asyncio
 sys.path.append("..")
-
 account = Acc(True)
+today = datetime.today().strftime("%B %d, %Y")
 
 
 class TestDataRoutes():
@@ -24,12 +24,12 @@ class TestDataRoutes():
         assert res["total_page"] == 1
         assert len(res["data"]) == 1
         first_data = res["data"][0]
-        del first_data["created"]
         assert first_data == {
             "id": 1,
             "name": "Arsi Negele Town - Garut",
             "administration": 4,
-            "created_by": 1,
+            "created": today,
+            "created_by": "Akvo Support",
             "form": 1,
             "geo": {
                 "lat": -7.836114,
@@ -39,28 +39,32 @@ class TestDataRoutes():
             "updated_by": None,
             "answer": [{
                 "question": 1,
-                "value": "Option 1"
+                "value": "Option 1",
+                "history": False
             }, {
                 "question": 2,
-                "value": 4
+                "value": 4,
+                "history": False
             }, {
                 "question": 3,
-                "value": "-7.836114|110.331143"
+                "value": "-7.836114|110.331143",
+                "history": False
             }, {
                 "question": 4,
-                "value": "Garut"
+                "value": "Garut",
+                "history": False
             }]
         }
 
+    @pytest.mark.asyncio
     async def test_get_last_submitted(self, app: FastAPI, session: Session,
                                       client: AsyncClient) -> None:
-        print(account)
         res = await client.get(
             app.url_path_for("data:last-submitted"),
             params={"form_id": 1})
         assert res.status_code == 200
         res = res.json()
         assert res == {
-                "at": datetime.today().strftime("%B %d, %Y"),
+                "at": today,
                 "by": account.decoded["name"]
             }

@@ -140,6 +140,7 @@ def get_by_id(req: Request, id: int, session: Session = Depends(get_session)):
 @data_route.put("/data/{id:path}",
                 response_model=DataDict,
                 summary="update data",
+                name="data:update",
                 tags=["Data"])
 def update_by_id(req: Request,
                  id: int,
@@ -162,6 +163,8 @@ def update_by_id(req: Request,
                 detail="question {} is not part of this form".format(
                     a["question"]))
         a.update({"type": questions[a["question"]]})
+        if a["type"] == QuestionType.option:
+            a.update({"value": [a["value"]]})
         if a['question'] in list(checked):
             execute = "update"
         else:
@@ -194,20 +197,6 @@ def update_by_id(req: Request,
     return data.serialize
 
 
-@data_route.get("/history/{data_id:path}/{question_id:path}",
-                summary="get answer with it's history",
-                name="data:history",
-                tags=["Data"])
-def get_history(req: Request,
-                data_id: int,
-                question_id: int,
-                session: Session = Depends(get_session)):
-    answer = crud_answer.get_history(session=session,
-                                     data=data_id,
-                                     question=question_id)
-    return answer
-
-
 @data_route.get("/last-submitted",
                 response_model=SubmissionInfo,
                 summary="get last submission",
@@ -234,3 +223,17 @@ def get_last_submission(req: Request,
         'at': last_submitted["at"].strftime("%B %d, %Y")
     })
     return last_submitted
+
+
+@data_route.get("/history/{data_id:path}/{question_id:path}",
+                summary="get answer with it's history",
+                name="data:history",
+                tags=["Data"])
+def get_history(req: Request,
+                data_id: int,
+                question_id: int,
+                session: Session = Depends(get_session)):
+    answer = crud_answer.get_history(session=session,
+                                     data=data_id,
+                                     question=question_id)
+    return answer

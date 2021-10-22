@@ -5,8 +5,10 @@ from datetime import datetime
 from typing_extensions import TypedDict
 from typing import Optional, List, Union
 from pydantic import BaseModel
+from .question import QuestionType
 from sqlalchemy import Column, Integer, Float, Text, String
 from sqlalchemy import ForeignKey, DateTime
+from sqlalchemy.orm import relationship
 import sqlalchemy.dialects.postgresql as pg
 from db.connection import Base
 
@@ -28,6 +30,9 @@ class History(Base):
     updated_by = Column(Integer, ForeignKey('user.id'), nullable=True)
     created = Column(DateTime, nullable=True)
     updated = Column(DateTime, nullable=True)
+    created_by_user = relationship("User", foreign_keys=[created_by])
+    updated_by_user = relationship("User", foreign_keys=[updated_by])
+    question_detail = relationship("Question", foreign_keys=[question])
 
     def __init__(self,
                  question: int,
@@ -69,10 +74,26 @@ class History(Base):
 
     @property
     def simplified(self) -> TypedDict:
+        user = self.updated_by_user or self.created_by_user
+        date = self.updated or self.created
+        type = self.question_detail.type
+        answer = None
+        if type == QuestionType.administration:
+            answer = self.value
+        if type in [QuestionType.text, QuestionType.geo, QuestionType.date]:
+            answer = self.text
+        if type == QuestionType.number:
+            answer = self.value
+        if type == QuestionType.option:
+            answer = self.options[0]
+        if type == QuestionType.multiple_option:
+            answer = self.options
+        if type == QuestionType.photo:
+            answer = self.text
         return {
-            "value": self.text or self.value or self.options,
-            "date": self.updated or self.created,
-            "user": self.updated_by or self.created_by
+            "value": answer,
+            "date": date.strftime("%B %d, %Y"),
+            "user": user.name
         }
 
 

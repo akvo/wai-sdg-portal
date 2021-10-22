@@ -1,9 +1,43 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { Select, Button, Result, Space } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { UIState } from "../state/ui";
 
+const { Option, OptGroup } = Select;
+
 const levels = ["Woreda", "Kebele"];
+
+export const navigationOptions = [
+  {
+    link: "water",
+    name: "Water",
+    childrens: null,
+  },
+  {
+    link: "clts",
+    name: "CLTS",
+    childrens: null,
+  },
+  {
+    link: "jmp",
+    name: "JMP",
+    childrens: [
+      {
+        link: "households",
+        name: "Households",
+      },
+      {
+        link: "schools",
+        name: "Schools",
+      },
+      {
+        link: "health",
+        name: "Health Facilities",
+      },
+    ],
+  },
+];
 
 export const SelectLevel = () => {
   const { administration, selectedAdministration } = UIState.useState((s) => s);
@@ -56,6 +90,34 @@ export const SelectLevel = () => {
         Remove Filter
       </Button>
     </Space>
+  );
+};
+
+export const DropdownNavigation = ({ page }) => {
+  const history = useHistory();
+
+  return (
+    <Select
+      value={[page]}
+      onChange={(val) => history.push(`/data/${val}`)}
+      className="filter-select"
+    >
+      {navigationOptions.map((item, i) => {
+        return item.childrens ? (
+          <OptGroup label={item.name} key={`${item.link}-${i}`}>
+            {item?.childrens?.map((child) => (
+              <Option value={child.link} key={`${child.link}-${i}`}>
+                {child.name}
+              </Option>
+            ))}
+          </OptGroup>
+        ) : (
+          <Option value={item.link} key={`${item.link}-${i}`}>
+            {item.name}
+          </Option>
+        );
+      })}
+    </Select>
   );
 };
 

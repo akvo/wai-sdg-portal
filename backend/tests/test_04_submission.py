@@ -1,5 +1,6 @@
 import sys
 import pytest
+from datetime import datetime
 from fastapi import FastAPI
 from httpx import AsyncClient
 from tests.test_01_auth import Acc
@@ -7,8 +8,8 @@ from sqlalchemy.orm import Session
 
 pytestmark = pytest.mark.asyncio
 sys.path.append("..")
-
 account = Acc(True)
+today = datetime.today().strftime("%B %d, %Y")
 
 
 class TestSubmissionRoutes():
@@ -100,12 +101,12 @@ class TestSubmissionRoutes():
             headers={"Authorization": f"Bearer {account.token}"})
         assert res.status_code == 200
         res = res.json()
-        del res["created"]
         assert res == {
                 "id": 1,
                 "name": "Arsi Negele Town - Garut",
                 "administration": 4,
-                "created_by": 1,
+                "created": today,
+                "created_by": "Akvo Support",
                 "form": 1,
                 "geo": {"lat": -7.836114, "long": 110.331143},
                 "updated": None,

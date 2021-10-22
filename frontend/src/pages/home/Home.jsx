@@ -1,12 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Row, Col, Card, Space, Carousel } from "antd";
+import { Row, Col, Card, Space, Carousel, Image } from "antd";
 import { RightOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import CountUp from "react-countup";
 
 import "./home.scss";
 import ethGeoUrl from "../../sources/eth-filtered.topo.json";
 import Map from "../../components/Map";
+
+import waterPointIcon from "../../sources/icons/landing-water-points-icon.png";
+import odfIcon from "../../sources/icons/landing-odf-icon.png";
+import healthFacilityIcon from "../../sources/icons/landing-health-facilities-icon.png";
+import schoolIcon from "../../sources/icons/landing-schools-icon.png";
 
 const datasetsInPortal = [
   {
@@ -41,7 +46,7 @@ const overviews = [
     {
       type: "info",
       category: "water-point",
-      icon: null,
+      icon: waterPointIcon,
       woreda: 2,
       percent: 78,
       count: 282,
@@ -53,7 +58,7 @@ const overviews = [
     {
       type: "info",
       category: "odf",
-      icon: null,
+      icon: odfIcon,
       woreda: 1,
       percent: 81,
       count: null,
@@ -73,7 +78,7 @@ const overviews = [
     {
       type: "info",
       category: "health-facilities",
-      icon: null,
+      icon: healthFacilityIcon,
       woreda: 1,
       percent: 4.5,
       count: null,
@@ -85,7 +90,7 @@ const overviews = [
     {
       type: "info",
       category: "schools",
-      icon: null,
+      icon: schoolIcon,
       woreda: 1,
       percent: 3.5,
       count: null,
@@ -207,8 +212,21 @@ const Home = () => {
                             className="overview-item-col"
                           >
                             <Card className={`overview-item-card ${category}`}>
-                              <Row className="overview-item">
-                                <Col span={8}>{icon || "Icon here"}</Col>
+                              <Row
+                                className="overview-item"
+                                gutter={[24, 24]}
+                                align="middle"
+                                justify="center"
+                              >
+                                <Col span={8} align="center">
+                                  <Image
+                                    className="overview-icon"
+                                    width="100%"
+                                    src={icon}
+                                    alt={category}
+                                    preview={false}
+                                  />
+                                </Col>
                                 <Col span={16}>
                                   <div className="area">
                                     Across{" "}

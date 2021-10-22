@@ -8,115 +8,167 @@ import {
   Table,
   notification,
   Tag,
+  Form,
+  Modal,
+  Select,
+  Input,
 } from "antd";
 import api from "../../util/api";
 import capitalize from "lodash/capitalize";
 import isEmpty from "lodash/isEmpty";
 import { UIState } from "../../state/ui";
 
-import { userColumns } from "./admin-static";
-
-const defUsers = {
-  current: 1,
-  data: [],
-  total: 0,
-  total_page: 0,
-};
-
 const ManageUser = () => {
   const organisations = UIState.useState((s) => s.organisations);
+  const [form] = Form.useForm();
   const [showPendingUser, setShowPendingUser] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const [users, setUsers] = useState(defUsers);
+  const [tableLoading, setTableLoading] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [paginate, setPaginate] = useState({
+    total: 1,
+    current: 1,
+    pageSize: 10,
+  });
+  const [selectedValue, setSelectedValue] = useState({});
+  const [isUserModalVisible, setIsUserModalVisible] = useState(false);
 
   const active = showPendingUser ? 0 : 1;
 
-  const getUsers = useCallback(
-    (active, page) => {
-      setLoading(true);
-      api
-        .get(`/user/?active=${active}&page=${page}`)
-        .then((res) => {
-          const handleApproveButton = (user) => {
-            api
-              .put(`/user/${user.id}?active=1&role=${user.role}`)
-              .then((res) => {
-                notification.success({
-                  message: "User approved",
-                });
-                getUsers(active, 1);
-              })
-              .catch((err) => {
-                console.error(err);
-                setUsers(defUsers);
-                notification.error({
-                  message: "Ops, something went wrong",
-                });
-              });
-          };
-
-          const data = res.data?.data?.map((x) => {
-            const emailStatus = (
-              <Tag color={x.email_verified ? "green" : "red"}>
-                {x.email_verified ? "verified" : "not verified"}
-              </Tag>
-            );
-            return {
-              ...x,
-              email: !active ? (
-                <Space size="small">
-                  {x.email} {emailStatus}
-                </Space>
-              ) : (
-                x.email
-              ),
-              organisation: organisations?.find(
-                (org) => org.id === x.organisation
-              )?.name,
-              role: capitalize(x.role),
-              action: (
-                <Space size="small" align="center" wrap={true}>
-                  {active ? (
-                    <>
-                      <Button type="link">Edit</Button>
-                      <Button type="link">Delete</Button>
-                    </>
-                  ) : (
-                    <Button
-                      type="default"
-                      disabled={!x.email_verified}
-                      onClick={() => handleApproveButton(x)}
-                    >
-                      Approve
-                    </Button>
-                  )}
-                </Space>
-              ),
-            };
-          });
-          setUsers({ ...res.data, data: data });
-        })
-        .catch((err) => {
-          console.error(err);
-          setUsers(defUsers);
-          notification.error({
-            message: "Ops, something went wrong",
-          });
-        })
-        .finally(() => {
-          setLoading(false);
+  const onFinish = (values) => {
+    api
+      .put(
+        `/user/${selectedValue.id}?active=1&role=${values.role}&organisation=${values.organisation}`,
+        []
+      )
+      .then((res) => {
+        notification.success({
+          message: active ? "Update process has been applied" : "User approved",
         });
+        getUsers(active, paginate.current);
+      })
+      .catch((err) => {
+        console.error(err);
+        setUsers([]);
+        notification.error({
+          message: "Ops, something went wrong",
+        });
+      })
+      .finally(() => {
+        setIsUserModalVisible(false);
+      });
+  };
+
+  const fetchUserDetail = (id) => {
+    api.get(`/user/${id}`).then((res) => {
+      setIsUserModalVisible(true);
+      const u = {
+        ...res.data,
+      };
+      form.setFieldsValue(u);
+      setSelectedValue(u);
+    });
+  };
+
+  const userColumns = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
     },
-    [organisations]
-  );
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+      render: (val, prop) => {
+        return !active ? (
+          <Space size="small">
+            {val}{" "}
+            <Tag color={prop.email_verified ? "green" : "red"}>
+              {prop.email_verified ? "verified" : "not verified"}
+            </Tag>
+          </Space>
+        ) : (
+          val
+        );
+      },
+    },
+    {
+      title: "Organisation",
+      dataIndex: "organisation",
+      key: "organisation",
+      render: (val, prop) => organisations?.find((org) => org.id === val)?.name,
+    },
+    {
+      title: "Role",
+      dataIndex: "role",
+      key: "role",
+      render: (val, prop) => capitalize(val),
+    },
+    {
+      title: "",
+      dataIndex: "id",
+      key: "id",
+      render: (id, prop) => (
+        <Space size="small" align="center" wrap={true}>
+          {active ? (
+            <Button type="link" onClick={() => fetchUserDetail(id)}>
+              Edit
+            </Button>
+          ) : (
+            <Button
+              type="default"
+              disabled={!prop.email_verified}
+              onClick={() => fetchUserDetail(id)}
+            >
+              Approve
+            </Button>
+          )}
+        </Space>
+      ),
+    },
+  ];
+
+  const getUsers = useCallback((active, page = 1, pageSize = 10) => {
+    setTableLoading(true);
+    api
+      .get(`/user/?active=${active}&page=${page}`)
+      .then((res) => {
+        setUsers(res.data?.data);
+        setPaginate({
+          current: res.data.current,
+          total: res.data.total,
+          pageSize: pageSize,
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+        setUsers([]);
+        notification.error({
+          message: "Ops, something went wrong",
+        });
+      })
+      .finally(() => {
+        setTableLoading(false);
+      });
+  }, []);
 
   useEffect(() => {
-    !isEmpty(organisations) && getUsers(active, defUsers.current);
+    !isEmpty(organisations) && getUsers(active);
   }, [getUsers, active, organisations]);
 
   const handleTableChange = (pagination) => {
-    const { current } = pagination;
-    !isEmpty(organisations) && getUsers(active, current);
+    const { current, pageSize } = pagination;
+    !isEmpty(organisations) && getUsers(active, current, pageSize);
+  };
+
+  const onRoleChange = (value) => {
+    form.setFieldsValue({ role: value });
+    setSelectedValue({ ...selectedValue, role: value });
+  };
+
+  const onOrganisationChange = (value) => {
+    form.setFieldsValue({ organisation: value });
+    setSelectedValue({ ...selectedValue, organisation: value });
   };
 
   return (
@@ -135,7 +187,7 @@ const ManageUser = () => {
               className="checkbox-input"
               onChange={(e) => setShowPendingUser(e.target.checked)}
               checked={showPendingUser}
-              disabled={isEmpty(organisations) || loading}
+              disabled={isEmpty(organisations) || tableLoading}
             />
           </Space>
         </Col>
@@ -143,16 +195,68 @@ const ManageUser = () => {
       <div className="table-wrapper">
         <Table
           rowKey={(record) => record.id}
-          dataSource={users.data}
+          dataSource={users}
           columns={userColumns}
-          loading={loading}
+          loading={tableLoading}
           onChange={handleTableChange}
           pagination={{
-            current: users.current,
-            total: users.total,
+            current: paginate.current,
+            total: paginate.total,
           }}
         />
       </div>
+
+      <Modal
+        title={`${active ? "Edit" : "Approve"} User`}
+        centered
+        visible={isUserModalVisible}
+        onOk={() => {
+          form.submit();
+        }}
+        onCancel={() => setIsUserModalVisible(false)}
+        okText={selectedValue?.active ? "Confirm Changes" : "Approve"}
+      >
+        <Form
+          form={form}
+          name="user-form"
+          labelCol={{ span: 6 }}
+          wrapperCol={{ span: 16 }}
+          initialValue={selectedValue}
+          onFinish={onFinish}
+        >
+          <Form.Item label="Name" name="name" valuePropName="name">
+            <Input value={selectedValue?.name} disabled bordered={false} />
+          </Form.Item>
+
+          <Form.Item label="Email" name="email" valuePropName="email">
+            <Input value={selectedValue?.email} disabled bordered={false} />
+          </Form.Item>
+
+          <Form.Item label="Role" name="role" valuePropName="role">
+            <Select onChange={onRoleChange} value={selectedValue?.role}>
+              <Select.Option value="admin">Admin</Select.Option>
+              <Select.Option value="editor">Editor</Select.Option>
+              <Select.Option value="user">User</Select.Option>
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            label="Organisation"
+            name="organisation"
+            valuePropName="organisation"
+          >
+            <Select
+              showSearch
+              onChange={onOrganisationChange}
+              options={organisations.map((x) => ({
+                label: x.name,
+                value: x.id,
+              }))}
+              value={selectedValue?.organisation}
+            />
+          </Form.Item>
+        </Form>
+      </Modal>
     </>
   );
 };

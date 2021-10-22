@@ -7,7 +7,6 @@ from sqlalchemy.orm import Session
 
 pytestmark = pytest.mark.asyncio
 sys.path.append("..")
-
 account = Acc(True)
 
 
