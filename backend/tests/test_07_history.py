@@ -8,9 +8,7 @@ from sqlalchemy.orm import Session
 
 pytestmark = pytest.mark.asyncio
 sys.path.append("..")
-
 account = Acc(True)
-
 today = datetime.today().strftime("%B %d, %Y")
 
 
@@ -30,19 +28,19 @@ class TestDataUpdateRoutes():
             headers={"Authorization": f"Bearer {account.token}"})
         assert res.status_code == 200
         res = res.json()
-        del res["created"]
-        del res["updated"]
         assert res == {
             "id": 1,
             "name": "Arsi Negele Town - Garut",
             "administration": 4,
-            "created_by": 1,
+            "created_by": "Akvo Support",
+            "created": today,
             "form": 1,
             "geo": {
                 "lat": -7.836114,
                 "long": 110.331143
             },
-            "updated_by": 1,
+            "updated_by": "Akvo Support",
+            "updated": today,
             "answer": [{
                 "question": 2,
                 "value": 4
@@ -74,8 +72,6 @@ class TestHistoryRoutes():
                 "user": "Akvo Support",
                 "value": "Option 1"
             }],
-            "user":
-            "Akvo Support",
-            "value":
-            "Option 2"
+            "user": "Akvo Support",
+            "value": "Option 2"
         }

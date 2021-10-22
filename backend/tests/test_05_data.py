@@ -8,8 +8,8 @@ from sqlalchemy.orm import Session
 
 pytestmark = pytest.mark.asyncio
 sys.path.append("..")
-
 account = Acc(True)
+today = datetime.today().strftime("%B %d, %Y")
 
 
 class TestDataRoutes():
@@ -29,7 +29,7 @@ class TestDataRoutes():
             "id": 1,
             "name": "Arsi Negele Town - Garut",
             "administration": 4,
-            "created_by": 1,
+            "created_by": "Akvo Support",
             "form": 1,
             "geo": {
                 "lat": -7.836114,
@@ -54,13 +54,12 @@ class TestDataRoutes():
 
     async def test_get_last_submitted(self, app: FastAPI, session: Session,
                                       client: AsyncClient) -> None:
-        print(account)
         res = await client.get(
             app.url_path_for("data:last-submitted"),
             params={"form_id": 1})
         assert res.status_code == 200
         res = res.json()
         assert res == {
-                "at": datetime.today().strftime("%B %d, %Y"),
+                "at": today,
                 "by": account.decoded["name"]
             }

@@ -24,10 +24,10 @@ class DataDict(TypedDict):
     form: int
     administration: int
     geo: Optional[GeoData] = None
-    created_by: int
-    updated_by: Optional[int] = None
-    created: Optional[datetime] = None
-    updated: Optional[datetime] = None
+    created_by: str
+    updated_by: Optional[str] = None
+    created: Optional[str] = None
+    updated: Optional[str] = None
     answer: List[AnswerDict]
 
 
@@ -58,6 +58,8 @@ class Data(Base):
                           cascade="all, delete",
                           passive_deletes=True,
                           backref="answer")
+    created_by_user = relationship("User", foreign_keys=[created_by])
+    updated_by_user = relationship("User", foreign_keys=[updated_by])
     administration_detail = relationship("Administration", backref="data")
 
     def __init__(self, name: str, form: int, administration: int,
@@ -86,10 +88,11 @@ class Data(Base):
                 "lat": self.geo[0],
                 "long": self.geo[1]
             } if self.geo else None,
-            "created_by": self.created_by,
-            "updated_by": self.updated_by,
-            "created": self.created,
-            "updated": self.updated,
+            "created_by": self.created_by_user.name,
+            "updated_by": self.updated_by_user.name if self.updated_by else None,
+            "created": self.created.strftime("%B %d, %Y"),
+            "updated":
+            self.updated.strftime("%B %d, %Y") if self.updated else None,
             "answer": [a.formatted for a in self.answer],
         }
 
@@ -116,10 +119,10 @@ class DataBase(BaseModel):
     form: int
     administration: int
     geo: Optional[GeoData] = None
-    created_by: int
-    updated_by: Optional[int] = None
-    created: Optional[datetime] = None
-    updated: Optional[datetime] = None
+    created_by: str
+    updated_by: Optional[str] = None
+    created: Optional[str] = None
+    updated: Optional[str] = None
     answer: List[AnswerBase]
 
     class Config:
