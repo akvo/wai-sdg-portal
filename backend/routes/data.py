@@ -140,6 +140,7 @@ def get_by_id(req: Request, id: int, session: Session = Depends(get_session)):
 @data_route.put("/data/{id:path}",
                 response_model=DataDict,
                 summary="update data",
+                name="data:update",
                 tags=["Data"])
 def update_by_id(req: Request,
                  id: int,
@@ -162,6 +163,9 @@ def update_by_id(req: Request,
                 detail="question {} is not part of this form".format(
                     a["question"]))
         a.update({"type": questions[a["question"]]})
+        if a["type"] == QuestionType.option:
+            a.update({"value": [a["value"]]})
+        print(a)
         if a['question'] in list(checked):
             execute = "update"
         else:
