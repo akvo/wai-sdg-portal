@@ -7,6 +7,7 @@ from typing import Optional, List, Union
 from pydantic import BaseModel
 from sqlalchemy import Column, Integer, Float, Text, String
 from sqlalchemy import ForeignKey, DateTime
+from sqlalchemy.orm import relationship
 import sqlalchemy.dialects.postgresql as pg
 from db.connection import Base
 
@@ -28,6 +29,8 @@ class History(Base):
     updated_by = Column(Integer, ForeignKey('user.id'), nullable=True)
     created = Column(DateTime, nullable=True)
     updated = Column(DateTime, nullable=True)
+    created_by_user = relationship("User", foreign_keys=[created_by])
+    updated_by_user = relationship("User", foreign_keys=[updated_by])
 
     def __init__(self,
                  question: int,
@@ -69,10 +72,11 @@ class History(Base):
 
     @property
     def simplified(self) -> TypedDict:
+        user = self.updated_by_user or self.created_by_user
         return {
             "value": self.text or self.value or self.options,
             "date": self.updated or self.created,
-            "user": self.updated_by or self.created_by
+            "user": user.name
         }
 
 
