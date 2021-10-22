@@ -5,6 +5,8 @@ import { UIState } from "../state/ui";
 import { Link } from "react-router-dom";
 import startCase from "lodash/startCase";
 
+import { navigationOptions } from "./common";
+
 const Navigation = ({ logout, loginWithPopup, isAuthenticated }) => {
   const { page, user } = UIState.useState((c) => c);
   const visible = UIState.useState((s) => s.showNav);
@@ -51,23 +53,21 @@ const Navigation = ({ logout, loginWithPopup, isAuthenticated }) => {
         >
           {user?.active && (
             <>
-              <Menu.Item key="water">
-                <Link to="/data/water">Water</Link>
-              </Menu.Item>
-              <Menu.Item key="clts">
-                <Link to="/data/clts">CLTS</Link>
-              </Menu.Item>
-              <Menu.ItemGroup key="jmp" title="JMP">
-                <Menu.Item key="households">
-                  <Link to="/data/households">Households</Link>
-                </Menu.Item>
-                <Menu.Item key="schools">
-                  <Link to="/data/schools">Schools</Link>
-                </Menu.Item>
-                <Menu.Item key="health">
-                  <Link to="/data/health">Health Facilities</Link>
-                </Menu.Item>
-              </Menu.ItemGroup>
+              {navigationOptions.map((item) => {
+                return item.childrens ? (
+                  <Menu.ItemGroup title={item.name} key={`${item.link}`}>
+                    {item?.childrens?.map((child) => (
+                      <Menu.Item key={`${child.link}`}>
+                        <Link to={`/data/${child.link}`}>{child.name}</Link>
+                      </Menu.Item>
+                    ))}
+                  </Menu.ItemGroup>
+                ) : (
+                  <Menu.Item key={`${item.link}`}>
+                    <Link to={`/data/${item.link}`}>{item.name}</Link>
+                  </Menu.Item>
+                );
+              })}
             </>
           )}
           {(user?.role === "admin" || user?.role === "editor") && (

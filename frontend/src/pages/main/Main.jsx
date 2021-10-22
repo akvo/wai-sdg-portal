@@ -6,7 +6,7 @@ import api from "../../util/api";
 import "./main.scss";
 import config from "./config";
 import ethGeoUrl from "../../sources/eth-filtered.topo.json";
-import { SelectLevel } from "../../components/common";
+import { SelectLevel, DropdownNavigation } from "../../components/common";
 import ErrorPage from "../../components/ErrorPage";
 import { UIState } from "../../state/ui";
 import takeRight from "lodash/takeRight";
@@ -107,6 +107,7 @@ const Main = ({ match }) => {
         <Row align="middle" className="filter-wrapper">
           <Col span={24} className="container">
             <Space size={20} align="center" wrap={true}>
+              <DropdownNavigation page={match?.params?.page} />
               <SelectLevel />
             </Space>
           </Col>
