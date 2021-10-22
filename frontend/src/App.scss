@@ -172,3 +172,72 @@
     padding-bottom: 50px;
   }
 }
+
+.popup-notification {
+  span.anticon.anticon-info-circle {
+    display: none;
+  }
+
+  .ant-modal-body {
+    padding: 32px;
+
+    .ant-avatar {
+      margin-bottom: 20px;
+      background: #45add94d;
+      color: #45add9;
+
+      &.submit {
+        background: #01770e4d;
+        color: #01770e;
+      }
+
+      &.delete {
+        background: #9f00314d;
+        color: #9f0031;
+      }
+    }
+
+    h2,
+    p {
+      color: #707070;
+    }
+
+    h2 {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    p {
+      width: 70%;
+    }
+
+    .ant-modal-confirm-btns {
+      float: none;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .ant-btn,
+    .ant-btn-primary {
+      font-size: 13px;
+      border-radius: 4px;
+      font-weight: 600;
+      background: #45add94d;
+      color: #45add9;
+      border: 1px solid #45add9;
+
+      &.submit {
+        background: #01770e4d;
+        color: #01770e;
+        border: 1px solid #01770e;
+      }
+
+      &.delete {
+        background: #9f00314d;
+        color: #9f0031;
+        border: 1px solid #9e0030;
+      }
+    }
+  }
+}
