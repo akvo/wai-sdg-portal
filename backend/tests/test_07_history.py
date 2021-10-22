@@ -13,6 +13,7 @@ account = Acc(True)
 
 today = datetime.today().strftime("%B %d, %Y")
 
+
 class TestDataUpdateRoutes():
     @pytest.mark.asyncio
     async def test_update_data(self, app: FastAPI, session: Session,
@@ -67,12 +68,14 @@ class TestHistoryRoutes():
         assert res.status_code == 200
         res = res.json()
         assert res == {
+            "date": today,
+            "history": [{
                 "date": today,
-                "history": [{
-                    "date": today,
-                    "user": "Akvo Support",
-                    "value": "Option 1"
-                    }],
                 "user": "Akvo Support",
-                "value": "Option 2"
-            }
+                "value": "Option 1"
+            }],
+            "user":
+            "Akvo Support",
+            "value":
+            "Option 2"
+        }
