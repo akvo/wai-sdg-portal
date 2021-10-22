@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Space, Input, Collapse } from "antd";
-import { PlusSquareOutlined } from "@ant-design/icons";
+import { Row, Col, Space, Input, Popover, Collapse } from "antd";
+import { PlusSquareOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import api from "../../util/api";
 
 import "./main.scss";
@@ -15,6 +15,25 @@ import MainMaps from "./MainMaps";
 
 const { Search } = Input;
 const { Panel } = Collapse;
+
+const NameWithInfo = ({ name, created_by, created }) => {
+  return (
+    <Space>
+      <Popover
+        placement="left"
+        content={
+          <div>
+            {created} by {created_by}
+          </div>
+        }
+        title="Submission info"
+      >
+        <InfoCircleOutlined />
+      </Popover>
+      {name}
+    </Space>
+  );
+};
 
 const Main = ({ match }) => {
   const { user, selectedAdministration } = UIState.useState((s) => s);
@@ -61,7 +80,7 @@ const Main = ({ match }) => {
             );
             return {
               key: x.id,
-              name: x.name,
+              name: <NameWithInfo {...x} />,
               detail: x.answer,
               ...values,
             };
