@@ -10,7 +10,7 @@ from sqlalchemy import Column, Integer, Float, String, ForeignKey, DateTime
 import sqlalchemy.dialects.postgresql as pg
 from sqlalchemy.orm import relationship
 from db.connection import Base
-from models.answer import AnswerDict, AnswerBase
+from models.answer import AnswerDict, AnswerDictWithHistory, AnswerBase
 
 
 class GeoData(BaseModel):
@@ -31,6 +31,10 @@ class DataDict(TypedDict):
     answer: List[AnswerDict]
 
 
+class DataDictWithHistory(DataDict):
+    answer: List[AnswerDictWithHistory]
+
+
 class SubmissionInfo(TypedDict):
     by: str
     at: str
@@ -38,7 +42,7 @@ class SubmissionInfo(TypedDict):
 
 class DataResponse(BaseModel):
     current: int
-    data: List[DataDict]
+    data: List[DataDictWithHistory]
     total: int
     total_page: int
 

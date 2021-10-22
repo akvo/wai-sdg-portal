@@ -19,6 +19,13 @@ class AnswerDict(TypedDict):
                  List[float], None]
 
 
+class AnswerDictWithHistory(TypedDict):
+    history: bool
+    question: int
+    value: Union[int, float, str, bool, dict, List[str], List[int],
+                 List[float], None]
+
+
 class Answer(Base):
     __tablename__ = "answer"
     id = Column(Integer, primary_key=True, index=True, nullable=True)
@@ -74,8 +81,11 @@ class Answer(Base):
         }
 
     @property
-    def formatted(self) -> AnswerDict:
-        answer = {"question": self.question}
+    def formatted(self) -> AnswerDictWithHistory:
+        answer = {
+            "question": self.question,
+            "history": True if self.updated_by else False
+        }
         type = self.question_detail.type
         if type == QuestionType.administration:
             answer.update({"value": self.value})

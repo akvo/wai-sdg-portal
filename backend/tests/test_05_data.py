@@ -24,11 +24,11 @@ class TestDataRoutes():
         assert res["total_page"] == 1
         assert len(res["data"]) == 1
         first_data = res["data"][0]
-        del first_data["created"]
         assert first_data == {
             "id": 1,
             "name": "Arsi Negele Town - Garut",
             "administration": 4,
+            "created": today,
             "created_by": "Akvo Support",
             "form": 1,
             "geo": {
@@ -39,19 +39,24 @@ class TestDataRoutes():
             "updated_by": None,
             "answer": [{
                 "question": 1,
-                "value": "Option 1"
+                "value": "Option 1",
+                "history": False
             }, {
                 "question": 2,
-                "value": 4
+                "value": 4,
+                "history": False
             }, {
                 "question": 3,
-                "value": "-7.836114|110.331143"
+                "value": "-7.836114|110.331143",
+                "history": False
             }, {
                 "question": 4,
-                "value": "Garut"
+                "value": "Garut",
+                "history": False
             }]
         }
 
+    @pytest.mark.asyncio
     async def test_get_last_submitted(self, app: FastAPI, session: Session,
                                       client: AsyncClient) -> None:
         res = await client.get(

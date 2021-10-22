@@ -75,3 +75,46 @@ class TestHistoryRoutes():
             "user": "Akvo Support",
             "value": "Option 2"
         }
+
+    @pytest.mark.asyncio
+    async def test_get_data(self, app: FastAPI, session: Session,
+                            client: AsyncClient) -> None:
+        res = await client.get(app.url_path_for("data:get", form_id=1))
+        assert res.status_code == 200
+        res = res.json()
+        assert res["current"] == 1
+        assert res["total"] == 1
+        assert res["total_page"] == 1
+        assert len(res["data"]) == 1
+        first_data = res["data"][0]
+        assert first_data == {
+            "id": 1,
+            "name": "Arsi Negele Town - Garut",
+            "administration": 4,
+            "created": today,
+            "created_by": "Akvo Support",
+            "form": 1,
+            "geo": {
+                "lat": -7.836114,
+                "long": 110.331143
+            },
+            "updated": today,
+            "updated_by": "Akvo Support",
+            "answer": [{
+                "question": 2,
+                "value": 4,
+                "history": False,
+            }, {
+                "question": 3,
+                "value": "-7.836114|110.331143",
+                "history": False,
+            }, {
+                "question": 1,
+                "value": "Option 2",
+                "history": True,
+            }, {
+                "question": 4,
+                "value": "Bandung",
+                "history": True,
+            }]
+        }
