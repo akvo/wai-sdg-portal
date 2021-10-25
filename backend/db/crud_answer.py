@@ -76,5 +76,5 @@ def get_history(session: Session, data: int, question: int):
     history = session.query(History).filter(
         and_(History.data == data,
              History.question == question)).order_by(desc(History.id)).all()
-    answer.update({"history": [h.simplified for h in history]})
-    return answer
+    history = [h.simplified for h in history]
+    return [answer] + history

@@ -40,16 +40,14 @@ const HistoryTable = ({ record, data }) => {
     if (historyData === null) {
       let url = `history/${data.key}/${record.name.props.question.id}`;
       api.get(url).then((res) => {
-        setHistoryData(
-          res.data.history.map((x, i) => ({ ...x, key: `history-${i}` }))
-        );
+        setHistoryData(res.data.map((x, i) => ({ ...x, key: `history-${i}` })));
       });
     }
   }, [historyData]);
   return (
     <Table
       columns={[
-        { title: "Old Value", dataIndex: "value", key: "value" },
+        { title: "History", dataIndex: "value", key: "value" },
         { title: "Updated at", dataIndex: "date", key: "date" },
         { title: "Updated by", dataIndex: "user", key: "user" },
       ]}

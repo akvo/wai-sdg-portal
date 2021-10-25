@@ -65,16 +65,15 @@ class TestHistoryRoutes():
             app.url_path_for("data:history", data_id=1, question_id=1))
         assert res.status_code == 200
         res = res.json()
-        assert res == {
-            "date": today,
-            "history": [{
+        assert res == [{
+                "date": today,
+                "user": "Akvo Support",
+                "value": "Option 2"
+                }, {
                 "date": today,
                 "user": "Akvo Support",
                 "value": "Option 1"
-            }],
-            "user": "Akvo Support",
-            "value": "Option 2"
-        }
+            }]
 
     @pytest.mark.asyncio
     async def test_get_data(self, app: FastAPI, session: Session,
