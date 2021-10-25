@@ -55,6 +55,8 @@ const Main = ({ match }) => {
 
   useEffect(() => {
     if (user && current?.formId) {
+      setPage(1);
+      setPerPage(10);
       api.get(`form/${current.formId}`).then((d) => {
         setQuestionGroup(d.data.question_group);
         UIState.update((s) => {
