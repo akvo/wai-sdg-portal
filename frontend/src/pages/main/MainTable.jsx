@@ -136,7 +136,7 @@ const MainTable = ({
               ""
             )}
           </Col>
-          <Col span={8}>
+          <Col span={8} align="right">
             <Space>
               <Button
                 size="small"

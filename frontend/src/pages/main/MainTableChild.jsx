@@ -5,6 +5,7 @@ import MainEditor from "./MainEditor";
 import { UIState } from "../../state/ui";
 import api from "../../util/api";
 import { getLocationName } from "../../util/utils";
+import { titleCase } from "title-case";
 
 const changeColBackground = (dt, edited) => {
   if (edited?.[dt.props.question.id]) {
@@ -83,7 +84,11 @@ const MainTableChild = ({ questionGroup, data }) => {
       const nonEditable = (q.type === "administration") | (q.type === "geo");
       return {
         name: (
-          <NormalCol value={<div>{q.name}</div>} question={q} edited={edited} />
+          <NormalCol
+            value={<div>{titleCase(q.name)}</div>}
+            question={q}
+            edited={edited}
+          />
         ),
         value: nonEditable ? (
           <NormalCol

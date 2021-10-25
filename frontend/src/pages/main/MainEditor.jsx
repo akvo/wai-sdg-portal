@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Row, Col, Button, Select, InputNumber, Input, DatePicker } from "antd";
 import { UndoOutlined, SaveOutlined } from "@ant-design/icons";
 import moment from "moment";
-import { startCase, pickBy } from "lodash";
+import { pickBy, startCase } from "lodash";
 import { UIState } from "../../state/ui";
+import { titleCase } from "title-case";
 
 const { Option } = Select;
 
@@ -44,13 +45,13 @@ const MainEditor = ({ value, question, edited, dataPointId }) => {
         <Col span={18}>
           {question.type === "option" ? (
             <Select
-              defaultValue={newValue || value?.toLowerCase() || null}
+              defaultValue={newValue || startCase(value) || null}
               style={{ width: "100%" }}
               onChange={setNewValue}
               size="small"
             >
               {question.option.map((o, oi) => (
-                <Option key={oi} value={o.name}>
+                <Option key={oi} value={startCase(o.name)}>
                   {startCase(o.name)}
                 </Option>
               ))}
@@ -104,7 +105,11 @@ const MainEditor = ({ value, question, edited, dataPointId }) => {
       </Row>
     );
   }
-  return <div onClick={() => setFieldActive(true)}>{value || " - "}</div>;
+  return (
+    <div onClick={() => setFieldActive(true)}>
+      {value ? startCase(value) : "-"}
+    </div>
+  );
 };
 
 export default MainEditor;
