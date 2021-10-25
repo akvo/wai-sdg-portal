@@ -55,6 +55,9 @@ const Main = ({ match }) => {
     if (user && current?.formId) {
       api.get(`form/${current.formId}`).then((d) => {
         setQuestionGroup(d.data.question_group);
+        UIState.update((s) => {
+          s.editedRow = {};
+        });
       });
     }
   }, [user, current]);

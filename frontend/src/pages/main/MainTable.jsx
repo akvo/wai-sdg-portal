@@ -1,4 +1,4 @@
-import { Row, Col, Button, Divider, Table, Pagination } from "antd";
+import { Row, Col, Button, Divider, Table, Space, Pagination } from "antd";
 import { Link } from "react-router-dom";
 import MainTableChild from "./MainTableChild";
 import { UIState } from "../../state/ui";
@@ -71,12 +71,13 @@ const MainTable = ({
           </Col>
         </Row>
         <Divider />
-        <Row align="middle" justify="space-between" wrap={true}>
-          <Col span={20}>
+        <Row align="middle" justify="space-around">
+          <Col span={16}>
             {total ? (
               <Pagination
                 defaultCurrent={1}
                 total={total}
+                size="small"
                 onShowSizeChange={(e, s) => {
                   setPerPage(s);
                 }}
@@ -87,10 +88,18 @@ const MainTable = ({
               ""
             )}
           </Col>
-          <Col span={4}>
-            <Link to={`/form/new-${title.toLowerCase()}/${formId}`}>
-              <Button>Add New</Button>
-            </Link>
+          <Col span={8}>
+            <Space>
+              <Button
+                size="small"
+                disabled={Object.keys(editedRow).length === 0}
+              >
+                Save Changes
+              </Button>
+              <Link to={`/form/new-${title.toLowerCase()}/${formId}`}>
+                <Button size="small">Add New</Button>
+              </Link>
+            </Space>
           </Col>
         </Row>
       </div>
