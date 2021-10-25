@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col, Space, Input, Popover, Collapse } from "antd";
 import { PlusSquareOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import api from "../../util/api";
