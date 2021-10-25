@@ -4,6 +4,7 @@ import { FieldTimeOutlined, HistoryOutlined } from "@ant-design/icons";
 import MainEditor from "./MainEditor";
 import { UIState } from "../../state/ui";
 import api from "../../util/api";
+import { getLocationName } from "../../util/utils";
 
 const changeColBackground = (dt, edited) => {
   if (edited?.[dt.props.question.id]) {
@@ -59,7 +60,7 @@ const HistoryTable = ({ record, data }) => {
 };
 
 const MainTableChild = ({ questionGroup, data }) => {
-  const { editedRow } = UIState.useState((e) => e);
+  const { editedRow, administration } = UIState.useState((e) => e);
   const [expanded, setExpanded] = useState([]);
   const edited = editedRow?.[data.key];
   const childcolumns = [
@@ -79,11 +80,24 @@ const MainTableChild = ({ questionGroup, data }) => {
   return questionGroup.map((g, gi) => {
     const source = g.question.map((q, qi) => {
       const answer = data.detail.find((d) => d.question === q.id);
+      const nonEditable = (q.type === "administration") | (q.type === "geo");
       return {
         name: (
           <NormalCol value={<div>{q.name}</div>} question={q} edited={edited} />
         ),
-        value: (
+        value: nonEditable ? (
+          <NormalCol
+            value={
+              <div>
+                {q.type === "administration" && answer?.value
+                  ? getLocationName(answer?.value, administration)
+                  : answer?.value}
+              </div>
+            }
+            question={q}
+            edited={edited}
+          />
+        ) : (
           <MainEditor
             value={answer?.value || null}
             question={q}
