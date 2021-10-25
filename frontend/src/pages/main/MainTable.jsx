@@ -1,6 +1,15 @@
 import { Row, Col, Button, Divider, Table, Pagination } from "antd";
 import { Link } from "react-router-dom";
 import MainTableChild from "./MainTableChild";
+import { UIState } from "../../state/ui";
+
+const getRowClassName = (record, editedRow) => {
+  const edited = editedRow?.[record.key];
+  if (edited) {
+    return "edited";
+  }
+  return "";
+};
 
 const MainTable = ({
   current,
@@ -13,6 +22,7 @@ const MainTable = ({
   lastSubmitted,
 }) => {
   const { columns, formId, title } = current;
+  const { editedRow } = UIState.useState((e) => e);
   return (
     <Col span={12} className="table-wrapper">
       <div className="container">
@@ -45,6 +55,7 @@ const MainTable = ({
           <Col span={24}>
             <Table
               size="small"
+              rowClassName={(record) => getRowClassName(record, editedRow)}
               loading={loading}
               columns={columns}
               scroll={{ y: 320 }}

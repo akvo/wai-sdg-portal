@@ -65,6 +65,7 @@ const MainTableChild = ({ questionGroup, data }) => {
             question={q}
             edited={edited}
             setEdited={setEdited}
+            dataPointId={data.key}
           />
         ),
         action: (

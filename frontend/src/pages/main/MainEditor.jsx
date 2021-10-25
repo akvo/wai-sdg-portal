@@ -3,15 +3,20 @@ import { Row, Col, Button, Select, InputNumber, Input, DatePicker } from "antd";
 import { UndoOutlined, SaveOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { startCase, pickBy } from "lodash";
+import { UIState } from "../../state/ui";
 
 const { Option } = Select;
 
-const MainEditor = ({ value, question, edited, setEdited }) => {
+const MainEditor = ({ value, question, edited, setEdited, dataPointId }) => {
   const [fieldActive, setFieldActive] = useState(null);
   const [newValue, setNewValue] = useState(null);
   const onSave = () => {
     setFieldActive(false);
-    setEdited({ ...edited, [question.id]: newValue });
+    const updatedValue = { ...edited, [question.id]: newValue };
+    setEdited(updatedValue);
+    UIState.update((s) => {
+      s.editedRow = { ...s.editedRow, ...{ [dataPointId]: updatedValue } };
+    });
   };
 
   const onReset = () => {

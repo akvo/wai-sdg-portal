@@ -10,6 +10,7 @@ const defaultUIState = {
   organisations: [],
   administration: [],
   selectedAdministration: [null],
+  editedRow: {},
 };
 
 export const UIState = new Store(defaultUIState);

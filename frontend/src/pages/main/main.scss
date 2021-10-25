@@ -58,6 +58,18 @@
         }
       }
 
+      tr.ant-table-row.edited {
+        background-color: #fefebe;
+      }
+
+      tr.ant-table-row.edited {
+        &:hover {
+          td {
+            background-color: #ffeb3b;
+          }
+        }
+      }
+
       .ant-table-thead {
         th {
           font-size: 13px;
