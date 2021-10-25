@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Table } from "antd";
 import { FieldTimeOutlined } from "@ant-design/icons";
 import MainEditor from "./MainEditor";
+import { UIState } from "../../state/ui";
 
 const changeColBackground = (dt, edited) => {
   if (edited?.[dt.props.question.id]) {
@@ -31,7 +32,8 @@ const HistoryCol = ({ history }) => {
 };
 
 const MainTableChild = ({ questionGroup, data }) => {
-  const [edited, setEdited] = useState({});
+  const { editedRow } = UIState.useState((e) => e);
+  const edited = editedRow?.[data.key];
   const childcolumns = [
     {
       dataIndex: "name",
@@ -64,7 +66,6 @@ const MainTableChild = ({ questionGroup, data }) => {
             value={answer?.value || null}
             question={q}
             edited={edited}
-            setEdited={setEdited}
             dataPointId={data.key}
           />
         ),

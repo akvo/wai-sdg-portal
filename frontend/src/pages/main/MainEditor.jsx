@@ -7,25 +7,36 @@ import { UIState } from "../../state/ui";
 
 const { Option } = Select;
 
-const MainEditor = ({ value, question, edited, setEdited, dataPointId }) => {
+const MainEditor = ({ value, question, edited, dataPointId }) => {
   const [fieldActive, setFieldActive] = useState(null);
   const [newValue, setNewValue] = useState(null);
   const onSave = () => {
     setFieldActive(false);
-    const updatedValue = { ...edited, [question.id]: newValue };
-    setEdited(updatedValue);
-    UIState.update((s) => {
-      s.editedRow = { ...s.editedRow, ...{ [dataPointId]: updatedValue } };
-    });
+    if (newValue !== null) {
+      const updatedValue = { ...edited, [question.id]: newValue };
+      UIState.update((s) => {
+        s.editedRow = { ...s.editedRow, ...{ [dataPointId]: updatedValue } };
+      });
+    }
   };
 
   const onReset = () => {
     setNewValue(null);
-    setEdited(
-      pickBy(edited, (v, k) => {
-        return parseInt(k) !== question.id;
-      })
-    );
+    const updatedValue = pickBy(edited, (v, k) => {
+      return parseInt(k) !== question.id;
+    });
+    if (Object.keys(updatedValue).length === 0) {
+      UIState.update((s) => {
+        const removed = pickBy(s.editedRow, (v, k) => {
+          return parseInt(k) !== dataPointId;
+        });
+        s.editedRow = removed;
+      });
+    } else {
+      UIState.update((s) => {
+        s.editedRow = { ...s.editedRow, ...{ [dataPointId]: updatedValue } };
+      });
+    }
   };
   if (fieldActive) {
     return (
