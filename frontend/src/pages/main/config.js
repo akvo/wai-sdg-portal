@@ -102,9 +102,9 @@ const water = {
   title: "Water Point",
   columns: [
     { title: "Water Points", key: "name", width: "30%" },
-    { title: "Number of Users", key: 82 },
     { title: "Water Source Type", key: 79 },
-    { title: "Energy Source", key: 81 },
+    { title: "Functionality Status", key: 80 },
+    { title: "Number of Users", key: 82 },
   ],
   charts: [
     { title: "Water Point Charts 01" },

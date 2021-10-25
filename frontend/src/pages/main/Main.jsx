@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import { Row, Col, Space, Input, Popover, Collapse } from "antd";
 import { PlusSquareOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import api from "../../util/api";
@@ -140,16 +140,11 @@ const Main = ({ match }) => {
       {/* Data View */}
       <Col span={24}>
         <Row align="top" className="data-container" wrap={true}>
-          <Col span={12} className="map-wrapper">
+          <Col span={12} xxl={10} className="map-wrapper">
             <div className="container">
-              <Search
-                className="map-search"
-                placeholder={`${current.title}`}
-                onSearch={() => console.log("search")}
-              />
               <MainMaps
                 geoUrl={ethGeoUrl}
-                mapHeight={525}
+                mapHeight={640}
                 question={questionGroup
                   .map((q) => q.question)
                   .flatMap((x) => x)}

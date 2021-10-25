@@ -68,7 +68,7 @@ const MainTable = ({
     });
   };
   return (
-    <Col span={12} className="table-wrapper">
+    <Col span={12} xxl={14} className="table-wrapper">
       <div className="container">
         <Row
           align="middle"
