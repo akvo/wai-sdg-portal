@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Table } from "antd";
-import { FieldTimeOutlined } from "@ant-design/icons";
+import { FieldTimeOutlined, HistoryOutlined } from "@ant-design/icons";
 import MainEditor from "./MainEditor";
 import { UIState } from "../../state/ui";
+import api from "../../util/api";
 
 const changeColBackground = (dt, edited) => {
   if (edited?.[dt.props.question.id]) {
@@ -31,8 +32,37 @@ const HistoryCol = ({ history }) => {
   );
 };
 
+const HistoryTable = ({ record, data }) => {
+  const [loading, setLoading] = useState(true);
+  const [historyData, setHistoryData] = useState(null);
+
+  useEffect(() => {
+    if (historyData === null) {
+      let url = `history/${data.key}/${record.name.props.question.id}`;
+      api.get(url).then((res) => {
+        setHistoryData(
+          res.data.history.map((x, i) => ({ ...x, key: `history-${i}` }))
+        );
+      });
+    }
+  }, [historyData]);
+  return (
+    <Table
+      columns={[
+        { title: "Old Value", dataIndex: "value", key: "value" },
+        { title: "Updated at", dataIndex: "date", key: "date" },
+        { title: "Updated by", dataIndex: "user", key: "user" },
+      ]}
+      loading={historyData === null}
+      pagination={false}
+      dataSource={historyData}
+    />
+  );
+};
+
 const MainTableChild = ({ questionGroup, data }) => {
   const { editedRow } = UIState.useState((e) => e);
+  const [expanded, setExpanded] = useState([]);
   const edited = editedRow?.[data.key];
   const childcolumns = [
     {
@@ -44,12 +74,6 @@ const MainTableChild = ({ questionGroup, data }) => {
     {
       dataIndex: "value",
       key: "value",
-      render: (dt) => changeColBackground(dt, edited),
-    },
-    {
-      dataIndex: "action",
-      key: "action",
-      align: "right",
       render: (dt) => changeColBackground(dt, edited),
     },
   ];
@@ -67,10 +91,8 @@ const MainTableChild = ({ questionGroup, data }) => {
             question={q}
             edited={edited}
             dataPointId={data.key}
+            history={answer?.history}
           />
-        ),
-        action: (
-          <HistoryCol question={q} edited={edited} history={answer?.history} />
         ),
         key: qi,
       };
@@ -85,6 +107,25 @@ const MainTableChild = ({ questionGroup, data }) => {
         dataSource={source}
         pagination={false}
         bordered={false}
+        expandedRowKeys={expanded}
+        onExpand={(expanded, record) => {
+          setExpanded(expanded ? [record.key] : []);
+        }}
+        expandable={{
+          expandIconColumnIndex: 3,
+          expandIcon: ({ expanded, onExpand, record }) => {
+            if (record.value.props.history) {
+              return <HistoryOutlined onClick={(e) => onExpand(record, e)} />;
+            }
+            return "";
+          },
+          expandedRowRender: (record) => (
+            <HistoryTable record={record} data={data} />
+          ),
+          rowExpandable: (record) => {
+            return record.value.props.history;
+          },
+        }}
       />
     );
   });
