@@ -36,7 +36,9 @@ const NameWithInfo = ({ name, created_by, created }) => {
 };
 
 const Main = ({ match }) => {
-  const { user, selectedAdministration } = UIState.useState((s) => s);
+  const { user, reloadData, selectedAdministration } = UIState.useState(
+    (s) => s
+  );
   const [data, setData] = useState([]);
   const [questionGroup, setQuestionGroup] = useState([]);
   const [page, setPage] = useState(1);
@@ -63,7 +65,7 @@ const Main = ({ match }) => {
   }, [user, current]);
 
   useEffect(() => {
-    if (user && current) {
+    if (user && current && reloadData) {
       const adminId = takeRight(selectedAdministration)[0];
       setLoading(true);
       let url = `data/form/${current.formId}?page=${page}&perpage=${perPage}`;
@@ -98,7 +100,7 @@ const Main = ({ match }) => {
           setLoading(false);
         });
     }
-  }, [page, perPage, user, current, selectedAdministration]);
+  }, [page, perPage, user, current, reloadData, selectedAdministration]);
 
   useEffect(() => {
     if (user && current) {

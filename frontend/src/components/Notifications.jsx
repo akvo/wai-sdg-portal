@@ -13,3 +13,7 @@ export const NonActiveUserMessage = ({ user }) => {
     </p>
   );
 };
+
+export const DataUpdateMessage = ({ id }) => {
+  return <p>{id} is updated</p>;
+};

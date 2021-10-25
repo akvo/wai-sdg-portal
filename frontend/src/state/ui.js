@@ -10,6 +10,7 @@ const defaultUIState = {
   organisations: [],
   administration: [],
   selectedAdministration: [null],
+  reloadData: true,
   editedRow: {},
 };
 

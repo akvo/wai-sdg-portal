@@ -1,7 +1,19 @@
-import { Row, Col, Button, Divider, Table, Space, Pagination } from "antd";
+import React, { useState } from "react";
+import {
+  Row,
+  Col,
+  Button,
+  Divider,
+  Table,
+  Space,
+  Pagination,
+  notification,
+} from "antd";
 import { Link } from "react-router-dom";
 import MainTableChild from "./MainTableChild";
 import { UIState } from "../../state/ui";
+import api from "../../util/api";
+import { DataUpdateMessage } from "./../../components/Notifications";
 
 const getRowClassName = (record, editedRow) => {
   const edited = editedRow?.[record.key];
@@ -22,7 +34,38 @@ const MainTable = ({
   lastSubmitted,
 }) => {
   const { columns, formId, title } = current;
-  const { editedRow } = UIState.useState((e) => e);
+  const [saving, setSaving] = useState(false);
+  const { editedRow, reloadData } = UIState.useState((e) => e);
+  const saveEdit = () => {
+    setSaving(true);
+    UIState.update((e) => {
+      e.reloadData = false;
+    });
+    const savedValues = Object.keys(editedRow).map((k, v) => {
+      const values = Object.keys(editedRow[k]).map((o, v) => ({
+        question: o,
+        value: editedRow[k][o],
+      }));
+      return { dataId: k, values: values };
+    });
+    const promises = savedValues.map((saved) => {
+      return api.put(`data/${saved.dataId}`, saved.values).then((res) => {
+        notification.success({
+          message: <DataUpdateMessage id={saved.dataId} />,
+        });
+        return res.data;
+      });
+    });
+    Promise.all(promises).then(() => {
+      setSaving(false);
+      UIState.update((e) => {
+        e.editedRow = {};
+      });
+      UIState.update((e) => {
+        e.reloadData = true;
+      });
+    });
+  };
   return (
     <Col span={12} className="table-wrapper">
       <div className="container">
@@ -92,9 +135,11 @@ const MainTable = ({
             <Space>
               <Button
                 size="small"
+                loading={saving}
                 disabled={Object.keys(editedRow).length === 0}
+                onClick={saveEdit}
               >
-                Save Changes
+                Save Edit
               </Button>
               <Link to={`/form/new-${title.toLowerCase()}/${formId}`}>
                 <Button size="small">Add New</Button>
