@@ -35,7 +35,8 @@ const MainTable = ({
 }) => {
   const { columns, formId, title } = current;
   const [saving, setSaving] = useState(false);
-  const { editedRow, reloadData } = UIState.useState((e) => e);
+  const [expanded, setExpanded] = useState([]);
+  const { editedRow } = UIState.useState((e) => e);
   const saveEdit = () => {
     setSaving(true);
     UIState.update((e) => {
@@ -108,6 +109,10 @@ const MainTable = ({
                 expandedRowRender: (record) => (
                   <MainTableChild questionGroup={questionGroup} data={record} />
                 ),
+              }}
+              expandedRowKeys={expanded}
+              onExpand={(expanded, record) => {
+                setExpanded(expanded ? [record.key] : []);
               }}
               dataSource={data}
             />
