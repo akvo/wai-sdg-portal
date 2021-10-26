@@ -36,8 +36,8 @@ class TestTemplateGenerator():
                                        "order": 2
                                    }])
         excel_file = generate_excel_template(session=session, form=1, adm=10)
-        today = datetime.today().strftime("%y%m%d")
-        assert excel_file == f"./tmp/1_10_{today}-test_arsi_negele_shala_bila.xls"
+        t = datetime.today().strftime("%y%m%d")
+        assert excel_file == f"./tmp/1_10_{t}-test_arsi_negele_shala_bila.xls"
         df = pd.read_excel(excel_file)
         assert list(df) == [
             "1|Test Option Question", "2|Test Administration Question",
