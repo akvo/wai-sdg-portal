@@ -1,3 +1,5 @@
+import moment from "moment";
+
 const mapValues = (d) => {
   return d.columns.filter((x) => !isNaN(x.key)).map((x) => x.key);
 };
@@ -18,8 +20,13 @@ const clts = {
   title: "CLTS",
   columns: [
     { title: "Name", key: "name", width: "30%" },
-    { title: "ODF Status", key: 8 },
-    { title: "Declared", key: 9 },
+    { title: "ODF Status", key: 8, align: "center" },
+    {
+      title: "Date Triggered",
+      key: 7,
+      align: "center",
+      fn: (d) => moment(d).format("YYYY-MM-DD"),
+    },
   ],
   charts: [
     { title: "CLTS Charts 01" },
@@ -59,9 +66,9 @@ const households = {
   title: "Households",
   columns: [
     { title: "Name", key: "name", width: "30%" },
-    { title: "Water", key: 35 },
-    { title: "Sanitation", key: 39 },
-    { title: "Hygiene", key: 44 },
+    { title: "Water", key: 35, align: "center" },
+    { title: "Sanitation", key: 39, align: "center" },
+    { title: "Hygiene", key: 44, align: "center" },
   ],
   charts: [
     { title: "Household Charts 01" },
@@ -80,9 +87,9 @@ const schools = {
   title: "Schools Facility",
   columns: [
     { title: "School Name", key: "name", width: "30%" },
-    { title: "Water", key: 56 },
-    { title: "Sanitation", key: 61 },
-    { title: "Hygiene", key: 67 },
+    { title: "Water", key: 56, align: "center" },
+    { title: "Sanitation", key: 61, align: "center" },
+    { title: "Hygiene", key: 67, align: "center" },
   ],
   charts: [
     { title: "School Charts 01" },
@@ -102,9 +109,9 @@ const water = {
   title: "Water Point",
   columns: [
     { title: "Water Points", key: "name", width: "30%" },
-    { title: "Water Source Type", key: 79 },
-    { title: "Functionality Status", key: 80 },
-    { title: "Number of Users", key: 82 },
+    { title: "Source Type", key: 79, align: "center" },
+    { title: "Functionality", key: 80, align: "center" },
+    { title: "Number of Users", key: 82, align: "right" },
   ],
   charts: [
     { title: "Water Point Charts 01" },

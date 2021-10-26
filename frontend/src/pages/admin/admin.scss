@@ -152,10 +152,14 @@
 
     .table-wrapper {
       .ant-table-thead > tr > th {
-        color: #0288d1;
+        color: #fff;
         font-weight: 600;
-        background: #fff;
-        border-bottom: 2px solid #0288d1;
+        background: #02989e;
+        border-bottom: 2px solid #02989e;
+
+        &.ant-table-cell-scrollbar {
+          box-shadow: none;
+        }
       }
 
       tr.ant-table-row.edited {
@@ -167,6 +171,40 @@
           td {
             background-color: #ffeb3b;
           }
+        }
+      }
+    }
+
+    .data-edit-modal {
+      .main-child-table {
+        .ant-table {
+          margin: 0px 0px 0px 0px !important;
+          border: 1px solid #eee;
+
+          td {
+            &:first-child {
+              padding-left: 30px;
+            }
+
+            &:last-child {
+              padding-right: 30px;
+            }
+          }
+        }
+      }
+
+      .ant-modal-content {
+        .ant-modal-body {
+          padding: 0px;
+        }
+      }
+    }
+
+    .editor {
+      .ant-col {
+        .ant-input,
+        .ant-input-number {
+          width: 100%;
         }
       }
     }

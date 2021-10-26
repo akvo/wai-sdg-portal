@@ -79,13 +79,17 @@ const Main = ({ match }) => {
         .get(url)
         .then((d) => {
           const tableData = d.data.data.map((x) => {
-            const values = current?.values?.reduce(
-              (o, key) =>
-                Object.assign(o, {
-                  [key]: x.answer.find((a) => a.question === key)?.value,
-                }),
-              {}
-            );
+            const values = current?.values?.reduce((o, key) => {
+              const ans = x.answer.find((a) => a.question === key);
+              const q = current.columns.find((c) => c.key === key);
+              let value = ans?.value;
+              if (q?.fn && value) {
+                value = q.fn(value);
+              }
+              return Object.assign(o, {
+                [key]: value,
+              });
+            }, {});
             return {
               key: x.id,
               name: <NameWithInfo {...x} />,
