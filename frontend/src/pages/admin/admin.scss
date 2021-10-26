@@ -159,6 +159,18 @@
         background: #fff;
         border-bottom: 2px solid #0288d1;
       }
+
+      tr.ant-table-row.edited {
+        background-color: #fefebe;
+      }
+
+      tr.ant-table-row.edited {
+        &:hover {
+          td {
+            background-color: #ffeb3b;
+          }
+        }
+      }
     }
   }
 }
