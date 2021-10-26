@@ -14,8 +14,8 @@ sys.path.append("..")
 
 class TestTemplateGenerator():
     @pytest.mark.asyncio
-    async def test_add_more_question(self, app: FastAPI,
-                                     session: Session) -> None:
+    async def test_get_excel_template(self, app: FastAPI,
+                                      session: Session) -> None:
         crud_question.add_question(session=session,
                                    name="Test Number Question",
                                    question_group=1,
@@ -40,8 +40,11 @@ class TestTemplateGenerator():
         assert excel_file == f"./tmp/1_10_{t}-test_arsi_negele_shala_bila.xls"
         df = pd.read_excel(excel_file)
         assert list(df) == [
-            "1|Test Option Question", "2|Test Administration Question",
-            "3|Test Geo Question", "4|Test Datapoint Text Question",
-            "5|Test Number Question", "6|Test Multiple Option Question"
+            "1|Test Option Question",
+            "2|Test Administration Question",
+            "3|Test Geo Question",
+            "4|Test Datapoint Text Question",
+            "5|Test Number Question",
+            "6|Test Multiple Option Question"
         ]
         os.remove(excel_file)
