@@ -21,7 +21,7 @@ const Header = () => {
         <Link to="/">
           <Space size={20}>
             <Avatar src="/wai-logo.png" alt="wai-logo" />
-            WAI Ethiopia
+            <div className="web-title">WAI Ethiopia</div>
           </Space>
         </Link>
       </Col>
