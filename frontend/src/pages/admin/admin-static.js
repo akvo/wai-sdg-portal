@@ -19,30 +19,38 @@ export const manageDataSources = ["Facility 1", "Facility 2", "Facility 3"].map(
   }
 );
 
-export const manageDataColumns = [
-  {
-    title: "Entry",
-    dataIndex: "entry",
-    key: "entry",
+export const columnNames = [
+  { title: "Entry", key: "name", width: "20%" },
+  { title: "Region", key: "administration", width: "20%" },
+  { title: "Submitter", key: "created_by", align: "center" },
+  { title: "Last Updated", key: "created", align: "center" },
+].map((x) => ({
+  ...x,
+  dataIndex: x.key,
+  elipsis: true,
+}));
+
+const config = {
+  clts: {
+    title: "CLTS",
+    formId: 1,
   },
-  {
-    title: "Last Updated",
-    dataIndex: "last_updated",
-    key: "last_updated",
+  health: {
+    title: "Health",
+    formId: 2,
   },
-  {
-    title: "Region",
-    dataIndex: "region",
-    key: "region",
+  households: {
+    title: "Households",
+    formId: 3,
   },
-  {
-    title: "User",
-    dataIndex: "user",
-    key: "user",
+  schools: {
+    title: "Schools Facility",
+    formId: 4,
   },
-  {
-    title: "",
-    dataIndex: "action",
-    key: "action",
+  water: {
+    title: "Water",
+    formId: 5,
   },
-];
+};
+
+export default config;

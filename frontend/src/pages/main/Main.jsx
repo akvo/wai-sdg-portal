@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Space, Input, Popover, Collapse } from "antd";
+import { Row, Col, Space, Popover, Collapse } from "antd";
 import { PlusSquareOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import api from "../../util/api";
+import { useHistory } from "react-router-dom";
 
 import "./main.scss";
 import config from "./config";
@@ -13,7 +14,6 @@ import takeRight from "lodash/takeRight";
 import MainTable from "./MainTable";
 import MainMaps from "./MainMaps";
 
-const { Search } = Input;
 const { Panel } = Collapse;
 
 const NameWithInfo = ({ name, created_by, created }) => {
@@ -36,6 +36,7 @@ const NameWithInfo = ({ name, created_by, created }) => {
 };
 
 const Main = ({ match }) => {
+  const history = useHistory();
   const { user, reloadData, selectedAdministration } = UIState.useState(
     (s) => s
   );
@@ -133,7 +134,10 @@ const Main = ({ match }) => {
         <Row align="middle" className="filter-wrapper">
           <Col span={24} className="container">
             <Space size={20} align="center" wrap={true}>
-              <DropdownNavigation page={match?.params?.page} />
+              <DropdownNavigation
+                value={match?.params?.page}
+                onChange={(val) => history.push(`/data/${val}`)}
+              />
               <SelectLevel />
             </Space>
           </Col>
@@ -155,6 +159,7 @@ const Main = ({ match }) => {
             </div>
           </Col>
           <MainTable
+            span={12}
             current={current}
             loading={loading}
             data={data}

@@ -24,6 +24,7 @@ const getRowClassName = (record, editedRow) => {
 };
 
 const MainTable = ({
+  span = 24,
   current,
   loading,
   data,
@@ -68,7 +69,7 @@ const MainTable = ({
     });
   };
   return (
-    <Col span={12} xxl={14} className="table-wrapper">
+    <Col span={span} xxl={14} className="table-wrapper">
       <div className="container">
         <Row
           align="middle"

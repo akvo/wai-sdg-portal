@@ -1,5 +1,4 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import { Select, Button, Result, Space } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { UIState } from "../state/ui";
@@ -93,15 +92,9 @@ export const SelectLevel = () => {
   );
 };
 
-export const DropdownNavigation = ({ page }) => {
-  const history = useHistory();
-
+export const DropdownNavigation = ({ value, onChange }) => {
   return (
-    <Select
-      value={[page]}
-      onChange={(val) => history.push(`/data/${val}`)}
-      className="filter-select"
-    >
+    <Select value={[value]} onChange={onChange} className="filter-select">
       {navigationOptions.map((item, i) => {
         return item.childrens ? (
           <OptGroup label={item.name} key={`${item.link}-${i}`}>

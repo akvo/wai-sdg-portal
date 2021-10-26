@@ -21,8 +21,9 @@ api
     console.error(err);
   });
 
-const Admin = () => {
+const Admin = ({ match }) => {
   const { user } = UIState.useState((e) => e);
+  const selectedData = match?.params?.page;
   return (
     <Row className="admin-container">
       {/* Jumbotron */}
@@ -38,13 +39,13 @@ const Admin = () => {
         <div className="card-container">
           <Tabs type="card" size="large" tabBarGutter={0}>
             <TabPane tab="Manage Data" key="manage-data">
-              <ManageData />
+              <ManageData match={match} />
             </TabPane>
             <TabPane tab="Exports" key="exports">
               <Export />
             </TabPane>
             <TabPane tab="Data Upload" key="data-upload">
-              <ManageData />
+              <ManageData match={match} />
             </TabPane>
             {user?.role === "admin" && (
               <TabPane tab="Manage Users" key="manage-users">
