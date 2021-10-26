@@ -26,6 +26,32 @@ def generate_excel_columns():
         n += 1
 
 
+def validate_header_names(excel_head, col, header_names):
+    header = excel_head[col]
+    default = {"error": "column_name"}
+    if "Unnamed:" in header:
+        default.update({
+            "message": "Header name is missing",
+            "column": f"{col}1"
+        })
+        return default
+    if "|" not in header:
+        default.update({
+            "message": f"{header} doesn't have question id",
+            "column": f"{col}1"
+        })
+        return default
+    if "|" in header:
+        if header not in header_names:
+            default.update({
+                "error": "column_name",
+                "message": f"{header} has invalid id",
+                "column": f"{col}1"
+            })
+            return default
+    return False
+
+
 def validate_excel_data(session: Session, form: int, administration: int,
                         file: str):
     questions = crud_question.get_excel_question(session=session, form=form)
@@ -37,10 +63,7 @@ def validate_excel_data(session: Session, form: int, administration: int,
         excel_head.update({excel_cols[index]: header})
     messages = []
     for col in excel_head:
-        header = excel_head[col]
-        if "|" not in header:
-            messages.append({
-                "error": "column_name",
-                "message": f"{col}1:{header} doesn't includes question id"
-            })
+        error = validate_header_names(excel_head, col, header_names)
+        if error:
+            messages.append(error)
     return messages

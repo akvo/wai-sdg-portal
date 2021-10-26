@@ -49,12 +49,13 @@ class TestTemplateGenerator():
     async def test_validate_header_names(self, app: FastAPI,
                                          session: Session) -> None:
         excel_file = "./tmp/1-test.xls"
-        wrong_data = [["Option 4", "180,90", "Testing Data 1", 23, "Option B"],
-                      ["Option 2", "180,90", "Testing Data 2", 23, "Option A"]]
+        wrong_data = [[
+            "Option 4", "180,90", "Testing Data 1", "", 23, "Option B"
+        ], ["Option 2", "180,90", "Testing Data 2", "", 23, "Option A"]]
         columns = [
             "Test Option Question", "Test Geo Question",
-            "Test Datapoint Text Question", "Test Number Question",
-            "Test Multiple Option Question"
+            "Test Datapoint Text Question", "", "Test Number Question",
+            "2|Test Multiple Option Question"
         ]
         df = pd.DataFrame(wrong_data, columns=columns)
         df.to_excel(excel_file, index=False)
@@ -62,32 +63,29 @@ class TestTemplateGenerator():
                                      form=1,
                                      administration=1,
                                      file=excel_file)
-        assert errors == [
-            {
-                'error': 'column_name',
-                'message':
-                "A1:Test Option Question doesn't includes question id"
-            },
-            {
-                'error': 'column_name',
-                'message': "B1:Test Geo Question doesn't includes question id"
-            },
-            {
-                'error':
-                'column_name',
-                'message':
-                "C1:Test Datapoint Text Question doesn't includes question id"
-            },
-            {
-                'error': 'column_name',
-                'message':
-                "D1:Test Number Question doesn't includes question id"
-            },
-            {
-                'error':
-                'column_name',
-                'message':
-                "E1:Test Multiple Option Question doesn't includes question id"
-            },
-        ]
+        assert errors == [{
+            'error': 'column_name',
+            'message': "Test Option Question doesn't have question id",
+            'column': "A1"
+        }, {
+            'error': 'column_name',
+            'message': "Test Geo Question doesn't have question id",
+            'column': "B1"
+        }, {
+            'error': 'column_name',
+            'message': "Test Datapoint Text Question doesn't have question id",
+            'column': "C1"
+        }, {
+            'error': 'column_name',
+            'message': "Header name is missing",
+            "column": "D1"
+        }, {
+            'error': 'column_name',
+            'message': "Test Number Question doesn't have question id",
+            "column": "E1"
+        }, {
+            'error': 'column_name',
+            'message': "2|Test Multiple Option Question has invalid id",
+            "column": "F1"
+        }]
         os.remove(excel_file)
