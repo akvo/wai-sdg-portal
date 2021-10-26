@@ -8,16 +8,24 @@ import {
   Table,
   Pagination,
   Modal,
+  notification,
 } from "antd";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import { SelectLevel, DropdownNavigation } from "../../components/common";
+import {
+  SaveOutlined,
+  EditOutlined,
+  UndoOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
 import config, { columnNames } from "./admin-static";
 import { UIState } from "../../state/ui";
 import takeRight from "lodash/takeRight";
-import ErrorPage from "../../components/ErrorPage";
 import api from "../../util/api";
 import { getLocationName } from "../../util/utils";
 import MainTableChild from "../main/MainTableChild.jsx";
+import ErrorPage from "../../components/ErrorPage";
+import { DataUpdateMessage } from "./../../components/Notifications";
+import { SelectLevel, DropdownNavigation } from "../../components/common";
+import { Link } from "react-router-dom";
 
 const getRowClassName = (record, editedRow) => {
   const edited = editedRow?.[record.key];
@@ -37,35 +45,65 @@ const ManageData = () => {
   } = UIState.useState((s) => s);
   const [data, setData] = useState([]);
   const [dataId, setDataId] = useState(false);
+  const [saving, setSaving] = useState(false);
   const [questionGroup, setQuestionGroup] = useState([]);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [form, setForm] = useState("water");
   const [perPage, setPerPage] = useState(10);
   const [loading, setLoading] = useState(true);
-  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const current = config?.[form];
   const dataSelected = dataId ? data.find((x) => x.key === dataId) : false;
 
-  const { formId } = current;
+  const { formId, title } = current;
 
   const showModal = (id) => {
     setDataId(id);
-    setIsModalVisible(true);
   };
 
   const handleOk = () => {
-    setIsModalVisible(false);
+    setDataId(false);
   };
 
   const handleCancel = () => {
-    setIsModalVisible(false);
+    setDataId(false);
   };
 
   const changePage = (p) => {
     setPage(p);
     setLoading(true);
+  };
+
+  const saveEdit = () => {
+    setSaving(true);
+    UIState.update((e) => {
+      e.reloadData = false;
+    });
+    const savedValues = Object.keys(editedRow).map((k, v) => {
+      const values = Object.keys(editedRow[k]).map((o, v) => ({
+        question: o,
+        value: editedRow[k][o],
+      }));
+      return { dataId: k, values: values };
+    });
+    const promises = savedValues.map((saved) => {
+      return api.put(`data/${saved.dataId}`, saved.values).then((res) => {
+        notification.success({
+          message: <DataUpdateMessage id={saved.dataId} />,
+        });
+        return res.data;
+      });
+    });
+    Promise.all(promises).then(() => {
+      setSaving(false);
+      UIState.update((e) => {
+        e.editedRow = {};
+      });
+      UIState.update((e) => {
+        e.reloadData = true;
+      });
+    });
   };
 
   useEffect(() => {
@@ -104,8 +142,8 @@ const ManageData = () => {
                 <Space size="small" align="center" wrap={true}>
                   <Button
                     size="small"
-                    onClick={() => showModal(x.id)}
                     icon={<EditOutlined />}
+                    onClick={() => showModal(x.id)}
                   >
                     Edit
                   </Button>
@@ -171,27 +209,56 @@ const ManageData = () => {
           dataSource={data}
         />
         <Divider />
-        {total ? (
-          <Pagination
-            defaultCurrent={1}
-            total={total}
-            onShowSizeChange={(e, s) => {
-              setPerPage(s);
-            }}
-            pageSizeOptions={[10, 20, 50]}
-            onChange={changePage}
-          />
-        ) : (
-          ""
-        )}
+        <Row align="middle" justify="space-around">
+          <Col span={16}>
+            {total ? (
+              <Pagination
+                defaultCurrent={1}
+                total={total}
+                onShowSizeChange={(e, s) => {
+                  setPerPage(s);
+                }}
+                pageSizeOptions={[10, 20, 50]}
+                onChange={changePage}
+              />
+            ) : (
+              ""
+            )}
+          </Col>
+          <Col span={8} align="right">
+            <Space>
+              <Button
+                loading={saving}
+                disabled={Object.keys(editedRow).length === 0}
+                onClick={saveEdit}
+              >
+                Save Changes
+              </Button>
+              <Link to={`/form/new-${title.toLowerCase()}/${formId}`}>
+                <Button>Add New</Button>
+              </Link>
+            </Space>
+          </Col>
+        </Row>
       </div>
       {dataSelected ? (
         <Modal
-          title="Basic Modal"
-          visible={isModalVisible}
+          title={dataSelected?.name}
+          bodyStyle={{ padding: "0px" }}
+          visible={dataSelected}
+          className="data-edit-modal"
           centered
           width={640}
           onOk={handleOk}
+          okText={editedRow?.[dataId] ? "Save Draft" : "Close"}
+          cancelText={"Reset All"}
+          cancelButtonProps={{
+            icon: <UndoOutlined />,
+            type: "danger",
+            style: { float: "left" },
+            disabled: !editedRow?.[dataId],
+          }}
+          okButtonProps={editedRow?.[dataId] && { icon: <SaveOutlined /> }}
           onCancel={handleCancel}
         >
           <div className="modal-wrapper">

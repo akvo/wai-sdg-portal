@@ -13,6 +13,7 @@ import {
   Select,
   Input,
 } from "antd";
+import { EditOutlined, CheckOutlined } from "@ant-design/icons";
 import api from "../../util/api";
 import capitalize from "lodash/capitalize";
 import isEmpty from "lodash/isEmpty";
@@ -111,12 +112,17 @@ const ManageUser = () => {
       render: (id, prop) => (
         <Space size="small" align="center" wrap={true}>
           {active ? (
-            <Button type="link" onClick={() => fetchUserDetail(id)}>
+            <Button
+              size="small"
+              icon={<EditOutlined />}
+              onClick={() => fetchUserDetail(id)}
+            >
               Edit
             </Button>
           ) : (
             <Button
-              type="default"
+              size="small"
+              icon={<CheckOutlined />}
               disabled={!prop.email_verified}
               onClick={() => fetchUserDetail(id)}
             >

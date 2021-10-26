@@ -75,22 +75,6 @@
           font-size: 13px;
         }
       }
-
-      .main-child-table {
-        .ant-table {
-          margin: 0px 0px 0px 32px !important;
-          border: 1px solid #eee;
-        }
-      }
-
-      .editor {
-        .ant-col {
-          .ant-input,
-          .ant-input-number {
-            width: 100%;
-          }
-        }
-      }
     }
   }
 
@@ -116,6 +100,40 @@
           border-radius: 5px;
         }
       }
+    }
+  }
+}
+
+.data-edit-modal {
+  .main-child-table {
+    .ant-table {
+      margin: 0px 0px 0px 0px !important;
+      border: 1px solid #eee;
+
+      td {
+        &:first-child {
+          padding-left: 30px;
+        }
+
+        &:last-child {
+          padding-right: 30px;
+        }
+      }
+    }
+  }
+
+  .ant-modal-content {
+    .ant-modal-body {
+      padding: 0px;
+    }
+  }
+}
+
+.editor {
+  .ant-col {
+    .ant-input,
+    .ant-input-number {
+      width: 100%;
     }
   }
 }
