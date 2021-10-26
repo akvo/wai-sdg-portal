@@ -35,13 +35,19 @@ class TestTemplateGenerator():
                                        "name": "Option B",
                                        "order": 2
                                    }])
+        crud_question.add_question(session=session,
+                                   name="Test Date Question",
+                                   question_group=1,
+                                   form=1,
+                                   meta=False,
+                                   type="date")
         excel_file = generate_excel_template(session=session, form=1)
         assert excel_file == "./tmp/1-test.xls"
         df = pd.read_excel(excel_file)
         assert list(df) == [
             "1|Test Option Question", "3|Test Geo Question",
             "4|Test Datapoint Text Question", "5|Test Number Question",
-            "6|Test Multiple Option Question"
+            "6|Test Multiple Option Question", "7|Test Date Question"
         ]
         os.remove(excel_file)
 
@@ -50,16 +56,19 @@ class TestTemplateGenerator():
                                        session: Session) -> None:
         excel_file = "./tmp/1-test.xls"
         wrong_data = [[
-            "Option 4", "180,90", "Testing Data 1", "", "NA", "Option B"
+            "Option 4", "180,90", "Testing Data 1", "", "Two",
+            "Option B|Option A", ""
         ], [
-            "Option 2", "180", "Testing Data 2", "", 23, "Option C|Option D"
+            "Option 2", "180", "Testing Data 2", "", 23,
+            "Option C|Option D", "2020"
         ], [
-            "Option 2", "180,A", "Testing Data 2", "", 23, "Option B"
+            "Option 2", "180,A", "Testing Data 2", "", 23,
+            "Option B", "2020-12-18"
         ]]
         columns = [
             "2|Test Option Question", "3|Test Geo Question",
             "Test Datapoint Text Question", "", "5|Test Number Question",
-            "6|Test Multiple Option Question"
+            "6|Test Multiple Option Question", "7|Test Date Question"
         ]
         df = pd.DataFrame(wrong_data, columns=columns)
         df.to_excel(excel_file, index=False)
@@ -95,5 +104,9 @@ class TestTemplateGenerator():
             'error': ExcelError.value,
             'message': "Invalid value: Option C, Option D",
             "column": "F3"
+        }, {
+            'error': ExcelError.value,
+            'message': "Invalid date format: 2020. It should be YYYY-MM-DD",
+            "column": "G3"
         }]
         os.remove(excel_file)
