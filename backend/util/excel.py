@@ -55,10 +55,6 @@ def validate_header_names(header, col, header_names):
 
 def validate_option(type, options, answer):
     err = []
-    if type == QuestionType.option:
-        answer = [answer]
-    if type == QuestionType.multiple_option:
-        answer = answer.split("|")
     for a in answer:
         if a not in options:
             err.append(a)
@@ -69,6 +65,17 @@ def validate_option(type, options, answer):
 
 def validate_row_data(col, answer, question):
     default = {"error": ExcelError.value, "column": col}
+    if question.type == QuestionType.geo:
+        answer = answer.split(",")
+        if len(answer) != 2:
+            default.update({"message": "Invalid lat long format"})
+            return default
+        for a in answer:
+            try:
+                a = int(a)
+            except ValueError:
+                default.update({"message": "Invalid lat long format"})
+                return default
     if question.type == QuestionType.number:
         try:
             answer = int(answer)
@@ -86,7 +93,7 @@ def validate_row_data(col, answer, question):
             return default
     if question.type in [QuestionType.option, QuestionType.multiple_option]:
         options = [o.name for o in question.option]
-        err = validate_option(question.type, options, answer)
+        err = validate_option(question.type, options, answer.split("|"))
         if err:
             default.update({"message": f"Invalid value: {err}"})
             return default

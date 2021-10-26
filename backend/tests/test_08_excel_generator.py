@@ -46,16 +46,18 @@ class TestTemplateGenerator():
         os.remove(excel_file)
 
     @pytest.mark.asyncio
-    async def test_validate_header_names(self, app: FastAPI,
-                                         session: Session) -> None:
+    async def test_validate_excel_file(self, app: FastAPI,
+                                       session: Session) -> None:
         excel_file = "./tmp/1-test.xls"
         wrong_data = [[
             "Option 4", "180,90", "Testing Data 1", "", "NA", "Option B"
         ], [
-            "Option 2", "180,90", "Testing Data 2", "", 23, "Option C|Option D"
+            "Option 2", "180", "Testing Data 2", "", 23, "Option C|Option D"
+        ], [
+            "Option 2", "180,A", "Testing Data 2", "", 23, "Option B"
         ]]
         columns = [
-            "2|Test Option Question", "Test Geo Question",
+            "2|Test Option Question", "3|Test Geo Question",
             "Test Datapoint Text Question", "", "5|Test Number Question",
             "6|Test Multiple Option Question"
         ]
@@ -71,16 +73,20 @@ class TestTemplateGenerator():
             'column': "A1"
         }, {
             'error': ExcelError.header,
-            'message': "Test Geo Question doesn't have question id",
-            'column': "B1"
-        }, {
-            'error': ExcelError.header,
             'message': "Test Datapoint Text Question doesn't have question id",
             'column': "C1"
         }, {
             'error': ExcelError.header,
             'message': "Header name is missing",
             "column": "D1"
+        }, {
+            'error': ExcelError.value,
+            'message': "Invalid lat long format",
+            "column": "B3"
+        }, {
+            'error': ExcelError.value,
+            'message': "Invalid lat long format",
+            "column": "B4"
         }, {
             'error': ExcelError.value,
             'message': "Value should be numeric",
