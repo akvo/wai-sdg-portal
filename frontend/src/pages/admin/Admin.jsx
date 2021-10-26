@@ -2,11 +2,10 @@ import React from "react";
 import { Row, Col, Tabs } from "antd";
 import { UIState } from "../../state/ui";
 import api from "../../util/api";
-
-import "./admin.scss";
 import ManageData from "./ManageData";
 import ManageUser from "./ManageUser";
 import Export from "./Export";
+import "./admin.scss";
 
 const { TabPane } = Tabs;
 
@@ -21,9 +20,8 @@ api
     console.error(err);
   });
 
-const Admin = ({ match }) => {
+const Admin = () => {
   const { user } = UIState.useState((e) => e);
-  const selectedData = match?.params?.page;
   return (
     <Row className="admin-container">
       {/* Jumbotron */}
@@ -39,13 +37,13 @@ const Admin = ({ match }) => {
         <div className="card-container">
           <Tabs type="card" size="large" tabBarGutter={0}>
             <TabPane tab="Manage Data" key="manage-data">
-              <ManageData match={match} />
+              <ManageData />
             </TabPane>
             <TabPane tab="Exports" key="exports">
               <Export />
             </TabPane>
             <TabPane tab="Data Upload" key="data-upload">
-              <ManageData match={match} />
+              <ManageData />
             </TabPane>
             {user?.role === "admin" && (
               <TabPane tab="Manage Users" key="manage-users">

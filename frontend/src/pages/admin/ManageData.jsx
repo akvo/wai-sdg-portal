@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Space, Divider, Button, Table, Pagination } from "antd";
+import {
+  Row,
+  Col,
+  Space,
+  Divider,
+  Button,
+  Table,
+  Pagination,
+  Modal,
+} from "antd";
 import { SelectLevel, DropdownNavigation } from "../../components/common";
-import config, { columnNames, manageDataSources } from "./admin-static";
+import config, { columnNames } from "./admin-static";
 import { UIState } from "../../state/ui";
 import takeRight from "lodash/takeRight";
 import ErrorPage from "../../components/ErrorPage";
 import api from "../../util/api";
 import { getLocationName } from "../../util/utils";
+import MainTableChild from "../main/MainTableChild.jsx";
 
 const getRowClassName = (record, editedRow) => {
   const edited = editedRow?.[record.key];
@@ -25,15 +35,32 @@ const ManageData = () => {
     selectedAdministration,
   } = UIState.useState((s) => s);
   const [data, setData] = useState([]);
+  const [dataId, setDataId] = useState(false);
   const [questionGroup, setQuestionGroup] = useState([]);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [form, setForm] = useState("water");
   const [perPage, setPerPage] = useState(10);
   const [loading, setLoading] = useState(true);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const current = config?.[form];
+  const dataSelected = dataId ? data.find((x) => x.key === dataId) : false;
+
   const { formId } = current;
+
+  const showModal = (id) => {
+    setDataId(id);
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
 
   const changePage = (p) => {
     setPage(p);
@@ -54,7 +81,7 @@ const ManageData = () => {
   }, [user, formId]);
 
   useEffect(() => {
-    if (user && formId && reloadData) {
+    if (user && formId && reloadData && administration) {
       const adminId = takeRight(selectedAdministration)[0];
       setLoading(true);
       let url = `data/form/${formId}?page=${page}&perpage=${perPage}`;
@@ -72,6 +99,14 @@ const ManageData = () => {
               created_by: x.updated_by || x.created_by,
               administration: getLocationName(x.administration, administration),
               detail: x.answer,
+              action: (
+                <Space size="small" align="center" wrap={true}>
+                  <Button type="link" onClick={() => showModal(x.id)}>
+                    Edit
+                  </Button>
+                  <Button type="link">Delete</Button>
+                </Space>
+              ),
             };
           });
           setData(tableData);
@@ -84,11 +119,20 @@ const ManageData = () => {
           setLoading(false);
         });
     }
-  }, [page, perPage, user, formId, reloadData, selectedAdministration]);
+  }, [
+    page,
+    perPage,
+    user,
+    formId,
+    reloadData,
+    selectedAdministration,
+    administration,
+  ]);
 
   if (!current) {
     return <ErrorPage status={404} />;
   }
+
   return (
     <>
       <div className="filter-wrapper">
@@ -134,6 +178,26 @@ const ManageData = () => {
           ""
         )}
       </div>
+      {dataSelected ? (
+        <Modal
+          title="Basic Modal"
+          visible={isModalVisible}
+          centered
+          width={640}
+          onOk={handleOk}
+          onCancel={handleCancel}
+        >
+          <div className="modal-wrapper">
+            <MainTableChild
+              questionGroup={questionGroup}
+              data={dataSelected}
+              scroll={400}
+            />
+          </div>
+        </Modal>
+      ) : (
+        ""
+      )}
     </>
   );
 };

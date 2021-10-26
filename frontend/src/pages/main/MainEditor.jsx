@@ -4,7 +4,6 @@ import { UndoOutlined, SaveOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { pickBy, startCase } from "lodash";
 import { UIState } from "../../state/ui";
-import { titleCase } from "title-case";
 
 const { Option } = Select;
 

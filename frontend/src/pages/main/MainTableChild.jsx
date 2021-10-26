@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Button, Table } from "antd";
-import { FieldTimeOutlined, HistoryOutlined } from "@ant-design/icons";
+import { Table } from "antd";
+import { HistoryOutlined } from "@ant-design/icons";
 import MainEditor from "./MainEditor";
 import { UIState } from "../../state/ui";
 import api from "../../util/api";
@@ -25,17 +25,7 @@ const NormalCol = ({ value }) => {
   return value;
 };
 
-const HistoryCol = ({ history }) => {
-  if (history) {
-    return <Button size="small" icon={<FieldTimeOutlined />} />;
-  }
-  return (
-    <Button size="small" type="dashed" icon={<FieldTimeOutlined />} disabled />
-  );
-};
-
 const HistoryTable = ({ record, data }) => {
-  const [loading, setLoading] = useState(true);
   const [historyData, setHistoryData] = useState(null);
 
   useEffect(() => {
@@ -45,7 +35,7 @@ const HistoryTable = ({ record, data }) => {
         setHistoryData(res.data.map((x, i) => ({ ...x, key: `history-${i}` })));
       });
     }
-  }, [historyData]);
+  }, [historyData, data, record]);
   return (
     <Table
       columns={[
@@ -60,7 +50,7 @@ const HistoryTable = ({ record, data }) => {
   );
 };
 
-const MainTableChild = ({ questionGroup, data }) => {
+const MainTableChild = ({ questionGroup, data, size = "small", scroll }) => {
   const { editedRow, administration } = UIState.useState((e) => e);
   const [expanded, setExpanded] = useState([]);
   const edited = editedRow?.[data.key];
@@ -117,7 +107,8 @@ const MainTableChild = ({ questionGroup, data }) => {
     return (
       <Table
         className={"main-child-table"}
-        size="small"
+        size={size}
+        scroll={scroll ? { y: scroll } : false}
         key={gi}
         showHeader={false}
         columns={childcolumns}
