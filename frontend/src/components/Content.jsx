@@ -19,7 +19,7 @@ const Content = () => {
         <Home />
       </Route>
       <ProtectedContent path="/data/:page" component={Main} />
-      <ProtectedContent exact path="/admin" component={Admin} />
+      <ProtectedContent path="/admin/:page" component={Admin} />
       <ProtectedContent exact path="/documentation" component={Doc} />
       <Route path="/form/:title/:id" component={Forms} />
       <Route exact path="/not-found">

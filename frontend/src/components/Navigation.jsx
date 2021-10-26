@@ -72,7 +72,7 @@ const Navigation = ({ logout, loginWithPopup, isAuthenticated }) => {
           )}
           {(user?.role === "admin" || user?.role === "editor") && (
             <Menu.Item key="admin">
-              <Link to="/admin">Admin</Link>
+              <Link to="/admin/manage-data">Admin</Link>
             </Menu.Item>
           )}
           <Menu.Item key="about">About</Menu.Item>

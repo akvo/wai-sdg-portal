@@ -16,16 +16,16 @@ import {
   UndoOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
+import { Link } from "react-router-dom";
+import takeRight from "lodash/takeRight";
 import config, { columnNames } from "./admin-static";
 import { UIState } from "../../state/ui";
-import takeRight from "lodash/takeRight";
 import api from "../../util/api";
 import { getLocationName } from "../../util/utils";
 import MainTableChild from "../main/MainTableChild.jsx";
 import ErrorPage from "../../components/ErrorPage";
 import { DataUpdateMessage } from "./../../components/Notifications";
 import { SelectLevel, DropdownNavigation } from "../../components/common";
-import { Link } from "react-router-dom";
 
 const getRowClassName = (record, editedRow) => {
   const edited = editedRow?.[record.key];
