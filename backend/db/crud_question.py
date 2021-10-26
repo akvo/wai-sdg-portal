@@ -45,7 +45,7 @@ def add_question(session: Session,
 def get_question(session: Session,
                  form: Optional[int] = None) -> List[QuestionDict]:
     if form:
-        return session.query(Question).filter(form=form).all()
+        return session.query(Question).filter(Question.form == form).all()
     return session.query(Question).all()
 
 
