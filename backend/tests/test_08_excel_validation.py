@@ -12,7 +12,7 @@ pytestmark = pytest.mark.asyncio
 sys.path.append("..")
 
 
-class TestTemplateGenerator():
+class TestExcelValidation():
     @pytest.mark.asyncio
     async def test_get_excel_template(self, app: FastAPI,
                                       session: Session) -> None:
