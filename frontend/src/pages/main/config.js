@@ -16,6 +16,31 @@ const mapConfig = (h) => {
   };
 };
 
+const filters = {
+  water: [
+    { text: "Basic", value: "basic" },
+    { text: "Safely Managed", value: "safely managed" },
+    { text: "Limited", value: "limited" },
+    { text: "No Service", value: "no service" },
+  ],
+  sanitation: [
+    { text: "Advanced", value: "basic" },
+    { text: "Basic", value: "basic" },
+    { text: "Limited", value: "limited" },
+    { text: "No Service", value: "no service" },
+  ],
+  hygiene: [
+    { text: "Advanced", value: "basic" },
+    { text: "Basic", value: "basic" },
+    { text: "Limited", value: "limited" },
+    { text: "No Service", value: "no service" },
+  ],
+  functional: [
+    { text: "Functional", value: "functional" },
+    { text: "Not Functional", value: "not functional" },
+  ],
+};
+
 const clts = {
   title: "CLTS",
   columns: [
@@ -45,9 +70,14 @@ const health = {
   title: "Health Facility",
   columns: [
     { title: "Facilty Name", key: "name", width: "30%" },
-    { title: "Water", key: 19 },
-    { title: "Sanitation", key: 21 },
-    { title: "Hygiene", key: 26 },
+    { title: "Water", key: 19, align: "center", filters: filters.water },
+    {
+      title: "Sanitation",
+      key: 21,
+      align: "center",
+      filters: filters.sanitation,
+    },
+    { title: "Hygiene", key: 26, align: "center", filters: filters.hygiene },
   ],
   charts: [
     { title: "Health Facility Charts 01" },
@@ -66,9 +96,19 @@ const households = {
   title: "Households",
   columns: [
     { title: "Name", key: "name", width: "30%" },
-    { title: "Water", key: 35, align: "center" },
-    { title: "Sanitation", key: 39, align: "center" },
-    { title: "Hygiene", key: 44, align: "center" },
+    { title: "Water", key: 35, align: "center", filters: filters.water },
+    {
+      title: "Sanitation",
+      key: 39,
+      align: "center",
+      filters: filters.sanitation,
+    },
+    {
+      title: "Hygiene",
+      key: 44,
+      align: "center",
+      filters: filters.hygiene,
+    },
   ],
   charts: [
     { title: "Household Charts 01" },
@@ -87,9 +127,19 @@ const schools = {
   title: "Schools Facility",
   columns: [
     { title: "School Name", key: "name", width: "30%" },
-    { title: "Water", key: 56, align: "center" },
-    { title: "Sanitation", key: 61, align: "center" },
-    { title: "Hygiene", key: 67, align: "center" },
+    {
+      title: "Water",
+      key: 56,
+      align: "center",
+      filters: filters.water,
+    },
+    {
+      title: "Sanitation",
+      key: 61,
+      align: "center",
+      filters: filters.sanitation,
+    },
+    { title: "Hygiene", key: 67, align: "center", filters: filters.hygiene },
   ],
   charts: [
     { title: "School Charts 01" },
@@ -110,7 +160,12 @@ const water = {
   columns: [
     { title: "Water Points", key: "name", width: "30%" },
     { title: "Source Type", key: 79, align: "center" },
-    { title: "Functionality", key: 80, align: "center" },
+    {
+      title: "Functionality",
+      key: 80,
+      align: "center",
+      filters: filters.functional,
+    },
     { title: "Number of Users", key: 82, align: "right" },
   ],
   charts: [
