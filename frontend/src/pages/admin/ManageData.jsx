@@ -9,6 +9,7 @@ import {
   Pagination,
   Modal,
 } from "antd";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { SelectLevel, DropdownNavigation } from "../../components/common";
 import config, { columnNames } from "./admin-static";
 import { UIState } from "../../state/ui";
@@ -101,10 +102,16 @@ const ManageData = () => {
               detail: x.answer,
               action: (
                 <Space size="small" align="center" wrap={true}>
-                  <Button type="link" onClick={() => showModal(x.id)}>
+                  <Button
+                    size="small"
+                    onClick={() => showModal(x.id)}
+                    icon={<EditOutlined />}
+                  >
                     Edit
                   </Button>
-                  <Button type="link">Delete</Button>
+                  <Button size="small" icon={<DeleteOutlined />}>
+                    Delete
+                  </Button>
                 </Space>
               ),
             };

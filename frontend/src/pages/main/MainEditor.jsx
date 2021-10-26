@@ -83,10 +83,25 @@ const MainEditor = ({ value, question, edited, dataPointId }) => {
       </Row>
     );
   }
+
   if (question.type === "date") {
     let dateValue = newValue || value;
     if (dateValue) {
       dateValue = dateValue.split(" ")[0];
+      if (edited?.[question.id]) {
+        return (
+          <Row justify="space-around" align="middle">
+            <Col span={18}>
+              <div onClick={() => setFieldActive(true)}>{dateValue}</div>
+            </Col>
+            <Col span={6}>
+              <Button size="small" onClick={onReset} icon={<UndoOutlined />}>
+                Undo
+              </Button>
+            </Col>
+          </Row>
+        );
+      }
       return <div onClick={() => setFieldActive(true)}>{dateValue}</div>;
     }
   }
