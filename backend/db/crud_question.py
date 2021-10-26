@@ -60,3 +60,9 @@ def get_question_by_name(session: Session, form: int,
     question = session.query(Question).filter(
         and_(Question.name == name, Question.form == form)).first()
     return question
+
+
+def get_excel_question(session: Session, form: int) -> List[QuestionDict]:
+    return session.query(Question).filter(
+        and_(Question.form == form,
+             Question.type != QuestionType.administration)).all()
