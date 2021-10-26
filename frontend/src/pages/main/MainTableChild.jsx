@@ -40,8 +40,18 @@ const HistoryTable = ({ record, data }) => {
     <Table
       columns={[
         { title: "History", dataIndex: "value", key: "value" },
-        { title: "Updated at", dataIndex: "date", key: "date" },
-        { title: "Updated by", dataIndex: "user", key: "user" },
+        {
+          title: "Updated at",
+          dataIndex: "date",
+          key: "date",
+          align: "center",
+        },
+        {
+          title: "Updated by",
+          dataIndex: "user",
+          key: "user",
+          align: "center",
+        },
       ]}
       loading={historyData === null}
       pagination={false}
