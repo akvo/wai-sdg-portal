@@ -13,10 +13,16 @@ import { UIState } from "../../state/ui";
 import takeRight from "lodash/takeRight";
 import MainTable from "./MainTable";
 import MainMaps from "./MainMaps";
+import startCase from "lodash/startCase";
 
 const { Panel } = Collapse;
 
 const NameWithInfo = ({ name, created_by, created }) => {
+  if (name) {
+    name = name.split(" - ");
+    name = name.map((n) => startCase(n));
+    name = name.join(" - ");
+  }
   return (
     <Space>
       <Popover
@@ -26,7 +32,7 @@ const NameWithInfo = ({ name, created_by, created }) => {
             {created} by {created_by}
           </div>
         }
-        title="Submission info"
+        title={name}
       >
         <InfoCircleOutlined />
       </Popover>
@@ -85,6 +91,9 @@ const Main = ({ match }) => {
               let value = ans?.value;
               if (q?.fn && value) {
                 value = q.fn(value);
+              }
+              if (!q?.fn && value) {
+                value = startCase(value);
               }
               return Object.assign(o, {
                 [key]: value,
