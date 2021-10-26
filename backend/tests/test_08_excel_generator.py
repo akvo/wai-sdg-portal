@@ -5,8 +5,8 @@ import pandas as pd
 from fastapi import FastAPI
 from sqlalchemy.orm import Session
 from db import crud_question
-from util.excel import generate_excel_template
-from util.excel import validate_excel_data
+from util.excel import generate_excel_template, validate_excel_data
+from util.excel import ExcelError
 
 pytestmark = pytest.mark.asyncio
 sys.path.append("..")
@@ -50,13 +50,13 @@ class TestTemplateGenerator():
                                          session: Session) -> None:
         excel_file = "./tmp/1-test.xls"
         wrong_data = [[
-            "Option 4", "180,90", "Testing Data 1", "", 23, "Option B"
+            "Option 4", "180,90", "Testing Data 1", "", "NA", "Option B"
         ], [
             "Option 2", "180,90", "Testing Data 2", "", 23, "Option C|Option D"
         ]]
         columns = [
-            "Test Option Question", "Test Geo Question",
-            "Test Datapoint Text Question", "", "2|Test Number Question",
+            "2|Test Option Question", "Test Geo Question",
+            "Test Datapoint Text Question", "", "5|Test Number Question",
             "6|Test Multiple Option Question"
         ]
         df = pd.DataFrame(wrong_data, columns=columns)
@@ -66,27 +66,27 @@ class TestTemplateGenerator():
                                      administration=1,
                                      file=excel_file)
         assert errors == [{
-            'error': 'header_name',
-            'message': "Test Option Question doesn't have question id",
+            'error': ExcelError.header,
+            'message': "2|Test Option Question has invalid id",
             'column': "A1"
         }, {
-            'error': 'header_name',
+            'error': ExcelError.header,
             'message': "Test Geo Question doesn't have question id",
             'column': "B1"
         }, {
-            'error': 'header_name',
+            'error': ExcelError.header,
             'message': "Test Datapoint Text Question doesn't have question id",
             'column': "C1"
         }, {
-            'error': 'header_name',
+            'error': ExcelError.header,
             'message': "Header name is missing",
             "column": "D1"
         }, {
-            'error': 'header_name',
-            'message': "2|Test Number Question has invalid id",
-            "column": "E1"
+            'error': ExcelError.value,
+            'message': "Value should be numeric",
+            "column": "E2"
         }, {
-            'error': 'row_value',
+            'error': ExcelError.value,
             'message': "Invalid value: Option C, Option D",
             "column": "F3"
         }]

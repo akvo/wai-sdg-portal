@@ -1,7 +1,9 @@
 import pandas as pd
+import enum
 import humps
 import itertools
 from db import crud_question
+from datetime import datetime
 from db import crud_form
 from models.question import Question, QuestionType
 from sqlalchemy.orm import Session
@@ -19,6 +21,11 @@ def generate_excel_template(session: Session, form: int):
     return f"./tmp/{file_name}.xls"
 
 
+class ExcelError(enum.Enum):
+    header = 'header_name'
+    value = 'column_value'
+
+
 def generate_excel_columns():
     n = 1
     while True:
@@ -28,7 +35,7 @@ def generate_excel_columns():
 
 
 def validate_header_names(header, col, header_names):
-    default = {"error": "header_name", "column": col}
+    default = {"error": ExcelError.header, "column": col}
     if "Unnamed:" in header:
         default.update({"message": "Header name is missing"})
         return default
@@ -46,26 +53,42 @@ def validate_header_names(header, col, header_names):
     return False
 
 
+def validate_option(type, options, answer):
+    err = []
+    if type == QuestionType.option:
+        answer = [answer]
+    if type == QuestionType.multiple_option:
+        answer = answer.split("|")
+    for a in answer:
+        if a not in options:
+            err.append(a)
+    if len(err):
+        return ", ".join(err)
+    return False
+
+
 def validate_row_data(col, answer, question):
-    default = {"error": "row_value", "column": col}
-    if question.type == QuestionType.option:
-        options = [o.name for o in question.option]
-        if answer not in options:
+    default = {"error": ExcelError.value, "column": col}
+    if question.type == QuestionType.number:
+        try:
+            answer = int(answer)
+        except ValueError:
+            default.update({"message": "Value should be numeric"})
+            return default
+    if question.type == QuestionType.date:
+        try:
+            answer = datetime.strptime(answer, "%Y-%m-%d")
+        except ValueError:
             default.update({
-                "message": f"Invalid value: {answer}",
+                "message":
+                f"Invalid date format: {answer}. It should be YYYY-MM-DD"
             })
             return default
-    if question.type == QuestionType.multiple_option:
+    if question.type in [QuestionType.option, QuestionType.multiple_option]:
         options = [o.name for o in question.option]
-        err = []
-        for a in answer.split("|"):
-            if a not in options:
-                err.append(a)
-        if len(err):
-            err = ", ".join(err)
-            default.update({
-                "message": f"Invalid value: {err}",
-            })
+        err = validate_option(question.type, options, answer)
+        if err:
+            default.update({"message": f"Invalid value: {err}"})
             return default
     return False
 
