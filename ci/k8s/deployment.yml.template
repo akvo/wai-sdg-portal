@@ -77,10 +77,10 @@ spec:
               port: 5000
             initialDelaySeconds: 30
           volumeMounts:
-          - name: wai-ethiopia-secrets
-            mountPath: "/secrets/credentials.json"
-            subPath: "wai-service-account.json"
-            readOnly: true
+            - name: wai-ethiopia-secrets
+              mountPath: "/secrets/credentials.json"
+              subPath: "wai-service-account.json"
+              readOnly: true
           resources:
             requests:
               cpu: "100m"
