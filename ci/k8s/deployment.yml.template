@@ -77,7 +77,7 @@ spec:
               port: 5000
             initialDelaySeconds: 30
           volumeMounts:
-          - name: unep-gpml-secrets
+          - name: wai-ethiopia-secrets
             mountPath: "/secrets/credentials.json"
             subPath: "wai-service-account.json"
             readOnly: true
@@ -88,7 +88,7 @@ spec:
             limits:
               cpu: "500m"
               memory: "1024Mi"
-    volumes:
-        - name: wai-ethiopia-secrets
-          secret:
-            secretName: wai-ethiopia
+        volumes:
+          - name: wai-ethiopia-secrets
+            secret:
+              secretName: wai-ethiopia
