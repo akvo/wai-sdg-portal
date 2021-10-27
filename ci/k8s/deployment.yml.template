@@ -64,6 +64,8 @@ spec:
                 secretKeyRef:
                   name: wai-ethiopia
                   key: auth0-client-id
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: "/secrets/credentials.json"
           readinessProbe:
             httpGet:
               path: /health-check
@@ -74,6 +76,11 @@ spec:
               path: /health-check
               port: 5000
             initialDelaySeconds: 30
+          volumeMounts:
+          - name: unep-gpml-secrets
+            mountPath: "/secrets/credentials.json"
+            subPath: "wai-service-account.json"
+            readOnly: true
           resources:
             requests:
               cpu: "100m"
@@ -81,3 +88,7 @@ spec:
             limits:
               cpu: "500m"
               memory: "1024Mi"
+    volumes:
+        - name: wai-ethiopia-secrets
+          secret:
+            secretName: wai-ethiopia
