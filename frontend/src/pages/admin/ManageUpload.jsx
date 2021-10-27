@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Space, Upload, message } from "antd";
+import { Row, Col, Space, Upload, Button, message, notification } from "antd";
 import { FileExcelOutlined } from "@ant-design/icons";
 import takeRight from "lodash/takeRight";
 import snakeCase from "lodash/snakeCase";
+import moment from "moment";
 import { UIState } from "../../state/ui";
 import { SelectLevel, DropdownNavigation } from "../../components/common";
 import { getLocationName } from "../../util/utils";
+import api from "../../util/api";
 import config from "./admin-static";
-import moment from "moment";
 
 const { Dragger } = Upload;
 const allowedFiles = [
   "application/vnd.ms-excel",
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
 ];
+const regExpFilename = /filename="(?<filename>.*)"/;
 
 const ManageUpload = () => {
   const { user, administration, selectedAdministration } = UIState.useState(
@@ -65,37 +67,82 @@ const ManageUpload = () => {
     disabled: fileName ? false : true,
   };
 
+  const downloadTemplate = () => {
+    api
+      .get(`download/excel-template/${formId}`, { responseType: "blob" })
+      .then((res) => {
+        const contentDispositionHeader = res.headers["content-disposition"];
+        const filename = regExpFilename.exec(contentDispositionHeader)?.groups
+          ?.filename;
+        if (filename) {
+          const url = window.URL.createObjectURL(new Blob([res.data]));
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", filename);
+          document.body.appendChild(link);
+          link.click();
+        } else {
+          notification.error({
+            message: "Something wen't wrong",
+          });
+        }
+      })
+      .catch(() => {
+        notification.error({
+          message: "Something wen't wrong",
+        });
+      });
+  };
+
   return (
-    <>
-      <div className="filter-wrapper">
-        <Space size={20} align="center" wrap={true}>
-          <DropdownNavigation value={form} onChange={setForm} />
-          <SelectLevel />
-        </Space>
+    <div className="main-wrapper">
+      <div className="upload-wrapper">
+        <Row className="filter-wrapper" align="middle" justify="space-between">
+          <Col span={24} align="center">
+            <Space size={20} align="center" wrap={true}>
+              <h3>
+                If you do not already have a template file, please download it
+              </h3>
+              <DropdownNavigation value={form} onChange={setForm} />
+              <Button onClick={downloadTemplate}>Download</Button>
+            </Space>
+          </Col>
+        </Row>
       </div>
-      <Row
-        className="button-wrapper"
-        align="middle"
-        justify="space-between"
-        wrap={true}
-      >
-        <Col span={24}>
-          <div className="dragger-wrapper">
-            <Dragger {...uploadProps}>
-              <p className="ant-upload-drag-icon">
-                <FileExcelOutlined />
-              </p>
-              <p className="ant-upload-text">
-                Click or drag file to this area to upload
-              </p>
-              <p className="ant-upload-hint">
-                Supported filetypes: .xls and .xlsx.
-              </p>
-            </Dragger>
-          </div>
-        </Col>
-      </Row>
-    </>
+      <div className="upload-wrapper">
+        <Row className="filter-wrapper" align="middle" justify="space-between">
+          <Col span={24} align="center">
+            <Space size={20} align="center" wrap={true}>
+              <h3>Upload your data</h3>
+              <DropdownNavigation value={form} onChange={setForm} />
+              <SelectLevel />
+            </Space>
+          </Col>
+        </Row>
+        <Row
+          className="button-wrapper"
+          align="middle"
+          justify="space-between"
+          wrap={true}
+        >
+          <Col span={24}>
+            <div className="dragger-wrapper">
+              <Dragger {...uploadProps}>
+                <p className="ant-upload-drag-icon">
+                  <FileExcelOutlined />
+                </p>
+                <p className="ant-upload-text">
+                  Click or drag file to this area to upload
+                </p>
+                <p className="ant-upload-hint">
+                  Supported filetypes: .xls and .xlsx.
+                </p>
+              </Dragger>
+            </div>
+          </Col>
+        </Row>
+      </div>
+    </div>
   );
 };
 

@@ -78,16 +78,22 @@
 
       .ant-table-thead {
         th {
-          font-size: 13px;
+          font-size: 14px;
         }
       }
     }
 
     .ant-table-thead > tr > th {
-      color: #fff;
-      font-weight: 600;
-      background: #02989e;
-      border-bottom: 2px solid #02989e;
+      background: #fff !important;
+      border-color: #fafafa;
+      border-bottom: 3px solid #0288d1;
+      color: #0288d1;
+      font-weight: bold;
+      padding: 10px;
+
+      &:first-child {
+        padding-left: 20px;
+      }
 
       &.ant-table-cell-scrollbar {
         box-shadow: none;
