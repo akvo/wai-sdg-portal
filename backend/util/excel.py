@@ -16,9 +16,10 @@ def generate_excel_template(session: Session, form: int):
     df = pd.DataFrame(columns=[q.to_excel_header for q in questions],
                       index=[0])
     form_name = humps.decamelize(form.name)
-    file_name = f"{form.id}-{form_name}"
-    df.to_excel(f"./tmp/{file_name}.xls", index=False)
-    return f"./tmp/{file_name}.xls"
+    filename = f"{form.id}-{form_name}"
+    filepath = f"./tmp/{filename}.xlsx"
+    df.to_excel(filepath, index=False)
+    return filepath
 
 
 class ExcelError(enum.Enum):

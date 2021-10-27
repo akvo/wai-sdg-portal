@@ -3,6 +3,7 @@ import os
 import pytest
 import pandas as pd
 from fastapi import FastAPI
+from httpx import AsyncClient
 from sqlalchemy.orm import Session
 from db import crud_question
 from util.excel import generate_excel_template, validate_excel_data
@@ -14,8 +15,7 @@ sys.path.append("..")
 
 class TestExcelValidation():
     @pytest.mark.asyncio
-    async def test_get_excel_template(self, app: FastAPI,
-                                      session: Session) -> None:
+    async def test_get_excel_template(self, session: Session) -> None:
         crud_question.add_question(session=session,
                                    name="Test Number Question",
                                    question_group=1,
@@ -42,7 +42,7 @@ class TestExcelValidation():
                                    meta=False,
                                    type="date")
         excel_file = generate_excel_template(session=session, form=1)
-        assert excel_file == "./tmp/1-test.xls"
+        assert excel_file == "./tmp/1-test.xlsx"
         df = pd.read_excel(excel_file)
         assert list(df) == [
             "1|Test Option Question", "3|Test Geo Question",
@@ -52,9 +52,21 @@ class TestExcelValidation():
         os.remove(excel_file)
 
     @pytest.mark.asyncio
-    async def test_validate_excel_file(self, app: FastAPI,
-                                       session: Session) -> None:
-        excel_file = "./tmp/1-test.xls"
+    async def test_download_excel_template(self, app: FastAPI,
+                                           session: Session,
+                                           client: AsyncClient) -> None:
+        res = await client.get(
+            app.url_path_for("excel-template:get_by_form_id", id=1))
+        assert res.status_code == 200
+        head = res.headers
+        type = head.get("content-type")
+        disposition = head.get("content-disposition")
+        assert "spreadsheetml" in type
+        assert disposition == 'attachment; filename="1-test.xlsx"'
+
+    @pytest.mark.asyncio
+    async def test_validate_excel_file(self, session: Session) -> None:
+        excel_file = "./tmp/1-test.xlsx"
         wrong_data = [[
             "Option 4", "180,90", "Testing Data 1", "", "Two",
             "Option B|Option A", ""

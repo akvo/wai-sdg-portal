@@ -13,7 +13,7 @@ sys.path.append("..")
 class TestStressAndTimeout():
     @pytest.mark.asyncio
     async def test_4000_value_errors(self, session: Session) -> None:
-        excel_file = "./tmp/1-test.xls"
+        excel_file = "./tmp/1-test.xlsx"
         excel = generate_excel_template(session=session, form=1)
         df = pd.read_excel(excel)
         random_wrong_rows = []
