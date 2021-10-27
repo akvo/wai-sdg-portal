@@ -17,25 +17,25 @@ spec:
     metadata:
       labels:
         run: wai-ethiopia
-        wai-ethiopia-version: "${CI_COMMIT}"
+        wai-ethiopia-version: '${CI_COMMIT}'
       annotations:
         prometheus.io/scrape: 'true'
         prometheus.io/port: '3000'
     spec:
       containers:
         - name: frontend
-          image: eu.gcr.io/akvo-lumen/wai-ethiopia/frontend:${CI_COMMIT}
+          image: 'eu.gcr.io/akvo-lumen/wai-ethiopia/frontend:${CI_COMMIT}'
           ports:
             - containerPort: 80
           resources:
             requests:
-              cpu: "100m"
-              memory: "32Mi"
+              cpu: 100m
+              memory: 32Mi
             limits:
-              cpu: "200m"
-              memory: "64Mi"
+              cpu: 200m
+              memory: 64Mi
         - name: backend
-          image: eu.gcr.io/akvo-lumen/wai-ethiopia/backend:${CI_COMMIT}
+          image: 'eu.gcr.io/akvo-lumen/wai-ethiopia/backend:${CI_COMMIT}'
           ports:
             - containerPort: 5000
           env:
@@ -65,7 +65,7 @@ spec:
                   name: wai-ethiopia
                   key: auth0-client-id
             - name: GOOGLE_APPLICATION_CREDENTIALS
-              value: "/secrets/credentials.json"
+              value: /secrets/credentials.json
           readinessProbe:
             httpGet:
               path: /health-check
@@ -78,17 +78,17 @@ spec:
             initialDelaySeconds: 30
           volumeMounts:
             - name: wai-ethiopia-secrets
-              mountPath: "/secrets/credentials.json"
-              subPath: "wai-service-account.json"
+              mountPath: /secrets/credentials.json
+              subPath: wai-service-account.json
               readOnly: true
           resources:
             requests:
-              cpu: "100m"
-              memory: "256Mi"
+              cpu: 100m
+              memory: 256Mi
             limits:
-              cpu: "500m"
-              memory: "1024Mi"
-        volumes:
-          - name: wai-ethiopia-secrets
-            secret:
-              secretName: wai-ethiopia
+              cpu: 500m
+              memory: 1024Mi
+      volumes:
+        - name: wai-ethiopia-secrets
+          secret:
+            secretName: wai-ethiopia
