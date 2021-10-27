@@ -64,6 +64,13 @@ def validate_option(type, options, answer):
 
 
 def validate_geo(answer):
+    try:
+        a = int(answer)
+        return {"message": "Invalid lat long format"}
+    except ValueError:
+        pass
+    if "," not in answer:
+        return {"message": "Invalid lat long format"}
     answer = answer.split(",")
     if len(answer) != 2:
         return {"message": "Invalid lat long format"}
@@ -91,6 +98,15 @@ def validate_row_data(col, answer, question):
             default.update({"message": "Value should be numeric"})
             return default
     if question.type == QuestionType.date:
+        try:
+            answer = int(answer)
+            default.update({
+                "message":
+                f"Invalid date format: {answer}. It should be YYYY-MM-DD"
+            })
+            return default
+        except ValueError:
+            pass
         try:
             answer = datetime.strptime(answer, "%Y-%m-%d")
         except ValueError:
