@@ -22,7 +22,7 @@ Base.metadata.create_all(bind=engine)
 
 @worker.get("/", tags=["Dev"])
 def read_main():
-    return "OK"
+    return "READY"
 
 
 @worker.get("/health-check", tags=["Dev"])

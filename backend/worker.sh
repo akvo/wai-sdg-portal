@@ -4,4 +4,4 @@ pip -q install --upgrade pip
 pip -q install --cache-dir=.pip -r requirements.txt
 pip check
 
-uvicorn main:worker --reload --port 5001
+uvicorn worker:worker --reload --port 5001
