@@ -2,7 +2,7 @@
 version: '3.9'
 services:
   backend:
-    command: ["sh", "./run.sh"]
+    command: ["sh", "run.sh"]
     depends_on:
       - db
     environment:
@@ -19,7 +19,7 @@ services:
       - ./backend:/app:delegated
     working_dir: /app
   worker:
-    command: ["sh", "./run-worker.sh"]
+    command: ["sh", "run-worker.sh"]
     depends_on:
       - db
     environment:
@@ -54,6 +54,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=password
     image: postgres:12-alpine
+    network_mode: service:mainnetwork
     ports:
       - 5432:5432
     restart: always
@@ -79,5 +80,6 @@ services:
       - 3000:3000
       - 5000:5000
       - 5001:5001
+      - 5432:5432
 volumes:
   pg-data: {}
