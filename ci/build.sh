@@ -46,7 +46,7 @@ worker_build () {
 
     docker build \
         --tag "${image_prefix}/worker:latest" \
-        --tag "${image_prefix}/worker:${CI_COMMIT}" backend -f ./backend/Dockerfile.worker
+        --tag "${image_prefix}/worker:${CI_COMMIT}" -f ./backend/Dockerfile.worker
 
 }
 
