@@ -29,7 +29,7 @@ services:
       - AUTH0_CLIENT_ID
       - AUTH0_SECRET
       - AUTH0_AUDIENCE
-    image: eu.gcr.io/akvo-lumen/wai-ethiopia/backend:latest
+    image: eu.gcr.io/akvo-lumen/wai-ethiopia/worker:latest
     network_mode: service:mainnetwork
     restart: always
     volumes:
@@ -38,6 +38,7 @@ services:
   ci:
     depends_on:
       - backend
+      - worker
       - db
       - frontend
     entrypoint: ./entrypoint.sh
@@ -64,6 +65,7 @@ services:
     command: ["nginx", "-g", "daemon off;"]
     depends_on:
       - backend
+      - worker
       - db
     image: eu.gcr.io/akvo-lumen/wai-ethiopia/frontend:latest
     network_mode: service:mainnetwork
@@ -76,5 +78,6 @@ services:
     ports:
       - 3000:3000
       - 5000:5000
+      - 5001:5001
 volumes:
   pg-data: {}
