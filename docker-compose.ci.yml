@@ -4,7 +4,8 @@ services:
   backend:
     command: ["sh", "./run.sh"]
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
       - DATABASE_URL=postgresql://wai:password@db:5432/wai_ethiopia
       - SKIP_MIGRATION=yes
@@ -21,7 +22,8 @@ services:
   worker:
     command: ["sh", "./run-worker.sh"]
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
       - DATABASE_URL=postgresql://wai:password@db:5432/wai_ethiopia
       - SKIP_MIGRATION=yes
@@ -37,10 +39,14 @@ services:
     working_dir: /app
   ci:
     depends_on:
-      - backend
-      - worker
-      - db
-      - frontend
+      db:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+      worker:
+        condition: service_healthy
+      frontend:
+        condition: service_healthy
     entrypoint: ./entrypoint.sh
     image: alpine:3.14
     network_mode: service:mainnetwork
@@ -63,10 +69,6 @@ services:
       - ./db/script:/script:ro
   frontend:
     command: ["nginx", "-g", "daemon off;"]
-    depends_on:
-      - backend
-      - worker
-      - db
     image: eu.gcr.io/akvo-lumen/wai-ethiopia/frontend:latest
     network_mode: service:mainnetwork
     volumes:
