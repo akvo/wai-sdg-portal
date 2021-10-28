@@ -16,8 +16,7 @@ dc () {
 
 # Docker compose using CI env
 dci () {
-    dc -f docker-compose.yml \
-       -f docker-compose.ci.yml "$@"
+    dc -f docker-compose.ci.yml "$@"
 }
 
 frontend_build () {
@@ -42,7 +41,16 @@ backend_build () {
         --tag "${image_prefix}/backend:${CI_COMMIT}" backend
 }
 
+worker_build () {
 
+    docker build \
+        --tag "${image_prefix}/worker:latest" \
+        --tag "${image_prefix}/worker:${CI_COMMIT}" backend -f ./backend/Dockerfile.worker
+
+}
+
+
+worker_build
 backend_build
 
 # Pytest
