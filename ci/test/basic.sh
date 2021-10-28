@@ -3,7 +3,14 @@
 
 set -euo pipefail
 
-wait4ports -q -s 1 -t 60 tcp://localhost:80 tcp://localhost:5000 tcp://localhost:5001 tcp://localhost:5432
+#waiting for postgres
+until psql --host db:5432 --username wai -w &>/dev/null
+do
+  echo "Waiting for PostgreSQL..."
+  sleep 1
+done
+
+wait4ports -q -s 1 -t 60 tcp://localhost:80 tcp://localhost:5000 tcp://localhost:5001
 
 http_get() {
     url="${1}"
