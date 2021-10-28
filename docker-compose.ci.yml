@@ -13,9 +13,7 @@ services:
     image: eu.gcr.io/akvo-lumen/wai-ethiopia/frontend:latest
     command: ["nginx", "-g", "daemon off;"]
     depends_on:
-      - worker
       - backend
-      - db
   backend:
     network_mode: service:mainnetwork
     image: eu.gcr.io/akvo-lumen/wai-ethiopia/backend:latest
@@ -37,7 +35,7 @@ services:
     environment:
       - DATABASE_URL=postgresql://wai:password@db:5432/wai_ethiopia
     depends_on:
-      - db
+      - backend
     restart: always
   ci:
     network_mode: service:mainnetwork
@@ -47,7 +45,4 @@ services:
     working_dir: /test
     entrypoint: ./entrypoint.sh
     depends_on:
-      - frontend
       - worker
-      - backend
-      - db
