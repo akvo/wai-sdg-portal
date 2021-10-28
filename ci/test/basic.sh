@@ -24,4 +24,4 @@ http_get() {
 http_get "http://localhost" 200
 http_get "http://localhost/api/" 200
 http_get "http://localhost/api/docs" 200
-http_get "http://localhost/worker" 200
+http_get "http://localhost/worker/" 200
