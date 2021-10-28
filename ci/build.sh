@@ -46,11 +46,12 @@ worker_build () {
 
     docker build \
         --tag "${image_prefix}/worker:latest" \
-        --tag "${image_prefix}/worker:${CI_COMMIT}" backend -f Dockerfile.worker
+        --tag "${image_prefix}/worker:${CI_COMMIT}" backend -f ./backend/Dockerfile.worker
 
 }
 
 
+worker_build
 backend_build
 
 # Pytest
@@ -58,7 +59,6 @@ docker-compose -f docker-compose.test.yml run -T backend pytest -rP -vvv
 # Code Quality
 docker-compose -f docker-compose.test.yml run -T backend python -m flake8
 
-worker_build
 frontend_build
 
 #test-connection
