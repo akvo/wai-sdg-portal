@@ -35,7 +35,6 @@ services:
       - DATABASE_URL=postgresql://wai:password@db:5432/wai_ethiopia
     depends_on:
       - db
-      - backend
     network_mode: service:mainnetwork
   frontend:
     image: akvo/akvo-node-14-alpine:20210106.152005.1864760

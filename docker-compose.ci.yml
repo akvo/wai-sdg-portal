@@ -37,7 +37,6 @@ services:
     environment:
       - DATABASE_URL=postgresql://wai:password@db:5432/wai_ethiopia
     depends_on:
-      - backend
       - db
     restart: always
   ci:
@@ -48,7 +47,7 @@ services:
     working_dir: /test
     entrypoint: ./entrypoint.sh
     depends_on:
-      - db
       - frontend
-      - backend
       - worker
+      - backend
+      - db
