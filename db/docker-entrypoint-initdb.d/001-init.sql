@@ -224,6 +224,38 @@ ALTER SEQUENCE public.answer_id_seq OWNED BY public.answer.id;
 
 
 --
+-- Name: question; Type: TABLE; Schema: public; Owner: wai
+--
+
+CREATE TABLE public.question (
+    id integer NOT NULL,
+    "order" integer,
+    name character varying,
+    form integer,
+    meta boolean NOT NULL,
+    type public.questiontype,
+    question_group integer
+);
+
+
+ALTER TABLE public.question OWNER TO wai;
+
+--
+-- Name: answer_search; Type: VIEW; Schema: public; Owner: wai
+--
+
+CREATE VIEW public.answer_search AS
+ SELECT a.data,
+    array_agg(concat(q.id, '||', lower(array_to_string(a.options, ','::text, '*'::text)))) AS options
+   FROM (public.answer a
+     LEFT JOIN public.question q ON ((q.id = a.question)))
+  WHERE (q.type = 'option'::public.questiontype)
+  GROUP BY a.data;
+
+
+ALTER TABLE public.answer_search OWNER TO wai;
+
+--
 -- Name: data; Type: TABLE; Schema: public; Owner: wai
 --
 
@@ -341,6 +373,20 @@ ALTER SEQUENCE public.history_id_seq OWNED BY public.history.id;
 
 
 --
+-- Name: log; Type: TABLE; Schema: public; Owner: wai
+--
+
+CREATE TABLE public.log (
+    id integer,
+    "user" integer,
+    message text,
+    at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+
+ALTER TABLE public.log OWNER TO wai;
+
+--
 -- Name: option; Type: TABLE; Schema: public; Owner: wai
 --
 
@@ -412,23 +458,6 @@ ALTER TABLE public.organisation_id_seq OWNER TO wai;
 
 ALTER SEQUENCE public.organisation_id_seq OWNED BY public.organisation.id;
 
-
---
--- Name: question; Type: TABLE; Schema: public; Owner: wai
---
-
-CREATE TABLE public.question (
-    id integer NOT NULL,
-    "order" integer,
-    name character varying,
-    form integer,
-    meta boolean NOT NULL,
-    type public.questiontype,
-    question_group integer
-);
-
-
-ALTER TABLE public.question OWNER TO wai;
 
 --
 -- Name: question_group; Type: TABLE; Schema: public; Owner: wai
@@ -724,7 +753,7 @@ COPY public.administration (id, parent, name) FROM stdin;
 --
 
 COPY public.alembic_version (version_num) FROM stdin;
-8f5d1ad55412
+ca0f707eecb9
 \.
 
 
@@ -757,6 +786,14 @@ COPY public.form (id, name) FROM stdin;
 --
 
 COPY public.history (id, question, data, value, text, options, created_by, updated_by, created, updated) FROM stdin;
+\.
+
+
+--
+-- Data for Name: log; Type: TABLE DATA; Schema: public; Owner: wai
+--
+
+COPY public.log (id, "user", message, at) FROM stdin;
 \.
 
 
@@ -1040,6 +1077,13 @@ CREATE UNIQUE INDEX ix_history_id ON public.history USING btree (id);
 
 
 --
+-- Name: ix_log_id; Type: INDEX; Schema: public; Owner: wai
+--
+
+CREATE UNIQUE INDEX ix_log_id ON public.log USING btree (id);
+
+
+--
 -- Name: ix_option_id; Type: INDEX; Schema: public; Owner: wai
 --
 
@@ -1279,6 +1323,14 @@ ALTER TABLE ONLY public.history
 
 ALTER TABLE ONLY public.history
     ADD CONSTRAINT history_updated_by_fkey FOREIGN KEY (updated_by) REFERENCES public."user"(id);
+
+
+--
+-- Name: log log_user_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wai
+--
+
+ALTER TABLE ONLY public.log
+    ADD CONSTRAINT log_user_fkey FOREIGN KEY ("user") REFERENCES public."user"(id);
 
 
 --
