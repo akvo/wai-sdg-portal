@@ -1,8 +1,6 @@
 import uvicorn
-import requests as r
-from time import sleep
 from db.connection import engine, Base
-from fastapi import BackgroundTasks, FastAPI
+from fastapi import FastAPI
 
 worker = FastAPI(
     root_path="/worker",
@@ -22,14 +20,8 @@ worker = FastAPI(
 Base.metadata.create_all(bind=engine)
 
 
-def try_to_delay():
-    sleep(5)
-    r.get("http://localhost:5000")
-
-
 @worker.get("/", tags=["Dev"])
-def read_main(background_tasks: BackgroundTasks):
-    background_tasks.add_task(try_to_delay)
+def read_main():
     return "OK"
 
 
