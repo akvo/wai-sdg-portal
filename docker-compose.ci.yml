@@ -5,6 +5,7 @@ services:
     ports:
       - 3000:3000
       - 5000:5000
+      - 5001:5001
   db:
     command: "postgres -c 'shared_buffers=128MB' -c 'fsync=off' -c 'synchronous_commit=off' -c 'full_page_writes=off' -c 'max_connections=100' -c 'bgwriter_lru_maxpages=0' -c 'client_min_messages=warning'"
     restart: always
@@ -27,6 +28,16 @@ services:
       - AUTH0_AUDIENCE
     depends_on:
       - db
+    restart: always
+  worker:
+    network_mode: service:mainnetwork
+    image: eu.gcr.io/akvo-lumen/wai-ethiopia/worker:latest
+    command: ["sh", "worker.sh"]
+    environment:
+      - DATABASE_URL=postgresql://wai:password@db:5432/wai_ethiopia
+    depends_on:
+      - db
+      - backend
     restart: always
   ci:
     network_mode: service:mainnetwork

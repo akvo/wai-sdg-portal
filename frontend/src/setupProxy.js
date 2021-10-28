@@ -11,4 +11,14 @@ module.exports = function (app) {
       },
     })
   );
+  app.use(
+    ["/worker"],
+    createProxyMiddleware({
+      target: "http://localhost:5001",
+      changeOrigin: true,
+      pathRewrite: {
+        "^/worker/": "/",
+      },
+    })
+  );
 };
