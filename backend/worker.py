@@ -30,5 +30,5 @@ def health_check():
     return "OK"
 
 
-if __name__ == "__worker__":
+if __name__ == "__main__":
     uvicorn.run(worker, host="0.0.0.0", port=5001)
