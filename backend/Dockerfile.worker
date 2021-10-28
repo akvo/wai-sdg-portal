@@ -10,4 +10,4 @@ RUN set -e; \
     pip check
 
 
-CMD ["sh", "worker.sh"]
+CMD ["sh", "run-worker.sh"]
