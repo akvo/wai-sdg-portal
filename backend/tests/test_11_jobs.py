@@ -1,7 +1,6 @@
 import sys
 import pytest
 from datetime import datetime
-from fastapi import FastAPI
 from tests.test_01_auth import Acc
 from sqlalchemy.orm import Session
 from models.jobs import JobType, JobStatus
