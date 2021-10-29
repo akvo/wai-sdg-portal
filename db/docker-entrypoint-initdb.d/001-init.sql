@@ -40,6 +40,33 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: jobstatus; Type: TYPE; Schema: public; Owner: wai
+--
+
+CREATE TYPE public.jobstatus AS ENUM (
+    'pending',
+    'on_progress',
+    'failed',
+    'done'
+);
+
+
+ALTER TYPE public.jobstatus OWNER TO wai;
+
+--
+-- Name: jobtype; Type: TYPE; Schema: public; Owner: wai
+--
+
+CREATE TYPE public.jobtype AS ENUM (
+    'send_email',
+    'validate_data',
+    'seed_data'
+);
+
+
+ALTER TYPE public.jobtype OWNER TO wai;
+
+--
 -- Name: organisation_type; Type: TYPE; Schema: public; Owner: wai
 --
 
@@ -373,11 +400,57 @@ ALTER SEQUENCE public.history_id_seq OWNED BY public.history.id;
 
 
 --
+-- Name: jobs_id_seq; Type: SEQUENCE; Schema: public; Owner: wai
+--
+
+CREATE SEQUENCE public.jobs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.jobs_id_seq OWNER TO wai;
+
+--
+-- Name: jobs; Type: TABLE; Schema: public; Owner: wai
+--
+
+CREATE TABLE public.jobs (
+    id integer DEFAULT nextval('public.jobs_id_seq'::regclass) NOT NULL,
+    type public.jobtype,
+    status public.jobstatus DEFAULT 'pending'::public.jobstatus,
+    payload text NOT NULL,
+    attempt integer DEFAULT 1 NOT NULL,
+    created_by integer NOT NULL,
+    created timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    available timestamp without time zone
+);
+
+
+ALTER TABLE public.jobs OWNER TO wai;
+
+--
+-- Name: log_id_seq; Type: SEQUENCE; Schema: public; Owner: wai
+--
+
+CREATE SEQUENCE public.log_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.log_id_seq OWNER TO wai;
+
+--
 -- Name: log; Type: TABLE; Schema: public; Owner: wai
 --
 
 CREATE TABLE public.log (
-    id integer,
+    id integer DEFAULT nextval('public.log_id_seq'::regclass) NOT NULL,
     "user" integer,
     message text,
     at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
@@ -646,105 +719,6 @@ COPY public.access (id, "user", administration) FROM stdin;
 --
 
 COPY public.administration (id, parent, name) FROM stdin;
-1	\N	Arsi Negele
-2	\N	Shashemene Town
-3	\N	Shashemene
-4	1	Arsi Negele Town
-5	1	Golije  Town
-6	2	Shashemene Town
-7	3	Kuyera Town
-8	1	Muda Arja
-9	1	Alge
-10	1	Shala Bila
-11	1	Balena Kilo
-12	1	Dega Argemo
-13	1	Dega Hora Kilo
-14	1	Hadi Bossa
-15	1	Kerero
-16	1	Kelo Tulu
-17	1	Sirba Lenda
-18	1	Gerbi Arba
-19	1	Gebta Arjo
-20	1	Rafa Hrgesa
-21	1	Ali Wayo
-22	1	Edo Jagesa
-23	1	Gerbo Derar
-24	1	Meko Oda
-25	1	Chri Elalu
-26	1	Besko Elala
-27	1	Lepeso
-28	1	Gambelto
-29	1	Sayo Menja
-30	1	Kersa Meja
-31	1	Kersa Gera
-32	1	Kersa Elala
-33	1	Terge Galo
-34	1	Danshe
-35	1	Adeba Tita
-36	1	Bombaso Rja
-37	1	Asheka
-38	1	Aga
-39	1	Gude Dura
-40	1	Werro Awelo
-41	1	Gunde Gurate
-42	1	Wetera
-43	1	Tufa
-44	1	Amibagodasideni
-45	1	Semiberorogicha
-46	1	Dawe
-47	1	Bukuwelida
-48	1	Degaga
-49	1	Arigedashalido
-50	1	Shababulitumi
-51	3	Chulule Habera
-52	3	Kubi guta
-53	3	Obenso Jilo
-54	3	Jelo Dida
-55	3	Faji Gole
-56	3	Chefageta
-57	3	Korerogicha
-58	3	Fajigeba
-59	3	Hagugeta Keni
-60	3	Ilalal Korke
-61	3	Wetera Shegule
-62	3	Turre Wetera Elemo
-63	3	kerara Felicha
-64	3	Bute Felicha
-65	3	Ale Luilu
-66	3	Oine Chefo Unbule
-67	3	Chebidi Dangata
-68	3	Bura Borema
-69	3	Tatesa Dedesa
-70	3	Kori Borejeta
-71	3	Daleti Guracha Bishen
-72	3	Toga Weransa
-73	3	Meja Dema
-74	3	Bulchana Deneba
-75	3	Sheleche Harlate
-76	3	Shere Borara
-77	3	Mudeta
-78	3	Ido Laburka
-79	3	Owa Shodongu
-80	3	Jegesa Korke
-81	3	Meraro
-82	3	Faji Sole
-83	3	Abaro
-84	3	Jengele Wendere
-85	3	Hursa Sinbo
-86	3	Danisa
-87	3	Gonde Kerso
-88	3	Aredano Shifa
-89	3	Ethiopia Adventist College
-90	3	Toga Military Camp
-91	3	Yeasa Den
-92	3	Kure Beke Den
-93	3	Hamele Den
-94	3	Hansewe Den
-95	3	Sole Den
-96	3	Bejetu Den
-97	3	Baro Den
-98	3	Alamudin Gtosh Meret (Elfora)
-99	3	Shalo Mrt Drjit
 \.
 
 
@@ -753,7 +727,7 @@ COPY public.administration (id, parent, name) FROM stdin;
 --
 
 COPY public.alembic_version (version_num) FROM stdin;
-ca0f707eecb9
+ccb3672a1a60
 \.
 
 
@@ -786,6 +760,14 @@ COPY public.form (id, name) FROM stdin;
 --
 
 COPY public.history (id, question, data, value, text, options, created_by, updated_by, created, updated) FROM stdin;
+\.
+
+
+--
+-- Data for Name: jobs; Type: TABLE DATA; Schema: public; Owner: wai
+--
+
+COPY public.jobs (id, type, status, payload, attempt, created_by, created, available) FROM stdin;
 \.
 
 
@@ -877,6 +859,20 @@ SELECT pg_catalog.setval('public.form_id_seq', 1, false);
 --
 
 SELECT pg_catalog.setval('public.history_id_seq', 1, false);
+
+
+--
+-- Name: jobs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: wai
+--
+
+SELECT pg_catalog.setval('public.jobs_id_seq', 1, false);
+
+
+--
+-- Name: log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: wai
+--
+
+SELECT pg_catalog.setval('public.log_id_seq', 1, false);
 
 
 --
@@ -1077,6 +1073,13 @@ CREATE UNIQUE INDEX ix_history_id ON public.history USING btree (id);
 
 
 --
+-- Name: ix_jobs_id; Type: INDEX; Schema: public; Owner: wai
+--
+
+CREATE UNIQUE INDEX ix_jobs_id ON public.jobs USING btree (id);
+
+
+--
 -- Name: ix_log_id; Type: INDEX; Schema: public; Owner: wai
 --
 
@@ -1222,6 +1225,14 @@ ALTER TABLE ONLY public.history
 
 
 --
+-- Name: jobs created_by_jobs_constraint; Type: FK CONSTRAINT; Schema: public; Owner: wai
+--
+
+ALTER TABLE ONLY public.jobs
+    ADD CONSTRAINT created_by_jobs_constraint FOREIGN KEY (created_by) REFERENCES public."user"(id) ON DELETE CASCADE;
+
+
+--
 -- Name: data data_administration_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wai
 --
 
@@ -1323,6 +1334,14 @@ ALTER TABLE ONLY public.history
 
 ALTER TABLE ONLY public.history
     ADD CONSTRAINT history_updated_by_fkey FOREIGN KEY (updated_by) REFERENCES public."user"(id);
+
+
+--
+-- Name: jobs jobs_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wai
+--
+
+ALTER TABLE ONLY public.jobs
+    ADD CONSTRAINT jobs_created_by_fkey FOREIGN KEY (created_by) REFERENCES public."user"(id);
 
 
 --
