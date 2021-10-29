@@ -16,7 +16,7 @@ def add(session: Session, payload: str, type: JobType,
 
 
 def update(session: Session, id: int, status: JobStatus) -> JobsBase:
-    jobs = Jobs.query(Jobs).filter(Jobs.id == id).first()
+    jobs = session.query(Jobs).filter(Jobs.id == id).first()
     jobs.status = status
     if status == JobStatus.done:
         jobs.available = datetime.now()
@@ -37,5 +37,5 @@ def pending(session: Session) -> JobsBase:
 
 
 def is_not_busy(session: Session) -> bool:
-    session.query(
+    return session.query(
         Jobs.id).filter(Jobs.status == JobStatus.on_progress).first() is None

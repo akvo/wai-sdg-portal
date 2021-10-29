@@ -25,8 +25,9 @@ class JobType(enum.Enum):
 
 
 class JobsDict(TypedDict):
+    id: int
     type: JobType
-    status: Optional[JobStatus] = None
+    status: Optional[JobStatus] = JobStatus.pending
     attempt: Optional[int] = None
     payload: str
     created_by: int
@@ -38,17 +39,17 @@ class Jobs(Base):
     __tablename__ = "jobs"
     id = Column(Integer, primary_key=True, index=True, nullable=True)
     type = Column(Enum(JobType))
-    status = Column(Enum(JobStatus), default=JobStatus.pending)
+    status = Column(Enum(JobStatus), nullable=True, default="pending")
     attempt = Column(Integer, default=0)
     payload = Column(Text)
     created_by = Column(Integer, ForeignKey('user.id'))
     created = Column(DateTime, default=datetime.utcnow)
-    available = Column(DateTime, nullable=True, default=None)
+    available = Column(DateTime, nullable=True)
 
     def __init__(self,
                  created_by: int,
                  payload: str,
-                 type: Optional[JobType] = None,
+                 type: JobType,
                  status: Optional[JobStatus] = None,
                  attempt: Optional[int] = None,
                  available: Optional[datetime] = None):
@@ -72,17 +73,18 @@ class Jobs(Base):
             "attempt": self.attempt,
             "created_by": self.created_by,
             "created": self.created,
+            "available": self.available,
         }
 
 
 class JobsBase(BaseModel):
     id: int
     type: JobType
-    status: JobStatus
+    status: Optional[JobStatus] = JobStatus.pending
     payload: str
-    attempt: int
+    attempt: Optional[int] = 1
     created_by: int
-    created: datetime
+    created: Optional[datetime] = None
     available: Optional[datetime] = None
 
     class Config:
