@@ -422,7 +422,7 @@ CREATE TABLE public.jobs (
     type public.jobtype,
     status public.jobstatus DEFAULT 'pending'::public.jobstatus,
     payload text NOT NULL,
-    attempt integer DEFAULT 1 NOT NULL,
+    attempt integer DEFAULT 0,
     created_by integer NOT NULL,
     created timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     available timestamp without time zone
