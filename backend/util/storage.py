@@ -14,3 +14,10 @@ def upload(file: str, folder: str, filename: str = None):
     blob.upload_from_filename(file)
     blob.make_public()
     return blob.public_url
+
+
+def delete(file: str, folder: str):
+    storage_client = storage.Client()
+    bucket = storage_client.bucket(bucket_name)
+    blob = bucket.blob(f"{folder}/{file}")
+    blob.delete()
