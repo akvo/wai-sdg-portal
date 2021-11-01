@@ -10,7 +10,7 @@ from alembic_utils.pg_view import PGView
 
 # revision identifiers, used by Alembic.
 revision = 'ace18af6268f'
-down_revision = '8f5d1ad55412'
+down_revision = 'ccb3672a1a60'
 branch_labels = None
 depends_on = None
 

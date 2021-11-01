@@ -7,7 +7,6 @@ Create Date: 2021-10-29 15:14:54.754879
 """
 from alembic import op
 import sqlalchemy as sa
-from sqlalchemy.schema import Sequence, CreateSequence, DropSequence
 
 # revision identifiers, used by Alembic.
 revision = 'ccb3672a1a60'
@@ -17,13 +16,10 @@ depends_on = None
 
 
 def upgrade():
-    op.execute(CreateSequence(Sequence('jobs_id_seq')))
     op.create_table(
         'jobs',
         sa.Column('id',
-                  sa.Integer(),
-                  nullable=False,
-                  server_default=sa.text("nextval('jobs_id_seq'::regclass)")),
+                  sa.Integer()),
         sa.Column(
             'type',
             sa.Enum('send_email', 'validate_data', 'seed_data',
@@ -49,6 +45,7 @@ def upgrade():
         sa.Column('available',
                   sa.DateTime(),
                   onupdate=sa.text('(CURRENT_TIMESTAMP)')),
+        sa.PrimaryKeyConstraint('id'),
         sa.ForeignKeyConstraint(['created_by'], ['user.id'],
                                 name='created_by_jobs_constraint',
                                 ondelete='CASCADE'))
@@ -63,4 +60,3 @@ def downgrade():
     op.drop_table('jobs')
     op.execute('DROP TYPE jobstatus')
     op.execute('DROP TYPE jobtype')
-    op.execute(DropSequence(Sequence('jobs_id_seq')))

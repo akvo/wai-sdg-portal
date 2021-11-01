@@ -400,25 +400,11 @@ ALTER SEQUENCE public.history_id_seq OWNED BY public.history.id;
 
 
 --
--- Name: jobs_id_seq; Type: SEQUENCE; Schema: public; Owner: wai
---
-
-CREATE SEQUENCE public.jobs_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.jobs_id_seq OWNER TO wai;
-
---
 -- Name: jobs; Type: TABLE; Schema: public; Owner: wai
 --
 
 CREATE TABLE public.jobs (
-    id integer DEFAULT nextval('public.jobs_id_seq'::regclass) NOT NULL,
+    id integer NOT NULL,
     type public.jobtype,
     status public.jobstatus DEFAULT 'pending'::public.jobstatus,
     payload text NOT NULL,
@@ -432,10 +418,47 @@ CREATE TABLE public.jobs (
 ALTER TABLE public.jobs OWNER TO wai;
 
 --
+-- Name: jobs_id_seq; Type: SEQUENCE; Schema: public; Owner: wai
+--
+
+CREATE SEQUENCE public.jobs_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.jobs_id_seq OWNER TO wai;
+
+--
+-- Name: jobs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: wai
+--
+
+ALTER SEQUENCE public.jobs_id_seq OWNED BY public.jobs.id;
+
+
+--
+-- Name: log; Type: TABLE; Schema: public; Owner: wai
+--
+
+CREATE TABLE public.log (
+    id integer NOT NULL,
+    "user" integer,
+    message text,
+    at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+
+ALTER TABLE public.log OWNER TO wai;
+
+--
 -- Name: log_id_seq; Type: SEQUENCE; Schema: public; Owner: wai
 --
 
 CREATE SEQUENCE public.log_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -446,18 +469,11 @@ CREATE SEQUENCE public.log_id_seq
 ALTER TABLE public.log_id_seq OWNER TO wai;
 
 --
--- Name: log; Type: TABLE; Schema: public; Owner: wai
+-- Name: log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: wai
 --
 
-CREATE TABLE public.log (
-    id integer DEFAULT nextval('public.log_id_seq'::regclass) NOT NULL,
-    "user" integer,
-    message text,
-    at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
-);
+ALTER SEQUENCE public.log_id_seq OWNED BY public.log.id;
 
-
-ALTER TABLE public.log OWNER TO wai;
 
 --
 -- Name: option; Type: TABLE; Schema: public; Owner: wai
@@ -672,6 +688,20 @@ ALTER TABLE ONLY public.history ALTER COLUMN id SET DEFAULT nextval('public.hist
 
 
 --
+-- Name: jobs id; Type: DEFAULT; Schema: public; Owner: wai
+--
+
+ALTER TABLE ONLY public.jobs ALTER COLUMN id SET DEFAULT nextval('public.jobs_id_seq'::regclass);
+
+
+--
+-- Name: log id; Type: DEFAULT; Schema: public; Owner: wai
+--
+
+ALTER TABLE ONLY public.log ALTER COLUMN id SET DEFAULT nextval('public.log_id_seq'::regclass);
+
+
+--
 -- Name: option id; Type: DEFAULT; Schema: public; Owner: wai
 --
 
@@ -727,7 +757,7 @@ COPY public.administration (id, parent, name) FROM stdin;
 --
 
 COPY public.alembic_version (version_num) FROM stdin;
-ccb3672a1a60
+ace18af6268f
 \.
 
 
@@ -972,6 +1002,22 @@ ALTER TABLE ONLY public.form
 
 ALTER TABLE ONLY public.history
     ADD CONSTRAINT history_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: jobs jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: wai
+--
+
+ALTER TABLE ONLY public.jobs
+    ADD CONSTRAINT jobs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: log log_pkey; Type: CONSTRAINT; Schema: public; Owner: wai
+--
+
+ALTER TABLE ONLY public.log
+    ADD CONSTRAINT log_pkey PRIMARY KEY (id);
 
 
 --
