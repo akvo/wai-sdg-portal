@@ -12,12 +12,21 @@ def upload(file: str, folder: str, filename: str = None):
     blob = bucket.blob(destination_blob_name)
 
     blob.upload_from_filename(file)
-    blob.make_public()
-    return blob.public_url
+    # blob.make_public()
+    return blob.name
 
 
-def delete(file: str, folder: str):
+def delete(url: str):
+    file = url.split("/")[-1]
+    folder = url.split("/")[-2]
     storage_client = storage.Client()
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.blob(f"{folder}/{file}")
     blob.delete()
+    return blob.name
+
+
+def check(url: str):
+    storage_client = storage.Client()
+    bucket = storage_client.bucket(bucket_name)
+    return storage.Blob(bucket=bucket, name=url).exists(storage_client)
