@@ -1,6 +1,9 @@
 import sys
+import aiofiles
+import os
 import pytest
-from fastapi import FastAPI
+import pandas as pd
+from fastapi import File, FastAPI
 from httpx import AsyncClient
 from tests.test_01_auth import Acc
 from sqlalchemy.orm import Session
@@ -18,7 +21,7 @@ class TestFileRoutes():
                                            session: Session,
                                            client: AsyncClient) -> None:
         res = await client.get(
-            app.url_path_for("excel-template:get_by_form_id", id=1),
+            app.url_path_for("excel-template:get_by_form_id", form_id=1),
             headers={"Authorization": f"Bearer {account.token}"})
         assert res.status_code == 200
         headers = res.headers
