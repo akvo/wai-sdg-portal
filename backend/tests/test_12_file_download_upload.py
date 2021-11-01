@@ -60,5 +60,5 @@ class TestFileRoutes():
         assert res["available"] is None
         assert res["status"] == "pending"
         assert res["type"] == "validate_data"
-        assert res["info"] == {"form_id": 1, "administration": 4}
+        assert res["info"] == {"administration": 4, "form_id": 1}
         os.remove(excel_file)

@@ -2,11 +2,11 @@
 # Keep the code clean and CLEAR
 
 import enum
-import json
 from typing import Optional
 from datetime import datetime
 from typing_extensions import TypedDict
 from pydantic import BaseModel
+from sqlalchemy.ext.mutable import MutableDict
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy import Integer, Text, Enum, DateTime
 import sqlalchemy.dialects.postgresql as pg
@@ -45,7 +45,7 @@ class Jobs(Base):
     status = Column(Enum(JobStatus), nullable=True, default="pending")
     attempt = Column(Integer, default=0)
     payload = Column(Text)
-    info = Column(pg.JSONB, nullable=True)
+    info = Column(MutableDict.as_mutable(pg.JSONB), nullable=True)
     created_by = Column(Integer, ForeignKey('user.id'))
     created = Column(DateTime, default=datetime.utcnow)
     available = Column(DateTime, nullable=True)
@@ -54,7 +54,7 @@ class Jobs(Base):
                  created_by: int,
                  payload: str,
                  type: JobType,
-                 info: Optional[TypedDict] = None,
+                 info: Optional[dict] = None,
                  status: Optional[JobStatus] = None,
                  attempt: Optional[int] = None,
                  available: Optional[datetime] = None):
@@ -76,7 +76,7 @@ class Jobs(Base):
             "type": self.type,
             "status": self.status,
             "payload": self.payload,
-            "info": json.loads(json.dumps(self.info)) if self.info else None,
+            "info": self.info,
             "attempt": self.attempt,
             "created_by": self.created_by,
             "created": self.created,

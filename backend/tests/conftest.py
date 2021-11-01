@@ -48,6 +48,26 @@ def app(apply_migrations: None) -> FastAPI:
     return app
 
 
+@pytest.fixture
+def worker(apply_migrations: None) -> FastAPI:
+    from worker import worker
+    engine = create_engine(get_db_url())
+    Base.metadata.create_all(bind=engine)
+    TestingSessionLocal = sessionmaker(autocommit=False,
+                                       autoflush=False,
+                                       bind=engine)
+
+    def override_get_db():
+        try:
+            db = TestingSessionLocal()
+            yield db
+        finally:
+            db.close()
+
+    worker.dependency_overrides[get_session] = override_get_db
+    return worker
+
+
 # Grab a reference to our database when needed
 @pytest.fixture
 def session() -> Session:
@@ -67,3 +87,12 @@ async def client(app: FastAPI) -> AsyncClient:
         async with AsyncClient(app=app,
                                base_url="http://testserver") as client:
             yield client
+
+
+# Make requests in our tests
+@pytest.fixture
+async def worker_client(worker: FastAPI) -> AsyncClient:
+    async with LifespanManager(worker):
+        async with AsyncClient(app=worker,
+                               base_url="http://testworker") as worker_client:
+            yield worker_client

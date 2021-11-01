@@ -1,25 +1,54 @@
 from typing import Union
-from fastapi import Depends, Request, APIRouter
+from fastapi import Depends, Request, BackgroundTasks, APIRouter
 from sqlalchemy.orm import Session
 import db.crud_jobs as crud
 from db.connection import get_session
-from models.jobs import JobsBase, JobStatus
+from models.jobs import JobsBase, JobType, JobStatus
+from util.excel import validate_excel_data
 
 jobs_route = APIRouter()
 
 
-@jobs_route.get("/jobs/pending",
+def do_task(session: Session, jobs):
+    info = jobs["info"]
+    if jobs["type"] == JobType.validate_data:
+        error = validate_excel_data(
+            session=session,
+            form=jobs["info"]["form_id"],
+            administration=jobs["info"]["administration"],
+            file=jobs["payload"])
+        if len(error):
+            info.update({"valid": False})
+        else:
+            info.update({"valid": True})
+        jobs = crud.update(session=session,
+                           id=jobs["id"],
+                           status=JobStatus.done,
+                           info=info)
+
+
+@jobs_route.get("/jobs/start",
                 response_model=JobsBase,
-                summary="get pending jobs",
+                summary="start pending jobs",
+                name="jobs:start",
                 tags=["Jobs"])
-def get(req: Request, session: Session = Depends(get_session)):
+async def get(req: Request,
+              background_tasks: BackgroundTasks,
+              session: Session = Depends(get_session)):
     jobs = crud.pending(session=session)
+    jobs = crud.update(session=session,
+                       id=jobs["id"],
+                       status=JobStatus.on_progress,
+                       info=jobs["info"])
+    if jobs:
+        background_tasks.add_task(do_task, session=session, jobs=jobs)
     return jobs
 
 
 @jobs_route.get("/jobs/status/{id:path}",
                 response_model=Union[JobStatus],
                 summary="get jobs by id",
+                name="jobs:status",
                 tags=["Jobs"])
 def get_by_id(req: Request, id: int, session: Session = Depends(get_session)):
     jobs = crud.status(session=session, id=id)

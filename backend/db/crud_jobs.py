@@ -1,5 +1,5 @@
 from fastapi import HTTPException
-from typing import Optional, List
+from typing import Optional, List, Union
 from typing_extensions import TypedDict
 from datetime import datetime
 from sqlalchemy.orm import Session
@@ -26,9 +26,20 @@ def get(session: Session, user: int) -> List[JobsBase]:
     return [j.serialize for j in jobs]
 
 
-def update(session: Session, id: int, status: JobStatus) -> JobsBase:
+def get_by_id(session: Session, id: int) -> JobsBase:
+    jobs = session.query(Jobs).filter(Jobs.id == id).first()
+    return jobs.serialize
+
+
+def update(session: Session,
+           id: int,
+           status: Union[JobStatus],
+           info: Optional[TypedDict] = None) -> JobsBase:
     jobs = session.query(Jobs).filter(Jobs.id == id).first()
     jobs.status = status
+    jobs.attempt = jobs.attempt + 1
+    if info:
+        jobs.info = info
     if status == JobStatus.done:
         jobs.available = datetime.now()
     session.flush()
