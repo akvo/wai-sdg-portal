@@ -4,15 +4,15 @@ from google.cloud import storage
 import shutil
 
 bucket_name = "wai-ethiopia"
-TESTING = os.environ.get("TESTING")
 
 
 def upload(file: str, folder: str, filename: str = None):
     if not filename:
         filename = file.split("/")[-1]
+    TESTING = os.environ.get("TESTING")
     if TESTING:
         fake_location = f"./tmp/fake-storage/{filename}"
-        shutil.copy2(fake_location, file)
+        shutil.copy2(file, fake_location)
         return fake_location
     storage_client = storage.Client()
     bucket = storage_client.bucket(bucket_name)
@@ -27,8 +27,9 @@ def upload(file: str, folder: str, filename: str = None):
 def delete(url: str):
     file = url.split("/")[-1]
     folder = url.split("/")[-2]
+    TESTING = os.environ.get("TESTING")
     if TESTING:
-        os.remove(f"./tmp/{url}")
+        os.remove(url)
         return url
     storage_client = storage.Client()
     bucket = storage_client.bucket(bucket_name)
@@ -38,6 +39,7 @@ def delete(url: str):
 
 
 def check(url: str):
+    TESTING = os.environ.get("TESTING")
     if TESTING:
         path = Path(url)
         return path.is_file()
