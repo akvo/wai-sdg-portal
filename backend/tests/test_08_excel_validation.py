@@ -58,7 +58,7 @@ class TestExcelValidation():
                                            session: Session,
                                            client: AsyncClient) -> None:
         res = await client.get(
-            app.url_path_for("excel-template:get_by_form_id", id=1),
+            app.url_path_for("excel-template:get_by_form_id", form_id=1),
             headers={"Authorization": f"Bearer {account.token}"})
         assert res.status_code == 200
         head = res.headers

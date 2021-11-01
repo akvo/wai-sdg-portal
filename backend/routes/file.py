@@ -28,16 +28,16 @@ file_route = APIRouter()
 ftype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 
 
-@file_route.get("/download/excel-template/{id:path}",
+@file_route.get("/download/excel-template/{form_id:path}",
                 summary="get excel template for ",
                 name="excel-template:get_by_form_id",
                 tags=["File"])
 def get(req: Request,
-        id: int,
+        form_id: int,
         session: Session = Depends(get_session),
         credentials: credentials = Depends(security)):
     verify_admin(req.state.authenticated, session)
-    filepath = excel.generate_excel_template(session=session, form=id)
+    filepath = excel.generate_excel_template(session=session, form=form_id)
     filename = filepath.split("/")[-1]
     return FileResponse(path=filepath, filename=filename, media_type=ftype)
 
