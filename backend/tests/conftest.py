@@ -65,7 +65,5 @@ def session() -> Session:
 async def client(app: FastAPI) -> AsyncClient:
     async with LifespanManager(app):
         async with AsyncClient(app=app,
-                               base_url="http://testserver",
-                               headers={"Content-Type":
-                                        "application/json"}) as client:
+                               base_url="http://testserver") as client:
             yield client
