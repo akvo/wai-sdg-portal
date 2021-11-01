@@ -14,11 +14,10 @@ down_revision = '8f5d1ad55412'
 branch_labels = None
 depends_on = None
 
+
 def upgrade():
     op.create_table(
-        'log',
-        sa.Column('id',
-                  sa.Integer()),
+        'log', sa.Column('id', sa.Integer()),
         sa.Column('user', sa.Integer(), sa.ForeignKey('user.id')),
         sa.Column('message', sa.Text()),
         sa.Column('at',
