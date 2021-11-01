@@ -7,6 +7,7 @@ Create Date: 2021-10-29 15:14:54.754879
 """
 from alembic import op
 import sqlalchemy as sa
+import sqlalchemy.dialects.postgresql as pg
 
 # revision identifiers, used by Alembic.
 revision = 'ccb3672a1a60'
@@ -32,6 +33,7 @@ def upgrade():
                           name='jobstatus'),
                   server_default='pending'),
         sa.Column('payload', sa.Text(), nullable=False),
+        sa.Column('info', pg.JSONB(), nullable=True),
         sa.Column('attempt',
                   sa.Integer(),
                   server_default=sa.text('0::int')),
@@ -58,5 +60,5 @@ def downgrade():
                        type_='foreignkey')
     op.drop_index(op.f('ix_jobs_id'), table_name='jobs')
     op.drop_table('jobs')
-    op.execute('DROP TYPE jobstatus')
-    op.execute('DROP TYPE jobtype')
+    op.execute('DROP TYPE jobstatus CASCADE')
+    op.execute('DROP TYPE jobtype CASCADE')

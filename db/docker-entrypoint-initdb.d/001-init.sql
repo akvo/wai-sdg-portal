@@ -408,6 +408,7 @@ CREATE TABLE public.jobs (
     type public.jobtype,
     status public.jobstatus DEFAULT 'pending'::public.jobstatus,
     payload text NOT NULL,
+    info jsonb,
     attempt integer DEFAULT 0,
     created_by integer NOT NULL,
     created timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
@@ -797,7 +798,7 @@ COPY public.history (id, question, data, value, text, options, created_by, updat
 -- Data for Name: jobs; Type: TABLE DATA; Schema: public; Owner: wai
 --
 
-COPY public.jobs (id, type, status, payload, attempt, created_by, created, available) FROM stdin;
+COPY public.jobs (id, type, status, payload, info, attempt, created_by, created, available) FROM stdin;
 \.
 
 
