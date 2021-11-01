@@ -1,4 +1,3 @@
-import time
 import pytest
 import os
 import util.storage as storage
