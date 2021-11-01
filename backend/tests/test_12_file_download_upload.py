@@ -1,9 +1,6 @@
 import sys
-import aiofiles
-import os
 import pytest
-import pandas as pd
-from fastapi import File, FastAPI
+from fastapi import FastAPI
 from httpx import AsyncClient
 from tests.test_01_auth import Acc
 from sqlalchemy.orm import Session
