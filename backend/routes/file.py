@@ -1,7 +1,5 @@
 import uuid
 import aiofiles
-import db.crud_jobs as jobs
-from models.jobs import JobsBase, JobType
 from xlrd import open_workbook, XLRDError
 from sqlalchemy.orm import Session
 from fastapi import Depends, Request, APIRouter, HTTPException
@@ -12,6 +10,8 @@ from fastapi.security import HTTPBearer
 from db.connection import get_session
 from util import excel, storage
 from middleware import verify_admin
+import db.crud_jobs as jobs
+from models.jobs import JobsBase, JobType
 
 
 def test_excel(file):
@@ -42,13 +42,14 @@ def get(req: Request,
     return FileResponse(path=filepath, filename=filename, media_type=ftype)
 
 
-@file_route.post("/upload/excel-template/{id:path}",
+@file_route.post("/upload/excel-template/{form_id:path}",
                  response_model=JobsBase,
                  summary="post excel file",
                  name="excel-template:post",
                  tags=["File"])
 async def upload(req: Request,
-                 id: int,
+                 form_id: int,
+                 administration: int,
                  file: UploadFile = File(...),
                  session: Session = Depends(get_session),
                  credentials: credentials = Depends(security)):
@@ -56,13 +57,17 @@ async def upload(req: Request,
     if file.content_type != ftype:
         raise HTTPException(status_code=404, detail="Not Valid Excel File")
     out_file = str(uuid.uuid4())
-    out_file = f"{out_file_path}{id}_{out_file}.xlsx"
+    out_file = f"{out_file_path}{out_file}.xlsx"
     async with aiofiles.open(out_file, 'wb') as of:
         contents = await file.read()
         await of.write(contents)
     uploaded_file = test_excel(out_file)
     res = jobs.add(session=session,
                    payload=uploaded_file,
+                   info={
+                       "form_id": form_id,
+                       "administration": administration
+                   },
                    type=JobType.validate_data,
                    created_by=user.id)
     return res

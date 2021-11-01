@@ -19,22 +19,22 @@ class TestsJobs():
                             payload="testing_job_1.xlsx",
                             created_by=1,
                             type=JobType.validate_data)
-        assert new_task.id == 1
-        assert new_task.created_by == 1
-        assert new_task.created.strftime("%B %d, %Y") == today
-        assert new_task.payload == "testing_job_1.xlsx"
-        assert new_task.status == JobStatus.pending
-        assert new_task.available is None
+        assert new_task["id"] == 1
+        assert new_task["created_by"] == 1
+        assert new_task["created"].strftime("%B %d, %Y") == today
+        assert new_task["payload"] == "testing_job_1.xlsx"
+        assert new_task["status"] == JobStatus.pending
+        assert new_task["available"] is None
 
     @pytest.mark.asyncio
     async def test_for_worker_checking_a_pending_jobs(
             self, session: Session) -> None:
         new_task = jobs.pending(session=session)
-        assert new_task.id == 1
-        assert new_task.payload == "testing_job_1.xlsx"
-        assert new_task.type == JobType.validate_data
+        assert new_task["id"] == 1
+        assert new_task["payload"] == "testing_job_1.xlsx"
+        assert new_task["type"] == JobType.validate_data
         new_task = jobs.update(session=session,
-                               id=new_task.id,
+                               id=new_task["id"],
                                status=JobStatus.on_progress)
 
     @pytest.mark.asyncio
@@ -45,6 +45,6 @@ class TestsJobs():
         current_task = jobs.update(session=session,
                                    id=1,
                                    status=JobStatus.done)
-        assert current_task.available.strftime("%B %d, %Y") == today
+        assert current_task["available"].strftime("%B %d, %Y") == today
         availability = jobs.is_not_busy(session=session)
         assert availability is True

@@ -1,6 +1,7 @@
 import uvicorn
 from db.connection import engine, Base
 from fastapi import FastAPI
+from routes.jobs import jobs_route
 
 worker = FastAPI(
     root_path="/worker",
@@ -17,6 +18,7 @@ worker = FastAPI(
     },
 )
 
+worker.include_router(jobs_route)
 Base.metadata.create_all(bind=engine)
 
 

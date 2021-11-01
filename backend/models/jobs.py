@@ -2,12 +2,14 @@
 # Keep the code clean and CLEAR
 
 import enum
+import json
 from typing import Optional
 from datetime import datetime
 from typing_extensions import TypedDict
 from pydantic import BaseModel
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy import Integer, Text, Enum, DateTime
+import sqlalchemy.dialects.postgresql as pg
 from db.connection import Base
 
 
@@ -28,6 +30,7 @@ class JobsDict(TypedDict):
     id: int
     type: JobType
     status: Optional[JobStatus] = JobStatus.pending
+    info: Optional[dict] = None
     attempt: Optional[int] = None
     payload: str
     created_by: int
@@ -42,6 +45,7 @@ class Jobs(Base):
     status = Column(Enum(JobStatus), nullable=True, default="pending")
     attempt = Column(Integer, default=0)
     payload = Column(Text)
+    info = Column(pg.JSONB, nullable=True)
     created_by = Column(Integer, ForeignKey('user.id'))
     created = Column(DateTime, default=datetime.utcnow)
     available = Column(DateTime, nullable=True)
@@ -50,10 +54,12 @@ class Jobs(Base):
                  created_by: int,
                  payload: str,
                  type: JobType,
+                 info: Optional[TypedDict] = None,
                  status: Optional[JobStatus] = None,
                  attempt: Optional[int] = None,
                  available: Optional[datetime] = None):
         self.type = type
+        self.info = info
         self.status = status
         self.payload = payload
         self.attempt = attempt
@@ -70,6 +76,7 @@ class Jobs(Base):
             "type": self.type,
             "status": self.status,
             "payload": self.payload,
+            "info": json.loads(json.dumps(self.info)) if self.info else None,
             "attempt": self.attempt,
             "created_by": self.created_by,
             "created": self.created,
@@ -82,6 +89,7 @@ class JobsBase(BaseModel):
     type: JobType
     status: Optional[JobStatus] = JobStatus.pending
     payload: str
+    info: Optional[dict] = None
     attempt: Optional[int] = 1
     created_by: int
     created: Optional[datetime] = None

@@ -73,15 +73,13 @@ class TestExcelValidation():
         wrong_data = [[
             "Option 4", "180,90", "Testing Data 1", "", "Two",
             "Option B|Option A", ""
-        ],
-                      [
-                          "Option 2", "180", "Testing Data 2", "", 23,
-                          "Option C|Option D", "2020"
-                      ],
-                      [
-                          "Option 2", "180,A", "Testing Data 2", "", 23,
-                          "Option B", "2020-12-18"
-                      ]]
+            ], [
+            "Option 2", "180", "Testing Data 2", "", 23,
+            "Option C|Option D", "2020"
+            ], [
+            "Option 2", "180,A", "Testing Data 2", "", 23,
+            "Option B", "2020-12-18"
+            ]]
         columns = [
             "2|Test Option Question", "3|Test Geo Question",
             "Test Datapoint Text Question", "", "5|Test Number Question",
