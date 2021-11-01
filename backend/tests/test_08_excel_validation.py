@@ -6,11 +6,13 @@ from fastapi import FastAPI
 from httpx import AsyncClient
 from sqlalchemy.orm import Session
 from db import crud_question
+from tests.test_01_auth import Acc
 from util.excel import generate_excel_template, validate_excel_data
 from util.excel import ExcelError
 
 pytestmark = pytest.mark.asyncio
 sys.path.append("..")
+account = Acc(True)
 
 
 class TestExcelValidation():
@@ -56,7 +58,8 @@ class TestExcelValidation():
                                            session: Session,
                                            client: AsyncClient) -> None:
         res = await client.get(
-            app.url_path_for("excel-template:get_by_form_id", id=1))
+            app.url_path_for("excel-template:get_by_form_id", id=1),
+            headers={"Authorization": f"Bearer {account.token}"})
         assert res.status_code == 200
         head = res.headers
         type = head.get("content-type")
@@ -70,13 +73,15 @@ class TestExcelValidation():
         wrong_data = [[
             "Option 4", "180,90", "Testing Data 1", "", "Two",
             "Option B|Option A", ""
-        ], [
-            "Option 2", "180", "Testing Data 2", "", 23,
-            "Option C|Option D", "2020"
-        ], [
-            "Option 2", "180,A", "Testing Data 2", "", 23,
-            "Option B", "2020-12-18"
-        ]]
+        ],
+                      [
+                          "Option 2", "180", "Testing Data 2", "", 23,
+                          "Option C|Option D", "2020"
+                      ],
+                      [
+                          "Option 2", "180,A", "Testing Data 2", "", 23,
+                          "Option B", "2020-12-18"
+                      ]]
         columns = [
             "2|Test Option Question", "3|Test Geo Question",
             "Test Datapoint Text Question", "", "5|Test Number Question",

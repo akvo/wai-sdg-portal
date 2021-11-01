@@ -1,3 +1,4 @@
+import os
 from google.cloud import storage
 
 bucket_name = "wai-ethiopia"
@@ -10,8 +11,8 @@ def upload(file: str, folder: str, filename: str = None):
     bucket = storage_client.bucket(bucket_name)
     destination_blob_name = f"{folder}/{filename}"
     blob = bucket.blob(destination_blob_name)
-
     blob.upload_from_filename(file)
+    os.remove(file)
     # blob.make_public()
     return blob.name
 
