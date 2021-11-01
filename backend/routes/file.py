@@ -42,7 +42,7 @@ def get(req: Request,
     return FileResponse(path=filepath, filename=filename, media_type=ftype)
 
 
-@file_route.post("/upload/excel-template/{form_id:path}",
+@file_route.post("/upload/excel-template/{form_id:path}/{administration:path}",
                  response_model=JobsBase,
                  summary="post excel file",
                  name="excel-template:post",
