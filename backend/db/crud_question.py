@@ -66,3 +66,25 @@ def get_excel_question(session: Session, form: int) -> List[QuestionDict]:
     return session.query(Question).filter(
         and_(Question.form == form,
              Question.type != QuestionType.administration))
+
+
+def get_definition(session: Session, form: int):
+    questions = session.query(Question).filter((Question.form) == form).all()
+    framed = []
+    for q in [qs.to_definition for qs in questions]:
+        if q["options"]:
+            for o in q["options"]:
+                framed.append({
+                    "id": q["id"],
+                    "question": q["name"],
+                    "type": q["type"],
+                    "option": o
+                })
+        else:
+            framed.append({
+                "id": q["id"],
+                "question": q["name"],
+                "type": q["type"],
+                "option": ""
+            })
+    return framed

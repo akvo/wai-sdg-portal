@@ -76,6 +76,17 @@ class Question(Base):
     def to_excel_header(self):
         return f"{self.id}|{self.name}"
 
+    @property
+    def to_definition(self):
+        options = [options.name
+                   for options in self.option] if self.option else False
+        return {
+            "id": self.id,
+            "name": self.name,
+            "type": self.type,
+            "options": options,
+        }
+
 
 class QuestionBase(BaseModel):
     id: int
