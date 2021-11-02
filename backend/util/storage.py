@@ -46,3 +46,16 @@ def check(url: str):
     storage_client = storage.Client()
     bucket = storage_client.bucket(bucket_name)
     return storage.Blob(bucket=bucket, name=url).exists(storage_client)
+
+
+def download(url):
+    TESTING = os.environ.get("TESTING")
+    if TESTING:
+        return url
+    storage_client = storage.Client()
+    bucket = storage_client.bucket(bucket_name)
+    blob = bucket.blob(url)
+    tmp_file = url.split("/")[-1]
+    tmp_file = f"./tmp/{tmp_file}"
+    blob.download_to_filename(tmp_file)
+    return tmp_file
