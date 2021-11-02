@@ -3,7 +3,7 @@ from typing import Optional, List, Union
 from typing_extensions import TypedDict
 from datetime import datetime
 from sqlalchemy.orm import Session
-from sqlalchemy import desc
+from sqlalchemy import asc
 from models.jobs import Jobs, JobsBase
 from models.jobs import JobType, JobStatus
 
@@ -33,15 +33,20 @@ def get_by_id(session: Session, id: int) -> JobsBase:
 
 def update(session: Session,
            id: int,
-           status: Union[JobStatus],
+           status: Union[JobStatus] = None,
+           type: Optional[Union[JobType]] = None,
            info: Optional[TypedDict] = None) -> JobsBase:
     jobs = session.query(Jobs).filter(Jobs.id == id).first()
-    jobs.status = status
-    jobs.attempt = jobs.attempt + 1
-    if info:
-        jobs.info = info
+    if status:
+        jobs.status = status
+    if status == JobStatus.pending:
+        jobs.attempt = jobs.attempt + 1
     if status == JobStatus.done:
         jobs.available = datetime.now()
+    if info:
+        jobs.info = info
+    if type:
+        jobs.type = type
     session.flush()
     session.commit()
     session.refresh(jobs)
@@ -57,7 +62,7 @@ def status(session: Session, id: int) -> str:
 
 def pending(session: Session) -> JobsBase:
     jobs = session.query(Jobs).filter(
-        Jobs.status == JobStatus.pending).order_by(desc(Jobs.created)).first()
+        Jobs.status == JobStatus.pending).order_by(asc(Jobs.created)).first()
     if not jobs:
         raise HTTPException(status_code=404, detail="Not Found")
     return jobs.serialize

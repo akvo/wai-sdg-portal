@@ -29,9 +29,12 @@ def get_administration_by_id(session: Session, id: int) -> Administration:
 def get_administration_by_name(session: Session,
                                name: str,
                                parent: Optional[int] = None) -> Administration:
+    if parent:
+        return session.query(Administration).filter(
+            and_(Administration.parent == parent,
+                 Administration.name == name.strip())).first()
     return session.query(Administration).filter(
-        and_(Administration.parent == parent,
-             Administration.name == name.strip())).first()
+        Administration.name == name.strip()).first()
 
 
 def get_administration_by_keyword(
