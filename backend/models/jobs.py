@@ -10,6 +10,7 @@ from sqlalchemy.ext.mutable import MutableDict
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy import Integer, Text, Enum, DateTime
 import sqlalchemy.dialects.postgresql as pg
+from .user import User
 from db.connection import Base
 
 
@@ -46,7 +47,7 @@ class Jobs(Base):
     attempt = Column(Integer, default=0)
     payload = Column(Text)
     info = Column(MutableDict.as_mutable(pg.JSONB), nullable=True)
-    created_by = Column(Integer, ForeignKey('user.id'))
+    created_by = Column(Integer, ForeignKey(User.id))
     created = Column(DateTime, default=datetime.utcnow)
     available = Column(DateTime, nullable=True)
 
