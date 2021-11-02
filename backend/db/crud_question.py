@@ -63,9 +63,7 @@ def get_question_by_name(session: Session, form: int,
 
 
 def get_excel_question(session: Session, form: int) -> List[QuestionDict]:
-    return session.query(Question).filter(
-        and_(Question.form == form,
-             Question.type != QuestionType.administration))
+    return session.query(Question).filter(Question.form == form)
 
 
 def get_definition(session: Session, form: int):

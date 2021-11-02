@@ -47,9 +47,10 @@ class TestExcelValidation():
         assert excel_file == "./tmp/1-test.xlsx"
         df = pd.read_excel(excel_file)
         assert list(df) == [
-            "1|Test Option Question", "3|Test Geo Question",
-            "4|Test Datapoint Text Question", "5|Test Number Question",
-            "6|Test Multiple Option Question", "7|Test Date Question"
+            "1|Test Option Question", "2|Test Administration Question",
+            "3|Test Geo Question", "4|Test Datapoint Text Question",
+            "5|Test Number Question", "6|Test Multiple Option Question",
+            "7|Test Date Question"
         ]
         os.remove(excel_file)
 
@@ -71,19 +72,20 @@ class TestExcelValidation():
     async def test_validate_excel_file(self, session: Session) -> None:
         excel_file = "./tmp/1-test.xlsx"
         wrong_data = [[
-            "Option 4", "180,90", "Testing Data 1", "", "Two",
+            "Option 4", "Kuyera Town", "180,90", "Testing Data 1", "", "Two",
             "Option B|Option A", ""
-            ], [
-            "Option 2", "180", "Testing Data 2", "", 23,
-            "Option C|Option D", "2020"
-            ], [
-            "Option 2", "180,A", "Testing Data 2", "", 23,
-            "Option B", "2020-12-18"
-            ]]
+        ], [
+            "Option 2", "Kuyera Town", "180", "Testing Data 2",
+            "", 23, "Option C|Option D", "2020"
+        ], [
+            "Option 2", "Kuyera Town", "180,A", "Testing Data 2",
+            "", 23, "Option B", "2020-12-18"
+        ]]
         columns = [
-            "2|Test Option Question", "3|Test Geo Question",
-            "Test Datapoint Text Question", "", "5|Test Number Question",
-            "6|Test Multiple Option Question", "7|Test Date Question"
+            "2|Test Option Question", "2|Test Administration Question",
+            "3|Test Geo Question", "Test Datapoint Text Question", "",
+            "5|Test Number Question", "6|Test Multiple Option Question",
+            "7|Test Date Question"
         ]
         df = pd.DataFrame(wrong_data, columns=columns)
         df.to_excel(excel_file, index=False, sheet_name='data')
@@ -98,30 +100,30 @@ class TestExcelValidation():
         }, {
             'error': ExcelError.header,
             'message': "Test Datapoint Text Question doesn't have question id",
-            'column': "C1"
+            'column': "D1"
         }, {
             'error': ExcelError.header,
             'message': "Header name is missing",
-            "column": "D1"
+            "column": "E1"
         }, {
             'error': ExcelError.value,
             'message': "Invalid lat long format",
-            "column": "B3"
+            "column": "C3"
         }, {
             'error': ExcelError.value,
             'message': "Invalid lat long format",
-            "column": "B4"
+            "column": "C4"
         }, {
             'error': ExcelError.value,
             'message': "Value should be numeric",
-            "column": "E2"
+            "column": "F2"
         }, {
             'error': ExcelError.value,
             'message': "Invalid value: Option C, Option D",
-            "column": "F3"
+            "column": "G3"
         }, {
             'error': ExcelError.value,
             'message': "Invalid date format: 2020. It should be YYYY-MM-DD",
-            "column": "G3"
+            "column": "H3"
         }]
         os.remove(excel_file)

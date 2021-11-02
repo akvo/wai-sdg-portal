@@ -18,7 +18,7 @@ class TestStressAndTimeout():
         df = pd.read_excel(excel)
         random_wrong_rows = []
         random_wrong_values = [
-            "Option", "180,A", "Testing Data 2", 23,
+            "Option", "Shashemene", "180,A", "Testing Data 2", 23,
             "Option C|Option D|Option B", "2020"
         ]
         for x in range(1000):
