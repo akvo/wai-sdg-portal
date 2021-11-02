@@ -11,6 +11,10 @@ import sqlalchemy.dialects.postgresql as pg
 from sqlalchemy.orm import relationship
 from db.connection import Base
 from models.answer import AnswerDict, AnswerDictWithHistory, AnswerBase
+from .form import Form
+from .user import User
+from .answer import Answer
+from .administration import Administration
 
 
 class GeoData(BaseModel):
@@ -51,21 +55,21 @@ class Data(Base):
     __tablename__ = "data"
     id = Column(Integer, primary_key=True, index=True, nullable=True)
     name = Column(String)
-    form = Column(Integer, ForeignKey('form.id'))
-    administration = Column(Integer, ForeignKey('administration.id'))
+    form = Column(Integer, ForeignKey(Form.id))
+    administration = Column(Integer, ForeignKey(Administration.id))
     geo = Column(pg.ARRAY(Float), nullable=True)
-    created_by = Column(Integer, ForeignKey('user.id'))
-    updated_by = Column(Integer, ForeignKey('user.id'), nullable=True)
+    created_by = Column(Integer, ForeignKey(User.id))
+    updated_by = Column(Integer, ForeignKey(User.id), nullable=True)
     created = Column(DateTime, nullable=True)
     updated = Column(DateTime, nullable=True)
-    answer = relationship("Answer",
+    answer = relationship(Answer,
                           cascade="all, delete",
                           passive_deletes=True,
                           backref="answer",
-                          order_by="Answer.id.asc()")
-    created_by_user = relationship("User", foreign_keys=[created_by])
-    updated_by_user = relationship("User", foreign_keys=[updated_by])
-    administration_detail = relationship("Administration", backref="data")
+                          order_by=Answer.id.asc())
+    created_by_user = relationship(User, foreign_keys=[created_by])
+    updated_by_user = relationship(User, foreign_keys=[updated_by])
+    administration_detail = relationship(Administration, backref="data")
 
     def __init__(self, name: str, form: int, administration: int,
                  geo: List[float], created_by: int, updated_by: int,
