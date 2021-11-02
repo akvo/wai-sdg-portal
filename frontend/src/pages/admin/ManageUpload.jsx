@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Space, Upload, Button, message, notification } from "antd";
-import { FileExcelOutlined } from "@ant-design/icons";
-import takeRight from "lodash/takeRight";
+import {
+  Row,
+  Col,
+  Space,
+  Upload,
+  Button,
+  Select,
+  message,
+  notification,
+} from "antd";
+import { FileExcelOutlined, FileExcelTwoTone } from "@ant-design/icons";
 import snakeCase from "lodash/snakeCase";
 import moment from "moment";
 import { UIState } from "../../state/ui";
-import { SelectLevel, DropdownNavigation } from "../../components/common";
-import { getLocationName } from "../../util/utils";
+import { DropdownNavigation } from "../../components/common";
 import api from "../../util/api";
 import config from "./admin-static";
 
@@ -18,53 +25,72 @@ const allowedFiles = [
 const regExpFilename = /filename="(?<filename>.*)"/;
 
 const ManageUpload = () => {
-  const { user, administration, selectedAdministration } = UIState.useState(
-    (s) => s
-  );
+  const { user, administration } = UIState.useState((s) => s);
   const [form, setForm] = useState("water");
   const [fileName, setFileName] = useState(null);
   const { formId } = config[form];
+  const [selectedAdm, setSelectedAdm] = useState(null);
+  const [uploadState, setUploadState] = useState(null);
+  const [jobState, setJobState] = useState(null);
+
+  const key = "updatable";
 
   const onChange = (info) => {
-    const { status } = info.file;
-    if (status !== "uploading") {
-      console.log(info.file, info.fileList);
+    const nextState = {};
+    switch (info.file.status) {
+      case "uploading":
+        message.loading({ content: "Loading...", key });
+        nextState.selectedFile = info.file;
+        nextState.selectedFileList = [info.file];
+        break;
+      case "done":
+        message.success({ content: "Done!", key, duration: 2 });
+        nextState.selectedFile = info.file;
+        nextState.file = info.file;
+        break;
+      default:
+        nextState.selectedFile = null;
+        nextState.selectedFileList = [];
     }
-    if (status === "done") {
-      message.success(`${info.file.name} file uploaded successfully.`);
-    } else if (status === "error") {
-      message.error(`${info.file.name} file upload failed.`);
-    }
+    setUploadState(() => nextState);
   };
 
-  const onDrop = (e) => {
-    console.log("Dropped files", e.dataTransfer.files);
+  const onUpload = ({ file, onSuccess }) => {
+    let formData = new FormData();
+    formData.append("file", file);
+    api
+      .post(`upload/excel-template/${formId}/${selectedAdm}`, formData)
+      .then((res) => {
+        onSuccess(res.data);
+        setJobState(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   useEffect(() => {
-    if (user && selectedAdministration.length > 2) {
+    if (user && selectedAdm) {
       const date = moment().format("YYYYMMDD");
-      const adminId = takeRight(selectedAdministration)[0];
-      const administrationName = snakeCase(
-        getLocationName(adminId, administration)
-      );
-      setFileName(
-        [date, formId, snakeCase(user.name), administrationName].join("-")
-      );
+      setFileName([date, formId, snakeCase(user.name)].join("-"));
     }
-    if (selectedAdministration.length < 2) {
-      setFileName(null);
+  }, [user, selectedAdm, formId]);
+
+  useEffect(() => {
+    if (jobState) {
+      console.log(jobState);
     }
-  }, [user, selectedAdministration, administration, formId]);
+  }, [jobState]);
 
   const uploadProps = {
     name: fileName,
     multiple: false,
-    action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
+    customRequest: onUpload,
     accept: allowedFiles.join(","),
     onChange: onChange,
-    onDrop: onDrop,
+    maxCount: 1,
     disabled: fileName ? false : true,
+    showUploadList: false,
   };
 
   const downloadTemplate = () => {
@@ -104,6 +130,15 @@ const ManageUpload = () => {
                 If you do not already have a template file, please download it
               </h3>
               <DropdownNavigation value={form} onChange={setForm} />
+              <Select onChange={setSelectedAdm} value={selectedAdm}>
+                {administration
+                  .filter((a) => a.parent === null)
+                  .map((a, ai) => (
+                    <Select.Option key={ai} value={a.id}>
+                      {a.name}
+                    </Select.Option>
+                  ))}
+              </Select>
               <Button onClick={downloadTemplate}>Download</Button>
             </Space>
           </Col>
@@ -115,7 +150,15 @@ const ManageUpload = () => {
             <Space size={20} align="center" wrap={true}>
               <h3>Upload your data</h3>
               <DropdownNavigation value={form} onChange={setForm} />
-              <SelectLevel />
+              <Select onChange={setSelectedAdm} value={selectedAdm}>
+                {administration
+                  .filter((a) => a.parent === null)
+                  .map((a, ai) => (
+                    <Select.Option key={ai} value={a.id}>
+                      {a.name}
+                    </Select.Option>
+                  ))}
+              </Select>
             </Space>
           </Col>
         </Row>
@@ -129,10 +172,21 @@ const ManageUpload = () => {
             <div className="dragger-wrapper">
               <Dragger {...uploadProps}>
                 <p className="ant-upload-drag-icon">
-                  <FileExcelOutlined />
+                  {uploadState?.selectedFile?.status === "done" ? (
+                    <FileExcelTwoTone twoToneColor="#52c41a" />
+                  ) : (
+                    <FileExcelOutlined />
+                  )}
                 </p>
                 <p className="ant-upload-text">
-                  Click or drag file to this area to upload
+                  {uploadState?.selectedFile?.status ? (
+                    <div className={`${uploadState?.selectedFile?.status}`}>
+                      {uploadState.selectedFile.name} -{" "}
+                      {uploadState.selectedFile.status}
+                    </div>
+                  ) : (
+                    "Click or drag file to this area to upload"
+                  )}
                 </p>
                 <p className="ant-upload-hint">
                   Supported filetypes: .xls and .xlsx.
