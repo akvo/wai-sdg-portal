@@ -21,3 +21,4 @@ google-cloud-storage==1.42.3
 aiofiles==0.7.0
 alembic-utils==0.7.3
 python-multipart==0.0.5
+XlsxWriter==3.0.2

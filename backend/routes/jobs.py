@@ -5,6 +5,7 @@ import db.crud_jobs as crud
 from db.connection import get_session
 from models.jobs import JobsBase, JobType, JobStatus
 from util.excel import validate_excel_data
+import util.storage as storage
 
 jobs_route = APIRouter()
 
@@ -12,15 +13,17 @@ jobs_route = APIRouter()
 def do_task(session: Session, jobs):
     info = jobs["info"]
     if jobs["type"] == JobType.validate_data:
+        file = storage.download(jobs["payload"])
         error = validate_excel_data(
             session=session,
             form=jobs["info"]["form_id"],
             administration=jobs["info"]["administration"],
-            file=jobs["payload"])
+            file=file)
         if len(error):
             info.update({"valid": False})
         else:
             info.update({"valid": True})
+        print(error)
         jobs = crud.update(session=session,
                            id=jobs["id"],
                            status=JobStatus.done,
