@@ -7,8 +7,9 @@ from httpx import AsyncClient
 from sqlalchemy.orm import Session
 from db import crud_question
 from tests.test_01_auth import Acc
-from util.excel import generate_excel_template, validate_excel_data
-from util.excel import ExcelError
+from util.excel import generate_excel_template
+from tasks import validation
+from tasks.validation import ExcelError
 
 pytestmark = pytest.mark.asyncio
 sys.path.append("..")
@@ -89,7 +90,7 @@ class TestExcelValidation():
         ]
         df = pd.DataFrame(wrong_data, columns=columns)
         df.to_excel(excel_file, index=False, sheet_name='data')
-        errors = validate_excel_data(session=session,
+        errors = validation.validate(session=session,
                                      form=1,
                                      administration=1,
                                      file=excel_file)

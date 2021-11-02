@@ -30,10 +30,10 @@ class TestFileRoutes():
             "content-disposition"] == 'attachment; filename="1-test.xlsx"'
 
     @pytest.mark.asyncio
-    async def test_upload_excel_template(self, app: FastAPI, session: Session,
-                                         client: AsyncClient) -> None:
+    async def test_queue_wrong_excel_data(self, app: FastAPI, session: Session,
+                                          client: AsyncClient) -> None:
         excel_file = "./tmp/1-test.xlsx"
-        correct_data = [[
+        wrong_data = [[
             "Option 4", "23,23", "Testing Data 1", 20, "Option A", "2020-12-18"
         ], [
             "Option 2", "24,24", "Testing Data 2", 23, "Option B", "2020-12-18"
@@ -43,7 +43,7 @@ class TestFileRoutes():
             "4|Test Datapoint Text Question", "5|Test Number Question",
             "6|Test Multiple Option Question", "7|Test Date Question"
         ]
-        df = pd.DataFrame(correct_data, columns=columns)
+        df = pd.DataFrame(wrong_data, columns=columns)
         df.to_excel(excel_file, index=False, sheet_name='data')
         fname = excel_file.split("/")[-1]
         async with aiofiles.open(excel_file, 'rb') as of:
@@ -61,4 +61,41 @@ class TestFileRoutes():
         assert res["status"] == "pending"
         assert res["type"] == "validate_data"
         assert res["info"] == {"administration": 4, "form_id": 1}
+        os.remove(excel_file)
+
+    @pytest.mark.asyncio
+    async def test_queue_right_excel_data(self, app: FastAPI, session: Session,
+                                          client: AsyncClient) -> None:
+        excel_file = "./tmp/1-test.xlsx"
+        wrong_data = [[
+            "Option 1", "Shashemene|Kuyera Town", None,
+            "Testing Data 1", 20, "Option A", "2020-12-18"
+        ], [
+            "Option 2", "Shashemene|Kuyera Town", None,
+            "Testing Data 2", 23, "Option B", "2020-12-18"
+        ]]
+        columns = [
+            "1|Test Option Question", "2|Test Administration Question",
+            "3|Test Geo Question", "4|Test Datapoint Text Question",
+            "5|Test Number Question", "6|Test Multiple Option Question",
+            "7|Test Date Question"
+        ]
+        df = pd.DataFrame(wrong_data, columns=columns)
+        df.to_excel(excel_file, index=False, sheet_name='data')
+        fname = excel_file.split("/")[-1]
+        async with aiofiles.open(excel_file, 'rb') as of:
+            contents = await of.read()
+        res = await client.post(
+            app.url_path_for("excel-template:post",
+                             form_id=1,
+                             administration=5),
+            files={"file": (fname, contents, ftype)},
+            headers={"Authorization": f"Bearer {account.token}"})
+        assert res.status_code == 200
+        res = res.json()
+        assert res["attempt"] == 0
+        assert res["available"] is None
+        assert res["status"] == "pending"
+        assert res["type"] == "validate_data"
+        assert res["info"] == {"administration": 5, "form_id": 1}
         os.remove(excel_file)

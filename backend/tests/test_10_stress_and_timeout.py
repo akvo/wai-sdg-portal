@@ -4,7 +4,8 @@ import pytest
 import pandas as pd
 from datetime import datetime
 from sqlalchemy.orm import Session
-from util.excel import generate_excel_template, validate_excel_data
+from util.excel import generate_excel_template
+from tasks import validation
 
 pytestmark = pytest.mark.asyncio
 sys.path.append("..")
@@ -27,7 +28,7 @@ class TestStressAndTimeout():
         assert df.shape[0] == 1000
         df.to_excel(excel_file, index=False, sheet_name='data')
         start = datetime.now()
-        errors = validate_excel_data(session=session,
+        errors = validation.validate(session=session,
                                      form=1,
                                      administration=1,
                                      file=excel_file)

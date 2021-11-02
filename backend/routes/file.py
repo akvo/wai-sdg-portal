@@ -1,5 +1,7 @@
+import os
 import uuid
 import aiofiles
+import requests
 from xlrd import open_workbook, XLRDError
 from sqlalchemy.orm import Session
 from fastapi import Depends, Request, APIRouter, HTTPException
@@ -70,4 +72,10 @@ async def upload(req: Request,
                    },
                    type=JobType.validate_data,
                    created_by=user.id)
+    TESTING = os.environ.get("TESTING")
+    if TESTING:
+        return res
+    if jobs.is_not_busy(session=session):
+        res = requests.get("http://localhost:5001/jobs/start")
+        res = res.json()
     return res
