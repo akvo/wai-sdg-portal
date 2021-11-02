@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import enum
 import humps
@@ -13,12 +14,38 @@ from string import ascii_uppercase
 def generate_excel_template(session: Session, form: int):
     form = crud_form.get_form_by_id(session=session, id=form)
     questions = crud_question.get_excel_question(session=session, form=form.id)
-    df = pd.DataFrame(columns=[q.to_excel_header for q in questions],
-                      index=[0])
+    definitions = crud_question.get_definition(session=session, form=form.id)
+    definitions = pd.DataFrame(definitions)
+    definitions["type"] = definitions["type"].apply(
+        lambda x: str(x).split(".")[1])
+    definitions = definitions.groupby(["id", "question", "type",
+                                       "option"]).first()
+    print(list(definitions))
+    data = pd.DataFrame(columns=[q.to_excel_header for q in questions],
+                        index=[0])
     form_name = humps.decamelize(form.name)
     filename = f"{form.id}-{form_name}"
     filepath = f"./tmp/{filename}.xlsx"
-    df.to_excel(filepath, index=False)
+    if os.path.exists(filepath):
+        os.remove(filepath)
+    writer = pd.ExcelWriter(filepath, engine='xlsxwriter')
+    data.to_excel(writer,
+                  sheet_name='data',
+                  startrow=1,
+                  header=False,
+                  index=False)
+    workbook = writer.book
+    worksheet = writer.sheets['data']
+    header_format = workbook.add_format({
+        'bold': True,
+        'text_wrap': True,
+        'valign': 'top',
+        'border': 1
+    })
+    for col_num, value in enumerate(data.columns.values):
+        worksheet.write(0, col_num, value, header_format)
+    definitions.to_excel(writer, sheet_name='definitions', startrow=0)
+    writer.save()
     return filepath
 
 
@@ -129,7 +156,7 @@ def validate_excel_data(session: Session, form: int, administration: int,
                         file: str):
     questions = crud_question.get_excel_question(session=session, form=form)
     header_names = [q.to_excel_header for q in questions.all()]
-    df = pd.read_excel(file)
+    df = pd.read_excel(file, sheet_name='data')
     excel_head = {}
     excel_cols = list(itertools.islice(generate_excel_columns(), df.shape[1]))
     for index, header in enumerate(list(df)):
