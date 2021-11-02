@@ -25,7 +25,7 @@ class TestStressAndTimeout():
             random_wrong_rows.append(random_wrong_values)
         df = pd.DataFrame(random_wrong_rows, columns=list(df))
         assert df.shape[0] == 1000
-        df.to_excel(excel_file, index=False)
+        df.to_excel(excel_file, index=False, sheet_name='data')
         start = datetime.now()
         errors = validate_excel_data(session=session,
                                      form=1,

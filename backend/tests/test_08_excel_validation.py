@@ -86,7 +86,7 @@ class TestExcelValidation():
             "6|Test Multiple Option Question", "7|Test Date Question"
         ]
         df = pd.DataFrame(wrong_data, columns=columns)
-        df.to_excel(excel_file, index=False)
+        df.to_excel(excel_file, index=False, sheet_name='data')
         errors = validate_excel_data(session=session,
                                      form=1,
                                      administration=1,

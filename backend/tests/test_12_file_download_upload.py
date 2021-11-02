@@ -44,7 +44,7 @@ class TestFileRoutes():
             "6|Test Multiple Option Question", "7|Test Date Question"
         ]
         df = pd.DataFrame(correct_data, columns=columns)
-        df.to_excel(excel_file, index=False)
+        df.to_excel(excel_file, index=False, sheet_name='data')
         fname = excel_file.split("/")[-1]
         async with aiofiles.open(excel_file, 'rb') as of:
             contents = await of.read()
