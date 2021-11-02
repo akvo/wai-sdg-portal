@@ -1,6 +1,5 @@
 import uuid
 import aiofiles
-import pandas as pd
 from xlrd import open_workbook, XLRDError
 from sqlalchemy.orm import Session
 from fastapi import Depends, Request, APIRouter, HTTPException
