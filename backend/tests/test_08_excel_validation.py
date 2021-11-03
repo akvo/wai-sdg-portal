@@ -77,7 +77,7 @@ class TestExcelValidation():
             "Option B|Option A", ""
         ], [
             "Option 2", "Kuyera Town", "180", "Testing Data 2",
-            "", 23, "Option C|Option D", "2020"
+            "", 23, "option a|Option D", "2020"
         ], [
             "Option 2", "Kuyera Town", "180,A", "Testing Data 2",
             "", 23, "Option B", "2020-12-18"
@@ -132,7 +132,7 @@ class TestExcelValidation():
             "column": "F2"
         }, {
             'error': ExcelError.value,
-            'message': "Invalid value: Option C, Option D",
+            'message': "Invalid case: option a and Invalid value: Option D",
             "column": "G3"
         }, {
             'error': ExcelError.value,

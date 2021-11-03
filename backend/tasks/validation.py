@@ -41,16 +41,6 @@ def validate_header_names(header, col, header_names):
     return False
 
 
-def validate_option(type, options, answer):
-    err = []
-    for a in answer:
-        if a not in options:
-            err.append(a)
-    if len(err):
-        return ", ".join(err)
-    return False
-
-
 def validate_geo(answer):
     try:
         a = int(answer)
@@ -67,6 +57,34 @@ def validate_geo(answer):
             a = int(a)
         except ValueError:
             return {"message": "Invalid lat long format"}
+    return False
+
+
+def validate_option(options, answer):
+    options = [o.name for o in options]
+    lower_options = [o.lower() for o in options]
+    answer = answer.split("|")
+    invalid_value = []
+    invalid_case = []
+    invalid = False
+    for a in answer:
+        if a not in options and a.lower() not in lower_options:
+            invalid = True
+            invalid_value.append(a)
+        if a not in options and a.lower() in lower_options:
+            invalid = True
+            invalid_case.append(a)
+    if invalid:
+        message = ""
+        if len(invalid_case):
+            invalid_list = ", ".join(invalid_case)
+            message += f"Invalid case: {invalid_list}"
+        if len(invalid_case) and len(invalid_value):
+            message += " and "
+        if len(invalid_value):
+            invalid_list = ", ".join(invalid_value)
+            message += f"Invalid value: {invalid_list}"
+        return {"message": message}
     return False
 
 
@@ -104,10 +122,9 @@ def validate_row_data(col, answer, question):
             })
             return default
     if question.type in [QuestionType.option, QuestionType.multiple_option]:
-        options = [o.name for o in question.option]
-        err = validate_option(question.type, options, answer.split("|"))
+        err = validate_option(question.option, answer)
         if err:
-            default.update({"message": f"Invalid value: {err}"})
+            default.update(err)
             return default
     return False
 
