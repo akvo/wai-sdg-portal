@@ -89,6 +89,18 @@ class TestExcelValidation():
             "7|Test Date Question"
         ]
         df = pd.DataFrame(wrong_data, columns=columns)
+        # Sheet Name Error
+        df.to_excel(excel_file, index=False, sheet_name='NOT DATA')
+        errors = validation.validate(session=session,
+                                     form=1,
+                                     administration=1,
+                                     file=excel_file)
+        assert errors == [{
+            'error': ExcelError.sheet,
+            "message": "Wrong sheet name, there should be sheet named data",
+            'sheets': "NOT DATA"
+        }]
+        # Header and Value Error
         df.to_excel(excel_file, index=False, sheet_name='data')
         errors = validation.validate(session=session,
                                      form=1,

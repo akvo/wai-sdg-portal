@@ -9,6 +9,7 @@ from string import ascii_uppercase
 
 
 class ExcelError(enum.Enum):
+    sheet = 'sheet_name'
     header = 'header_name'
     value = 'column_value'
 
@@ -111,7 +112,19 @@ def validate_row_data(col, answer, question):
     return False
 
 
+def validate_sheet_name(file: str):
+    xl = pd.ExcelFile(file)
+    return xl.sheet_names
+
+
 def validate(session: Session, form: int, administration: int, file: str):
+    sheet_names = validate_sheet_name(file)
+    if 'data' not in sheet_names:
+        return [{
+            "error": ExcelError.sheet,
+            "message": "Wrong sheet name, there should be sheet named data",
+            "sheets": ",".join(sheet_names)
+        }]
     questions = crud_question.get_excel_question(session=session, form=form)
     header_names = [q.to_excel_header for q in questions.all()]
     df = pd.read_excel(file, sheet_name='data')
