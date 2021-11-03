@@ -12,6 +12,7 @@ const defaultUIState = {
   selectedAdministration: [null],
   reloadData: true,
   editedRow: {},
+  jobStatus: [],
 };
 
 export const UIState = new Store(defaultUIState);

@@ -15,6 +15,7 @@ import moment from "moment";
 import { UIState } from "../../state/ui";
 import { DropdownNavigation } from "../../components/common";
 import api from "../../util/api";
+import axios from "axios";
 import config from "./admin-static";
 
 const { Dragger } = Upload;
@@ -24,8 +25,48 @@ const allowedFiles = [
 ];
 const regExpFilename = /filename="(?<filename>.*)"/;
 
+const checkJobs = (id, filename) => {
+  axios.get(`/worker/jobs/status/${id}`).then(function (res) {
+    if (res.data === "on_progress" || res.data === "pending") {
+      UIState.update((e) => {
+        e.jobStatus = [
+          {
+            id: id,
+            file: filename,
+            status: "Waiting for validation",
+            icon: "warning",
+          },
+          ...e.jobStatus.filter((x) => x.id !== id),
+        ];
+      });
+      setTimeout(() => {
+        checkJobs(id, filename);
+      }, 10000);
+    } else if (res.data === "failed") {
+      UIState.update((e) => {
+        e.jobStatus = [
+          { id: id, file: filename, status: "Failed", icon: "danger" },
+          ...e.jobStatus,
+        ];
+      });
+    } else {
+      UIState.update((e) => {
+        e.jobStatus = [
+          {
+            id: id,
+            file: filename,
+            status: "Submitted",
+            icon: "success",
+          },
+          ...e.jobStatus,
+        ];
+      });
+    }
+  });
+};
+
 const ManageUpload = () => {
-  const { user, administration } = UIState.useState((s) => s);
+  const { user, administration, jobStatus } = UIState.useState((s) => s);
   const [form, setForm] = useState("water");
   const [fileName, setFileName] = useState(null);
   const { formId } = config[form];
@@ -65,7 +106,7 @@ const ManageUpload = () => {
         setJobState(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        message.error({ content: "Failed", key, duration: 2 });
       });
   };
 
@@ -77,10 +118,19 @@ const ManageUpload = () => {
   }, [user, selectedAdm, formId]);
 
   useEffect(() => {
-    if (jobState) {
-      console.log(jobState);
+    if (jobState && uploadState?.selectedFile?.status === "done") {
+      const op = jobStatus.find((x) => x.id === jobState.id);
+      if (!op) {
+        checkJobs(jobState.id, uploadState.selectedFile.name);
+      }
     }
-  }, [jobState]);
+  }, [jobStatus, jobState, uploadState]);
+
+  useEffect(() => {
+    if (user && administration.length) {
+      setSelectedAdm(administration.filter((a) => a.parent === null)[0].id);
+    }
+  }, [user, administration]);
 
   const uploadProps = {
     name: fileName,
