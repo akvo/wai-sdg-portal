@@ -6,8 +6,10 @@ from typing import Optional, List
 from typing_extensions import TypedDict
 from pydantic import BaseModel
 from sqlalchemy import Column, ForeignKey
+from sqlalchemy.ext.mutable import MutableDict
 from sqlalchemy import Boolean, Integer, String, Enum
 from sqlalchemy.orm import relationship
+import sqlalchemy.dialects.postgresql as pg
 from db.connection import Base
 from models.option import OptionBase
 
@@ -31,6 +33,8 @@ class QuestionDict(TypedDict):
     name: str
     meta: bool
     type: QuestionType
+    required: bool
+    rule: Optional[dict]
 
 
 class Question(Base):
@@ -42,19 +46,24 @@ class Question(Base):
     order = Column(Integer, nullable=True)
     meta = Column(Boolean, default=False)
     type = Column(Enum(QuestionType), default=QuestionType.text)
+    required = Column(Boolean, nullable=True)
+    rule = Column(MutableDict.as_mutable(pg.JSONB), nullable=True)
     option = relationship("Option",
                           cascade="all, delete",
                           passive_deletes=True,
                           backref="option")
 
     def __init__(self, name: str, order: int, form: int, question_group: int,
-                 meta: bool, type: QuestionType):
+                 meta: bool, type: QuestionType, required: Optional[bool],
+                 rule: Optional[dict]):
         self.form = form
         self.order = order
         self.question_group = question_group
         self.name = name
         self.meta = meta
         self.type = type
+        self.required = required
+        self.rule = rule
 
     def __repr__(self) -> int:
         return f"<Question {self.id}>"
@@ -69,7 +78,9 @@ class Question(Base):
             "order": self.order,
             "meta": self.meta,
             "type": self.type,
-            "option": self.option
+            "required": self.required,
+            "rule": self.rule,
+            "option": self.option,
         }
 
     @property
@@ -84,6 +95,8 @@ class Question(Base):
             "id": self.id,
             "name": self.name,
             "type": self.type,
+            "required": self.required,
+            "rule": self.rule,
             "options": options,
         }
 
@@ -96,6 +109,8 @@ class QuestionBase(BaseModel):
     order: Optional[int] = None
     meta: bool
     type: QuestionType
+    required: bool
+    rule: Optional[dict]
     option: List[OptionBase]
 
     class Config:
