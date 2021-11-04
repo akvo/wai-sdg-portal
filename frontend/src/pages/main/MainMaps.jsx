@@ -6,7 +6,12 @@ import {
   ZoomableGroup,
   Marker,
 } from "react-simple-maps";
-import { Spin } from "antd";
+import { Spin, Tooltip, Button, Space } from "antd";
+import {
+  ZoomInOutlined,
+  ZoomOutOutlined,
+  FullscreenOutlined,
+} from "@ant-design/icons";
 import api from "../../util/api";
 import { scaleQuantize } from "d3-scale";
 import { UIState } from "../../state/ui";
@@ -106,6 +111,40 @@ const MainMaps = ({ geoUrl, question, current, mapHeight = 350 }) => {
           <Spin />
         </div>
       )}
+      <div className="map-buttons">
+        <Space size="small" direction="vertical">
+          <Tooltip title="zoom out">
+            <Button
+              type="secondary"
+              icon={<ZoomOutOutlined />}
+              onClick={() => {
+                position.zoom > 1 &&
+                  setPosition({ ...position, zoom: position.zoom - 0.5 });
+              }}
+              disabled={position.zoom <= 1}
+            />
+          </Tooltip>
+          <Tooltip title="zoom in">
+            <Button
+              disabled={position.zoom >= mapMaxZoom}
+              type="secondary"
+              icon={<ZoomInOutlined />}
+              onClick={() => {
+                setPosition({ ...position, zoom: position.zoom + 0.5 });
+              }}
+            />
+          </Tooltip>
+          <Tooltip title="reset zoom">
+            <Button
+              type="secondary"
+              icon={<FullscreenOutlined />}
+              onClick={() => {
+                setPosition({ coordinates: [0, 0], zoom: 1 });
+              }}
+            />
+          </Tooltip>
+        </Space>
+      </div>
       <ComposableMap
         data-tip=""
         projection="geoEquirectangular"

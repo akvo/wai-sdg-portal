@@ -163,7 +163,7 @@ const Main = ({ match }) => {
             <div className="container">
               <MainMaps
                 geoUrl={ethGeoUrl}
-                mapHeight={640}
+                mapHeight={660}
                 question={questionGroup
                   .map((q) => q.question)
                   .flatMap((x) => x)}
