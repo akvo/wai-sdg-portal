@@ -60,10 +60,10 @@ def status(session: Session, id: int) -> str:
     return jobs.status
 
 
-def pending(session: Session) -> int:
+def pending(session: Session) -> Union[int, bool]:
     jobs = session.query(Jobs.id).filter(
         Jobs.status == JobStatus.pending).order_by(asc(Jobs.created)).first()
-    return jobs.id
+    return jobs.id if jobs else False
 
 
 def is_not_busy(session: Session) -> bool:

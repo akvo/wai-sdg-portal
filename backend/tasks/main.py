@@ -1,7 +1,6 @@
-import os
 from sqlalchemy.orm import Session
 from datetime import timedelta
-from time import process_time, sleep
+from time import process_time
 import db.crud_jobs as crud
 from . import validation
 from . import seed
@@ -56,9 +55,6 @@ def run_validate(session: Session, jobs: dict):
 
 
 def do_task(session: Session, jobs):
-    TESTING = os.environ.get("TESTING")
-    if not TESTING:
-        sleep(60)
     if jobs["type"] == JobType.validate_data:
         run_validate(session=session, jobs=jobs)
     if jobs["type"] == JobType.seed_data:
