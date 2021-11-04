@@ -6,6 +6,7 @@ from datetime import datetime
 from models.question import Question, QuestionType
 from sqlalchemy.orm import Session
 from string import ascii_uppercase
+from util.helper import HText
 
 
 class ExcelError(enum.Enum):
@@ -60,6 +61,25 @@ def validate_geo(answer):
     return False
 
 
+def validate_date(answer):
+    try:
+        answer = int(answer)
+        return {
+            "message":
+            f"Invalid date format: {answer}. It should be YYYY-MM-DD"
+        }
+    except ValueError:
+        pass
+    try:
+        answer = datetime.strptime(answer, "%Y-%m-%d")
+    except ValueError:
+        return {
+            "message":
+            f"Invalid date format: {answer}. It should be YYYY-MM-DD"
+        }
+    return False
+
+
 def validate_option(options, answer):
     options = [o.name for o in options]
     lower_options = [o.lower() for o in options]
@@ -92,6 +112,8 @@ def validate_row_data(col, answer, question):
     default = {"error": ExcelError.value, "column": col}
     if answer != answer:
         return False
+    if isinstance(answer, str):
+        answer = HText(answer).clean
     if question.type == QuestionType.geo:
         err = validate_geo(answer)
         if err:
@@ -104,22 +126,9 @@ def validate_row_data(col, answer, question):
             default.update({"message": "Value should be numeric"})
             return default
     if question.type == QuestionType.date:
-        try:
-            answer = int(answer)
-            default.update({
-                "message":
-                f"Invalid date format: {answer}. It should be YYYY-MM-DD"
-            })
-            return default
-        except ValueError:
-            pass
-        try:
-            answer = datetime.strptime(answer, "%Y-%m-%d")
-        except ValueError:
-            default.update({
-                "message":
-                f"Invalid date format: {answer}. It should be YYYY-MM-DD"
-            })
+        err = validate_date(answer)
+        if err:
+            default.update(err)
             return default
     if question.type in [QuestionType.option, QuestionType.multiple_option]:
         err = validate_option(question.option, answer)

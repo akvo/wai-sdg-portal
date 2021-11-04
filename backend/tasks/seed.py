@@ -6,6 +6,7 @@ from db import crud_administration
 from models.question import QuestionType
 from models.answer import Answer
 from datetime import datetime
+from util.helper import HText
 
 
 def save(session: Session, user: int, form: int, dp: dict, qs: dict):
@@ -14,14 +15,17 @@ def save(session: Session, user: int, form: int, dp: dict, qs: dict):
     answerlist = []
     names = []
     for a in dp:
-        if dp[a] == dp[a]:
+        aw = dp[a]
+        if aw == aw:
+            if isinstance(aw, str):
+                aw = HText(aw).clean
             valid = True
             q = qs[a]
             answer = Answer(question=q.id,
                             created_by=user,
                             created=datetime.now())
             if q.type == QuestionType.administration:
-                adms = dp[a].split("|")
+                adms = aw.split("|")
                 adm_list = []
                 for ix, adm in enumerate(adms):
                     if len(adm_list):
@@ -38,34 +42,34 @@ def save(session: Session, user: int, form: int, dp: dict, qs: dict):
                 if q.meta:
                     names.append(adm_list[-1].name)
             if q.type == QuestionType.geo:
-                if dp[a]:
-                    geo = dp[a]
-                    answer.text = ("{}|{}").format(dp[a][0], dp[a][1])
+                if aw:
+                    geo = aw
+                    answer.text = ("{}|{}").format(aw[0], aw[1])
                 else:
                     valid = False
             if q.type == QuestionType.text:
-                answer.text = dp[a]
+                answer.text = aw
                 if q.meta:
-                    names.append(dp[a])
+                    names.append(aw)
             if q.type == QuestionType.date:
-                if dp[a]:
-                    answer.text = dp[a]
+                if aw:
+                    answer.text = aw
                 else:
                     valid = False
             if q.type == QuestionType.number:
                 try:
-                    float(dp[a])
+                    float(aw)
                     valid = True
                 except ValueError:
                     valid = False
                 if valid:
-                    answer.value = dp[a]
+                    answer.value = aw
                     if q.meta:
-                        names.append(str(dp[a]))
+                        names.append(str(aw))
             if q.type == QuestionType.option:
-                answer.options = [dp[a]]
+                answer.options = [aw]
             if q.type == QuestionType.multiple_option:
-                answer.options = dp[a]
+                answer.options = aw
             if valid:
                 answerlist.append(answer)
     name = " - ".join([str(n) for n in names])

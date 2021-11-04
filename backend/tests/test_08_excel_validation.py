@@ -81,6 +81,9 @@ class TestExcelValidation():
         ], [
             "Option 2", "Kuyera Town", "180,A", "Testing Data 2",
             "", 23, "Option B", "2020-12-18"
+        ], [
+            "Option 2        ", "Kuyera Town", "180,90", "Testing Data 2",
+            "", 23, "    Option B\n", "2020-12-18"
         ]]
         columns = [
             "2|Test Option Question", "2|Test Administration Question",

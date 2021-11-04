@@ -1,6 +1,7 @@
 import os
 import sys
 from main import app
+from util.helper import HText
 from fastapi.testclient import TestClient
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,3 +24,11 @@ def test_read_credentials():
     else:
         print("SKIPPING READ CREDENTIAL TEST")
         assert True is True
+
+
+def test_string_trim_helper():
+    string_list = [
+        "Option    1", "Option 1 ", "Option  1", " Option 1 ", "Option 1\n "
+    ]
+    for st in string_list:
+        assert HText(st).clean == "Option 1"
