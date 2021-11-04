@@ -153,6 +153,7 @@ const MarkerLegend = ({ data, colors, filterMarker, setFilterMarker }) => {
   colors = _.sortBy(colors, ["order"]);
   const option = colors.map((x, i) => (
     <Space
+      key={`marker-legend-${x.name}-${i}`}
       size="small"
       align="center"
       className={
