@@ -37,6 +37,12 @@ def update_data(session: Session, data: Data) -> DataDict:
     return data
 
 
+def delete_by_id(session: Session, id: Data) -> None:
+    data = session.query(Data).filter(Data.id == id).one()
+    session.delete(data)
+    session.commit()
+
+
 def get_data(session: Session,
              form: int,
              skip: int,

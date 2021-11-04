@@ -1,3 +1,4 @@
+from http import HTTPStatus
 from datetime import datetime
 from math import ceil
 from fastapi import Depends, Request, APIRouter, HTTPException
@@ -135,6 +136,23 @@ def get_by_id(req: Request, id: int, session: Session = Depends(get_session)):
         raise HTTPException(status_code=404,
                             detail="data {} is not found".format(id))
     return data.serialize
+
+
+@data_route.delete("/data/{id:path}",
+                   responses={204: {
+                       "model": None
+                   }},
+                   status_code=HTTPStatus.NO_CONTENT,
+                   summary="delete data",
+                   name="data:delete",
+                   tags=["Data"])
+def delete(req: Request,
+           id: int,
+           session: Session = Depends(get_session),
+           credentials: credentials = Depends(security)):
+    verify_admin(req.state.authenticated, session)
+    crud.delete_by_id(session=session, id=id)
+    return None
 
 
 @data_route.put("/data/{id:path}",
