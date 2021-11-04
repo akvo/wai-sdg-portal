@@ -1,7 +1,7 @@
 from http import HTTPStatus
 from datetime import datetime
 from math import ceil
-from fastapi import Depends, Request, APIRouter, HTTPException
+from fastapi import Depends, Request, Response, APIRouter, HTTPException
 from fastapi.security import HTTPBearer
 from fastapi.security import HTTPBasicCredentials as credentials
 from typing import List, Optional
@@ -156,7 +156,7 @@ def delete(req: Request,
            credentials: credentials = Depends(security)):
     verify_admin(req.state.authenticated, session)
     crud.delete_by_id(session=session, id=id)
-    return None
+    return Response(status_code=HTTPStatus.NO_CONTENT.value)
 
 
 @data_route.put("/data/{id:path}",
