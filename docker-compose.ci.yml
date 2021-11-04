@@ -22,6 +22,7 @@ services:
     command: ["sh", "run-worker.sh"]
     depends_on:
       - db
+      - backend
     environment:
       - DATABASE_URL=postgresql://wai:password@db:5432/wai_ethiopia
       - SKIP_MIGRATION=yes
