@@ -100,6 +100,8 @@ class TestFormRoutes():
         assert res["order"] == 2
         assert res["name"] == "Test Administration Question"
         assert res["meta"] is True
+        assert res["required"] is True
+        assert res["rule"] is None
         assert res["type"] == "administration"
 
     @pytest.mark.asyncio
@@ -125,6 +127,8 @@ class TestFormRoutes():
         assert res["order"] == 3
         assert res["name"] == "Test Geo Question"
         assert res["meta"] is True
+        assert res["required"] is True
+        assert res["rule"] is None
         assert res["type"] == "geo"
 
     @pytest.mark.asyncio
@@ -150,4 +154,6 @@ class TestFormRoutes():
         assert res["order"] == 4
         assert res["name"] == "Test Datapoint Text Question"
         assert res["meta"] is True
+        assert res["required"] is True
+        assert res["rule"] is None
         assert res["type"] == "text"

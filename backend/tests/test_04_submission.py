@@ -36,6 +36,8 @@ class TestSubmissionRoutes():
                     "order": 1,
                     "question_group": 1,
                     "type": "option",
+                    "required": True,
+                    "rule": None,
                     "option": [{
                         "color": "#333",
                         "name": "Option 1",
@@ -48,7 +50,7 @@ class TestSubmissionRoutes():
                         "color": None,
                         "name": "Option 3",
                         "order": None,
-                    }]
+                    }],
                 }, {
                     "form": 1,
                     "id": 2,
@@ -57,6 +59,8 @@ class TestSubmissionRoutes():
                     "order": 2,
                     "question_group": 1,
                     "type": "administration",
+                    "required": True,
+                    "rule": None,
                     "option": [],
                 }, {
                     "form": 1,
@@ -66,6 +70,8 @@ class TestSubmissionRoutes():
                     "order": 3,
                     "question_group": 1,
                     "type": "geo",
+                    "required": True,
+                    "rule": None,
                     "option": [],
                 }, {
                     "form": 1,
@@ -75,6 +81,8 @@ class TestSubmissionRoutes():
                     "order": 4,
                     "question_group": 1,
                     "type": "text",
+                    "required": True,
+                    "rule": None,
                     "option": [],
                 }]
             }]

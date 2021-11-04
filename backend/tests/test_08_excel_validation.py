@@ -24,7 +24,8 @@ class TestExcelValidation():
                                    question_group=1,
                                    form=1,
                                    meta=False,
-                                   type="number")
+                                   type="number",
+                                   rule={"min": 0, "max": 100})
         crud_question.add_question(session=session,
                                    name="Test Multiple Option Question",
                                    question_group=1,
