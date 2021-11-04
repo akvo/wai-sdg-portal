@@ -60,12 +60,10 @@ def status(session: Session, id: int) -> str:
     return jobs.status
 
 
-def pending(session: Session) -> JobsBase:
-    jobs = session.query(Jobs).filter(
+def pending(session: Session) -> int:
+    jobs = session.query(Jobs.id).filter(
         Jobs.status == JobStatus.pending).order_by(asc(Jobs.created)).first()
-    if not jobs:
-        raise HTTPException(status_code=404, detail="Not Found")
-    return jobs.serialize
+    return jobs.id
 
 
 def is_not_busy(session: Session) -> bool:

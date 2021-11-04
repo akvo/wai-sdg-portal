@@ -30,11 +30,9 @@ class TestsJobs():
     async def test_for_worker_checking_a_pending_jobs(
             self, session: Session) -> None:
         new_task = jobs.pending(session=session)
-        assert new_task["id"] == 1
-        assert new_task["payload"] == "testing_job_1.xlsx"
-        assert new_task["type"] == JobType.validate_data
+        assert new_task == 1
         new_task = jobs.update(session=session,
-                               id=new_task["id"],
+                               id=new_task,
                                status=JobStatus.on_progress)
 
     @pytest.mark.asyncio
