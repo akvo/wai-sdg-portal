@@ -42,7 +42,7 @@ const modalProps = (type) => {
   }
 };
 
-const PopupNotification = (handleOk, type = null) => {
+const PopupNotification = (handleOk, value = null, type = null) => {
   const props = modalProps(type);
 
   return info({
@@ -69,7 +69,7 @@ const PopupNotification = (handleOk, type = null) => {
     },
     okText: props?.btnOkText,
     onOk() {
-      return handleOk();
+      return handleOk(value);
     },
   });
 };

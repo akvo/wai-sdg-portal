@@ -24,8 +24,12 @@ import api from "../../util/api";
 import { getLocationName } from "../../util/utils";
 import MainTableChild from "../main/MainTableChild.jsx";
 import ErrorPage from "../../components/ErrorPage";
-import { DataUpdateMessage } from "./../../components/Notifications";
+import {
+  DataUpdateMessage,
+  DataDeleteMessage,
+} from "./../../components/Notifications";
 import { SelectLevel, DropdownNavigation } from "../../components/common";
+import PopupNotification from "../../components/PopupNotification";
 
 const getRowClassName = (record, editedRow) => {
   const edited = editedRow?.[record.key];
@@ -106,6 +110,24 @@ const ManageData = () => {
     });
   };
 
+  const handleDelete = (value) => {
+    UIState.update((e) => {
+      e.reloadData = false;
+    });
+    api
+      .delete(`data/${value?.id}`)
+      .then((res) => {
+        notification.success({ message: <DataDeleteMessage id={value.id} /> });
+        UIState.update((e) => {
+          e.reloadData = true;
+        });
+        return res;
+      })
+      .catch((err) => {
+        notification.error({ message: "Opps, something went wrong." });
+      });
+  };
+
   useEffect(() => {
     if (user && formId) {
       setPage(1);
@@ -147,7 +169,11 @@ const ManageData = () => {
                   >
                     Edit
                   </Button>
-                  <Button size="small" icon={<DeleteOutlined />}>
+                  <Button
+                    size="small"
+                    icon={<DeleteOutlined />}
+                    onClick={() => PopupNotification(handleDelete, x, "delete")}
+                  >
                     Delete
                   </Button>
                 </Space>

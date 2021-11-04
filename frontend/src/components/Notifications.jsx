@@ -17,3 +17,7 @@ export const NonActiveUserMessage = ({ user }) => {
 export const DataUpdateMessage = ({ id }) => {
   return <p>{id} is updated</p>;
 };
+
+export const DataDeleteMessage = ({ id }) => {
+  return <p>{id} is deleted</p>;
+};
