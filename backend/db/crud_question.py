@@ -1,4 +1,5 @@
 from typing import List, Optional
+from typing_extensions import TypedDict
 from sqlalchemy import and_
 from sqlalchemy.orm import Session
 from models.question import Question, QuestionDict, QuestionBase, QuestionType
@@ -12,7 +13,9 @@ def add_question(session: Session,
                  type: QuestionType,
                  meta: bool,
                  order: Optional[int] = None,
-                 option: Optional[List[OptionDict]] = None) -> QuestionBase:
+                 option: Optional[List[OptionDict]] = None,
+                 required: Optional[bool] = True,
+                 rule: Optional[dict] = None) -> QuestionBase:
     last_question = session.query(Question).filter(
         and_(Question.form == form,
              Question.question_group == question_group)).order_by(
@@ -26,7 +29,9 @@ def add_question(session: Session,
                         form=form,
                         meta=meta,
                         question_group=question_group,
-                        type=type)
+                        type=type,
+                        required=required,
+                        rule=rule)
     if option:
         for o in option:
             opt = Option(name=o["name"])
@@ -74,19 +79,28 @@ def get_definition(session: Session, form: int):
     questions = session.query(Question).filter((Question.form) == form).all()
     framed = []
     for q in [qs.to_definition for qs in questions]:
+        rule = None
+        if q["rule"]:
+            rule = []
+            for r in q["rule"]:
+                rtext = f"{r}: " + q["rule"][r]
+                rule.append(rtext)
+            rule = " ".join(rule)
         if q["options"]:
             for o in q["options"]:
                 framed.append({
                     "id": q["id"],
                     "question": q["name"],
                     "type": q["type"],
-                    "option": o
+                    "option": o,
+                    "required": "YES" if q["required"] else "NO"
                 })
         else:
             framed.append({
                 "id": q["id"],
                 "question": q["name"],
                 "type": q["type"],
-                "option": ""
+                "option": "",
+                "required": "YES" if q["required"] else "NO"
             })
     return framed

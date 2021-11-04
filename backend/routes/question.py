@@ -32,6 +32,14 @@ class PostQueryParams:
                                    description="question type"),
         meta: bool = Query(default=False,
                            description="Wether question is metadata or not"),
+        required: bool = Query(
+            default=True, description="Wether question is required or not"),
+        min: int = Query(
+            default=0,
+            description="Minimum number for number question type, default: 0"
+        ),
+        max: int = Query(None,
+                         description="Max number for number question type"),
         form: int = Query(
             None,
             description="Existing form id, create if you don't have one"),
@@ -42,6 +50,9 @@ class PostQueryParams:
         self.form = form
         self.question_group = question_group
         self.type = type
+        self.required = required
+        self.min = max
+        self.max = min
         self.meta = meta
 
 
@@ -63,12 +74,23 @@ def add(req: Request,
             session=session, name=params.question_group, form=params.form)
     if params.type != QuestionType.option:
         option = None
+    rule = {}
+    has_rule = False
+    if params.type == QuestionType.number:
+        if params.min:
+            has_rule = True
+            rule.update({"min": params.min})
+        if params.min:
+            has_rule = True
+            rule.update({"max": params.max})
     question = crud.add_question(session=session,
                                  name=params.name,
                                  order=params.order,
                                  form=params.form,
                                  meta=params.meta,
                                  type=params.type,
+                                 required=params.required,
+                                 rule=rule if has_rule else None,
                                  question_group=question_group.id,
                                  option=option)
     return question.serialize
