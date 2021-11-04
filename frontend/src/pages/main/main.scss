@@ -170,4 +170,29 @@
     padding: 3px 8px;
     color: #fff;
   }
+
+  .marker-legends {
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
+
+    .marker-item {
+      cursor: pointer;
+    }
+
+    .marker-name {
+      font-size: 12px;
+    }
+
+    .marker-icon {
+      height: 14px;
+      width: 14px;
+      border-radius: 50%;
+      display: block;
+    }
+
+    .marker-item-selected {
+      font-weight: 600;
+    }
+  }
 }

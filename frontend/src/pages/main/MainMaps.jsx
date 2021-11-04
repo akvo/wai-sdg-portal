@@ -24,23 +24,33 @@ const colorRange = ["#bbedda", "#a7e1cb", "#92d5bd", "#7dcaaf", "#67bea1"];
 const higlightColor = "#84b4cc";
 const noDataColor = "#d3d3d3";
 
-const Markers = ({ data, colors }) => {
+const Markers = ({ data, colors, filterMarker }) => {
   data = data.filter((d) => d.geo);
   return data.map(({ id, geo, marker }) => {
     let fill = "#F00";
+    let r = 3;
+    let stroke = "#fff";
     if (colors) {
-      fill = colors.find((c) => c.name === marker.toLowerCase());
-      fill = fill ? fill.color : "#FF0";
+      const option = colors.find((c) => c.name === marker.toLowerCase());
+      fill = option ? option.color : "#FF0";
+    }
+    if (filterMarker === marker.toLowerCase()) {
+      r = 4;
+      stroke = "#000";
     }
     return (
       <Marker key={id} coordinates={geo}>
-        <circle r={3} fill={fill} stroke="#fff" strokeWidth={1} />
+        <circle r={r} fill={fill} stroke={stroke} strokeWidth={1} />
       </Marker>
     );
   });
 };
 
-const ShapeLegend = ({ thresholds, filterColor, setFilterColor }) => {
+const ShapeLegend = ({ data, thresholds, filterColor, setFilterColor }) => {
+  if (_.isEmpty(data)) {
+    return "";
+  }
+
   thresholds = Array.from(new Set(thresholds.map((x) => Math.floor(x))));
   thresholds = thresholds.filter((x) => x !== 0);
   const range = thresholds.map((x, i) => {
@@ -133,6 +143,41 @@ const ShapeLegend = ({ thresholds, filterColor, setFilterColor }) => {
   return "";
 };
 
+const MarkerLegend = ({ data, colors, filterMarker, setFilterMarker }) => {
+  if (_.isEmpty(data)) {
+    return "";
+  }
+
+  colors = _.sortBy(colors, ["order"]);
+  const option = colors.map((x, i) => (
+    <Space
+      size="small"
+      align="center"
+      className={
+        "marker-item" + (filterMarker === x.name ? " marker-item-selected" : "")
+      }
+      onClick={() =>
+        filterMarker === x.name
+          ? setFilterMarker(null)
+          : setFilterMarker(x.name)
+      }
+    >
+      <span className="marker-name">{_.capitalize(x.name)}</span>
+      <span
+        className="marker-icon"
+        style={{ backgroundColor: x.color || "#000" }}
+      ></span>
+    </Space>
+  ));
+  return (
+    <div className="marker-legends">
+      <Space size="small" direction="vertical" align="end">
+        {option}
+      </Space>
+    </div>
+  );
+};
+
 const MainMaps = ({ geoUrl, question, current, mapHeight = 350 }) => {
   const { user, administration, selectedAdministration } = UIState.useState(
     (s) => s
@@ -144,6 +189,7 @@ const MainMaps = ({ geoUrl, question, current, mapHeight = 350 }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filterColor, setFilterColor] = useState(null);
+  const [filterMarker, setFilterMarker] = useState(null);
   const colors = question.find((q) => q.id === current.maps?.marker?.id)
     ?.option;
 
@@ -201,7 +247,7 @@ const MainMaps = ({ geoUrl, question, current, mapHeight = 350 }) => {
   };
 
   const fillColor = (v) => {
-    const color = v === 0 ? "#fff" : colorScale(v);
+    const color = v === 0 ? noDataColor : colorScale(v);
     if (filterColor !== null) {
       return filterColor === color ? higlightColor : color;
     }
@@ -216,9 +262,16 @@ const MainMaps = ({ geoUrl, question, current, mapHeight = 350 }) => {
         </div>
       )}
       <ShapeLegend
+        data={data}
         thresholds={colorScale.thresholds()}
         filterColor={filterColor}
         setFilterColor={setFilterColor}
+      />
+      <MarkerLegend
+        data={data}
+        colors={colors}
+        filterMarker={filterMarker}
+        setFilterMarker={setFilterMarker}
       />
       <div className="map-buttons">
         <Space size="small" direction="vertical">
@@ -311,7 +364,9 @@ const MainMaps = ({ geoUrl, question, current, mapHeight = 350 }) => {
               })
             }
           </Geographies>
-          {!loading && <Markers data={data} colors={colors} />}
+          {!loading && (
+            <Markers data={data} colors={colors} filterMarker={filterMarker} />
+          )}
         </ZoomableGroup>
       </ComposableMap>
     </>
