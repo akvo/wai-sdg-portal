@@ -51,7 +51,9 @@ const ShapeLegend = ({ data, thresholds, filterColor, setFilterColor }) => {
     return "";
   }
 
-  thresholds = Array.from(new Set(thresholds.map((x) => Math.floor(x))));
+  thresholds = Array.from(
+    new Set(thresholds.map((x) => Math.round(Math.floor(x) / 10) * 10))
+  );
   thresholds = thresholds.filter((x) => x !== 0);
   const range = thresholds.map((x, i) => {
     return (
@@ -225,12 +227,16 @@ const MainMaps = ({ geoUrl, question, current, mapHeight = 350 }) => {
     })
     .value();
 
-  const colorScale = scaleQuantize()
-    .domain([
-      _.minBy(shapeColor, "values")?.values,
-      _.maxBy(shapeColor, "values")?.values,
-    ])
-    .range(colorRange);
+  const domain = shapeColor.reduce(
+    (acc, curr) => {
+      const v = curr.values;
+      const [min, max] = acc;
+      return [min, v > max ? v : max];
+    },
+    [0, 0]
+  );
+
+  const colorScale = scaleQuantize().domain(domain).range(colorRange);
 
   const adminName = administration.find(
     (a) => a.id === _.takeRight(selectedAdministration)[0]
