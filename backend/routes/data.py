@@ -129,8 +129,12 @@ def add(req: Request,
 @data_route.get("/data/{id:path}",
                 response_model=DataDict,
                 summary="get data by id",
+                name="data:get_by_id",
                 tags=["Data"])
-def get_by_id(req: Request, id: int, session: Session = Depends(get_session)):
+def get_by_id(req: Request,
+              id: int,
+              session: Session = Depends(get_session),
+              credentials: credentials = Depends(security)):
     data = crud.get_data_by_id(session=session, id=id)
     if not data:
         raise HTTPException(status_code=404,
