@@ -21,6 +21,8 @@ const shapeLevels = ["UNIT_TYPE", "UNIT_NAME"];
 const mapMaxZoom = 4;
 const defCenter = [38.6682, 7.3942];
 const colorRange = ["#bbedda", "#a7e1cb", "#92d5bd", "#7dcaaf", "#67bea1"];
+const higlightColor = "#84b4cc";
+const noDataColor = "#d3d3d3";
 
 const Markers = ({ data, colors }) => {
   data = data.filter((d) => d.geo);
@@ -38,6 +40,99 @@ const Markers = ({ data, colors }) => {
   });
 };
 
+const ShapeLegend = ({ thresholds, filterColor, setFilterColor }) => {
+  thresholds = Array.from(new Set(thresholds.map((x) => Math.floor(x))));
+  thresholds = thresholds.filter((x) => x !== 0);
+  const range = thresholds.map((x, i) => {
+    return (
+      <div
+        key={`legend-${i + 1}`}
+        className={
+          "legend" +
+          (filterColor !== null && filterColor === colorRange[i]
+            ? " legend-selected"
+            : "")
+        }
+        onClick={(e) => {
+          filterColor === null
+            ? setFilterColor(colorRange[i])
+            : filterColor === colorRange[i]
+            ? setFilterColor(null)
+            : setFilterColor(colorRange[i]);
+        }}
+        style={{
+          backgroundColor:
+            colorRange[i] === filterColor ? higlightColor : colorRange[i],
+        }}
+      >
+        {i === 0 && x === 1
+          ? x
+          : i === 0
+          ? "1 - " + x
+          : thresholds[i - 1] + " - " + x}
+      </div>
+    );
+  });
+
+  if (thresholds.length) {
+    return (
+      <div className="legends">
+        {[
+          <div
+            key={"legend-0"}
+            className={
+              "legend" +
+              (filterColor !== null && filterColor === noDataColor
+                ? " legend-selected"
+                : "")
+            }
+            style={{
+              backgroundColor:
+                noDataColor === filterColor ? higlightColor : noDataColor,
+            }}
+            onClick={(e) => {
+              filterColor === null
+                ? setFilterColor(noDataColor)
+                : filterColor === noDataColor
+                ? setFilterColor(null)
+                : setFilterColor(noDataColor);
+            }}
+          >
+            0
+          </div>,
+          ...range,
+          <div
+            key={"legend-last"}
+            className={
+              "legend" +
+              (filterColor !== null && filterColor === colorRange[range.length]
+                ? " legend-selected"
+                : "")
+            }
+            style={{
+              backgroundColor:
+                colorRange[range.length] === filterColor
+                  ? higlightColor
+                  : colorRange[range.length],
+            }}
+            onClick={(e) => {
+              filterColor === null
+                ? setFilterColor(colorRange[range.length])
+                : filterColor === colorRange[range.length]
+                ? setFilterColor(null)
+                : setFilterColor(colorRange[range.length]);
+            }}
+          >
+            {"> "}
+            {thresholds[thresholds.length - 1]}
+          </div>,
+        ]}
+      </div>
+    );
+  }
+  return "";
+};
+
 const MainMaps = ({ geoUrl, question, current, mapHeight = 350 }) => {
   const { user, administration, selectedAdministration } = UIState.useState(
     (s) => s
@@ -48,6 +143,7 @@ const MainMaps = ({ geoUrl, question, current, mapHeight = 350 }) => {
   });
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [filterColor, setFilterColor] = useState(null);
   const colors = question.find((q) => q.id === current.maps?.marker?.id)
     ?.option;
 
@@ -104,6 +200,14 @@ const MainMaps = ({ geoUrl, question, current, mapHeight = 350 }) => {
     });
   };
 
+  const fillColor = (v) => {
+    const color = v === 0 ? "#fff" : colorScale(v);
+    if (filterColor !== null) {
+      return filterColor === color ? higlightColor : color;
+    }
+    return color;
+  };
+
   return (
     <>
       {loading && (
@@ -111,8 +215,22 @@ const MainMaps = ({ geoUrl, question, current, mapHeight = 350 }) => {
           <Spin />
         </div>
       )}
+      <ShapeLegend
+        thresholds={colorScale.thresholds()}
+        filterColor={filterColor}
+        setFilterColor={setFilterColor}
+      />
       <div className="map-buttons">
         <Space size="small" direction="vertical">
+          <Tooltip title="reset zoom">
+            <Button
+              type="secondary"
+              icon={<FullscreenOutlined />}
+              onClick={() => {
+                setPosition({ coordinates: [0, 0], zoom: 1 });
+              }}
+            />
+          </Tooltip>
           <Tooltip title="zoom out">
             <Button
               type="secondary"
@@ -131,15 +249,6 @@ const MainMaps = ({ geoUrl, question, current, mapHeight = 350 }) => {
               icon={<ZoomInOutlined />}
               onClick={() => {
                 setPosition({ ...position, zoom: position.zoom + 0.5 });
-              }}
-            />
-          </Tooltip>
-          <Tooltip title="reset zoom">
-            <Button
-              type="secondary"
-              icon={<FullscreenOutlined />}
-              onClick={() => {
-                setPosition({ coordinates: [0, 0], zoom: 1 });
               }}
             />
           </Tooltip>
@@ -185,7 +294,7 @@ const MainMaps = ({ geoUrl, question, current, mapHeight = 350 }) => {
                     cursor="pointer"
                     style={{
                       default: {
-                        fill: sc ? colorScale(sc.values || 0) : "#d3d3d3",
+                        fill: sc ? fillColor(sc.values || 0) : noDataColor,
                         outline: "none",
                       },
                       hover: {

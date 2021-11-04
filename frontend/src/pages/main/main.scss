@@ -143,4 +143,31 @@
     right: 24px;
     top: 24px;
   }
+
+  .legends {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .legend {
+      cursor: pointer;
+      font-weight: bold;
+      text-align: center;
+      padding: 5px 10px;
+      color: #226799;
+      min-width: 80px;
+      font-size: 12px;
+      border-right: solid 2px #daeaf1;
+      line-height: 10px;
+    }
+  }
+
+  .legend.legend-selected {
+    border: solid #036799 2px;
+    padding: 3px 8px;
+    color: #fff;
+  }
 }
