@@ -226,7 +226,7 @@ const ManageData = () => {
               (adm) => adm.id === x.administration
             )?.parent;
             const isActionDisabled =
-              user?.role === "user" ||
+              user?.role === "editor" &&
               !user?.access.includes(administrationParent);
             return {
               key: x.id,
