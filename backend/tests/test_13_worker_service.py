@@ -20,7 +20,9 @@ class TestWorkerRoutes():
     async def test_get_data_before_recorded(self, app: FastAPI,
                                             session: Session,
                                             client: AsyncClient) -> None:
-        res = await client.get(app.url_path_for("data:get", form_id=1))
+        res = await client.get(
+            app.url_path_for("data:get", form_id=1),
+            headers={"Authorization": f"Bearer {account.token}"})
         assert res.status_code == 200
         res = res.json()
         assert res["total"] == 1
@@ -56,7 +58,9 @@ class TestWorkerRoutes():
     async def test_get_data_after_recorded(self, app: FastAPI,
                                            session: Session,
                                            client: AsyncClient) -> None:
-        res = await client.get(app.url_path_for("data:get", form_id=1))
+        res = await client.get(
+            app.url_path_for("data:get", form_id=1),
+            headers={"Authorization": f"Bearer {account.token}"})
         assert res.status_code == 200
         res = res.json()
         assert res["total"] == 3

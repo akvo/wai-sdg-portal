@@ -24,6 +24,14 @@ security = HTTPBearer()
 data_route = APIRouter()
 
 
+def check_access(adm, user) -> None:
+    if user.role == UserRole.admin:
+        return
+    access = [a.administration for a in user.access]
+    if int(adm) not in access:
+        raise HTTPException(status_code=404, detail="Forbidden")
+
+
 def get_administration_list(session: Session, id: int) -> List[int]:
     administration_ids = [id]
     administration = crud_administration.get_administration_by_id(session,
@@ -44,8 +52,10 @@ def get(req: Request,
         page: int = 1,
         perpage: int = 10,
         administration: Optional[int] = None,
-        session: Session = Depends(get_session)):
+        session: Session = Depends(get_session),
+        credentials: credentials = Depends(security)):
     verify_editor(req.state.authenticated, session)
+    administration_ids = False
     if administration:
         administration_ids = get_administration_list(session=session,
                                                      id=administration)
@@ -82,8 +92,6 @@ def add(req: Request,
         session: Session = Depends(get_session),
         credentials: credentials = Depends(security)):
     user = verify_editor(req.state.authenticated, session)
-    not_admin = user.role == UserRole.editor
-    access = [a.administration for a in user.access]
     administration = None
     geo = None
     answerlist = []
@@ -94,9 +102,8 @@ def add(req: Request,
                         created_by=user.id,
                         created=datetime.now())
         if q.type == QuestionType.administration:
+            check_access(a["value"][0], user)
             if len(a["value"]) == 2:
-                if not_admin and int(a["value"][0]) not in access:
-                    raise HTTPException(status_code=404, detail="Forbidden")
                 administration = int(a["value"][1])
                 answer.value = administration
                 if q.meta:
@@ -276,7 +283,9 @@ def get_last_submission(req: Request,
 def get_history(req: Request,
                 data_id: int,
                 question_id: int,
-                session: Session = Depends(get_session)):
+                session: Session = Depends(get_session),
+                credentials: credentials = Depends(security)):
+    verify_editor(req.state.authenticated, session)
     answer = crud_answer.get_history(session=session,
                                      data=data_id,
                                      question=question_id)

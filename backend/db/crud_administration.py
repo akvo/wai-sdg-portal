@@ -12,7 +12,13 @@ def add_administration(session, data) -> AdministrationDict:
     return data
 
 
-def get_parent_administration(session: Session) -> List[Administration]:
+def get_parent_administration(
+        session: Session,
+        access: Optional[List[int]] = False) -> List[Administration]:
+    if access:
+        return session.query(Administration).filter(
+            and_(Administration.parent.is_(None),
+                 Administration.id.in_(access))).all()
     return session.query(Administration).filter(
         Administration.parent.is_(None)).all()
 

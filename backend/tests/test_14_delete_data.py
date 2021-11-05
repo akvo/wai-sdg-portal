@@ -43,7 +43,9 @@ class TestFileRoutes():
             app.url_path_for("data:delete", id=data["id"]),
             headers={"Authorization": f"Bearer {account.token}"})
         assert res.status_code == 204
-        res = await client.get(app.url_path_for("data:get", form_id=1))
+        res = await client.get(
+            app.url_path_for("data:get", form_id=1),
+            headers={"Authorization": f"Bearer {account.token}"})
         assert res.status_code == 200
         res = res.json()
         assert res["total"] == 2

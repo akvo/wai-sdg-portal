@@ -7,8 +7,9 @@ import db.crud_form as crud
 import db.crud_administration as crud_administration
 from db.connection import get_session
 from models.form import FormDict, FormBase
+from models.user import UserRole
 from models.question import QuestionType
-from middleware import verify_editor
+from middleware import verify_admin, verify_editor
 
 security = HTTPBearer()
 form_route = APIRouter()
@@ -42,6 +43,8 @@ def get_by_id(req: Request, id: int, session: Session = Depends(get_session)):
 def get_webform_by_id(req: Request,
                       id: int,
                       session: Session = Depends(get_session)):
+    user = verify_editor(req.state.authenticated, session)
+    access = [a.administration for a in user.access]
     form = crud.get_form_by_id(session=session, id=id)
     form = form.serialize
     form["question_group"] = [qg.serialize for qg in form["question_group"]]
@@ -54,7 +57,8 @@ def get_webform_by_id(req: Request,
             if q["type"] == QuestionType.geo:
                 q.update({"center": geo_center})
     administration = crud_administration.get_parent_administration(
-        session=session)
+        session=session,
+        access=None if user.role == UserRole.admin else access)
     form.update(
         {"cascade": {
             "administration": [a.cascade for a in administration]
@@ -71,6 +75,6 @@ def add(req: Request,
         name: str,
         session: Session = Depends(get_session),
         credentials: credentials = Depends(security)):
-    verify_editor(req.state.authenticated, session)
+    verify_admin(req.state.authenticated, session)
     form = crud.add_form(session=session, name=name)
     return form.serialize

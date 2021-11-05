@@ -29,18 +29,26 @@ class TestDataUpdateRoutes():
         assert res.status_code == 200
         res = res.json()
         assert res == {
-            "id": 1,
-            "name": "Arsi Negele Town - Garut",
-            "administration": 4,
-            "created_by": "Akvo Support",
-            "created": today,
-            "form": 1,
+            "id":
+            1,
+            "name":
+            "Arsi Negele Town - Garut",
+            "administration":
+            4,
+            "created_by":
+            "Akvo Support",
+            "created":
+            today,
+            "form":
+            1,
             "geo": {
                 "lat": -7.836114,
                 "long": 110.331143
             },
-            "updated_by": "Akvo Support",
-            "updated": today,
+            "updated_by":
+            "Akvo Support",
+            "updated":
+            today,
             "answer": [{
                 "question": 1,
                 "value": "Option 2"
@@ -62,23 +70,26 @@ class TestHistoryRoutes():
     async def test_get_history(self, app: FastAPI, session: Session,
                                client: AsyncClient) -> None:
         res = await client.get(
-            app.url_path_for("data:history", data_id=1, question_id=1))
+            app.url_path_for("data:history", data_id=1, question_id=1),
+            headers={"Authorization": f"Bearer {account.token}"})
         assert res.status_code == 200
         res = res.json()
         assert res == [{
-                "date": today,
-                "user": "Akvo Support",
-                "value": "Option 2"
-                }, {
-                "date": today,
-                "user": "Akvo Support",
-                "value": "Option 1"
-            }]
+            "date": today,
+            "user": "Akvo Support",
+            "value": "Option 2"
+        }, {
+            "date": today,
+            "user": "Akvo Support",
+            "value": "Option 1"
+        }]
 
     @pytest.mark.asyncio
     async def test_get_data(self, app: FastAPI, session: Session,
                             client: AsyncClient) -> None:
-        res = await client.get(app.url_path_for("data:get", form_id=1))
+        res = await client.get(
+            app.url_path_for("data:get", form_id=1),
+            headers={"Authorization": f"Bearer {account.token}"})
         assert res.status_code == 200
         res = res.json()
         assert res["current"] == 1
