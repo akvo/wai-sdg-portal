@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Space, Popover, Collapse } from "antd";
+import { Row, Col, Space, Popover, Collapse, List } from "antd";
 import { PlusSquareOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import api from "../../util/api";
 import { useHistory } from "react-router-dom";
@@ -17,20 +17,34 @@ import startCase from "lodash/startCase";
 
 const { Panel } = Collapse;
 
-const NameWithInfo = ({ name, created_by, created }) => {
+const NameWithInfo = ({ name, created_by, created, updated, updated_by }) => {
   if (name) {
     name = name.split(" - ");
     name = name.map((n) => startCase(n));
     name = name.join(" - ");
+  }
+  let data = [{ text: "Created", date: created, by: created_by }];
+  if (updated) {
+    data = [...data, { text: "Updated", date: updated, by: updated_by }];
   }
   return (
     <Space>
       <Popover
         placement="left"
         content={
-          <div>
-            {created} by {created_by}
-          </div>
+          <List
+            size="small"
+            itemLayout="horizontal"
+            dataSource={data}
+            renderItem={(item) => (
+              <List.Item>
+                <List.Item.Meta
+                  title={`${item.date} - ${item.by}`}
+                  description={item.text}
+                />
+              </List.Item>
+            )}
+          />
         }
         title={name}
       >
