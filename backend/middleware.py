@@ -82,3 +82,12 @@ def verify_admin(authenticated, session):
             status_code=403,
             detail="You don't have data access, please contact admin")
     return user
+
+
+def verify_editor(authenticated, session):
+    user = verify_user(authenticated, session)
+    if user.role not in [UserRole.admin, UserRole.editor]:
+        raise HTTPException(
+            status_code=403,
+            detail="You don't have data access, please contact admin")
+    return user
