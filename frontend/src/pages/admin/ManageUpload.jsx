@@ -17,6 +17,7 @@ import { DropdownNavigation } from "../../components/common";
 import api from "../../util/api";
 import axios from "axios";
 import config from "./admin-static";
+import isEmpty from "lodash/isEmpty";
 
 const { Dragger } = Upload;
 const allowedFiles = [
@@ -75,6 +76,16 @@ const ManageUpload = () => {
   const [jobState, setJobState] = useState(null);
 
   const key = "updatable";
+
+  let administrationByAccess = administration;
+  if (user?.role !== "admin" && !isEmpty(user?.access)) {
+    if (user?.role !== "admin" && !isEmpty(user?.access)) {
+      administrationByAccess = administration.filter(
+        (adm) =>
+          user?.access.includes(adm.id) || user?.access.includes(adm.parent)
+      );
+    }
+  }
 
   const onChange = (info) => {
     const nextState = {};
@@ -181,7 +192,7 @@ const ManageUpload = () => {
               </h3>
               <DropdownNavigation value={form} onChange={setForm} />
               <Select onChange={setSelectedAdm} value={selectedAdm}>
-                {administration
+                {administrationByAccess
                   .filter((a) => a.parent === null)
                   .map((a, ai) => (
                     <Select.Option key={ai} value={a.id}>
@@ -201,7 +212,7 @@ const ManageUpload = () => {
               <h3>Upload your data</h3>
               <DropdownNavigation value={form} onChange={setForm} />
               <Select onChange={setSelectedAdm} value={selectedAdm}>
-                {administration
+                {administrationByAccess
                   .filter((a) => a.parent === null)
                   .map((a, ai) => (
                     <Select.Option key={ai} value={a.id}>
