@@ -222,6 +222,12 @@ const ManageData = () => {
         .get(url)
         .then((d) => {
           const tableData = d.data.data.map((x) => {
+            const administrationParent = administration.find(
+              (adm) => adm.id === x.administration
+            )?.parent;
+            const isActionDisabled =
+              user?.role === "user" ||
+              !user?.access.includes(administrationParent);
             return {
               key: x.id,
               name: x.name,
@@ -235,6 +241,7 @@ const ManageData = () => {
                     size="small"
                     icon={<EditOutlined />}
                     onClick={() => showModal(x.id)}
+                    disabled={isActionDisabled}
                   >
                     Edit
                   </Button>
@@ -248,6 +255,7 @@ const ManageData = () => {
                         type: "delete",
                       })
                     }
+                    disabled={isActionDisabled}
                   >
                     Delete
                   </Button>
