@@ -63,6 +63,8 @@ const MainEditor = ({ value, question, edited, dataPointId }) => {
             />
           ) : question.type === "number" ? (
             <InputNumber
+              min={question.rule?.min !== undefined ? question.rule?.min : null}
+              max={question.rule?.max !== undefined ? question.rule?.max : null}
               value={newValue || value}
               onChange={setNewValue}
               size="small"
