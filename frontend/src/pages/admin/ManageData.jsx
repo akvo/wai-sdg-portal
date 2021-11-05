@@ -29,7 +29,7 @@ import {
   DataDeleteMessage,
 } from "./../../components/Notifications";
 import { SelectLevel, DropdownNavigation } from "../../components/common";
-import PopupNotification from "../../components/PopupNotification";
+import ConfirmationModal from "../../components/ConfirmationModal";
 import isEmpty from "lodash/isEmpty";
 import without from "lodash/without";
 import union from "lodash/union";
@@ -62,6 +62,13 @@ const ManageData = () => {
   const [loading, setLoading] = useState(true);
   const [selectedRow, setSelectedRow] = useState([]);
   const [deleting, setDeleting] = useState(false);
+
+  //ConfirmationModal state
+  const [confirmationModal, setConfirmationModal] = useState({
+    visible: false,
+    handleOk: null,
+    type: "default",
+  });
 
   const current = config?.[form];
   const dataSelected = dataId ? data.find((x) => x.key === dataId) : false;
@@ -116,6 +123,13 @@ const ManageData = () => {
     });
   };
 
+  const handleCloseConfirmationModal = () => {
+    setConfirmationModal({
+      ...confirmationModal,
+      visible: false,
+    });
+  };
+
   const handleDelete = (value) => {
     UIState.update((e) => {
       e.reloadData = false;
@@ -131,6 +145,9 @@ const ManageData = () => {
       })
       .catch((err) => {
         notification.error({ message: "Opps, something went wrong." });
+      })
+      .finally(() => {
+        handleCloseConfirmationModal();
       });
   };
 
@@ -143,6 +160,7 @@ const ManageData = () => {
     api
       .delete(`data?id=${ids}`)
       .then((res) => {
+        setSelectedRow([]);
         notification.success({ message: "Bulk delete success." });
         UIState.update((e) => {
           e.reloadData = true;
@@ -153,6 +171,7 @@ const ManageData = () => {
         notification.error({ message: "Opps, something went wrong." });
       })
       .finally(() => {
+        handleCloseConfirmationModal();
         setDeleting(false);
       });
   };
@@ -187,6 +206,7 @@ const ManageData = () => {
           s.editedRow = {};
         });
       });
+      setSelectedRow([]);
     }
   }, [user, formId]);
 
@@ -221,7 +241,13 @@ const ManageData = () => {
                   <Button
                     size="small"
                     icon={<DeleteOutlined />}
-                    onClick={() => PopupNotification(handleDelete, x, "delete")}
+                    onClick={() =>
+                      setConfirmationModal({
+                        visible: true,
+                        handleOk: () => handleDelete(x),
+                        type: "delete",
+                      })
+                    }
                   >
                     Delete
                   </Button>
@@ -325,7 +351,11 @@ const ManageData = () => {
                 loading={deleting}
                 disabled={!hasSelected}
                 onClick={() =>
-                  PopupNotification(handleBulkDelete, selectedRow, "delete")
+                  setConfirmationModal({
+                    visible: true,
+                    handleOk: () => handleBulkDelete(selectedRow),
+                    type: "delete",
+                  })
                 }
               >
                 Delete Selected
@@ -368,6 +398,14 @@ const ManageData = () => {
       ) : (
         ""
       )}
+
+      {/* ConfirmationModal */}
+      <ConfirmationModal
+        visible={confirmationModal.visible}
+        type={confirmationModal.type}
+        onOk={confirmationModal.handleOk}
+        onCancel={() => handleCloseConfirmationModal()}
+      />
     </>
   );
 };
