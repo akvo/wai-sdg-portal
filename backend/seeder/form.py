@@ -43,6 +43,8 @@ for file in sorted(files):
                 type=q["type"],
                 meta=q["meta"],
                 order=q["order"],
+                required=q["required"] if "required" in q else True,
+                rule=q["rule"] if "rule" in q else None,
                 option=q["options"])
             print(f"{i}.{question.name}")
     print("------------------------------------------")

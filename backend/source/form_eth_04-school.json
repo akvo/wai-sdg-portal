@@ -45,14 +45,20 @@
     "question": "male pupils",
     "type": "number",
     "meta": false,
-    "options": null
+    "options": null,
+    "rule": {
+      "min": 0
+    }
   },
   {
     "order": 8,
     "question": "female pupils",
     "type": "number",
     "meta": false,
-    "options": null
+    "options": null,
+    "rule": {
+      "min": 0
+    }
   },
   {
     "order": 9,
@@ -127,7 +133,11 @@
     "question": "year commisioned",
     "type": "number",
     "meta": false,
-    "options": null
+    "options": null,
+    "rule": {
+      "min": 2000,
+      "max": 2020
+    }
   },
   {
     "order": 13,
@@ -152,7 +162,10 @@
     "question": "yield",
     "type": "number",
     "meta": false,
-    "options": null
+    "options": null,
+    "rule": {
+      "min": 0
+    }
   },
   {
     "order": 15,
@@ -221,14 +234,22 @@
     "question": "number of boy pupils",
     "type": "number",
     "meta": false,
-    "options": null
+    "options": null,
+    "required": false,
+    "rule": {
+      "min": 0
+    }
   },
   {
     "order": 19,
     "question": "number of girl pupils",
     "type": "number",
     "meta": false,
-    "options": null
+    "options": null,
+    "required": false,
+    "rule": {
+      "min": 0
+    }
   },
   {
     "order": 20,

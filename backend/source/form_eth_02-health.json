@@ -195,6 +195,10 @@
     "meta": false,
     "options": [
       {
+        "name": "yes",
+        "color": null
+      },
+      {
         "name": "no facility",
         "color": null
       }

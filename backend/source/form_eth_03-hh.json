@@ -25,7 +25,10 @@
     "question": "household size",
     "type": "number",
     "meta": false,
-    "options": null
+    "options": null,
+    "rule": {
+      "min": 0
+    }
   },
   {
     "order": 6,

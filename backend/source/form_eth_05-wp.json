@@ -140,7 +140,10 @@
     "question": "estimated number of users",
     "type": "number",
     "meta": false,
-    "options": null
+    "options": null,
+    "rule": {
+      "min": 0
+    }
   },
   {
     "order": 12,
@@ -187,7 +190,11 @@
     "question": "year commisioned",
     "type": "number",
     "meta": false,
-    "options": null
+    "options": null,
+    "rule": {
+      "min": 2000,
+      "max": 2020
+    }
   },
   {
     "order": 15,
@@ -222,27 +229,42 @@
     "question": "functional taps in the scheme",
     "type": "number",
     "meta": false,
-    "options": null
+    "options": null,
+    "required": false,
+    "rule": {
+      "min": 0
+    }
   },
   {
     "order": 17,
     "question": "number of non functional taps in the scheme",
     "type": "number",
     "meta": false,
-    "options": null
+    "options": null,
+    "required": false,
+    "rule": {
+      "min": 0
+    }
   },
   {
     "order": 18,
     "question": "depth",
     "type": "number",
     "meta": false,
-    "options": null
+    "options": null,
+    "rule": {
+      "min": 0,
+      "max": 500
+    }
   },
   {
     "order": 19,
     "question": "yield",
     "type": "number",
     "meta": false,
-    "options": null
+    "options": null,
+    "rule": {
+      "min": 0
+    }
   }
 ]
