@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col, Modal, Avatar, Checkbox, Input, Space, Button } from "antd";
 import {
   SaveOutlined,
@@ -6,7 +6,7 @@ import {
   DeleteOutlined,
 } from "@ant-design/icons";
 
-const modalProps = (type) => {
+const modalProps = (type, secureDelete, setSecureDelete) => {
   switch (type) {
     case "submit":
       return {
@@ -26,9 +26,26 @@ const modalProps = (type) => {
             <Space direction="vertical">
               <div>
                 Please type <b>DELETE</b> to confirm
-                <Input onChange={(e) => console.log(e.target.value)} />
+                <Input
+                  value={secureDelete.text}
+                  onChange={(e) =>
+                    setSecureDelete({ ...secureDelete, text: e.target.value })
+                  }
+                  style={{
+                    borderColor:
+                      secureDelete.text === "DELETE" ? "#01770e" : "#9f0031",
+                  }}
+                />
               </div>
-              <Checkbox onChange={(e) => console.log(e.target.checked)}>
+              <Checkbox
+                checked={secureDelete.checked}
+                onChange={(e) =>
+                  setSecureDelete({
+                    ...secureDelete,
+                    checked: e.target.checked,
+                  })
+                }
+              >
                 I understand the consequences.
               </Checkbox>
             </Space>
@@ -46,8 +63,20 @@ const modalProps = (type) => {
   }
 };
 
+const defSecureDeleteState = {
+  text: "",
+  checked: false,
+};
+
 const ConfirmationModal = ({ visible, type, onOk, onCancel }) => {
-  const modalProp = modalProps(type);
+  const [secureDelete, setSecureDelete] = useState(defSecureDeleteState);
+  const modalProp = modalProps(type, secureDelete, setSecureDelete);
+  const isSecure = secureDelete.text === "DELETE" && secureDelete.checked;
+  const disabledOkBtn = type === "delete" ? !isSecure : false;
+
+  useEffect(() => {
+    setSecureDelete(defSecureDeleteState);
+  }, [visible]);
 
   return (
     <Modal
@@ -57,7 +86,13 @@ const ConfirmationModal = ({ visible, type, onOk, onCancel }) => {
       centered={true}
       onCancel={onCancel}
       footer={[
-        <Button key="confirm-ok" size="large" className={type} onClick={onOk}>
+        <Button
+          key="confirm-ok"
+          size="large"
+          className={type}
+          onClick={onOk}
+          disabled={disabledOkBtn}
+        >
           {modalProp?.btnOkText}
         </Button>,
       ]}
@@ -77,38 +112,6 @@ const ConfirmationModal = ({ visible, type, onOk, onCancel }) => {
       </Row>
     </Modal>
   );
-
-  // return info({
-  //   className: "popup-notification",
-  //   closable: true,
-  //   centered: true,
-  //   content: (
-  //     <Row align="middle" justify="center">
-  //       <Col span={24} align="center">
-  //         <Avatar
-  //           className={type}
-  //           icon={modalProp?.icon}
-  //           alt={modalProp?.title}
-  //           size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
-  //         />
-  //         <h2>{modalProp?.title}</h2>
-  //         <p>{modalProp?.subTitle}</p>
-  //         {modalProp?.secure ? modalProp.secure : ""}
-  //       </Col>
-  //     </Row>
-  //   ),
-  //   okButtonProps: {
-  //     disabled: parentProps?.confirmDelete
-  //       ? !parentProps?.confirmDelete.checkbox
-  //       : false,
-  //     size: "large",
-  //     className: type,
-  //   },
-  //   okText: modalProp?.btnOkText,
-  //   onOk() {
-  //     return handleOk(value);
-  //   },
-  // });
 };
 
 export default ConfirmationModal;

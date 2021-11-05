@@ -208,11 +208,6 @@
       }
     }
 
-    h2,
-    p {
-      color: #707070;
-    }
-
     h2 {
       font-size: 18px;
       font-weight: 600;
@@ -229,15 +224,6 @@
     width: 100%;
     display: flex;
     justify-content: center;
-
-    .ant-btn,
-    .ant-btn-primary:disabled {
-      &.delete {
-        background: #707070;
-        color: #ffff;
-        border: 1px solid #707070;
-      }
-    }
 
     .ant-btn,
     .ant-btn-primary {
@@ -259,6 +245,15 @@
         background: #9f00314d;
         color: #9f0031;
         border: 1px solid #9e0030;
+      }
+    }
+
+    .ant-btn:disabled,
+    .ant-btn-primary:disabled {
+      &.delete {
+        background: #707070;
+        color: #ffff;
+        border: 1px solid #707070;
       }
     }
   }
