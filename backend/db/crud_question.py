@@ -1,5 +1,4 @@
 from typing import List, Optional
-from typing_extensions import TypedDict
 from sqlalchemy import and_
 from sqlalchemy.orm import Session
 from models.question import Question, QuestionDict, QuestionBase, QuestionType
@@ -93,7 +92,8 @@ def get_definition(session: Session, form: int):
                     "question": q["name"],
                     "type": q["type"],
                     "option": o,
-                    "required": "YES" if q["required"] else "NO"
+                    "required": "YES" if q["required"] else "NO",
+                    "rule": rule
                 })
         else:
             framed.append({
@@ -101,6 +101,7 @@ def get_definition(session: Session, form: int):
                 "question": q["name"],
                 "type": q["type"],
                 "option": "",
-                "required": "YES" if q["required"] else "NO"
+                "required": "YES" if q["required"] else "NO",
+                "rule": rule
             })
     return framed

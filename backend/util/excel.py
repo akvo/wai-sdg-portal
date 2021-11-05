@@ -34,7 +34,8 @@ def generate_definition_sheet(session: Session, form: int):
     definitions = crud_question.get_definition(session=session, form=form.id)
     df = pd.DataFrame(definitions)
     df["type"] = df["type"].apply(lambda x: str(x).split(".")[1])
-    return df.groupby(["id", "question", "type", "option"]).first()
+    return df.groupby(["id", "question", "type", "option", "required",
+                       "rule"]).first()
 
 
 def generate_excel_template(session: Session, form: int):
