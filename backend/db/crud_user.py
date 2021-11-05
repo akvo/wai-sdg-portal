@@ -101,7 +101,14 @@ def add_access(session: Session, user: int,
     return access
 
 
-def delete_all_access(session: Session, user: int):
+def delete_all_access(session: Session, user: int) -> None:
     session.query(Access).filter(Access.user == user).delete()
+    session.commit()
+    session.flush()
+
+
+# ONLY FOR SEED DEVELOP
+def delete_non_admin_user(session: Session) -> None:
+    session.query(User).filter(User.role != UserRole.admin).delete()
     session.commit()
     session.flush()
