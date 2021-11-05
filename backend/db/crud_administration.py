@@ -44,3 +44,23 @@ def get_administration_by_keyword(
     return session.query(Administration).filter(
         and_(Administration.parent == parent,
              Administration.name.match("%{}%".format(name)))).all()
+
+
+def get_nested_children_ids(session: Session,
+                            current: Optional[List[int]] = [],
+                            parents: Optional[List[int]] = None):
+    if parents is None:
+        current = session.query(Administration.id).all()
+        current = [c.id for c in current]
+    else:
+        for parent in parents:
+            childrens = session.query(Administration.id).filter(
+                Administration.parent == parent).all()
+            if childrens:
+                for children in childrens:
+                    current.append(children.id)
+                current = get_nested_children_ids(
+                    session=session,
+                    current=current,
+                    parents=[c.id for c in childrens])
+    return current
