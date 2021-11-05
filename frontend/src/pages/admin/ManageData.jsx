@@ -30,6 +30,10 @@ import {
 } from "./../../components/Notifications";
 import { SelectLevel, DropdownNavigation } from "../../components/common";
 import PopupNotification from "../../components/PopupNotification";
+import isEmpty from "lodash/isEmpty";
+import without from "lodash/without";
+import union from "lodash/union";
+import xor from "lodash/xor";
 
 const getRowClassName = (record, editedRow) => {
   const edited = editedRow?.[record.key];
@@ -56,6 +60,8 @@ const ManageData = () => {
   const [form, setForm] = useState("water");
   const [perPage, setPerPage] = useState(10);
   const [loading, setLoading] = useState(true);
+  const [selectedRow, setSelectedRow] = useState([]);
+  const [deleting, setDeleting] = useState(false);
 
   const current = config?.[form];
   const dataSelected = dataId ? data.find((x) => x.key === dataId) : false;
@@ -126,6 +132,49 @@ const ManageData = () => {
       .catch((err) => {
         notification.error({ message: "Opps, something went wrong." });
       });
+  };
+
+  const handleBulkDelete = (values) => {
+    setDeleting(true);
+    UIState.update((e) => {
+      e.reloadData = false;
+    });
+    const ids = values.join("&id=");
+    api
+      .delete(`data?id=${ids}`)
+      .then((res) => {
+        notification.success({ message: "Bulk delete success." });
+        UIState.update((e) => {
+          e.reloadData = true;
+        });
+        return res;
+      })
+      .catch((err) => {
+        notification.error({ message: "Opps, something went wrong." });
+      })
+      .finally(() => {
+        setDeleting(false);
+      });
+  };
+
+  const hasSelected = !isEmpty(selectedRow);
+  const onSelectTableRow = ({ key }) => {
+    selectedRow.includes(key)
+      ? setSelectedRow(without(selectedRow, key))
+      : setSelectedRow([...selectedRow, key]);
+  };
+
+  const onSelectAllTableRow = (isSelected) => {
+    const ids = data.map((x) => x.key);
+    if (!isSelected && hasSelected) {
+      setSelectedRow(xor(selectedRow, ids));
+    }
+    if (isSelected && !hasSelected) {
+      setSelectedRow(ids);
+    }
+    if (isSelected && hasSelected) {
+      setSelectedRow(union(selectedRow, ids));
+    }
   };
 
   useEffect(() => {
@@ -218,7 +267,14 @@ const ManageData = () => {
         justify="space-between"
         wrap={true}
       >
-        <Col span={24} align="end">
+        <Col span={16}>
+          {hasSelected
+            ? `Selected ${selectedRow.length} datapoint${
+                selectedRow.length > 1 ? "s" : ""
+              }`
+            : ""}
+        </Col>
+        <Col span={8} align="end">
           <Button type="primary" className="export-filter-button">
             Export Filtered Data
           </Button>
@@ -233,6 +289,11 @@ const ManageData = () => {
           scroll={perPage > 10 ? { y: 420 } : false}
           pagination={false}
           dataSource={data}
+          rowSelection={{
+            selectedRowKeys: selectedRow,
+            onSelect: onSelectTableRow,
+            onSelectAll: onSelectAllTableRow,
+          }}
         />
         <Divider />
         <Row align="middle" justify="space-around">
@@ -259,6 +320,15 @@ const ManageData = () => {
                 onClick={saveEdit}
               >
                 Save Changes
+              </Button>
+              <Button
+                loading={deleting}
+                disabled={!hasSelected}
+                onClick={() =>
+                  PopupNotification(handleBulkDelete, selectedRow, "delete")
+                }
+              >
+                Delete Selected
               </Button>
               <Link to={`/form/new-${title.toLowerCase()}/${formId}`}>
                 <Button>Add New</Button>
