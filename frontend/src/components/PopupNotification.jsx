@@ -29,7 +29,7 @@ const modalProps = (type) => {
         icon: <DeleteOutlined />,
         title: "Delete Entry?",
         subTitle:
-          "Are you sure you want to delete this entry, this Will delete the history as well",
+          "Are you sure you want to delete this entry, this Will delete the history as well and this changes are irreversible.",
         btnOkText: "Yes, Delete This Entry",
       };
     default:
