@@ -83,7 +83,7 @@ def get_definition(session: Session, form: int):
         if q["rule"]:
             rule = []
             for r in q["rule"]:
-                rtext = f"{r}: " + q["rule"][r]
+                rtext = f"{r}: " + str(q["rule"][r])
                 rule.append(rtext)
             rule = " ".join(rule)
         if q["options"]:
