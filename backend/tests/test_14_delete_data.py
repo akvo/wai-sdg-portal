@@ -57,3 +57,26 @@ class TestFileRoutes():
                                             question=q["question"])
             for a in answer:
                 assert a.data != 1
+
+    @pytest.mark.asyncio
+    async def test_bulk_delete_data(self, app: FastAPI,
+                                    client: AsyncClient) -> None:
+        data = await client.get(
+            app.url_path_for("data:get", form_id=1),
+            headers={"Authorization": f"Bearer {account.token}"})
+        data = data.json()
+        ids = [d["id"] for d in data["data"]]
+        assert data["total"] == 2
+        assert ids == [3, 2]
+        res = await client.delete(
+            app.url_path_for("data:bulk-delete"),
+            params="id=2&id=3",
+            headers={"Authorization": f"Bearer {account.token}"})
+        assert res.status_code == 204
+
+        data = await client.get(
+            app.url_path_for("data:get", form_id=1),
+            headers={"Authorization": f"Bearer {account.token}"})
+        assert data.status_code == 404
+        data = data.json()
+        assert data == {"detail": "Not found"}

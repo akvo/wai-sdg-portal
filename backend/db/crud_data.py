@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import List, Optional
+from typing import List, Tuple, Optional
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, desc
 from models.data import Data, DataDict
@@ -37,9 +37,15 @@ def update_data(session: Session, data: Data) -> DataDict:
     return data
 
 
-def delete_by_id(session: Session, id: Data) -> None:
+def delete_by_id(session: Session, id: int) -> None:
     data = session.query(Data).filter(Data.id == id).one()
     session.delete(data)
+    session.commit()
+
+
+def delete_bulk(session: Session, ids: List[int]) -> None:
+    session.query(Data).filter(
+        Data.id.in_(ids)).delete(synchronize_session='fetch')
     session.commit()
 
 

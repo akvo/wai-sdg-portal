@@ -1,7 +1,7 @@
 from http import HTTPStatus
 from datetime import datetime
 from math import ceil
-from fastapi import Depends, Request, Response, APIRouter, HTTPException
+from fastapi import Depends, Request, Response, APIRouter, HTTPException, Query
 from fastapi.security import HTTPBearer
 from fastapi.security import HTTPBasicCredentials as credentials
 from typing import List, Optional
@@ -156,6 +156,23 @@ def delete(req: Request,
            credentials: credentials = Depends(security)):
     verify_admin(req.state.authenticated, session)
     crud.delete_by_id(session=session, id=id)
+    return Response(status_code=HTTPStatus.NO_CONTENT.value)
+
+
+@data_route.delete("/data",
+                   responses={204: {
+                       "model": None
+                   }},
+                   status_code=HTTPStatus.NO_CONTENT,
+                   summary="bulk delete data",
+                   name="data:bulk-delete",
+                   tags=["Data"])
+def bulk_delete(req: Request,
+                id: Optional[List[int]] = Query(None),
+                session: Session = Depends(get_session),
+                credentials: credentials = Depends(security)):
+    verify_admin(req.state.authenticated, session)
+    crud.delete_bulk(session=session, ids=id)
     return Response(status_code=HTTPStatus.NO_CONTENT.value)
 
 
