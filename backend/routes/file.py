@@ -9,7 +9,7 @@ from fastapi.responses import FileResponse
 from fastapi.security import HTTPBearer
 from db.connection import get_session
 from util import excel, storage
-from middleware import verify_admin
+from middleware import verify_editor
 import db.crud_jobs as jobs
 from models.jobs import JobsBase, JobType
 
@@ -36,7 +36,7 @@ def get(req: Request,
         form_id: int,
         session: Session = Depends(get_session),
         credentials: credentials = Depends(security)):
-    verify_admin(req.state.authenticated, session)
+    verify_editor(req.state.authenticated, session)
     filepath = excel.generate_excel_template(session=session, form=form_id)
     filename = filepath.split("/")[-1]
     return FileResponse(path=filepath, filename=filename, media_type=ftype)
@@ -53,7 +53,7 @@ async def upload(req: Request,
                  file: UploadFile = File(...),
                  session: Session = Depends(get_session),
                  credentials: credentials = Depends(security)):
-    user = verify_admin(req.state.authenticated, session)
+    user = verify_editor(req.state.authenticated, session)
     if file.content_type != ftype:
         raise HTTPException(status_code=404, detail="Not Valid Excel File")
     out_file = str(uuid.uuid4())
