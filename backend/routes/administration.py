@@ -1,5 +1,5 @@
-from fastapi import Depends, Request, APIRouter
-from typing import List
+from fastapi import Depends, Request, APIRouter, Query
+from typing import List, Optional
 from sqlalchemy.orm import Session
 import db.crud_administration as crud
 from db.connection import get_session
@@ -25,3 +25,14 @@ def get(req: Request, session: Session = Depends(get_session)):
 def get_by_id(req: Request, id: int, session: Session = Depends(get_session)):
     administration = crud.get_administration_by_id(session=session, id=id)
     return administration
+
+
+@administration_route.get(
+    "/administration-boundary",
+    summary="get nested id's list of parent administration",
+    tags=["Administration"])
+def get_all_ids(req: Request,
+                id: Optional[List[int]] = Query(None),
+                session: Session = Depends(get_session)) -> List[int]:
+    ids = crud.get_nested_children_ids(session=session, parents=id)
+    return ids
