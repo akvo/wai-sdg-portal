@@ -1,16 +1,54 @@
 import React, { useState } from "react";
-import { Row, Col, Button, Select, InputNumber, Input, DatePicker } from "antd";
+import {
+  Row,
+  Col,
+  Button,
+  Select,
+  InputNumber,
+  Input,
+  DatePicker,
+  Popover,
+  Typography,
+} from "antd";
 import { UndoOutlined, SaveOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { pickBy, startCase } from "lodash";
 import { UIState } from "../../state/ui";
 
 const { Option } = Select;
+const { Text } = Typography;
+const defInputNumberPopoverState = { visible: [], content: "" };
 
 const MainEditor = ({ value, question, edited, dataPointId }) => {
   const [fieldActive, setFieldActive] = useState(null);
   const [newValue, setNewValue] = useState(null);
-  const onSave = () => {
+  const [inputNumberPopover, setInputNumberPopover] = useState(
+    defInputNumberPopoverState
+  );
+
+  const onSave = (question) => {
+    const { type, rule } = question;
+    if (type === "number") {
+      const min = rule?.min !== undefined ? rule.min : null;
+      const max = rule?.max !== undefined ? rule.max : null;
+      const isNotInRange = newValue < min || newValue > max;
+      setInputNumberPopover({
+        visible: isNotInRange,
+        content: (
+          <Text type="danger">
+            {max ? `range : ${[min, max].join(" - ")}` : `min : ${min}`}
+          </Text>
+        ),
+      });
+      if (isNotInRange) {
+        setNewValue(value);
+        setTimeout(() => {
+          setInputNumberPopover({ defInputNumberPopoverState });
+        }, 1500);
+        return;
+      }
+    }
+
     setFieldActive(false);
     if (newValue !== null) {
       const updatedValue = { ...edited, [question.id]: newValue };
@@ -38,6 +76,7 @@ const MainEditor = ({ value, question, edited, dataPointId }) => {
       });
     }
   };
+
   if (fieldActive) {
     return (
       <Row className="editor" justify="space-around" align="middle">
@@ -62,13 +101,17 @@ const MainEditor = ({ value, question, edited, dataPointId }) => {
               onChange={(d, ds) => setNewValue(ds)}
             />
           ) : question.type === "number" ? (
-            <InputNumber
-              min={question.rule?.min !== undefined ? question.rule?.min : null}
-              max={question.rule?.max !== undefined ? question.rule?.max : null}
-              value={newValue || value}
-              onChange={setNewValue}
-              size="small"
-            />
+            <Popover
+              placement="top"
+              title={inputNumberPopover.content}
+              visible={inputNumberPopover.visible}
+            >
+              <InputNumber
+                value={newValue || value}
+                onChange={setNewValue}
+                size="small"
+              />
+            </Popover>
           ) : (
             <Input
               size="small"
@@ -78,7 +121,11 @@ const MainEditor = ({ value, question, edited, dataPointId }) => {
           )}
         </Col>
         <Col span={6}>
-          <Button size="small" onClick={onSave} icon={<SaveOutlined />}>
+          <Button
+            size="small"
+            onClick={() => onSave(question)}
+            icon={<SaveOutlined />}
+          >
             Save
           </Button>
         </Col>
@@ -107,6 +154,7 @@ const MainEditor = ({ value, question, edited, dataPointId }) => {
       return <div onClick={() => setFieldActive(true)}>{dateValue}</div>;
     }
   }
+
   if (edited?.[question.id]) {
     return (
       <Row justify="space-around" align="middle">
@@ -121,6 +169,7 @@ const MainEditor = ({ value, question, edited, dataPointId }) => {
       </Row>
     );
   }
+
   return (
     <div onClick={() => setFieldActive(true)}>
       {value ? startCase(value) : "-"}
