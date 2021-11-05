@@ -42,6 +42,22 @@ def validate_header_names(header, col, header_names):
     return False
 
 
+def validate_number(answer, question):
+    try:
+        answer = int(answer)
+    except ValueError:
+        return {"message": "Value should be numeric"}
+    if question.rule:
+        rule = question.rule
+        qname = question.name
+        for r in rule:
+            if r == "max" and rule[r] < answer:
+                return {"message": f"Maximum value for {qname} is {rule[r]}"}
+            if r == "min" and rule[r] > answer:
+                return {"message": f"Minimum value for {qname} is {rule[r]}"}
+    return False
+
+
 def validate_geo(answer):
     try:
         a = int(answer)
@@ -120,10 +136,9 @@ def validate_row_data(col, answer, question):
             default.update(err)
             return default
     if question.type == QuestionType.number:
-        try:
-            answer = int(answer)
-        except ValueError:
-            default.update({"message": "Value should be numeric"})
+        err = validate_number(answer, question)
+        if err:
+            default.update(err)
             return default
     if question.type == QuestionType.date:
         err = validate_date(answer)

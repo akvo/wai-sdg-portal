@@ -18,9 +18,7 @@ account = Acc(True)
 
 class TestExcelValidation():
     @pytest.mark.asyncio
-    async def test_get_excel_template(self, session: Session,
-                                      client: AsyncClient,
-                                      app: FastAPI) -> None:
+    async def test_get_excel_template(self, session: Session) -> None:
         crud_question.add_question(session=session,
                                    name="Test Number Question",
                                    question_group=1,
@@ -47,14 +45,6 @@ class TestExcelValidation():
                                    form=1,
                                    meta=False,
                                    type="date")
-
-        res = await client.get(app.url_path_for("form:get_by_id", id=1))
-        res = res.json()
-        for qg in res["question_group"]:
-            for q in qg["question"]:
-                if q["name"] == "Test Number Question":
-                    assert q["rule"] == {"min": 0, "max": 100}
-
         excel_file = generate_excel_template(session=session, form=1)
         assert excel_file == "./tmp/1-test.xlsx"
         df = pd.read_excel(excel_file)
@@ -88,10 +78,10 @@ class TestExcelValidation():
             "Option B|Option A", ""
         ], [
             "Option 2", "Kuyera Town", "180", "Testing Data 2",
-            "", 23, "option a|Option D", "2020"
+            "", 300, "option a|Option D", "2020"
         ], [
             "Option 2", "Kuyera Town", "180,A", "Testing Data 2",
-            "", 23, "Option B", "2020-12-18"
+            "", -23, "Option B", "2020-12-18"
         ], [
             "Option 2        ", "Kuyera Town", "180,90", "Testing Data 2",
             "", 23, "    Option B\n", "2020-12-18"
@@ -144,6 +134,14 @@ class TestExcelValidation():
             'error': ExcelError.value,
             'message': "Value should be numeric",
             "column": "F2"
+        }, {
+            'error': ExcelError.value,
+            'message': "Maximum value for Test Number Question is 100",
+            "column": "F3"
+        }, {
+            'error': ExcelError.value,
+            'message': "Minimum value for Test Number Question is 0",
+            "column": "F4"
         }, {
             'error': ExcelError.value,
             'message': "Invalid case: option a and Invalid value: Option D",
