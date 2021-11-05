@@ -12,12 +12,13 @@ from db import crud_administration
 from db import crud_answer
 from db import crud_form
 from db import crud_user
+from models.user import UserRole
 from models.answer import Answer, AnswerDict
 from models.question import QuestionType
 from models.history import History
 from db.connection import get_session
 from models.data import DataResponse, DataDict, SubmissionInfo
-from middleware import verify_admin
+from middleware import verify_editor
 
 security = HTTPBearer()
 data_route = APIRouter()
@@ -44,7 +45,7 @@ def get(req: Request,
         perpage: int = 10,
         administration: Optional[int] = None,
         session: Session = Depends(get_session)):
-    administration_ids = False
+    verify_editor(req.state.authenticated, session)
     if administration:
         administration_ids = get_administration_list(session=session,
                                                      id=administration)
@@ -80,7 +81,9 @@ def add(req: Request,
         answers: List[AnswerDict],
         session: Session = Depends(get_session),
         credentials: credentials = Depends(security)):
-    user = verify_admin(req.state.authenticated, session)
+    user = verify_editor(req.state.authenticated, session)
+    not_admin = user.role == UserRole.editor
+    access = [a.administration for a in user.access]
     administration = None
     geo = None
     answerlist = []
@@ -92,6 +95,8 @@ def add(req: Request,
                         created=datetime.now())
         if q.type == QuestionType.administration:
             if len(a["value"]) == 2:
+                if not_admin and int(a["value"][0]) not in access:
+                    raise HTTPException(status_code=404, detail="Forbidden")
                 administration = int(a["value"][1])
                 answer.value = administration
                 if q.meta:
@@ -154,7 +159,7 @@ def delete(req: Request,
            id: int,
            session: Session = Depends(get_session),
            credentials: credentials = Depends(security)):
-    verify_admin(req.state.authenticated, session)
+    verify_editor(req.state.authenticated, session)
     crud.delete_by_id(session=session, id=id)
     return Response(status_code=HTTPStatus.NO_CONTENT.value)
 
@@ -171,7 +176,7 @@ def bulk_delete(req: Request,
                 id: Optional[List[int]] = Query(None),
                 session: Session = Depends(get_session),
                 credentials: credentials = Depends(security)):
-    verify_admin(req.state.authenticated, session)
+    verify_editor(req.state.authenticated, session)
     crud.delete_bulk(session=session, ids=id)
     return Response(status_code=HTTPStatus.NO_CONTENT.value)
 
@@ -186,7 +191,7 @@ def update_by_id(req: Request,
                  answers: List[AnswerDict],
                  session: Session = Depends(get_session),
                  credentials: credentials = Depends(security)):
-    user = verify_admin(req.state.authenticated, session)
+    user = verify_editor(req.state.authenticated, session)
     data = crud.get_data_by_id(session=session, id=id)
     form = crud_form.get_form_by_id(session=session, id=data.form)
     questions = form.list_of_questions

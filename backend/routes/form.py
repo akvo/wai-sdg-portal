@@ -8,7 +8,7 @@ import db.crud_administration as crud_administration
 from db.connection import get_session
 from models.form import FormDict, FormBase
 from models.question import QuestionType
-from middleware import verify_admin
+from middleware import verify_editor
 
 security = HTTPBearer()
 form_route = APIRouter()
@@ -71,6 +71,6 @@ def add(req: Request,
         name: str,
         session: Session = Depends(get_session),
         credentials: credentials = Depends(security)):
-    verify_admin(req.state.authenticated, session)
+    verify_editor(req.state.authenticated, session)
     form = crud.add_form(session=session, name=name)
     return form.serialize
