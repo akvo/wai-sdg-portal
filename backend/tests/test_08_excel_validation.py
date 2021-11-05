@@ -18,7 +18,9 @@ account = Acc(True)
 
 class TestExcelValidation():
     @pytest.mark.asyncio
-    async def test_get_excel_template(self, session: Session) -> None:
+    async def test_get_excel_template(self, session: Session,
+                                      client: AsyncClient,
+                                      app: FastAPI) -> None:
         crud_question.add_question(session=session,
                                    name="Test Number Question",
                                    question_group=1,
@@ -45,6 +47,14 @@ class TestExcelValidation():
                                    form=1,
                                    meta=False,
                                    type="date")
+
+        res = await client.get(app.url_path_for("form:get_by_id", id=1))
+        res = res.json()
+        for qg in res["question_group"]:
+            for q in qg["question"]:
+                if q["name"] == "Test Number Question":
+                    assert q["rule"] == {"min": 0, "max": 100}
+
         excel_file = generate_excel_template(session=session, form=1)
         assert excel_file == "./tmp/1-test.xlsx"
         df = pd.read_excel(excel_file)

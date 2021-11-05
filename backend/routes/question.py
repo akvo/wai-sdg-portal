@@ -51,8 +51,8 @@ class PostQueryParams:
         self.question_group = question_group
         self.type = type
         self.required = required
-        self.min = max
-        self.max = min
+        self.min = min
+        self.max = max
         self.meta = meta
 
 
@@ -77,10 +77,10 @@ def add(req: Request,
     rule = {}
     has_rule = False
     if params.type == QuestionType.number:
-        if params.min:
+        if params.min is not None:
             has_rule = True
             rule.update({"min": params.min})
-        if params.min:
+        if params.max:
             has_rule = True
             rule.update({"max": params.max})
     question = crud.add_question(session=session,

@@ -78,7 +78,7 @@ def get_definition(session: Session, form: int):
     questions = session.query(Question).filter((Question.form) == form).all()
     framed = []
     for q in [qs.to_definition for qs in questions]:
-        rule = None
+        rule = ""
         if q["rule"]:
             rule = []
             for r in q["rule"]:
