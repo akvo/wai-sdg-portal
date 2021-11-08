@@ -13,6 +13,7 @@ const defaultUIState = {
   reloadData: true,
   editedRow: {},
   jobStatus: [],
+  advanceSearchValue: [],
 };
 
 export const UIState = new Store(defaultUIState);

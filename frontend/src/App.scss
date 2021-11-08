@@ -263,3 +263,34 @@
   padding: 0px !important;
   min-width: 300px;
 }
+
+.advance-search-container {
+  margin-bottom: 24px;
+
+  .advance-search-collapse {
+    margin-bottom: 10px;
+    .advance-search-panel {
+      .ant-collapse-header {
+        padding: 0 !important;
+      }
+    }
+
+    .ant-collapse-content-box {
+      background-color: #fff;
+      border-radius: 4px;
+      padding: 24px !important;
+
+      .search-question-option-wrapper {
+        width: 100%;
+
+        .search-question-select {
+          width: 100%;
+        }
+      }
+
+      .ant-radio-wrapper {
+        display: block;
+      }
+    }
+  }
+}

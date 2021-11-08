@@ -82,7 +82,7 @@ export const SelectLevel = () => {
               optionFilterProp="label"
               onSelect={onSelect}
               filterOption={(input, option) =>
-                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
               }
               className="filter-select"
             />
