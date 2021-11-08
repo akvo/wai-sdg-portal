@@ -186,7 +186,7 @@ const ManageData = () => {
   };
 
   const onSelectAllTableRow = (isSelected) => {
-    const ids = data.map((x) => x.key);
+    const ids = data.filter((x) => !x.disabled).map((x) => x.key);
     if (!isSelected && hasSelected) {
       setSelectedRow(xor(selectedRow, ids));
     }
