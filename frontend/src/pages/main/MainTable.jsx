@@ -36,6 +36,7 @@ const MainTable = ({
   changePage,
   setPerPage,
   lastSubmitted,
+  page,
 }) => {
   const { columns, formId, title } = current;
   const [saving, setSaving] = useState(false);
@@ -163,6 +164,7 @@ const MainTable = ({
             {total ? (
               <Pagination
                 defaultCurrent={1}
+                current={page}
                 total={total}
                 size="small"
                 onShowSizeChange={(e, s) => {

@@ -214,8 +214,8 @@ const ManageData = () => {
 
   useEffect(() => {
     if (user && formId && reloadData && administration) {
-      const adminId = takeRight(selectedAdministration)[0];
       setLoading(true);
+      const adminId = takeRight(selectedAdministration)[0];
       let url = `data/form/${formId}?page=${page}&perpage=${perPage}`;
       if (adminId) {
         url += `&administration=${adminId}`;
@@ -299,10 +299,14 @@ const ManageData = () => {
       <div className="filter-wrapper">
         <Space size={20} align="center" wrap={true}>
           <DropdownNavigation value={form} onChange={setForm} />
-          <SelectLevel />
+          <SelectLevel setPage={setPage} />
         </Space>
       </div>
-      <AdvanceSearch formId={formId} questionGroup={questionGroup} />
+      <AdvanceSearch
+        formId={formId}
+        questionGroup={questionGroup}
+        setPage={setPage}
+      />
       <Row
         className="button-wrapper"
         align="middle"
@@ -346,6 +350,7 @@ const ManageData = () => {
             {total ? (
               <Pagination
                 defaultCurrent={1}
+                current={page}
                 total={total}
                 onShowSizeChange={(e, s) => {
                   setPerPage(s);

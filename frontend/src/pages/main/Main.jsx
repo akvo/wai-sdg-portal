@@ -14,8 +14,9 @@ import takeRight from "lodash/takeRight";
 import MainTable from "./MainTable";
 import MainMaps from "./MainMaps";
 import AdvanceSearch from "../../components/AdvanceSearch";
-import startCase from "lodash/startCase";
 import { generateAdvanceFilterURL } from "../../util/utils";
+import startCase from "lodash/startCase";
+import isEmpty from "lodash/isEmpty";
 
 const { Panel } = Collapse;
 
@@ -94,8 +95,8 @@ const Main = ({ match }) => {
 
   useEffect(() => {
     if (user && current && reloadData) {
-      const adminId = takeRight(selectedAdministration)[0];
       setLoading(true);
+      const adminId = takeRight(selectedAdministration)[0];
       let url = `data/form/${current.formId}?page=${page}&perpage=${perPage}`;
       if (adminId) {
         url += `&administration=${adminId}`;
@@ -182,11 +183,12 @@ const Main = ({ match }) => {
                 value={match?.params?.page}
                 onChange={(val) => history.push(`/data/${val}`)}
               />
-              <SelectLevel />
+              <SelectLevel setPage={setPage} />
             </Space>
             <AdvanceSearch
               formId={current?.formId}
               questionGroup={questionGroup}
+              setPage={setPage}
             />
           </Col>
         </Row>
@@ -217,6 +219,7 @@ const Main = ({ match }) => {
             setPerPage={setPerPage}
             changePage={changePage}
             lastSubmitted={lastSubmitted}
+            page={page}
           />
         </Row>
       </Col>

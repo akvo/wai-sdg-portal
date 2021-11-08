@@ -10,7 +10,7 @@ import flatten from "lodash/flatten";
 
 const { Panel } = Collapse;
 
-const AdvanceSearch = ({ formId, questionGroup }) => {
+const AdvanceSearch = ({ formId, questionGroup, setPage }) => {
   // Get question option only
   const question = flatten(
     questionGroup.map((qg) => qg.question.filter((q) => q.type === "option"))
@@ -26,6 +26,7 @@ const AdvanceSearch = ({ formId, questionGroup }) => {
   };
 
   const handleOnChangeQuestionOption = (value) => {
+    setPage(1);
     const filterAdvanceSearchValue = advanceSearchValue.filter(
       (x) => x.qid !== selectedQuestion?.id
     );
@@ -64,7 +65,7 @@ const AdvanceSearch = ({ formId, questionGroup }) => {
       >
         <Panel
           className="advance-search-panel"
-          header={<Button icon={<FilterOutlined />}>Advance Search</Button>}
+          header={<Button icon={<FilterOutlined />}>Advanced Filter</Button>}
           showArrow={false}
           key="advance-search"
         >
@@ -98,7 +99,7 @@ const AdvanceSearch = ({ formId, questionGroup }) => {
         </Panel>
       </Collapse>
       {/* Tags of selected filter */}
-      {!isEmpty(advanceSearchValue) && <RenderFilterTag />}
+      {!isEmpty(advanceSearchValue) && <RenderFilterTag setPage={setPage} />}
     </div>
   );
 };
@@ -136,10 +137,11 @@ const RenderQuestionOption = ({
   );
 };
 
-const RenderFilterTag = () => {
+const RenderFilterTag = ({ setPage }) => {
   const { advanceSearchValue } = UIState.useState((s) => s);
 
   const handleOnCloseTag = (option) => {
+    setPage(1);
     const deleteFilter = advanceSearchValue.filter((x) => x.option !== option);
     UIState.update((s) => {
       s.advanceSearchValue = deleteFilter;

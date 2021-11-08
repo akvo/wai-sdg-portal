@@ -39,7 +39,7 @@ export const navigationOptions = [
   },
 ];
 
-export const SelectLevel = () => {
+export const SelectLevel = ({ setPage }) => {
   const { administration, selectedAdministration, user } = UIState.useState(
     (s) => s
   );
@@ -55,6 +55,7 @@ export const SelectLevel = () => {
     <Space>
       {selectedAdministration.map((s, si) => {
         const onSelect = (v) => {
+          setPage(1);
           UIState.update((u) => {
             u.selectedAdministration[si + 1] = v;
           });
