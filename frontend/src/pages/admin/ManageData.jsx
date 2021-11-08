@@ -21,7 +21,7 @@ import takeRight from "lodash/takeRight";
 import config, { columnNames } from "./admin-static";
 import { UIState } from "../../state/ui";
 import api from "../../util/api";
-import { getLocationName } from "../../util/utils";
+import { getLocationName, generateAdvanceFilterURL } from "../../util/utils";
 import MainTableChild from "../main/MainTableChild.jsx";
 import ErrorPage from "../../components/ErrorPage";
 import {
@@ -221,12 +221,7 @@ const ManageData = () => {
         url += `&administration=${adminId}`;
       }
       // advance search
-      if (!isEmpty(advanceSearchValue)) {
-        const advanceFilter = advanceSearchValue
-          .map((x) => x.option)
-          .join("&q=");
-        url += `&q=${advanceFilter}`;
-      }
+      url = generateAdvanceFilterURL(advanceSearchValue, url);
       api
         .get(url)
         .then((d) => {
