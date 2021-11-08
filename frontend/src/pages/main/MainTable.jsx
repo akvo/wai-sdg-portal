@@ -14,6 +14,9 @@ import MainTableChild from "./MainTableChild";
 import { UIState } from "../../state/ui";
 import api from "../../util/api";
 import { DataUpdateMessage } from "./../../components/Notifications";
+import flatten from "lodash/flatten";
+import isEmpty from "lodash/isEmpty";
+import intersection from "lodash/intersection";
 
 const getRowClassName = (record, editedRow) => {
   const edited = editedRow?.[record.key];
@@ -37,7 +40,26 @@ const MainTable = ({
   const { columns, formId, title } = current;
   const [saving, setSaving] = useState(false);
   const [expanded, setExpanded] = useState([]);
-  const { editedRow } = UIState.useState((e) => e);
+  const { editedRow, administration, user } = UIState.useState((e) => e);
+
+  // Filter administration question
+  const administrationQuestionIds = flatten(
+    questionGroup.map((qg) =>
+      qg.question.filter((q) => q.type === "administration")
+    )
+  )?.map((x) => x.id);
+
+  // Filter by Access
+  const administrationIdsByUserAccess =
+    user?.role === "editor" && !isEmpty(user?.access)
+      ? administration
+          .filter(
+            (adm) =>
+              user?.access.includes(adm.id) || user?.access.includes(adm.parent)
+          )
+          .map((adm) => adm.id)
+      : administration.map((adm) => adm.id);
+
   const saveEdit = () => {
     setSaving(true);
     UIState.update((e) => {
@@ -68,6 +90,7 @@ const MainTable = ({
       });
     });
   };
+
   return (
     <Col span={span} xxl={14} className="table-wrapper">
       <div className="container">
@@ -106,6 +129,21 @@ const MainTable = ({
               scroll={{ y: 320 }}
               pagination={false}
               expandable={{
+                rowExpandable: (record) => {
+                  // Enable expand by Access
+                  const administrationAnswers = record.detail
+                    .filter((det) =>
+                      administrationQuestionIds.includes(det.question)
+                    )
+                    .map((det) => det.value);
+                  const isExpandable = !isEmpty(
+                    intersection(
+                      administrationIdsByUserAccess,
+                      administrationAnswers
+                    )
+                  );
+                  return isExpandable;
+                },
                 expandIconColumnIndex: columns.length,
                 expandedRowRender: (record) => (
                   <MainTableChild questionGroup={questionGroup} data={record} />
