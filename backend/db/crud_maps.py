@@ -12,7 +12,7 @@ def get_data(session: Session,
     data = session.query(Data).filter(Data.form == form)
     if options:
         data_id = session.query(ViewData.data).filter(
-            ViewData.options.overlap(options)).all()
+            ViewData.options.contains(options)).all()
         data = data.filter(Data.id.in_([d.data for d in data_id]))
     data = data.all()
     answer = session.query(Answer).filter(Answer.question.in_(question)).all()

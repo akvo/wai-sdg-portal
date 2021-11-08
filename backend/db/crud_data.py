@@ -65,7 +65,7 @@ def get_data(session: Session,
     data = session.query(Data).filter(Data.form == form)
     if options:
         data_id = session.query(ViewData.data).filter(
-            ViewData.options.overlap(options)).all()
+            ViewData.options.contains(options)).all()
         data = data.filter(Data.id.in_([d.data for d in data_id]))
     if administration:
         data = data.filter(Data.administration.in_(administration))
@@ -85,7 +85,7 @@ def count(session: Session,
     data = session.query(Data).filter(Data.form == form)
     if options:
         data_id = session.query(ViewData.data).filter(
-            ViewData.options.overlap(options)).all()
+            ViewData.options.contains(options)).all()
         data = data.filter(Data.id.in_([d.data for d in data_id]))
     if administration:
         data = data.filter(Data.administration.in_(administration))
@@ -99,7 +99,7 @@ def get_last_submitted(session: Session,
     data = session.query(Data).filter(Data.form == form)
     if options:
         data_id = session.query(ViewData.data).filter(
-            ViewData.options.overlap(options)).all()
+            ViewData.options.contains(options)).all()
         data = data.filter(Data.id.in_([d.data for d in data_id]))
     if administration:
         data = data.filter(Data.administration.in_(administration))
