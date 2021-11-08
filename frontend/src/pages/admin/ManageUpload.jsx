@@ -191,15 +191,6 @@ const ManageUpload = () => {
                 If you do not already have a template file, please download it
               </h3>
               <DropdownNavigation value={form} onChange={setForm} />
-              <Select onChange={setSelectedAdm} value={selectedAdm}>
-                {administrationByAccess
-                  .filter((a) => a.parent === null)
-                  .map((a, ai) => (
-                    <Select.Option key={ai} value={a.id}>
-                      {a.name}
-                    </Select.Option>
-                  ))}
-              </Select>
               <Button onClick={downloadTemplate}>Download</Button>
             </Space>
           </Col>
