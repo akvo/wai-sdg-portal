@@ -16,6 +16,7 @@ import api from "../../util/api";
 import { scaleQuantize } from "d3-scale";
 import { UIState } from "../../state/ui";
 import _ from "lodash";
+import { generateAdvanceFilterURL } from "../../util/utils";
 
 const shapeLevels = ["UNIT_TYPE", "UNIT_NAME"];
 const mapMaxZoom = 4;
@@ -182,9 +183,12 @@ const MarkerLegend = ({ data, colors, filterMarker, setFilterMarker }) => {
 };
 
 const MainMaps = ({ geoUrl, question, current, mapHeight = 350 }) => {
-  const { user, administration, selectedAdministration } = UIState.useState(
-    (s) => s
-  );
+  const {
+    user,
+    administration,
+    selectedAdministration,
+    advanceSearchValue,
+  } = UIState.useState((s) => s);
   const [position, setPosition] = useState({
     coordinates: defCenter,
     zoom: 1.8,
@@ -206,6 +210,8 @@ const MainMaps = ({ geoUrl, question, current, mapHeight = 350 }) => {
       if (current.maps.shape) {
         url += `&marker=${current.maps.marker.id}`;
       }
+      // advance search
+      url = generateAdvanceFilterURL(advanceSearchValue, url);
       api
         .get(url)
         .then((res) => {
@@ -217,7 +223,7 @@ const MainMaps = ({ geoUrl, question, current, mapHeight = 350 }) => {
           setLoading(false);
         });
     }
-  }, [user, current]);
+  }, [user, current, advanceSearchValue]);
 
   const shapeColor = _.chain(_.groupBy(data, "loc"))
     .map((v, k) => {
