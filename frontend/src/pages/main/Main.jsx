@@ -16,7 +16,6 @@ import MainMaps from "./MainMaps";
 import AdvanceSearch from "../../components/AdvanceSearch";
 import { generateAdvanceFilterURL } from "../../util/utils";
 import startCase from "lodash/startCase";
-import isEmpty from "lodash/isEmpty";
 
 const { Panel } = Collapse;
 
