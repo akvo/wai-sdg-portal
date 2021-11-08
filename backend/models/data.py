@@ -15,6 +15,7 @@ from .form import Form
 from .user import User
 from .answer import Answer
 from .administration import Administration
+from .views.view_data import ViewData
 
 
 class GeoData(BaseModel):
@@ -70,6 +71,10 @@ class Data(Base):
     created_by_user = relationship(User, foreign_keys=[created_by])
     updated_by_user = relationship(User, foreign_keys=[updated_by])
     administration_detail = relationship(Administration, backref="data")
+    views = relationship(ViewData,
+                         primaryjoin=ViewData.data == id,
+                         foreign_keys=id,
+                         viewonly=True)
 
     def __init__(self, name: str, form: int, administration: int,
                  geo: List[float], created_by: int, updated_by: int,

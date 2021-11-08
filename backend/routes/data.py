@@ -1,3 +1,4 @@
+import re
 from http import HTTPStatus
 from datetime import datetime
 from math import ceil
@@ -22,6 +23,19 @@ from middleware import verify_editor
 
 security = HTTPBearer()
 data_route = APIRouter()
+query_pattern = re.compile(r"[0-9]*\|(.*)")
+
+
+def check_query(keywords):
+    keys = []
+    if not keywords:
+        return keys
+    for q in keywords:
+        if not query_pattern.match(q):
+            raise HTTPException(status_code=400, detail="Bad Request")
+        else:
+            keys.append(q.replace("|", "||"))
+    return keys
 
 
 def check_access(adm, user) -> None:
@@ -52,8 +66,12 @@ def get(req: Request,
         page: int = 1,
         perpage: int = 10,
         administration: Optional[int] = None,
+        q: Optional[List[str]] = Query(None),
         session: Session = Depends(get_session),
         credentials: credentials = Depends(security)):
+    options = None
+    if q:
+        options = check_query(q)
     verify_editor(req.state.authenticated, session)
     administration_ids = False
     if administration:
@@ -62,12 +80,14 @@ def get(req: Request,
     data = crud.get_data(session=session,
                          form=form_id,
                          administration=administration_ids,
+                         options=options,
                          skip=(perpage * (page - 1)),
                          perpage=perpage)
     if not data:
         raise HTTPException(status_code=404, detail="Not found")
     data = [f.serialize for f in data]
     total = crud.count(session=session,
+                       options=options,
                        form=form_id,
                        administration=administration_ids)
     total_page = ceil(total / 10) if total > 0 else 0
@@ -256,13 +276,18 @@ def update_by_id(req: Request,
 def get_last_submission(req: Request,
                         form_id: int,
                         administration: Optional[int] = None,
+                        q: Optional[List[str]] = Query(None),
                         session: Session = Depends(get_session)):
+    options = None
+    if q:
+        options = check_query(q)
     administration_ids = False
     if administration:
         administration_ids = get_administration_list(session=session,
                                                      id=administration)
     last_submitted = crud.get_last_submitted(session=session,
                                              form=form_id,
+                                             options=options,
                                              administration=administration_ids)
     if not last_submitted:
         raise HTTPException(status_code=404, detail="Not found")
