@@ -114,7 +114,7 @@ const RenderQuestionOption = ({
 
   const OptionToRender = ({ questionId, option }) => {
     return sortBy(option, "order").map((opt) => (
-      <Radio key={`${opt.id}-${opt.name}`} value={`${questionId}||${opt.name}`}>
+      <Radio key={`${opt.id}-${opt.name}`} value={`${questionId}|${opt.name}`}>
         {upperFirst(opt.name)}
       </Radio>
     ));
@@ -158,7 +158,7 @@ const RenderFilterTag = () => {
         closable
         onClose={(e) => handleOnCloseTag(val.option)}
       >
-        {upperFirst(val.option.split("||")[1])}
+        {upperFirst(val.option.split("|")[1])}
       </Tag>
     ));
   };

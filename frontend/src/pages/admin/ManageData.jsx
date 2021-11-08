@@ -51,6 +51,7 @@ const ManageData = () => {
     reloadData,
     administration,
     selectedAdministration,
+    advanceSearchValue,
   } = UIState.useState((s) => s);
   const [data, setData] = useState([]);
   const [dataId, setDataId] = useState(false);
@@ -219,6 +220,13 @@ const ManageData = () => {
       if (adminId) {
         url += `&administration=${adminId}`;
       }
+      // advance search
+      if (!isEmpty(advanceSearchValue)) {
+        const advanceFilter = advanceSearchValue
+          .map((x) => x.option)
+          .join("&q=");
+        url += `&q=${advanceFilter}`;
+      }
       api
         .get(url)
         .then((d) => {
@@ -284,6 +292,7 @@ const ManageData = () => {
     reloadData,
     selectedAdministration,
     administration,
+    advanceSearchValue,
   ]);
 
   if (!current) {
