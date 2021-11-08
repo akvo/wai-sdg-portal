@@ -39,7 +39,7 @@ export const navigationOptions = [
   },
 ];
 
-export const SelectLevel = ({ setPage }) => {
+export const SelectLevel = ({ setPage, setSelectedRow }) => {
   const { administration, selectedAdministration, user } = UIState.useState(
     (s) => s
   );
@@ -56,6 +56,9 @@ export const SelectLevel = ({ setPage }) => {
       {selectedAdministration.map((s, si) => {
         const onSelect = (v) => {
           setPage(1);
+          if (setSelectedRow) {
+            setSelectedRow([]);
+          }
           UIState.update((u) => {
             u.selectedAdministration[si + 1] = v;
           });
@@ -92,11 +95,15 @@ export const SelectLevel = ({ setPage }) => {
         return "";
       })}
       <Button
-        onClick={() =>
+        onClick={() => {
+          setPage(1);
+          if (setSelectedRow) {
+            setSelectedRow([]);
+          }
           UIState.update((u) => {
             u.selectedAdministration = [null];
-          })
-        }
+          });
+        }}
       >
         Remove Filter
       </Button>

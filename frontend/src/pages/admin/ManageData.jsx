@@ -299,13 +299,14 @@ const ManageData = () => {
       <div className="filter-wrapper">
         <Space size={20} align="center" wrap={true}>
           <DropdownNavigation value={form} onChange={setForm} />
-          <SelectLevel setPage={setPage} />
+          <SelectLevel setPage={setPage} setSelectedRow={setSelectedRow} />
         </Space>
       </div>
       <AdvanceSearch
         formId={formId}
         questionGroup={questionGroup}
         setPage={setPage}
+        setSelectedRow={setSelectedRow}
       />
       <Row
         className="button-wrapper"

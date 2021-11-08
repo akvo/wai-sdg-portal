@@ -10,7 +10,7 @@ import flatten from "lodash/flatten";
 
 const { Panel } = Collapse;
 
-const AdvanceSearch = ({ formId, questionGroup, setPage }) => {
+const AdvanceSearch = ({ formId, questionGroup, setPage, setSelectedRow }) => {
   // Get question option only
   const question = flatten(
     questionGroup.map((qg) => qg.question.filter((q) => q.type === "option"))
@@ -27,6 +27,9 @@ const AdvanceSearch = ({ formId, questionGroup, setPage }) => {
 
   const handleOnChangeQuestionOption = (value) => {
     setPage(1);
+    if (setSelectedRow) {
+      setSelectedRow([]);
+    }
     const filterAdvanceSearchValue = advanceSearchValue.filter(
       (x) => x.qid !== selectedQuestion?.id
     );
@@ -99,7 +102,9 @@ const AdvanceSearch = ({ formId, questionGroup, setPage }) => {
         </Panel>
       </Collapse>
       {/* Tags of selected filter */}
-      {!isEmpty(advanceSearchValue) && <RenderFilterTag setPage={setPage} />}
+      {!isEmpty(advanceSearchValue) && (
+        <RenderFilterTag setPage={setPage} setSelectedRow={setSelectedRow} />
+      )}
     </div>
   );
 };
@@ -137,11 +142,14 @@ const RenderQuestionOption = ({
   );
 };
 
-const RenderFilterTag = ({ setPage }) => {
+const RenderFilterTag = ({ setPage, setSelectedRow }) => {
   const { advanceSearchValue } = UIState.useState((s) => s);
 
   const handleOnCloseTag = (option) => {
     setPage(1);
+    if (setSelectedRow) {
+      setSelectedRow([]);
+    }
     const deleteFilter = advanceSearchValue.filter((x) => x.option !== option);
     UIState.update((s) => {
       s.advanceSearchValue = deleteFilter;
