@@ -235,6 +235,7 @@ const ManageData = () => {
               created_by: x.updated_by || x.created_by,
               administration: getLocationName(x.administration, administration),
               detail: x.answer,
+              disabled: isActionDisabled,
               action: (
                 <Space size="small" align="center" wrap={true}>
                   <Button
@@ -308,7 +309,7 @@ const ManageData = () => {
               }`
             : ""}
         </Col>
-        <Col span={8} align="end">
+        <Col span={8} align="right">
           <Button type="primary" className="export-filter-button">
             Export Filtered Data
           </Button>
@@ -327,6 +328,9 @@ const ManageData = () => {
             selectedRowKeys: selectedRow,
             onSelect: onSelectTableRow,
             onSelectAll: onSelectAllTableRow,
+            getCheckboxProps: (record) => ({
+              disabled: record?.disabled,
+            }),
           }}
         />
         <Divider />
