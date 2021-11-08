@@ -83,20 +83,15 @@ def get(req: Request,
                          options=options,
                          skip=(perpage * (page - 1)),
                          perpage=perpage)
-    if not data:
+    if not data["count"]:
         raise HTTPException(status_code=404, detail="Not found")
-    data = [f.serialize for f in data]
-    total = crud.count(session=session,
-                       options=options,
-                       form=form_id,
-                       administration=administration_ids)
-    total_page = ceil(total / 10) if total > 0 else 0
+    total_page = ceil(data["count"] / 10) if data["count"] > 0 else 0
     if total_page < page:
         raise HTTPException(status_code=404, detail="Not found")
     return {
         'current': page,
-        'data': data,
-        'total': total,
+        'data': [d.serialize for d in data["data"]],
+        'total': data["count"],
         'total_page': total_page,
     }
 
