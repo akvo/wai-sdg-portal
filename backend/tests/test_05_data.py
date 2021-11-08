@@ -27,26 +27,18 @@ class TestDataRoutes():
         assert len(res["data"]) == 1
         first_data = res["data"][0]
         assert first_data == {
-            "id":
-            1,
-            "name":
-            "Arsi Negele Town - Garut",
-            "administration":
-            4,
-            "created":
-            today,
-            "created_by":
-            "Akvo Support",
-            "form":
-            1,
+            "id": 1,
+            "name": "Arsi Negele Town - Garut",
+            "administration": 4,
+            "created": today,
+            "created_by": "Akvo Support",
+            "form": 1,
             "geo": {
                 "lat": -7.836114,
                 "long": 110.331143
             },
-            "updated":
-            None,
-            "updated_by":
-            None,
+            "updated": None,
+            "updated_by": None,
             "answer": [{
                 "question": 1,
                 "value": "Option 1",
@@ -56,8 +48,7 @@ class TestDataRoutes():
                 "value": 4,
                 "history": False
             }, {
-                "question": 3,
-                "value": "-7.836114|110.331143",
+                "question": 3, "value": "-7.836114|110.331143",
                 "history": False
             }, {
                 "question": 4,
