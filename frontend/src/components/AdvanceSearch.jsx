@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Collapse, Button, Tag, Space, Select, Radio, Popover } from "antd";
 import { FilterOutlined, InfoCircleOutlined } from "@ant-design/icons";
 
@@ -6,14 +6,19 @@ import { UIState } from "../state/ui";
 import upperFirst from "lodash/upperFirst";
 import isEmpty from "lodash/isEmpty";
 import sortBy from "lodash/sortBy";
+import flatten from "lodash/flatten";
 
 const { Panel } = Collapse;
 
-const AdvanceSearch = ({ question }) => {
-  // Only receive option question
-  const { advanceSearchValue } = UIState.useState((s) => s);
+const AdvanceSearch = ({ formId, questionGroup }) => {
+  // Get question option only
+  const question = flatten(
+    questionGroup.map((qg) => qg.question.filter((q) => q.type === "option"))
+  );
+
+  const { user, advanceSearchValue } = UIState.useState((s) => s);
+  const [selectedPanel, setSelectedPanel] = useState([]);
   const [selectedQuestion, setSelectedQuestion] = useState([]);
-  const [selectedOption, setSelectedOption] = useState(null);
 
   const handleOnChangeQuestionDropdown = (id) => {
     const filterQuestion = question.find((q) => q.id === id);
@@ -21,7 +26,6 @@ const AdvanceSearch = ({ question }) => {
   };
 
   const handleOnChangeQuestionOption = (value) => {
-    setSelectedOption(value);
     const filterAdvanceSearchValue = advanceSearchValue.filter(
       (x) => x.qid !== selectedQuestion?.id
     );
@@ -37,10 +41,27 @@ const AdvanceSearch = ({ question }) => {
     });
   };
 
+  useEffect(() => {
+    // Reset state
+    if (user && formId) {
+      UIState.update((s) => {
+        s.advanceSearchValue = [];
+      });
+      setSelectedPanel([]);
+      setSelectedQuestion([]);
+    }
+  }, [user, formId]);
+
   return (
     <div className="advance-search-container">
       {/* Question filter */}
-      <Collapse className="advance-search-collapse" ghost>
+      <Collapse
+        ghost
+        collapsible="header"
+        className="advance-search-collapse"
+        activeKey={selectedPanel}
+        onChange={(e) => setSelectedPanel(e)}
+      >
         <Panel
           className="advance-search-panel"
           header={<Button icon={<FilterOutlined />}>Advance Search</Button>}
@@ -54,7 +75,7 @@ const AdvanceSearch = ({ question }) => {
           >
             <Select
               showSearch
-              placeholder="Search the question"
+              placeholder="Type to search..."
               className="search-question-select"
               options={question.map((q) => ({
                 label: upperFirst(q.name),
@@ -64,6 +85,7 @@ const AdvanceSearch = ({ question }) => {
               filterOption={(input, option) =>
                 option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
               }
+              value={!isEmpty(selectedQuestion) ? [selectedQuestion?.id] : []}
               onChange={handleOnChangeQuestionDropdown}
             />
             {!isEmpty(selectedQuestion) && (

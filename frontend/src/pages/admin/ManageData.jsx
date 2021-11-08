@@ -35,7 +35,6 @@ import isEmpty from "lodash/isEmpty";
 import without from "lodash/without";
 import union from "lodash/union";
 import xor from "lodash/xor";
-import flatten from "lodash/flatten";
 
 const getRowClassName = (record, editedRow) => {
   const edited = editedRow?.[record.key];
@@ -206,7 +205,6 @@ const ManageData = () => {
         setQuestionGroup(d.data.question_group);
         UIState.update((s) => {
           s.editedRow = {};
-          s.advanceSearchValue = [];
         });
       });
       setSelectedRow([]);
@@ -277,6 +275,7 @@ const ManageData = () => {
           setLoading(false);
         });
     }
+    // eslint-disable-next-line
   }, [
     page,
     perPage,
@@ -286,11 +285,6 @@ const ManageData = () => {
     selectedAdministration,
     administration,
   ]);
-
-  // get question option only
-  const questionOption = flatten(
-    questionGroup.map((qg) => qg.question.filter((q) => q.type === "option"))
-  );
 
   if (!current) {
     return <ErrorPage status={404} />;
@@ -304,7 +298,7 @@ const ManageData = () => {
           <SelectLevel />
         </Space>
       </div>
-      <AdvanceSearch question={questionOption} />
+      <AdvanceSearch formId={formId} questionGroup={questionGroup} />
       <Row
         className="button-wrapper"
         align="middle"
