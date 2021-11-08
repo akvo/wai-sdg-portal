@@ -13,7 +13,9 @@ import { UIState } from "../../state/ui";
 import takeRight from "lodash/takeRight";
 import MainTable from "./MainTable";
 import MainMaps from "./MainMaps";
+import AdvanceSearch from "../../components/AdvanceSearch";
 import startCase from "lodash/startCase";
+import { generateAdvanceFilterURL } from "../../util/utils";
 
 const { Panel } = Collapse;
 
@@ -57,9 +59,12 @@ const NameWithInfo = ({ name, created_by, created, updated, updated_by }) => {
 
 const Main = ({ match }) => {
   const history = useHistory();
-  const { user, reloadData, selectedAdministration } = UIState.useState(
-    (s) => s
-  );
+  const {
+    user,
+    reloadData,
+    selectedAdministration,
+    advanceSearchValue,
+  } = UIState.useState((s) => s);
   const [data, setData] = useState([]);
   const [questionGroup, setQuestionGroup] = useState([]);
   const [page, setPage] = useState(1);
@@ -95,6 +100,8 @@ const Main = ({ match }) => {
       if (adminId) {
         url += `&administration=${adminId}`;
       }
+      // advance search
+      url = generateAdvanceFilterURL(advanceSearchValue, url);
       api
         .get(url)
         .then((d) => {
@@ -130,7 +137,15 @@ const Main = ({ match }) => {
           setLoading(false);
         });
     }
-  }, [page, perPage, user, current, reloadData, selectedAdministration]);
+  }, [
+    page,
+    perPage,
+    user,
+    current,
+    reloadData,
+    selectedAdministration,
+    advanceSearchValue,
+  ]);
 
   useEffect(() => {
     if (user && current) {
@@ -139,6 +154,8 @@ const Main = ({ match }) => {
       if (adminId) {
         url += `&administration=${adminId}`;
       }
+      // advance search
+      url = generateAdvanceFilterURL(advanceSearchValue, url);
       api
         .get(url)
         .then((res) => {
@@ -148,7 +165,7 @@ const Main = ({ match }) => {
           setLastSubmitted({ by: "", at: "" });
         });
     }
-  }, [user, current, selectedAdministration]);
+  }, [user, current, selectedAdministration, advanceSearchValue]);
 
   if (!current) {
     return <ErrorPage status={404} />;
@@ -167,6 +184,10 @@ const Main = ({ match }) => {
               />
               <SelectLevel />
             </Space>
+            <AdvanceSearch
+              formId={current?.formId}
+              questionGroup={questionGroup}
+            />
           </Col>
         </Row>
       </Col>
