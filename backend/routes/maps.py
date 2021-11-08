@@ -1,10 +1,11 @@
 from pydantic import BaseModel
-from fastapi import Depends, Request, APIRouter
+from fastapi import Depends, Request, APIRouter, Query
 from fastapi.security import HTTPBearer
 from typing import List, Optional, Any
 from sqlalchemy.orm import Session
 import db.crud_maps as crud
 from db.connection import get_session
+from middleware import check_query
 
 security = HTTPBearer()
 maps_route = APIRouter()
@@ -27,7 +28,9 @@ def get(req: Request,
         form_id: int,
         shape: int,
         marker: Optional[int] = None,
+        q: Optional[List[str]] = Query(None),
         session: Session = Depends(get_session)):
+    options = check_query(q) if q else None
     question_ids = []
     if marker:
         question_ids.append(marker)
@@ -35,7 +38,10 @@ def get(req: Request,
         question_ids.append(shape)
     if not len(question_ids):
         question_ids = None
-    data = crud.get_data(session=session, form=form_id, question=question_ids)
+    data = crud.get_data(session=session,
+                         form=form_id,
+                         question=question_ids,
+                         options=options)
     for d in data:
         for v in d["values"]:
             if v["question"] == marker:

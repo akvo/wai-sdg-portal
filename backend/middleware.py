@@ -1,3 +1,4 @@
+import re
 from pydantic import Field
 from typing import Optional
 import requests as r
@@ -13,6 +14,7 @@ AUTH0_CLIENT_ID = environ['AUTH0_CLIENT_ID']
 AUTH0_SECRET = environ['AUTH0_SECRET']
 AUTH0_AUDIENCE = environ['AUTH0_AUDIENCE']
 TOKEN_TMP = "./tmp/token.txt"
+query_pattern = re.compile(r"[0-9]*\|(.*)")
 
 
 class CustomAuth0User(Auth0User):
@@ -91,3 +93,15 @@ def verify_editor(authenticated, session):
             status_code=403,
             detail="You don't have data access, please contact admin")
     return user
+
+
+def check_query(keywords):
+    keys = []
+    if not keywords:
+        return keys
+    for q in keywords:
+        if not query_pattern.match(q):
+            raise HTTPException(status_code=400, detail="Bad Request")
+        else:
+            keys.append(q.replace("|", "||"))
+    return keys

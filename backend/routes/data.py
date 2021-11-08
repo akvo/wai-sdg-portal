@@ -1,4 +1,3 @@
-import re
 from http import HTTPStatus
 from datetime import datetime
 from math import ceil
@@ -19,23 +18,10 @@ from models.question import QuestionType
 from models.history import History
 from db.connection import get_session
 from models.data import DataResponse, DataDict, SubmissionInfo
-from middleware import verify_editor
+from middleware import verify_editor, check_query
 
 security = HTTPBearer()
 data_route = APIRouter()
-query_pattern = re.compile(r"[0-9]*\|(.*)")
-
-
-def check_query(keywords):
-    keys = []
-    if not keywords:
-        return keys
-    for q in keywords:
-        if not query_pattern.match(q):
-            raise HTTPException(status_code=400, detail="Bad Request")
-        else:
-            keys.append(q.replace("|", "||"))
-    return keys
 
 
 def check_access(adm, user) -> None:
@@ -69,9 +55,7 @@ def get(req: Request,
         q: Optional[List[str]] = Query(None),
         session: Session = Depends(get_session),
         credentials: credentials = Depends(security)):
-    options = None
-    if q:
-        options = check_query(q)
+    options = check_query(q) if q else None
     verify_editor(req.state.authenticated, session)
     administration_ids = False
     if administration:
