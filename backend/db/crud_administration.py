@@ -52,6 +52,18 @@ def get_administration_by_keyword(
              Administration.name.match("%{}%".format(name)))).all()
 
 
+def get_administration_id_by_keyword(
+        session: Session,
+        name: str,
+        parent: Optional[int] = None) -> Administration:
+    administration = session.query(Administration.id).filter(
+        and_(Administration.parent == parent,
+             Administration.name.match("%{}%".format(name)))).first()
+    if administration:
+        return administration.id
+    return False
+
+
 def get_nested_children_ids(session: Session,
                             current: Optional[List[int]] = [],
                             parents: Optional[List[int]] = None):
