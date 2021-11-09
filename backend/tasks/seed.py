@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 from sqlalchemy.orm import Session
 from db import crud_question
@@ -43,7 +44,7 @@ def save(session: Session, user: int, form: int, dp: dict, qs: dict):
                     names.append(adm_list[-1].name)
             if q.type == QuestionType.geo:
                 if aw:
-                    geo = aw
+                    geo = aw.split(",")
                     answer.text = ("{}|{}").format(aw[0], aw[1])
                 else:
                     valid = False
@@ -102,4 +103,5 @@ def seed(session: Session, file: str, user: int, form: int):
                     dp=datapoint,
                     qs=questions)
         records.append(data)
+    os.remove(file)
     return records

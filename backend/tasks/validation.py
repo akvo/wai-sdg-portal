@@ -2,6 +2,7 @@ import pandas as pd
 import enum
 import itertools
 from db import crud_question
+from db import crud_administration
 from datetime import datetime
 from models.question import Question, QuestionType
 from sqlalchemy.orm import Session
@@ -59,11 +60,12 @@ def validate_number(answer, question):
 
 
 def validate_geo(answer):
+    answer = str(answer)
     try:
-        a = int(answer)
-        return {"message": "Invalid lat long format"}
+        for a in answer.split(","):
+            float(a)
     except ValueError:
-        pass
+        return {"message": "Invalid lat long format"}
     if "," not in answer:
         return {"message": "Invalid lat long format"}
     answer = answer.split(",")
@@ -71,9 +73,23 @@ def validate_geo(answer):
         return {"message": "Invalid lat long format"}
     for a in answer:
         try:
-            a = int(a)
+            a = float(a)
         except ValueError:
             return {"message": "Invalid lat long format"}
+    return False
+
+
+def validate_administration(session, answer, adm):
+    aw = answer.split("|")
+    name = adm["name"]
+    if len(aw) < 2:
+        return {"message": "Wrong administration format"}
+    if aw[0] != adm["name"]:
+        return {"message": f"Wrong administration data for {name}"}
+    children = crud_administration.get_administration_by_name(
+        session=session, name=aw[-1], parent=adm["id"])
+    if not children:
+        return {"message": f"{aw[-1]} is not part of {name}"}
     return False
 
 
@@ -124,12 +140,20 @@ def validate_option(options, answer):
     return False
 
 
-def validate_row_data(col, answer, question):
+def validate_row_data(session, col, answer, question, adm):
     default = {"error": ExcelError.value, "column": col}
     if answer != answer:
+        if question.required:
+            default.update({"message": f"{question.name} is required"})
+            return default
         return False
     if isinstance(answer, str):
         answer = HText(answer).clean
+    if question.type == QuestionType.administration:
+        err = validate_administration(session, answer, adm)
+        if err:
+            default.update(err)
+            return default
     if question.type == QuestionType.geo:
         err = validate_geo(answer)
         if err:
@@ -175,6 +199,11 @@ def validate(session: Session, form: int, administration: int, file: str):
         excel_head.update({excel_cols[index]: header})
     header_error = []
     data_error = []
+    childs = crud_administration.get_nested_children_ids(
+        session, [administration])
+    adm = crud_administration.get_administration_by_id(session=session,
+                                                       id=administration)
+    adm = {"id": adm.id, "name": adm.name, "childs": childs}
     for col in excel_head:
         header = excel_head[col]
         error = validate_header_names(header, f"{col}1", header_names)
@@ -186,7 +215,8 @@ def validate(session: Session, form: int, administration: int, file: str):
             answers = list(df[header])
             for i, answer in enumerate(answers):
                 ix = i + 2
-                error = validate_row_data(f"{col}{ix}", answer, question)
+                error = validate_row_data(session, f"{col}{ix}", answer,
+                                          question, adm)
                 if error:
                     data_error.append(error)
     return header_error + data_error

@@ -19,7 +19,7 @@ class TestStressAndTimeout():
         df = pd.read_excel(excel)
         random_wrong_rows = []
         random_wrong_values = [
-            "Option", "Shashemene", "180,A", "Testing Data 2", 23,
+            "Option", "Cianjur", "180,A", "Testing Data 2", 23,
             "Option C|Option D|Option B", "2020"
         ]
         for x in range(1000):
@@ -34,6 +34,6 @@ class TestStressAndTimeout():
                                      file=excel_file)
         done = datetime.now()
         elapsed = done - start
-        assert len(errors) == 4000
+        assert len(errors) == 5000
         assert elapsed.seconds < 1
         os.remove(excel_file)
