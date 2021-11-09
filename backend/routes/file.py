@@ -1,4 +1,3 @@
-import os
 import aiofiles
 from datetime import datetime
 from xlrd import open_workbook, XLRDError
