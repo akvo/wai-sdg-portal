@@ -104,3 +104,18 @@ async def download(req: Request,
                    type=JobType.download,
                    created_by=user.id)
     return res
+
+
+@file_route.get("/download/list",
+                response_model=List[JobsBase],
+                summary="list of generated data",
+                name="excel-data:download-list",
+                tags=["File"])
+async def download_list(req: Request,
+                        session: Session = Depends(get_session),
+                        credentials: credentials = Depends(security)):
+    user = verify_editor(req.state.authenticated, session)
+    res = jobs.query(session=session,
+                     type=JobType.download,
+                     created_by=user.id)
+    return res

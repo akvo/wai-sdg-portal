@@ -65,7 +65,7 @@ const ManageData = () => {
   const [loading, setLoading] = useState(true);
   const [selectedRow, setSelectedRow] = useState([]);
   const [deleting, setDeleting] = useState(false);
-  const [exportLoading, setExportLoading] = useState(true);
+  const [exportLoading, setExportLoading] = useState(false);
   const [lastSubmitted, setLastSubmitted] = useState({ by: "", at: "" });
 
   //ConfirmationModal state
@@ -193,6 +193,7 @@ const ManageData = () => {
       .get(url)
       .then((d) => {
         console.log(d);
+        notification.success({ message: "Data Export Created." });
         setExportLoading(false);
       })
       .catch((error) => {
