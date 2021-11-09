@@ -75,7 +75,7 @@ class TestAdvancedFilter():
             "shape": 4.0,
             }, {
             "id": 3,
-            "geo": None,
+            "geo": [106.81, -6.2],
             "loc": "Kuyera Town",
             "marker": "Option 2",
             "shape": 7.0

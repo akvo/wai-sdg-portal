@@ -32,6 +32,7 @@ class TestExcelValidation():
                                    form=1,
                                    meta=False,
                                    type="multiple_option",
+                                   required=True,
                                    option=[{
                                        "name": "Option A",
                                        "order": 1
@@ -74,8 +75,8 @@ class TestExcelValidation():
     async def test_validate_excel_file(self, session: Session) -> None:
         excel_file = "./tmp/1-test.xlsx"
         wrong_data = [[
-            "Option 4", "Kuyera Town", "180,90", "Testing Data 1", "", "Two",
-            "Option B|Option A", ""
+            "Option 4", "Kuyera Town", "-6.2,106.81", "Testing Data 1",
+            "", "Two", "Option B|Option A", ""
         ], [
             "Option 2", "Kuyera Town", "180", "Testing Data 2",
             "", 300, "option a|Option D", "2020"
@@ -83,8 +84,11 @@ class TestExcelValidation():
             "Option 2", "Kuyera Town", "180,A", "Testing Data 2",
             "", -23, "Option B", "2020-12-18"
         ], [
-            "Option 2        ", "Kuyera Town", "180,90", "Testing Data 2",
+            "Option 2        ", "Kuyera Town", "-6.2,106.81", "Testing Data 2",
             "", 23, "    Option B\n", "2020-12-18"
+        ], [
+            "Option 1", "Kuyera Town", "-6.2,106.81", "Testing Data 2",
+            "", 23, "", "2020-12-18"
         ]]
         columns = [
             "2|Test Option Question", "2|Test Administration Question",
@@ -146,6 +150,14 @@ class TestExcelValidation():
             'error': ExcelError.value,
             'message': "Invalid case: option a and Invalid value: Option D",
             "column": "G3"
+        }, {
+            'error': ExcelError.value,
+            'message': "Test Multiple Option Question is required",
+            "column": "G6"
+        }, {
+            'error': ExcelError.value,
+            'message': "Test Date Question is required",
+            "column": "H2"
         }, {
             'error': ExcelError.value,
             'message': "Invalid date format: 2020. It should be YYYY-MM-DD",

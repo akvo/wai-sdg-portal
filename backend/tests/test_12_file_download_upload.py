@@ -67,11 +67,11 @@ class TestFileRoutes():
     async def test_queue_right_excel_data(self, app: FastAPI, session: Session,
                                           client: AsyncClient) -> None:
         excel_file = "./tmp/1-test.xlsx"
-        wrong_data = [[
-            "Option 1", "Shashemene|Kuyera Town", None,
+        right_data = [[
+            "Option 1", "Shashemene|Kuyera Town", "-6.2,106.81",
             "Testing Data 1", 20, "Option A", "2020-12-18"
         ], [
-            "Option 2", "Shashemene|Kuyera Town", None,
+            "Option 2", "Shashemene|Kuyera Town", "-6.2,106.81",
             "Testing Data 2", 23, "Option B", "2020-12-18"
         ]]
         columns = [
@@ -80,7 +80,7 @@ class TestFileRoutes():
             "5|Test Number Question", "6|Test Multiple Option Question",
             "7|Test Date Question"
         ]
-        df = pd.DataFrame(wrong_data, columns=columns)
+        df = pd.DataFrame(right_data, columns=columns)
         df.to_excel(excel_file, index=False, sheet_name='data')
         fname = excel_file.split("/")[-1]
         async with aiofiles.open(excel_file, 'rb') as of:
