@@ -18,6 +18,7 @@ import {
   ExclamationCircleTwoTone,
   CheckCircleTwoTone,
   CloseCircleTwoTone,
+  DownloadOutlined,
 } from "@ant-design/icons";
 import { UIState } from "../state/ui";
 
@@ -39,15 +40,28 @@ const ActivityLog = () => {
         size="small"
         itemLayout="horizontal"
         dataSource={jobStatus}
-        renderItem={(item) => (
-          <List.Item>
-            <List.Item.Meta
-              avatar={<IconList type={item.icon} />}
-              title={item.file}
-              description={item.status}
-            />
-          </List.Item>
-        )}
+        renderItem={(item) => {
+          let desc = item.status;
+          if (item?.attachment) {
+            desc = (
+              <div>
+                {item.status}
+                <a className="attachment-badge" href={item.attachment}>
+                  <DownloadOutlined /> Attachment
+                </a>
+              </div>
+            );
+          }
+          return (
+            <List.Item>
+              <List.Item.Meta
+                avatar={<IconList type={item.icon} />}
+                title={item.file}
+                description={desc}
+              />
+            </List.Item>
+          );
+        }}
       />
     );
   }

@@ -28,7 +28,8 @@ const regExpFilename = /filename="(?<filename>.*)"/;
 
 const checkJobs = (id, filename) => {
   axios.get(`/worker/jobs/status/${id}`).then(function (res) {
-    if (res.data === "on_progress" || res.data === "pending") {
+    const status = res.data.status;
+    if (status === "on_progress" || status === "pending") {
       UIState.update((e) => {
         e.jobStatus = [
           {
@@ -43,10 +44,16 @@ const checkJobs = (id, filename) => {
       setTimeout(() => {
         checkJobs(id, filename);
       }, 10000);
-    } else if (res.data === "failed") {
+    } else if (status === "failed") {
       UIState.update((e) => {
         e.jobStatus = [
-          { id: id, file: filename, status: "Failed", icon: "danger" },
+          {
+            id: id,
+            file: filename,
+            status: "Failed",
+            icon: "danger",
+            attachment: res.data.attachment,
+          },
           ...e.jobStatus,
         ];
       });
@@ -111,7 +118,7 @@ const ManageUpload = () => {
     let formData = new FormData();
     formData.append("file", file);
     api
-      .post(`upload/excel-template/${formId}/${selectedAdm}`, formData)
+      .post(`excel-template/${formId}/${selectedAdm}`, formData)
       .then((res) => {
         onSuccess(res.data);
         setJobState(res.data);
@@ -156,7 +163,7 @@ const ManageUpload = () => {
 
   const downloadTemplate = () => {
     api
-      .get(`download/excel-template/${formId}`, { responseType: "blob" })
+      .get(`excel-template/${formId}`, { responseType: "blob" })
       .then((res) => {
         const contentDispositionHeader = res.headers["content-disposition"];
         const filename = regExpFilename.exec(contentDispositionHeader)?.groups
