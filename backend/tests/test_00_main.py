@@ -1,7 +1,7 @@
 import os
 import sys
 from main import app
-from util.helper import HText
+from util.helper import HText, UUID
 from fastapi.testclient import TestClient
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -32,3 +32,8 @@ def test_string_trim_helper():
     ]
     for st in string_list:
         assert HText(st).clean == "Option 1"
+
+
+def test_uuid_helper():
+    uuid = UUID("testing")
+    assert uuid.str == f"testing-{uuid.uuid}"

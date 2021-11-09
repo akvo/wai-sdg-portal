@@ -32,16 +32,6 @@ def check_access(adm, user) -> None:
         raise HTTPException(status_code=404, detail="Forbidden")
 
 
-def get_administration_list(session: Session, id: int) -> List[int]:
-    administration_ids = [id]
-    administration = crud_administration.get_administration_by_id(session,
-                                                                  id=id)
-    if administration.children:
-        for a in administration.cascade["children"]:
-            administration_ids.append(a["value"])
-    return administration_ids
-
-
 @data_route.get("/data/form/{form_id:path}",
                 response_model=DataResponse,
                 name="data:get",
@@ -59,8 +49,8 @@ def get(req: Request,
     verify_editor(req.state.authenticated, session)
     administration_ids = False
     if administration:
-        administration_ids = get_administration_list(session=session,
-                                                     id=administration)
+        administration_ids = crud_administration.get_administration_list(
+            session=session, id=administration)
     data = crud.get_data(session=session,
                          form=form_id,
                          administration=administration_ids,
@@ -262,8 +252,8 @@ def get_last_submission(req: Request,
         options = check_query(q)
     administration_ids = False
     if administration:
-        administration_ids = get_administration_list(session=session,
-                                                     id=administration)
+        administration_ids = crud_administration.get_administration_list(
+            session=session, id=administration)
     last_submitted = crud.get_last_submitted(session=session,
                                              form=form_id,
                                              options=options,

@@ -104,3 +104,18 @@ def get_last_submitted(session: Session,
     if administration:
         data = data.filter(Data.administration.in_(administration))
     return data.order_by(Data.id.desc()).first()
+
+
+def download(session: Session,
+             form: int,
+             options: List[str] = None,
+             administration: List[int] = None):
+    data = session.query(Data).filter(Data.form == form)
+    if options:
+        data_id = session.query(ViewData.data).filter(
+            ViewData.options.contains(options)).all()
+        data = data.filter(Data.id.in_([d.data for d in data_id]))
+    if administration:
+        data = data.filter(Data.administration.in_(administration))
+    data = data.order_by(desc(Data.id)).all()
+    return [d.to_data_frame for d in data]

@@ -1,7 +1,10 @@
+import pandas as pd
 from sqlalchemy.orm import Session
 from datetime import timedelta
 from time import process_time
 import db.crud_jobs as crud
+from db import crud_administration
+from db import crud_data
 from . import validation
 from . import seed
 from models.jobs import JobType, JobStatus
@@ -58,9 +61,34 @@ def run_validate(session: Session, jobs: dict):
         run_seed(session=session, jobs=jobs)
 
 
+def run_download(session: Session, jobs: dict):
+    start_time = print_log_start("DATA DOWNLOAD STARTED")
+    info = jobs["info"]
+    out_file = jobs["payload"]
+    file = f"./tmp/{out_file}"
+    administration_ids = False
+    if info["administration"]:
+        administration_ids = crud_administration.get_administration_list(
+            session=session, id=info["administration"])
+    data = crud_data.download(session=session,
+                              form=info["form_id"],
+                              administration=administration_ids,
+                              options=info["options"])
+    df = pd.DataFrame(data)
+    df = df.to_excel(file, index=False)
+    output = storage.upload(file, "download", out_file)
+    jobs = crud.update(session=session,
+                       id=jobs["id"],
+                       payload=output,
+                       status=JobStatus.done)
+    print_log_done(f"FILE CREATED {output}", start_time)
+
+
 def do_task(session: Session, jobs):
     if jobs["type"] == JobType.validate_data:
         run_validate(session=session, jobs=jobs)
     if jobs["type"] == JobType.seed_data:
         run_seed(session=session, jobs=jobs)
+    if jobs["type"] == JobType.download:
+        run_download(session=session, jobs=jobs)
     return True

@@ -33,10 +33,13 @@ def get_by_id(session: Session, id: int) -> JobsBase:
 
 def update(session: Session,
            id: int,
+           payload: Optional[str] = None,
            status: Union[JobStatus] = None,
            type: Optional[Union[JobType]] = None,
            info: Optional[TypedDict] = None) -> JobsBase:
     jobs = session.query(Jobs).filter(Jobs.id == id).first()
+    if payload:
+        jobs.payload = payload
     if status:
         jobs.status = status
     if status == JobStatus.pending:

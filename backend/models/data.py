@@ -127,6 +127,28 @@ class Data(Base):
             "geo": [self.geo[1], self.geo[0]] if self.geo else None,
         }
 
+    @property
+    def to_data_frame(self):
+        data = {
+            "id":
+            self.id,
+            "administration":
+            self.administration_detail.name,
+            "geolocation":
+            f"{self.geo[0], self.geo[1]}" if self.geo else None,
+            "created_by":
+            self.created_by_user.name,
+            "updated_by":
+            self.updated_by_user.name if self.updated_by else None,
+            "created_at":
+            self.created.strftime("%B %d, %Y"),
+            "updated_at":
+            self.updated.strftime("%B %d, %Y") if self.updated else None,
+        }
+        for a in self.answer:
+            data.update(a.to_data_frame)
+        return data
+
 
 class DataBase(BaseModel):
     id: int

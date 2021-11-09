@@ -25,6 +25,7 @@ class JobType(enum.Enum):
     send_email = 'send_email'
     validate_data = 'validate_data'
     seed_data = 'seed_data'
+    download = 'download'
 
 
 class JobsDict(TypedDict):

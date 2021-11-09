@@ -120,9 +120,7 @@ class Answer(Base):
         if type == QuestionType.number:
             return self.value
         if type == QuestionType.option:
-            if self.options:
-                return self.options[0]
-            return None
+            return self.options[0] if self.options else None
         if type == QuestionType.multiple_option:
             return self.options
         if type == QuestionType.photo:
@@ -142,7 +140,7 @@ class Answer(Base):
         if type == QuestionType.number:
             answer = self.value
         if type == QuestionType.option:
-            answer = self.options[0]
+            answer = self.options[0] if self.options else None
         if type == QuestionType.multiple_option:
             answer = self.options
         if type == QuestionType.photo:
@@ -164,12 +162,31 @@ class Answer(Base):
         if type == QuestionType.number:
             answer.update({"value": self.value})
         if type == QuestionType.option:
-            answer.update({"value": self.options[0]})
+            answer.update({"value": self.options[0] if self.options else None})
         if type == QuestionType.multiple_option:
             answer.update({"value": self.options})
         if type == QuestionType.photo:
             answer.update({"value": self.text})
         return answer
+
+    @property
+    def to_data_frame(self) -> dict:
+        answer = None
+        q = self.question_detail
+        qname = f"{self.question_detail.id}|{self.question_detail.name}"
+        if q.type == QuestionType.administration:
+            answer = self.value
+        if q.type in [QuestionType.text, QuestionType.geo, QuestionType.date]:
+            answer = self.text
+        if q.type == QuestionType.number:
+            answer = self.value
+        if q.type == QuestionType.option:
+            answer = self.options[0] if self.options else None
+        if q.type == QuestionType.multiple_option:
+            answer = "|".join(self.options) if self.options else None
+        if q.type == QuestionType.photo:
+            answer = self.text
+        return {qname: answer}
 
 
 class AnswerBase(BaseModel):
