@@ -7,6 +7,7 @@ from fastapi import FastAPI
 from httpx import AsyncClient
 from tests.test_01_auth import Acc
 from sqlalchemy.orm import Session
+from db.crud_administration import get_administration_id_by_keyword
 
 pytestmark = pytest.mark.asyncio
 sys.path.append("..")
@@ -51,7 +52,7 @@ class TestFileRoutes():
         res = await client.post(
             app.url_path_for("excel-template:post",
                              form_id=1,
-                             administration=4),
+                             administration=3),
             files={"file": (fname, contents, ftype)},
             headers={"Authorization": f"Bearer {account.token}"})
         assert res.status_code == 200
@@ -60,7 +61,7 @@ class TestFileRoutes():
         assert res["available"] is None
         assert res["status"] == "pending"
         assert res["type"] == "validate_data"
-        assert res["info"] == {"administration": 4, "form_id": 1}
+        assert res["info"] == {"administration": 3, "form_id": 1}
         os.remove(excel_file)
 
     @pytest.mark.asyncio
@@ -68,11 +69,11 @@ class TestFileRoutes():
                                           client: AsyncClient) -> None:
         excel_file = "./tmp/1-test.xlsx"
         right_data = [[
-            "Option 1", "Yogyakarta|Bantul", "-6.2,106.81",
-            "Testing Data 1", 20, "Option A", "2020-12-18"
+            "Option 1", "Yogyakarta|Bantul", "-6.2,106.81", "Testing Data 1",
+            20, "Option A", "2020-12-18"
         ], [
-            "Option 2", "Yogyakarta|Bantul", "-6.2,106.81",
-            "Testing Data 2", 23, "Option B", "2020-12-18"
+            "Option 2", "Yogyakarta|Bantul", "-6.2,106.81", "Testing Data 2",
+            23, "Option B", "2020-12-18"
         ]]
         columns = [
             "1|Test Option Question", "2|Test Administration Question",
@@ -85,10 +86,12 @@ class TestFileRoutes():
         fname = excel_file.split("/")[-1]
         async with aiofiles.open(excel_file, 'rb') as of:
             contents = await of.read()
+        administration_id = get_administration_id_by_keyword(
+            session=session, name="Yogyakarta")
         res = await client.post(
             app.url_path_for("excel-template:post",
                              form_id=1,
-                             administration=5),
+                             administration=administration_id),
             files={"file": (fname, contents, ftype)},
             headers={"Authorization": f"Bearer {account.token}"})
         assert res.status_code == 200
@@ -97,5 +100,8 @@ class TestFileRoutes():
         assert res["available"] is None
         assert res["status"] == "pending"
         assert res["type"] == "validate_data"
-        assert res["info"] == {"administration": 5, "form_id": 1}
+        assert res["info"] == {
+            "administration": administration_id,
+            "form_id": 1
+        }
         os.remove(excel_file)
