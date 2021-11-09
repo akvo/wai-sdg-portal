@@ -131,12 +131,8 @@
       }
     }
 
-    .button-wrapper {
-      margin-bottom: 8px;
-
-      .export-filter-button {
-        border-radius: 0 8px 0 0;
-      }
+    .export-filter-button {
+      float: right;
     }
 
     .checkbox-wrapper {
@@ -181,6 +177,8 @@
     }
 
     .table-wrapper {
+      padding-top: 10px;
+
       .ant-table-thead > tr > th {
         background: #fff !important;
         border-color: #fafafa;

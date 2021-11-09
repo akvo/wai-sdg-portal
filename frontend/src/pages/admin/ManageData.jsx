@@ -15,6 +15,7 @@ import {
   EditOutlined,
   UndoOutlined,
   DeleteOutlined,
+  DownloadOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import takeRight from "lodash/takeRight";
@@ -64,6 +65,8 @@ const ManageData = () => {
   const [loading, setLoading] = useState(true);
   const [selectedRow, setSelectedRow] = useState([]);
   const [deleting, setDeleting] = useState(false);
+  const [exportLoading, setExportLoading] = useState(true);
+  const [lastSubmitted, setLastSubmitted] = useState({ by: "", at: "" });
 
   //ConfirmationModal state
   const [confirmationModal, setConfirmationModal] = useState({
@@ -175,6 +178,26 @@ const ManageData = () => {
       .finally(() => {
         handleCloseConfirmationModal();
         setDeleting(false);
+      });
+  };
+
+  const handleExport = () => {
+    setExportLoading(true);
+    const adminId = takeRight(selectedAdministration)[0];
+    let url = `download/data?form_id=${formId}`;
+    if (adminId) {
+      url += `&administration=${adminId}`;
+    }
+    url = generateAdvanceFilterURL(advanceSearchValue, url);
+    api
+      .get(url)
+      .then((d) => {
+        console.log(d);
+        setExportLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setExportLoading(false);
       });
   };
 
@@ -290,6 +313,26 @@ const ManageData = () => {
     advanceSearchValue,
   ]);
 
+  useEffect(() => {
+    if (user && current) {
+      const adminId = takeRight(selectedAdministration)[0];
+      let url = `last-submitted?form_id=${current.formId}`;
+      if (adminId) {
+        url += `&administration=${adminId}`;
+      }
+      // advance search
+      url = generateAdvanceFilterURL(advanceSearchValue, url);
+      api
+        .get(url)
+        .then((res) => {
+          setLastSubmitted(res.data);
+        })
+        .catch(() => {
+          setLastSubmitted({ by: "", at: "" });
+        });
+    }
+  }, [user, current, selectedAdministration, advanceSearchValue]);
+
   if (!current) {
     return <ErrorPage status={404} />;
   }
@@ -301,6 +344,15 @@ const ManageData = () => {
           <DropdownNavigation value={form} onChange={setForm} />
           <SelectLevel setPage={setPage} setSelectedRow={setSelectedRow} />
         </Space>
+        <Button
+          type="primary"
+          className="export-filter-button"
+          icon={<DownloadOutlined />}
+          onClick={handleExport}
+          disabled={exportLoading}
+        >
+          Export Filtered Data
+        </Button>
       </div>
       <AdvanceSearch
         formId={formId}
@@ -309,22 +361,31 @@ const ManageData = () => {
         setSelectedRow={setSelectedRow}
       />
       <Row
-        className="button-wrapper"
         align="middle"
         justify="space-between"
         wrap={true}
+        className="data-info"
       >
-        <Col span={16}>
-          {hasSelected
-            ? `Selected ${selectedRow.length} datapoint${
-                selectedRow.length > 1 ? "s" : ""
-              }`
-            : ""}
+        <Col span={8}>
+          <span className="info title">
+            {total ? `Total: ${total} Submissions` : "No Data"}
+            {hasSelected
+              ? `, Selected ${selectedRow.length} datapoint${
+                  selectedRow.length > 1 ? "s" : ""
+                }`
+              : ""}
+          </span>
         </Col>
-        <Col span={8} align="right">
-          <Button type="primary" className="export-filter-button">
-            Export Filtered Data
-          </Button>
+        <Col span={16} align="end">
+          {total ? (
+            <div className="info">
+              Last submitted: {lastSubmitted.at}
+              <br />
+              by: {lastSubmitted.by}
+            </div>
+          ) : (
+            ""
+          )}
         </Col>
       </Row>
       <div className="table-wrapper">
