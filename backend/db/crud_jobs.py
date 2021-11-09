@@ -5,7 +5,7 @@ from datetime import datetime
 from sqlalchemy.orm import Session
 from sqlalchemy import asc
 from models.jobs import Jobs, JobsBase
-from models.jobs import JobType, JobStatus
+from models.jobs import JobType, JobStatus, JobStatusResponse
 
 
 def add(session: Session,
@@ -56,11 +56,11 @@ def update(session: Session,
     return jobs.serialize
 
 
-def status(session: Session, id: int) -> str:
-    jobs = session.query(Jobs.status).filter(Jobs.id == id).first()
+def status(session: Session, id: int) -> JobStatusResponse:
+    jobs = session.query(Jobs).filter(Jobs.id == id).first()
     if not jobs:
         raise HTTPException(status_code=404, detail="Not Found")
-    return jobs.status
+    return jobs.status_response
 
 
 def pending(session: Session) -> Union[int, bool]:

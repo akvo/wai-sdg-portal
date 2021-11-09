@@ -1,15 +1,14 @@
-from typing import Union
 from fastapi import Depends, Request, APIRouter
 from sqlalchemy.orm import Session
 import db.crud_jobs as crud
 from db.connection import get_session
-from models.jobs import JobStatus
+from models.jobs import JobStatusResponse
 
 jobs_route = APIRouter()
 
 
 @jobs_route.get("/jobs/status/{id:path}",
-                response_model=Union[JobStatus],
+                response_model=JobStatusResponse,
                 summary="get jobs by id",
                 name="jobs:status",
                 tags=["Jobs"])

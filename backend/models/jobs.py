@@ -40,6 +40,11 @@ class JobsDict(TypedDict):
     available: Optional[datetime] = None
 
 
+class JobStatusResponse(TypedDict):
+    status: JobStatus
+    attachment: Optional[str] = None
+
+
 class Jobs(Base):
     __tablename__ = "jobs"
     id = Column(Integer, primary_key=True, index=True, nullable=True)
@@ -83,6 +88,13 @@ class Jobs(Base):
             "created_by": self.created_by,
             "created": self.created,
             "available": self.available,
+        }
+
+    @property
+    def status_response(self) -> JobStatusResponse:
+        return {
+            "status": self.status,
+            "attachment": self.payload
         }
 
 
