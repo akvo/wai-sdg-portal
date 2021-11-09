@@ -1,4 +1,3 @@
-import os
 import pandas as pd
 from sqlalchemy.orm import Session
 from datetime import timedelta
@@ -56,7 +55,6 @@ def run_validate(session: Session, jobs: dict):
         error_list = error_list[["column", "message"]].to_csv(error_file,
                                                               index=False)
         error_file = storage.upload(error_file, "error", public=True)
-        os.remove(error_file)
         payload = error_file
         message = "VALIDATION ERROR"
     print(f"JOBS #{id} {message}")
