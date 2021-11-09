@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 from sqlalchemy.orm import Session
 from db import crud_question
@@ -102,4 +103,5 @@ def seed(session: Session, file: str, user: int, form: int):
                     dp=datapoint,
                     qs=questions)
         records.append(data)
+    os.remove(file)
     return records
