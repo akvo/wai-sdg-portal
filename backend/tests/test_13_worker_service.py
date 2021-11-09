@@ -40,7 +40,8 @@ class TestWorkerRoutes():
             do_task(session=session, jobs=jobs)
         res = await worker_client.get(
             worker.url_path_for("jobs:status", id=pending_jobs))
-        assert res.json() == "done"
+        res = res.json()
+        assert res["status"] == "done"
         current = crud_jobs.get_by_id(session=session, id=pending_jobs)
         assert current["available"] is not None
         assert current["type"] is JobType.seed_data
