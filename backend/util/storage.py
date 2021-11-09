@@ -6,7 +6,7 @@ import shutil
 bucket_name = "wai-ethiopia"
 
 
-def upload(file: str, folder: str, filename: str = None):
+def upload(file: str, folder: str, filename: str = None, public: bool = False):
     if not filename:
         filename = file.split("/")[-1]
     TESTING = os.environ.get("TESTING")
@@ -20,7 +20,9 @@ def upload(file: str, folder: str, filename: str = None):
     blob = bucket.blob(destination_blob_name)
     blob.upload_from_filename(file)
     os.remove(file)
-    # blob.make_public()
+    if public:
+        blob.make_public()
+        return blob.public_url
     return blob.name
 
 
