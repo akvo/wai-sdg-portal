@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 from sqlalchemy.orm import Session
 from datetime import timedelta
@@ -40,20 +41,29 @@ def run_seed(session: Session, jobs: dict):
 
 
 def run_validate(session: Session, jobs: dict):
-    info = jobs["info"]
     start_time = print_log_start("DATA VALIDATION STARTED")
+    info = jobs["info"]
+    id = jobs["id"]
+    message = "IS SUCCESSFULY VALIDATED"
+    payload = None
     error = validation.validate(session=session,
                                 form=info["form_id"],
                                 administration=info["administration"],
                                 file=storage.download(jobs["payload"]))
     if len(error):
-        print(error)
-    else:
-        id = jobs["id"]
-        print(f"JOBS #{id} NO ERROR")
+        error_list = pd.DataFrame(error)
+        error_file = f"./tmp/error-{id}.csv"
+        error_list = error_list[["column", "message"]].to_csv(error_file,
+                                                              index=False)
+        error_file = storage.upload(error_file, "error", public=True)
+        os.remove(error_file)
+        payload = error_file
+        message = "VALIDATION ERROR"
+    print(f"JOBS #{id} {message}")
     status = JobStatus.failed if len(error) else None
     jobs = crud.update(session=session,
                        id=jobs["id"],
+                       payload=payload,
                        type=None if len(error) else JobType.seed_data,
                        status=status)
     print_log_done(f"VALIDATION {status}", start_time)

@@ -32,7 +32,7 @@ file_route = APIRouter()
 ftype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 
 
-@file_route.get("/download/excel-template/{form_id:path}",
+@file_route.get("/excel-template/{form_id:path}",
                 summary="get excel template for ",
                 name="excel-template:get_by_form_id",
                 tags=["File"])
@@ -46,7 +46,7 @@ def get(req: Request,
     return FileResponse(path=filepath, filename=filename, media_type=ftype)
 
 
-@file_route.post("/upload/excel-template/{form_id:path}/{administration:path}",
+@file_route.post("/excel-template/{form_id:path}/{administration:path}",
                  response_model=JobsBase,
                  summary="post excel file",
                  name="excel-template:post",
@@ -76,15 +76,14 @@ async def upload(req: Request,
                    },
                    type=JobType.validate_data,
                    created_by=user.id)
-    os.remove(out_file)
     return res
 
 
-@file_route.post("/download/data",
-                 response_model=JobsBase,
-                 summary="download data",
-                 name="excel-data:download",
-                 tags=["File"])
+@file_route.get("/download/data",
+                response_model=JobsBase,
+                summary="download data",
+                name="excel-data:download",
+                tags=["File"])
 async def download(req: Request,
                    form_id: int,
                    session: Session = Depends(get_session),
