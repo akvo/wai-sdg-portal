@@ -43,7 +43,7 @@ def save(session: Session, user: int, form: int, dp: dict, qs: dict):
                     names.append(adm_list[-1].name)
             if q.type == QuestionType.geo:
                 if aw:
-                    geo = aw
+                    geo = aw.split(",")
                     answer.text = ("{}|{}").format(aw[0], aw[1])
                 else:
                     valid = False

@@ -59,11 +59,12 @@ def validate_number(answer, question):
 
 
 def validate_geo(answer):
+    answer = str(answer)
     try:
-        a = int(answer)
-        return {"message": "Invalid lat long format"}
+        for a in answer.split(","):
+            float(a)
     except ValueError:
-        pass
+        return {"message": "Invalid lat long format"}
     if "," not in answer:
         return {"message": "Invalid lat long format"}
     answer = answer.split(",")
@@ -71,7 +72,7 @@ def validate_geo(answer):
         return {"message": "Invalid lat long format"}
     for a in answer:
         try:
-            a = int(a)
+            a = float(a)
         except ValueError:
             return {"message": "Invalid lat long format"}
     return False
@@ -127,6 +128,9 @@ def validate_option(options, answer):
 def validate_row_data(col, answer, question):
     default = {"error": ExcelError.value, "column": col}
     if answer != answer:
+        if question.required:
+            default.update({"message": f"{question.name} is required"})
+            return default
         return False
     if isinstance(answer, str):
         answer = HText(answer).clean

@@ -43,7 +43,11 @@ def run_validate(session: Session, jobs: dict):
                                 form=info["form_id"],
                                 administration=info["administration"],
                                 file=storage.download(jobs["payload"]))
-    print(error)
+    if len(error):
+        print(error)
+    else:
+        id = jobs["id"]
+        print(f"JOBS #{id} NO ERROR")
     status = JobStatus.failed if len(error) else None
     jobs = crud.update(session=session,
                        id=jobs["id"],
