@@ -82,3 +82,12 @@ def get_nested_children_ids(session: Session,
                     current=current,
                     parents=[c.id for c in childrens])
     return current
+
+
+def get_administration_list(session: Session, id: int) -> List[int]:
+    administration_ids = [id]
+    administration = get_administration_by_id(session, id=id)
+    if administration.children:
+        for a in administration.cascade["children"]:
+            administration_ids.append(a["value"])
+    return administration_ids
