@@ -98,7 +98,7 @@ class TestSubmissionRoutes():
                 "value": "Option 1"
             }, {
                 "question": 2,
-                "value": [1, 4]
+                "value": [2, 10]
             }, {
                 "question": 3,
                 "value": {"lat": -7.836114, "lng": 110.331143}
@@ -111,8 +111,8 @@ class TestSubmissionRoutes():
         res = res.json()
         assert res == {
                 "id": 1,
-                "name": "Arsi Negele Town - Garut",
-                "administration": 4,
+                "name": "Garut - Garut",
+                "administration": 10,
                 "created": today,
                 "created_by": "Akvo Support",
                 "form": 1,
@@ -121,7 +121,7 @@ class TestSubmissionRoutes():
                 "updated_by": None,
                 "answer": [
                     {"question": 1, "value": "Option 1"},
-                    {"question": 2, "value": 4},
+                    {"question": 2, "value": 10},
                     {"question": 3, "value": "-7.836114|110.331143"},
                     {"question": 4, "value": "Garut"}
                 ]

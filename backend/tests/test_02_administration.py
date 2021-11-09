@@ -19,7 +19,7 @@ class TestAdministrationRoute():
     async def test_seed_administration(self, app: FastAPI, session: Session,
                                        client: AsyncClient) -> None:
         engine = create_engine(get_db_url())
-        data = pd.read_csv('./source/administration-ethiopia.csv')
+        data = pd.read_csv('./source/administration-tests.csv')
         parents = list(data['UNIT_TYPE'].unique())
         parents = pd.DataFrame(parents, columns=['name'])
         parents['parent'] = None

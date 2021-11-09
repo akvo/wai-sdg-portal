@@ -28,7 +28,7 @@ class TestFileRoutes():
             },
             {
                 "question": 2,
-                "value": 4
+                "value": 10
             },
             {
                 "question": 3,

@@ -24,7 +24,7 @@ class TestMapsRoutes():
         assert res == [{
             "id": 1,
             "geo": [110.331143, -7.836114],
-            "loc": "Arsi Negele Town",
+            "loc": "Garut",
             "marker": "Option 1",
-            "shape": 4,
+            "shape": 10.0,
         }]

@@ -68,10 +68,10 @@ class TestFileRoutes():
                                           client: AsyncClient) -> None:
         excel_file = "./tmp/1-test.xlsx"
         right_data = [[
-            "Option 1", "Shashemene|Kuyera Town", "-6.2,106.81",
+            "Option 1", "Yogyakarta|Bantul", "-6.2,106.81",
             "Testing Data 1", 20, "Option A", "2020-12-18"
         ], [
-            "Option 2", "Shashemene|Kuyera Town", "-6.2,106.81",
+            "Option 2", "Yogyakarta|Bantul", "-6.2,106.81",
             "Testing Data 2", 23, "Option B", "2020-12-18"
         ]]
         columns = [

@@ -75,19 +75,19 @@ class TestExcelValidation():
     async def test_validate_excel_file(self, session: Session) -> None:
         excel_file = "./tmp/1-test.xlsx"
         wrong_data = [[
-            "Option 4", "Kuyera Town", "-6.2,106.81", "Testing Data 1",
-            "", "Two", "Option B|Option A", ""
+            "Option 4", "Jawa Barat|Garut", "-6.2,106.81",
+            "Testing Data 1", "", "Two", "Option B|Option A", ""
         ], [
-            "Option 2", "Kuyera Town", "180", "Testing Data 2",
-            "", 300, "option a|Option D", "2020"
+            "Option 2", "Jawa Barat|Garut",  "180",
+            "Testing Data 2", "", 300, "option a|Option D", "2020"
         ], [
-            "Option 2", "Kuyera Town", "180,A", "Testing Data 2",
+            "Option 2", "Jawa Barat|Garut",  "180,A", "Testing Data 2",
             "", -23, "Option B", "2020-12-18"
         ], [
-            "Option 2        ", "Kuyera Town", "-6.2,106.81", "Testing Data 2",
-            "", 23, "    Option B\n", "2020-12-18"
+            "Option 2        ", "Jawa Barat|Garut", "-6.2,106.81",
+            "Testing Data 2", "", 23, "    Option B\n", "2020-12-18"
         ], [
-            "Option 1", "Kuyera Town", "-6.2,106.81", "Testing Data 2",
+            "Option 1", "Jawa Barat|Garut",  "-6.2,106.81", "Testing Data 2",
             "", 23, "", "2020-12-18"
         ]]
         columns = [

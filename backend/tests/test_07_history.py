@@ -29,32 +29,24 @@ class TestDataUpdateRoutes():
         assert res.status_code == 200
         res = res.json()
         assert res == {
-            "id":
-            1,
-            "name":
-            "Arsi Negele Town - Garut",
-            "administration":
-            4,
-            "created_by":
-            "Akvo Support",
-            "created":
-            today,
-            "form":
-            1,
+            "id": 1,
+            "name": "Garut - Garut",
+            "administration": 10,
+            "created_by": "Akvo Support",
+            "created": today,
+            "form": 1,
             "geo": {
                 "lat": -7.836114,
                 "long": 110.331143
             },
-            "updated_by":
-            "Akvo Support",
-            "updated":
-            today,
+            "updated_by": "Akvo Support",
+            "updated": today,
             "answer": [{
                 "question": 1,
                 "value": "Option 2"
             }, {
                 "question": 2,
-                "value": 4
+                "value": 10
             }, {
                 "question": 3,
                 "value": "-7.836114|110.331143"
@@ -99,8 +91,8 @@ class TestHistoryRoutes():
         first_data = res["data"][0]
         assert first_data == {
             "id": 1,
-            "name": "Arsi Negele Town - Garut",
-            "administration": 4,
+            "name": "Garut - Garut",
+            "administration": 10,
             "created": today,
             "created_by": "Akvo Support",
             "form": 1,
@@ -116,7 +108,7 @@ class TestHistoryRoutes():
                 "history": True,
             }, {
                 "question": 2,
-                "value": 4,
+                "value": 10,
                 "history": False,
             }, {
                 "question": 3,

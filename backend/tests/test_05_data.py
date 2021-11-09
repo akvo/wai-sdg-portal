@@ -28,8 +28,8 @@ class TestDataRoutes():
         first_data = res["data"][0]
         assert first_data == {
             "id": 1,
-            "name": "Arsi Negele Town - Garut",
-            "administration": 4,
+            "name": "Garut - Garut",
+            "administration": 10,
             "created": today,
             "created_by": "Akvo Support",
             "form": 1,
@@ -45,7 +45,7 @@ class TestDataRoutes():
                 "history": False
             }, {
                 "question": 2,
-                "value": 4,
+                "value": 10,
                 "history": False
             }, {
                 "question": 3, "value": "-7.836114|110.331143",
