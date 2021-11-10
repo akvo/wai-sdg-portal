@@ -125,10 +125,30 @@ async def generate(req: Request,
                 name="excel-data:download-list",
                 tags=["File"])
 async def download_list(req: Request,
+                        page: Optional[int] = 1,
+                        perpage: Optional[int] = 5,
                         session: Session = Depends(get_session),
                         credentials: credentials = Depends(security)):
     user = verify_editor(req.state.authenticated, session)
     res = jobs.query(session=session,
                      type=JobType.download,
-                     created_by=user.id)
+                     created_by=user.id,
+                     limit=perpage,
+                     skip=(perpage * (page - 1)))
+    if len(res) == 0:
+        raise HTTPException(status_code=404, detail="Not found")
+    return res
+
+
+@file_route.get("/download/status",
+                response_model=JobsBase,
+                summary="list of generated data",
+                name="excel-data:download-status",
+                tags=["File"])
+async def download_check(req: Request,
+                         id: int,
+                         session: Session = Depends(get_session),
+                         credentials: credentials = Depends(security)):
+    verify_editor(req.state.authenticated, session)
+    res = jobs.get_by_id(session=session, id=id)
     return res

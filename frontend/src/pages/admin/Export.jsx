@@ -6,9 +6,13 @@ import { UIState } from "../../state/ui";
 
 const Export = () => {
   const [fileList, setFileList] = useState([]);
+  const [pendingFile, setPendingFile] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [attempt, setAttempt] = useState(0);
+  const [page, setPage] = useState(1);
+  const [refreshing, setRefreshing] = useState(false);
+  const [loadMoreButton, setLoadMoreButton] = useState(true);
   const { user } = UIState.useState((s) => s);
+
   useEffect(() => {
     if (user) {
       api
@@ -27,23 +31,30 @@ const Export = () => {
   const pending = fileList.find((item) => item.status !== "done");
 
   useEffect(() => {
-    if (pending && attempt < 2) {
+    if (pending && !refreshing) {
+      setRefreshing(true);
       setTimeout(() => {
-        api
-          .get("download/list")
-          .then((res) => {
-            setLoading(false);
-            setFileList(res.data);
-            setAttempt(attempt + 1);
-          })
-          .catch(() => {
-            setLoading(false);
-            setFileList([]);
-            setAttempt(attempt + 1);
-          });
+        api.get(`download/status?id=${pending.id}`).then((res) => {
+          if (res?.data?.status === "done") {
+            setPendingFile(res.data);
+            setRefreshing(false);
+          }
+        });
       }, 10000);
     }
-  }, [pending, attempt]);
+  }, [refreshing, pendingFile, pending]);
+
+  useEffect(() => {
+    if (pendingFile) {
+      const currentList = fileList.map((x) => {
+        if (pendingFile.id === x.id) {
+          return pendingFile;
+        }
+        return x;
+      });
+      setFileList(currentList);
+    }
+  }, [pendingFile, fileList]);
 
   const handleDownload = (payload) => {
     api
@@ -58,6 +69,36 @@ const Export = () => {
       });
   };
 
+  const onLoadMore = () => {
+    api
+      .get(`download/list?page=${page + 1}`)
+      .then((res) => {
+        setFileList([...fileList, ...res.data]);
+        setPage(page + 1);
+      })
+      .catch(() => {
+        setLoadMoreButton(false);
+      });
+  };
+
+  const loadMore = !loading ? (
+    <div
+      style={{
+        textAlign: "center",
+        marginTop: 12,
+        marginBottom: 12,
+        height: 32,
+        lineHeight: "32px",
+      }}
+    >
+      {loadMoreButton ? (
+        <Button onClick={onLoadMore}>More</Button>
+      ) : (
+        "End of the list"
+      )}
+    </div>
+  ) : null;
+
   return (
     <Row className="filter-wrapper" align="middle" justify="space-between">
       <Col span={24}>
@@ -65,6 +106,7 @@ const Export = () => {
           loading={loading}
           bordered={true}
           itemLayout="horizontal"
+          loadMore={loadMore}
           dataSource={fileList}
           renderItem={(item) => {
             const filename = item?.payload?.replace("download/", "");
