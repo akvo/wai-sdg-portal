@@ -31,7 +31,7 @@ const Export = () => {
   const pending = fileList.find((item) => item.status !== "done");
 
   useEffect(() => {
-    if (pending && !refreshing) {
+    if (pending && !refreshing && !pendingFile) {
       setRefreshing(true);
       setTimeout(() => {
         api.get(`download/status?id=${pending.id}`).then((res) => {
@@ -40,7 +40,7 @@ const Export = () => {
             setRefreshing(false);
           }
         });
-      }, 10000);
+      }, 3000);
     }
   }, [refreshing, pendingFile, pending]);
 
@@ -52,6 +52,7 @@ const Export = () => {
         }
         return x;
       });
+      setPendingFile(null);
       setFileList(currentList);
     }
   }, [pendingFile, fileList]);
@@ -63,7 +64,7 @@ const Export = () => {
         const url = window.URL.createObjectURL(new Blob([res.data]));
         const link = document.createElement("a");
         link.href = url;
-        link.setAttribute("download", payload); //or any other extension
+        link.setAttribute("download", payload);
         document.body.appendChild(link);
         link.click();
       });
@@ -81,23 +82,24 @@ const Export = () => {
       });
   };
 
-  const loadMore = !loading ? (
-    <div
-      style={{
-        textAlign: "center",
-        marginTop: 12,
-        marginBottom: 12,
-        height: 32,
-        lineHeight: "32px",
-      }}
-    >
-      {loadMoreButton ? (
-        <Button onClick={onLoadMore}>More</Button>
-      ) : (
-        "End of the list"
-      )}
-    </div>
-  ) : null;
+  const loadMore =
+    !loading && fileList.length ? (
+      <div
+        style={{
+          textAlign: "center",
+          marginTop: 12,
+          marginBottom: 12,
+          height: 32,
+          lineHeight: "32px",
+        }}
+      >
+        {loadMoreButton ? (
+          <Button onClick={onLoadMore}>More</Button>
+        ) : (
+          "End of the list"
+        )}
+      </div>
+    ) : null;
 
   return (
     <Row className="filter-wrapper" align="middle" justify="space-between">

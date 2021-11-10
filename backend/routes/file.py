@@ -105,10 +105,11 @@ async def generate(req: Request,
     options = check_query(q) if q else None
     user = verify_editor(req.state.authenticated, session)
     form_name = get_form_name(session=session, id=form_id)
+    form_name = form_name.replace(" ", "_").lower()
     today = datetime.today().strftime("%y%m%d")
     out_file = UUID(f"{form_name}-{today}").str
     res = jobs.add(session=session,
-                   payload=f"D{out_file}.xlsx",
+                   payload=f"download-{out_file}.xlsx",
                    info={
                        "form_id": form_id,
                        "administration": administration,
