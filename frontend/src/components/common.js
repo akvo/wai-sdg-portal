@@ -2,7 +2,6 @@ import React from "react";
 import { Select, Button, Result, Space } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { UIState } from "../state/ui";
-import isEmpty from "lodash/isEmpty";
 
 const { Option, OptGroup } = Select;
 
@@ -40,17 +39,9 @@ export const navigationOptions = [
 ];
 
 export const SelectLevel = ({ setPage, setSelectedRow }) => {
-  const { administration, selectedAdministration, user } = UIState.useState(
+  const { selectedAdministration, administrationByAccess } = UIState.useState(
     (s) => s
   );
-  let administrationByAccess = administration;
-  if (user?.role !== "admin" && !isEmpty(user?.access)) {
-    administrationByAccess = administration.filter(
-      (adm) =>
-        user?.access.includes(adm.id) || user?.access.includes(adm.parent)
-    );
-  }
-
   return (
     <Space>
       {selectedAdministration.map((s, si) => {

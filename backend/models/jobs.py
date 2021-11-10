@@ -36,7 +36,7 @@ class JobsDict(TypedDict):
     attempt: Optional[int] = None
     payload: str
     created_by: int
-    created: Optional[datetime] = None
+    created: Optional[str] = None
     available: Optional[datetime] = None
 
 
@@ -86,16 +86,13 @@ class Jobs(Base):
             "info": self.info,
             "attempt": self.attempt,
             "created_by": self.created_by,
-            "created": self.created,
+            "created": self.created.strftime("%B %d, %Y at %I:%M %p"),
             "available": self.available,
         }
 
     @property
     def status_response(self) -> JobStatusResponse:
-        return {
-            "status": self.status,
-            "attachment": self.payload
-        }
+        return {"status": self.status, "attachment": self.payload}
 
 
 class JobsBase(BaseModel):
@@ -106,7 +103,7 @@ class JobsBase(BaseModel):
     info: Optional[dict] = None
     attempt: Optional[int] = 1
     created_by: int
-    created: Optional[datetime] = None
+    created: Optional[str] = None
     available: Optional[datetime] = None
 
     class Config:

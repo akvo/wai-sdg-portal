@@ -21,7 +21,6 @@ class TestsJobs():
                             type=JobType.validate_data)
         assert new_task["id"] == 1
         assert new_task["created_by"] == 1
-        assert new_task["created"].strftime("%B %d, %Y") == today
         assert new_task["payload"] == "testing_job_1.xlsx"
         assert new_task["status"] == JobStatus.pending
         assert new_task["available"] is None

@@ -70,6 +70,13 @@ def get_question_by_name(session: Session, form: int,
     return question
 
 
+def get_question_name(session: Session, id: int) -> str:
+    question = session.query(Question.name).filter(Question.id == id).first()
+    if question:
+        return question.name
+    return ""
+
+
 def get_excel_question(session: Session, form: int) -> List[QuestionDict]:
     return session.query(Question).filter(Question.form == form)
 

@@ -17,7 +17,6 @@ import { DropdownNavigation } from "../../components/common";
 import api from "../../util/api";
 import axios from "axios";
 import config from "./admin-static";
-import isEmpty from "lodash/isEmpty";
 
 const { Dragger } = Upload;
 const allowedFiles = [
@@ -74,7 +73,12 @@ const checkJobs = (id, filename) => {
 };
 
 const ManageUpload = () => {
-  const { user, administration, jobStatus } = UIState.useState((s) => s);
+  const {
+    user,
+    administration,
+    jobStatus,
+    administrationByAccess,
+  } = UIState.useState((s) => s);
   const [form, setForm] = useState("water");
   const [fileName, setFileName] = useState(null);
   const { formId } = config[form];
@@ -83,16 +87,6 @@ const ManageUpload = () => {
   const [jobState, setJobState] = useState(null);
 
   const key = "updatable";
-
-  let administrationByAccess = administration;
-  if (user?.role !== "admin" && !isEmpty(user?.access)) {
-    if (user?.role !== "admin" && !isEmpty(user?.access)) {
-      administrationByAccess = administration.filter(
-        (adm) =>
-          user?.access.includes(adm.id) || user?.access.includes(adm.parent)
-      );
-    }
-  }
 
   const onChange = (info) => {
     const nextState = {};

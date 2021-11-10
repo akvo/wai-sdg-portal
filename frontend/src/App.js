@@ -11,6 +11,7 @@ import api from "./util/api";
 import { useAuth0 } from "@auth0/auth0-react";
 import { createBrowserHistory } from "history";
 import { Router } from "react-router-dom";
+import isEmpty from "lodash/isEmpty";
 import "./App.scss";
 
 const history = createBrowserHistory();
@@ -46,8 +47,18 @@ function App() {
             }
             if (active) {
               api.get("administration").then((a) => {
+                let administrationByAccess = a.data;
+                if (user?.role !== "admin" && !isEmpty(data?.access)) {
+                  administrationByAccess = a.data.filter(
+                    (adm) =>
+                      data?.access.includes(adm.id) ||
+                      data?.access.includes(adm.parent)
+                  );
+                }
+
                 UIState.update((u) => {
                   u.administration = a.data;
+                  u.administrationByAccess = administrationByAccess;
                 });
               });
             }

@@ -10,6 +10,7 @@ from fastapi.responses import FileResponse
 from fastapi.security import HTTPBearer
 from db.connection import get_session
 from db.crud_form import get_form_name
+from db.crud_question import get_question_name
 from util import excel, storage
 from util.helper import UUID
 import db.crud_jobs as jobs
@@ -78,28 +79,50 @@ async def upload(req: Request,
     return res
 
 
-@file_route.get("/download/data",
-                response_model=JobsBase,
-                summary="download data",
+@file_route.get("/download/file/{file_name:path}",
+                summary="get excel template for ",
                 name="excel-data:download",
                 tags=["File"])
 async def download(req: Request,
+                   file_name: str,
+                   session: Session = Depends(get_session),
+                   credentials: credentials = Depends(security)):
+    verify_editor(req.state.authenticated, session)
+    filepath = storage.download(f"download/{file_name}")
+    return FileResponse(path=filepath, filename=file_name, media_type=ftype)
+
+
+@file_route.get("/download/data",
+                response_model=JobsBase,
+                summary="download data",
+                name="excel-data:generate",
+                tags=["File"])
+async def generate(req: Request,
                    form_id: int,
                    session: Session = Depends(get_session),
                    administration: Optional[int] = None,
                    q: Optional[List[str]] = Query(None),
                    credentials: credentials = Depends(security)):
+    tags = []
     options = check_query(q) if q else None
     user = verify_editor(req.state.authenticated, session)
     form_name = get_form_name(session=session, id=form_id)
+    form_name = form_name.replace(" ", "_").lower()
     today = datetime.today().strftime("%y%m%d")
     out_file = UUID(f"{form_name}-{today}").str
+    if q:
+        for o in q:
+            [qid, option] = o.split("|")
+            question = get_question_name(session=session, id=qid)
+            tags.append({"q": question, "o": option})
     res = jobs.add(session=session,
-                   payload=f"D{out_file}.xlsx",
+                   payload=f"download-{out_file}.xlsx",
                    info={
                        "form_id": form_id,
+                       "form_name": form_name,
                        "administration": administration,
-                       "options": options
+                       "options": options,
+                       "tags": tags
                    },
                    type=JobType.download,
                    created_by=user.id)
@@ -112,10 +135,30 @@ async def download(req: Request,
                 name="excel-data:download-list",
                 tags=["File"])
 async def download_list(req: Request,
+                        page: Optional[int] = 1,
+                        perpage: Optional[int] = 5,
                         session: Session = Depends(get_session),
                         credentials: credentials = Depends(security)):
     user = verify_editor(req.state.authenticated, session)
     res = jobs.query(session=session,
                      type=JobType.download,
-                     created_by=user.id)
+                     created_by=user.id,
+                     limit=perpage,
+                     skip=(perpage * (page - 1)))
+    if len(res) == 0:
+        raise HTTPException(status_code=404, detail="Not found")
+    return res
+
+
+@file_route.get("/download/status",
+                response_model=JobsBase,
+                summary="list of generated data",
+                name="excel-data:download-status",
+                tags=["File"])
+async def download_check(req: Request,
+                         id: int,
+                         session: Session = Depends(get_session),
+                         credentials: credentials = Depends(security)):
+    verify_editor(req.state.authenticated, session)
+    res = jobs.get_by_id(session=session, id=id)
     return res

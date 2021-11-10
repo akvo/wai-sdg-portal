@@ -45,7 +45,7 @@ const getRowClassName = (record, editedRow) => {
   return "";
 };
 
-const ManageData = () => {
+const ManageData = ({ handleTabClick }) => {
   const {
     user,
     editedRow,
@@ -192,9 +192,9 @@ const ManageData = () => {
     api
       .get(url)
       .then((d) => {
-        console.log(d);
         notification.success({ message: "Data Export Created." });
         setExportLoading(false);
+        handleTabClick("exports");
       })
       .catch((error) => {
         console.log(error);

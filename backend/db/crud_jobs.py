@@ -26,7 +26,7 @@ def get(session: Session, user: int) -> List[JobsBase]:
     return [j.serialize for j in jobs]
 
 
-def get_by_id(session: Session, id: int) -> JobsBase:
+def get_by_id(session: Session, id: int) -> Jobs:
     jobs = session.query(Jobs).filter(Jobs.id == id).first()
     return jobs.serialize
 
@@ -59,7 +59,9 @@ def update(session: Session,
 def query(session: Session,
           type: Optional[JobType] = None,
           status: Optional[JobStatus] = None,
-          created_by: Optional[int] = None) -> JobsBase:
+          created_by: Optional[int] = None,
+          limit: Optional[int] = 5,
+          skip: Optional[int] = 0) -> JobsBase:
     jobs = session.query(Jobs)
     if type:
         jobs = jobs.filter(Jobs.type == type)
@@ -67,7 +69,7 @@ def query(session: Session,
         jobs = jobs.filter(Jobs.status == status)
     if created_by:
         jobs = jobs.filter(Jobs.created_by == created_by)
-    jobs = jobs.order_by(desc(Jobs.created)).all()
+    jobs = jobs.order_by(desc(Jobs.created)).offset(skip).limit(limit).all()
     return [j.serialize for j in jobs]
 
 
