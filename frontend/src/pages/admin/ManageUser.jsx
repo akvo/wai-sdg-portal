@@ -250,21 +250,38 @@ const ManageUser = () => {
               <Select.Option value="user">User</Select.Option>
             </Select>
           </Form.Item>
-
-          <Form.Item label="Access" name="access" valuePropName="access">
-            <Select
-              mode="multiple"
-              onChange={onAccessChange}
-              value={selectedValue?.access}
-            >
-              {administration
-                .filter((a) => a.parent === null)
-                .map((a, ai) => (
-                  <Select.Option key={ai} value={a.id}>
-                    {a.name}
-                  </Select.Option>
-                ))}
-            </Select>
+          <Form.Item
+            noStyle
+            shouldUpdate={(prevValues, currentValues) =>
+              prevValues.role !== currentValues.role
+            }
+          >
+            {({ getFieldValue }) =>
+              getFieldValue("role") !== "admin" ? (
+                <Form.Item
+                  label="Access"
+                  name="access"
+                  valuePropName="access"
+                  shouldUpdate={(prevValues, currentValues) =>
+                    prevValues.role !== currentValues.role
+                  }
+                >
+                  <Select
+                    mode="multiple"
+                    onChange={onAccessChange}
+                    value={selectedValue?.access}
+                  >
+                    {administration
+                      .filter((a) => a.parent === null)
+                      .map((a, ai) => (
+                        <Select.Option key={ai} value={a.id}>
+                          {a.name}
+                        </Select.Option>
+                      ))}
+                  </Select>
+                </Form.Item>
+              ) : null
+            }
           </Form.Item>
 
           <Form.Item
