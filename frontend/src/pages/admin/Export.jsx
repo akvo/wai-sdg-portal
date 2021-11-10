@@ -1,8 +1,38 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, List, Button } from "antd";
-import { FileExcelFilled, DownloadOutlined } from "@ant-design/icons";
+import { Row, Col, List, Space, Button, Tag, Popover } from "antd";
+import {
+  FileExcelFilled,
+  InfoCircleOutlined,
+  DownloadOutlined,
+} from "@ant-design/icons";
 import api from "../../util/api";
 import { UIState } from "../../state/ui";
+import upperFirst from "lodash/upperFirst";
+
+const ItemDescription = ({ created, tags }) => {
+  return (
+    <Space direction="vertical">
+      <div>{created}</div>
+      {tags.length ? (
+        <div>
+          Filters:{" "}
+          {tags.map((t, i) => (
+            <Tag
+              key={i}
+              icon={
+                <Popover title={upperFirst(t.q)} placement="topRight">
+                  <InfoCircleOutlined />
+                </Popover>
+              }
+            >
+              {upperFirst(t.o)}
+            </Tag>
+          ))}
+        </div>
+      ) : null}
+    </Space>
+  );
+};
 
 const Export = () => {
   const [fileList, setFileList] = useState([]);
@@ -112,22 +142,28 @@ const Export = () => {
           dataSource={fileList}
           renderItem={(item) => {
             const filename = item?.payload?.replace("download/", "");
+            const done = item?.status === "done";
             return (
               <List.Item key={item.id}>
                 <List.Item.Meta
                   avatar={
                     <FileExcelFilled
-                      style={{ color: "#52c41a", fontSize: "50px" }}
+                      style={{
+                        color: done ? "#52c41a" : "#dddddd",
+                        fontSize: "50px",
+                      }}
                     />
                   }
                   title={<a href={item?.payload}>{filename}</a>}
-                  description={item?.created}
+                  description={
+                    <ItemDescription created={item.created} {...item.info} />
+                  }
                 />
                 <Button
                   onClick={() => handleDownload(item?.payload)}
                   icon={<DownloadOutlined />}
-                  loading={item?.status !== "done"}
-                  disabled={item?.status !== "done"}
+                  loading={!done}
+                  disabled={!done}
                 >
                   Download
                 </Button>

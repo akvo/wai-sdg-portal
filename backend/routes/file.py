@@ -10,6 +10,7 @@ from fastapi.responses import FileResponse
 from fastapi.security import HTTPBearer
 from db.connection import get_session
 from db.crud_form import get_form_name
+from db.crud_question import get_question_name
 from util import excel, storage
 from util.helper import UUID
 import db.crud_jobs as jobs
@@ -102,19 +103,26 @@ async def generate(req: Request,
                    administration: Optional[int] = None,
                    q: Optional[List[str]] = Query(None),
                    credentials: credentials = Depends(security)):
+    tags = []
     options = check_query(q) if q else None
     user = verify_editor(req.state.authenticated, session)
     form_name = get_form_name(session=session, id=form_id)
     form_name = form_name.replace(" ", "_").lower()
     today = datetime.today().strftime("%y%m%d")
     out_file = UUID(f"{form_name}-{today}").str
+    if q:
+        for o in q:
+            [qid, option] = o.split("|")
+            question = get_question_name(session=session, id=qid)
+            tags.append({"q": question, "o": option})
     res = jobs.add(session=session,
                    payload=f"download-{out_file}.xlsx",
                    info={
                        "form_id": form_id,
                        "form_name": form_name,
                        "administration": administration,
-                       "options": options
+                       "options": options,
+                       "tags": tags
                    },
                    type=JobType.download,
                    created_by=user.id)
