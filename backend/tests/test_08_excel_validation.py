@@ -80,24 +80,19 @@ class TestExcelValidation():
         wrong_data = [[
             "Option 4", "Jawa Barat|Garut", "-6.2,106.81", "Testing Data 1",
             "", "Two", "Option B|Option A", ""
-        ],
-                      [
-                          "Option 2", "Jakarta|Garut", "180", "Testing Data 2",
-                          "", 300, "option a|Option D", "2020"
-                      ],
-                      [
-                          "Option 2", "Jakarta|Jakarta Barat", "180,A",
-                          "Testing Data 2", "", -23, "Option B", "2020-12-18"
-                      ],
-                      [
-                          "Option 2        ", "Jakarta|Jakarta Pusat",
-                          "-6.2,106.81", "Testing Data 2", "", 23,
-                          "    Option B\n", "2020-12-18"
-                      ],
-                      [
-                          "Option 1", "Jakarta|Jakarta Barat", "-6.2,106.81",
-                          "Testing Data 2", "", 23, "", "2020-12-18"
-                      ]]
+        ], [
+            "Option 2", "Jakarta|Garut", "180", "Testing Data 2",
+            "", 300, "option a|Option D", "2020"
+        ], [
+            "Option 2", "Jakarta|Jakarta Barat", "180,A",
+            "Testing Data 2", "", -23, "Option B", "2020-12-18"
+        ], [
+            "Option 2        ", "Jakarta|Jakarta Pusat", "-6.2,106.81",
+            "Testing Data 2", "", 23, "    Option B\n", "2020-12-18"
+        ], [
+            "Option 1", "Jakarta|Jakarta Barat", "-6.2,106.81",
+            "Testing Data 2", "", 23, "", "2020-12-18"
+        ]]
         columns = [
             "2|Test Option Question", "2|Test Administration Question",
             "3|Test Geo Question", "Test Datapoint Text Question", "",
