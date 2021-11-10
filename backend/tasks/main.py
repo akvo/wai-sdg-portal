@@ -9,6 +9,7 @@ from . import validation
 from . import seed
 from models.jobs import JobType, JobStatus
 import util.storage as storage
+from util.helper import HText
 
 
 def print_log_start(message):
@@ -82,6 +83,13 @@ def run_download(session: Session, jobs: dict):
                               administration=administration_ids,
                               options=info["options"])
     df = pd.DataFrame(data)
+    col_names = list(df)
+    col_question = list(filter(lambda x: HText(x).hasnum, col_names))
+    col_names = [
+        "id", "created_at", "created_by", "updated_at", "updated_by",
+        "datapoint_name", "administration", "geolocation"
+    ] + col_question
+    df = df[col_names]
     df = df.to_excel(file, index=False)
     output = storage.upload(file, "download", out_file)
     jobs = crud.update(session=session,

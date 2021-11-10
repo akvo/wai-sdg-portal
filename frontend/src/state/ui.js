@@ -12,7 +12,7 @@ const defaultUIState = {
   selectedAdministration: [null],
   reloadData: true,
   editedRow: {},
-  jobStatus: [],
+  activityLog: [],
   advanceSearchValue: [],
   administrationByAccess: [],
 };

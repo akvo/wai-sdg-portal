@@ -21,7 +21,7 @@ def get(req: Request,
         session: Session = Depends(get_session),
         credentials: credentials = Depends(security)):
     user = verify_editor(req.state.authenticated, session)
-    log = crud.get(session=session, user=user)
+    log = crud.get(session=session, user=user.id)
     return log
 
 

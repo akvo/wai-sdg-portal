@@ -175,7 +175,7 @@ const water = {
     { title: "Water Point Charts 04" },
   ],
   maps: {
-    shape: { id: 88, name: "Non Functional Taps" },
+    shape: { id: 82, name: "Non Functional Taps" },
     marker: { id: 80, title: "Functionality Status" },
   },
   formId: 5,
