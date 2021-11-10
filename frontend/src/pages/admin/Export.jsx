@@ -38,6 +38,7 @@ const Export = () => {
   const [fileList, setFileList] = useState([]);
   const [pendingFile, setPendingFile] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [downloading, setDownloading] = useState(null);
   const [page, setPage] = useState(1);
   const [refreshing, setRefreshing] = useState(false);
   const [loadMoreButton, setLoadMoreButton] = useState(true);
@@ -58,10 +59,10 @@ const Export = () => {
     }
   }, [user]);
 
-  const pending = fileList.find((item) => item.status !== "done");
+  const pending = fileList.filter((item) => item.status !== "done");
 
   useEffect(() => {
-    if (pending && !refreshing && !pendingFile) {
+    if (pending.length && !refreshing && !pendingFile) {
       setRefreshing(true);
       setTimeout(() => {
         api.get(`download/status?id=${pending.id}`).then((res) => {
@@ -82,12 +83,13 @@ const Export = () => {
         }
         return x;
       });
-      setPendingFile(null);
       setFileList(currentList);
+      setPendingFile(null);
     }
   }, [pendingFile, fileList]);
 
   const handleDownload = (payload) => {
+    setDownloading(payload);
     api
       .get(`download/file/${payload}`, { responseType: "blob" })
       .then((res) => {
@@ -97,6 +99,7 @@ const Export = () => {
         link.setAttribute("download", payload);
         document.body.appendChild(link);
         link.click();
+        setDownloading(null);
       });
   };
 
@@ -113,7 +116,7 @@ const Export = () => {
   };
 
   const loadMore =
-    !loading && fileList.length ? (
+    !loading && fileList.length > 2 ? (
       <div
         style={{
           textAlign: "center",
@@ -124,7 +127,7 @@ const Export = () => {
         }}
       >
         {loadMoreButton ? (
-          <Button onClick={onLoadMore}>More</Button>
+          <Button onClick={onLoadMore}>Load More</Button>
         ) : (
           "End of the list"
         )}
@@ -143,6 +146,7 @@ const Export = () => {
           renderItem={(item) => {
             const filename = item?.payload?.replace("download/", "");
             const done = item?.status === "done";
+            const isDownloading = item?.payload === downloading;
             return (
               <List.Item key={item.id}>
                 <List.Item.Meta
@@ -163,9 +167,9 @@ const Export = () => {
                   onClick={() => handleDownload(item?.payload)}
                   icon={<DownloadOutlined />}
                   loading={!done}
-                  disabled={!done}
+                  disabled={!done || isDownloading}
                 >
-                  Download
+                  Download{isDownloading && "ing"}
                 </Button>
               </List.Item>
             );
