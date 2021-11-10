@@ -13,7 +13,6 @@ import { getLocationName } from "../../util/utils";
 const ItemDescription = ({ created, tags, adminid }) => {
   const { administration } = UIState.useState((e) => e);
   const admin_name = adminid ? getLocationName(adminid, administration) : false;
-  console.log(adminid);
   return (
     <Space direction="vertical">
       <div>{created}</div>
