@@ -14,6 +14,7 @@ const defaultUIState = {
   editedRow: {},
   jobStatus: [],
   advanceSearchValue: [],
+  administrationByAccess: [],
 };
 
 export const UIState = new Store(defaultUIState);
