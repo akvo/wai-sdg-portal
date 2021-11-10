@@ -132,6 +132,7 @@ class Data(Base):
         data = {
             "id":
             self.id,
+            "datapoint_name": self.name,
             "administration":
             self.administration_detail.name,
             "geolocation":

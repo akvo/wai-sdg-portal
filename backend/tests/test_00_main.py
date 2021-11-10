@@ -34,6 +34,33 @@ def test_string_trim_helper():
         assert HText(st).clean == "Option 1"
 
 
+def test_check_number_helper():
+    string_list = [{
+        "text": "mantap",
+        "has_number": False
+    }, {
+        "text": "mantap123",
+        "has_number": True
+    }, {
+        "text": "1|mantap",
+        "has_number": True
+    }]
+    for st in string_list:
+        assert HText(st["text"]).hasnum == st["has_number"]
+    metadata_columns = list(
+        filter(lambda x: not HText(x["text"]).hasnum, string_list))
+    assert metadata_columns == [{"text": "mantap", "has_number": False}]
+    question_columns = list(
+        filter(lambda x: HText(x["text"]).hasnum, string_list))
+    assert question_columns == [{
+        "text": "mantap123",
+        "has_number": True
+    }, {
+        "text": "1|mantap",
+        "has_number": True
+    }]
+
+
 def test_uuid_helper():
     uuid = UUID("testing")
     assert uuid.str == f"testing-{uuid.uuid}"

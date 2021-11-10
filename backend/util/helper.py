@@ -1,4 +1,5 @@
 import uuid
+import re
 
 
 def tr(obj):
@@ -9,10 +10,15 @@ def get_uuid():
     return "-".join(str(uuid.uuid4()).split("-")[1:4])
 
 
+def contain_numbers(inputString):
+    return bool(re.search(r'\d', inputString))
+
+
 class HText(str):
     def __init__(self, string):
         self.obj = [string] if "|" not in string else string.split("|")
         self.clean = "|".join([tr(o) for o in self.obj])
+        self.hasnum = contain_numbers(string)
 
 
 class UUID(str):
