@@ -65,7 +65,7 @@ const Export = () => {
     if (pending.length && !refreshing && !pendingFile) {
       setRefreshing(true);
       setTimeout(() => {
-        api.get(`download/status?id=${pending.id}`).then((res) => {
+        api.get(`download/status?id=${pending?.[0]?.id}`).then((res) => {
           if (res?.data?.status === "done") {
             setPendingFile(res.data);
             setRefreshing(false);
@@ -169,7 +169,8 @@ const Export = () => {
                   loading={!done}
                   disabled={!done || isDownloading}
                 >
-                  Download{isDownloading && "ing"}
+                  {!done ? "Generating" : "Download"}
+                  {isDownloading && "ing"}
                 </Button>
               </List.Item>
             );
