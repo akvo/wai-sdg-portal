@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, List } from "antd";
+import { Row, Col, List, Button } from "antd";
 import { FileExcelFilled, DownloadOutlined } from "@ant-design/icons";
 import api from "../../util/api";
 import { UIState } from "../../state/ui";
@@ -7,6 +7,7 @@ import { UIState } from "../../state/ui";
 const Export = () => {
   const [fileList, setFileList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [attempt, setAttempt] = useState(0);
   const { user } = UIState.useState((s) => s);
   useEffect(() => {
     if (user) {
@@ -22,6 +23,28 @@ const Export = () => {
         });
     }
   }, [user]);
+
+  const pending = fileList.find((item) => item.status !== "done");
+
+  useEffect(() => {
+    if (pending && attempt < 2) {
+      setTimeout(() => {
+        api
+          .get("download/list")
+          .then((res) => {
+            setLoading(false);
+            setFileList(res.data);
+            setAttempt(attempt + 1);
+          })
+          .catch(() => {
+            setLoading(false);
+            setFileList([]);
+            setAttempt(attempt + 1);
+          });
+      }, 10000);
+    }
+  }, [pending, attempt]);
+
   return (
     <Row className="filter-wrapper" align="middle" justify="space-between">
       <Col span={24}>
@@ -43,6 +66,14 @@ const Export = () => {
                   title={<a href={item?.payload}>{filename}</a>}
                   description={item?.created}
                 />
+                <Button
+                  href={item?.payload}
+                  icon={<DownloadOutlined />}
+                  loading={item?.status !== "done"}
+                  disabled={item?.status !== "done"}
+                >
+                  Download
+                </Button>
               </List.Item>
             );
           }}
