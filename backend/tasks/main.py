@@ -52,8 +52,7 @@ def run_validate(session: Session, jobs: dict):
     if len(error):
         error_list = pd.DataFrame(error)
         error_file = f"./tmp/error-{id}.csv"
-        error_list = error_list[["column", "message"]].to_csv(error_file,
-                                                              index=False)
+        error_list = error_list.to_csv(error_file, index=False)
         error_file = storage.upload(error_file, "error", public=True)
         payload = error_file
         message = "VALIDATION ERROR"

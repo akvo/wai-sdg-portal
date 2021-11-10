@@ -25,7 +25,10 @@ class TestExcelValidation():
                                    form=1,
                                    meta=False,
                                    type="number",
-                                   rule={"min": 0, "max": 100})
+                                   rule={
+                                       "min": 0,
+                                       "max": 100
+                                   })
         crud_question.add_question(session=session,
                                    name="Test Multiple Option Question",
                                    question_group=1,
@@ -75,29 +78,34 @@ class TestExcelValidation():
     async def test_validate_excel_file(self, session: Session) -> None:
         excel_file = "./tmp/1-test.xlsx"
         wrong_data = [[
-            "Option 4", "Jawa Barat|Garut", "-6.2,106.81",
-            "Testing Data 1", "", "Two", "Option B|Option A", ""
-        ], [
-            "Option 2", "Jakarta|Garut",  "180",
-            "Testing Data 2", "", 300, "option a|Option D", "2020"
-        ], [
-            "Option 2", "Jakarta|Jakarta Barat",  "180,A",
-            "Testing Data 2", "", -23, "Option B", "2020-12-18"
-        ], [
-            "Option 2        ", "Jakarta|Jakarta Pusat", "-6.2,106.81",
-            "Testing Data 2", "", 23, "    Option B\n", "2020-12-18"
-        ], [
-            "Option 1", "Jakarta|Jakarta Barat",  "-6.2,106.81",
-            "Testing Data 2", "", 23, "", "2020-12-18"
-        ]]
+            "Option 4", "Jawa Barat|Garut", "-6.2,106.81", "Testing Data 1",
+            "", "Two", "Option B|Option A", ""
+        ],
+                      [
+                          "Option 2", "Jakarta|Garut", "180", "Testing Data 2",
+                          "", 300, "option a|Option D", "2020"
+                      ],
+                      [
+                          "Option 2", "Jakarta|Jakarta Barat", "180,A",
+                          "Testing Data 2", "", -23, "Option B", "2020-12-18"
+                      ],
+                      [
+                          "Option 2        ", "Jakarta|Jakarta Pusat",
+                          "-6.2,106.81", "Testing Data 2", "", 23,
+                          "    Option B\n", "2020-12-18"
+                      ],
+                      [
+                          "Option 1", "Jakarta|Jakarta Barat", "-6.2,106.81",
+                          "Testing Data 2", "", 23, "", "2020-12-18"
+                      ]]
         columns = [
             "2|Test Option Question", "2|Test Administration Question",
             "3|Test Geo Question", "Test Datapoint Text Question", "",
             "5|Test Number Question", "6|Test Multiple Option Question",
             "7|Test Date Question"
         ]
-        df = pd.DataFrame(wrong_data, columns=columns)
         # Sheet Name Error
+        df = pd.DataFrame(wrong_data, columns=columns)
         df.to_excel(excel_file, index=False, sheet_name='NOT DATA')
         errors = validation.validate(session=session,
                                      form=1,
@@ -105,10 +113,23 @@ class TestExcelValidation():
                                      file=excel_file)
         assert errors == [{
             'error': ExcelError.sheet,
-            "message": "Wrong sheet name, there should be sheet named data",
+            "error_message":
+            "Wrong sheet name, there should be sheet named data",
             'sheets': "NOT DATA"
         }]
+        # Empty Sheet Error
+        df = pd.DataFrame([], columns=columns)
+        df.to_excel(excel_file, index=False, sheet_name='data')
+        errors = validation.validate(session=session,
+                                     form=1,
+                                     administration=1,
+                                     file=excel_file)
+        assert errors == [{
+            'error': ExcelError.sheet,
+            "error_message": "You have uploaded an empty sheet",
+        }]
         # Header and Value Error
+        df = pd.DataFrame(wrong_data, columns=columns)
         df.to_excel(excel_file, index=False, sheet_name='data')
         errors = validation.validate(session=session,
                                      form=1,
@@ -116,59 +137,62 @@ class TestExcelValidation():
                                      file=excel_file)
         assert errors == [{
             'error': ExcelError.header,
-            'message': "2|Test Option Question has invalid id",
-            'column': "A1"
+            'error_message': "2|Test Option Question has invalid id",
+            'cell': "A1"
         }, {
             'error': ExcelError.header,
-            'message': "Test Datapoint Text Question doesn't have question id",
-            'column': "D1"
+            'error_message':
+            "Test Datapoint Text Question doesn't have question id",
+            'cell': "D1"
         }, {
             'error': ExcelError.header,
-            'message': "Header name is missing",
-            "column": "E1"
+            'error_message': "Header name is missing",
+            "cell": "E1"
         }, {
             'error': ExcelError.value,
-            'message': "Wrong administration data for Jakarta",
-            "column": "B2"
+            'error_message': "Wrong administration data for Jakarta",
+            "cell": "B2"
         }, {
             'error': ExcelError.value,
-            'message': "Garut is not part of Jakarta",
-            "column": "B3"
+            'error_message': "Garut is not part of Jakarta",
+            "cell": "B3"
         }, {
             'error': ExcelError.value,
-            'message': "Invalid lat long format",
-            "column": "C3"
+            'error_message': "Invalid lat long format",
+            "cell": "C3"
         }, {
             'error': ExcelError.value,
-            'message': "Invalid lat long format",
-            "column": "C4"
+            'error_message': "Invalid lat long format",
+            "cell": "C4"
         }, {
             'error': ExcelError.value,
-            'message': "Value should be numeric",
-            "column": "F2"
+            'error_message': "Value should be numeric",
+            "cell": "F2"
         }, {
             'error': ExcelError.value,
-            'message': "Maximum value for Test Number Question is 100",
-            "column": "F3"
+            'error_message': "Maximum value for Test Number Question is 100",
+            "cell": "F3"
         }, {
             'error': ExcelError.value,
-            'message': "Minimum value for Test Number Question is 0",
-            "column": "F4"
+            'error_message': "Minimum value for Test Number Question is 0",
+            "cell": "F4"
         }, {
             'error': ExcelError.value,
-            'message': "Invalid case: option a and Invalid value: Option D",
-            "column": "G3"
+            'error_message':
+            "Invalid case: option a and Invalid value: Option D",
+            "cell": "G3"
         }, {
             'error': ExcelError.value,
-            'message': "Test Multiple Option Question is required",
-            "column": "G6"
+            'error_message': "Test Multiple Option Question is required",
+            "cell": "G6"
         }, {
             'error': ExcelError.value,
-            'message': "Test Date Question is required",
-            "column": "H2"
+            'error_message': "Test Date Question is required",
+            "cell": "H2"
         }, {
             'error': ExcelError.value,
-            'message': "Invalid date format: 2020. It should be YYYY-MM-DD",
-            "column": "H3"
+            'error_message':
+            "Invalid date format: 2020. It should be YYYY-MM-DD",
+            "cell": "H3"
         }]
         os.remove(excel_file)

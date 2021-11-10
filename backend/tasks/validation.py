@@ -25,19 +25,19 @@ def generate_excel_columns():
 
 
 def validate_header_names(header, col, header_names):
-    default = {"error": ExcelError.header, "column": col}
+    default = {"error": ExcelError.header, "cell": col}
     if "Unnamed:" in header:
-        default.update({"message": "Header name is missing"})
+        default.update({"error_message": "Header name is missing"})
         return default
     if "|" not in header:
         default.update({
-            "message": f"{header} doesn't have question id",
+            "error_message": f"{header} doesn't have question id",
         })
         return default
     if "|" in header:
         if header not in header_names:
             default.update({
-                "message": f"{header} has invalid id",
+                "error_message": f"{header} has invalid id",
             })
             return default
     return False
@@ -47,15 +47,19 @@ def validate_number(answer, question):
     try:
         answer = int(answer)
     except ValueError:
-        return {"message": "Value should be numeric"}
+        return {"error_message": "Value should be numeric"}
     if question.rule:
         rule = question.rule
         qname = question.name
         for r in rule:
             if r == "max" and rule[r] < answer:
-                return {"message": f"Maximum value for {qname} is {rule[r]}"}
+                return {
+                    "error_message": f"Maximum value for {qname} is {rule[r]}"
+                }
             if r == "min" and rule[r] > answer:
-                return {"message": f"Minimum value for {qname} is {rule[r]}"}
+                return {
+                    "error_message": f"Minimum value for {qname} is {rule[r]}"
+                }
     return False
 
 
@@ -65,17 +69,17 @@ def validate_geo(answer):
         for a in answer.split(","):
             float(a)
     except ValueError:
-        return {"message": "Invalid lat long format"}
+        return {"error_message": "Invalid lat long format"}
     if "," not in answer:
-        return {"message": "Invalid lat long format"}
+        return {"error_message": "Invalid lat long format"}
     answer = answer.split(",")
     if len(answer) != 2:
-        return {"message": "Invalid lat long format"}
+        return {"error_message": "Invalid lat long format"}
     for a in answer:
         try:
             a = float(a)
         except ValueError:
-            return {"message": "Invalid lat long format"}
+            return {"error_message": "Invalid lat long format"}
     return False
 
 
@@ -83,13 +87,14 @@ def validate_administration(session, answer, adm):
     aw = answer.split("|")
     name = adm["name"]
     if len(aw) < 2:
-        return {"message": "Wrong administration format"}
+        return {"error_message": "Wrong administration format"}
     if aw[0] != adm["name"]:
-        return {"message": f"Wrong administration data for {name}"}
-    children = crud_administration.get_administration_by_name(
-        session=session, name=aw[-1], parent=adm["id"])
+        return {"error_message": f"Wrong administration data for {name}"}
+    children = crud_administration.get_administration_by_name(session=session,
+                                                              name=aw[-1],
+                                                              parent=adm["id"])
     if not children:
-        return {"message": f"{aw[-1]} is not part of {name}"}
+        return {"error_message": f"{aw[-1]} is not part of {name}"}
     return False
 
 
@@ -97,7 +102,7 @@ def validate_date(answer):
     try:
         answer = int(answer)
         return {
-            "message":
+            "error_message":
             f"Invalid date format: {answer}. It should be YYYY-MM-DD"
         }
     except ValueError:
@@ -106,7 +111,7 @@ def validate_date(answer):
         answer = datetime.strptime(answer, "%Y-%m-%d")
     except ValueError:
         return {
-            "message":
+            "error_message":
             f"Invalid date format: {answer}. It should be YYYY-MM-DD"
         }
     return False
@@ -136,15 +141,15 @@ def validate_option(options, answer):
         if len(invalid_value):
             invalid_list = ", ".join(invalid_value)
             message += f"Invalid value: {invalid_list}"
-        return {"message": message}
+        return {"error_message": message}
     return False
 
 
 def validate_row_data(session, col, answer, question, adm):
-    default = {"error": ExcelError.value, "column": col}
+    default = {"error": ExcelError.value, "cell": col}
     if answer != answer:
         if question.required:
-            default.update({"message": f"{question.name} is required"})
+            default.update({"error_message": f"{question.name} is required"})
             return default
         return False
     if isinstance(answer, str):
@@ -187,12 +192,18 @@ def validate(session: Session, form: int, administration: int, file: str):
     if 'data' not in sheet_names:
         return [{
             "error": ExcelError.sheet,
-            "message": "Wrong sheet name, there should be sheet named data",
+            "error_message":
+            "Wrong sheet name, there should be sheet named data",
             "sheets": ",".join(sheet_names)
         }]
     questions = crud_question.get_excel_question(session=session, form=form)
     header_names = [q.to_excel_header for q in questions.all()]
     df = pd.read_excel(file, sheet_name='data')
+    if df.shape[0] == 0:
+        return [{
+            "error": ExcelError.sheet,
+            "error_message": "You have uploaded an empty sheet",
+        }]
     excel_head = {}
     excel_cols = list(itertools.islice(generate_excel_columns(), df.shape[1]))
     for index, header in enumerate(list(df)):
