@@ -87,7 +87,7 @@ def run_download(session: Session, jobs: dict):
     output = storage.upload(file, "download", out_file)
     jobs = crud.update(session=session,
                        id=jobs["id"],
-                       payload=output,
+                       payload=output.split("/")[1],
                        status=JobStatus.done)
     print_log_done(f"FILE CREATED {output}", start_time)
 

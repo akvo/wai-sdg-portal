@@ -45,6 +45,19 @@ const Export = () => {
     }
   }, [pending, attempt]);
 
+  const handleDownload = (payload) => {
+    api
+      .get(`download/file/${payload}`, { responseType: "blob" })
+      .then((res) => {
+        const url = window.URL.createObjectURL(new Blob([res.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", payload); //or any other extension
+        document.body.appendChild(link);
+        link.click();
+      });
+  };
+
   return (
     <Row className="filter-wrapper" align="middle" justify="space-between">
       <Col span={24}>
@@ -67,7 +80,7 @@ const Export = () => {
                   description={item?.created}
                 />
                 <Button
-                  href={item?.payload}
+                  onClick={() => handleDownload(item?.payload)}
                   icon={<DownloadOutlined />}
                   loading={item?.status !== "done"}
                   disabled={item?.status !== "done"}

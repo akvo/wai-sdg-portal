@@ -78,12 +78,25 @@ async def upload(req: Request,
     return res
 
 
-@file_route.get("/download/data",
-                response_model=JobsBase,
-                summary="download data",
+@file_route.get("/download/file/{file_name:path}",
+                summary="get excel template for ",
                 name="excel-data:download",
                 tags=["File"])
 async def download(req: Request,
+                   file_name: str,
+                   session: Session = Depends(get_session),
+                   credentials: credentials = Depends(security)):
+    verify_editor(req.state.authenticated, session)
+    filepath = storage.download(f"download/{file_name}")
+    return FileResponse(path=filepath, filename=file_name, media_type=ftype)
+
+
+@file_route.get("/download/data",
+                response_model=JobsBase,
+                summary="download data",
+                name="excel-data:generate",
+                tags=["File"])
+async def generate(req: Request,
                    form_id: int,
                    session: Session = Depends(get_session),
                    administration: Optional[int] = None,
