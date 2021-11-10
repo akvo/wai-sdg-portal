@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import {
   Row,
   Col,
@@ -46,8 +45,7 @@ const getRowClassName = (record, editedRow) => {
   return "";
 };
 
-const ManageData = () => {
-  const history = useHistory();
+const ManageData = ({ handleTabClick }) => {
   const {
     user,
     editedRow,
@@ -196,7 +194,7 @@ const ManageData = () => {
       .then((d) => {
         notification.success({ message: "Data Export Created." });
         setExportLoading(false);
-        history.push("/admin/exports");
+        handleTabClick("exports");
       })
       .catch((error) => {
         console.log(error);

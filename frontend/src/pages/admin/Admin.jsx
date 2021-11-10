@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col, Tabs } from "antd";
 import { UIState } from "../../state/ui";
 import api from "../../util/api";
@@ -23,9 +23,10 @@ api
   });
 
 const Admin = ({ match }) => {
+  const [page, setPage] = useState(match?.params?.page);
   const history = useHistory();
-  const { page } = match?.params;
   const { user } = UIState.useState((e) => e);
+
   useEffect(() => {
     if (page) {
       UIState.update((e) => {
@@ -33,6 +34,12 @@ const Admin = ({ match }) => {
       });
     }
   }, [page]);
+
+  const handleTabClick = (key) => {
+    setPage(key);
+    history.push(`/admin/${key}`);
+  };
+
   return (
     <Row className="admin-container">
       {/* Jumbotron */}
@@ -50,11 +57,13 @@ const Admin = ({ match }) => {
             type="card"
             size="large"
             tabBarGutter={0}
-            defaultActiveKey={page}
-            onTabClick={(key) => history.push(`/admin/${key}`)}
+            activeKey={page}
+            onTabClick={handleTabClick}
           >
             <TabPane tab="Manage Data" key="manage-data">
-              {page === "manage-data" && <ManageData />}
+              {page === "manage-data" && (
+                <ManageData handleTabClick={handleTabClick} currentTab={page} />
+              )}
             </TabPane>
             <TabPane tab="Exports" key="exports">
               {page === "exports" && <Export />}
