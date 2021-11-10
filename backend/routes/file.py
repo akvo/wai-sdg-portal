@@ -112,6 +112,7 @@ async def generate(req: Request,
                    payload=f"download-{out_file}.xlsx",
                    info={
                        "form_id": form_id,
+                       "form_name": form_name,
                        "administration": administration,
                        "options": options
                    },
