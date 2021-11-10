@@ -30,14 +30,14 @@ const checkJobs = (id, filename) => {
     const status = res.data.status;
     if (status === "on_progress" || status === "pending") {
       UIState.update((e) => {
-        e.jobStatus = [
+        e.activityLog = [
           {
             id: id,
             file: filename,
             status: "Waiting for validation",
             icon: "warning",
           },
-          ...e.jobStatus.filter((x) => x.id !== id),
+          ...e.activityLog.filter((x) => x.id !== id),
         ];
       });
       setTimeout(() => {
@@ -45,7 +45,7 @@ const checkJobs = (id, filename) => {
       }, 10000);
     } else if (status === "failed") {
       UIState.update((e) => {
-        e.jobStatus = [
+        e.activityLog = [
           {
             id: id,
             file: filename,
@@ -53,19 +53,19 @@ const checkJobs = (id, filename) => {
             icon: "danger",
             attachment: res.data.attachment,
           },
-          ...e.jobStatus,
+          ...e.activityLog,
         ];
       });
     } else {
       UIState.update((e) => {
-        e.jobStatus = [
+        e.activityLog = [
           {
             id: id,
             file: filename,
             status: "Submitted",
             icon: "success",
           },
-          ...e.jobStatus,
+          ...e.activityLog,
         ];
       });
     }
@@ -76,7 +76,7 @@ const ManageUpload = () => {
   const {
     user,
     administration,
-    jobStatus,
+    activityLog,
     administrationByAccess,
   } = UIState.useState((s) => s);
   const [form, setForm] = useState("water");
@@ -131,12 +131,12 @@ const ManageUpload = () => {
 
   useEffect(() => {
     if (jobState && uploadState?.selectedFile?.status === "done") {
-      const op = jobStatus.find((x) => x.id === jobState.id);
+      const op = activityLog.find((x) => x.id === jobState.id);
       if (!op) {
         checkJobs(jobState.id, uploadState.selectedFile.name);
       }
     }
-  }, [jobStatus, jobState, uploadState]);
+  }, [activityLog, jobState, uploadState]);
 
   useEffect(() => {
     if (user && administration.length) {

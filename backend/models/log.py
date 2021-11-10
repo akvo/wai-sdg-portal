@@ -41,7 +41,7 @@ class Log(Base):
     user = Column(Integer, ForeignKey(User.id))
     jobs = Column(Integer, ForeignKey(Jobs.id), nullable=True)
     at = Column(DateTime, default=datetime.utcnow)
-    jobs_detail = relationship(Jobs, backref="log")
+    jobs_detail = relationship(Jobs, backref="jobs")
 
     def __init__(self,
                  message: str,

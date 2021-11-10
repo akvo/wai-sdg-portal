@@ -33,13 +33,13 @@ const IconList = ({ type }) => {
 };
 
 const ActivityLog = () => {
-  const { jobStatus } = UIState.useState((c) => c);
-  if (jobStatus.length) {
+  const { activityLog } = UIState.useState((c) => c);
+  if (activityLog.length) {
     return (
       <List
         size="small"
         itemLayout="horizontal"
-        dataSource={jobStatus}
+        dataSource={activityLog}
         renderItem={(item) => {
           let desc = item.status;
           if (item?.attachment) {
@@ -69,7 +69,7 @@ const ActivityLog = () => {
 };
 
 const Header = () => {
-  const { user, jobStatus } = UIState.useState((c) => c);
+  const { user, activityLog } = UIState.useState((c) => c);
   const onOpen = () => {
     UIState.update((s) => {
       s.showNav = true;
@@ -95,7 +95,7 @@ const Header = () => {
                 content={<ActivityLog />}
                 trigger="click"
               >
-                <Badge count={jobStatus.length}>
+                <Badge count={activityLog.length}>
                   <Button icon={<FieldTimeOutlined />}>Activity Log</Button>
                 </Badge>
               </Popover>
