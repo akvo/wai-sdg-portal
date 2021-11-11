@@ -52,6 +52,8 @@ def run_validate(session: Session, jobs: dict):
                                 file=storage.download(jobs["payload"]))
     if len(error):
         error_list = pd.DataFrame(error)
+        error_list = error_list[list(
+            filter(lambda x: x != "error", list(error_list)))]
         error_file = f"./tmp/error-{id}.csv"
         error_list = error_list.to_csv(error_file, index=False)
         error_file = storage.upload(error_file, "error", public=True)
