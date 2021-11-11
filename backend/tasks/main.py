@@ -3,13 +3,11 @@ from sqlalchemy.orm import Session
 from datetime import timedelta
 from time import process_time
 import db.crud_jobs as crud
-from db import crud_administration
-from db import crud_data
 from . import validation
+from . import downloader
 from . import seed
 from models.jobs import JobType, JobStatus
 import util.storage as storage
-from util.helper import HText
 
 
 def print_log_start(message):
@@ -73,26 +71,10 @@ def run_validate(session: Session, jobs: dict):
 
 def run_download(session: Session, jobs: dict):
     start_time = print_log_start("DATA DOWNLOAD STARTED")
-    info = jobs["info"]
     out_file = jobs["payload"]
-    file = f"./tmp/{out_file}"
-    administration_ids = False
-    if info["administration"]:
-        administration_ids = crud_administration.get_administration_list(
-            session=session, id=info["administration"])
-    data = crud_data.download(session=session,
-                              form=info["form_id"],
-                              administration=administration_ids,
-                              options=info["options"])
-    df = pd.DataFrame(data)
-    col_names = list(df)
-    col_question = list(filter(lambda x: HText(x).hasnum, col_names))
-    col_names = [
-        "id", "created_at", "created_by", "updated_at", "updated_by",
-        "datapoint_name", "administration", "geolocation"
-    ] + col_question
-    df = df[col_names]
-    df = df.to_excel(file, index=False)
+    file = downloader.download(session=session,
+                               jobs=jobs,
+                               file=f"/tmp/{out_file}")
     output = storage.upload(file, "download", out_file)
     jobs = crud.update(session=session,
                        id=jobs["id"],
