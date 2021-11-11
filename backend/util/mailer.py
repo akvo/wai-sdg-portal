@@ -18,9 +18,23 @@ def send(data):
     return res
 
 
+def generate_icon(icon: str, color: Optional[str] = None):
+    svg_path = f"./templates/icons/{icon}.svg"
+    try:
+        open(svg_path)
+    except (OSError, IOError):
+        return None
+    soup = BeautifulSoup(open(svg_path, "r"), "lxml")
+    if color:
+        for spath in soup.findAll("path"):
+            spath['style'] = f"fill: {color};"
+    return soup
+
+
 def html_to_text(html):
-    soup = BeautifulSoup(html)
-    return soup.get_text("\n")
+    soup = BeautifulSoup(html, "lxml")
+    body = soup.find('body')
+    return "".join(body.get_text())
 
 
 def format_attachment(file):
@@ -37,17 +51,19 @@ def format_attachment(file):
 
 
 class MailSubject(enum.Enum):
-    form_submission = "New Form Submission"
-    data_upload = "Data Upload"
-    data_validation = "Data Validation"
+    # data_upload = "Data Upload"
+    data_validation_success = "Data Validation"
+    data_validation_failed = "Data Validation"
+    data_submission_success = "Data Upload Completed"
+    data_submission_failed = "Data Upload Failed"  # Seeder issue
     data_updates = "Data Updates"
     data_download = "Data Download"
+    user_reg_new = "New Account Registration"
     user_reg_approved = "Your Registration is Approved"
-    user_reg_declined = "Your Registration is Declined"
-    user_access_changed = "User Access"
+    user_acc_changed = "User Access"
 
 
-class Mail:
+class Email:
     def __init__(self,
                  recipients: List[UserRecipient],
                  subject: MailSubject,
@@ -64,8 +80,7 @@ class Mail:
     def data(self):
         payload = {
             "FromEmail": "noreply@akvo.org",
-            "FromName": "Akvo",
-            "Subject": self.subject,
+            "Subject": self.subject.value,
             "Html-part": self.html,
             "Text-part": html_to_text(self.html),
             "Recipients": self.recipients,
@@ -76,3 +91,11 @@ class Mail:
             attachment = format_attachment(self.attachment)
             payload.update({"Attachments": [attachment]})
         return payload
+
+    @property
+    def send(self) -> int:
+        TESTING = os.environ.get("TESTING")
+        if TESTING:
+            return True
+        res = mailjet.send.create(data=self.data)
+        return res.status_code == 200
