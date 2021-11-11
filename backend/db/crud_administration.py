@@ -64,6 +64,21 @@ def get_administration_id_by_keyword(
     return False
 
 
+def get_administration_name(session: Session,
+                            id: Optional[int] = None,
+                            name: Optional[List[str]] = None) -> str:
+    if not name:
+        name = []
+    administration = session.query(Administration).filter(
+        Administration.id == id).first()
+    name.append(administration.name)
+    if administration.parent:
+        get_administration_name(session=session,
+                                id=administration.parent,
+                                name=name)
+    return ", ".join(name)
+
+
 def get_nested_children_ids(session: Session,
                             current: Optional[List[int]] = [],
                             parents: Optional[List[int]] = None):
