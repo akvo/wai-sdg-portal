@@ -5,6 +5,7 @@ from fastapi import FastAPI
 from fastapi_utils.session import FastAPISessionMaker
 from fastapi_utils.tasks import repeat_every
 from routes.jobs import jobs_route
+from templates.main import template_route
 from models.jobs import JobStatus
 from db.crud_jobs import pending, update, is_not_busy
 from tasks.main import do_task
@@ -25,6 +26,7 @@ worker = FastAPI(
 )
 
 worker.include_router(jobs_route)
+worker.include_router(template_route)
 Base.metadata.create_all(bind=engine)
 sessionmaker = FastAPISessionMaker(get_db_url())
 

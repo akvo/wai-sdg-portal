@@ -8,6 +8,9 @@ services:
     environment:
       - DATABASE_URL=postgresql://wai:password@db:5432/wai_ethiopia
       - SKIP_MIGRATION=yes
+      - MAILJET_SECRET=notset
+      - MAILJET_APIKEY=notset
+      - WEBDOMAIN=notset
       - AUTH0_DOMAIN
       - AUTH0_CLIENT_ID
       - AUTH0_SECRET
@@ -26,6 +29,9 @@ services:
     environment:
       - DATABASE_URL=postgresql://wai:password@db:5432/wai_ethiopia
       - SKIP_MIGRATION=yes
+      - MAILJET_SECRET=notset
+      - MAILJET_APIKEY=notset
+      - WEBDOMAIN=notset
       - AUTH0_DOMAIN
       - AUTH0_CLIENT_ID
       - AUTH0_SECRET

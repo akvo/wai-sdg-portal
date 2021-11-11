@@ -28,11 +28,17 @@ services:
       - AUTH0_CLIENT_ID=$WAI_AUTH0_CLIENT_ID
       - AUTH0_AUDIENCE=$WAI_AUTH0_AUDIENCE
       - AUTH0_SECRET=$WAI_AUTH0_SECRET
+      - MAILJET_SECRET=$MAILJET_SECRET
+      - MAILJET_APIKEY=$MAILJET_APIKEY
+      - WEBDOMAIN=$WAI_WEBDOMAIN
   worker:
     volumes:
       - ./backend:/app:delegated
       - ../akvo-config/k8s-secrets/test/wai-ethiopia:/credentials/:ro
     environment:
       - GOOGLE_APPLICATION_CREDENTIALS=/credentials/wai-service-account.json
+      - MAILJET_SECRET=$MAILJET_SECRET
+      - MAILJET_APIKEY=$MAILJET_APIKEY
+      - WEBDOMAIN=$WAI_WEBDOMAIN
 volumes:
   pg-admin-data:

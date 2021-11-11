@@ -60,7 +60,8 @@ ALTER TYPE public.jobstatus OWNER TO wai;
 CREATE TYPE public.jobtype AS ENUM (
     'send_email',
     'validate_data',
-    'seed_data'
+    'seed_data',
+    'download'
 );
 
 
@@ -261,7 +262,9 @@ CREATE TABLE public.question (
     form integer,
     meta boolean NOT NULL,
     type public.questiontype,
-    question_group integer
+    question_group integer,
+    required boolean DEFAULT true NOT NULL,
+    rule jsonb
 );
 
 
@@ -448,7 +451,8 @@ CREATE TABLE public.log (
     id integer NOT NULL,
     "user" integer,
     message text,
-    at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+    at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    jobs integer
 );
 
 
@@ -758,7 +762,7 @@ COPY public.administration (id, parent, name) FROM stdin;
 --
 
 COPY public.alembic_version (version_num) FROM stdin;
-ace18af6268f
+f05579d8d253
 \.
 
 
@@ -806,7 +810,7 @@ COPY public.jobs (id, type, status, payload, info, attempt, created_by, created,
 -- Data for Name: log; Type: TABLE DATA; Schema: public; Owner: wai
 --
 
-COPY public.log (id, "user", message, at) FROM stdin;
+COPY public.log (id, "user", message, at, jobs) FROM stdin;
 \.
 
 
@@ -830,7 +834,7 @@ COPY public.organisation (id, name, type, created) FROM stdin;
 -- Data for Name: question; Type: TABLE DATA; Schema: public; Owner: wai
 --
 
-COPY public.question (id, "order", name, form, meta, type, question_group) FROM stdin;
+COPY public.question (id, "order", name, form, meta, type, question_group, required, rule) FROM stdin;
 \.
 
 
@@ -1389,6 +1393,14 @@ ALTER TABLE ONLY public.history
 
 ALTER TABLE ONLY public.jobs
     ADD CONSTRAINT jobs_created_by_fkey FOREIGN KEY (created_by) REFERENCES public."user"(id);
+
+
+--
+-- Name: log log_jobs_fkey; Type: FK CONSTRAINT; Schema: public; Owner: wai
+--
+
+ALTER TABLE ONLY public.log
+    ADD CONSTRAINT log_jobs_fkey FOREIGN KEY (jobs) REFERENCES public.jobs(id);
 
 
 --
