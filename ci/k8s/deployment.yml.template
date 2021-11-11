@@ -74,6 +74,11 @@ spec:
                 secretKeyRef:
                   name: wai-ethiopia
                   key: mailjet-secret
+            - name: WEBDOMAIN
+              valueFrom:
+                secretKeyRef:
+                  name: wai-ethiopia
+                  key: webdomain
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: /secrets/credentials.json
           readinessProbe:
@@ -118,6 +123,11 @@ spec:
                 secretKeyRef:
                   name: wai-ethiopia
                   key: mailjet-secret
+            - name: WEBDOMAIN
+              valueFrom:
+                secretKeyRef:
+                  name: wai-ethiopia
+                  key: webdomain
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: /secrets/credentials.json
           readinessProbe:

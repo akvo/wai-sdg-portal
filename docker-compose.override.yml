@@ -30,6 +30,7 @@ services:
       - AUTH0_SECRET=$WAI_AUTH0_SECRET
       - MAILJET_SECRET=$MAILJET_SECRET
       - MAILJET_APIKEY=$MAILJET_APIKEY
+      - WEBDOMAIN=$WAI_WEBDOMAIN
   worker:
     volumes:
       - ./backend:/app:delegated
@@ -38,5 +39,6 @@ services:
       - GOOGLE_APPLICATION_CREDENTIALS=/credentials/wai-service-account.json
       - MAILJET_SECRET=$MAILJET_SECRET
       - MAILJET_APIKEY=$MAILJET_APIKEY
+      - WEBDOMAIN=$WAI_WEBDOMAIN
 volumes:
   pg-admin-data:
