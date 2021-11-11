@@ -37,6 +37,11 @@ class UserSimple(TypedDict):
     active: bool
 
 
+class UserRecipient(TypedDict):
+    Email: str
+    Name: str
+
+
 class User(Base):
     __tablename__ = "user"
     id = Column(Integer, primary_key=True, index=True, nullable=True)
@@ -72,6 +77,13 @@ class User(Base):
             "active": self.active,
             "access": [a.administration for a in self.access],
             "organisation": self.organisation
+        }
+
+    @property
+    def recipient(self) -> UserRecipient:
+        return {
+            "Email": self.email,
+            "Name": self.name
         }
 
 
