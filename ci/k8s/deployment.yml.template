@@ -64,6 +64,16 @@ spec:
                 secretKeyRef:
                   name: wai-ethiopia
                   key: auth0-client-id
+            - name: MAILJET_APIKEY
+              valueFrom:
+                secretKeyRef:
+                  name: wai-ethiopia
+                  key: mailjet-apikey
+            - name: MAILJET_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: wai-ethiopia
+                  key: mailjet-secret
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: /secrets/credentials.json
           readinessProbe:
@@ -98,6 +108,16 @@ spec:
                 secretKeyRef:
                   name: wai-ethiopia
                   key: database-url
+            - name: MAILJET_APIKEY
+              valueFrom:
+                secretKeyRef:
+                  name: wai-ethiopia
+                  key: mailjet-apikey
+            - name: MAILJET_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: wai-ethiopia
+                  key: mailjet-secret
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: /secrets/credentials.json
           readinessProbe:
