@@ -1,7 +1,5 @@
-import os
 import sys
 import pytest
-from mailjet_rest import Client as MailClient
 from tests.test_01_auth import Acc
 from sqlalchemy.orm import Session
 from db.crud_user import get_user_by_email
