@@ -7,6 +7,7 @@ from tests.test_01_auth import Acc
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 from db.connection import get_db_url
+from db import crud_administration as ca
 
 pytestmark = pytest.mark.asyncio
 sys.path.append("..")
@@ -38,3 +39,36 @@ class TestAdministrationRoute():
         assert res.status_code == 200
         res = res.json()
         assert len(res) == len(results.to_dict('records'))
+
+    @pytest.mark.asyncio
+    async def test_cruds(self, session: Session) -> None:
+        origin = pd.read_csv('./source/administration-tests.csv')
+        origin["name"] = origin[['UNIT_NAME',
+                                 'UNIT_TYPE']].apply(lambda x: ', '.join(x),
+                                                     axis=1)
+        administration = ca.get_administration_name(session=session, id=2)
+        assert administration == "Jawa Barat"
+        administration = ca.get_administration_name(session=session, id=12)
+        assert administration == "Sumedang, Jawa Barat"
+
+        ids = ca.get_nested_children_ids(session=session, parents=[3])
+        childs = origin[origin["UNIT_TYPE"] == "Yogyakarta"]
+        childs = list(childs["name"])
+        for id in ids:
+            administration = ca.get_administration_name(session=session, id=id)
+            assert administration in childs
+        adms = ca.get_parent_administration(session=session, access=[1, 2])
+        for a in adms:
+            adm = a.cascade
+            if a.id == 1:
+                adm["label"] == "Jakarta"
+                childs = origin[origin["UNIT_TYPE"] == "Jakarta"]
+                childs = list(childs["UNIT_NAME"])
+                for c in adm["children"]:
+                    assert c["label"] in childs
+            else:
+                adm["label"] == "Jawa Barat"
+                childs = origin[origin["UNIT_TYPE"] == "Jawa Barat"]
+                childs = list(childs["UNIT_NAME"])
+                for c in adm["children"]:
+                    assert c["label"] in childs
