@@ -10,6 +10,7 @@ from jinja2 import Environment, FileSystemLoader
 mjkey = os.environ['MAILJET_APIKEY']
 mjsecret = os.environ['MAILJET_SECRET']
 webdomain = os.environ["WEBDOMAIN"]
+image_url = f"{webdomain}/email-icons"
 
 mailjet = Client(auth=(mjkey, mjsecret))
 loader = FileSystemLoader('.')
@@ -67,7 +68,7 @@ class MailType(enum.Enum):
         "subject": "Data Validation",
         "body": "Testing Body of Html",
         "message": "Extra message",
-        "image": None
+        "image": f"{image_url}/file-excel-green.png"
     }
     # data_validation_failed = "Data Validation"
     # data_submission_success = "Data Upload Completed"

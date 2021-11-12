@@ -502,7 +502,13 @@
                         <tbody>
                           {% if image %}
                           <tr>
-                            <td style="text-align: center">{{ image }}</td>
+                            <td style="text-align: center">
+                              <img
+                                src="{{ image }}"
+                                width="55%"
+                                alt="email-icon"
+                              />
+                            </td>
                           </tr>
                           {% endif %} {% if message %}
                           <tr>
