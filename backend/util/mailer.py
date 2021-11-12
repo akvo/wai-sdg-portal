@@ -97,7 +97,7 @@ class MailType(enum.Enum):
     data_submission_success = {
         "title": "Data Upload Completed",
         "subject": "Data Upload",
-        "body": "Thank you for uploading data file filename to the portal.",
+        "body": "filename",
         "message": '''
                     <div style="color: #11A840;">
                         Data have uploaded successfully!
@@ -108,7 +108,7 @@ class MailType(enum.Enum):
     data_submission_failed = {
         "title": "Data Upload Failed",
         "subject": "Data Upload",
-        "body": "Thank you for uploading data file filename to the portal.",
+        "body": "filename",
         "message": '''
                     <div style="color: #9F0031;">
                         There were some errors during the data processing.

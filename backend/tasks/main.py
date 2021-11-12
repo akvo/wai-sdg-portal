@@ -25,6 +25,8 @@ def print_log_done(message, start_time):
 
 def run_seed(session: Session, jobs: dict):
     start_time = print_log_start("DATA SEEDER STARTED")
+    original_filename = jobs["info"]["original_filename"]
+    user = get_user_by_id(session=session, id=jobs["created_by"])
     info = jobs["info"]
     data = seed.seed(session=session,
                      file=storage.download(jobs["payload"]),
@@ -33,6 +35,21 @@ def run_seed(session: Session, jobs: dict):
     status = JobStatus.done if len(data) else JobStatus.failed
     if (data):
         info.update({"records": len(data)})
+        # success email
+        body = f"Thank you for uploading data file {original_filename}"
+        body += " to the portal."
+        email = Email(recipients=[user.recipient],
+                      type=MailTypeEnum.data_submission_success,
+                      body=body)
+        email.send
+    else:
+        # failed email
+        body = f"Thank you for uploading data file {original_filename}"
+        body += " to the portal."
+        email = Email(recipients=[user.recipient],
+                      type=MailTypeEnum.data_submission_failed,
+                      body=body)
+        email.send
     jobs = crud.update(session=session,
                        id=jobs["id"],
                        status=status,
