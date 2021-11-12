@@ -19,7 +19,7 @@ import {
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import takeRight from "lodash/takeRight";
-import config, { columnNames } from "./admin-static";
+import { columnNames } from "./admin-static";
 import { UIState } from "../../state/ui";
 import api from "../../util/api";
 import { getLocationName, generateAdvanceFilterURL } from "../../util/utils";
@@ -36,6 +36,8 @@ import isEmpty from "lodash/isEmpty";
 import without from "lodash/without";
 import union from "lodash/union";
 import xor from "lodash/xor";
+
+const config = window.page_config;
 
 const getRowClassName = (record, editedRow) => {
   const edited = editedRow?.[record.key];

@@ -5,7 +5,6 @@ import { RightOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import CountUp from "react-countup";
 
 import "./home.scss";
-import ethGeoUrl from "../../sources/eth-filtered.topo.json";
 import Map from "../../components/Map";
 
 import waterPointIcon from "../../sources/icons/landing-water-points-icon.png";
@@ -124,7 +123,7 @@ const Home = () => {
           </Col>
           <Col lg={14}>
             <Card className="map-wrapper">
-              <Map geoUrl={ethGeoUrl} mapHeight={550} />
+              <Map mapHeight={550} />
             </Card>
           </Col>
         </Row>

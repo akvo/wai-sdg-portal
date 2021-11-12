@@ -9,28 +9,3 @@ export const columnNames = [
   dataIndex: x.key,
   elipsis: true,
 }));
-
-const config = {
-  clts: {
-    title: "CLTS",
-    formId: 1,
-  },
-  health: {
-    title: "Health",
-    formId: 2,
-  },
-  households: {
-    title: "Households",
-    formId: 3,
-  },
-  schools: {
-    title: "Schools Facility",
-    formId: 4,
-  },
-  water: {
-    title: "Water",
-    formId: 5,
-  },
-};
-
-export default config;

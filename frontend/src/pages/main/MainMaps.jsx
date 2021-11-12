@@ -182,7 +182,7 @@ const MarkerLegend = ({ data, colors, filterMarker, setFilterMarker }) => {
   );
 };
 
-const MainMaps = ({ geoUrl, question, current, mapHeight = 350 }) => {
+const MainMaps = ({ question, current, mapHeight = 350 }) => {
   const {
     user,
     administration,
@@ -337,7 +337,7 @@ const MainMaps = ({ geoUrl, question, current, mapHeight = 350 }) => {
             setPosition(x);
           }}
         >
-          <Geographies geography={geoUrl}>
+          <Geographies geography={window.topojson}>
             {({ geographies }) =>
               geographies.map((geo) => {
                 let sc = shapeColor.find(

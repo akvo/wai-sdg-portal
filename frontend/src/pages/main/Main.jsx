@@ -5,8 +5,6 @@ import api from "../../util/api";
 import { useHistory } from "react-router-dom";
 
 import "./main.scss";
-import config from "./config";
-import ethGeoUrl from "../../sources/eth-filtered.topo.json";
 import { SelectLevel, DropdownNavigation } from "../../components/common";
 import ErrorPage from "../../components/ErrorPage";
 import { UIState } from "../../state/ui";
@@ -17,6 +15,7 @@ import AdvanceSearch from "../../components/AdvanceSearch";
 import { generateAdvanceFilterURL } from "../../util/utils";
 import startCase from "lodash/startCase";
 
+const config = window.page_config;
 const { Panel } = Collapse;
 
 const NameWithInfo = ({ name, created_by, created, updated, updated_by }) => {
@@ -198,7 +197,6 @@ const Main = ({ match }) => {
           <Col span={12} xxl={10} className="map-wrapper">
             <div className="container">
               <MainMaps
-                geoUrl={ethGeoUrl}
                 mapHeight={660}
                 question={questionGroup
                   .map((q) => q.question)
