@@ -4,13 +4,9 @@ from fastapi import Depends, Request, APIRouter
 from fastapi.responses import HTMLResponse
 from sqlalchemy.orm import Session
 from db.connection import get_session
-from jinja2 import Environment, FileSystemLoader
-from db.crud_user import get_user_by_email
-from util.mailer import Email, MailSubject, generate_icon
+from db.crud_user import get_user_by_id
+from util.mailer import Email, MailTypeEnum
 
-loader = FileSystemLoader('.')
-env = Environment(loader=loader)
-html = env.get_template("./templates/main.html")
 template_route = APIRouter()
 webdomain = os.environ["WEBDOMAIN"]
 
@@ -21,24 +17,12 @@ webdomain = os.environ["WEBDOMAIN"]
                     name="template:email",
                     tags=["Template"])
 def get_by_id(req: Request,
-              title: str,
-              body: str,
-              image: Optional[str] = None,
-              color: Optional[str] = None,
-              message: Optional[str] = None,
-              email: Optional[str] = None,
+              type: MailTypeEnum,
+              user: int,
+              send: Optional[bool] = False,
               session: Session = Depends(get_session)):
-    if image:
-        image = generate_icon(image, color)
-    res = html.render(logo=f"{webdomain}/wai-logo.png",
-                      title=title,
-                      body=body,
-                      image=image,
-                      message=message)
-    if email:
-        user = get_user_by_email(session=session, email=email)
-        email = Email(recipients=[user.recipient],
-                      subject=MailSubject.data_download,
-                      html=res)
+    user = get_user_by_id(session=session, id=user)
+    email = Email(recipients=[user.recipient], type=type)
+    if send:
         email.send
-    return res
+    return email.data["Html-part"]
