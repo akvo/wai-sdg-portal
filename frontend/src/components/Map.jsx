@@ -9,7 +9,7 @@ import {
 const mapMaxZoom = 4;
 const defCenter = [38.6682, 7.3942];
 
-const Map = ({ geoUrl, mapHeight = 350 }) => {
+const Map = ({ mapHeight = 350 }) => {
   const [position, setPosition] = useState({
     coordinates: defCenter,
     zoom: 1.8,
@@ -33,7 +33,7 @@ const Map = ({ geoUrl, mapHeight = 350 }) => {
           setPosition(x);
         }}
       >
-        <Geographies geography={geoUrl}>
+        <Geographies geography={window.topojson}>
           {({ geographies }) =>
             geographies.map((geo) => {
               return (

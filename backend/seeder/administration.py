@@ -5,11 +5,13 @@ from db.connection import engine, SessionLocal
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 session = SessionLocal()
+source_path = os.environ["WEBDOMAIN"].replace("https://", "").split(".")[0]
+source_file = f"./source/{source_path}/data/administration.csv"
 action = truncate(session=session, table="administration")
 print(action)
 session.close()
 
-data = pd.read_csv('./source/administration-ethiopia.csv')
+data = pd.read_csv(source_file)
 parents = list(data['UNIT_TYPE'].unique())
 parents = pd.DataFrame(parents, columns=['name'])
 parents['parent'] = None

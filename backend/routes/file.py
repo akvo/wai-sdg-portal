@@ -71,6 +71,7 @@ async def upload(req: Request,
     res = jobs.add(session=session,
                    payload=uploaded_file,
                    info={
+                       "original_filename": file.filename,
                        "form_id": form_id,
                        "administration": administration
                    },

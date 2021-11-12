@@ -1,0 +1,24 @@
+id,parent,name
+1,Jakarta,Jakarta Pusat
+2,Jakarta,Jakarta Barat
+3,Jakarta,Jakarta Selatan
+4,Jakarta,Jakarta Utara
+5,Jakarta,Jakarta Timur
+6,Jawa Barat,Bandung
+7,Jawa Barat,Garut
+8,Jawa Barat,Bogor
+9,Jawa Barat,Sumedang
+10,Jawa Barat,Cianjur
+11,Jawa Barat,Sukabumi
+12,Jawa Barat,Bekasi
+13,Jawa Barat,Subang
+14,Jawa Barat,Majalengka
+15,Jawa Barat,Ciamis
+16,Jawa Barat,Banjar
+17,Jawa Barat,Indramayu
+18,Jawa Barat,Kuningan
+19,Yogyakarta,Kota Yogyakarta
+20,Yogyakarta,Sleman
+21,Yogyakarta,Bantul
+22,Yogyakarta,Wonosari
+23,Yogyakarta,Kulon Progo

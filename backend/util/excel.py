@@ -4,6 +4,9 @@ import humps
 from db import crud_question, crud_form, crud_administration
 from sqlalchemy.orm import Session
 
+source_path = os.environ["WEBDOMAIN"].replace("https://", "").split(".")[0]
+cascade = f"./source/{source_path}/data/cascade.csv"
+
 
 def generate_administration_sheet(session: Session):
     adm = crud_administration.get_administration(session=session)
@@ -69,7 +72,7 @@ def generate_excel_template(session: Session, form: int):
                          sheet_name='definitions',
                          startrow=0,
                          header=False)
-    administration = pd.read_csv("./source/administration-cascade.csv")
+    administration = pd.read_csv(cascade)
     administration["administration"] = administration[
         "parent"] + "|" + administration["name"]
     administration = administration[["administration"]]

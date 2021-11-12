@@ -10,6 +10,9 @@ from db.connection import get_session
 from middleware import verify_token, verify_admin, verify_user, get_auth0_user
 from models.access import Access
 from models.user import UserRole, UserBase, UserAccessBase, UserResponse
+from util.mailer import Email, MailTypeEnum
+from db.crud_organisation import get_organisation_by_id
+from db.crud_administration import get_administration_by_id
 
 security = HTTPBearer()
 user_route = APIRouter()
@@ -45,6 +48,25 @@ def add(req: Request,
                          email=user.get("email"),
                          role="user",
                          organisation=organisation)
+    # send email to admin
+    organisation = get_organisation_by_id(session=session,
+                                          id=user.organisation)
+    context = f'''
+                <table border="1">
+                    <tr>
+                        <td> Email </td>
+                        <td>{user.email}</td>
+                    </tr>
+                    <tr>
+                        <td> Organisation </td>
+                        <td>{organisation.name}</td>
+                    </tr>
+                </table>
+            '''
+    recipient = crud.get_all_admin_recipient(session=session)
+    email = Email(recipients=recipient, type=MailTypeEnum.user_reg_new,
+                  context=context)
+    email.send
     return user.serialize
 
 
@@ -117,7 +139,14 @@ def update_by_id(req: Request,
                  session: Session = Depends(get_session),
                  credentials: credentials = Depends(security)):
     verify_admin(req.state.authenticated, session)
-    print(access)
+    # get old value
+    old_user = crud.get_user_by_id(session=session, id=id)
+    old_active = old_user.active
+    # get administration value
+    access_list = [get_administration_by_id(session=session,
+                                            id=a) for a in access]
+    access_list = [a.name for a in access_list]
+    user_access = ", ".join(access_list)
     name = ""
     if len(first_name):
         name = first_name
@@ -139,4 +168,31 @@ def update_by_id(req: Request,
         raise HTTPException(status_code=404, detail="Not Found")
     if user.role == UserRole.admin:
         crud.delete_all_access(session=session, user=user.id)
+        user_access = "All"
+    # email
+    context = f'''
+            <table border="1">
+                <tr>
+                    <td> Role </td>
+                    <td>{role.value.title()}</td>
+                </tr>
+                <tr>
+                    <td> Access </td>
+                    <td>{user_access}</td>
+                </tr>
+            </table>
+        '''
+    # check approval
+    if active is True and old_active is False:
+        # send approval email
+        email = Email(recipients=[old_user.recipient],
+                      type=MailTypeEnum.user_reg_approved,
+                      context=context)
+        email.send
+    else:
+        # send user updated email
+        email = Email(recipients=[old_user.recipient],
+                      type=MailTypeEnum.user_acc_changed,
+                      context=context)
+        email.send
     return user.serialize

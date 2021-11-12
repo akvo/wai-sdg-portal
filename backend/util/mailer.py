@@ -97,7 +97,7 @@ class MailType(enum.Enum):
     data_submission_success = {
         "title": "Data Upload Completed",
         "subject": "Data Upload",
-        "body": "Thank you for uploading data file filename to the portal.",
+        "body": "filename",
         "message": '''
                     <div style="color: #11A840;">
                         Data have uploaded successfully!
@@ -108,7 +108,7 @@ class MailType(enum.Enum):
     data_submission_failed = {
         "title": "Data Upload Failed",
         "subject": "Data Upload",
-        "body": "Thank you for uploading data file filename to the portal.",
+        "body": "filename",
         "message": '''
                     <div style="color: #9F0031;">
                         There were some errors during the data processing.
@@ -145,12 +145,8 @@ class MailType(enum.Enum):
         "title": "New Account Registration",
         "subject": "Registration",
         "body": "User waiting for approval",
-        "message": '''
-                    <div style="color: #11A840;">
-                        Successfully Registered
-                    </div>
-                    ''',
-        "image": f"{image_url}/check-circle.png"
+        "message": None,
+        "image": f"{image_url}/user.png"
     }
     user_reg_approved = {
         "title": "Approved",
@@ -159,24 +155,14 @@ class MailType(enum.Enum):
                 Congratulations!! You are now a verified user, with great
                 power comes great responsibility.
                 ''',
-        "message": '''
-                <div style="color: #45ADD9;">
-                    You can now view, upload and export out data from the
-                    following regions.
-                </div>
-                ''',
-        "image": f"{image_url}/user.png"
+        "message": None,
+        "image": f"{image_url}/check-circle.png"
     }
     user_acc_changed = {
         "title": "Access Changed",
         "subject": "User Access",
         "body": "Your access have been updated.",
-        "message": '''
-                <div style="color: #45ADD9;">
-                    You can now view, upload and export out data from the
-                    following regions.
-                </div>
-                ''',
+        "message": None,
         "image": f"{image_url}/user-switch.png"
     }
 
@@ -187,19 +173,24 @@ class Email:
                  type: MailTypeEnum,
                  bcc: Optional[List[UserRecipient]] = None,
                  attachment: Optional[str] = None,
-                 context: Optional[str] = None):
+                 context: Optional[str] = None,
+                 body: Optional[str] = None):
         self.type = MailType[type.value]
         self.recipients = recipients
         self.bcc = bcc
         self.attachment = attachment
         self.context = context
+        self.body = body
 
     @property
     def data(self):
         type = self.type.value
+        body = type["body"]
+        if self.body:
+            body = self.body
         html = html_template.render(logo=f"{webdomain}/wai-logo.png",
                                          title=type["title"],
-                                         body=type["body"],
+                                         body=body,
                                          image=type["image"],
                                          message=type["message"],
                                          context=self.context)

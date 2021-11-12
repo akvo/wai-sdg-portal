@@ -16,7 +16,8 @@ import { UIState } from "../../state/ui";
 import { DropdownNavigation } from "../../components/common";
 import api from "../../util/api";
 import axios from "axios";
-import config from "./admin-static";
+
+const config = window.page_config;
 
 const { Dragger } = Upload;
 const allowedFiles = [

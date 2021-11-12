@@ -35,7 +35,8 @@ class TestFileRoutes():
     @pytest.mark.asyncio
     async def test_queue_wrong_excel_data(self, app: FastAPI, session: Session,
                                           client: AsyncClient) -> None:
-        excel_file = "./tmp/1-test.xlsx"
+        original_filename = "1-test.xlsx"
+        excel_file = f"./tmp/{original_filename}"
         wrong_data = [[
             "Option 4", "23,23", "Testing Data 1", 20, "Option A", "2020-12-18"
         ], [
@@ -63,13 +64,18 @@ class TestFileRoutes():
         assert res["available"] is None
         assert res["status"] == "pending"
         assert res["type"] == "validate_data"
-        assert res["info"] == {"administration": 3, "form_id": 1}
+        assert res["info"] == {
+            "original_filename": original_filename,
+            "administration": 3,
+            "form_id": 1
+        }
         os.remove(excel_file)
 
     @pytest.mark.asyncio
     async def test_queue_right_excel_data(self, app: FastAPI, session: Session,
                                           client: AsyncClient) -> None:
-        excel_file = "./tmp/1-test.xlsx"
+        original_filename = "1-test.xlsx"
+        excel_file = f"./tmp/{original_filename}"
         right_data = [[
             "Option 1", "Yogyakarta|Bantul", "-6.2,106.81", "Testing Data 1",
             20, "Option A", "2020-12-18"
@@ -103,6 +109,7 @@ class TestFileRoutes():
         assert res["status"] == "pending"
         assert res["type"] == "validate_data"
         assert res["info"] == {
+            "original_filename": original_filename,
             "administration": administration_id,
             "form_id": 1
         }
