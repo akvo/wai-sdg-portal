@@ -8,6 +8,8 @@ from httpx import AsyncClient
 from tests.test_01_auth import Acc
 from sqlalchemy.orm import Session
 from db.crud_administration import get_administration_id_by_keyword
+from tasks import downloader
+from datetime import datetime
 
 pytestmark = pytest.mark.asyncio
 sys.path.append("..")
@@ -105,3 +107,28 @@ class TestFileRoutes():
             "form_id": 1
         }
         os.remove(excel_file)
+
+    @pytest.mark.asyncio
+    async def test_download_excel_data(self, session: Session) -> None:
+        filename = "download.xlsx"
+        jobs = {
+            "id": 1,
+            "type": "download",
+            "status": "pending",
+            "payload": filename,
+            "info": {"tags": [], "form_id": 1, "options": None,
+                     "form_name": "test", "administration": None},
+            "created_by": 1,
+            "created": datetime.now().strftime("%B %d, %Y at %I:%M %p")
+        }
+        file, context = downloader.download(session=session, jobs=jobs,
+                                            file=f"./tmp/{filename}")
+        assert file == f"./tmp/{filename}"
+        success = False
+        try:
+            open(file, "r")
+            success = True
+        except (OSError, IOError) as e:
+            print(e)
+        assert success is True
+        os.remove(file)

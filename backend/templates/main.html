@@ -498,14 +498,14 @@
                         </p>
                       </div>
                       {% if image or message %}
-                      <table style="width: 150px; margin: auto; padding: 20px">
+                      <table style="width: 90%; margin: auto; padding: 20px">
                         <tbody>
                           {% if image %}
                           <tr>
                             <td style="text-align: center">
                               <img
                                 src="{{ image }}"
-                                width="55%"
+                                width="64px"
                                 alt="email-icon"
                               />
                             </td>
@@ -513,6 +513,10 @@
                           {% endif %} {% if message %}
                           <tr>
                             <td style="text-align: center">{{ message }}</td>
+                          </tr>
+                          {% endif %} {% if context %}
+                          <tr>
+                            <td style="text-align: center">{{ context }}</td>
                           </tr>
                           {% endif %}
                         </tbody>

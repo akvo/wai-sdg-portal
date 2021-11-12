@@ -8,6 +8,8 @@ from . import downloader
 from . import seed
 from models.jobs import JobType, JobStatus
 import util.storage as storage
+from db.crud_user import get_user_by_id
+from util.mailer import Email, MailTypeEnum
 
 
 def print_log_start(message):
@@ -72,15 +74,25 @@ def run_validate(session: Session, jobs: dict):
 def run_download(session: Session, jobs: dict):
     start_time = print_log_start("DATA DOWNLOAD STARTED")
     out_file = jobs["payload"]
-    file = downloader.download(session=session,
-                               jobs=jobs,
-                               file=f"/tmp/{out_file}")
-    output = storage.upload(file, "download", out_file)
-    jobs = crud.update(session=session,
-                       id=jobs["id"],
-                       payload=output.split("/")[1],
-                       status=JobStatus.done)
-    print_log_done(f"FILE CREATED {output}", start_time)
+    file, context = downloader.download(session=session,
+                                        jobs=jobs,
+                                        file=f"./tmp/{out_file}")
+    # set email payload
+    user = get_user_by_id(session=session, id=jobs["created_by"])
+    email = Email(recipients=[user.recipient],
+                  type=MailTypeEnum.data_download_success,
+                  attachment=file,
+                  context=context.to_html())
+    sent = email.send
+    if sent:
+        output = storage.upload(file, "download", out_file)
+        jobs = crud.update(session=session,
+                           id=jobs["id"],
+                           payload=output.split("/")[1],
+                           status=JobStatus.done)
+        print_log_done(f"FILE CREATED {output}", start_time)
+    else:
+        print_log_done(f"FAILED TO CREATED {file}", start_time)
 
 
 def do_task(session: Session, jobs):
