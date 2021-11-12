@@ -145,12 +145,8 @@ class MailType(enum.Enum):
         "title": "New Account Registration",
         "subject": "Registration",
         "body": "User waiting for approval",
-        "message": '''
-                    <div style="color: #11A840;">
-                        Successfully Registered
-                    </div>
-                    ''',
-        "image": f"{image_url}/check-circle.png"
+        "message": None,
+        "image": f"{image_url}/user.png"
     }
     user_reg_approved = {
         "title": "Approved",
@@ -165,7 +161,7 @@ class MailType(enum.Enum):
                     following regions.
                 </div>
                 ''',
-        "image": f"{image_url}/user.png"
+        "image": f"{image_url}/check-circle.png"
     }
     user_acc_changed = {
         "title": "Access Changed",

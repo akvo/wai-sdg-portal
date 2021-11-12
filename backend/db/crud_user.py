@@ -112,3 +112,8 @@ def delete_non_admin_user(session: Session) -> None:
     session.query(User).filter(User.role != UserRole.admin).delete()
     session.commit()
     session.flush()
+
+
+def get_all_admin_recipient(session: Session) -> User:
+    admin_list = session.query(User).filter(User.role == UserRole.admin).all()
+    return [admin.recipient for admin in admin_list]

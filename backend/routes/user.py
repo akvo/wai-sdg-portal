@@ -10,6 +10,8 @@ from db.connection import get_session
 from middleware import verify_token, verify_admin, verify_user, get_auth0_user
 from models.access import Access
 from models.user import UserRole, UserBase, UserAccessBase, UserResponse
+from util.mailer import Email, MailTypeEnum
+from db.crud_organisation import get_organisation_by_id
 
 security = HTTPBearer()
 user_route = APIRouter()
@@ -45,6 +47,25 @@ def add(req: Request,
                          email=user.get("email"),
                          role="user",
                          organisation=organisation)
+    # send email to admin
+    organisation = get_organisation_by_id(session=session,
+                                          id=user.organisation)
+    context = f'''
+                <table border="1">
+                    <tr>
+                        <td> Email </td>
+                        <td>{user.email}</td>
+                    </tr>
+                    <tr>
+                        <td> Organisation </td>
+                        <td>{organisation.name}</td>
+                    </tr>
+                </table>
+            '''
+    recipient = crud.get_all_admin_recipient(session=session)
+    email = Email(recipients=recipient, type=MailTypeEnum.user_reg_new,
+                  context=context)
+    email.send
     return user.serialize
 
 
