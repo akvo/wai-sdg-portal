@@ -13,7 +13,7 @@ pytestmark = pytest.mark.asyncio
 sys.path.append("..")
 
 account = Acc(True)
-administration_file = "./source/notset/administration.csv"
+administration_file = "./source/notset/data/administration.csv"
 
 
 class TestAdministrationRoute():
