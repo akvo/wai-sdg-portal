@@ -3,7 +3,7 @@ from pathlib import Path
 from google.cloud import storage
 import shutil
 
-bucket_name = "wai-ethiopia"
+bucket_name = os.environ["WEBDOMAIN"].replace("https://", "").split(".")[0]
 
 
 def upload(file: str, folder: str, filename: str = None, public: bool = False):
