@@ -19,9 +19,10 @@ start_time = time.process_time()
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 Base.metadata.create_all(bind=engine)
 session = SessionLocal()
-source = './source/data-input.xlsx'
+source_path = os.environ["WEBDOMAIN"].replace("https://", "").split(".")[0]
+source_file = f"./source/{source_path}/data/baseline.xlsx"
 sheet_prefix = 'Eth'
-all_sheets = load_workbook(source, read_only=True).sheetnames
+all_sheets = load_workbook(source_file, read_only=True).sheetnames
 sheets = list(filter(lambda x: sheet_prefix in x, all_sheets))
 administration_level = ['woreda', 'kebele']
 lat_long = ["latitude", "longitude"]
@@ -210,7 +211,7 @@ for table in ["data", "answer", "history"]:
     print(action)
 
 for sheet in sheets:
-    data = pd.read_excel(source, sheet)
+    data = pd.read_excel(source_file, sheet)
     data.drop(data.filter(regex="Unnamed"), axis=1, inplace=True)
     data = data.rename(
         columns={

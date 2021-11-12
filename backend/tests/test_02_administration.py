@@ -13,6 +13,7 @@ pytestmark = pytest.mark.asyncio
 sys.path.append("..")
 
 account = Acc(True)
+administration_file = "./source/notset/administration.csv"
 
 
 class TestAdministrationRoute():
@@ -20,7 +21,7 @@ class TestAdministrationRoute():
     async def test_seed_administration(self, app: FastAPI, session: Session,
                                        client: AsyncClient) -> None:
         engine = create_engine(get_db_url())
-        data = pd.read_csv('./source/administration-tests.csv')
+        data = pd.read_csv(administration_file)
         parents = list(data['UNIT_TYPE'].unique())
         parents = pd.DataFrame(parents, columns=['name'])
         parents['parent'] = None
@@ -42,7 +43,7 @@ class TestAdministrationRoute():
 
     @pytest.mark.asyncio
     async def test_cruds(self, session: Session) -> None:
-        origin = pd.read_csv('./source/administration-tests.csv')
+        origin = pd.read_csv(administration_file)
         origin["name"] = origin[['UNIT_NAME',
                                  'UNIT_TYPE']].apply(lambda x: ', '.join(x),
                                                      axis=1)
