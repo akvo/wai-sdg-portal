@@ -57,27 +57,126 @@ def format_attachment(file):
 
 
 class MailTypeEnum(enum.Enum):
-    # data_upload = "Data Upload"
     data_validation_success = "data_validation_success"
+    data_validation_failed = "data_validation_failed"
+    data_submission_success = "data_submission_success"
+    data_submission_failed = "data_submission_failed"  # Seeder issue
+    data_updates = "data_updates"
+    data_download_success = "data_download_success"
+    data_download_failed = "data_download_failed"
+    user_reg_new = "user_reg_new"
+    user_reg_approved = "user_reg_approved"
+    user_acc_changed = "user_acc_changed"
 
 
 class MailType(enum.Enum):
-    # data_upload = "Data Upload"
     data_validation_success = {
         "title": "Data Validation Success",
         "subject": "Data Validation",
-        "body": "Testing Body of Html",
-        "message": "Extra message",
+        "body": "filename",
+        "message": '''
+                    <div style="color: #11A840;">
+                        Data Validation have passed successfully!
+                    </div>
+                    ''',
+        "image": f"{image_url}/check-circle.png"
+    }
+    data_validation_failed = {
+        "title": "Data Validation Failed",
+        "subject": "Data Validation",
+        "body": "filename",
+        "message": '''
+                    <div style="color: #9F0031;">
+                        There were some errors during the data processing.
+                    </div>
+                    ''',
+        "image": f"{image_url}/exclamation-circle.png"
+    }
+    data_submission_success = {
+        "title": "Data Upload Completed",
+        "subject": "Data Upload",
+        "body": "Thank you for uploading data file filename to the portal.",
+        "message": '''
+                    <div style="color: #11A840;">
+                        Data have uploaded successfully!
+                    </div>
+                    ''',
+        "image": f"{image_url}/check-circle.png"
+    }
+    data_submission_failed = {
+        "title": "Data Upload Failed",
+        "subject": "Data Upload",
+        "body": "Thank you for uploading data file filename to the portal.",
+        "message": '''
+                    <div style="color: #9F0031;">
+                        There were some errors during the data processing.
+                    </div>
+                    ''',
+        "image": f"{image_url}/exclamation-circle.png"
+    }
+    data_updates = {
+        "title": "Data Updated",
+        "subject": "Data Updates",
+        "body": None,
+        "message": None,
+        "image": f"{image_url}/check-circle.png"
+    }
+    data_download_success = {
+        "title": "Data Download Completed",
+        "subject": "Data Download",
+        "body": "Your data are ready to download.",
+        "message": "link",
         "image": f"{image_url}/file-excel-green.png"
     }
-    # data_validation_failed = "Data Validation"
-    # data_submission_success = "Data Upload Completed"
-    # data_submission_failed = "Data Upload Failed"  # Seeder issue
-    # data_updates = "Data Updates"
-    # data_download = "Data Download"
-    # user_reg_new = "New Account Registration"
-    # user_reg_approved = "Your Registration is Approved"
-    # user_acc_changed = "User Access"
+    data_download_failed = {
+        "title": "Data Download Failed",
+        "subject": "Data Download",
+        "body": None,
+        "message": '''
+                    <div style="color: #9F0031;">
+                        There were some errors during the data processing.
+                    </div>
+                    ''',
+        "image": f"{image_url}/file-excel-red.png"
+    }
+    user_reg_new = {
+        "title": "New Account Registration",
+        "subject": "Registration",
+        "body": "Welcome to WAI-Ethiopia portal",
+        "message": '''
+                    <div style="color: #11A840;">
+                        Successfully Registered
+                    </div>
+                    ''',
+        "image": f"{image_url}/check-circle.png"
+    }
+    user_reg_approved = {
+        "title": "Approved",
+        "subject": "Registration",
+        "body": '''
+                Congratulations!! You are now a verified user, with great
+                power comes great responsibility.
+                ''',
+        "message": '''
+                <div style="color: #45ADD9;">
+                    You can now view, upload and export out data from the
+                    following regions.
+                </div>
+                ''',
+        "image": f"{image_url}/user.png"
+    }
+    user_acc_changed = {
+        "title": "Access Changed",
+        "subject": "User Access",
+        "body": "Your access have been updated.",
+        "message": '''
+                <div style="color: #45ADD9;">
+                    You can now view, upload and export out data from the
+                    following regions.
+                </div>
+                ''',
+        "image": f"{image_url}/user-switch.png"
+    }
 
 
 class Email:
