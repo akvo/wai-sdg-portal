@@ -173,19 +173,24 @@ class Email:
                  type: MailTypeEnum,
                  bcc: Optional[List[UserRecipient]] = None,
                  attachment: Optional[str] = None,
-                 context: Optional[str] = None):
+                 context: Optional[str] = None,
+                 body: Optional[str] = None):
         self.type = MailType[type.value]
         self.recipients = recipients
         self.bcc = bcc
         self.attachment = attachment
         self.context = context
+        self.body = body
 
     @property
     def data(self):
         type = self.type.value
+        body = type["body"]
+        if self.body:
+            body = self.body
         html = html_template.render(logo=f"{webdomain}/wai-logo.png",
                                          title=type["title"],
-                                         body=type["body"],
+                                         body=body,
                                          image=type["image"],
                                          message=type["message"],
                                          context=self.context)

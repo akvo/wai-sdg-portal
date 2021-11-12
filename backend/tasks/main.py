@@ -42,6 +42,8 @@ def run_seed(session: Session, jobs: dict):
 
 def run_validate(session: Session, jobs: dict):
     start_time = print_log_start("DATA VALIDATION STARTED")
+    original_filename = jobs["info"]["original_filename"]
+    user = get_user_by_id(session=session, id=jobs["created_by"])
     info = jobs["info"]
     id = jobs["id"]
     message = "IS SUCCESSFULY VALIDATED"
@@ -56,6 +58,13 @@ def run_validate(session: Session, jobs: dict):
             filter(lambda x: x != "error", list(error_list)))]
         error_file = f"./tmp/error-{id}.csv"
         error_list = error_list.to_csv(error_file, index=False)
+        # error email
+        email = Email(recipients=[user.recipient],
+                      type=MailTypeEnum.data_validation_failed,
+                      attachment=error_file,
+                      body=original_filename)
+        email.send
+        # end of email
         error_file = storage.upload(error_file, "error", public=True)
         payload = error_file
         message = "VALIDATION ERROR"
@@ -68,6 +77,12 @@ def run_validate(session: Session, jobs: dict):
                        status=status)
     print_log_done(f"VALIDATION {status}", start_time)
     if len(error) == 0:
+        # success email
+        email = Email(recipients=[user.recipient],
+                      type=MailTypeEnum.data_validation_success,
+                      body=original_filename)
+        email.send
+        # end of email
         run_seed(session=session, jobs=jobs)
 
 
