@@ -72,4 +72,4 @@ def download(session: Session, jobs: dict, file: str):
     })
     worksheet.merge_range('A1:B1', 'Context', merge_format)
     writer.save()
-    return file
+    return file, context

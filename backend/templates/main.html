@@ -514,6 +514,10 @@
                           <tr>
                             <td style="text-align: center">{{ message }}</td>
                           </tr>
+                          {% endif %} {% if context %}
+                          <tr>
+                            <td style="text-align: center">{{ context }}</td>
+                          </tr>
                           {% endif %}
                         </tbody>
                       </table>

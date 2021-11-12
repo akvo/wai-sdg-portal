@@ -1,11 +1,11 @@
 import os
-import mimetypes
 from bs4 import BeautifulSoup
 import enum
 from typing import List, Optional
 from models.user import UserRecipient
 from mailjet_rest import Client
 from jinja2 import Environment, FileSystemLoader
+import base64
 
 mjkey = os.environ['MAILJET_APIKEY']
 mjsecret = os.environ['MAILJET_SECRET']
@@ -16,6 +16,8 @@ mailjet = Client(auth=(mjkey, mjsecret))
 loader = FileSystemLoader('.')
 env = Environment(loader=loader)
 html_template = env.get_template("./templates/main.html")
+ftype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+ftype += ';base64'
 
 
 def send(data):
@@ -45,14 +47,14 @@ def html_to_text(html):
 
 def format_attachment(file):
     try:
-        open(file)
+        open(file, "r")
     except (OSError, IOError) as e:
         print(e)
         return None
     return {
-        "ContentType": mimetypes.guess_type(file),
-        "Filename": file.split("/")[:-1],
-        "content": open(file, "rb")
+        "ContentType": ftype,
+        "Filename": file.split("/")[2],
+        "content": base64.b64encode(open(file, "rb").read()).decode('UTF-8')
     }
 
 
@@ -125,7 +127,7 @@ class MailType(enum.Enum):
         "title": "Data Download Completed",
         "subject": "Data Download",
         "body": "Your data are ready to download.",
-        "message": "link",
+        "message": None,
         "image": f"{image_url}/file-excel-green.png"
     }
     data_download_failed = {
@@ -142,7 +144,7 @@ class MailType(enum.Enum):
     user_reg_new = {
         "title": "New Account Registration",
         "subject": "Registration",
-        "body": "Welcome to WAI-Ethiopia portal",
+        "body": "User waiting for approval",
         "message": '''
                     <div style="color: #11A840;">
                         Successfully Registered
@@ -184,11 +186,13 @@ class Email:
                  recipients: List[UserRecipient],
                  type: MailTypeEnum,
                  bcc: Optional[List[UserRecipient]] = None,
-                 attachment: Optional[str] = None):
+                 attachment: Optional[str] = None,
+                 context: Optional[str] = None):
         self.type = MailType[type.value]
         self.recipients = recipients
         self.bcc = bcc
         self.attachment = attachment
+        self.context = context
 
     @property
     def data(self):
@@ -197,7 +201,8 @@ class Email:
                                          title=type["title"],
                                          body=type["body"],
                                          image=type["image"],
-                                         message=type["message"])
+                                         message=type["message"],
+                                         context=self.context)
         payload = {
             "FromEmail": "noreply@akvo.org",
             "Subject": type["subject"],

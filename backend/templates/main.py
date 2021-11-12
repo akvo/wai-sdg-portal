@@ -1,4 +1,3 @@
-import os
 from typing import Optional
 from fastapi import Depends, Request, APIRouter
 from fastapi.responses import HTMLResponse
@@ -8,7 +7,6 @@ from db.crud_user import get_user_by_id
 from util.mailer import Email, MailTypeEnum
 
 template_route = APIRouter()
-webdomain = os.environ["WEBDOMAIN"]
 
 
 @template_route.get("/template/email",
