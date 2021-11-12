@@ -5,11 +5,16 @@ import enum
 from typing import List, Optional
 from models.user import UserRecipient
 from mailjet_rest import Client
+from jinja2 import Environment, FileSystemLoader
 
 mjkey = os.environ['MAILJET_APIKEY']
 mjsecret = os.environ['MAILJET_SECRET']
+webdomain = os.environ["WEBDOMAIN"]
 
 mailjet = Client(auth=(mjkey, mjsecret))
+loader = FileSystemLoader('.')
+env = Environment(loader=loader)
+html_template = env.get_template("./templates/main.html")
 
 
 def send(data):
@@ -50,39 +55,54 @@ def format_attachment(file):
     }
 
 
-class MailSubject(enum.Enum):
+class MailTypeEnum(enum.Enum):
     # data_upload = "Data Upload"
-    data_validation_success = "Data Validation"
-    data_validation_failed = "Data Validation"
-    data_submission_success = "Data Upload Completed"
-    data_submission_failed = "Data Upload Failed"  # Seeder issue
-    data_updates = "Data Updates"
-    data_download = "Data Download"
-    user_reg_new = "New Account Registration"
-    user_reg_approved = "Your Registration is Approved"
-    user_acc_changed = "User Access"
+    data_validation_success = "data_validation_success"
+
+
+class MailType(enum.Enum):
+    # data_upload = "Data Upload"
+    data_validation_success = {
+        "title": "Data Validation Success",
+        "subject": "Data Validation",
+        "body": "Testing Body of Html",
+        "message": "Extra message",
+        "image": None
+    }
+    # data_validation_failed = "Data Validation"
+    # data_submission_success = "Data Upload Completed"
+    # data_submission_failed = "Data Upload Failed"  # Seeder issue
+    # data_updates = "Data Updates"
+    # data_download = "Data Download"
+    # user_reg_new = "New Account Registration"
+    # user_reg_approved = "Your Registration is Approved"
+    # user_acc_changed = "User Access"
 
 
 class Email:
     def __init__(self,
                  recipients: List[UserRecipient],
-                 subject: MailSubject,
-                 html: str,
+                 type: MailTypeEnum,
                  bcc: Optional[List[UserRecipient]] = None,
                  attachment: Optional[str] = None):
-        self.subject = subject
+        self.type = MailType[type.value]
         self.recipients = recipients
-        self.html = html
         self.bcc = bcc
         self.attachment = attachment
 
     @property
     def data(self):
+        type = self.type.value
+        html = html_template.render(logo=f"{webdomain}/wai-logo.png",
+                                         title=type["title"],
+                                         body=type["body"],
+                                         image=type["image"],
+                                         message=type["message"])
         payload = {
             "FromEmail": "noreply@akvo.org",
-            "Subject": self.subject.value,
-            "Html-part": self.html,
-            "Text-part": html_to_text(self.html),
+            "Subject": type["subject"],
+            "Html-part": html,
+            "Text-part": html_to_text(html),
             "Recipients": self.recipients,
         }
         if self.bcc:
