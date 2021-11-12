@@ -155,24 +155,14 @@ class MailType(enum.Enum):
                 Congratulations!! You are now a verified user, with great
                 power comes great responsibility.
                 ''',
-        "message": '''
-                <div style="color: #45ADD9;">
-                    You can now view, upload and export out data from the
-                    following regions.
-                </div>
-                ''',
+        "message": None,
         "image": f"{image_url}/check-circle.png"
     }
     user_acc_changed = {
         "title": "Access Changed",
         "subject": "User Access",
         "body": "Your access have been updated.",
-        "message": '''
-                <div style="color: #45ADD9;">
-                    You can now view, upload and export out data from the
-                    following regions.
-                </div>
-                ''',
+        "message": None,
         "image": f"{image_url}/user-switch.png"
     }
 
