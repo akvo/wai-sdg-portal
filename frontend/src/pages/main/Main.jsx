@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Space, Popover, Collapse, List } from "antd";
+import { Row, Col, Space, Popover, Collapse, List, Select } from "antd";
 import { PlusSquareOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import api from "../../util/api";
 import { useHistory } from "react-router-dom";
@@ -14,6 +14,10 @@ import MainMaps from "./MainMaps";
 import AdvanceSearch from "../../components/AdvanceSearch";
 import { generateAdvanceFilterURL } from "../../util/utils";
 import startCase from "lodash/startCase";
+import upperFirst from "lodash/upperFirst";
+import flatten from "lodash/flatten";
+import isEmpty from "lodash/isEmpty";
+import Chart from "../../chart";
 
 const config = window.page_config;
 const { Panel } = Collapse;
@@ -71,6 +75,7 @@ const Main = ({ match }) => {
   const [perPage, setPerPage] = useState(10);
   const [loading, setLoading] = useState(true);
   const [lastSubmitted, setLastSubmitted] = useState({ by: "", at: "" });
+  const [chartData, setChartData] = useState({});
 
   const current = config?.[match.params.page];
   const changePage = (p) => {
@@ -166,6 +171,30 @@ const Main = ({ match }) => {
     }
   }, [user, current, selectedAdministration, advanceSearchValue]);
 
+  // Get question option only
+  const question = flatten(
+    questionGroup.map((qg) => qg.question.filter((q) => q.type === "option"))
+  );
+
+  const handleOnChangeChartDropdown = (val) => {
+    const selected = question.find((q) => q.id === val);
+    api
+      .get(`chart/data/${val}`)
+      .then((res) => {
+        const temp = selected.option.map((opt) => {
+          const val = res.data.data.find((d) => d.name === opt.name);
+          return {
+            ...opt,
+            value: val?.value || 0,
+          };
+        });
+        setChartData({ ...res.data, data: temp });
+      })
+      .catch(() => {
+        setChartData({});
+      });
+  };
+
   if (!current) {
     return <ErrorPage status={404} />;
   }
@@ -224,29 +253,50 @@ const Main = ({ match }) => {
       <Col span={24}>
         <Row align="middle" className="collapse-wrapper">
           <Col span={24} className="container">
-            {current?.charts.map((c, ci) => (
-              <Collapse
-                key={`collapse-${ci}`}
-                expandIcon={() => (
-                  <PlusSquareOutlined style={{ fontSize: 18 }} />
-                )}
-                expandIconPosition="right"
-                bordered={false}
-              >
-                <Panel header={c.title} key={ci}>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                    ac consectetur diam. Pellentesque lacinia, erat ac efficitur
-                    molestie, sapien odio efficitur purus, non ornare sem massa
-                    euismod metus. Maecenas at dolor tortor. Praesent sit amet
-                    mauris augue. Curabitur rutrum ipsum eget augue accumsan, in
-                    porta velit dignissim. Integer mattis vulputate arcu, in
-                    aliquet tellus lobortis auctor. Phasellus lacus augue,
-                    ultrices mattis ultrices et, euismod quis erat.
-                  </p>
-                </Panel>
-              </Collapse>
-            ))}
+            <Collapse
+              key="collapse-charts"
+              expandIcon={() => <PlusSquareOutlined style={{ fontSize: 18 }} />}
+              expandIconPosition="right"
+              bordered={false}
+              defaultActiveKey="chart-panel"
+              collapsible="disabled"
+            >
+              <Panel header="Visualisations" key="chart-panel">
+                <Space
+                  size="large"
+                  direction="vertical"
+                  style={{ width: "100%" }}
+                >
+                  <Row align="middle" gutter={[24, 24]}>
+                    <Col span={24}>
+                      <Select
+                        showSearch
+                        placeholder="Select Question"
+                        style={{ width: "100%" }}
+                        options={question?.map((q) => ({
+                          label: upperFirst(q.name),
+                          value: q.id,
+                        }))}
+                        optionFilterProp="label"
+                        filterOption={(input, option) =>
+                          option.label
+                            .toLowerCase()
+                            .indexOf(input.toLowerCase()) >= 0
+                        }
+                        onChange={handleOnChangeChartDropdown}
+                      />
+                    </Col>
+                  </Row>
+                  {!isEmpty(chartData) && (
+                    <Chart
+                      type={chartData.type}
+                      data={chartData.data}
+                      wrapper={false}
+                    />
+                  )}
+                </Space>
+              </Panel>
+            </Collapse>
           </Col>
         </Row>
       </Col>

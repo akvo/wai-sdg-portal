@@ -3,40 +3,9 @@ import { Select, Button, Result, Space } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { UIState } from "../state/ui";
 
+const navigationOptions = window.navigation_config;
+const levels = window.levels;
 const { Option, OptGroup } = Select;
-
-const levels = ["Woreda", "Kebele"];
-
-export const navigationOptions = [
-  {
-    link: "water",
-    name: "Water",
-    childrens: null,
-  },
-  {
-    link: "clts",
-    name: "CLTS",
-    childrens: null,
-  },
-  {
-    link: "jmp",
-    name: "JMP",
-    childrens: [
-      {
-        link: "households",
-        name: "Households",
-      },
-      {
-        link: "schools",
-        name: "Schools",
-      },
-      {
-        link: "health",
-        name: "Health Facilities",
-      },
-    ],
-  },
-];
 
 export const SelectLevel = ({ setPage, setSelectedRow }) => {
   const { selectedAdministration, administrationByAccess } = UIState.useState(

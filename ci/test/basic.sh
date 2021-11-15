@@ -3,7 +3,7 @@
 
 set -euo pipefail
 
-RETRIES=10
+RETRIES=15
 
 until psql -h db:5432 -U wai -w password -d wai_ethiopia -c "select 1" &>/dev/null 2>&1 || [ $RETRIES -eq 0 ];
 do

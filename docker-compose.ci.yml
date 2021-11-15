@@ -15,7 +15,7 @@ services:
       - AUTH0_CLIENT_ID
       - AUTH0_SECRET
       - AUTH0_AUDIENCE
-    image: eu.gcr.io/akvo-lumen/wai-ethiopia/backend:latest
+    image: eu.gcr.io/akvo-lumen/wai-sdg-portal/backend:latest
     network_mode: service:mainnetwork
     restart: always
     volumes:
@@ -36,7 +36,7 @@ services:
       - AUTH0_CLIENT_ID
       - AUTH0_SECRET
       - AUTH0_AUDIENCE
-    image: eu.gcr.io/akvo-lumen/wai-ethiopia/worker:latest
+    image: eu.gcr.io/akvo-lumen/wai-sdg-portal/worker:latest
     network_mode: service:mainnetwork
     restart: always
     volumes:
@@ -74,7 +74,7 @@ services:
       - backend
       - worker
       - db
-    image: eu.gcr.io/akvo-lumen/wai-ethiopia/frontend:latest
+    image: eu.gcr.io/akvo-lumen/wai-sdg-portal/frontend:latest
     network_mode: service:mainnetwork
     volumes:
       - ./frontend:/app:delegated

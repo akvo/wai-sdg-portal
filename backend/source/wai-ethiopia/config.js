@@ -1,3 +1,41 @@
+var levels = ["Woreda", "Kebele"];
+
+var navigation_config = [
+  {
+    link: "water",
+    name: "Water",
+    childrens: null,
+  },
+  {
+    link: "clts",
+    name: "CLTS",
+    childrens: null,
+  },
+  {
+    link: "jmp",
+    name: "JMP",
+    childrens: [
+      {
+        link: "households",
+        name: "Households",
+      },
+      {
+        link: "schools",
+        name: "Schools",
+      },
+      {
+        link: "health",
+        name: "Health Facilities",
+      },
+    ],
+  },
+];
+
+var map_config = {
+  shapeLevels: ["UNIT_TYPE", "UNIT_NAME"],
+  defCenter: [38.6682, 7.3942],
+};
+
 var page_config = {
   water: {
     title: "Water Point",
@@ -35,12 +73,6 @@ var page_config = {
         ellipsis: true,
       },
     ],
-    charts: [
-      { title: "Water Point Charts 01" },
-      { title: "Water Point Charts 02" },
-      { title: "Water Point Charts 03" },
-      { title: "Water Point Charts 04" },
-    ],
     maps: {
       shape: { id: 82, name: "Non Functional Taps" },
       marker: { id: 80, title: "Functionality Status" },
@@ -72,12 +104,6 @@ var page_config = {
         dataIndex: 7,
         ellipsis: true,
       },
-    ],
-    charts: [
-      { title: "CLTS Charts 01" },
-      { title: "CLTS Charts 02" },
-      { title: "CLTS Charts 03" },
-      { title: "CLTS Charts 04" },
     ],
     maps: {
       shape: { id: 4, name: "Number of HHS" },
@@ -136,12 +162,6 @@ var page_config = {
         ellipsis: true,
       },
     ],
-    charts: [
-      { title: "Health Facility Charts 01" },
-      { title: "Health Facility Charts 02" },
-      { title: "Health Facility Charts 03" },
-      { title: "Health Facility Charts 04" },
-    ],
     maps: { shape: false, marker: { id: 19, name: "Water Service Level" } },
     formId: 2,
     values: [19, 21, 26],
@@ -195,12 +215,6 @@ var page_config = {
         dataIndex: 44,
         ellipsis: true,
       },
-    ],
-    charts: [
-      { title: "Household Charts 01" },
-      { title: "Household Charts 02" },
-      { title: "Household Charts 03" },
-      { title: "Household Charts 04" },
     ],
     maps: {
       shape: { id: 33, name: "Household Size" },
@@ -258,12 +272,6 @@ var page_config = {
         dataIndex: 67,
         ellipsis: true,
       },
-    ],
-    charts: [
-      { title: "School Charts 01" },
-      { title: "School Charts 02" },
-      { title: "School Charts 03" },
-      { title: "School Charts 04" },
     ],
     maps: {
       shape: { id: 48, name: "Female Pupils" },

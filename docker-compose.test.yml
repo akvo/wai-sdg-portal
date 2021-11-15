@@ -14,7 +14,7 @@ services:
     ports:
       - 5432:5432
   backend:
-    image: eu.gcr.io/akvo-lumen/wai-ethiopia/backend:latest
+    image: eu.gcr.io/akvo-lumen/wai-sdg-portal/backend:latest
     working_dir: /app
     command: "pytest -rP"
     volumes:

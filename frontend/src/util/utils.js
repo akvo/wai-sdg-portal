@@ -1,6 +1,8 @@
 import reverse from "lodash/reverse";
 import isEmpty from "lodash/isEmpty";
 
+const currencyFormatter = require("currency-formatter");
+
 export const getLocationName = (id, locations, result = []) => {
   const loc = locations.find((l) => l.id === id);
   result = loc?.name ? [...result, loc?.name] : result;
@@ -19,4 +21,13 @@ export const generateAdvanceFilterURL = (advanceSearchValue, url) => {
     url += `&q=${advanceFilter}`;
   }
   return url;
+};
+
+export const formatNumber = (x) => {
+  return currencyFormatter.format(x, {
+    decimal: ".",
+    thousand: ",",
+    precision: 0,
+    format: "%v",
+  });
 };

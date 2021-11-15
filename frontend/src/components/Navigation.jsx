@@ -5,7 +5,7 @@ import { UIState } from "../state/ui";
 import { Link } from "react-router-dom";
 import startCase from "lodash/startCase";
 
-import { navigationOptions } from "./common";
+const navigationOptions = window.navigation_config;
 
 const Navigation = ({ logout, loginWithPopup, isAuthenticated }) => {
   const { page, user } = UIState.useState((c) => c);
