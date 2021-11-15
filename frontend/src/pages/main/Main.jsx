@@ -16,6 +16,8 @@ import { generateAdvanceFilterURL } from "../../util/utils";
 import startCase from "lodash/startCase";
 import upperFirst from "lodash/upperFirst";
 import flatten from "lodash/flatten";
+import isEmpty from "lodash/isEmpty";
+import Chart from "../../chart";
 
 const config = window.page_config;
 const { Panel } = Collapse;
@@ -73,6 +75,7 @@ const Main = ({ match }) => {
   const [perPage, setPerPage] = useState(10);
   const [loading, setLoading] = useState(true);
   const [lastSubmitted, setLastSubmitted] = useState({ by: "", at: "" });
+  const [chartData, setChartData] = useState([]);
 
   const current = config?.[match.params.page];
   const changePage = (p) => {
@@ -175,6 +178,14 @@ const Main = ({ match }) => {
 
   const handleOnChangeChartDropdown = (val) => {
     const selected = question.find((q) => q.id === val);
+    api
+      .get(`chart/data/${val}`)
+      .then((res) => {
+        setChartData(res.data);
+      })
+      .catch(() => {
+        setChartData([]);
+      });
   };
 
   if (!current) {
@@ -242,30 +253,41 @@ const Main = ({ match }) => {
               bordered={false}
             >
               <Panel header="Visualisations" key="chart-panel">
-                <Select
-                  showSearch
-                  placeholder="Select Question"
+                <Space
+                  size="large"
+                  direction="vertical"
                   style={{ width: "100%" }}
-                  options={question?.map((q) => ({
-                    label: upperFirst(q.name),
-                    value: q.id,
-                  }))}
-                  optionFilterProp="label"
-                  filterOption={(input, option) =>
-                    option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                  }
-                  onChange={handleOnChangeChartDropdown}
-                />
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                  ac consectetur diam. Pellentesque lacinia, erat ac efficitur
-                  molestie, sapien odio efficitur purus, non ornare sem massa
-                  euismod metus. Maecenas at dolor tortor. Praesent sit amet
-                  mauris augue. Curabitur rutrum ipsum eget augue accumsan, in
-                  porta velit dignissim. Integer mattis vulputate arcu, in
-                  aliquet tellus lobortis auctor. Phasellus lacus augue,
-                  ultrices mattis ultrices et, euismod quis erat.
-                </p>
+                >
+                  <Row align="middle" gutter={[24, 24]}>
+                    <Col span={24}>
+                      <Select
+                        showSearch
+                        placeholder="Select Question"
+                        style={{ width: "100%" }}
+                        options={question?.map((q) => ({
+                          label: upperFirst(q.name),
+                          value: q.id,
+                        }))}
+                        optionFilterProp="label"
+                        filterOption={(input, option) =>
+                          option.label
+                            .toLowerCase()
+                            .indexOf(input.toLowerCase()) >= 0
+                        }
+                        onChange={handleOnChangeChartDropdown}
+                      />
+                    </Col>
+                  </Row>
+
+                  {!isEmpty(chartData) && (
+                    <Chart
+                      type="BAR"
+                      title="Title"
+                      data={chartData}
+                      wrapper={false}
+                    />
+                  )}
+                </Space>
               </Panel>
             </Collapse>
           </Col>
