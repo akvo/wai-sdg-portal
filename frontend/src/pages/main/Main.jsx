@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Space, Popover, Collapse, List } from "antd";
+import { Row, Col, Space, Popover, Collapse, List, Select } from "antd";
 import { PlusSquareOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import api from "../../util/api";
 import { useHistory } from "react-router-dom";
@@ -14,6 +14,8 @@ import MainMaps from "./MainMaps";
 import AdvanceSearch from "../../components/AdvanceSearch";
 import { generateAdvanceFilterURL } from "../../util/utils";
 import startCase from "lodash/startCase";
+import upperFirst from "lodash/upperFirst";
+import flatten from "lodash/flatten";
 
 const config = window.page_config;
 const { Panel } = Collapse;
@@ -166,6 +168,15 @@ const Main = ({ match }) => {
     }
   }, [user, current, selectedAdministration, advanceSearchValue]);
 
+  // Get question option only
+  const question = flatten(
+    questionGroup.map((qg) => qg.question.filter((q) => q.type === "option"))
+  );
+
+  const handleOnChangeChartDropdown = (val) => {
+    const selected = question.find((q) => q.id === val);
+  };
+
   if (!current) {
     return <ErrorPage status={404} />;
   }
@@ -224,29 +235,39 @@ const Main = ({ match }) => {
       <Col span={24}>
         <Row align="middle" className="collapse-wrapper">
           <Col span={24} className="container">
-            {current?.charts.map((c, ci) => (
-              <Collapse
-                key={`collapse-${ci}`}
-                expandIcon={() => (
-                  <PlusSquareOutlined style={{ fontSize: 18 }} />
-                )}
-                expandIconPosition="right"
-                bordered={false}
-              >
-                <Panel header={c.title} key={ci}>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                    ac consectetur diam. Pellentesque lacinia, erat ac efficitur
-                    molestie, sapien odio efficitur purus, non ornare sem massa
-                    euismod metus. Maecenas at dolor tortor. Praesent sit amet
-                    mauris augue. Curabitur rutrum ipsum eget augue accumsan, in
-                    porta velit dignissim. Integer mattis vulputate arcu, in
-                    aliquet tellus lobortis auctor. Phasellus lacus augue,
-                    ultrices mattis ultrices et, euismod quis erat.
-                  </p>
-                </Panel>
-              </Collapse>
-            ))}
+            <Collapse
+              key="collapse-charts"
+              expandIcon={() => <PlusSquareOutlined style={{ fontSize: 18 }} />}
+              expandIconPosition="right"
+              bordered={false}
+            >
+              <Panel header="Visualisations" key="chart-panel">
+                <Select
+                  showSearch
+                  placeholder="Select Question"
+                  style={{ width: "100%" }}
+                  options={question?.map((q) => ({
+                    label: upperFirst(q.name),
+                    value: q.id,
+                  }))}
+                  optionFilterProp="label"
+                  filterOption={(input, option) =>
+                    option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                  }
+                  onChange={handleOnChangeChartDropdown}
+                />
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                  ac consectetur diam. Pellentesque lacinia, erat ac efficitur
+                  molestie, sapien odio efficitur purus, non ornare sem massa
+                  euismod metus. Maecenas at dolor tortor. Praesent sit amet
+                  mauris augue. Curabitur rutrum ipsum eget augue accumsan, in
+                  porta velit dignissim. Integer mattis vulputate arcu, in
+                  aliquet tellus lobortis auctor. Phasellus lacus augue,
+                  ultrices mattis ultrices et, euismod quis erat.
+                </p>
+              </Panel>
+            </Collapse>
           </Col>
         </Row>
       </Col>
