@@ -32,7 +32,6 @@ def apply_migrations():
 def app(apply_migrations: None) -> FastAPI:
     from core.config import app
     engine = create_engine(get_db_url())
-    print(get_db_url())
     Base.metadata.create_all(bind=engine)
     TestingSessionLocal = sessionmaker(autocommit=False,
                                        autoflush=False,

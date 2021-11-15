@@ -7,7 +7,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=password
     volumes:
-      - ./db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - ./db/docker-entrypoint-initdb.d.ci:/docker-entrypoint-initdb.d
       - pg-data:/var/lib/postgresql/data
       - ./db/script:/script:ro
     restart: always
@@ -20,7 +20,7 @@ services:
     volumes:
       - ./backend:/app:delegated
     environment:
-      - DATABASE_URL=postgresql://wai:password@db:5432/wai_test
+      - DATABASE_URL=postgresql://wai:password@db:5432/wai-ci
       - SKIP_MIGRATION=yes
       - MAILJET_SECRET=notset
       - MAILJET_APIKEY=notset
