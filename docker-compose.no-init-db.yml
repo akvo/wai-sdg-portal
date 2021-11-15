@@ -21,7 +21,7 @@ services:
     volumes:
       - ./backend:/app:delegated
     environment:
-      - DATABASE_URL=postgresql://wai:password@db:5432/$INSTANCE_NAME
+      - DATABASE_URL=$("postgresql://wai:password@db:5432/${INSTANCE_NAME}")
       - INSTANCE_NAME=$INSTANCE_NAME
     depends_on:
       - db
@@ -33,7 +33,7 @@ services:
     volumes:
       - ./backend:/app:delegated
     environment:
-      - DATABASE_URL=postgresql://wai:password@db:5432/$INSTANCE_NAME
+      - DATABASE_URL=$("postgresql://wai:password@db:5432/${INSTANCE_NAME}")
       - INSTANCE_NAME=$INSTANCE_NAME
     depends_on:
       - db

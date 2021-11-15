@@ -18,6 +18,9 @@ config = context.config
 # overwrite sqlalchemy.url path with local environment
 # check docker-compose.yml deh
 DATABASE_URL = os.environ["DATABASE_URL"].replace('%', '%%')
+INSTANCE_NAME = os.environ["INSTANCE_NAME"]
+DATABASE_URL = DATABASE_URL.replace(INSTANCE_NAME,
+                                    INSTANCE_NAME.replace("-", "_"))
 
 # sets up loggers
 fileConfig(config.config_file_name)
@@ -43,7 +46,8 @@ def run_migrations_online():
     Run migrations in 'online' mode
     """
     TESTING = os.environ.get("TESTING")
-    DB_URL = "wai_test" if TESTING else DATABASE_URL
+    DB_URL = DATABASE_URL.replace(INSTANCE_NAME, "wai_test")
+    DB_URL = DB_URL if TESTING else DATABASE_URL
     # handle testing config for migrations
     if TESTING:
         # connect to primary db

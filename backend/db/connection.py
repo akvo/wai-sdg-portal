@@ -7,7 +7,11 @@ from sqlalchemy.orm import sessionmaker
 def get_db_url():
     TESTING = environ.get("TESTING")
     DATABASE_URL = environ.get("DATABASE_URL")
-    DB_URL = "wai_test" if TESTING else DATABASE_URL
+    INSTANCE_NAME = environ.get("INSTANCE_NAME")
+    DATABASE_URL = DATABASE_URL.replace(INSTANCE_NAME,
+                                        INSTANCE_NAME.replace("-", "_"))
+    DB_URL = DATABASE_URL.replace(INSTANCE_NAME, "wai_test")
+    DB_URL = DB_URL if TESTING else DATABASE_URL
     return DB_URL
 
 
