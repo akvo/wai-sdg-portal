@@ -1,11 +1,11 @@
 # WAI SDG Portal
 
-[![Build Status](https://akvo.semaphoreci.com/badges/wai-ethiopia/branches/main.svg?style=shields)](https://akvo.semaphoreci.com/projects/wai-ethiopia) [![Repo Size](https://img.shields.io/github/repo-size/akvo/wai-ethiopia)](https://img.shields.io/github/repo-size/akvo/wai-ethiopia) [![Languages](https://img.shields.io/github/languages/count/akvo/wai-ethiopia
-)](https://img.shields.io/github/languages/count/akvo/wai-ethiopia
-) [![Issues](https://img.shields.io/github/issues/akvo/wai-ethiopia
-)](https://img.shields.io/github/issues/akvo/wai-ethiopia
-) [![Last Commit](https://img.shields.io/github/last-commit/akvo/wai-ethiopia/main
-)](https://img.shields.io/github/last-commit/akvo/wai-ethiopia/main)
+[![Build Status](https://akvo.semaphoreci.com/badges/wai-sdg-portal/branches/main.svg?style=shields)](https://akvo.semaphoreci.com/projects/wai-sdg-portal) [![Repo Size](https://img.shields.io/github/repo-size/akvo/wai-sdg-portal)](https://img.shields.io/github/repo-size/akvo/wai-sdg-portal) [![Languages](https://img.shields.io/github/languages/count/akvo/wai-sdg-portal
+)](https://img.shields.io/github/languages/count/akvo/wai-sdg-portal
+) [![Issues](https://img.shields.io/github/issues/akvo/wai-sdg-portal
+)](https://img.shields.io/github/issues/akvo/wai-sdg-portal
+) [![Last Commit](https://img.shields.io/github/last-commit/akvo/wai-sdg-portal/main
+)](https://img.shields.io/github/last-commit/akvo/wai-sdg-portal/main)
 
 ## Development
 
@@ -65,7 +65,7 @@ The app should be running at: [localhost:3000](http://localhost:3000). Any endpo
 - `/worker` is for worker service in [localhost:5001](http://localhost:5001)
 - `/config.js` is a static config that redirected to [localhost:5001/config.js](http://localhost:5000/config.js)
 
-see: [setupProxy.js](https://github.com/akvo/wai-ethiopia/blob/main/frontend/src/setupProxy.js)
+see: [setupProxy.js](https://github.com/akvo/wai-sdg-portal/blob/main/frontend/src/setupProxy.js)
 
 #### 3. Database Seeder
 
@@ -141,7 +141,7 @@ docker-compose exec backend ./test.sh
 export CI_COMMIT='local'
 ./ci/build.sh
 ```
-This will generate two docker images with prefix `eu.gcr.io/akvo-lumen/wai-ethiopia` for backend and frontend
+This will generate two docker images with prefix `eu.gcr.io/akvo-lumen/wai-sdg-portal` for backend and frontend
 
 ```bash
 docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d
@@ -154,8 +154,8 @@ Then visit: [localhost:8080](http://localhost:8080). Any endpoints with prefix
 inside the network container
 
 see:
-- [nginx](https://github.com/akvo/wai-ethiopia/blob/main/frontend/nginx/conf.d/default.conf) config
-- [mainnetwork](https://github.com/akvo/wai-ethiopia/blob/0aa961abd05b3611533f47133aac0fe4f682c2cd/docker-compose.ci.yml#L78-L81) container setup
+- [nginx](https://github.com/akvo/wai-sdg-portal/blob/main/frontend/nginx/conf.d/default.conf) config
+- [mainnetwork](https://github.com/akvo/wai-sdg-portal/blob/0aa961abd05b3611533f47133aac0fe4f682c2cd/docker-compose.ci.yml#L75-L81) container setup
 
 
 ### Contact
