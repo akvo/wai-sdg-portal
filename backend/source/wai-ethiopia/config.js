@@ -1,3 +1,41 @@
+var levels = ["Woreda", "Kebele"];
+
+var navigation_config = [
+  {
+    link: "water",
+    name: "Water",
+    childrens: null,
+  },
+  {
+    link: "clts",
+    name: "CLTS",
+    childrens: null,
+  },
+  {
+    link: "jmp",
+    name: "JMP",
+    childrens: [
+      {
+        link: "households",
+        name: "Households",
+      },
+      {
+        link: "schools",
+        name: "Schools",
+      },
+      {
+        link: "health",
+        name: "Health Facilities",
+      },
+    ],
+  },
+];
+
+var map_config = {
+  shapeLevels: ["UNIT_TYPE", "UNIT_NAME"],
+  defCenter: [38.6682, 7.3942],
+};
+
 var page_config = {
   water: {
     title: "Water Point",
