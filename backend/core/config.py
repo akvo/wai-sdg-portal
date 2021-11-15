@@ -16,12 +16,13 @@ from routes.chart import chart_route
 from routes.file import file_route
 from routes.log import log_route
 
-
 instance_name = os.environ["WEBDOMAIN"].replace("https://", "").split(".")[0]
 source_path = f"./source/{instance_name}"
 js_file = f"{source_path}/config"
 minjs = jsmin(open(f"{js_file}.js").read())
-minjs += jsmin(open(f"{source_path}/topojson.js").read())
+minjs += jsmin("".join(
+    ["var topojson=",
+     open(f"{source_path}/topojson.json").read(), ";"]))
 js_file = f"{source_path}/config.min.js"
 open(js_file, 'w').write(minjs)
 
