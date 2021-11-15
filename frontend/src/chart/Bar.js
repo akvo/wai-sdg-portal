@@ -49,6 +49,34 @@ const Bar = (data, extra) => {
           icon: Icons.saveAsImage,
           backgroundColor: "#ffffff",
         },
+        dataView: {
+          show: true,
+          title: "table view",
+          icon: Icons.dataView,
+          backgroundColor: "#ffffff",
+          optionToContent: function (opt) {
+            var axisData = opt.xAxis[0].data;
+            var series = opt.series[0].data;
+            var table =
+              '<table style="width:100%;text-align:center"><tbody><tr>' +
+              "<td>Option</td>" +
+              "<td>Value</td>" +
+              "</tr>";
+            for (var i = 0, l = series.length; i < l; i++) {
+              table +=
+                "<tr>" +
+                "<td>" +
+                series[i].name +
+                "</td>" +
+                "<td>" +
+                series[i].value +
+                "</td>" +
+                "</tr>";
+            }
+            table += "</tbody></table>";
+            return table;
+          },
+        },
       },
       backgroundColor: "#ffffff",
     },
