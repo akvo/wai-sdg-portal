@@ -66,7 +66,6 @@ services:
     restart: always
     volumes:
       - ./db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
-      - pg-data:/var/lib/postgresql/data
       - ./db/script:/script:ro
   frontend:
     command: ["nginx", "-g", "daemon off;"]
@@ -86,5 +85,3 @@ services:
       - 3000:3000
       - 5000:5000
       - 5001:5001
-volumes:
-  pg-data: {}
