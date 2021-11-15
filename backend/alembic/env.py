@@ -51,7 +51,7 @@ def run_migrations_online():
     # handle testing config for migrations
     if TESTING:
         # connect to primary db
-        default_engine = create_engine(DATABASE_URL,
+        default_engine = create_engine(DB_URL,
                                        isolation_level="AUTOCOMMIT")
         # drop testing db if it exists and create a fresh one
         with default_engine.connect() as default_conn:
