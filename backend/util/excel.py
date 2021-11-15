@@ -4,7 +4,7 @@ import humps
 from db import crud_question, crud_form, crud_administration
 from sqlalchemy.orm import Session
 
-source_path = os.environ["WEBDOMAIN"].replace("https://", "").split(".")[0]
+source_path = os.environ["INSTANCE_NAME"]
 cascade = f"./source/{source_path}/data/cascade.csv"
 
 

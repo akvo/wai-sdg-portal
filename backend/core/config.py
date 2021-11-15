@@ -16,29 +16,29 @@ from routes.chart import chart_route
 from routes.file import file_route
 from routes.log import log_route
 
-instance_name = os.environ["WEBDOMAIN"].replace("https://", "").split(".")[0]
-source_path = f"./source/{instance_name}"
-js_file = f"{source_path}/config"
-minjs = jsmin(open(f"{js_file}.js").read())
-minjs += jsmin("".join(
+INSTANCE_NAME = os.environ["INSTANCE_NAME"]
+SOURCE_PATH = f"./source/{INSTANCE_NAME}"
+JS_FILE = f"{SOURCE_PATH}/config"
+MINJS = jsmin(open(f"{JS_FILE}.js").read())
+MINJS += jsmin("".join(
     ["var topojson=",
-     open(f"{source_path}/topojson.json").read(), ";"]))
-js_file = f"{source_path}/config.min.js"
-open(js_file, 'w').write(minjs)
+     open(f"{SOURCE_PATH}/topojson.json").read(), ";"]))
+JS_FILE = f"{SOURCE_PATH}/config.min.js"
+open(JS_FILE, 'w').write(MINJS)
 
 
 class Settings(BaseSettings):
     domain: str = os.environ["WEBDOMAIN"]
-    instance_name: str = instance_name
-    source_path: str = source_path
-    js_file: str = js_file
+    instance_name: str = INSTANCE_NAME
+    source_path: str = SOURCE_PATH
+    js_file: str = JS_FILE
 
 
 settings = Settings()
 app = FastAPI(
     root_path="/api",
-    title="WAI - Ethiopia",
-    instance_name=instance_name,
+    title=INSTANCE_NAME.upper(),
+    instance_name=INSTANCE_NAME,
     description="Auth Client ID: 99w2F1wVLZq8GqJwZph1kE42GuAZFvlF",
     version="1.0.0",
     contact={

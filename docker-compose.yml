@@ -21,7 +21,8 @@ services:
     volumes:
       - ./backend:/app:delegated
     environment:
-      - DATABASE_URL=postgresql://wai:password@db:5432/wai_ethiopia
+      - DATABASE_URL=postgresql://wai:password@db:5432/$INSTANCE_NAME
+      - INSTANCE_NAME=$INSTANCE_NAME
     depends_on:
       - db
     network_mode: service:mainnetwork
@@ -32,7 +33,8 @@ services:
     volumes:
       - ./backend:/app:delegated
     environment:
-      - DATABASE_URL=postgresql://wai:password@db:5432/wai_ethiopia
+      - DATABASE_URL=postgresql://wai:password@db:5432/$INSTANCE_NAME
+      - INSTANCE_NAME=$INSTANCE_NAME
     depends_on:
       - db
       - backend

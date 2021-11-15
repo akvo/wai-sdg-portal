@@ -19,7 +19,7 @@ start_time = time.process_time()
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 Base.metadata.create_all(bind=engine)
 session = SessionLocal()
-source_path = os.environ["WEBDOMAIN"].replace("https://", "").split(".")[0]
+source_path = os.environ["INSTANCE_NAME"]
 source_file = f"./source/{source_path}/data/baseline.xlsx"
 sheet_prefix = 'Eth'
 all_sheets = load_workbook(source_file, read_only=True).sheetnames

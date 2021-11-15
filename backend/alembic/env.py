@@ -43,7 +43,7 @@ def run_migrations_online():
     Run migrations in 'online' mode
     """
     TESTING = os.environ.get("TESTING")
-    DB_URL = f"{DATABASE_URL}_test" if TESTING else DATABASE_URL
+    DB_URL = "wai_test" if TESTING else DATABASE_URL
     # handle testing config for migrations
     if TESTING:
         # connect to primary db
@@ -51,8 +51,8 @@ def run_migrations_online():
                                        isolation_level="AUTOCOMMIT")
         # drop testing db if it exists and create a fresh one
         with default_engine.connect() as default_conn:
-            default_conn.execute("DROP DATABASE IF EXISTS wai_ethiopia_test")
-            default_conn.execute("CREATE DATABASE wai_ethiopia_test")
+            default_conn.execute("DROP DATABASE IF EXISTS wai_test")
+            default_conn.execute("CREATE DATABASE wai_test")
     connectable = config.attributes.get("connection", None)
     config.set_main_option("sqlalchemy.url", DB_URL)
 

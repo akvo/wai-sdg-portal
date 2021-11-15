@@ -5,7 +5,7 @@ from db.connection import engine, SessionLocal
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 session = SessionLocal()
-source_path = os.environ["WEBDOMAIN"].replace("https://", "").split(".")[0]
+source_path = os.environ["INSTANCE_NAME"]
 source_file = f"./source/{source_path}/data/administration.csv"
 action = truncate(session=session, table="administration")
 print(action)
