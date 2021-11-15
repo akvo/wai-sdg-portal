@@ -1,6 +1,6 @@
 ---
 version: v1.0
-name: 'WAI Ethiopia'
+name: 'WAI SDG Portal'
 agent:
   machine:
     type: e1-standard-2
