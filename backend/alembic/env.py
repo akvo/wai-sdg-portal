@@ -48,6 +48,7 @@ def run_migrations_online():
     TESTING = os.environ.get("TESTING")
     DB_URL = DATABASE_URL.replace(INSTANCE_NAME, "wai_test")
     DB_URL = DB_URL if TESTING else DATABASE_URL
+    print(DB_URL)
     # handle testing config for migrations
     if TESTING:
         # connect to primary db
