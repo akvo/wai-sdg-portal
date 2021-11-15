@@ -23,13 +23,24 @@ export const Easing = {
 };
 
 export const TextStyle = {
-  textStyle: {
-    color: "#000",
-    fontSize: 14,
-    fontWeight: "bold",
-  },
-  formatter: function (x) {
-    return x;
+  color: "#000",
+  fontSize: 14,
+  fontWeight: "bold",
+};
+
+export const AxisLabelFormatter = {
+  formatter: function (params) {
+    let newParamsName = String(params).split(" ");
+    if (newParamsName.length > 2) {
+      newParamsName = newParamsName.map((p, pi) => {
+        if (pi !== 0 && pi % 2 !== 0) {
+          p += "\n";
+        }
+        return p;
+      });
+    }
+    newParamsName = newParamsName.join(" ");
+    return newParamsName;
   },
 };
 

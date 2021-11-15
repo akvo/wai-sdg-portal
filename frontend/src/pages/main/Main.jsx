@@ -75,7 +75,7 @@ const Main = ({ match }) => {
   const [perPage, setPerPage] = useState(10);
   const [loading, setLoading] = useState(true);
   const [lastSubmitted, setLastSubmitted] = useState({ by: "", at: "" });
-  const [chartData, setChartData] = useState([]);
+  const [chartData, setChartData] = useState({});
 
   const current = config?.[match.params.page];
   const changePage = (p) => {
@@ -184,7 +184,7 @@ const Main = ({ match }) => {
         setChartData(res.data);
       })
       .catch(() => {
-        setChartData([]);
+        setChartData({});
       });
   };
 
@@ -251,6 +251,8 @@ const Main = ({ match }) => {
               expandIcon={() => <PlusSquareOutlined style={{ fontSize: 18 }} />}
               expandIconPosition="right"
               bordered={false}
+              defaultActiveKey="chart-panel"
+              collapsible="disabled"
             >
               <Panel header="Visualisations" key="chart-panel">
                 <Space
@@ -278,12 +280,10 @@ const Main = ({ match }) => {
                       />
                     </Col>
                   </Row>
-
                   {!isEmpty(chartData) && (
                     <Chart
-                      type="BAR"
-                      title="Title"
-                      data={chartData}
+                      type={chartData.type}
+                      data={chartData.data}
                       wrapper={false}
                     />
                   )}

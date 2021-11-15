@@ -5,6 +5,7 @@ import {
   backgroundColor,
   Icons,
   Legend,
+  AxisLabelFormatter,
 } from "./chart-style.js";
 import { formatNumber } from "../util/utils.js";
 import sortBy from "lodash/sortBy";
@@ -24,7 +25,6 @@ const Bar = (data, extra) => {
     ...Color,
     grid: {
       top: "15%",
-      left: "20%",
       show: true,
       label: {
         color: "#222",
@@ -54,18 +54,19 @@ const Bar = (data, extra) => {
       },
       backgroundColor: "#ffffff",
     },
-    yAxis: {
+    xAxis: {
       type: "category",
       data: labels,
       axisLabel: {
         color: "#222",
         ...TextStyle,
+        ...AxisLabelFormatter,
       },
       axisTick: {
         alignWithLabel: true,
       },
     },
-    xAxis: {
+    yAxis: {
       type: "value",
     },
     series: [
@@ -76,15 +77,13 @@ const Bar = (data, extra) => {
           formatter: function (params) {
             return formatNumber(params.data);
           },
-          position: "insideLeft",
+          position: "insideBottom",
           show: true,
           color: "#222",
           padding: 5,
           backgroundColor: "rgba(0,0,0,.3)",
-          textStyle: {
-            ...TextStyle.textStyle,
-            color: "#fff",
-          },
+          ...TextStyle,
+          color: "#fff",
         },
       },
     ],
