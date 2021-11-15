@@ -18,9 +18,8 @@ import { UIState } from "../../state/ui";
 import _ from "lodash";
 import { generateAdvanceFilterURL } from "../../util/utils";
 
-const shapeLevels = ["UNIT_TYPE", "UNIT_NAME"];
+const { shapeLevels, defCenter } = window.map_config;
 const mapMaxZoom = 4;
-const defCenter = [38.6682, 7.3942];
 const colorRange = ["#bbedda", "#a7e1cb", "#92d5bd", "#7dcaaf", "#67bea1"];
 const higlightColor = "#84b4cc";
 const noDataColor = "#d3d3d3";
