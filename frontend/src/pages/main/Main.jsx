@@ -181,7 +181,14 @@ const Main = ({ match }) => {
     api
       .get(`chart/data/${val}`)
       .then((res) => {
-        setChartData(res.data);
+        const temp = selected.option.map((opt) => {
+          const val = res.data.data.find((d) => d.name === opt.name);
+          return {
+            ...opt,
+            value: val?.value || 0,
+          };
+        });
+        setChartData({ ...res.data, data: temp });
       })
       .catch(() => {
         setChartData({});

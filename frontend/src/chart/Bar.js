@@ -7,17 +7,15 @@ import {
   Legend,
   AxisLabelFormatter,
 } from "./chart-style.js";
-import { formatNumber } from "../util/utils.js";
 import sortBy from "lodash/sortBy";
-import reverse from "lodash/reverse";
+import upperFirst from "lodash/upperFirst";
 
 const Bar = (data, extra) => {
   let values = [];
   let labels = [];
-  data = !data ? [] : data;
+  data = !data ? [] : data.map((x) => ({ ...x, name: upperFirst(x.name) }));
   if (data.length > 0) {
-    data = sortBy(data, "name");
-    data = reverse(data);
+    data = sortBy(data, "order");
     values = data.map((x) => x.value);
     labels = data.map((x) => x.name);
   }
@@ -71,15 +69,15 @@ const Bar = (data, extra) => {
     },
     series: [
       {
-        data: values,
+        data: data.map((v) => ({
+          ...v,
+          itemStyle: { color: v.color || "#36aa40" },
+        })),
         type: "bar",
         label: {
-          formatter: function (params) {
-            return formatNumber(params.data);
-          },
+          colorBy: "data",
           position: "insideBottom",
           show: true,
-          color: "#222",
           padding: 5,
           backgroundColor: "rgba(0,0,0,.3)",
           ...TextStyle,
