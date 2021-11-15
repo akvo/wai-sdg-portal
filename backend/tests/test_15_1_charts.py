@@ -21,10 +21,13 @@ class TestChartsRoutes():
             ))
         assert res.status_code == 200
         res = res.json()
-        assert res == [{
-                "name": "option 1",
-                "value": 1
-            }, {
-                "name": "option 2",
-                "value": 2
-            }]
+        assert res == {
+                "type": "BAR",
+                "data": [{
+                    "name": "option 1",
+                    "value": 1
+                }, {
+                    "name": "option 2",
+                    "value": 2
+                }]
+            }

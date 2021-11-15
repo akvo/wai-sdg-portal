@@ -9,7 +9,9 @@ def get_chart_data(session: Session,
                    stack: int = None):
     answer = session.query(Answer.options,
                            func.count(Answer.id))
+    type = "BAR"
     if stack:
+        type = "BARSTACK"
         answer = answer.filter(or_(Answer.question == question,
                                    Answer.question == stack))
     else:
@@ -21,4 +23,4 @@ def get_chart_data(session: Session,
         for d in answer:
             counter.update(d)
         answer = [{"name": k, "value": v} for k, v in dict(counter).items()]
-    return answer
+    return {"type": type, "data": answer}
