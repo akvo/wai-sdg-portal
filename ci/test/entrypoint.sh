@@ -2,7 +2,7 @@
 
 set -ex
 
-apk add \
+apk --update add \
     --no-cache \
     --no-progress \
     bash~=5 \
