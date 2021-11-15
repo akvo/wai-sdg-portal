@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -exuo pipefail
 
+INSTANCES="wai-ethiopia"
+
+
 [[ "${CI_BRANCH}" !=  "main" && ! "${CI_TAG:=}" =~ promote.* ]] && { echo "Branch different than main and not a tag. Skip deploy"; exit 0; }
 [[ "${CI_PULL_REQUEST}" ==  "true" ]] && { echo "Pull request. Skip deploy"; exit 0; }
 
@@ -14,7 +17,7 @@ auth () {
 }
 
 push_image () {
-    prefix="eu.gcr.io/akvo-lumen/wai-ethiopia"
+    prefix="eu.gcr.io/akvo-lumen/wai-sdg-portal"
     docker push "${prefix}/${1}:${CI_COMMIT}"
 }
 
@@ -28,12 +31,23 @@ prepare_deployment () {
     gcloud container clusters get-credentials "${cluster}"
 
     sed -e "s/\${CI_COMMIT}/${CI_COMMIT}/g;" \
-        ci/k8s/deployment.yml.template > ci/k8s/deployment.yml
+        ci/k8s/deployment.yml.template > ci/k8s/template.yml
+    for INSTANCE in ${INSTANCES}
+    do
+        sed -e "s/\${INSTANCE_NAME}/${INSTANCE}/g;" \
+            ci/k8s/template.yml > ci/k8s/deployment-${INSTANCE}.yml
+        sed -e "s/\${INSTANCE_NAME}/${INSTANCE}/g;" \
+            ci/k8s/service.yml.template > ci/k8s/service-${INSTANCE}.yml
+    done
 }
 
 apply_deployment () {
-    kubectl apply -f ci/k8s/deployment.yml
-    kubectl apply -f ci/k8s/service.yml
+    for INSTANCE in ${INSTANCES}
+    do
+        echo "DEPLOYING ${INSTANCE}"
+        kubectl apply -f ci/k8s/deployment-${INSTANCE}.yml
+        kubectl apply -f ci/k8s/service-${INSTANCE}.yml
+    done
 }
 
 auth
@@ -47,4 +61,8 @@ fi
 prepare_deployment
 apply_deployment
 
-ci/k8s/wait-for-k8s-deployment-to-be-ready.sh
+
+for INSTANCE in ${INSTANCES}
+do
+    ci/k8s/wait-for-k8s-deployment-to-be-ready.sh ${INSTANCE}
+done
