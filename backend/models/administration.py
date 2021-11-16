@@ -28,6 +28,7 @@ class Administration(Base):
     parent = Column(Integer, ForeignKey('administration.id'))
     name = Column(String)
     children = relationship("Administration")
+    parent_detail = relationship("Administration", remote_side=[id])
 
     def __init__(self, parent: int, name: str):
         self.parent = parent
@@ -56,6 +57,14 @@ class Administration(Base):
         return {
             "value": self.id,
             "label": self.name,
+        }
+
+    @property
+    def with_parent_name(self):
+        return {
+            "id": self.id,
+            "parent": self.parent_detail.name if self.parent_detail else None,
+            "name": self.name
         }
 
 
