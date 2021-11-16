@@ -3,11 +3,15 @@ from sqlalchemy import and_, func
 from models.answer import Answer
 import collections
 from itertools import groupby
+from typing import List
 
 
 def get_chart_data(session: Session,
+                   form: int,
                    question: int,
-                   stack: int = None):
+                   stack: int = None,
+                   administration: List[str] = None,
+                   options: List[str] = None):
     type = "BAR"
     if stack:
         type = "BARSTACK"

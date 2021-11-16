@@ -17,8 +17,9 @@ class TestChartsRoutes():
                                              client: AsyncClient) -> None:
         res = await client.get(app.url_path_for(
                 "charts:get_aggregated_chart_data",
-                question_id=1
-            ))
+                form_id=1), params={
+                    "question": 1
+                })
         assert res.status_code == 200
         res = res.json()
         assert res == {
