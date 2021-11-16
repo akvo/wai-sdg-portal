@@ -200,7 +200,6 @@ const Main = ({ match }) => {
   const handleOnChangeChartQuestion = (val) => {
     if (val) {
       const selected = question.find((q) => q.id === val);
-      console.log(selected);
       setSelectedQuestion(selected);
     } else {
       setSelectedQuestion({});
@@ -295,7 +294,7 @@ const Main = ({ match }) => {
               </Space>
               <AdvanceSearch
                 buttonPos="right"
-                customStyle={{ marginTop: "-36px", marginBottom: 0 }}
+                customStyle={{ marginTop: "-33px", marginBottom: 0 }}
                 formId={current?.formId}
                 questionGroup={questionGroup}
                 setPage={setPage}
