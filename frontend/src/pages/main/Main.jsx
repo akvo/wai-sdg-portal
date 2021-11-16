@@ -211,6 +211,12 @@ const Main = ({ match }) => {
       if (!isEmpty(selectedStack)) {
         url += `&stack=${selectedStack?.id}`;
       }
+      const adminId = takeRight(selectedAdministration)[0];
+      if (adminId) {
+        url += `&administration=${adminId}`;
+      }
+      // advance search
+      url = generateAdvanceFilterURL(advanceSearchValue, url);
       api
         .get(url)
         .then((res) => {
@@ -252,7 +258,12 @@ const Main = ({ match }) => {
     } else {
       setChartData({});
     }
-  }, [selectedQuestion, selectedStack]);
+  }, [
+    selectedQuestion,
+    selectedStack,
+    selectedAdministration,
+    advanceSearchValue,
+  ]);
 
   if (!current) {
     return <ErrorPage status={404} />;

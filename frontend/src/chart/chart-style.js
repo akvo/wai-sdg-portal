@@ -51,8 +51,6 @@ export const Color = {
     "#4475B4",
     "#73ADD1",
     "#AAD9E8",
-    "#DEF3F8",
-    "#FEFEBE",
     "#FEE08F",
     "#FDAE60",
     "#F36C42",
@@ -69,10 +67,6 @@ export const visualMap = {
   itemHeight: "520px",
   text: ["High", "Low"],
   calculable: true,
-};
-
-export const rsrColor = {
-  color: ["#355c7d", "#6c5b7b", "#c06c84", "#f67280", "#f8b195", "#ddd"],
 };
 
 export const Legend = {
