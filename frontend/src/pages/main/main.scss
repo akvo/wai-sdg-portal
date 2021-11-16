@@ -14,6 +14,7 @@
 
     .filter-select,
     .remove-filter-button {
+      z-index: 1;
       background: #ffffff 0% 0% no-repeat padding-box;
       border: 1px solid #70707080;
       border-radius: 4px;
