@@ -6,6 +6,7 @@ import {
   Icons,
   Legend,
   AxisLabelFormatter,
+  DataView,
 } from "./chart-style.js";
 import sortBy from "lodash/sortBy";
 import isEmpty from "lodash/isEmpty";
@@ -55,10 +56,7 @@ const Bar = (data, extra) => {
           icon: Icons.saveAsImage,
         },
         dataView: {
-          show: true,
-          title: "table view",
-          icon: Icons.dataView,
-          readOnly: true,
+          ...DataView,
           optionToContent: function (opt) {
             var series = opt.series[0].data;
             var table =

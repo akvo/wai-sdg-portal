@@ -6,6 +6,7 @@ import {
   Icons,
   AxisLabelFormatter,
   Legend,
+  DataView,
 } from "./chart-style.js";
 import uniq from "lodash/uniq";
 import isEmpty from "lodash/isEmpty";
@@ -91,18 +92,15 @@ const BarStack = (data, extra) => {
           icon: Icons.saveAsImage,
         },
         dataView: {
-          show: true,
-          title: "table view",
-          icon: Icons.dataView,
-          readOnly: true,
+          ...DataView,
           optionToContent: function (opt) {
             var xAxis = opt.xAxis.map((x) => x.data)[0];
             var series = opt.series.map((x) => x.data);
             var table =
               '<table border="1" style="width:90%;text-align:center">';
             table += "<thead><tr><th></th>";
-            for (var i = 0, l = xAxis.length; i < l; i++) {
-              table += "<th>" + upperFirst(xAxis[i]) + "</th>";
+            for (var a = 0, b = xAxis.length; a < b; a++) {
+              table += "<th>" + upperFirst(xAxis[a]) + "</th>";
             }
             table += "</tr></thead><tbody>";
             for (var i = 0, l = series.length; i < l; i++) {
