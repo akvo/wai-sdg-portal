@@ -5,13 +5,13 @@ import {
   backgroundColor,
   Icons,
   AxisLabelFormatter,
+  Legend,
 } from "./chart-style.js";
 import uniq from "lodash/uniq";
-import flatten from "lodash/flatten";
 import isEmpty from "lodash/isEmpty";
 
 const BarStack = (data, extra) => {
-  if (isEmpty(data)) {
+  if (isEmpty(data) || !data) {
     return {
       title: {
         text: "No Data",
@@ -22,16 +22,23 @@ const BarStack = (data, extra) => {
       },
     };
   }
-  let stacked = uniq(flatten(data.map((x) => x.stack.map((y) => y.name))));
-  let legends = stacked;
+  let stacked = data[0].stack.map((x) => ({ name: x.name, color: x.color }));
+  let legends = stacked.map((s, si) => ({
+    name: s.name,
+    itemStyle: { color: s.color || Color.color[si] },
+  }));
   let xAxis = uniq(data.map((x) => x.name));
   let series = stacked.map((s) => {
-    const temp = data.map((d) => {
-      const val = d.stack.find((c) => c.name === s);
-      return val?.value || 0;
+    const temp = data.map((d, di) => {
+      const val = d.stack.find((c) => c.name === s.name);
+      return {
+        name: val?.name || null,
+        value: val?.value || 0,
+        itemStyle: { color: val?.color || s.color },
+      };
     });
     return {
-      name: s,
+      name: s.name,
       type: "bar",
       stack: "count",
       label: { show: true },
@@ -45,17 +52,7 @@ const BarStack = (data, extra) => {
     ...Color,
     legend: {
       data: legends,
-      icon: "circle",
-      top: "top",
-      left: "left",
-      align: "left",
-      orient: "horizontal",
-      itemGap: 10,
-      textStyle: {
-        fontWeight: "normal",
-        fontSize: 12,
-        marginLeft: 20,
-      },
+      ...Legend,
     },
     grid: {
       top: "15%",

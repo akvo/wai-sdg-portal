@@ -18,6 +18,7 @@ import upperFirst from "lodash/upperFirst";
 import flatten from "lodash/flatten";
 import isEmpty from "lodash/isEmpty";
 import Chart from "../../chart";
+import { set } from "lodash";
 
 const config = window.page_config;
 const { Panel } = Collapse;
@@ -86,8 +87,15 @@ const Main = ({ match }) => {
     setLoading(true);
   };
 
+  const revertChart = () => {
+    setSelectedQuestion({});
+    setSelectedStack({});
+    setChartData({});
+  };
+
   useEffect(() => {
     if (user && current?.formId) {
+      revertChart();
       setPage(1);
       setPerPage(10);
       api.get(`form/${current.formId}`).then((d) => {
@@ -226,7 +234,7 @@ const Main = ({ match }) => {
                       value: val?.value || 0,
                     };
                   })
-                : [];
+                : selectedStack.option.map((sopt) => ({ ...sopt, value: 0 }));
               return {
                 ...opt,
                 stack: child,
@@ -324,10 +332,12 @@ const Main = ({ match }) => {
                         showSearch
                         placeholder="Select Question"
                         style={{ width: "100%" }}
-                        options={question?.map((q) => ({
-                          label: upperFirst(q.name),
-                          value: q.id,
-                        }))}
+                        options={question
+                          ?.filter((q) => q.id !== selectedStack?.id)
+                          ?.map((q) => ({
+                            label: upperFirst(q.name),
+                            value: q.id,
+                          }))}
                         optionFilterProp="label"
                         filterOption={(input, option) =>
                           option.label
