@@ -9,6 +9,7 @@ import {
 } from "./chart-style.js";
 import sortBy from "lodash/sortBy";
 import isEmpty from "lodash/isEmpty";
+import upperFirst from "lodash/upperFirst";
 
 const Bar = (data, extra) => {
   if (isEmpty(data) || !data) {
@@ -59,26 +60,25 @@ const Bar = (data, extra) => {
           icon: Icons.dataView,
           readOnly: true,
           optionToContent: function (opt) {
-            var axisData = opt.xAxis[0].data;
             var series = opt.series[0].data;
             var table =
-              '<table style="width:90%;text-align:center"><tbody><tr>' +
-              "<td>Option</td>" +
-              "<td>Value</td>" +
-              "</tr>";
+              '<table border="1" style="width:90%;text-align:center">';
+            table += "<thead><tr>";
+            table += "<th>Category</th>";
+            table += "<th>Count</th>";
+            table += "</tr></thead><tbody>";
             for (var i = 0, l = series.length; i < l; i++) {
-              table +=
-                "<tr>" +
-                "<td>" +
-                series[i].name +
-                "</td>" +
-                "<td>" +
-                series[i].value +
-                "</td>" +
-                "</tr>";
+              table += "<tr>";
+              table += "<td>" + upperFirst(series[i].name) + "</td>";
+              table += "<td>" + series[i].value + "</td>";
+              table += "</tr>";
             }
             table += "</tbody></table>";
-            return table;
+            return (
+              '<div style="display:flex;align-items:center;justify-content:center">' +
+              table +
+              "</div>"
+            );
           },
         },
       },

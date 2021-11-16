@@ -9,6 +9,7 @@ import {
 } from "./chart-style.js";
 import uniq from "lodash/uniq";
 import isEmpty from "lodash/isEmpty";
+import upperFirst from "lodash/upperFirst";
 
 const BarStack = (data, extra) => {
   if (isEmpty(data) || !data) {
@@ -94,6 +95,31 @@ const BarStack = (data, extra) => {
           title: "table view",
           icon: Icons.dataView,
           readOnly: true,
+          optionToContent: function (opt) {
+            var xAxis = opt.xAxis.map((x) => x.data)[0];
+            var series = opt.series.map((x) => x.data);
+            var table =
+              '<table border="1" style="width:90%;text-align:center">';
+            table += "<thead><tr><th></th>";
+            for (var i = 0, l = xAxis.length; i < l; i++) {
+              table += "<th>" + upperFirst(xAxis[i]) + "</th>";
+            }
+            table += "</tr></thead><tbody>";
+            for (var i = 0, l = series.length; i < l; i++) {
+              table += "<tr>";
+              table += "<td><b>" + upperFirst(series[i][0].name) + "</b></td>";
+              for (var x = 0, y = series[i].length; x < y; x++) {
+                table += "<td>" + series[i][x].value + "</td>";
+              }
+              table += "</tr>";
+            }
+            table += "</tbody></table>";
+            return (
+              '<div style="display:flex;align-items:center;justify-content:center">' +
+              table +
+              "</div>"
+            );
+          },
         },
       },
     },
