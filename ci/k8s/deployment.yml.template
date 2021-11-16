@@ -79,6 +79,11 @@ spec:
                 secretKeyRef:
                   name: ${INSTANCE_NAME}
                   key: webdomain
+            - name: INSTANCE_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: ${INSTANCE_NAME}
+                  key: instance-name
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: /secrets/credentials.json
           readinessProbe:
@@ -129,7 +134,10 @@ spec:
                   name: ${INSTANCE_NAME}
                   key: webdomain
             - name: INSTANCE_NAME
-              value: ${INSTANCE_NAME}
+              valueFrom:
+                secretKeyRef:
+                  name: ${INSTANCE_NAME}
+                  key: instance-name
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: /secrets/credentials.json
           readinessProbe:
