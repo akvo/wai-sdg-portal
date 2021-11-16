@@ -84,6 +84,8 @@ spec:
                 secretKeyRef:
                   name: ${INSTANCE_NAME}
                   key: instance-name
+            - name: ONLINE
+              value: 1
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: /secrets/credentials.json
           readinessProbe:
@@ -138,6 +140,8 @@ spec:
                 secretKeyRef:
                   name: ${INSTANCE_NAME}
                   key: instance-name
+            - name: ONLINE
+              value: 1
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: /secrets/credentials.json
           readinessProbe:

@@ -19,7 +19,9 @@ config = context.config
 # check docker-compose.yml deh
 INSTANCE_NAME = os.environ["INSTANCE_NAME"]
 INSTANCE_DB = INSTANCE_NAME.replace("-", "_")
-DATABASE_URL = os.environ["DATABASE_URL"].replace(INSTANCE_NAME, INSTANCE_DB)
+DATABASE_URL = os.environ["DATABASE_URL"]
+if "ONLINE" not in os.environ:
+    DATABASE_URL = DATABASE_URL.replace(INSTANCE_NAME, INSTANCE_DB)
 DATABASE_URL = DATABASE_URL.replace('%', '%%')
 
 # sets up loggers
