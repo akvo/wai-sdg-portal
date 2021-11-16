@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Space, Popover, Collapse, List, Select, Spin } from "antd";
+import {
+  Row,
+  Col,
+  Space,
+  Popover,
+  Collapse,
+  List,
+  Select,
+  Spin,
+  Affix,
+} from "antd";
 import { PlusSquareOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import api from "../../util/api";
 import { useHistory } from "react-router-dom";
@@ -272,24 +282,26 @@ const Main = ({ match }) => {
   return (
     <Row className="main-container">
       {/* Filter */}
-      <Col span={24}>
-        <Row align="middle" className="filter-wrapper">
-          <Col span={24} className="container">
-            <Space size={20} align="center" wrap={true}>
-              <DropdownNavigation
-                value={match?.params?.page}
-                onChange={(val) => history.push(`/data/${val}`)}
+      <Affix style={{ width: "100%", zIndex: 1 }}>
+        <Col span={24}>
+          <Row align="middle" className="filter-wrapper">
+            <Col span={24} className="container">
+              <Space size={20} align="center" wrap={true}>
+                <DropdownNavigation
+                  value={match?.params?.page}
+                  onChange={(val) => history.push(`/data/${val}`)}
+                />
+                <SelectLevel setPage={setPage} />
+              </Space>
+              <AdvanceSearch
+                formId={current?.formId}
+                questionGroup={questionGroup}
+                setPage={setPage}
               />
-              <SelectLevel setPage={setPage} />
-            </Space>
-            <AdvanceSearch
-              formId={current?.formId}
-              questionGroup={questionGroup}
-              setPage={setPage}
-            />
-          </Col>
-        </Row>
-      </Col>
+            </Col>
+          </Row>
+        </Col>
+      </Affix>
       {/* Data View */}
       <Col span={24}>
         <Row align="top" className="data-container" wrap={true}>
