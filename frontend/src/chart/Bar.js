@@ -8,11 +8,10 @@ import {
   AxisLabelFormatter,
 } from "./chart-style.js";
 import sortBy from "lodash/sortBy";
-import upperFirst from "lodash/upperFirst";
 import isEmpty from "lodash/isEmpty";
 
 const Bar = (data, extra) => {
-  if (isEmpty(data)) {
+  if (isEmpty(data) || !data) {
     return {
       title: {
         text: "No Data",
@@ -23,14 +22,8 @@ const Bar = (data, extra) => {
       },
     };
   }
-  let values = [];
-  let labels = [];
-  data = !data ? [] : data.map((x) => ({ ...x, name: upperFirst(x.name) }));
-  if (data.length > 0) {
-    data = sortBy(data, "order");
-    values = data.map((x) => x.value);
-    labels = data.map((x) => x.name);
-  }
+  data = sortBy(data, "order");
+  let labels = data.map((x) => x.name);
   let option = {
     ...Color,
     grid: {
@@ -107,9 +100,10 @@ const Bar = (data, extra) => {
     },
     series: [
       {
-        data: data.map((v) => ({
-          ...v,
-          itemStyle: { color: v.color || "#36aa40" },
+        data: data.map((v, vi) => ({
+          name: v.name,
+          value: v.value,
+          itemStyle: { color: v.color || Color.color[vi] },
         })),
         type: "bar",
         label: {

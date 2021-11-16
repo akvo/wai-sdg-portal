@@ -1,3 +1,5 @@
+import upperFirst from "lodash/upperFirst";
+
 export const popupFormatter = (params) => {
   var value = (params.value + "").split(".");
   value = value[0].replace(/(\d{1,3})(?=(?:\d{3})+(?!\d))/g, "$1,");
@@ -40,24 +42,21 @@ export const AxisLabelFormatter = {
       });
     }
     newParamsName = newParamsName.join(" ");
-    return newParamsName;
+    return upperFirst(newParamsName);
   },
 };
 
 export const Color = {
   color: [
-    "#36aa40",
-    "#0081e0",
-    "#2872c6",
-    "#355c7d",
-    "#3D588A",
-    "#5C616A",
-    "#C9CDC0",
-    "#DBC2CF",
-    "#2E4756",
-    "#CC9485",
-    "#CCD3B6",
-    "#FFE800",
+    "#4475B4",
+    "#73ADD1",
+    "#AAD9E8",
+    "#DEF3F8",
+    "#FEFEBE",
+    "#FEE08F",
+    "#FDAE60",
+    "#F36C42",
+    "#D73027",
   ],
 };
 
@@ -77,16 +76,20 @@ export const rsrColor = {
 };
 
 export const Legend = {
-  orient: "horizontal",
-  x: "center",
-  y: "bottom",
-  bottom: "40px",
-  textStyle: {
-    fontWeight: 200,
-    fontSize: 12,
-  },
-  padding: 10,
   icon: "circle",
+  top: "top",
+  left: "left",
+  align: "left",
+  orient: "horizontal",
+  itemGap: 10,
+  textStyle: {
+    fontWeight: "normal",
+    fontSize: 12,
+    marginLeft: 20,
+  },
+  formatter: function (name) {
+    return name;
+  },
 };
 
 export const Icons = {
