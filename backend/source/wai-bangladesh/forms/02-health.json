@@ -1,0 +1,283 @@
+[
+  {
+    "order": 1,
+    "question": "location",
+    "type": "administration",
+    "meta": true,
+    "options": null
+  },
+  {
+    "order": 3,
+    "question": "name of health facility",
+    "type": "text",
+    "meta": true,
+    "options": null
+  },
+  {
+    "order": 4,
+    "question": "geolocation",
+    "type": "geo",
+    "meta": true,
+    "options": null
+  },
+  {
+    "order": 6,
+    "question": "type of healthy facility",
+    "type": "option",
+    "meta": false,
+    "options": [
+      {
+        "name": "health post",
+        "color": null
+      },
+      {
+        "name": "other",
+        "color": null
+      }
+    ]
+  },
+  {
+    "order": 7,
+    "question": "description of water supply in health facilities",
+    "type": "option",
+    "meta": false,
+    "options": [
+      {
+        "name": "no water supply in premises",
+        "color": null
+      },
+      {
+        "name": "protected wells",
+        "color": null
+      },
+      {
+        "name": "pipeline connections",
+        "color": null
+      },
+      {
+        "name": "rain water harvesting",
+        "color": null
+      }
+    ]
+  },
+  {
+    "order": 8,
+    "question": "water",
+    "type": "option",
+    "meta": false,
+    "options": [
+      {
+        "name": "advanced",
+        "color": "#CFD8DB",
+        "order": 1
+      },
+      {
+        "name": "basic",
+        "color": "#40B1E6",
+        "order": 2
+      },
+      {
+        "name": "no service",
+        "color": "#F9CA29",
+        "order": 4
+      },
+      {
+        "name": "limited",
+        "color": "#FCF176",
+        "order": 3
+      }
+    ]
+  },
+  {
+    "order": 9,
+    "question": "latrine description",
+    "type": "option",
+    "meta": false,
+    "options": [
+      {
+        "name": "no latrine",
+        "color": null
+      },
+      {
+        "name": "simple pit latrine",
+        "color": null
+      },
+      {
+        "name": "vip",
+        "color": null
+      }
+    ]
+  },
+  {
+    "order": 10,
+    "question": "sanitation",
+    "type": "option",
+    "meta": false,
+    "options": [
+      {
+        "name": "advanced",
+        "color": "#CFD8DB",
+        "order": 1
+      },
+      {
+        "name": "basic",
+        "color": "#67B769",
+        "order": 2
+      },
+      {
+        "name": "limited",
+        "color": "#FCF176",
+        "order": 3
+      },
+      {
+        "name": "no service",
+        "color": "#F9CA29",
+        "order": 4
+      }
+    ]
+  },
+  {
+    "order": 11,
+    "question": "physically separate latrines for male female patients",
+    "type": "option",
+    "meta": false,
+    "options": [
+      {
+        "name": "yes",
+        "color": null
+      },
+      {
+        "name": "no",
+        "color": null
+      }
+    ]
+  },
+  {
+    "order": 12,
+    "question": "facilitated access for disabled",
+    "type": "option",
+    "meta": false,
+    "options": [
+      {
+        "name": "yes",
+        "color": null
+      },
+      {
+        "name": "no",
+        "color": null
+      }
+    ]
+  },
+  {
+    "order": 13,
+    "question": "latrine condition",
+    "type": "option",
+    "meta": false,
+    "options": [
+      {
+        "name": "filthy ,unused",
+        "color": null
+      },
+      {
+        "name": "clean, used",
+        "color": null
+      },
+      {
+        "name": "dirty but used",
+        "color": null
+      }
+    ]
+  },
+  {
+    "order": 14,
+    "question": "is there hand washing facility with in 5m of the toilet",
+    "type": "option",
+    "meta": false,
+    "options": [
+      {
+        "name": "yes",
+        "color": null
+      },
+      {
+        "name": "no facility",
+        "color": null
+      }
+    ]
+  },
+  {
+    "order": 15,
+    "question": "hygiene",
+    "type": "option",
+    "meta": false,
+    "options": [
+      {
+        "name": "advanced",
+        "color": "#CFD8DB",
+        "order": 1
+      },
+      {
+        "name": "basic",
+        "color": "#AB47BC",
+        "order": 2
+      },
+      {
+        "name": "limited",
+        "color": "#FCF176",
+        "order": 3
+      },
+      {
+        "name": "no service",
+        "color": "#F9CA29",
+        "order": 4
+      }
+    ]
+  },
+  {
+    "order": 16,
+    "question": "is hand washing facility operating i.e with water",
+    "type": "option",
+    "meta": false,
+    "options": [
+      {
+        "name": "yes",
+        "color": null
+      },
+      {
+        "name": "no",
+        "color": null
+      }
+    ]
+  },
+  {
+    "order": 17,
+    "question": "is soap available at each hand washing stand",
+    "type": "option",
+    "meta": false,
+    "options": [
+      {
+        "name": "yes",
+        "color": null
+      },
+      {
+        "name": "no",
+        "color": null
+      }
+    ]
+  },
+  {
+    "order": 18,
+    "question": "is there a toilet for staff",
+    "type": "option",
+    "meta": false,
+    "options": [
+      {
+        "name": "yes",
+        "color": null
+      },
+      {
+        "name": "no",
+        "color": null
+      }
+    ]
+  }
+]

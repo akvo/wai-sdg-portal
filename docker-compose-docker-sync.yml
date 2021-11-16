@@ -3,7 +3,7 @@ version: "3.9"
 services:
   frontend:
     volumes:
-      - wai-ethiopia-docker-sync:/app/node_modules:nocopy
+      - wai-sdg-portal-docker-sync:/app/node_modules:nocopy
 volumes:
-  wai-ethiopia-docker-sync:
+  wai-sdg-portal-docker-sync:
     external: true

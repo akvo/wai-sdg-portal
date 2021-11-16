@@ -1,25 +1,58 @@
 import os
+import json
 import pandas as pd
 from db.truncator import truncate
 from db.connection import engine, SessionLocal
+from source.geoconfig import GeoLevels
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+source_path = os.environ["INSTANCE_NAME"]
 session = SessionLocal()
-source_path = os.environ["WEBDOMAIN"].replace("https://", "").split(".")[0]
-source_file = f"./source/{source_path}/data/administration.csv"
+class_path = source_path.replace("-", "_")
+source_file = f"./source/{source_path}/topojson.json"
 action = truncate(session=session, table="administration")
 print(action)
-session.close()
 
-data = pd.read_csv(source_file)
-parents = list(data['UNIT_TYPE'].unique())
-parents = pd.DataFrame(parents, columns=['name'])
-parents['parent'] = None
-parents['id'] = parents.index + 1
-data['parent'] = data['UNIT_TYPE'].apply(
-    lambda x: parents[parents['name'] == x].id.values[0])
-data = data.rename(columns={'UNIT_NAME': 'name'})[['name', 'parent']]
-results = parents[['name', 'parent'
-                   ]].append(data).reset_index()[['name', 'parent']]
-results['id'] = results.index + 1
-results.to_sql('administration', engine, if_exists='append',  index=False)
+
+def get_parent_id(df, x):
+    if x["l"] == 0:
+        return None
+    parent_level = x["l"] - 1
+    pid = df[(df["l"] == parent_level) & (df["name"] == x["p"])]
+    pid = pid.to_dict("records")[0]
+    return pid["id"]
+
+
+with open(source_file, 'r') as geo:
+    geo = json.load(geo)
+    ob = geo["objects"]
+    ob_name = list(ob)[0]
+    config = GeoLevels[class_path].value
+    levels = [c["name"] for c in config]
+    properties = [
+        d for d in [p["properties"] for p in ob[ob_name]["geometries"]]
+    ]
+    df = pd.DataFrame(properties)
+    rec = df[levels].to_dict("records")
+    res = []
+    for i, r in enumerate(rec):
+        for iv, v in enumerate(levels):
+            lv = list(filter(lambda x: x["name"] == v, config))[0]["level"]
+            plv = None
+            if lv > 0:
+                plv = r[levels[iv - 1]]
+            data = {
+                "name": r[v],
+                "p": plv,
+                "l": lv,
+            }
+            res.append(data)
+    res = pd.DataFrame(res)
+    subset = ["name", "p", "l"]
+    res = res.drop_duplicates(subset=subset).sort_values(["l", "name"
+                                                          ]).reset_index()
+    res = res[subset]
+    res["id"] = res.index + 1
+    res["parent"] = res.apply(lambda x: get_parent_id(res, x), axis=1)
+    res = res[["id", "name", "parent"]]
+    res.to_sql('administration', engine, if_exists='append',  index=False)

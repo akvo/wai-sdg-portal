@@ -21,7 +21,7 @@ services:
   backend:
     volumes:
       - ./backend:/app:delegated
-      - ../akvo-config/k8s-secrets/test/wai-ethiopia:/credentials/:ro
+      - ../akvo-config/k8s-secrets/test/$INSTANCE_NAME:/credentials/:ro
     environment:
       - GOOGLE_APPLICATION_CREDENTIALS=/credentials/wai-service-account.json
       - AUTH0_DOMAIN=$WAI_AUTH0_DOMAIN
@@ -30,15 +30,15 @@ services:
       - AUTH0_SECRET=$WAI_AUTH0_SECRET
       - MAILJET_SECRET=$MAILJET_SECRET
       - MAILJET_APIKEY=$MAILJET_APIKEY
-      - WEBDOMAIN=$WAI_WEBDOMAIN
+      - WEBDOMAIN=$INSTANCE_NAME.akvotest.org
   worker:
     volumes:
       - ./backend:/app:delegated
-      - ../akvo-config/k8s-secrets/test/wai-ethiopia:/credentials/:ro
+      - ../akvo-config/k8s-secrets/test/$INSTANCE_NAME:/credentials/:ro
     environment:
       - GOOGLE_APPLICATION_CREDENTIALS=/credentials/wai-service-account.json
       - MAILJET_SECRET=$MAILJET_SECRET
       - MAILJET_APIKEY=$MAILJET_APIKEY
-      - WEBDOMAIN=$WAI_WEBDOMAIN
+      - WEBDOMAIN=$INSTANCE_NAME.akvotest.org
 volumes:
   pg-admin-data:

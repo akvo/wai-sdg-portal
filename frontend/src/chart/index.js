@@ -3,11 +3,14 @@ import { Col, Card } from "antd";
 import ReactECharts from "echarts-for-react";
 import Bar from "./Bar";
 import Line from "./Line";
+import BarStack from "./BarStack";
 
 export const generateOptions = ({ type, data }, extra, axis) => {
   switch (type) {
     case "LINE":
       return Line(data, extra);
+    case "BARSTACK":
+      return BarStack(data, extra);
     default:
       return Bar(data, extra);
   }

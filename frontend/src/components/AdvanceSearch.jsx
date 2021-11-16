@@ -10,7 +10,14 @@ import flatten from "lodash/flatten";
 
 const { Panel } = Collapse;
 
-const AdvanceSearch = ({ formId, questionGroup, setPage, setSelectedRow }) => {
+const AdvanceSearch = ({
+  formId,
+  questionGroup,
+  setPage,
+  setSelectedRow,
+  buttonPos = "left",
+  customStyle = {},
+}) => {
   // Get question option only
   const question = flatten(
     questionGroup.map((qg) => qg.question.filter((q) => q.type === "option"))
@@ -57,7 +64,7 @@ const AdvanceSearch = ({ formId, questionGroup, setPage, setSelectedRow }) => {
   }, [user, formId]);
 
   return (
-    <div className="advance-search-container">
+    <div className="advance-search-container" style={customStyle}>
       {/* Question filter */}
       <Collapse
         ghost
@@ -68,7 +75,11 @@ const AdvanceSearch = ({ formId, questionGroup, setPage, setSelectedRow }) => {
       >
         <Panel
           className="advance-search-panel"
-          header={<Button icon={<FilterOutlined />}>Advanced Filter</Button>}
+          header={
+            <Button style={{ float: buttonPos }} icon={<FilterOutlined />}>
+              Advanced Filter
+            </Button>
+          }
           showArrow={false}
           key="advance-search"
         >

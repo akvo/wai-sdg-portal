@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Space, Popover, Collapse, List, Select } from "antd";
+import {
+  Row,
+  Col,
+  Space,
+  Popover,
+  Collapse,
+  List,
+  Select,
+  Spin,
+  Affix,
+} from "antd";
 import { PlusSquareOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import api from "../../util/api";
 import { useHistory } from "react-router-dom";
@@ -18,6 +28,7 @@ import upperFirst from "lodash/upperFirst";
 import flatten from "lodash/flatten";
 import isEmpty from "lodash/isEmpty";
 import Chart from "../../chart";
+import { set } from "lodash";
 
 const config = window.page_config;
 const { Panel } = Collapse;
@@ -75,7 +86,10 @@ const Main = ({ match }) => {
   const [perPage, setPerPage] = useState(10);
   const [loading, setLoading] = useState(true);
   const [lastSubmitted, setLastSubmitted] = useState({ by: "", at: "" });
+  const [loadingChartData, setLoadingChartData] = useState(false);
   const [chartData, setChartData] = useState({});
+  const [selectedQuestion, setSelectedQuestion] = useState({});
+  const [selectedStack, setSelectedStack] = useState({});
 
   const current = config?.[match.params.page];
   const changePage = (p) => {
@@ -83,8 +97,15 @@ const Main = ({ match }) => {
     setLoading(true);
   };
 
+  const revertChart = () => {
+    setSelectedQuestion({});
+    setSelectedStack({});
+    setChartData({});
+  };
+
   useEffect(() => {
     if (user && current?.formId) {
+      revertChart();
       setPage(1);
       setPerPage(10);
       api.get(`form/${current.formId}`).then((d) => {
@@ -176,24 +197,82 @@ const Main = ({ match }) => {
     questionGroup.map((qg) => qg.question.filter((q) => q.type === "option"))
   );
 
-  const handleOnChangeChartDropdown = (val) => {
-    const selected = question.find((q) => q.id === val);
-    api
-      .get(`chart/data/${val}`)
-      .then((res) => {
-        const temp = selected.option.map((opt) => {
-          const val = res.data.data.find((d) => d.name === opt.name);
-          return {
-            ...opt,
-            value: val?.value || 0,
-          };
-        });
-        setChartData({ ...res.data, data: temp });
-      })
-      .catch(() => {
-        setChartData({});
-      });
+  const handleOnChangeChartQuestion = (val) => {
+    if (val) {
+      const selected = question.find((q) => q.id === val);
+      setSelectedQuestion(selected);
+    } else {
+      setSelectedQuestion({});
+      setSelectedStack({});
+    }
   };
+
+  const handleOnChangeChartStack = (val) => {
+    setChartData({});
+    const selected = question.find((q) => q.id === val);
+    setSelectedStack(val ? selected : {});
+  };
+
+  useEffect(() => {
+    if (!isEmpty(selectedQuestion) || !isEmpty(selectedStack)) {
+      setLoadingChartData(true);
+      let url = `chart/data/${selectedQuestion.form}?question=${selectedQuestion?.id}`;
+      if (!isEmpty(selectedStack)) {
+        url += `&stack=${selectedStack?.id}`;
+      }
+      const adminId = takeRight(selectedAdministration)[0];
+      if (adminId) {
+        url += `&administration=${adminId}`;
+      }
+      // advance search
+      url = generateAdvanceFilterURL(advanceSearchValue, url);
+      api
+        .get(url)
+        .then((res) => {
+          let temp = [];
+          if (res.data.type === "BAR") {
+            temp = selectedQuestion.option.map((opt) => {
+              const val = res.data.data.find((d) => d.name === opt.name);
+              return {
+                ...opt,
+                value: val?.value || 0,
+              };
+            });
+          }
+          if (res.data.type === "BARSTACK") {
+            temp = selectedQuestion.option.map((opt) => {
+              const group = res.data.data.find((d) => d.group === opt.name);
+              const child = group?.child.length
+                ? selectedStack.option.map((sopt) => {
+                    const val = group.child.find((c) => c.name === sopt.name);
+                    return {
+                      ...sopt,
+                      value: val?.value || 0,
+                    };
+                  })
+                : selectedStack.option.map((sopt) => ({ ...sopt, value: 0 }));
+              return {
+                ...opt,
+                stack: child,
+              };
+            });
+          }
+          setChartData({ ...res.data, data: temp });
+          setLoadingChartData(false);
+        })
+        .catch(() => {
+          setChartData({});
+          setLoadingChartData(false);
+        });
+    } else {
+      setChartData({});
+    }
+  }, [
+    selectedQuestion,
+    selectedStack,
+    selectedAdministration,
+    advanceSearchValue,
+  ]);
 
   if (!current) {
     return <ErrorPage status={404} />;
@@ -202,24 +281,28 @@ const Main = ({ match }) => {
   return (
     <Row className="main-container">
       {/* Filter */}
-      <Col span={24}>
-        <Row align="middle" className="filter-wrapper">
-          <Col span={24} className="container">
-            <Space size={20} align="center" wrap={true}>
-              <DropdownNavigation
-                value={match?.params?.page}
-                onChange={(val) => history.push(`/data/${val}`)}
+      <Affix style={{ width: "100%", zIndex: 2 }}>
+        <Col span={24}>
+          <Row align="middle" className="filter-wrapper">
+            <Col span={24} className="container">
+              <Space size={20} align="center" wrap={true}>
+                <DropdownNavigation
+                  value={match?.params?.page}
+                  onChange={(val) => history.push(`/data/${val}`)}
+                />
+                <SelectLevel setPage={setPage} />
+              </Space>
+              <AdvanceSearch
+                buttonPos="right"
+                customStyle={{ marginTop: "-33px", marginBottom: 0 }}
+                formId={current?.formId}
+                questionGroup={questionGroup}
+                setPage={setPage}
               />
-              <SelectLevel setPage={setPage} />
-            </Space>
-            <AdvanceSearch
-              formId={current?.formId}
-              questionGroup={questionGroup}
-              setPage={setPage}
-            />
-          </Col>
-        </Row>
-      </Col>
+            </Col>
+          </Row>
+        </Col>
+      </Affix>
       {/* Data View */}
       <Col span={24}>
         <Row align="top" className="data-container" wrap={true}>
@@ -268,32 +351,74 @@ const Main = ({ match }) => {
                   style={{ width: "100%" }}
                 >
                   <Row align="middle" gutter={[24, 24]}>
-                    <Col span={24}>
+                    <Col span={12}>
                       <Select
+                        allowClear
                         showSearch
                         placeholder="Select Question"
                         style={{ width: "100%" }}
-                        options={question?.map((q) => ({
-                          label: upperFirst(q.name),
-                          value: q.id,
-                        }))}
+                        options={question
+                          ?.filter((q) => q.id !== selectedStack?.id)
+                          ?.map((q) => ({
+                            label: upperFirst(q.name),
+                            value: q.id,
+                          }))}
                         optionFilterProp="label"
                         filterOption={(input, option) =>
                           option.label
                             .toLowerCase()
                             .indexOf(input.toLowerCase()) >= 0
                         }
-                        onChange={handleOnChangeChartDropdown}
+                        onChange={handleOnChangeChartQuestion}
+                        value={
+                          isEmpty(selectedQuestion) ? [] : [selectedQuestion.id]
+                        }
+                      />
+                    </Col>
+                    <Col span={12}>
+                      <Select
+                        allowClear
+                        showSearch
+                        placeholder="Select Second Question"
+                        style={{ width: "100%" }}
+                        options={question
+                          ?.filter((q) => q.id !== selectedQuestion?.id)
+                          ?.map((q) => ({
+                            label: upperFirst(q.name),
+                            value: q.id,
+                          }))}
+                        optionFilterProp="label"
+                        filterOption={(input, option) =>
+                          option.label
+                            .toLowerCase()
+                            .indexOf(input.toLowerCase()) >= 0
+                        }
+                        onChange={handleOnChangeChartStack}
+                        value={isEmpty(selectedStack) ? [] : [selectedStack.id]}
+                        disabled={isEmpty(selectedQuestion)}
                       />
                     </Col>
                   </Row>
-                  {!isEmpty(chartData) && (
-                    <Chart
-                      type={chartData.type}
-                      data={chartData.data}
-                      wrapper={false}
-                    />
-                  )}
+                  <div
+                    style={{
+                      minHeight: "450px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {!isEmpty(chartData) && !loadingChartData ? (
+                      <Chart
+                        type={chartData.type}
+                        data={chartData.data}
+                        wrapper={false}
+                      />
+                    ) : loadingChartData ? (
+                      <Spin />
+                    ) : (
+                      ""
+                    )}
+                  </div>
                 </Space>
               </Panel>
             </Collapse>

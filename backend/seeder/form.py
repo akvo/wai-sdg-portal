@@ -12,7 +12,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 Base.metadata.create_all(bind=engine)
 session = SessionLocal()
 
-source_path = os.environ["WEBDOMAIN"].replace("https://", "").split(".")[0]
+source_path = os.environ["INSTANCE_NAME"]
 file_path = f"./source/{source_path}/forms/"
 
 files = os.listdir(file_path)

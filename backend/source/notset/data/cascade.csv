@@ -1,24 +1,27 @@
-id,parent,name
-1,Jakarta,Jakarta Pusat
-2,Jakarta,Jakarta Barat
-3,Jakarta,Jakarta Selatan
-4,Jakarta,Jakarta Utara
-5,Jakarta,Jakarta Timur
-6,Jawa Barat,Bandung
-7,Jawa Barat,Garut
-8,Jawa Barat,Bogor
-9,Jawa Barat,Sumedang
-10,Jawa Barat,Cianjur
-11,Jawa Barat,Sukabumi
-12,Jawa Barat,Bekasi
-13,Jawa Barat,Subang
-14,Jawa Barat,Majalengka
-15,Jawa Barat,Ciamis
-16,Jawa Barat,Banjar
-17,Jawa Barat,Indramayu
-18,Jawa Barat,Kuningan
-19,Yogyakarta,Kota Yogyakarta
-20,Yogyakarta,Sleman
-21,Yogyakarta,Bantul
-22,Yogyakarta,Wonosari
-23,Yogyakarta,Kulon Progo
+id,name,parent
+1,Jakarta,
+2,Jawa Barat,
+3,Yogyakarta,
+4,Jakarta Pusat,Jakarta
+5,Jakarta Barat,Jakarta
+6,Jakarta Selatan,Jakarta
+7,Jakarta Utara,Jakarta
+8,Jakarta Timur,Jakarta
+9,Bandung,Jawa Barat
+10,Garut,Jawa Barat
+11,Bogor,Jawa Barat
+12,Sumedang,Jawa Barat
+13,Cianjur,Jawa Barat
+14,Sukabumi,Jawa Barat
+15,Bekasi,Jawa Barat
+16,Subang,Jawa Barat
+17,Majalengka,Jawa Barat
+18,Ciamis,Jawa Barat
+19,Banjar,Jawa Barat
+20,Indramayu,Jawa Barat
+21,Kuningan,Jawa Barat
+22,Kota Yogyakarta,Yogyakarta
+23,Sleman,Yogyakarta
+24,Bantul,Yogyakarta
+25,Wonosari,Yogyakarta
+26,Kulon Progo,Yogyakarta

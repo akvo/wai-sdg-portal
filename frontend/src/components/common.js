@@ -55,6 +55,7 @@ export const SelectLevel = ({ setPage, setSelectedRow }) => {
         return "";
       })}
       <Button
+        className="remove-filter-button"
         onClick={() => {
           setPage(1);
           if (setSelectedRow) {

@@ -6,19 +6,26 @@ import {
   Icons,
   Legend,
   AxisLabelFormatter,
+  DataView,
 } from "./chart-style.js";
 import sortBy from "lodash/sortBy";
+import isEmpty from "lodash/isEmpty";
 import upperFirst from "lodash/upperFirst";
 
 const Bar = (data, extra) => {
-  let values = [];
-  let labels = [];
-  data = !data ? [] : data.map((x) => ({ ...x, name: upperFirst(x.name) }));
-  if (data.length > 0) {
-    data = sortBy(data, "order");
-    values = data.map((x) => x.value);
-    labels = data.map((x) => x.name);
+  if (isEmpty(data) || !data) {
+    return {
+      title: {
+        text: "No Data",
+        subtext: "",
+        left: "center",
+        top: "20px",
+        ...TextStyle,
+      },
+    };
   }
+  data = sortBy(data, "order");
+  let labels = data.map((x) => x.name);
   let option = {
     ...Color,
     grid: {
@@ -39,18 +46,40 @@ const Bar = (data, extra) => {
     },
     toolbox: {
       show: true,
-      orient: "horizontal",
-      left: "right",
+      orient: "vertical",
+      right: 15,
       top: "top",
       feature: {
         saveAsImage: {
           type: "jpg",
           title: "save image",
           icon: Icons.saveAsImage,
-          backgroundColor: "#ffffff",
+        },
+        dataView: {
+          ...DataView,
+          optionToContent: function (opt) {
+            var series = opt.series[0].data;
+            var table =
+              '<table border="1" style="width:90%;text-align:center">';
+            table += "<thead><tr>";
+            table += "<th>Category</th>";
+            table += "<th>Count</th>";
+            table += "</tr></thead><tbody>";
+            for (var i = 0, l = series.length; i < l; i++) {
+              table += "<tr>";
+              table += "<td>" + upperFirst(series[i].name) + "</td>";
+              table += "<td>" + series[i].value + "</td>";
+              table += "</tr>";
+            }
+            table += "</tbody></table>";
+            return (
+              '<div style="display:flex;align-items:center;justify-content:center">' +
+              table +
+              "</div>"
+            );
+          },
         },
       },
-      backgroundColor: "#ffffff",
     },
     xAxis: {
       type: "category",
@@ -69,9 +98,10 @@ const Bar = (data, extra) => {
     },
     series: [
       {
-        data: data.map((v) => ({
-          ...v,
-          itemStyle: { color: v.color || "#36aa40" },
+        data: data.map((v, vi) => ({
+          name: v.name,
+          value: v.value,
+          itemStyle: { color: v.color || Color.color[vi] },
         })),
         type: "bar",
         label: {
