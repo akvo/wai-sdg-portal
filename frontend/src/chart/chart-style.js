@@ -78,7 +78,7 @@ export const rsrColor = {
 export const Legend = {
   icon: "circle",
   top: "top",
-  left: "left",
+  left: 15,
   align: "left",
   orient: "horizontal",
   itemGap: 10,

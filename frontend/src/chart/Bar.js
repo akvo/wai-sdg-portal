@@ -44,8 +44,8 @@ const Bar = (data, extra) => {
     },
     toolbox: {
       show: true,
-      orient: "horizontal",
-      left: "right",
+      orient: "vertical",
+      right: 15,
       top: "top",
       feature: {
         saveAsImage: {
@@ -57,11 +57,12 @@ const Bar = (data, extra) => {
           show: true,
           title: "table view",
           icon: Icons.dataView,
+          readOnly: true,
           optionToContent: function (opt) {
             var axisData = opt.xAxis[0].data;
             var series = opt.series[0].data;
             var table =
-              '<table style="width:100%;text-align:center"><tbody><tr>' +
+              '<table style="width:90%;text-align:center"><tbody><tr>' +
               "<td>Option</td>" +
               "<td>Value</td>" +
               "</tr>";
@@ -81,7 +82,6 @@ const Bar = (data, extra) => {
           },
         },
       },
-      backgroundColor: "#ffffff",
     },
     xAxis: {
       type: "category",

@@ -41,7 +41,15 @@ const BarStack = (data, extra) => {
       name: s.name,
       type: "bar",
       stack: "count",
-      label: { show: true },
+      label: {
+        colorBy: "data",
+        position: "insideBottom",
+        show: true,
+        padding: 5,
+        backgroundColor: "rgba(0,0,0,.3)",
+        ...TextStyle,
+        color: "#fff",
+      },
       emphasis: {
         focus: "series",
       },
@@ -72,8 +80,8 @@ const BarStack = (data, extra) => {
     },
     toolbox: {
       show: true,
-      orient: "horizontal",
-      left: "right",
+      orient: "vertical",
+      right: 15,
       top: "top",
       feature: {
         saveAsImage: {
@@ -85,6 +93,7 @@ const BarStack = (data, extra) => {
           show: true,
           title: "table view",
           icon: Icons.dataView,
+          readOnly: true,
         },
       },
     },
