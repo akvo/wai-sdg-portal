@@ -1,4 +1,4 @@
-var levels = ["Woreda", "Kebele"];
+var site_name = "WAI Bangladesh";
 
 var navigation_config = [
   {
@@ -30,11 +30,6 @@ var navigation_config = [
     ],
   },
 ];
-
-var map_config = {
-  shapeLevels: ["UNIT_TYPE", "UNIT_NAME"],
-  defCenter: [38.6682, 7.3942],
-};
 
 var page_config = {
   water: {

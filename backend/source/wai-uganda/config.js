@@ -1,3 +1,4 @@
+var site_name = "WAI Uganda";
 var navigation_config = [
   {
     link: "water",
@@ -62,8 +63,8 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 90, name: "Number of Water Point" },
-      marker: { id: 101, title: "Functionality Status" },
+      shape: { id: 180, title: "Monthly Tariff" },
+      marker: { id: 93, title: "Number of Water Point" },
     },
     formId: 4,
     values: [93, 101, 91],
