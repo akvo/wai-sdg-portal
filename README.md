@@ -44,7 +44,7 @@ export MAILJET_APIKEY="string"
 Now you have all the required environment ready, then run the App using:
 
 ```bash
-export WEBDOMAIN=notset
+export INSTANCE_NAME=<project-name>
 docker-compose up -d
 ```
 
@@ -79,9 +79,6 @@ Folder Path: **/backend/source/**
     ├── config.js
     ├── config.min.js
     ├── data
-    │   ├── administration.csv
-    │   ├── baseline.xlsx
-    │   ├── cascade.csv
     │   └── organisation.csv
     ├── forms
     │   ├── 01-clts.json
@@ -92,14 +89,15 @@ Folder Path: **/backend/source/**
     └── topojson.js
 
 ```
+Note that project-name should be same as [**INSTANCE_NAME**](#2.-start-the-app) that you exported
 
 ##### Administration Level Seeder
-Assuming that you have `administration.csv` inside `./backend/source/data` folder you will be able to run.
+Assuming that you have **topojson.js** inside `./backend/source/{project_name}` folder you will be able to run.
 ```
 docker-compose exec backend python -m seeder.administration
 ```
 ##### Organisation Seeder
-Assuming that you have `organisation.csv` inside `./backend/source/data` folder you will be able to run.
+To seed organisation, you need to have **organisation.csv** inside `./backend/source/{project_name}/data` folder you will be able to run.
 ```
 docker-compose exec backend python -m seeder.organisation
 ```
@@ -113,7 +111,7 @@ docker-compose exec backend python -m seeder.admin youremail@akvo.org "Your Name
 docker-compose exec backend python -m seeder.user <number_of_user> Akvo
 ```
 ##### Form Seeder
-Assuming that you have **id-form_name.json** inside `./backend/source/forms/` folder you should be able to run.
+Assuming that you have **id-form_name.json** inside `./backend/source/{project_name}/forms/` folder you should be able to run.
 ```
 docker-compose exec backend python -m seeder.form
 ```

@@ -81,7 +81,7 @@ const Header = () => {
         <Link to="/">
           <Space size={20}>
             <Avatar src="/wai-logo.png" alt="wai-logo" />
-            <div className="web-title">WAI Ethiopia</div>
+            <div className="web-title">{window.site_name}</div>
           </Space>
         </Link>
       </Col>

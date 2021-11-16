@@ -116,7 +116,7 @@ const Home = () => {
         >
           <Col lg={9}>
             <h1 className="jumbotron-text">
-              This portal is used by Woredas to see the relative WASH
+              This portal is used by {window.levels[1]} to see the relative WASH
               vulnerability of communities and institutions, and track the
               status of water and sanitation infrastructure
             </h1>
@@ -168,7 +168,7 @@ const Home = () => {
       <Col span={24}>
         <Row className="overview-container">
           <Col span={24} className="container">
-            <h1>Overview of Woredas</h1>
+            <h1>Overview of {window.levels[1]}</h1>
           </Col>
           <Col span={24} className="overview-content-wrapper">
             <Carousel autoplay effect="fade">
@@ -230,7 +230,7 @@ const Home = () => {
                                   <div className="area">
                                     Across{" "}
                                     {woreda > 1
-                                      ? `${woreda} Woredas`
+                                      ? `${woreda} ${window.levels[1]}`
                                       : "the country"}
                                   </div>
                                   <div className="count">

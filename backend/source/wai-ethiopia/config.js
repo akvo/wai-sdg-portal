@@ -1,3 +1,5 @@
+var site_name = "WAI Ethiopia";
+
 var navigation_config = [
   {
     link: "water",

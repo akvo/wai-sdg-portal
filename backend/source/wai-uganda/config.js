@@ -1,14 +1,8 @@
-var levels = ["Woreda", "Kebele"];
-
+var site_name = "WAI Uganda";
 var navigation_config = [
   {
     link: "water",
     name: "Water",
-    childrens: null,
-  },
-  {
-    link: "clts",
-    name: "CLTS",
     childrens: null,
   },
   {
@@ -31,11 +25,6 @@ var navigation_config = [
   },
 ];
 
-var map_config = {
-  shapeLevels: ["UNIT_TYPE", "UNIT_NAME"],
-  defCenter: [38.6682, 7.3942],
-};
-
 var page_config = {
   water: {
     title: "Water Point",
@@ -48,69 +37,37 @@ var page_config = {
         ellipsis: true,
       },
       {
-        title: "Source Type",
-        key: 79,
+        title: "Number of Households",
+        key: 93,
         align: "center",
-        dataIndex: 79,
+        dataIndex: 93,
         ellipsis: true,
       },
       {
         title: "Functionality",
-        key: 80,
+        key: 101,
         align: "center",
         filters: [
-          { text: "Functional", value: "functional" },
-          { text: "Not Functional", value: "not functional" },
+          { text: "Functional", value: "yes" },
+          { text: "Not Functional", value: "no" },
         ],
-        dataIndex: 80,
+        dataIndex: 101,
         ellipsis: true,
       },
       {
-        title: "Number of Users",
-        key: 82,
+        title: "Construction Year",
+        key: 91,
         align: "right",
-        dataIndex: 82,
+        dataIndex: 91,
         ellipsis: true,
       },
     ],
     maps: {
-      shape: { id: 82, name: "Non Functional Taps" },
-      marker: { id: 80, title: "Functionality Status" },
+      shape: { id: 180, title: "Monthly Tariff" },
+      marker: { id: 93, title: "Number of Water Point" },
     },
-    formId: 5,
-    values: [79, 80, 82],
-  },
-  clts: {
-    title: "CLTS",
-    columns: [
-      {
-        title: "Name",
-        key: "name",
-        width: "30%",
-        dataIndex: "name",
-        ellipsis: true,
-      },
-      {
-        title: "ODF Status",
-        key: 8,
-        align: "center",
-        dataIndex: 8,
-        ellipsis: true,
-      },
-      {
-        title: "Date Triggered",
-        key: 7,
-        align: "center",
-        dataIndex: 7,
-        ellipsis: true,
-      },
-    ],
-    maps: {
-      shape: { id: 4, name: "Number of HHS" },
-      marker: { id: 8, title: "ODF Status" },
-    },
-    formId: 1,
-    values: [8, 7],
+    formId: 4,
+    values: [93, 101, 91],
   },
   health: {
     title: "Health Facility",
@@ -124,7 +81,7 @@ var page_config = {
       },
       {
         title: "Water",
-        key: 19,
+        key: 32,
         align: "center",
         filters: [
           { text: "Basic", value: "basic" },
@@ -132,12 +89,12 @@ var page_config = {
           { text: "Limited", value: "limited" },
           { text: "No Service", value: "no service" },
         ],
-        dataIndex: 19,
+        dataIndex: 32,
         ellipsis: true,
       },
       {
         title: "Sanitation",
-        key: 21,
+        key: 36,
         align: "center",
         filters: [
           { text: "Advanced", value: "basic" },
@@ -145,61 +102,7 @@ var page_config = {
           { text: "Limited", value: "limited" },
           { text: "No Service", value: "no service" },
         ],
-        dataIndex: 21,
-        ellipsis: true,
-      },
-      {
-        title: "Hygiene",
-        key: 26,
-        align: "center",
-        filters: [
-          { text: "Advanced", value: "basic" },
-          { text: "Basic", value: "basic" },
-          { text: "Limited", value: "limited" },
-          { text: "No Service", value: "no service" },
-        ],
-        dataIndex: 26,
-        ellipsis: true,
-      },
-    ],
-    maps: { shape: false, marker: { id: 19, name: "Water Service Level" } },
-    formId: 2,
-    values: [19, 21, 26],
-  },
-  households: {
-    title: "Households",
-    columns: [
-      {
-        title: "Name",
-        key: "name",
-        width: "30%",
-        dataIndex: "name",
-        ellipsis: true,
-      },
-      {
-        title: "Water",
-        key: 35,
-        align: "center",
-        filters: [
-          { text: "Basic", value: "basic" },
-          { text: "Safely Managed", value: "safely managed" },
-          { text: "Limited", value: "limited" },
-          { text: "No Service", value: "no service" },
-        ],
-        dataIndex: 35,
-        ellipsis: true,
-      },
-      {
-        title: "Sanitation",
-        key: 39,
-        align: "center",
-        filters: [
-          { text: "Advanced", value: "basic" },
-          { text: "Basic", value: "basic" },
-          { text: "Limited", value: "limited" },
-          { text: "No Service", value: "no service" },
-        ],
-        dataIndex: 39,
+        dataIndex: 36,
         ellipsis: true,
       },
       {
@@ -217,11 +120,68 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 33, name: "Household Size" },
-      marker: { id: 35, title: "Water Service Level" },
+      shape: { id: 31, name: "Average number of patients per day" },
+      marker: { id: 32, name: "Water Service Level" },
     },
-    formId: 3,
-    values: [35, 39, 44],
+    formId: 2,
+    values: [32, 36, 44],
+  },
+  households: {
+    title: "Households",
+    columns: [
+      {
+        title: "Name",
+        key: "name",
+        width: "30%",
+        dataIndex: "name",
+        ellipsis: true,
+      },
+      {
+        title: "Water",
+        key: 7,
+        align: "center",
+        filters: [
+          { text: "Basic", value: "basic" },
+          { text: "Safely Managed", value: "safely managed" },
+          { text: "Limited", value: "limited" },
+          { text: "No Service", value: "no service" },
+        ],
+        dataIndex: 7,
+        ellipsis: true,
+      },
+      {
+        title: "Sanitation",
+        key: 14,
+        align: "center",
+        filters: [
+          { text: "Advanced", value: "basic" },
+          { text: "Basic", value: "basic" },
+          { text: "Limited", value: "limited" },
+          { text: "No Service", value: "no service" },
+        ],
+        dataIndex: 14,
+        ellipsis: true,
+      },
+      {
+        title: "Hygiene",
+        key: 20,
+        align: "center",
+        filters: [
+          { text: "Advanced", value: "basic" },
+          { text: "Basic", value: "basic" },
+          { text: "Limited", value: "limited" },
+          { text: "No Service", value: "no service" },
+        ],
+        dataIndex: 20,
+        ellipsis: true,
+      },
+    ],
+    maps: {
+      shape: { id: 6, name: "Household Size" },
+      marker: { id: 7, title: "Water Service Level" },
+    },
+    formId: 1,
+    values: [7, 14, 20],
   },
   schools: {
     title: "Schools Facility",
@@ -235,7 +195,7 @@ var page_config = {
       },
       {
         title: "Water",
-        key: 56,
+        key: 63,
         align: "center",
         filters: [
           { text: "Basic", value: "basic" },
@@ -243,12 +203,12 @@ var page_config = {
           { text: "Limited", value: "limited" },
           { text: "No Service", value: "no service" },
         ],
-        dataIndex: 56,
+        dataIndex: 63,
         ellipsis: true,
       },
       {
         title: "Sanitation",
-        key: 61,
+        key: 68,
         align: "center",
         filters: [
           { text: "Advanced", value: "basic" },
@@ -256,12 +216,12 @@ var page_config = {
           { text: "Limited", value: "limited" },
           { text: "No Service", value: "no service" },
         ],
-        dataIndex: 61,
+        dataIndex: 68,
         ellipsis: true,
       },
       {
         title: "Hygiene",
-        key: 67,
+        key: 26,
         align: "center",
         filters: [
           { text: "Advanced", value: "basic" },
@@ -269,15 +229,15 @@ var page_config = {
           { text: "Limited", value: "limited" },
           { text: "No Service", value: "no service" },
         ],
-        dataIndex: 67,
+        dataIndex: 26,
         ellipsis: true,
       },
     ],
     maps: {
-      shape: { id: 48, name: "Female Pupils" },
-      marker: { id: 56, title: "Water Service Level" },
+      shape: { id: 62, name: "Number of School Staff" },
+      marker: { id: 63, title: "Water Service Level" },
     },
-    formId: 4,
-    values: [56, 61, 67],
+    formId: 3,
+    values: [63, 68, 26],
   },
 };

@@ -11,5 +11,5 @@ jq -r '[.objects
    | .[]?]
    | (.[0] | keys_unsorted) as $keys
     | $keys, map([.[ $keys[] ]])[]
-   | @csv' ./ethiopia.topo.json > ../backend/data/administration-ethiopia.csv
+   | @csv' ./ethiopia.topo.json > ../backend/source/wai-ethiopia/administration-ethiopia.csv
 

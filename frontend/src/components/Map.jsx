@@ -7,7 +7,7 @@ import {
 } from "react-simple-maps";
 
 const mapMaxZoom = 4;
-const defCenter = [38.6682, 7.3942];
+const { defCenter } = window.map_config;
 
 const Map = ({ mapHeight = 350 }) => {
   const [position, setPosition] = useState({
