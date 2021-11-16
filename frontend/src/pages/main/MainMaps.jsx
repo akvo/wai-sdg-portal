@@ -31,10 +31,10 @@ const Markers = ({ data, colors, filterMarker }) => {
     let r = 3;
     let stroke = "#fff";
     if (colors) {
-      const option = colors.find((c) => c.name === marker.toLowerCase());
+      const option = colors.find((c) => c.name === marker?.toLowerCase());
       fill = option ? option.color : "#FF0";
     }
-    if (filterMarker === marker.toLowerCase()) {
+    if (filterMarker === marker?.toLowerCase()) {
       r = 4;
       stroke = "#000";
     }
