@@ -2,6 +2,15 @@ import enum
 
 
 class GeoLevels(enum.Enum):
+    notset = [{
+        "level": 0,
+        "name": "provinsi",
+        "alias": "Provinsi"
+    }, {
+        "level": 1,
+        "name": "kabkot",
+        "alias": "Kabupaten / Kota"
+    }]
     wai_ethiopia = [{
         "level": 0,
         "name": "UNIT_TYPE",
@@ -40,6 +49,7 @@ class GeoLevels(enum.Enum):
 
 
 class GeoCenter(enum.Enum):
+    notset = [106.3715, -8.849025]
     wai_ethiopia = [38.6682, 7.3942]
-    wai_uganda = [38.6682, 7.3942]
-    wai_bangladesh = [38.6682, 7.3942]
+    wai_uganda = [33.0129, 2.5857]
+    wai_bangladesh = [88.9238, 22.0201]
