@@ -282,7 +282,7 @@ const Main = ({ match }) => {
   return (
     <Row className="main-container">
       {/* Filter */}
-      <Affix style={{ width: "100%", zIndex: 1 }}>
+      <Affix style={{ width: "100%", zIndex: 2 }}>
         <Col span={24}>
           <Row align="middle" className="filter-wrapper">
             <Col span={24} className="container">
@@ -294,6 +294,8 @@ const Main = ({ match }) => {
                 <SelectLevel setPage={setPage} />
               </Space>
               <AdvanceSearch
+                buttonPos="right"
+                customStyle={{ marginTop: "-36px", marginBottom: 0 }}
                 formId={current?.formId}
                 questionGroup={questionGroup}
                 setPage={setPage}
