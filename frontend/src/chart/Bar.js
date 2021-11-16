@@ -9,8 +9,20 @@ import {
 } from "./chart-style.js";
 import sortBy from "lodash/sortBy";
 import upperFirst from "lodash/upperFirst";
+import isEmpty from "lodash/isEmpty";
 
 const Bar = (data, extra) => {
+  if (isEmpty(data)) {
+    return {
+      title: {
+        text: "No Data",
+        subtext: "",
+        left: "center",
+        top: "20px",
+        ...TextStyle,
+      },
+    };
+  }
   let values = [];
   let labels = [];
   data = !data ? [] : data.map((x) => ({ ...x, name: upperFirst(x.name) }));
@@ -47,13 +59,11 @@ const Bar = (data, extra) => {
           type: "jpg",
           title: "save image",
           icon: Icons.saveAsImage,
-          backgroundColor: "#ffffff",
         },
         dataView: {
           show: true,
           title: "table view",
           icon: Icons.dataView,
-          backgroundColor: "#ffffff",
           optionToContent: function (opt) {
             var axisData = opt.xAxis[0].data;
             var series = opt.series[0].data;
