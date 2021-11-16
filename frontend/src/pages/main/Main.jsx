@@ -190,6 +190,7 @@ const Main = ({ match }) => {
   const handleOnChangeChartQuestion = (val) => {
     if (val) {
       const selected = question.find((q) => q.id === val);
+      console.log(selected);
       setSelectedQuestion(selected);
     } else {
       setSelectedQuestion({});
@@ -206,9 +207,9 @@ const Main = ({ match }) => {
   useEffect(() => {
     if (!isEmpty(selectedQuestion) || !isEmpty(selectedStack)) {
       setLoadingChartData(true);
-      let url = `chart/data/${selectedQuestion?.id}`;
+      let url = `chart/data/${selectedQuestion.form}?question=${selectedQuestion?.id}`;
       if (!isEmpty(selectedStack)) {
-        url += `?stack=${selectedStack?.id}`;
+        url += `&stack=${selectedStack?.id}`;
       }
       api
         .get(url)
