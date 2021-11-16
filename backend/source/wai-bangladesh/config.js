@@ -1,3 +1,5 @@
+var levels = ["Woreda", "Kebele"];
+
 var navigation_config = [
   {
     link: "water",
@@ -28,6 +30,11 @@ var navigation_config = [
     ],
   },
 ];
+
+var map_config = {
+  shapeLevels: ["UNIT_TYPE", "UNIT_NAME"],
+  defCenter: [38.6682, 7.3942],
+};
 
 var page_config = {
   water: {

@@ -15,14 +15,21 @@ from routes.maps import maps_route
 from routes.chart import chart_route
 from routes.file import file_route
 from routes.log import log_route
+from source.geoconfig import GeoLevels, GeoCenter
 
 INSTANCE_NAME = os.environ["INSTANCE_NAME"]
+CONFIG_NAME = INSTANCE_NAME.replace("-", "_")
 SOURCE_PATH = f"./source/{INSTANCE_NAME}"
 JS_FILE = f"{SOURCE_PATH}/config"
 MINJS = jsmin(open(f"{JS_FILE}.js").read())
-MINJS += jsmin("".join(
-    ["var topojson=",
-     open(f"{SOURCE_PATH}/topojson.json").read(), ";"]))
+GEO_CONFIG = GeoLevels[CONFIG_NAME].value
+
+MINJS += jsmin("".join([
+    "var levels=" + str([g["alias"] for g in GEO_CONFIG]) + ";"
+    "var map_config={shapeLevels:" + str([g["name"] for g in GEO_CONFIG]) +
+    ", defCenter:" + str(GeoCenter[CONFIG_NAME].value) + "};",
+    "var topojson=", open(f"{SOURCE_PATH}/topojson.json").read(), ";"
+]))
 JS_FILE = f"{SOURCE_PATH}/config.min.js"
 open(JS_FILE, 'w').write(MINJS)
 
