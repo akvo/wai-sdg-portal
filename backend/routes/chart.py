@@ -1,5 +1,5 @@
 from typing import List
-from fastapi import Request, APIRouter
+from fastapi import Request, APIRouter, HTTPException
 from fastapi import Depends
 from sqlalchemy.orm import Session
 from db.connection import get_session
@@ -23,6 +23,8 @@ def get(req: Request, session: Session = Depends(get_session)) -> List[str]:
 def get_aggregated_chart_data(
         req: Request, question_id: int, stack: int = None,
         session: Session = Depends(get_session)):
+    if (question_id == stack):
+        raise HTTPException(status_code=406, detail="Not Acceptable")
     value = get_chart_data(session=session, question=question_id, stack=stack)
     return value
 
