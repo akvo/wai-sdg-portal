@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Table } from "antd";
-import { HistoryOutlined } from "@ant-design/icons";
+import { Table, Space } from "antd";
+import { LineChartOutlined, HistoryOutlined } from "@ant-design/icons";
 import MainEditor from "./MainEditor";
 import { UIState } from "../../state/ui";
 import api from "../../util/api";
@@ -132,8 +132,30 @@ const MainTableChild = ({ questionGroup, data, size = "small", scroll }) => {
         expandable={{
           expandIconColumnIndex: 3,
           expandIcon: ({ expanded, onExpand, record }) => {
+            const type = record.value.props.question.type;
+            let showChartButton = "";
+            if (type === "number" || type === "option") {
+              showChartButton = (
+                <LineChartOutlined
+                  onClick={() => {
+                    UIState.update((s) => {
+                      s.historyChart = {
+                        dataPointId: record?.value?.props?.dataPointId,
+                        questionId: record?.value?.props?.question?.id,
+                        questionType: record?.value?.props?.question?.type,
+                      };
+                    });
+                  }}
+                />
+              );
+            }
             if (record.value.props.history) {
-              return <HistoryOutlined onClick={(e) => onExpand(record, e)} />;
+              return (
+                <Space>
+                  {showChartButton}
+                  <HistoryOutlined onClick={(e) => onExpand(record, e)} />
+                </Space>
+              );
             }
             return "";
           },
