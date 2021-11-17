@@ -31,7 +31,9 @@ const MainEditor = ({ value, question, edited, dataPointId }) => {
     if (type === "number") {
       const min = rule?.min !== undefined ? rule.min : null;
       const max = rule?.max !== undefined ? rule.max : null;
-      const isNotInRange = newValue < min || newValue > max;
+      const isNotInRange = max
+        ? newValue < min || newValue > max
+        : newValue < min;
       setInputNumberPopover({
         visible: isNotInRange,
         content: (
