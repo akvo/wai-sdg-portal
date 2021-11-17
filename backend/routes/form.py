@@ -1,3 +1,4 @@
+import os
 from fastapi import Depends, Request, APIRouter
 from fastapi.security import HTTPBearer
 from fastapi.security import HTTPBasicCredentials as credentials
@@ -10,11 +11,15 @@ from models.form import FormDict, FormBase
 from models.user import UserRole
 from models.question import QuestionType
 from middleware import verify_admin, verify_editor
+from source.geoconfig import GeoCenter
 
+INSTANCE_NAME = os.environ["INSTANCE_NAME"]
+class_path = INSTANCE_NAME.replace("-", "_")
 security = HTTPBearer()
 form_route = APIRouter()
 
-geo_center = {"lat": 9.145, "lng": 40.4897}
+geo_center = GeoCenter[class_path].value
+geo_center = {"lat": geo_center[1], "lng": geo_center[0]}
 
 
 @form_route.get("/form/",
