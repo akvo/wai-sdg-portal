@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import startCase from "lodash/startCase";
 
 const navigationOptions = window.navigation_config;
+const sitename = window.site_name;
 
 const Navigation = ({ logout, loginWithPopup, isAuthenticated }) => {
   const { page, user } = UIState.useState((c) => c);
@@ -35,7 +36,7 @@ const Navigation = ({ logout, loginWithPopup, isAuthenticated }) => {
             <Link to="/">
               <Space size={20}>
                 <Avatar src="/wai-logo.png" alt="wai-logo" />
-                <div className="web-title">WAI Ethiopia</div>
+                <div className="web-title">{sitename}</div>
               </Space>
             </Link>
           </div>

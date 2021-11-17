@@ -12,6 +12,9 @@ import odfIcon from "../../sources/icons/landing-odf-icon.png";
 import healthFacilityIcon from "../../sources/icons/landing-health-facilities-icon.png";
 import schoolIcon from "../../sources/icons/landing-schools-icon.png";
 
+const level1 = window.levels[0];
+const level2 = window.levels[1];
+
 const datasetsInPortal = [
   {
     title: "JMP/SDG Status",
@@ -61,7 +64,7 @@ const overviews = [
       woreda: 1,
       percent: 81,
       count: null,
-      text: "OF ODF VILLAGES PER WOREDA",
+      text: "OF ODF VILLAGES PER " + level1?.toUpperCase(),
       explore: "#",
     },
     {
@@ -116,7 +119,7 @@ const Home = () => {
         >
           <Col lg={9}>
             <h1 className="jumbotron-text">
-              This portal is used by {window.levels[1]} to see the relative WASH
+              This portal is used by {level2} to see the relative WASH
               vulnerability of communities and institutions, and track the
               status of water and sanitation infrastructure
             </h1>
@@ -168,7 +171,7 @@ const Home = () => {
       <Col span={24}>
         <Row className="overview-container">
           <Col span={24} className="container">
-            <h1>Overview of {window.levels[1]}</h1>
+            <h1>Overview of {level2}</h1>
           </Col>
           <Col span={24} className="overview-content-wrapper">
             <Carousel autoplay effect="fade">
@@ -230,8 +233,8 @@ const Home = () => {
                                   <div className="area">
                                     Across{" "}
                                     {woreda > 1
-                                      ? `${woreda} ${window.levels[1]}`
-                                      : "the country"}
+                                      ? `${woreda} ${level2}`
+                                      : "the " + level1}
                                   </div>
                                   <div className="count">
                                     <CountUp decimals={1} end={percent} />%
