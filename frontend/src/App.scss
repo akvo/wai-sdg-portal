@@ -88,6 +88,10 @@
   }
 }
 
+.ant-drawer {
+  z-index: 1002 !important;
+}
+
 .menu-drawer-container {
   .ant-drawer-body {
     padding: 0;
