@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { cloneElement, useState } from "react";
 import {
   Row,
   Col,
@@ -92,6 +92,24 @@ const MainTable = ({
     });
   };
 
+  // Modify column config to add render function
+  const modifyColumnRender = current.columns.map((col) => {
+    if (current.values.includes(col.key)) {
+      return {
+        ...col,
+        render(text, record) {
+          return {
+            props: {
+              style: { background: text?.color || "" },
+            },
+            children: text?.value,
+          };
+        },
+      };
+    }
+    return col;
+  });
+
   return (
     <Col span={span} xxl={14} className="table-wrapper">
       <div className="container">
@@ -126,7 +144,7 @@ const MainTable = ({
               size="small"
               rowClassName={(record) => getRowClassName(record, editedRow)}
               loading={loading}
-              columns={columns}
+              columns={modifyColumnRender}
               scroll={{ y: 320 }}
               pagination={false}
               expandable={{

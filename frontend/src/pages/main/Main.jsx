@@ -28,7 +28,6 @@ import upperFirst from "lodash/upperFirst";
 import flatten from "lodash/flatten";
 import isEmpty from "lodash/isEmpty";
 import Chart from "../../chart";
-import { set } from "lodash";
 
 const config = window.page_config;
 const { Panel } = Collapse;
@@ -118,7 +117,9 @@ const Main = ({ match }) => {
   }, [user, current]);
 
   useEffect(() => {
-    if (user && current && reloadData) {
+    if (user && current && reloadData && questionGroup) {
+      // Get all question
+      const question = flatten(questionGroup.map((qg) => qg.question));
       setLoading(true);
       const adminId = takeRight(selectedAdministration)[0];
       let url = `data/form/${current.formId}?page=${page}&perpage=${perPage}`;
@@ -141,8 +142,15 @@ const Main = ({ match }) => {
               if (!q?.fn && value) {
                 value = startCase(value);
               }
+              const option = question.find((qs) => qs.id === key)?.option;
+              let color = null;
+              if (!isEmpty(option)) {
+                color =
+                  option.find((opt) => opt.name === value.toLowerCase())
+                    ?.color || null;
+              }
               return Object.assign(o, {
-                [key]: value,
+                [key]: { value: value, color: color },
               });
             }, {});
             return {
@@ -170,6 +178,7 @@ const Main = ({ match }) => {
     reloadData,
     selectedAdministration,
     advanceSearchValue,
+    questionGroup,
   ]);
 
   useEffect(() => {
