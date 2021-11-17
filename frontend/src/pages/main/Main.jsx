@@ -77,6 +77,7 @@ const Main = ({ match }) => {
     reloadData,
     selectedAdministration,
     advanceSearchValue,
+    historyChart,
   } = UIState.useState((s) => s);
   const [data, setData] = useState([]);
   const [questionGroup, setQuestionGroup] = useState([]);
@@ -89,6 +90,7 @@ const Main = ({ match }) => {
   const [chartData, setChartData] = useState({});
   const [selectedQuestion, setSelectedQuestion] = useState({});
   const [selectedStack, setSelectedStack] = useState({});
+  const [historyChartData, setHistoryChartData] = useState([]);
 
   const current = config?.[match.params.page];
   const changePage = (p) => {
@@ -103,6 +105,24 @@ const Main = ({ match }) => {
   };
 
   useEffect(() => {
+    if (!isEmpty(historyChart)) {
+      const { dataPointId, questionId, questionType } = historyChart;
+      const url = `history/${dataPointId}/${questionId}`;
+      api.get(url).then((res) => {
+        setHistoryChartData(
+          res.data.map((x, i) => ({
+            ...x,
+            key: `history-${i}`,
+            type: questionType,
+          }))
+        );
+      });
+    } else {
+      setHistoryChartData([]);
+    }
+  }, [historyChart]);
+
+  useEffect(() => {
     if (user && current?.formId) {
       revertChart();
       setPage(1);
@@ -111,6 +131,7 @@ const Main = ({ match }) => {
         setQuestionGroup(d.data.question_group);
         UIState.update((s) => {
           s.editedRow = {};
+          s.historyChart = {};
         });
       });
     }
@@ -341,14 +362,30 @@ const Main = ({ match }) => {
           />
         </Row>
       </Col>
-      {/* Collapsable Charts*/}
+      {/* History Chart */}
+      {!isEmpty(historyChartData) && (
+        <Col span={24}>
+          <Row align="middle" className="collapse-wrapper">
+            <Col span={24} className="container">
+              <Card
+                className="visual-card-wrapper"
+                title="History Chart"
+                key="history-chart-card"
+              >
+                <Chart type="LINE" data={historyChartData} wrapper={false} />
+              </Card>
+            </Col>
+          </Row>
+        </Col>
+      )}
+      {/* Main Chart */}
       <Col span={24}>
         <Row align="middle" className="collapse-wrapper">
           <Col span={24} className="container">
             <Card
               className="visual-card-wrapper"
               title="Visualisations"
-              key="chart-panel"
+              key="main-chart-card"
             >
               <Space
                 size="large"

@@ -85,6 +85,7 @@ const MainTable = ({
       setSaving(false);
       UIState.update((e) => {
         e.editedRow = {};
+        e.historyChart = {};
       });
       UIState.update((e) => {
         e.reloadData = true;

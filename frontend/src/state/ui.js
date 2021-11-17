@@ -15,6 +15,7 @@ const defaultUIState = {
   activityLog: [],
   advanceSearchValue: [],
   administrationByAccess: [],
+  historyChart: {},
 };
 
 export const UIState = new Store(defaultUIState);
