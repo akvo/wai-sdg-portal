@@ -15,6 +15,7 @@ from routes.maps import maps_route
 from routes.chart import chart_route
 from routes.file import file_route
 from routes.log import log_route
+from routes.option import option_route
 from source.geoconfig import GeoLevels, GeoCenter
 
 INSTANCE_NAME = os.environ["INSTANCE_NAME"]
@@ -64,6 +65,7 @@ app.include_router(organisation_route)
 app.include_router(user_route)
 app.include_router(form_route)
 app.include_router(question_route)
+app.include_router(option_route)
 app.include_router(data_route)
 app.include_router(maps_route)
 app.include_router(chart_route)

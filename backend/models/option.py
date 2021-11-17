@@ -15,6 +15,13 @@ class OptionDict(TypedDict):
     color: Optional[str] = None
 
 
+class OptionDictWithId(TypedDict):
+    id: int
+    name: str
+    order: Optional[int] = None
+    color: Optional[str] = None
+
+
 class Option(Base):
     __tablename__ = "option"
     id = Column(Integer, primary_key=True, index=True, nullable=True)
@@ -42,8 +49,27 @@ class Option(Base):
             "color": self.color
         }
 
+    @property
+    def serializeWithId(self) -> OptionDictWithId:
+        return {
+            "id": self.id,
+            "name": self.name,
+            "order": self.order,
+            "color": self.color
+        }
+
 
 class OptionBase(BaseModel):
+    name: str
+    order: Optional[int] = None
+    color: Optional[str] = None
+
+    class Config:
+        orm_mode = True
+
+
+class OptionBaseWithId(BaseModel):
+    id: int
     name: str
     order: Optional[int] = None
     color: Optional[str] = None

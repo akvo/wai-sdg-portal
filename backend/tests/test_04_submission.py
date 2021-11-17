@@ -126,3 +126,52 @@ class TestSubmissionRoutes():
                     {"question": 4, "value": "Garut"}
                 ]
             }
+
+    @pytest.mark.asyncio
+    async def test_get_all_option(self, app: FastAPI,
+                                  session: Session,
+                                  client: AsyncClient) -> None:
+        res = await client.get(
+            app.url_path_for("option:get"),
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
+        assert res.status_code == 200
+        res = res.json()
+        assert res == [{
+                "id": 1,
+                "name": "Option 1",
+                "color": "#333",
+                "order": 1
+            }, {
+                "id": 2,
+                "name": "Option 2",
+                "color": "#333",
+                "order": 2
+            }, {
+                "id": 3,
+                "name": "Option 3",
+                "color": None,
+                "order": None
+            }]
+
+    @pytest.mark.asyncio
+    async def test_update_option(self, app: FastAPI,
+                                 session: Session,
+                                 client: AsyncClient) -> None:
+        res = await client.put(
+            app.url_path_for("option:update", id=1),
+            params={
+                "name": "Option 1",
+                "color": "#333",
+                "order": 1,
+            },
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
+        assert res.status_code == 200
+        res = res.json()
+        assert res == {
+                "color": "#333",
+                "id": 1,
+                "name": "Option 1",
+                "order": 1,
+            }
