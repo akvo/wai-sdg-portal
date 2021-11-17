@@ -36,8 +36,7 @@ import isEmpty from "lodash/isEmpty";
 import without from "lodash/without";
 import union from "lodash/union";
 import xor from "lodash/xor";
-
-const config = window.page_config;
+import config from "../../config";
 
 const getRowClassName = (record, editedRow) => {
   const edited = editedRow?.[record.key];

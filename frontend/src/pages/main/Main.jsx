@@ -9,8 +9,9 @@ import {
   Select,
   Spin,
   Affix,
+  Card,
 } from "antd";
-import { PlusSquareOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import { InfoCircleOutlined } from "@ant-design/icons";
 import api from "../../util/api";
 import { useHistory } from "react-router-dom";
 
@@ -28,8 +29,9 @@ import upperFirst from "lodash/upperFirst";
 import flatten from "lodash/flatten";
 import isEmpty from "lodash/isEmpty";
 import Chart from "../../chart";
+import config from "../../config";
 
-const config = window.page_config;
+const { chartFeature } = window.features;
 const { Panel } = Collapse;
 
 const NameWithInfo = ({ name, created_by, created, updated, updated_by }) => {
@@ -146,7 +148,7 @@ const Main = ({ match }) => {
               let color = null;
               if (!isEmpty(option)) {
                 color =
-                  option.find((opt) => opt.name === value.toLowerCase())
+                  option.find((opt) => opt.name === value?.toLowerCase())
                     ?.color || null;
               }
               return Object.assign(o, {
@@ -345,45 +347,42 @@ const Main = ({ match }) => {
       <Col span={24}>
         <Row align="middle" className="collapse-wrapper">
           <Col span={24} className="container">
-            <Collapse
-              key="collapse-charts"
-              expandIcon={() => <PlusSquareOutlined style={{ fontSize: 18 }} />}
-              expandIconPosition="right"
-              bordered={false}
-              defaultActiveKey="chart-panel"
-              collapsible="disabled"
+            <Card
+              className="visual-card-wrapper"
+              title="Visualisations"
+              key="chart-panel"
             >
-              <Panel header="Visualisations" key="chart-panel">
-                <Space
-                  size="large"
-                  direction="vertical"
-                  style={{ width: "100%" }}
-                >
-                  <Row align="middle" gutter={[24, 24]}>
-                    <Col span={12}>
-                      <Select
-                        allowClear
-                        showSearch
-                        placeholder="Select Question"
-                        style={{ width: "100%" }}
-                        options={question
-                          ?.filter((q) => q.id !== selectedStack?.id)
-                          ?.map((q) => ({
-                            label: upperFirst(q.name),
-                            value: q.id,
-                          }))}
-                        optionFilterProp="label"
-                        filterOption={(input, option) =>
-                          option.label
-                            .toLowerCase()
-                            .indexOf(input.toLowerCase()) >= 0
-                        }
-                        onChange={handleOnChangeChartQuestion}
-                        value={
-                          isEmpty(selectedQuestion) ? [] : [selectedQuestion.id]
-                        }
-                      />
-                    </Col>
+              <Space
+                size="large"
+                direction="vertical"
+                style={{ width: "100%" }}
+              >
+                <Row align="middle" gutter={[24, 24]}>
+                  <Col span={chartFeature?.stack ? 12 : 24}>
+                    <Select
+                      allowClear
+                      showSearch
+                      placeholder="Select Question"
+                      style={{ width: "100%" }}
+                      options={question
+                        ?.filter((q) => q.id !== selectedStack?.id)
+                        ?.map((q) => ({
+                          label: upperFirst(q.name),
+                          value: q.id,
+                        }))}
+                      optionFilterProp="label"
+                      filterOption={(input, option) =>
+                        option.label
+                          .toLowerCase()
+                          .indexOf(input.toLowerCase()) >= 0
+                      }
+                      onChange={handleOnChangeChartQuestion}
+                      value={
+                        isEmpty(selectedQuestion) ? [] : [selectedQuestion.id]
+                      }
+                    />
+                  </Col>
+                  {chartFeature?.stack && (
                     <Col span={12}>
                       <Select
                         allowClear
@@ -407,30 +406,30 @@ const Main = ({ match }) => {
                         disabled={isEmpty(selectedQuestion)}
                       />
                     </Col>
-                  </Row>
-                  <div
-                    style={{
-                      minHeight: "450px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    {!isEmpty(chartData) && !loadingChartData ? (
-                      <Chart
-                        type={chartData.type}
-                        data={chartData.data}
-                        wrapper={false}
-                      />
-                    ) : loadingChartData ? (
-                      <Spin />
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                </Space>
-              </Panel>
-            </Collapse>
+                  )}
+                </Row>
+                <div
+                  style={{
+                    minHeight: "450px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  {!isEmpty(chartData) && !loadingChartData ? (
+                    <Chart
+                      type={chartData.type}
+                      data={chartData.data}
+                      wrapper={false}
+                    />
+                  ) : loadingChartData ? (
+                    <Spin />
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </Space>
+            </Card>
           </Col>
         </Row>
       </Col>
