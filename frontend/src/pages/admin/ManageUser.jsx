@@ -32,6 +32,8 @@ const ManageUser = () => {
   });
   const [selectedValue, setSelectedValue] = useState({});
   const [isUserModalVisible, setIsUserModalVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [isInformUser, setIsInformUser] = useState(false);
 
   const active = showPendingUser ? 0 : 1;
 
@@ -43,7 +45,11 @@ const ManageUser = () => {
       )
       .then((res) => {
         notification.success({
-          message: active ? "Update process has been applied" : "User approved",
+          message: active
+            ? isInformUser
+              ? "Email has been sent"
+              : "Update process has been applied"
+            : "User approved",
         });
         getUsers(active, paginate.current);
       })
@@ -55,6 +61,8 @@ const ManageUser = () => {
         });
       })
       .finally(() => {
+        setLoading(false);
+        setIsInformUser(false);
         setIsUserModalVisible(false);
       });
   };
@@ -221,11 +229,33 @@ const ManageUser = () => {
         title={`${active ? "Edit" : "Approve"} User`}
         centered
         visible={isUserModalVisible}
-        onOk={() => {
-          form.submit();
-        }}
+        footer={[
+          <Button onClick={() => setIsUserModalVisible(false)}>Cancel</Button>,
+          active ? (
+            <Button
+              loading={isInformUser}
+              onClick={() => {
+                setIsInformUser(true);
+                form.submit();
+              }}
+            >
+              Inform User
+            </Button>
+          ) : (
+            ""
+          ),
+          <Button
+            type="primary"
+            loading={loading}
+            onClick={() => {
+              setLoading(true);
+              form.submit();
+            }}
+          >
+            {selectedValue?.active ? "Confirm Changes" : "Approve"}
+          </Button>,
+        ]}
         onCancel={() => setIsUserModalVisible(false)}
-        okText={selectedValue?.active ? "Confirm Changes" : "Approve"}
       >
         <Form
           form={form}
