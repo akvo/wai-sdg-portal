@@ -4,7 +4,6 @@ import {
   Col,
   Space,
   Popover,
-  Collapse,
   List,
   Select,
   Spin,
@@ -32,7 +31,6 @@ import Chart from "../../chart";
 import config from "../../config";
 
 const { chartFeature } = window.features;
-const { Panel } = Collapse;
 
 const NameWithInfo = ({ name, created_by, created, updated, updated_by }) => {
   if (name) {
