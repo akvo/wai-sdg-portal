@@ -29,8 +29,7 @@ const MainEditor = ({ value, question, edited, dataPointId }) => {
   const onSave = (question) => {
     const { type, rule } = question;
     if (type === "number") {
-      const min = rule?.min !== undefined ? rule.min : null;
-      const max = rule?.max !== undefined ? rule.max : null;
+      const { min, max } = rule;
       const isNotInRange = max
         ? newValue < min || newValue > max
         : newValue < min;
