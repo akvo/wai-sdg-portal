@@ -1,4 +1,10 @@
 var site_name = "WAI Uganda";
+var features = {
+  chartFeature: {
+    stack: true,
+  },
+};
+
 var navigation_config = [
   {
     link: "water",
@@ -33,33 +39,22 @@ var page_config = {
         title: "Water Points",
         key: "name",
         width: "30%",
-        dataIndex: "name",
-        ellipsis: true,
       },
       {
         title: "Number of Households",
         key: 93,
         align: "center",
-        dataIndex: 93,
-        ellipsis: true,
       },
       {
         title: "Functionality",
         key: 101,
         align: "center",
-        filters: [
-          { text: "Functional", value: "yes" },
-          { text: "Not Functional", value: "no" },
-        ],
-        dataIndex: 101,
-        ellipsis: true,
+        filters: ["yes", "no"],
       },
       {
         title: "Construction Year",
         key: 91,
         align: "right",
-        dataIndex: 91,
-        ellipsis: true,
       },
     ],
     maps: {
@@ -67,7 +62,6 @@ var page_config = {
       marker: { id: 93, title: "Number of Water Point" },
     },
     formId: 4,
-    values: [93, 101, 91],
   },
   health: {
     title: "Health Facility",
@@ -76,47 +70,24 @@ var page_config = {
         title: "Facilty Name",
         key: "name",
         width: "30%",
-        dataIndex: "name",
-        ellipsis: true,
       },
       {
         title: "Water",
         key: 32,
         align: "center",
-        filters: [
-          { text: "Basic", value: "basic" },
-          { text: "Safely Managed", value: "safely managed" },
-          { text: "Limited", value: "limited" },
-          { text: "No Service", value: "no service" },
-        ],
-        dataIndex: 32,
-        ellipsis: true,
+        filters: ["basic", "safely managed", "limited", "no service"],
       },
       {
         title: "Sanitation",
         key: 36,
         align: "center",
-        filters: [
-          { text: "Advanced", value: "basic" },
-          { text: "Basic", value: "basic" },
-          { text: "Limited", value: "limited" },
-          { text: "No Service", value: "no service" },
-        ],
-        dataIndex: 36,
-        ellipsis: true,
+        filters: ["advanced", "basic", "limited", "no service"],
       },
       {
         title: "Hygiene",
         key: 44,
         align: "center",
-        filters: [
-          { text: "Advanced", value: "basic" },
-          { text: "Basic", value: "basic" },
-          { text: "Limited", value: "limited" },
-          { text: "No Service", value: "no service" },
-        ],
-        dataIndex: 44,
-        ellipsis: true,
+        filters: ["advanced", "basic", "limited", "no service"],
       },
     ],
     maps: {
@@ -124,7 +95,6 @@ var page_config = {
       marker: { id: 32, name: "Water Service Level" },
     },
     formId: 2,
-    values: [32, 36, 44],
   },
   households: {
     title: "Households",
@@ -133,47 +103,24 @@ var page_config = {
         title: "Name",
         key: "name",
         width: "30%",
-        dataIndex: "name",
-        ellipsis: true,
       },
       {
         title: "Water",
         key: 7,
         align: "center",
-        filters: [
-          { text: "Basic", value: "basic" },
-          { text: "Safely Managed", value: "safely managed" },
-          { text: "Limited", value: "limited" },
-          { text: "No Service", value: "no service" },
-        ],
-        dataIndex: 7,
-        ellipsis: true,
+        filters: ["basic", "safely managed", "limited", "no service"],
       },
       {
         title: "Sanitation",
         key: 14,
         align: "center",
-        filters: [
-          { text: "Advanced", value: "basic" },
-          { text: "Basic", value: "basic" },
-          { text: "Limited", value: "limited" },
-          { text: "No Service", value: "no service" },
-        ],
-        dataIndex: 14,
-        ellipsis: true,
+        filters: ["advanced", "basic", "limited", "no service"],
       },
       {
         title: "Hygiene",
         key: 20,
         align: "center",
-        filters: [
-          { text: "Advanced", value: "basic" },
-          { text: "Basic", value: "basic" },
-          { text: "Limited", value: "limited" },
-          { text: "No Service", value: "no service" },
-        ],
-        dataIndex: 20,
-        ellipsis: true,
+        filters: ["advanced", "basic", "limited", "no service"],
       },
     ],
     maps: {
@@ -181,7 +128,6 @@ var page_config = {
       marker: { id: 7, title: "Water Service Level" },
     },
     formId: 1,
-    values: [7, 14, 20],
   },
   schools: {
     title: "Schools Facility",
@@ -190,47 +136,24 @@ var page_config = {
         title: "School Name",
         key: "name",
         width: "30%",
-        dataIndex: "name",
-        ellipsis: true,
       },
       {
         title: "Water",
         key: 63,
         align: "center",
-        filters: [
-          { text: "Basic", value: "basic" },
-          { text: "Safely Managed", value: "safely managed" },
-          { text: "Limited", value: "limited" },
-          { text: "No Service", value: "no service" },
-        ],
-        dataIndex: 63,
-        ellipsis: true,
+        filters: ["basic", "safely managed", "limited", "no service"],
       },
       {
         title: "Sanitation",
         key: 68,
         align: "center",
-        filters: [
-          { text: "Advanced", value: "basic" },
-          { text: "Basic", value: "basic" },
-          { text: "Limited", value: "limited" },
-          { text: "No Service", value: "no service" },
-        ],
-        dataIndex: 68,
-        ellipsis: true,
+        filters: ["advanced", "basic", "limited", "no service"],
       },
       {
         title: "Hygiene",
         key: 26,
         align: "center",
-        filters: [
-          { text: "Advanced", value: "basic" },
-          { text: "Basic", value: "basic" },
-          { text: "Limited", value: "limited" },
-          { text: "No Service", value: "no service" },
-        ],
-        dataIndex: 26,
-        ellipsis: true,
+        filters: ["advanced", "basic", "limited", "no service"],
       },
     ],
     maps: {
@@ -238,6 +161,5 @@ var page_config = {
       marker: { id: 63, title: "Water Service Level" },
     },
     formId: 3,
-    values: [63, 68, 26],
   },
 };
