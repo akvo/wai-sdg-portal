@@ -125,7 +125,10 @@ var page_config = {
         filters: ["advanced", "basic", "limited", "no service"],
       },
     ],
-    maps: { shape: false, marker: { id: 19, name: "Water Service Level" } },
+    maps: {
+      shape: { id: 19, name: "Water" },
+      marker: { id: 19, name: "Water Service Level" },
+    },
     formId: 2,
   },
   households: {
