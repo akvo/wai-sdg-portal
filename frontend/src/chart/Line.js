@@ -10,6 +10,17 @@ import uniq from "lodash/uniq";
 import isEmpty from "lodash/isEmpty";
 
 const Line = (data, chartTitle, extra) => {
+  if (isEmpty(data)) {
+    return {
+      title: {
+        text: "No Data",
+        subtext: "",
+        left: "center",
+        top: "20px",
+        ...TextStyle,
+      },
+    };
+  }
   let yAxisVal = [];
   let labels = [];
   let seriesData = [];

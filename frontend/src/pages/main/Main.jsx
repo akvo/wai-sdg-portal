@@ -248,7 +248,7 @@ const Main = ({ match }) => {
       {/* History Chart */}
       {!isEmpty(historyChart) && (
         <Col span={24}>
-          <MainHistoryChart current={current} data={data} />
+          <MainHistoryChart current={current} data={data} question={question} />
         </Col>
       )}
       {/* Main Chart */}

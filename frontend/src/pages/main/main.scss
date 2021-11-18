@@ -202,4 +202,11 @@
       font-weight: 600;
     }
   }
+
+  .chart-container {
+    min-height: 450px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

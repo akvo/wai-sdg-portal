@@ -168,14 +168,7 @@ const MainChart = ({ current, question }) => {
                 </Col>
               )}
             </Row>
-            <div
-              style={{
-                minHeight: "450px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
+            <div className="chart-container">
               {!isEmpty(chartData) && !loadingChartData ? (
                 <Chart
                   type={chartData.type}
@@ -185,7 +178,7 @@ const MainChart = ({ current, question }) => {
               ) : loadingChartData ? (
                 <Spin />
               ) : (
-                ""
+                "No Data"
               )}
             </div>
           </Space>
