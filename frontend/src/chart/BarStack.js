@@ -74,8 +74,8 @@ const BarStack = (data, chartTitle, extra) => {
       left: "center",
     },
     grid: {
-      top: "15%",
-      bottom: "25%",
+      top: "25%",
+      bottom: "23%",
       show: true,
       label: {
         color: "#222",
@@ -133,10 +133,14 @@ const BarStack = (data, chartTitle, extra) => {
     },
     yAxis: {
       type: "value",
+      name: "Count",
+      nameTextStyle: { ...TextStyle },
     },
     xAxis: {
       data: xAxis,
       type: "category",
+      name: "Option",
+      nameTextStyle: { ...TextStyle },
       axisLabel: {
         color: "#222",
         ...TextStyle,

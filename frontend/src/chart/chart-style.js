@@ -26,16 +26,16 @@ export const Easing = {
 
 export const TextStyle = {
   color: "#000",
-  fontSize: 14,
+  fontSize: 12,
   fontWeight: "bold",
 };
 
 export const AxisLabelFormatter = {
   formatter: function (params) {
     let newParamsName = String(params).split(" ");
-    if (newParamsName.length > 2) {
+    if (newParamsName.length > 3) {
       newParamsName = newParamsName.map((p, pi) => {
-        if (pi !== 0 && pi % 2 !== 0) {
+        if (pi !== 0 && pi % 3 === 0) {
           p += "\n";
         }
         return p;

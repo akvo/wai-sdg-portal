@@ -4,6 +4,7 @@ import {
   TextStyle,
   backgroundColor,
   Title,
+  AxisLabelFormatter,
 } from "./chart-style.js";
 import sortBy from "lodash/sortBy";
 import uniq from "lodash/uniq";
@@ -43,7 +44,7 @@ const Line = (data, chartTitle, extra) => {
       trigger: "axis",
     },
     grid: {
-      top: "15%",
+      top: "25%",
       containLabel: true,
       label: {
         color: "#222",
@@ -58,6 +59,9 @@ const Line = (data, chartTitle, extra) => {
     yAxis: {
       type: "category",
       data: yAxisVal,
+      axisLabel: {
+        ...AxisLabelFormatter,
+      },
     },
     series: [
       {

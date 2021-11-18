@@ -36,7 +36,7 @@ const Bar = (data, chartTitle, extra) => {
       subtext: chartTitle?.subTitle,
     },
     grid: {
-      top: "15%",
+      top: "25%",
       show: true,
       label: {
         color: "#222",
@@ -91,6 +91,8 @@ const Bar = (data, chartTitle, extra) => {
     xAxis: {
       type: "category",
       data: labels,
+      name: "Option",
+      nameTextStyle: { ...TextStyle },
       axisLabel: {
         color: "#222",
         ...TextStyle,
@@ -102,6 +104,8 @@ const Bar = (data, chartTitle, extra) => {
     },
     yAxis: {
       type: "value",
+      name: "Count",
+      nameTextStyle: { ...TextStyle },
     },
     series: [
       {
