@@ -90,7 +90,7 @@ const Bar = (data, chartTitle, extra) => {
     },
     yAxis: {
       type: "value",
-      name: "Count",
+      name: "Option",
       nameTextStyle: { ...TextStyle },
       nameLocation: "middle",
       nameGap: 50,
