@@ -34,8 +34,8 @@ const FooterEnd = () => {
         © 2021
       </Col>
       <Col span={8} className="end">
-        <Link to="/privacy-policy">Privacy Policy</Link>
-        <Link to="/tos">Terms of Service</Link>
+        {/* <Link to="/privacy-policy">Privacy Policy</Link> */}
+        {/* <Link to="/tos">Terms of Service</Link> */}
         {user && (
           <Link to="/documentation" onClick={() => changePage("documentation")}>
             Developer
