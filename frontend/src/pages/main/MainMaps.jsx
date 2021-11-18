@@ -46,7 +46,13 @@ const Markers = ({ data, colors, filterMarker }) => {
   });
 };
 
-const ShapeLegend = ({ data, thresholds, filterColor, setFilterColor }) => {
+const ShapeLegend = ({
+  data,
+  thresholds,
+  filterColor,
+  setFilterColor,
+  shapeQuestion,
+}) => {
   if (_.isEmpty(data)) {
     return "";
   }
@@ -88,70 +94,80 @@ const ShapeLegend = ({ data, thresholds, filterColor, setFilterColor }) => {
 
   if (thresholds.length) {
     return (
-      <div className="legends">
-        {[
-          <div
-            key={"legend-0"}
-            className={
-              "legend" +
-              (filterColor !== null && filterColor === noDataColor
-                ? " legend-selected"
-                : "")
-            }
-            style={{
-              backgroundColor:
-                noDataColor === filterColor ? higlightColor : noDataColor,
-            }}
-            onClick={(e) => {
-              filterColor === null
-                ? setFilterColor(noDataColor)
-                : filterColor === noDataColor
-                ? setFilterColor(null)
-                : setFilterColor(noDataColor);
-            }}
-          >
-            0
-          </div>,
-          ...range,
-          <div
-            key={"legend-last"}
-            className={
-              "legend" +
-              (filterColor !== null && filterColor === colorRange[range.length]
-                ? " legend-selected"
-                : "")
-            }
-            style={{
-              backgroundColor:
-                colorRange[range.length] === filterColor
-                  ? higlightColor
-                  : colorRange[range.length],
-            }}
-            onClick={(e) => {
-              filterColor === null
-                ? setFilterColor(colorRange[range.length])
-                : filterColor === colorRange[range.length]
-                ? setFilterColor(null)
-                : setFilterColor(colorRange[range.length]);
-            }}
-          >
-            {"> "}
-            {thresholds[thresholds.length - 1]}
-          </div>,
-        ]}
+      <div className="legends-wrapper">
+        {!_.isEmpty(shapeQuestion) && (
+          <h4>{shapeQuestion?.name?.toUpperCase()}</h4>
+        )}
+        <div className="legends">
+          {[
+            <div
+              key={"legend-0"}
+              className={
+                "legend" +
+                (filterColor !== null && filterColor === noDataColor
+                  ? " legend-selected"
+                  : "")
+              }
+              style={{
+                backgroundColor:
+                  noDataColor === filterColor ? higlightColor : noDataColor,
+              }}
+              onClick={(e) => {
+                filterColor === null
+                  ? setFilterColor(noDataColor)
+                  : filterColor === noDataColor
+                  ? setFilterColor(null)
+                  : setFilterColor(noDataColor);
+              }}
+            >
+              0
+            </div>,
+            ...range,
+            <div
+              key={"legend-last"}
+              className={
+                "legend" +
+                (filterColor !== null &&
+                filterColor === colorRange[range.length]
+                  ? " legend-selected"
+                  : "")
+              }
+              style={{
+                backgroundColor:
+                  colorRange[range.length] === filterColor
+                    ? higlightColor
+                    : colorRange[range.length],
+              }}
+              onClick={(e) => {
+                filterColor === null
+                  ? setFilterColor(colorRange[range.length])
+                  : filterColor === colorRange[range.length]
+                  ? setFilterColor(null)
+                  : setFilterColor(colorRange[range.length]);
+              }}
+            >
+              {"> "}
+              {thresholds[thresholds.length - 1]}
+            </div>,
+          ]}
+        </div>
       </div>
     );
   }
   return "";
 };
 
-const MarkerLegend = ({ data, colors, filterMarker, setFilterMarker }) => {
+const MarkerLegend = ({
+  data,
+  markerQuestion,
+  filterMarker,
+  setFilterMarker,
+}) => {
   if (_.isEmpty(data)) {
     return "";
   }
 
-  colors = _.sortBy(colors, ["order"]);
-  const option = colors.map((x, i) => (
+  const option = _.sortBy(markerQuestion?.option)?.map((x, i) => (
     <Space
       key={`marker-legend-${x.name}-${i}`}
       size="small"
@@ -175,7 +191,7 @@ const MarkerLegend = ({ data, colors, filterMarker, setFilterMarker }) => {
   return (
     <Row className="marker-legends">
       <Col align="end" span={24}>
-        <h4>Legend</h4>
+        <h4>{markerQuestion?.name?.toUpperCase() || "Legend"}</h4>
       </Col>
       <Col align="end" span={24}>
         <Space size="small" direction="vertical" align="end">
@@ -201,8 +217,10 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
   const [loading, setLoading] = useState(true);
   const [filterColor, setFilterColor] = useState(null);
   const [filterMarker, setFilterMarker] = useState(null);
-  const colors = question.find((q) => q.id === current.maps?.marker?.id)
-    ?.option;
+  const markerQuestion = question.find(
+    (q) => q.id === current.maps?.marker?.id
+  );
+  const shapeQuestion = question.find((q) => q.id === current.maps?.shape?.id);
 
   useEffect(() => {
     setLoading(true);
@@ -283,10 +301,11 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
         thresholds={colorScale.thresholds()}
         filterColor={filterColor}
         setFilterColor={setFilterColor}
+        shapeQuestion={shapeQuestion}
       />
       <MarkerLegend
         data={data}
-        colors={colors}
+        markerQuestion={markerQuestion}
         filterMarker={filterMarker}
         setFilterMarker={setFilterMarker}
       />
@@ -382,7 +401,11 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
             }
           </Geographies>
           {!loading && (
-            <Markers data={data} colors={colors} filterMarker={filterMarker} />
+            <Markers
+              data={data}
+              colors={markerQuestion?.option}
+              filterMarker={filterMarker}
+            />
           )}
         </ZoomableGroup>
       </ComposableMap>
