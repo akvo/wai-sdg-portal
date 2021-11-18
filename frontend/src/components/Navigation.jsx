@@ -91,7 +91,7 @@ const Navigation = ({ logout, loginWithPopup, isAuthenticated }) => {
                   Login
                 </Button>
               </Col>
-              <Col span={6}>
+              <Col span={6} onClick={loginWithPopup}>
                 <Button type="link">Signup</Button>
               </Col>
             </>
