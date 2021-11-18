@@ -1,15 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Row,
-  Col,
-  Space,
-  Popover,
-  List,
-  Select,
-  Spin,
-  Affix,
-  Card,
-} from "antd";
+import { Row, Col, Space, Popover, List, Affix, Card } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import api from "../../util/api";
 import { useHistory } from "react-router-dom";
@@ -22,15 +12,13 @@ import takeRight from "lodash/takeRight";
 import MainTable from "./MainTable";
 import MainMaps from "./MainMaps";
 import AdvanceSearch from "../../components/AdvanceSearch";
+import MainChart from "./MainChart";
 import { generateAdvanceFilterURL } from "../../util/utils";
 import startCase from "lodash/startCase";
-import upperFirst from "lodash/upperFirst";
 import flatten from "lodash/flatten";
 import isEmpty from "lodash/isEmpty";
 import Chart from "../../chart";
 import config from "../../config";
-
-const { chartFeature } = window.features;
 
 const NameWithInfo = ({ name, created_by, created, updated, updated_by }) => {
   if (name) {
@@ -86,22 +74,12 @@ const Main = ({ match }) => {
   const [perPage, setPerPage] = useState(10);
   const [loading, setLoading] = useState(true);
   const [lastSubmitted, setLastSubmitted] = useState({ by: "", at: "" });
-  const [loadingChartData, setLoadingChartData] = useState(false);
-  const [chartData, setChartData] = useState({});
-  const [selectedQuestion, setSelectedQuestion] = useState({});
-  const [selectedStack, setSelectedStack] = useState({});
   const [historyChartData, setHistoryChartData] = useState([]);
 
   const current = config?.[match.params.page];
   const changePage = (p) => {
     setPage(p);
     setLoading(true);
-  };
-
-  const revertChart = () => {
-    setSelectedQuestion({});
-    setSelectedStack({});
-    setChartData({});
   };
 
   useEffect(() => {
@@ -124,7 +102,6 @@ const Main = ({ match }) => {
 
   useEffect(() => {
     if (user && current?.formId) {
-      revertChart();
       setPage(1);
       setPerPage(10);
       api.get(`form/${current.formId}`).then((d) => {
@@ -222,87 +199,8 @@ const Main = ({ match }) => {
     }
   }, [user, current, selectedAdministration, advanceSearchValue]);
 
-  // Get question option only
-  const question = flatten(
-    questionGroup.map((qg) => qg.question.filter((q) => q.type === "option"))
-  );
-
-  const handleOnChangeChartQuestion = (val) => {
-    if (val) {
-      const selected = question.find((q) => q.id === val);
-      setSelectedQuestion(selected);
-    } else {
-      setSelectedQuestion({});
-      setSelectedStack({});
-    }
-  };
-
-  const handleOnChangeChartStack = (val) => {
-    setChartData({});
-    const selected = question.find((q) => q.id === val);
-    setSelectedStack(val ? selected : {});
-  };
-
-  useEffect(() => {
-    if (!isEmpty(selectedQuestion) || !isEmpty(selectedStack)) {
-      setLoadingChartData(true);
-      let url = `chart/data/${selectedQuestion.form}?question=${selectedQuestion?.id}`;
-      if (!isEmpty(selectedStack)) {
-        url += `&stack=${selectedStack?.id}`;
-      }
-      const adminId = takeRight(selectedAdministration)[0];
-      if (adminId) {
-        url += `&administration=${adminId}`;
-      }
-      // advance search
-      url = generateAdvanceFilterURL(advanceSearchValue, url);
-      api
-        .get(url)
-        .then((res) => {
-          let temp = [];
-          if (res.data.type === "BAR") {
-            temp = selectedQuestion.option.map((opt) => {
-              const val = res.data.data.find((d) => d.name === opt.name);
-              return {
-                ...opt,
-                value: val?.value || 0,
-              };
-            });
-          }
-          if (res.data.type === "BARSTACK") {
-            temp = selectedQuestion.option.map((opt) => {
-              const group = res.data.data.find((d) => d.group === opt.name);
-              const child = group?.child.length
-                ? selectedStack.option.map((sopt) => {
-                    const val = group.child.find((c) => c.name === sopt.name);
-                    return {
-                      ...sopt,
-                      value: val?.value || 0,
-                    };
-                  })
-                : selectedStack.option.map((sopt) => ({ ...sopt, value: 0 }));
-              return {
-                ...opt,
-                stack: child,
-              };
-            });
-          }
-          setChartData({ ...res.data, data: temp });
-          setLoadingChartData(false);
-        })
-        .catch(() => {
-          setChartData({});
-          setLoadingChartData(false);
-        });
-    } else {
-      setChartData({});
-    }
-  }, [
-    selectedQuestion,
-    selectedStack,
-    selectedAdministration,
-    advanceSearchValue,
-  ]);
+  // Get question
+  const question = flatten(questionGroup?.map((qg) => qg.question));
 
   if (!current) {
     return <ErrorPage status={404} />;
@@ -380,93 +278,7 @@ const Main = ({ match }) => {
       )}
       {/* Main Chart */}
       <Col span={24}>
-        <Row align="middle" className="collapse-wrapper">
-          <Col span={24} className="container">
-            <Card
-              className="visual-card-wrapper"
-              title="Visualisations"
-              key="main-chart-card"
-            >
-              <Space
-                size="large"
-                direction="vertical"
-                style={{ width: "100%" }}
-              >
-                <Row align="middle" gutter={[24, 24]}>
-                  <Col span={chartFeature?.stack ? 12 : 24}>
-                    <Select
-                      allowClear
-                      showSearch
-                      placeholder="Select Question"
-                      style={{ width: "100%" }}
-                      options={question
-                        ?.filter((q) => q.id !== selectedStack?.id)
-                        ?.map((q) => ({
-                          label: upperFirst(q.name),
-                          value: q.id,
-                        }))}
-                      optionFilterProp="label"
-                      filterOption={(input, option) =>
-                        option.label
-                          .toLowerCase()
-                          .indexOf(input.toLowerCase()) >= 0
-                      }
-                      onChange={handleOnChangeChartQuestion}
-                      value={
-                        isEmpty(selectedQuestion) ? [] : [selectedQuestion.id]
-                      }
-                    />
-                  </Col>
-                  {chartFeature?.stack && (
-                    <Col span={12}>
-                      <Select
-                        allowClear
-                        showSearch
-                        placeholder="Select Second Question"
-                        style={{ width: "100%" }}
-                        options={question
-                          ?.filter((q) => q.id !== selectedQuestion?.id)
-                          ?.map((q) => ({
-                            label: upperFirst(q.name),
-                            value: q.id,
-                          }))}
-                        optionFilterProp="label"
-                        filterOption={(input, option) =>
-                          option.label
-                            .toLowerCase()
-                            .indexOf(input.toLowerCase()) >= 0
-                        }
-                        onChange={handleOnChangeChartStack}
-                        value={isEmpty(selectedStack) ? [] : [selectedStack.id]}
-                        disabled={isEmpty(selectedQuestion)}
-                      />
-                    </Col>
-                  )}
-                </Row>
-                <div
-                  style={{
-                    minHeight: "450px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  {!isEmpty(chartData) && !loadingChartData ? (
-                    <Chart
-                      type={chartData.type}
-                      data={chartData.data}
-                      wrapper={false}
-                    />
-                  ) : loadingChartData ? (
-                    <Spin />
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </Space>
-            </Card>
-          </Col>
-        </Row>
+        <MainChart current={current} question={question} />
       </Col>
     </Row>
   );
