@@ -6,7 +6,7 @@ import {
   ZoomableGroup,
   Marker,
 } from "react-simple-maps";
-import { Spin, Tooltip, Button, Space } from "antd";
+import { Spin, Tooltip, Button, Space, Row, Col } from "antd";
 import {
   ZoomInOutlined,
   ZoomOutOutlined,
@@ -173,11 +173,16 @@ const MarkerLegend = ({ data, colors, filterMarker, setFilterMarker }) => {
     </Space>
   ));
   return (
-    <div className="marker-legends">
-      <Space size="small" direction="vertical" align="end">
-        {option}
-      </Space>
-    </div>
+    <Row className="marker-legends">
+      <Col align="end" span={24}>
+        <h4>Legend</h4>
+      </Col>
+      <Col align="end" span={24}>
+        <Space size="small" direction="vertical" align="end">
+          {option}
+        </Space>
+      </Col>
+    </Row>
   );
 };
 
