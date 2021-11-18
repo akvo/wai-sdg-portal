@@ -3,25 +3,17 @@ import sortBy from "lodash/sortBy";
 import uniq from "lodash/uniq";
 
 const Line = (data, extra) => {
-  const qtype = data[0]?.type;
-  let values = [];
+  let yAxisVal = [];
   let labels = [];
+  let seriesData = [];
   data = !data ? [] : data;
   if (data.length > 0) {
     data = sortBy(data, "date");
-    values = data.map((x) => x.value || x.name);
+    seriesData = data.map((x) => x.value || x.name);
+    yAxisVal = uniq(sortBy(seriesData).filter((x) => x));
     labels = data.map((x) => x.date);
+    seriesData = seriesData.map((x) => String(x));
   }
-  let yAxisVal = {
-    type: "value",
-  };
-  if (qtype === "option") {
-    yAxisVal = {
-      type: "category",
-      data: uniq(values),
-    };
-  }
-  const text_style = TextStyle;
   let option = {
     tooltip: {
       trigger: "axis",
@@ -33,7 +25,7 @@ const Line = (data, extra) => {
       containLabel: true,
       label: {
         color: "#222",
-        ...text_style,
+        ...TextStyle,
       },
     },
     xAxis: {
@@ -41,10 +33,13 @@ const Line = (data, extra) => {
       boundaryGap: false,
       data: labels,
     },
-    yAxis: yAxisVal,
+    yAxis: {
+      type: "category",
+      data: yAxisVal,
+    },
     series: [
       {
-        data: values,
+        data: seriesData,
         type: "line",
       },
     ],
