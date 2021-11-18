@@ -7,6 +7,7 @@ import {
   AxisLabelFormatter,
   Legend,
   DataView,
+  Title,
 } from "./chart-style.js";
 import uniq from "lodash/uniq";
 import isEmpty from "lodash/isEmpty";
@@ -60,12 +61,21 @@ const BarStack = (data, chartTitle, extra) => {
   });
   let option = {
     ...Color,
+    title: {
+      ...Title,
+      show: !isEmpty(chartTitle),
+      text: chartTitle?.title,
+      subtext: chartTitle?.subTitle,
+    },
     legend: {
-      data: legends,
       ...Legend,
+      data: legends,
+      top: "bottom",
+      left: "center",
     },
     grid: {
       top: "15%",
+      bottom: "25%",
       show: true,
       label: {
         color: "#222",

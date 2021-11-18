@@ -7,6 +7,7 @@ import {
   Legend,
   AxisLabelFormatter,
   DataView,
+  Title,
 } from "./chart-style.js";
 import sortBy from "lodash/sortBy";
 import isEmpty from "lodash/isEmpty";
@@ -28,6 +29,12 @@ const Bar = (data, chartTitle, extra) => {
   let labels = data.map((x) => x.name);
   let option = {
     ...Color,
+    title: {
+      ...Title,
+      show: !isEmpty(chartTitle),
+      text: chartTitle?.title,
+      subtext: chartTitle?.subTitle,
+    },
     grid: {
       top: "15%",
       show: true,

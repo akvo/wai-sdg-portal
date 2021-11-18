@@ -13,13 +13,17 @@ import takeRight from "lodash/takeRight";
 const { chartFeature } = window.features;
 
 const MainChart = ({ current, question }) => {
-  const { user, selectedAdministration, advanceSearchValue } = UIState.useState(
-    (s) => s
-  );
+  const {
+    user,
+    selectedAdministration,
+    advanceSearchValue,
+    administration,
+  } = UIState.useState((s) => s);
   const [loadingChartData, setLoadingChartData] = useState(false);
   const [chartData, setChartData] = useState({});
   const [selectedQuestion, setSelectedQuestion] = useState({});
   const [selectedStack, setSelectedStack] = useState({});
+  const [chartSubTitle, setChartSubTitle] = useState([]);
 
   // Get question option only
   question = question?.filter((q) => q.type === "option");
@@ -40,18 +44,34 @@ const MainChart = ({ current, question }) => {
     if (!isEmpty(selectedQuestion) || !isEmpty(selectedStack)) {
       setLoadingChartData(true);
       let url = `chart/data/${selectedQuestion.form}?question=${selectedQuestion?.id}`;
+      let tempChartSubTitle = [];
       if (!isEmpty(selectedStack)) {
         url += `&stack=${selectedStack?.id}`;
+        tempChartSubTitle = [
+          ...tempChartSubTitle,
+          upperFirst(selectedStack?.name),
+        ];
       }
       const adminId = takeRight(selectedAdministration)[0];
       if (adminId) {
         url += `&administration=${adminId}`;
+        tempChartSubTitle = [
+          ...tempChartSubTitle,
+          administration?.find((a) => a.id === adminId)?.name,
+        ];
       }
       // advance search
       url = generateAdvanceFilterURL(advanceSearchValue, url);
+      if (!isEmpty(advanceSearchValue)) {
+        const tempAdvance = advanceSearchValue?.map((x) =>
+          upperFirst(x.option.split("|")?.[1])
+        );
+        tempChartSubTitle = [...tempChartSubTitle, ...tempAdvance];
+      }
       api
         .get(url)
         .then((res) => {
+          setChartSubTitle(tempChartSubTitle);
           let temp = [];
           if (res.data.type === "BAR") {
             temp = selectedQuestion.option.map((opt) => {
@@ -95,6 +115,7 @@ const MainChart = ({ current, question }) => {
     selectedStack,
     selectedAdministration,
     advanceSearchValue,
+    administration,
   ]);
 
   const handleOnChangeChartQuestion = (val) => {
@@ -171,6 +192,8 @@ const MainChart = ({ current, question }) => {
             <div className="chart-container">
               {!isEmpty(chartData) && !loadingChartData ? (
                 <Chart
+                  title={upperFirst(selectedQuestion?.name)}
+                  subTitle={chartSubTitle.join(" - ")}
                   type={chartData.type}
                   data={chartData.data}
                   wrapper={false}
@@ -178,7 +201,7 @@ const MainChart = ({ current, question }) => {
               ) : loadingChartData ? (
                 <Spin />
               ) : (
-                "No Data"
+                ""
               )}
             </div>
           </Space>
