@@ -42,14 +42,17 @@ class TestSubmissionRoutes():
                         "color": "#333",
                         "name": "Option 1",
                         "order": 1,
+                        "score": None,
                     }, {
                         "color": "#333",
                         "name": "Option 2",
                         "order": 2,
+                        "score": 5,
                     }, {
                         "color": None,
                         "name": "Option 3",
                         "order": None,
+                        "score": 10,
                     }],
                 }, {
                     "form": 1,

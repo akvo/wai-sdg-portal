@@ -31,10 +31,11 @@ def update_by_id(req: Request, id: int,
                  name: Optional[str] = None,
                  order: Optional[str] = None,
                  color: Optional[str] = None,
+                 score: Optional[str] = None,
                  session: Session = Depends(get_session),
                  credentials: credentials = Depends(security)):
     verify_admin(req.state.authenticated, session)
     option = crud.update_option(session=session, id=id,
                                 name=name, order=order,
-                                color=color)
+                                color=color, score=score)
     return option.serializeWithId

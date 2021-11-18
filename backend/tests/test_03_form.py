@@ -42,15 +42,18 @@ class TestFormRoutes():
             json=[{
                 "name": "Option 1",
                 "color": "#333",
-                "order": 1
+                "order": 1,
+                "score": None
             }, {
                 "name": "Option 2",
                 "color": "#333",
-                "order": 2
+                "order": 2,
+                "score": 5
             }, {
                 "name": "Option 3",
                 "color": None,
-                "order": None
+                "order": None,
+                "score": 10
             }],
             headers={"Authorization": f"Bearer {account.token}"},
         )
@@ -66,15 +69,18 @@ class TestFormRoutes():
         assert res["option"] == [{
             "color": "#333",
             "order": 1,
-            "name": "Option 1"
+            "name": "Option 1",
+            "score": None
         }, {
             "color": "#333",
             "order": 2,
-            "name": "Option 2"
+            "name": "Option 2",
+            "score": 5
         }, {
             "color": None,
             "order": None,
-            "name": "Option 3"
+            "name": "Option 3",
+            "score": 10
         }]
 
     @pytest.mark.asyncio

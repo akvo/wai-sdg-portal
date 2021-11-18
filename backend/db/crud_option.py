@@ -10,10 +10,12 @@ def get_option(session: Session) -> List[OptionDictWithId]:
 def update_option(session: Session, id: int,
                   name: Optional[str] = None,
                   order: Optional[str] = None,
-                  color: Optional[str] = None) -> OptionDictWithId:
+                  color: Optional[str] = None,
+                  score: Optional[str] = None) -> OptionDictWithId:
     option = session.query(Option).filter(Option.id == id).first()
     option.order = order
     option.color = color
+    option.score = score
     if name:
         option.name = name
     session.flush()

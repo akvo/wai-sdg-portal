@@ -38,6 +38,8 @@ def add_question(session: Session,
                 opt.order = o["order"]
             if "color" in o:
                 opt.color = o["color"]
+            if "score" in o:
+                opt.score = o["score"]
             question.option.append(opt)
     session.add(question)
     session.commit()
