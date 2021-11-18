@@ -5,20 +5,21 @@ import Bar from "./Bar";
 import Line from "./Line";
 import BarStack from "./BarStack";
 
-export const generateOptions = ({ type, data }, extra, axis) => {
+export const generateOptions = ({ type, data, chartTitle }, extra, axis) => {
   switch (type) {
     case "LINE":
-      return Line(data, extra);
+      return Line(data, chartTitle, extra);
     case "BARSTACK":
-      return BarStack(data, extra);
+      return BarStack(data, chartTitle, extra);
     default:
-      return Bar(data, extra);
+      return Bar(data, chartTitle, extra);
   }
 };
 
 const Chart = ({
   type,
   title = "",
+  subTitle = "",
   height = 450,
   span = 12,
   data,
@@ -32,7 +33,12 @@ const Chart = ({
     name: x.name,
     var: x.name,
   }));
-  const option = generateOptions({ type: type, data: data }, extra, axis);
+  const chartTitle = wrapper ? {} : { title: title, subTitle: subTitle };
+  const option = generateOptions(
+    { type: type, data: data, chartTitle: chartTitle },
+    extra,
+    axis
+  );
   if (wrapper) {
     return (
       <Col

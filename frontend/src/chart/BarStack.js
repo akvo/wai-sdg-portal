@@ -12,7 +12,7 @@ import uniq from "lodash/uniq";
 import isEmpty from "lodash/isEmpty";
 import upperFirst from "lodash/upperFirst";
 
-const BarStack = (data, extra) => {
+const BarStack = (data, chartTitle, extra) => {
   if (isEmpty(data) || !data) {
     return {
       title: {

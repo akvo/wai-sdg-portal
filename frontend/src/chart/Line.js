@@ -1,8 +1,15 @@
-import { Easing, Color, TextStyle, backgroundColor } from "./chart-style.js";
+import {
+  Easing,
+  Color,
+  TextStyle,
+  backgroundColor,
+  Title,
+} from "./chart-style.js";
 import sortBy from "lodash/sortBy";
 import uniq from "lodash/uniq";
+import isEmpty from "lodash/isEmpty";
 
-const Line = (data, extra) => {
+const Line = (data, chartTitle, extra) => {
   let yAxisVal = [];
   let labels = [];
   let seriesData = [];
@@ -15,13 +22,17 @@ const Line = (data, extra) => {
     seriesData = seriesData.map((x) => String(x));
   }
   let option = {
+    title: {
+      ...Title,
+      show: !isEmpty(chartTitle),
+      text: chartTitle?.title,
+      subtext: chartTitle?.subTitle,
+    },
     tooltip: {
       trigger: "axis",
     },
     grid: {
-      top: "10px",
-      left: "10%",
-      right: "10%",
+      top: "15%",
       containLabel: true,
       label: {
         color: "#222",

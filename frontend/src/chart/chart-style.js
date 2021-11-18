@@ -110,3 +110,11 @@ export const DataView = {
   buttonColor: "#009fe2",
   textAreaBorderColor: "#fff",
 };
+
+export const Title = {
+  show: false,
+  text: "Title",
+  subtext: "Sub title",
+  textAlign: "center",
+  left: "center",
+};

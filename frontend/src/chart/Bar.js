@@ -12,7 +12,7 @@ import sortBy from "lodash/sortBy";
 import isEmpty from "lodash/isEmpty";
 import upperFirst from "lodash/upperFirst";
 
-const Bar = (data, extra) => {
+const Bar = (data, chartTitle, extra) => {
   if (isEmpty(data) || !data) {
     return {
       title: {
