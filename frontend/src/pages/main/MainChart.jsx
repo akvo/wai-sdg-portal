@@ -35,6 +35,15 @@ const MainChart = ({ current, question }) => {
   };
 
   useEffect(() => {
+    if (isEmpty(selectedQuestion)) {
+      const defQuestion = question?.find(
+        (q) => q.id === current?.default?.visualization
+      );
+      setSelectedQuestion(defQuestion);
+    }
+  }, [question]);
+
+  useEffect(() => {
     if (user && current?.formId) {
       revertChart();
     }

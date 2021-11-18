@@ -68,6 +68,10 @@ var page_config = {
       marker: { id: 80, title: "Functionality Status" },
     },
     formId: 5,
+    default: {
+      datapoint: 80,
+      visualization: 79,
+    },
   },
   clts: {
     title: "CLTS",
