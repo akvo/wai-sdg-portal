@@ -135,11 +135,13 @@ const BarStack = (data, chartTitle, extra) => {
       type: "value",
       name: "Count",
       nameTextStyle: { ...TextStyle },
+      nameLocation: "middle",
+      nameGap: 50,
     },
     xAxis: {
       data: xAxis,
       type: "category",
-      name: "Option",
+      name: "Question",
       nameTextStyle: { ...TextStyle },
       axisLabel: {
         color: "#222",

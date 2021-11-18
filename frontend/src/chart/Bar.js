@@ -88,10 +88,17 @@ const Bar = (data, chartTitle, extra) => {
         },
       },
     },
+    yAxis: {
+      type: "value",
+      name: "Count",
+      nameTextStyle: { ...TextStyle },
+      nameLocation: "middle",
+      nameGap: 50,
+    },
     xAxis: {
       type: "category",
       data: labels,
-      name: "Option",
+      name: "Question",
       nameTextStyle: { ...TextStyle },
       axisLabel: {
         color: "#222",
@@ -101,11 +108,6 @@ const Bar = (data, chartTitle, extra) => {
       axisTick: {
         alignWithLabel: true,
       },
-    },
-    yAxis: {
-      type: "value",
-      name: "Count",
-      nameTextStyle: { ...TextStyle },
     },
     series: [
       {
