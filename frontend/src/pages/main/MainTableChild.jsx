@@ -132,17 +132,16 @@ const MainTableChild = ({ questionGroup, data, size = "small", scroll }) => {
         expandable={{
           expandIconColumnIndex: 3,
           expandIcon: ({ expanded, onExpand, record }) => {
-            const type = record.value.props.question.type;
+            const { dataPointId, question } = record.value.props;
             let showChartButton = "";
-            if (type === "number" || type === "option") {
+            if (question.type === "number" || question.type === "option") {
               showChartButton = (
                 <LineChartOutlined
                   onClick={() => {
                     UIState.update((s) => {
                       s.historyChart = {
-                        dataPointId: record?.value?.props?.dataPointId,
-                        questionId: record?.value?.props?.question?.id,
-                        questionType: record?.value?.props?.question?.type,
+                        dataPointId: dataPointId,
+                        question: question,
                       };
                     });
                   }}

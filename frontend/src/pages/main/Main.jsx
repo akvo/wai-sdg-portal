@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Space, Popover, List, Affix, Card } from "antd";
+import { Row, Col, Space, Popover, List, Affix } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import api from "../../util/api";
 import { useHistory } from "react-router-dom";
@@ -13,11 +13,11 @@ import MainTable from "./MainTable";
 import MainMaps from "./MainMaps";
 import AdvanceSearch from "../../components/AdvanceSearch";
 import MainChart from "./MainChart";
+import MainHistoryChart from "./MainHistoryChart";
 import { generateAdvanceFilterURL } from "../../util/utils";
 import startCase from "lodash/startCase";
 import flatten from "lodash/flatten";
 import isEmpty from "lodash/isEmpty";
-import Chart from "../../chart";
 import config from "../../config";
 
 const NameWithInfo = ({ name, created_by, created, updated, updated_by }) => {
@@ -74,31 +74,12 @@ const Main = ({ match }) => {
   const [perPage, setPerPage] = useState(10);
   const [loading, setLoading] = useState(true);
   const [lastSubmitted, setLastSubmitted] = useState({ by: "", at: "" });
-  const [historyChartData, setHistoryChartData] = useState([]);
 
   const current = config?.[match.params.page];
   const changePage = (p) => {
     setPage(p);
     setLoading(true);
   };
-
-  useEffect(() => {
-    if (!isEmpty(historyChart)) {
-      const { dataPointId, questionId, questionType } = historyChart;
-      const url = `history/${dataPointId}/${questionId}`;
-      api.get(url).then((res) => {
-        setHistoryChartData(
-          res.data.map((x, i) => ({
-            ...x,
-            key: `history-${i}`,
-            type: questionType,
-          }))
-        );
-      });
-    } else {
-      setHistoryChartData([]);
-    }
-  }, [historyChart]);
 
   useEffect(() => {
     if (user && current?.formId) {
@@ -116,6 +97,10 @@ const Main = ({ match }) => {
 
   useEffect(() => {
     if (user && current && reloadData && questionGroup) {
+      // Reset history chart
+      UIState.update((s) => {
+        s.historyChart = {};
+      });
       // Get all question
       const question = flatten(questionGroup.map((qg) => qg.question));
       setLoading(true);
@@ -261,19 +246,9 @@ const Main = ({ match }) => {
         </Row>
       </Col>
       {/* History Chart */}
-      {!isEmpty(historyChartData) && (
+      {!isEmpty(historyChart) && (
         <Col span={24}>
-          <Row align="middle" className="collapse-wrapper">
-            <Col span={24} className="container">
-              <Card
-                className="visual-card-wrapper"
-                title="History Chart"
-                key="history-chart-card"
-              >
-                <Chart type="LINE" data={historyChartData} wrapper={false} />
-              </Card>
-            </Col>
-          </Row>
+          <MainHistoryChart current={current} data={data} />
         </Col>
       )}
       {/* Main Chart */}
