@@ -41,7 +41,7 @@ const MainChart = ({ current, question }) => {
       );
       setSelectedQuestion(defQuestion);
     }
-  }, [question]);
+  }, [question, selectedQuestion, current]);
 
   useEffect(() => {
     if (user && current?.formId) {

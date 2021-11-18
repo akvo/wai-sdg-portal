@@ -22,12 +22,12 @@ const MainHistoryChart = ({ current, data, question }) => {
     if (!isEmpty(historyChart) && !isEmpty(data)) {
       setLoadingChartData(true);
       const { dataPointId, question } = historyChart;
+      const temp = data.find((d) => d.key === dataPointId);
       const url = `history/${dataPointId}/${question?.id}`;
       api
         .get(url)
         .then((res) => {
-          const temp = data.find((d) => d.key === historyChart.dataPointId);
-          setSelectedData(temp || {});
+          setSelectedData(temp?.name?.props?.record || {});
           setHistoryChartData(
             res.data.map((x, i) => ({
               ...x,
@@ -100,7 +100,7 @@ const MainHistoryChart = ({ current, data, question }) => {
             <div className="chart-container">
               {!isEmpty(historyChartData) && !loadingChartData ? (
                 <Chart
-                  title={`${selectedData?.name?.props?.name} Datapoint`}
+                  title={`${selectedData?.name} Datapoint`}
                   subTitle={upperFirst(historyChart?.question?.name)}
                   type="LINE"
                   data={historyChartData}

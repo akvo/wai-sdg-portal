@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Space, Popover, List, Affix } from "antd";
-import { InfoCircleOutlined } from "@ant-design/icons";
+import { InfoCircleOutlined, LineChartOutlined } from "@ant-design/icons";
 import api from "../../util/api";
 import { useHistory } from "react-router-dom";
 
@@ -20,11 +20,14 @@ import flatten from "lodash/flatten";
 import isEmpty from "lodash/isEmpty";
 import config from "../../config";
 
-const NameWithInfo = ({ name, created_by, created, updated, updated_by }) => {
-  if (name) {
-    name = name.split(" - ");
-    name = name.map((n) => startCase(n));
-    name = name.join(" - ");
+const NameWithInfo = ({ record, current, question }) => {
+  const { id, name, created_by, created, updated, updated_by, answer } = record;
+  const isHistory = answer.map((x) => x.history).includes(true);
+  let tmpName = name;
+  if (tmpName) {
+    tmpName = tmpName.split(" - ");
+    tmpName = tmpName.map((n) => startCase(n));
+    tmpName = tmpName.join(" - ");
   }
   let data = [{ text: "Created", date: created, by: created_by }];
   if (updated) {
@@ -49,11 +52,25 @@ const NameWithInfo = ({ name, created_by, created, updated, updated_by }) => {
             )}
           />
         }
-        title={name}
+        title={tmpName}
       >
         <InfoCircleOutlined />
       </Popover>
-      {name}
+      {isHistory && (
+        <LineChartOutlined
+          onClick={() => {
+            UIState.update((s) => {
+              s.historyChart = {
+                dataPointId: id,
+                question: question?.find(
+                  (q) => q.id === current?.default?.datapoint
+                ),
+              };
+            });
+          }}
+        />
+      )}
+      {tmpName}
     </Space>
   );
 };
@@ -138,7 +155,13 @@ const Main = ({ match }) => {
             }, {});
             return {
               key: x.id,
-              name: <NameWithInfo {...x} />,
+              name: (
+                <NameWithInfo
+                  record={x}
+                  current={current}
+                  question={question}
+                />
+              ),
               detail: x.answer,
               ...values,
             };
