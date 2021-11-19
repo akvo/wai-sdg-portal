@@ -5,8 +5,8 @@ from sqlalchemy.orm import Session
 from db.connection import get_session
 from util.charts import Charts
 from util.charts import get_chart_value
-from db.crud_charts import get_chart_data
-from db.crud_administration import get_administration_list
+import db.crud_charts as crud_charts
+import db.crud_administration as crud_administration
 from middleware import check_query
 
 chart_route = APIRouter()
@@ -31,13 +31,46 @@ def get_aggregated_chart_data(
     options = check_query(q) if q else None
     administration_ids = False
     if (administration):
-        administration_ids = get_administration_list(session=session,
-                                                     id=administration)
+        administration_ids = crud_administration.get_administration_list(
+            session=session, id=administration)
     if (question == stack):
         raise HTTPException(status_code=406, detail="Not Acceptable")
-    value = get_chart_data(session=session, form=form_id, question=question,
-                           stack=stack, administration=administration_ids,
-                           options=options)
+    value = crud_charts.get_chart_data(session=session,
+                                       form=form_id,
+                                       question=question,
+                                       stack=stack,
+                                       administration=administration_ids,
+                                       options=options)
+    return value
+
+
+@chart_route.get("/chart/jmp-data/{form_id:path}/{question_id:path}",
+                 name="charts:get_aggregated_jmp_chart_data",
+                 summary="get jmp chart aggregate data",
+                 tags=["Charts"])
+def get_aggregated_jmp_chart_data(
+        req: Request, form_id: int, question_id: int,
+        administration: Optional[int] = None,
+        q: Optional[List[str]] = Query(None),
+        session: Session = Depends(get_session)):
+    options = check_query(q) if q else None
+    parent_administration = crud_administration.get_parent_administration(
+        session=session)
+    parent_administration = [x.simplify_serialize_with_children
+                             for x in parent_administration]
+    administration_ids = crud_administration.get_nested_children_ids(
+        session=session)
+    if (administration):
+        parent_administration = False
+        administration_ids = crud_administration.get_administration_list(
+            session=session, id=administration)
+    value = crud_charts.get_chart_jmp_data(
+        session=session,
+        form=form_id,
+        question=question_id,
+        parent_administration=parent_administration,
+        administration=administration_ids,
+        options=options)
     return value
 
 

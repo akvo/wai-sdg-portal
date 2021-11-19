@@ -3,17 +3,16 @@ from sqlalchemy import and_, func
 from models.answer import Answer
 from models.data import Data
 from models.views.view_data import ViewData
+from models.views.view_data_score import ViewDataScore
 import collections
 from itertools import groupby
 from typing import List
 
 
-def get_chart_data(session: Session,
-                   form: int,
-                   question: int,
-                   stack: int = None,
-                   administration: List[str] = None,
-                   options: List[str] = None):
+def filter_datapoint(session: Session,
+                     form: int,
+                     administration: List[str] = None,
+                     options: List[str] = None):
     # get list of data ids
     data = session.query(Data.id).filter(Data.form == form)
     if options:
@@ -23,7 +22,18 @@ def get_chart_data(session: Session,
     if administration:
         data = data.filter(Data.administration.in_(administration))
     data = [d.id for d in data.all()]
+    return data
 
+
+def get_chart_data(session: Session,
+                   form: int,
+                   question: int,
+                   stack: int = None,
+                   administration: List[str] = None,
+                   options: List[str] = None):
+    data = filter_datapoint(session=session, form=form,
+                            administration=administration,
+                            options=options)
     # chart query
     type = "BAR"
     if stack:
@@ -69,3 +79,64 @@ def get_chart_data(session: Session,
             counter.update(d)
         answer = [{"name": k, "value": v} for k, v in dict(counter).items()]
     return {"type": type, "data": answer}
+
+
+def get_chart_jmp_data(session: Session,
+                       form: int,
+                       question: int,
+                       parent_administration=bool,
+                       administration: List[str] = None,
+                       options: List[str] = None):
+    data = filter_datapoint(session=session, form=form,
+                            administration=administration,
+                            options=options)
+    result = session.query(
+        ViewDataScore.administration,
+        ViewDataScore.option,
+        func.count(ViewDataScore.data).label('count'),
+        func.sum(ViewDataScore.score).label('sum_score')
+    ).filter(
+        ViewDataScore.form == form
+    ).filter(
+        ViewDataScore.question == question
+    ).filter(
+        ViewDataScore.administration.in_(administration)
+    ).filter(
+        ViewDataScore.data.in_(data)
+    ).group_by(
+        ViewDataScore.administration
+    ).group_by(
+        ViewDataScore.option
+    ).all()
+    result = [ViewDataScore.group_serialize(t) for t in result]
+    if parent_administration:
+        for p in parent_administration:
+            for r in result:
+                print(r["administration"], p['children'])
+                if r["administration"] in p['children']:
+                    r.update({"administration": p["id"]})
+
+    temp = []
+    result.sort(key=lambda x: x["administration"])
+    for k, v in groupby(result, key=lambda x: x["administration"]):
+        score = []
+        child = []
+        for x in list(v):
+            score.append({"score": x['score']})
+            child.append({"option": x['option'], "count": x["count"]})
+
+        child_group = []
+        child.sort(key=lambda x: x["option"])
+        for kc, vc in groupby(child, key=lambda x: x["option"]):
+            child_group.append({
+                "option": kc,
+                "count": sum([x["count"] for x in list(vc)])
+            })
+
+        temp.append({
+            "administration": k,
+            "score": sum([s["score"] for s in score]),
+            "child": child_group,
+        })
+    temp.sort(key=lambda x: x["score"], reverse=True)
+    return temp

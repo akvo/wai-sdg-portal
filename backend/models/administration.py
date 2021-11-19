@@ -67,6 +67,13 @@ class Administration(Base):
             "name": self.name
         }
 
+    @property
+    def simplify_serialize_with_children(self):
+        return {
+            "id": self.id,
+            "children": [c.id for c in self.children]
+        }
+
 
 class AdministrationBase(BaseModel):
     id: int
