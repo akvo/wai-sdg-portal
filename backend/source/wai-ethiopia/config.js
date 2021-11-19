@@ -163,6 +163,11 @@ var page_config = {
       marker: { id: 35, title: "Water Service Level" },
     },
     formId: 3,
+    jmpCharts: [
+      { type: "JMP-BARSTACK", question: 35, name: "Water Service Level" },
+      { type: "JMP-BARSTACK", question: 39, name: "Sanitation Service Level" },
+      { type: "JMP-BARSTACK", question: 44, name: "Hygiene Service Level" },
+    ],
   },
   schools: {
     title: "Schools Facility",

@@ -42,19 +42,23 @@ class TestChartsRoutes():
                 form_id=1, question_id=1))
         assert res.status_code == 200
         res = res.json()
-        assert res == [{
-                "administration": 2,
-                "child": [{
-                    "count": 1,
-                    "option": "Option 2"
-                }],
-                "score": 5
-            },
-            {
-                "administration": 3,
-                "child": [{
-                    "count": 1,
-                    "option": "Option 2"
-                }],
-                "score": 5
-            }]
+        assert res == {
+            "form": 1,
+            "question": 1,
+            "data": [{
+                    "administration": 2,
+                    "child": [{
+                        "count": 1,
+                        "option": "Option 2"
+                    }],
+                    "score": 5
+                },
+                {
+                    "administration": 3,
+                    "child": [{
+                        "count": 1,
+                        "option": "Option 2"
+                    }],
+                    "score": 5
+                }]
+            }

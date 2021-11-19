@@ -112,7 +112,6 @@ def get_jmp_chart_data(session: Session,
     if parent_administration:
         for p in parent_administration:
             for r in result:
-                print(r["administration"], p['children'])
                 if r["administration"] in p['children']:
                     r.update({"administration": p["id"]})
 
@@ -139,4 +138,4 @@ def get_jmp_chart_data(session: Session,
             "child": child_group,
         })
     temp.sort(key=lambda x: x["score"], reverse=True)
-    return temp
+    return {"form": form, "question": question, "data": temp}
