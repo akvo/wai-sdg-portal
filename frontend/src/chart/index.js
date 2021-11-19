@@ -4,6 +4,7 @@ import ReactECharts from "echarts-for-react";
 import Bar from "./Bar";
 import Line from "./Line";
 import BarStack from "./BarStack";
+import JmpBarStack from "./JmpBarStack";
 
 export const generateOptions = ({ type, data, chartTitle }, extra, axis) => {
   switch (type) {
@@ -11,6 +12,8 @@ export const generateOptions = ({ type, data, chartTitle }, extra, axis) => {
       return Line(data, chartTitle, extra);
     case "BARSTACK":
       return BarStack(data, chartTitle, extra);
+    case "JMP-BARSTACK":
+      return JmpBarStack(data, chartTitle, extra);
     default:
       return Bar(data, chartTitle, extra);
   }

@@ -14,6 +14,7 @@ import MainMaps from "./MainMaps";
 import AdvanceSearch from "../../components/AdvanceSearch";
 import MainChart from "./MainChart";
 import MainHistoryChart from "./MainHistoryChart";
+import MainJmpChart from "./MainJmpChart";
 import { generateAdvanceFilterURL } from "../../util/utils";
 import startCase from "lodash/startCase";
 import flatten from "lodash/flatten";
@@ -277,6 +278,10 @@ const Main = ({ match }) => {
       {/* Main Chart */}
       <Col span={24}>
         <MainChart current={current} question={question} />
+      </Col>
+      {/* JMP Chart */}
+      <Col span={24}>
+        <MainJmpChart current={current} question={question} />
       </Col>
     </Row>
   );
