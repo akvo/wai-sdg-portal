@@ -10,6 +10,7 @@ import isEmpty from "lodash/isEmpty";
 import takeRight from "lodash/takeRight";
 import { titleCase } from "title-case";
 
+const levels = window.map_config?.shapeLevels?.length;
 const MainJmpChart = ({ current, question }) => {
   const {
     user,
@@ -30,9 +31,9 @@ const MainJmpChart = ({ current, question }) => {
     ) {
       setLoading(true);
       const administrationId =
-        selectedAdministration.length <= 2
+        selectedAdministration.length <= levels
           ? takeRight(selectedAdministration)[0]
-          : selectedAdministration[1];
+          : selectedAdministration[levels - 1];
       const administrationList = administration.filter(
         (adm) => adm?.parent === administrationId
       );
@@ -107,6 +108,12 @@ const MainJmpChart = ({ current, question }) => {
                   data={c.data}
                   wrapper={false}
                   height={600}
+                  extra={{
+                    selectedAdministration:
+                      selectedAdministration.length > levels
+                        ? takeRight(selectedAdministration)[0]
+                        : null,
+                  }}
                 />
               </Card>
             </Col>

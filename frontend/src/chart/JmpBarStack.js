@@ -3,15 +3,12 @@ import {
   Color,
   TextStyle,
   backgroundColor,
-  Icons,
   AxisLabelFormatter,
   Legend,
-  DataView,
   Title,
 } from "./chart-style.js";
 import uniq from "lodash/uniq";
 import isEmpty from "lodash/isEmpty";
-import upperFirst from "lodash/upperFirst";
 import sortBy from "lodash/sortBy";
 
 const JmpBarStack = (data, chartTitle, extra) => {
@@ -27,6 +24,7 @@ const JmpBarStack = (data, chartTitle, extra) => {
     };
   }
 
+  const { selectedAdministration } = extra;
   // filter only data with stack
   data = sortBy(
     data.filter((d) => !isEmpty(d.stack)),
@@ -44,25 +42,29 @@ const JmpBarStack = (data, chartTitle, extra) => {
   let series = stacked.map((s) => {
     const temp = data.map((d, di) => {
       const val = d.stack.find((c) => c.name === s.name);
+      const opacity = selectedAdministration === d.id ? 1 : 0.5;
       return {
         name: val?.name || null,
         value: val?.value || 0,
-        itemStyle: { color: val?.color || s.color },
+        itemStyle: {
+          color: val?.color || s.color,
+          opacity: selectedAdministration ? opacity : 1,
+        },
       };
     });
     return {
       name: s.name,
       type: "bar",
       stack: "count",
-      label: {
-        colorBy: "data",
-        position: "insideLeft",
-        show: true,
-        padding: 5,
-        backgroundColor: "rgba(0,0,0,.3)",
-        ...TextStyle,
-        color: "#fff",
-      },
+      // label: {
+      //   colorBy: "data",
+      //   position: "insideLeft",
+      //   show: true,
+      //   padding: 5,
+      //   backgroundColor: "rgba(0,0,0,.3)",
+      //   ...TextStyle,
+      //   color: "#fff",
+      // },
       emphasis: {
         focus: "series",
       },
@@ -84,7 +86,7 @@ const JmpBarStack = (data, chartTitle, extra) => {
       left: "center",
     },
     grid: {
-      top: "15%",
+      top: "10%",
       show: true,
       label: {
         color: "#222",
@@ -98,47 +100,6 @@ const JmpBarStack = (data, chartTitle, extra) => {
       },
       backgroundColor: "#ffffff",
       ...TextStyle,
-    },
-    toolbox: {
-      show: true,
-      orient: "vertical",
-      right: 15,
-      top: "top",
-      feature: {
-        saveAsImage: {
-          type: "jpg",
-          title: "save image",
-          icon: Icons.saveAsImage,
-        },
-        dataView: {
-          ...DataView,
-          optionToContent: function (opt) {
-            var xAxis = opt.xAxis.map((x) => x.data)[0];
-            var series = opt.series.map((x) => x.data);
-            var table =
-              '<table border="1" style="width:90%;text-align:center">';
-            table += "<thead><tr><th></th>";
-            for (var a = 0, b = xAxis.length; a < b; a++) {
-              table += "<th>" + upperFirst(xAxis[a]) + "</th>";
-            }
-            table += "</tr></thead><tbody>";
-            for (var i = 0, l = series.length; i < l; i++) {
-              table += "<tr>";
-              table += "<td><b>" + upperFirst(series[i][0].name) + "</b></td>";
-              for (var x = 0, y = series[i].length; x < y; x++) {
-                table += "<td>" + series[i][x].value + "</td>";
-              }
-              table += "</tr>";
-            }
-            table += "</tbody></table>";
-            return (
-              '<div style="display:flex;align-items:center;justify-content:center">' +
-              table +
-              "</div>"
-            );
-          },
-        },
-      },
     },
     xAxis: {
       type: "value",
