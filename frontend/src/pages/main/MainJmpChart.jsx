@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Card, Spin } from "antd";
+import { Row, Col, Card } from "antd";
 
 import "./main.scss";
 import { UIState } from "../../state/ui";
@@ -25,7 +25,8 @@ const MainJmpChart = ({ current, question }) => {
       user &&
       current?.jmpCharts &&
       !isEmpty(administration) &&
-      !isEmpty(question)
+      !isEmpty(question) &&
+      !loading
     ) {
       setLoading(true);
       const administrationId =
@@ -75,7 +76,14 @@ const MainJmpChart = ({ current, question }) => {
         setLoading(false);
       });
     }
-  }, [user, current, administration, selectedAdministration, question]);
+  }, [
+    user,
+    current,
+    administration,
+    selectedAdministration,
+    question,
+    advanceSearchValue,
+  ]);
 
   if (!current?.jmpCharts || isEmpty(current?.jmpCharts)) {
     return "";
@@ -98,6 +106,7 @@ const MainJmpChart = ({ current, question }) => {
                   type="JMP-BARSTACK"
                   data={c.data}
                   wrapper={false}
+                  height={600}
                 />
               </Card>
             </Col>

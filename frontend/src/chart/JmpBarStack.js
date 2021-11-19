@@ -12,6 +12,7 @@ import {
 import uniq from "lodash/uniq";
 import isEmpty from "lodash/isEmpty";
 import upperFirst from "lodash/upperFirst";
+import sortBy from "lodash/sortBy";
 
 const JmpBarStack = (data, chartTitle, extra) => {
   if (isEmpty(data) || !data) {
@@ -25,7 +26,16 @@ const JmpBarStack = (data, chartTitle, extra) => {
       },
     };
   }
-  let stacked = data[0].stack.map((x) => ({ name: x.name, color: x.color }));
+
+  // filter only data with stack
+  data = sortBy(
+    data.filter((d) => !isEmpty(d.stack)),
+    ["score"]
+  );
+
+  let stacked = data
+    .find((d) => !isEmpty(d.stack))
+    .stack.map((x) => ({ name: x.name, color: x.color }));
   let legends = stacked.map((s, si) => ({
     name: s.name,
     itemStyle: { color: s.color || Color.color[si] },
@@ -46,7 +56,7 @@ const JmpBarStack = (data, chartTitle, extra) => {
       stack: "count",
       label: {
         colorBy: "data",
-        position: "insideBottom",
+        position: "insideLeft",
         show: true,
         padding: 5,
         backgroundColor: "rgba(0,0,0,.3)",
@@ -70,12 +80,11 @@ const JmpBarStack = (data, chartTitle, extra) => {
     legend: {
       ...Legend,
       data: legends,
-      top: "bottom",
+      top: "top",
       left: "center",
     },
     grid: {
-      top: "25%",
-      bottom: "23%",
+      top: "15%",
       show: true,
       label: {
         color: "#222",
@@ -140,6 +149,9 @@ const JmpBarStack = (data, chartTitle, extra) => {
       },
       axisTick: {
         alignWithLabel: true,
+      },
+      max: function (value) {
+        return value.max;
       },
     },
     yAxis: {
