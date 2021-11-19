@@ -64,7 +64,7 @@ def get_aggregated_jmp_chart_data(
         parent_administration = False
         administration_ids = crud_administration.get_administration_list(
             session=session, id=administration)
-    value = crud_charts.get_chart_jmp_data(
+    value = crud_charts.get_jmp_chart_data(
         session=session,
         form=form_id,
         question=question_id,

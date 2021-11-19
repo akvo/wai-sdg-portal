@@ -81,7 +81,7 @@ def get_chart_data(session: Session,
     return {"type": type, "data": answer}
 
 
-def get_chart_jmp_data(session: Session,
+def get_jmp_chart_data(session: Session,
                        form: int,
                        question: int,
                        parent_administration=bool,
