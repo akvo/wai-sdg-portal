@@ -11,6 +11,7 @@ import takeRight from "lodash/takeRight";
 import { titleCase } from "title-case";
 
 const levels = window.map_config?.shapeLevels?.length;
+
 const MainJmpChart = ({ current, question }) => {
   const {
     user,
@@ -22,12 +23,26 @@ const MainJmpChart = ({ current, question }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    if (selectedAdministration.length <= levels && !isEmpty(chartData)) {
+      setChartData([]);
+    } else {
+      const updateChartData = chartData?.map((c) => ({
+        ...c,
+        selectedAdministration: takeRight(selectedAdministration)[0],
+      }));
+      setChartData(updateChartData);
+    }
+  }, [selectedAdministration]);
+
+  useEffect(() => {
     if (
       user &&
       current?.jmpCharts &&
       !isEmpty(administration) &&
       !isEmpty(question) &&
-      !loading
+      !loading &&
+      isEmpty(chartData) &&
+      selectedAdministration.length <= levels
     ) {
       setLoading(true);
       const administrationId =
@@ -44,38 +59,50 @@ const MainJmpChart = ({ current, question }) => {
         url = generateAdvanceFilterURL(advanceSearchValue, url);
         return api.get(url);
       });
-      Promise.all(apiCall).then((res) => {
-        const allData = res?.map((r) => {
-          const selectedQuestion = question.find(
-            (q) => q.id === r?.data?.question
-          );
-          const data = administrationList.map((adm) => {
-            const findData = r?.data?.data?.find(
-              (d) => d.administration === adm.id
+      Promise.all(apiCall)
+        .then((res) => {
+          const allData = res?.map((r) => {
+            const selectedQuestion = question.find(
+              (q) => q.id === r?.data?.question
             );
-            let stack = [];
-            if (findData) {
-              stack = selectedQuestion?.option?.map((opt) => {
-                const findStack = findData?.child?.find(
-                  (c) => c?.option?.toLowerCase() === opt?.name?.toLowerCase()
-                );
-                return {
-                  ...opt,
-                  value: findStack?.count || 0,
-                };
-              });
-            }
+            const chartSetting = current?.jmpCharts?.find(
+              (c) => c.question === r?.data?.question
+            );
+            const data = administrationList.map((adm) => {
+              const findData = r?.data?.data?.find(
+                (d) => d.administration === adm.id
+              );
+              let stack = [];
+              if (findData) {
+                stack = selectedQuestion?.option?.map((opt) => {
+                  const findStack = findData?.child?.find(
+                    (c) => c?.option?.toLowerCase() === opt?.name?.toLowerCase()
+                  );
+                  return {
+                    ...opt,
+                    value: findStack?.count || 0,
+                  };
+                });
+              }
+              return {
+                ...adm,
+                score: findData?.score || null,
+                stack: stack,
+              };
+            });
             return {
-              ...adm,
-              score: findData?.score || null,
-              stack: stack,
+              name: titleCase(selectedQuestion?.name),
+              type: chartSetting?.type,
+              selectedAdministration: null,
+              data: data,
             };
           });
-          return { name: titleCase(selectedQuestion?.name), data: data };
+          return allData;
+        })
+        .then((res) => {
+          setChartData(res);
+          setLoading(false);
         });
-        setChartData(allData);
-        setLoading(false);
-      });
     }
   }, [
     user,
@@ -84,6 +111,8 @@ const MainJmpChart = ({ current, question }) => {
     selectedAdministration,
     question,
     advanceSearchValue,
+    loading,
+    chartData,
   ]);
 
   if (!current?.jmpCharts || isEmpty(current?.jmpCharts)) {
@@ -100,19 +129,16 @@ const MainJmpChart = ({ current, question }) => {
             className="collapse-wrapper"
           >
             <Col span={24} className="container">
-              <Card className="visual-card-wrapper" title={c.name}>
+              <Card className="visual-card-wrapper" title={c?.name}>
                 <Chart
                   title=""
                   subTitle=""
-                  type="JMP-BARSTACK"
-                  data={c.data}
+                  type={c?.type}
+                  data={c?.data}
                   wrapper={false}
                   height={600}
                   extra={{
-                    selectedAdministration:
-                      selectedAdministration.length > levels
-                        ? takeRight(selectedAdministration)[0]
-                        : null,
+                    selectedAdministration: c?.selectedAdministration,
                   }}
                 />
               </Card>
