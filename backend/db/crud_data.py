@@ -2,10 +2,11 @@ from datetime import datetime
 from typing import List, Optional
 from typing_extensions import TypedDict
 from sqlalchemy.orm import Session
-from sqlalchemy import desc
+from sqlalchemy import desc, func
 from models.data import Data, DataDict
 from models.views.view_data import ViewData
 from models.answer import AnswerBase
+from models.views.view_data_score import ViewDataScore
 
 
 class PaginatedData(TypedDict):
@@ -61,8 +62,10 @@ def get_data(session: Session,
              skip: int,
              perpage: int,
              options: List[str] = None,
-             administration: List[int] = None) -> PaginatedData:
+             administration: List[int] = None,
+             question: List[int] = None) -> PaginatedData:
     data = session.query(Data).filter(Data.form == form)
+    data_id = False
     if options:
         data_id = session.query(ViewData.data).filter(
             ViewData.options.contains(options)).all()
@@ -71,6 +74,22 @@ def get_data(session: Session,
         data = data.filter(Data.administration.in_(administration))
     count = data.count()
     data = data.order_by(desc(Data.id)).offset(skip).limit(perpage).all()
+    # getting the score
+    if (question):
+        test = session.query(
+            ViewDataScore.data,
+            func.sum(ViewDataScore.score).label('sum_score')
+        ).filter(
+            ViewDataScore.form == form
+        ).filter(
+            ViewDataScore.question.in_(question)
+        )
+        if data_id:
+            test = test.filter(
+                ViewDataScore.id.in_([d.data for d in data_id])
+            )
+        test = test.group_by(ViewDataScore.data).all()
+        print("questions", test)
     return PaginatedData(data=data, count=count)
 
 
