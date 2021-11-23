@@ -52,8 +52,7 @@
       background: #7070701a;
 
       .chart-container {
-        min-height: 585px;
-        max-height: 585px;
+        max-height: 486px;
         margin: 24px 40px;
         padding: 0px !important;
         display: block !important;
@@ -63,10 +62,11 @@
 
         .data-info {
           border-bottom: 3px solid #0288d1;
-          padding: 20px;
+          padding: 10px;
 
           .info.title {
             color: #0288d1 !important;
+            font-size: 14px;
           }
         }
 

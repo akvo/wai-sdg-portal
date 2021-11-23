@@ -130,6 +130,8 @@ const MainJmpChart = ({ current, question, show }) => {
       <Col span={24}>
         {!loading &&
           chartData?.map((c, ci) => {
+            const height =
+              (c?.data?.filter((x) => x.stack.length)?.length || 0) * 50;
             return [
               <Col
                 span={24}
@@ -146,7 +148,7 @@ const MainJmpChart = ({ current, question, show }) => {
                     type={c?.type}
                     data={c?.data}
                     wrapper={false}
-                    height={600}
+                    height={height < 300 ? 300 : height}
                     extra={{
                       selectedAdministration: c?.selectedAdministration,
                     }}
