@@ -17,6 +17,7 @@ import { scaleQuantize } from "d3-scale";
 import { UIState } from "../../state/ui";
 import _ from "lodash";
 import { generateAdvanceFilterURL } from "../../util/utils";
+import { centeroid } from "../../util/geo-util";
 
 const { shapeLevels, defCenter } = window.map_config;
 const mapMaxZoom = 4;
@@ -289,6 +290,10 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
     return color;
   };
 
+  useEffect(() => {
+    setPosition(centeroid(selectedAdministration, administration));
+  }, [administration, selectedAdministration]);
+
   return (
     <>
       {loading && (
@@ -316,7 +321,7 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
               type="secondary"
               icon={<FullscreenOutlined />}
               onClick={() => {
-                setPosition({ coordinates: [0, 0], zoom: 1 });
+                setPosition(centeroid([null], []));
               }}
             />
           </Tooltip>
