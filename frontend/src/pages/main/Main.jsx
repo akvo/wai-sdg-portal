@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Space, Popover, List, Radio, Affix } from "antd";
+import { Row, Col, Space, Popover, List, Button, Affix } from "antd";
 import { InfoCircleOutlined, LineChartOutlined } from "@ant-design/icons";
 import api from "../../util/api";
 import { useHistory } from "react-router-dom";
@@ -211,7 +211,7 @@ const Main = ({ match }) => {
 
   useEffect(() => {
     if (current?.jmpCharts) {
-      setActiveTab("summary");
+      setActiveTab("jmp");
     } else {
       setActiveTab("data");
     }
@@ -266,19 +266,23 @@ const Main = ({ match }) => {
           <Col span={12} xxl={14} className="table-wrapper">
             {current?.jmpCharts && (
               <Row
-                style={{ margin: "20px 10px 0px" }}
+                style={{ margin: "20px 40px 0px" }}
                 align="middle"
                 justify="center"
               >
-                <Col span={12} style={{ textAlign: "center" }}>
-                  <Radio.Group
-                    size="small"
-                    value={activeTab}
-                    onChange={(e) => setActiveTab(e.target.value)}
+                <Col span={24}>
+                  <Button
+                    onClick={() => setActiveTab("jmp")}
+                    type={activeTab === "jmp" ? "primary" : "secondary"}
                   >
-                    <Radio.Button value="summary">Summary</Radio.Button>
-                    <Radio.Button value="data">Data</Radio.Button>
-                  </Radio.Group>
+                    JMP
+                  </Button>
+                  <Button
+                    onClick={() => setActiveTab("data")}
+                    type={activeTab === "data" ? "primary" : "secondary"}
+                  >
+                    Data
+                  </Button>
                 </Col>
               </Row>
             )}

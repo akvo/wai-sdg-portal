@@ -49,13 +49,14 @@
       background: #7070701a;
 
       .chart-container {
-        max-height: 486px;
+        max-height: 530px;
         margin: 24px 40px;
         padding: 0px !important;
         display: block !important;
         overflow-y: scroll;
         overflow-x: hidden;
         background-color: #fff;
+        border: 3px solid #ededed;
 
         .data-info {
           border-top: 1px solid #eee;
@@ -71,6 +72,10 @@
         .jmp-chart {
           padding: 20px;
         }
+      }
+
+      .main-table-container {
+        border: 3px solid #ededed;
       }
 
       .data-info {

@@ -99,7 +99,7 @@ const MainTable = ({
     if (current.values.includes(col.key)) {
       return {
         ...col,
-        render(text, record) {
+        render(text) {
           return {
             props: {
               style: { background: text?.color || "" },
@@ -142,7 +142,7 @@ const MainTable = ({
         </Col>
       </Row>
       <Divider />
-      <Row>
+      <Row className="main-table-container">
         <Col span={24}>
           <Table
             size="small"
