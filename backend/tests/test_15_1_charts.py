@@ -49,16 +49,18 @@ class TestChartsRoutes():
                     "administration": 2,
                     "child": [{
                         "count": 1,
-                        "option": "Option 2"
+                        "option": "Option 2",
+                        "percent": 100.00
                     }],
-                    "score": 5
+                    "score": 5.0
                 },
                 {
                     "administration": 3,
                     "child": [{
                         "count": 1,
-                        "option": "Option 2"
+                        "option": "Option 2",
+                        "percent": 100.00
                     }],
-                    "score": 5
+                    "score": 5.0
                 }]
             }
