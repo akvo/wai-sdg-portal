@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Col } from "antd";
+import { Col, Spin } from "antd";
 
 import "./main.scss";
 import { UIState } from "../../state/ui";
@@ -23,7 +23,7 @@ const MainJmpChart = ({ current, question, show }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (selectedAdministration.length <= levels) {
+    if (selectedAdministration.length < levels + 1) {
       setChartData([]);
     } else {
       const updateChartData = chartData?.map((c) => ({
@@ -38,10 +38,10 @@ const MainJmpChart = ({ current, question, show }) => {
     if (
       user &&
       current?.jmpCharts &&
-      !isEmpty(administration) &&
-      !isEmpty(question) &&
+      administration.length &&
+      question.length &&
       !loading &&
-      isEmpty(chartData) &&
+      !chartData.length &&
       selectedAdministration.length <= levels
     ) {
       setLoading(true);
@@ -127,9 +127,13 @@ const MainJmpChart = ({ current, question, show }) => {
 
   return (
     <div className="container chart-container">
-      <Col span={24}>
-        {!loading &&
-          chartData?.map((c, ci) => {
+      {loading ? (
+        <div className="chart-loading">
+          <Spin />
+        </div>
+      ) : (
+        <Col span={24}>
+          {chartData?.map((c, ci) => {
             const height =
               (c?.data?.filter((x) => x?.stack?.length)?.length || 0) * 50;
             return [
@@ -157,7 +161,8 @@ const MainJmpChart = ({ current, question, show }) => {
               </Col>,
             ];
           })}
-      </Col>
+        </Col>
+      )}
     </div>
   );
 };

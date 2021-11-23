@@ -92,7 +92,7 @@ const Main = ({ match }) => {
   const [perPage, setPerPage] = useState(10);
   const [loading, setLoading] = useState(true);
   const [lastSubmitted, setLastSubmitted] = useState({ by: "", at: "" });
-  const [activeTab, setActiveTab] = useState("data");
+  const [activeTab, setActiveTab] = useState(null);
 
   const current = config?.[match.params.page];
   const changePage = (p) => {
@@ -303,7 +303,7 @@ const Main = ({ match }) => {
             <MainJmpChart
               show={activeTab !== "data"}
               current={current}
-              question={question}
+              question={questionGroup.map((q) => q.question).flatMap((x) => x)}
             />
           </Col>
         </Row>

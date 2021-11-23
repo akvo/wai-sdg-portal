@@ -48,7 +48,17 @@
       min-height: 585px;
       background: #7070701a;
 
+      .chart-loading {
+        .ant-spin-spinning {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          margin: auto;
+        }
+      }
+
       .chart-container {
+        height: 530px;
         max-height: 530px;
         margin: 24px 40px;
         padding: 0px !important;

@@ -120,9 +120,9 @@ const JmpBarStack = (data, chartTitle, extra) => {
       type: "category",
     },
     series: series,
+    animation: false,
     ...Color,
     ...backgroundColor,
-    ...Easing,
     ...extra,
   };
   return option;
