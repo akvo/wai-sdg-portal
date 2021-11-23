@@ -65,6 +65,13 @@ class Option(Base):
             "score": self.score
         }
 
+    @property
+    def scores(self):
+        return {
+            "name": self.name,
+            "score": self.score
+        }
+
 
 class OptionBase(BaseModel):
     name: str

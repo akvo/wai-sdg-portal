@@ -70,7 +70,6 @@ class ViewDataScore(Base):
             "administration": data.administration,
             "option": data.option,
             "count": data.count,
-            "score": data.sum_score
         }
 
 

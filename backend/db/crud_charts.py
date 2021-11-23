@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session, aliased
 from sqlalchemy import and_, func
 from models.answer import Answer
 from models.data import Data
+from models.option import Option
 from models.views.view_data import ViewData
 from models.views.view_data_score import ViewDataScore
 import collections
@@ -31,7 +32,8 @@ def get_chart_data(session: Session,
                    stack: int = None,
                    administration: List[str] = None,
                    options: List[str] = None):
-    data = filter_datapoint(session=session, form=form,
+    data = filter_datapoint(session=session,
+                            form=form,
                             administration=administration,
                             options=options)
     # chart query
@@ -43,14 +45,16 @@ def get_chart_data(session: Session,
                                func.count())
         # filter
         answer = answer.filter(Answer.data.in_(data))
-        answer = answer.join((answerStack,
-                              Answer.data == answerStack.data))
-        answer = answer.filter(and_(Answer.question == question,
-                                    answerStack.question == stack))
+        answer = answer.join((answerStack, Answer.data == answerStack.data))
+        answer = answer.filter(
+            and_(Answer.question == question, answerStack.question == stack))
         answer = answer.group_by(Answer.options, answerStack.options)
         answer = answer.all()
-        answer = [{"axis": a[0][0].lower(), "stack": a[1][0].lower(),
-                   "value": a[2]} for a in answer]
+        answer = [{
+            "axis": a[0][0].lower(),
+            "stack": a[1][0].lower(),
+            "value": a[2]
+        } for a in answer]
         temp = []
         answer.sort(key=lambda x: x["axis"])
         for k, v in groupby(answer, key=lambda x: x["axis"]):
@@ -58,16 +62,14 @@ def get_chart_data(session: Session,
             counter = collections.Counter()
             for d in child:
                 counter.update(d)
-            child = [{"name": key, "value": val}
-                     for key, val in dict(counter).items()]
-            temp.append({
-                "group": k,
-                "child": child
-            })
+            child = [{
+                "name": key,
+                "value": val
+            } for key, val in dict(counter).items()]
+            temp.append({"group": k, "child": child})
         answer = temp
     else:
-        answer = session.query(Answer.options,
-                               func.count(Answer.id))
+        answer = session.query(Answer.options, func.count(Answer.id))
         # filter
         answer = answer.filter(Answer.data.in_(data))
         answer = answer.filter(Answer.question == question)
@@ -87,27 +89,19 @@ def get_jmp_chart_data(session: Session,
                        parent_administration=bool,
                        administration: List[str] = None,
                        options: List[str] = None):
-    data = filter_datapoint(session=session, form=form,
+    data = filter_datapoint(session=session,
+                            form=form,
                             administration=administration,
                             options=options)
     result = session.query(
-        ViewDataScore.administration,
-        ViewDataScore.option,
-        func.count(ViewDataScore.data).label('count'),
-        func.sum(ViewDataScore.score).label('sum_score')
-    ).filter(
-        ViewDataScore.form == form
-    ).filter(
-        ViewDataScore.question == question
-    ).filter(
-        ViewDataScore.administration.in_(administration)
-    ).filter(
-        ViewDataScore.data.in_(data)
-    ).group_by(
-        ViewDataScore.administration
-    ).group_by(
-        ViewDataScore.option
-    ).all()
+        ViewDataScore.administration, ViewDataScore.option,
+        func.count(ViewDataScore.data).label('count')).filter(
+            ViewDataScore.form == form).filter(
+                ViewDataScore.question == question).filter(
+                    ViewDataScore.administration.in_(administration)).filter(
+                        ViewDataScore.data.in_(data)).group_by(
+                            ViewDataScore.administration).group_by(
+                                ViewDataScore.option).all()
     result = [ViewDataScore.group_serialize(t) for t in result]
     if parent_administration:
         for p in parent_administration:
@@ -117,11 +111,12 @@ def get_jmp_chart_data(session: Session,
 
     temp = []
     result.sort(key=lambda x: x["administration"])
+    options = session.query(Option).filter(Option.question == question).all()
+    scores = [o.scores for o in options]
     for k, v in groupby(result, key=lambda x: x["administration"]):
-        score = []
+        score = 0
         child = []
         for x in list(v):
-            score.append({"score": x['score']})
             child.append({"option": x['option'], "count": x["count"]})
 
         child_group = []
@@ -131,10 +126,16 @@ def get_jmp_chart_data(session: Session,
                 "option": kc,
                 "count": sum([x["count"] for x in list(vc)])
             })
-
+        for c in child_group:
+            percent = c["count"] / sum([x["count"] for x in list(child_group)])
+            this_score = list(
+                filter(lambda s: s["name"] == c["option"], scores))
+            if (len(this_score)):
+                score += this_score[0]["score"] * percent
+            c.update({"percent": percent * 100})
         temp.append({
             "administration": k,
-            "score": sum([s["score"] for s in score]),
+            "score": score,
             "child": child_group,
         })
     temp.sort(key=lambda x: x["score"], reverse=True)
