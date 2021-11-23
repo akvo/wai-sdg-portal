@@ -17,9 +17,9 @@ import { scaleQuantize } from "d3-scale";
 import { UIState } from "../../state/ui";
 import _ from "lodash";
 import { generateAdvanceFilterURL } from "../../util/utils";
-import { centeroid } from "../../util/geo-util";
+import { centeroid, defaultPos } from "../../util/geo-util";
 
-const { shapeLevels, defCenter } = window.map_config;
+const { shapeLevels } = window.map_config;
 const mapMaxZoom = 4;
 const colorRange = ["#bbedda", "#a7e1cb", "#92d5bd", "#7dcaaf", "#67bea1"];
 const higlightColor = "#84b4cc";
@@ -210,10 +210,7 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
     selectedAdministration,
     advanceSearchValue,
   } = UIState.useState((s) => s);
-  const [position, setPosition] = useState({
-    coordinates: defCenter,
-    zoom: 1.8,
-  });
+  const [position, setPosition] = useState(defaultPos);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filterColor, setFilterColor] = useState(null);
@@ -321,7 +318,7 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
               type="secondary"
               icon={<FullscreenOutlined />}
               onClick={() => {
-                setPosition(centeroid([null], []));
+                setPosition(defaultPos);
               }}
             />
           </Tooltip>

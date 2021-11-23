@@ -5,15 +5,12 @@ import {
   Geography,
   ZoomableGroup,
 } from "react-simple-maps";
+import { defaultPos } from "../util/geo-util";
 
 const mapMaxZoom = 4;
-const { defCenter } = window.map_config;
 
 const Map = ({ mapHeight = 350 }) => {
-  const [position, setPosition] = useState({
-    coordinates: defCenter,
-    zoom: 1.8,
-  });
+  const [position, setPosition] = useState(defaultPos);
 
   return (
     <ComposableMap

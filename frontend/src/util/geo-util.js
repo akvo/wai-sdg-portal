@@ -36,3 +36,8 @@ export const centeroid = (selected, administration) => {
     zoom: 1.75 * (selected.length + 1),
   };
 };
+
+export const defaultPos = {
+  coordinates: geoCentroid(merge(topojson, geo.geometries)),
+  zoom: 1.75,
+};
