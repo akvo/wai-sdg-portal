@@ -80,7 +80,7 @@ const MainJmpChart = ({ current, question }) => {
                   );
                   return {
                     ...opt,
-                    value: findStack?.count || 0,
+                    value: findStack?.percent || 0,
                   };
                 });
               }

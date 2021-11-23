@@ -59,7 +59,7 @@ const JmpBarStack = (data, chartTitle, extra) => {
     return {
       name: s.name,
       type: "bar",
-      stack: "count",
+      stack: "percent",
       emphasis: {
         focus: "series",
       },
