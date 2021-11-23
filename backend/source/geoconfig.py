@@ -34,11 +34,11 @@ class GeoLevels(enum.Enum):
         "name": "ADM2_EN",
         "alias": "District"
     }, {
-        "level": 2,
+        "level": 1,
         "name": "ADM4_EN",
         "alias": "Municipality"
     }, {
-        "level": 3,
+        "level": 2,
         "name": "WARD",
         "alias": "Ward"
     }]

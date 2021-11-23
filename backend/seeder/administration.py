@@ -48,6 +48,7 @@ with open(source_file, 'r') as geo:
             }
             res.append(data)
     res = pd.DataFrame(res)
+    res = res.dropna(subset=["name"]).reset_index()
     subset = ["name", "p", "l"]
     res = res.drop_duplicates(subset=subset).sort_values(["l", "name"
                                                           ]).reset_index()
