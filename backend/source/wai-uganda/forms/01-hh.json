@@ -1,385 +1,390 @@
 [
-    {
+  {
+    "question_group": "Registration",
+    "questions": [
+      {
         "order": 1,
         "question": "location",
         "type": "administration",
         "meta": true,
         "options": null
-    },
-    {
+      },
+      {
         "order": 4,
         "question": "parish",
         "type": "text",
         "meta": false,
         "options": null
-    },
-    {
+      },
+      {
         "order": 5,
         "question": "village",
         "type": "text",
         "meta": false,
         "options": null
-    },
-    {
+      },
+      {
         "order": 6,
         "question": "geolocation",
         "type": "geo",
         "meta": true,
         "options": null
-    },
-    {
+      },
+      {
         "order": 8,
         "question": "name of household",
         "type": "text",
         "meta": true,
         "options": null
-    },
-    {
+      },
+      {
         "order": 9,
         "question": "what is the total number of household members, including yourself?",
         "type": "number",
         "meta": false,
         "options": null
-    },
-    {
+      },
+      {
         "order": 10,
         "question": "water service level",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "basic",
-                "color": null
-            },
-            {
-                "name": "limited",
-                "color": null
-            },
-            {
-                "name": "unimproved",
-                "color": null
-            },
-            {
-                "name": "surface water",
-                "color": null
-            }
+          {
+            "name": "basic",
+            "color": null
+          },
+          {
+            "name": "limited",
+            "color": null
+          },
+          {
+            "name": "unimproved",
+            "color": null
+          },
+          {
+            "name": "surface water",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 11,
         "question": "main source of drinking water",
         "type": "text",
         "meta": false,
         "options": null
-    },
-    {
+      },
+      {
         "order": 12,
         "question": "main source of water for other purposes",
         "type": "number",
         "meta": false,
         "options": null
-    },
-    {
+      },
+      {
         "order": 13,
         "question": "specific location of water collection",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "elsewhere",
-                "color": null
-            },
-            {
-                "name": "in own yard / plot",
-                "color": null
-            },
-            {
-                "name": "in own dwelling",
-                "color": null
-            }
+          {
+            "name": "elsewhere",
+            "color": null
+          },
+          {
+            "name": "in own yard / plot",
+            "color": null
+          },
+          {
+            "name": "in own dwelling",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 14,
         "question": "time to collect water",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "less than 30 minutes",
-                "color": null
-            },
-            {
-                "name": "more than 30 minutes",
-                "color": null
-            },
-            {
-                "name": "don't know",
-                "color": null
-            }
+          {
+            "name": "less than 30 minutes",
+            "color": null
+          },
+          {
+            "name": "more than 30 minutes",
+            "color": null
+          },
+          {
+            "name": "don't know",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 15,
         "question": "times in last month when drinking water quantity was insufficient",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "yes, at least once",
-                "color": null
-            },
-            {
-                "name": "no, always sufficient",
-                "color": null
-            },
-            {
-                "name": "don't know",
-                "color": null
-            }
+          {
+            "name": "yes, at least once",
+            "color": null
+          },
+          {
+            "name": "no, always sufficient",
+            "color": null
+          },
+          {
+            "name": "don't know",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 16,
         "question": "fecal and chemical levels acceptable",
         "type": "number",
         "meta": false,
         "options": null
-    },
-    {
+      },
+      {
         "order": 17,
         "question": "sanitation service level",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "basic",
-                "color": null
-            },
-            {
-                "name": "limited",
-                "color": null
-            },
-            {
-                "name": "unimproved",
-                "color": null
-            },
-            {
-                "name": "open defecation",
-                "color": null
-            },
-            {
-                "name": "safely managed",
-                "color": null
-            }
+          {
+            "name": "basic",
+            "color": null
+          },
+          {
+            "name": "limited",
+            "color": null
+          },
+          {
+            "name": "unimproved",
+            "color": null
+          },
+          {
+            "name": "open defecation",
+            "color": null
+          },
+          {
+            "name": "safely managed",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 18,
         "question": "type of toilet facility",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "pit latrine with slab",
-                "color": null
-            },
-            {
-                "name": "ventilated improved pit latrine (vip)",
-                "color": null
-            },
-            {
-                "name": "toilet that flush/pour to pit latrine",
-                "color": null
-            },
-            {
-                "name": "pit latrine without slab/open pit",
-                "color": null
-            }
+          {
+            "name": "pit latrine with slab",
+            "color": null
+          },
+          {
+            "name": "ventilated improved pit latrine (vip)",
+            "color": null
+          },
+          {
+            "name": "toilet that flush/pour to pit latrine",
+            "color": null
+          },
+          {
+            "name": "pit latrine without slab/open pit",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 19,
         "question": "facility is shared with others outside of the household",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "no",
-                "color": null
-            },
-            {
-                "name": "yes",
-                "color": null
-            }
+          {
+            "name": "no",
+            "color": null
+          },
+          {
+            "name": "yes",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 20,
         "question": "location of sanitation facility",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "in own plot/yard",
-                "color": null
-            },
-            {
-                "name": "elsewhere",
-                "color": null
-            },
-            {
-                "name": "in own dwelling",
-                "color": null
-            }
+          {
+            "name": "in own plot/yard",
+            "color": null
+          },
+          {
+            "name": "elsewhere",
+            "color": null
+          },
+          {
+            "name": "in own dwelling",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 21,
         "question": "emptying of on-site sanitation facilities",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "no, never emptied",
-                "color": null
-            },
-            {
-                "name": "yes, within the last 5 years",
-                "color": null
-            },
-            {
-                "name": "don't know",
-                "color": null
-            },
-            {
-                "name": "yes, but don't know when",
-                "color": null
-            }
+          {
+            "name": "no, never emptied",
+            "color": null
+          },
+          {
+            "name": "yes, within the last 5 years",
+            "color": null
+          },
+          {
+            "name": "don't know",
+            "color": null
+          },
+          {
+            "name": "yes, but don't know when",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 22,
         "question": "disposal of excreta from onite sanitation facilities",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "by service provider to a treatment plant",
-                "color": null
-            },
-            {
-                "name": "by household buried in a covered pit",
-                "color": null
-            },
-            {
-                "name": "by service provider but don't know where",
-                "color": null
-            },
-            {
-                "name": "other (specify)",
-                "color": null
-            },
-            {
-                "name": "don't know",
-                "color": null
-            },
-            {
-                "name": "by service provider buried in a covered pit",
-                "color": null
-            }
+          {
+            "name": "by service provider to a treatment plant",
+            "color": null
+          },
+          {
+            "name": "by household buried in a covered pit",
+            "color": null
+          },
+          {
+            "name": "by service provider but don't know where",
+            "color": null
+          },
+          {
+            "name": "other (specify)",
+            "color": null
+          },
+          {
+            "name": "don't know",
+            "color": null
+          },
+          {
+            "name": "by service provider buried in a covered pit",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 23,
         "question": "hygiene",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "basic",
-                "color": null
-            },
-            {
-                "name": "limited",
-                "color": null
-            },
-            {
-                "name": "no facility",
-                "color": null
-            },
-            {
-                "name": "no permission",
-                "color": null
-            }
+          {
+            "name": "basic",
+            "color": null
+          },
+          {
+            "name": "limited",
+            "color": null
+          },
+          {
+            "name": "no facility",
+            "color": null
+          },
+          {
+            "name": "no permission",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 24,
         "question": "type of handwashing facility used most often",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "fixed facility observed in plot/yard",
-                "color": null
-            },
-            {
-                "name": "mobile object observed (bucket, jug, kettle)",
-                "color": null
-            },
-            {
-                "name": "no handwashing place available in dwelling/plot/yard",
-                "color": null
-            },
-            {
-                "name": "no permission to see",
-                "color": null
-            },
-            {
-                "name": "other reason (specify)",
-                "color": null
-            },
-            {
-                "name": "fixed facility observed in dwelling",
-                "color": null
-            }
+          {
+            "name": "fixed facility observed in plot/yard",
+            "color": null
+          },
+          {
+            "name": "mobile object observed (bucket, jug, kettle)",
+            "color": null
+          },
+          {
+            "name": "no handwashing place available in dwelling/plot/yard",
+            "color": null
+          },
+          {
+            "name": "no permission to see",
+            "color": null
+          },
+          {
+            "name": "other reason (specify)",
+            "color": null
+          },
+          {
+            "name": "fixed facility observed in dwelling",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 25,
         "question": "water available at handwashing facility",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "water is available",
-                "color": null
-            },
-            {
-                "name": "water is not available",
-                "color": null
-            }
+          {
+            "name": "water is available",
+            "color": null
+          },
+          {
+            "name": "water is not available",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 26,
         "question": "soap available",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "yes, soap or detergent are present",
-                "color": null
-            },
-            {
-                "name": "no, not present",
-                "color": null
-            },
-            {
-                "name": "ash/mud/sand is present",
-                "color": null
-            }
+          {
+            "name": "yes, soap or detergent are present",
+            "color": null
+          },
+          {
+            "name": "no, not present",
+            "color": null
+          },
+          {
+            "name": "ash/mud/sand is present",
+            "color": null
+          }
         ]
-    }
+      }
+    ]
+  }
 ]

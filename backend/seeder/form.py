@@ -26,25 +26,26 @@ for file in sorted(files):
     form_name = file.replace(".json", "")
     form_name = form_name.split("-")[1]
     form = crud_form.add_form(session=session, name=form_name.upper())
-    question_group = crud_question_group.add_question_group(
-        session=session, name="Registration", form=form.id)
     print(f"Form: {form.name}")
-    print(f"Question Group: {question_group.name}")
     with open(f'{file_path}{file}') as json_file:
         json_form = json.load(json_file)
-        for i, q in enumerate(json_form):
-            question = crud_question.add_question(
-                session=session,
-                name=q["question"],
-                form=form.id,
-                question_group=question_group.id,
-                type=q["type"],
-                meta=q["meta"],
-                order=q["order"],
-                required=q["required"] if "required" in q else True,
-                rule=q["rule"] if "rule" in q else None,
-                option=q["options"])
-            print(f"{i}.{question.name}")
+        for qg in json_form:
+            question_group = crud_question_group.add_question_group(
+                session=session, name="Registration", form=form.id)
+            print(f"Question Group: {question_group.name}")
+            for i, q in enumerate(qg["questions"]):
+                question = crud_question.add_question(
+                    session=session,
+                    name=q["question"],
+                    form=form.id,
+                    question_group=question_group.id,
+                    type=q["type"],
+                    meta=q["meta"],
+                    order=q["order"],
+                    required=q["required"] if "required" in q else True,
+                    rule=q["rule"] if "rule" in q else None,
+                    option=q["options"])
+                print(f"{i}.{question.name}")
     print("------------------------------------------")
 
 elapsed_time = time.process_time() - start_time

@@ -1,416 +1,421 @@
 [
-    {
+  {
+    "question_group": "Registration",
+    "questions": [
+      {
         "order": 1,
         "question": "location",
         "type": "administration",
         "meta": true,
         "options": null
-    },
-    {
+      },
+      {
         "order": 3,
         "question": "parish",
         "type": "text",
         "meta": false,
         "options": null
-    },
-    {
+      },
+      {
         "order": 4,
         "question": "village",
         "type": "text",
         "meta": false,
         "options": null
-    },
-    {
+      },
+      {
         "order": 5,
         "question": "name of health facility",
         "type": "text",
         "meta": true,
         "options": null
-    },
-    {
+      },
+      {
         "order": 6,
         "question": "geolocation",
         "type": "geo",
         "meta": true,
         "options": null
-    },
-    {
+      },
+      {
         "order": 8,
         "question": "health facility level",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "hc iii",
-                "color": null
-            },
-            {
-                "name": "hc ii",
-                "color": null
-            }
+          {
+            "name": "hc iii",
+            "color": null
+          },
+          {
+            "name": "hc ii",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 9,
         "question": "type of health facility",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "government health facility ",
-                "color": null
-            },
-            {
-                "name": "private",
-                "color": null
-            }
+          {
+            "name": "government health facility ",
+            "color": null
+          },
+          {
+            "name": "private",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 10,
         "question": "average number of patients per day",
         "type": "number",
         "meta": false,
         "options": null
-    },
-    {
+      },
+      {
         "order": 11,
         "question": "water service level",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "basic ",
-                "color": null
-            },
-            {
-                "name": "limited ",
-                "color": null
-            },
-            {
-                "name": "no service ",
-                "color": null
-            }
+          {
+            "name": "basic ",
+            "color": null
+          },
+          {
+            "name": "limited ",
+            "color": null
+          },
+          {
+            "name": "no service ",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 12,
         "question": "main water supply for the facility",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "rain water harvesting",
-                "color": null
-            },
-            {
-                "name": "deep borehole",
-                "color": null
-            }
+          {
+            "name": "rain water harvesting",
+            "color": null
+          },
+          {
+            "name": "deep borehole",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 13,
         "question": "distance of main water supply from facility",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "on premises",
-                "color": null
-            },
-            {
-                "name": "up to 500 m",
-                "color": null
-            }
+          {
+            "name": "on premises",
+            "color": null
+          },
+          {
+            "name": "up to 500 m",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 14,
         "question": "water is available at the time of survey",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "yes",
-                "color": null
-            },
-            {
-                "name": "no",
-                "color": null
-            }
+          {
+            "name": "yes",
+            "color": null
+          },
+          {
+            "name": "no",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 15,
         "question": "sanitation service level",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "limited ",
-                "color": null
-            },
-            {
-                "name": "basic",
-                "color": null
-            },
-            {
-                "name": "basic ",
-                "color": null
-            },
-            {
-                "name": "limited",
-                "color": null
-            }
+          {
+            "name": "limited ",
+            "color": null
+          },
+          {
+            "name": "basic",
+            "color": null
+          },
+          {
+            "name": "basic ",
+            "color": null
+          },
+          {
+            "name": "limited",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 16,
         "question": "is there an improved toilet with permanent superstructure (wall constructed of bricks with concrete floor slab and galvanised iron sheet roofing).",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "yes",
-                "color": null
-            },
-            {
-                "name": "no",
-                "color": null
-            }
+          {
+            "name": "yes",
+            "color": null
+          },
+          {
+            "name": "no",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 17,
         "question": "type of toilet for patients",
         "type": "number",
         "meta": false,
         "options": null
-    },
-    {
+      },
+      {
         "order": 18,
         "question": "at least one toilet is usable",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "yes",
-                "color": null
-            },
-            {
-                "name": "no",
-                "color": null
-            }
+          {
+            "name": "yes",
+            "color": null
+          },
+          {
+            "name": "no",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 19,
         "question": "toilets dedicated for staff",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "no",
-                "color": null
-            },
-            {
-                "name": "yes",
-                "color": null
-            }
+          {
+            "name": "no",
+            "color": null
+          },
+          {
+            "name": "yes",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 20,
         "question": "toilets are in sex-separated or gender-neutral rooms",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "yes",
-                "color": null
-            },
-            {
-                "name": "no",
-                "color": null
-            }
+          {
+            "name": "yes",
+            "color": null
+          },
+          {
+            "name": "no",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 21,
         "question": "toilets have menstrual hygiene facilites",
         "type": "number",
         "meta": false,
         "options": null
-    },
-    {
+      },
+      {
         "order": 22,
         "question": "toilets accessible for people with limited mobility",
         "type": "number",
         "meta": false,
         "options": null
-    },
-    {
+      },
+      {
         "order": 23,
         "question": "hygiene service level",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "no service",
-                "color": null
-            },
-            {
-                "name": "basic ",
-                "color": null
-            },
-            {
-                "name": "no service ",
-                "color": null
-            },
-            {
-                "name": "basic",
-                "color": null
-            }
+          {
+            "name": "no service",
+            "color": null
+          },
+          {
+            "name": "basic ",
+            "color": null
+          },
+          {
+            "name": "no service ",
+            "color": null
+          },
+          {
+            "name": "basic",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 24,
         "question": "functional hand hygien facility at points of care",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "yes",
-                "color": null
-            },
-            {
-                "name": "no",
-                "color": null
-            }
+          {
+            "name": "yes",
+            "color": null
+          },
+          {
+            "name": "no",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 25,
         "question": "functional handwashing facility at one or more toilets",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "no",
-                "color": null
-            },
-            {
-                "name": "yes",
-                "color": null
-            }
+          {
+            "name": "no",
+            "color": null
+          },
+          {
+            "name": "yes",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 26,
         "question": "health care waste service level",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "basic",
-                "color": null
-            },
-            {
-                "name": "no service ",
-                "color": null
-            },
-            {
-                "name": "no service",
-                "color": null
-            }
+          {
+            "name": "basic",
+            "color": null
+          },
+          {
+            "name": "no service ",
+            "color": null
+          },
+          {
+            "name": "no service",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 27,
         "question": "waste is correctly segregated into at least three labelled bins in the consultation area",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "yes",
-                "color": null
-            },
-            {
-                "name": "no",
-                "color": null
-            }
+          {
+            "name": "yes",
+            "color": null
+          },
+          {
+            "name": "no",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 28,
         "question": "main method for disposing infectious waste",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "incinerated",
-                "color": null
-            }
+          {
+            "name": "incinerated",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 29,
         "question": "main method used for disposing sharps waste",
         "type": "number",
         "meta": false,
         "options": null
-    },
-    {
+      },
+      {
         "order": 30,
         "question": "environmental cleaning service level",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "basic",
-                "color": null
-            },
-            {
-                "name": "no service",
-                "color": null
-            },
-            {
-                "name": "no service ",
-                "color": null
-            }
+          {
+            "name": "basic",
+            "color": null
+          },
+          {
+            "name": "no service",
+            "color": null
+          },
+          {
+            "name": "no service ",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 31,
         "question": "cleaning protocols are available",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "yes",
-                "color": null
-            },
-            {
-                "name": "no",
-                "color": null
-            }
+          {
+            "name": "yes",
+            "color": null
+          },
+          {
+            "name": "no",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 32,
         "question": "all staff responsible for cleaning received training",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "yes",
-                "color": null
-            },
-            {
-                "name": "no",
-                "color": null
-            }
+          {
+            "name": "yes",
+            "color": null
+          },
+          {
+            "name": "no",
+            "color": null
+          }
         ]
-    }
+      }
+    ]
+  }
 ]

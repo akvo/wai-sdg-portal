@@ -1,4 +1,5 @@
 var site_name = "WAI Uganda";
+
 var features = {
   chartFeature: {
     stack: true,

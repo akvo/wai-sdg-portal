@@ -1,490 +1,495 @@
 [
-    {
+  {
+    "question_group": "Registration",
+    "questions": [
+      {
         "order": 1,
         "question": "location",
         "type": "administration",
         "meta": true,
         "options": null
-    },
-    {
+      },
+      {
         "order": 3,
         "question": "parish",
         "type": "text",
         "meta": false,
         "options": null
-    },
-    {
+      },
+      {
         "order": 4,
         "question": "school name",
         "type": "text",
         "meta": true,
         "options": null
-    },
-    {
+      },
+      {
         "order": 5,
         "question": "geolocation",
         "type": "geo",
         "meta": true,
         "options": null
-    },
-    {
+      },
+      {
         "order": 7,
         "question": "school type",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "primary",
-                "color": null
-            },
-            {
-                "name": "primary ",
-                "color": null
-            },
-            {
-                "name": "secondary ",
-                "color": null
-            },
-            {
-                "name": "pirmary ",
-                "color": null
-            },
-            {
-                "name": "tertiary ",
-                "color": null
-            },
-            {
-                "name": "secondary",
-                "color": null
-            }
+          {
+            "name": "primary",
+            "color": null
+          },
+          {
+            "name": "primary ",
+            "color": null
+          },
+          {
+            "name": "secondary ",
+            "color": null
+          },
+          {
+            "name": "pirmary ",
+            "color": null
+          },
+          {
+            "name": "tertiary ",
+            "color": null
+          },
+          {
+            "name": "secondary",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 8,
         "question": "total number of boys enrolled in the school",
         "type": "number",
         "meta": false,
         "options": null
-    },
-    {
+      },
+      {
         "order": 9,
         "question": "total number of girls enrolled in the school",
         "type": "number",
         "meta": false,
         "options": null
-    },
-    {
+      },
+      {
         "order": 10,
         "question": "what is the total enrolment in the school?",
         "type": "number",
         "meta": false,
         "options": null
-    },
-    {
+      },
+      {
         "order": 11,
         "question": "what is the regular number of staff in the school?",
         "type": "number",
         "meta": false,
         "options": null
-    },
-    {
+      },
+      {
         "order": 12,
         "question": "drinking water",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "basic",
-                "color": null
-            },
-            {
-                "name": "limited",
-                "color": null
-            },
-            {
-                "name": "no service",
-                "color": null
-            }
+          {
+            "name": "basic",
+            "color": null
+          },
+          {
+            "name": "limited",
+            "color": null
+          },
+          {
+            "name": "no service",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 13,
         "question": "is there an improved water source that serves the school?",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "yes-school has its own improved water sources",
-                "color": null
-            },
-            {
-                "name": "yes-school shares with a community improved water source",
-                "color": null
-            },
-            {
-                "name": "no-school does not have access to an improved water source",
-                "color": null
-            }
+          {
+            "name": "yes-school has its own improved water sources",
+            "color": null
+          },
+          {
+            "name": "yes-school shares with a community improved water source",
+            "color": null
+          },
+          {
+            "name": "no-school does not have access to an improved water source",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 14,
         "question": "what is the type of improved water source?",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "deep borehole",
-                "color": null
-            },
-            {
-                "name": "tapstand",
-                "color": null
-            }
+          {
+            "name": "deep borehole",
+            "color": null
+          },
+          {
+            "name": "tapstand",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 15,
         "question": "what year was the water facility constructed?",
         "type": "number",
         "meta": false,
         "options": null
-    },
-    {
+      },
+      {
         "order": 16,
         "question": "who funded the construction of the water point?",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "government",
-                "color": null
-            },
-            {
-                "name": "ngo",
-                "color": null
-            },
-            {
-                "name": "school",
-                "color": null
-            },
-            {
-                "name": "church",
-                "color": null
-            },
-            {
-                "name": "politician (mp, lc)",
-                "color": null
-            }
+          {
+            "name": "government",
+            "color": null
+          },
+          {
+            "name": "ngo",
+            "color": null
+          },
+          {
+            "name": "school",
+            "color": null
+          },
+          {
+            "name": "church",
+            "color": null
+          },
+          {
+            "name": "politician (mp, lc)",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 17,
         "question": "sanitation",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "basic",
-                "color": null
-            },
-            {
-                "name": "limited",
-                "color": null
-            },
-            {
-                "name": "no service",
-                "color": null
-            }
+          {
+            "name": "basic",
+            "color": null
+          },
+          {
+            "name": "limited",
+            "color": null
+          },
+          {
+            "name": "no service",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 18,
         "question": "does the school have any sanitation facilities?",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "yes",
-                "color": null
-            },
-            {
-                "name": "no",
-                "color": null
-            }
+          {
+            "name": "yes",
+            "color": null
+          },
+          {
+            "name": "no",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 19,
         "question": "what type of sanitation facilities are present?",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "vip latrine",
-                "color": null
-            },
-            {
-                "name": "traditional pit latrine",
-                "color": null
-            },
-            {
-                "name": "pour flush toilet",
-                "color": null
-            },
-            {
-                "name": "ecosan toilet (uddt)",
-                "color": null
-            },
-            {
-                "name": "ecosan toilet uddt",
-                "color": null
-            }
+          {
+            "name": "vip latrine",
+            "color": null
+          },
+          {
+            "name": "traditional pit latrine",
+            "color": null
+          },
+          {
+            "name": "pour flush toilet",
+            "color": null
+          },
+          {
+            "name": "ecosan toilet (uddt)",
+            "color": null
+          },
+          {
+            "name": "ecosan toilet uddt",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 20,
         "question": "in total, how many functioning stances are for females?",
         "type": "number",
         "meta": false,
         "options": null
-    },
-    {
+      },
+      {
         "order": 21,
         "question": "in total, how many functioning stances are for males?",
         "type": "number",
         "meta": false,
         "options": null
-    },
-    {
+      },
+      {
         "order": 22,
         "question": "is there a sanitation facility accessible to students with disabilities?",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "yes",
-                "color": null
-            },
-            {
-                "name": "no",
-                "color": null
-            }
+          {
+            "name": "yes",
+            "color": null
+          },
+          {
+            "name": "no",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 23,
         "question": "in what year was the latest (most recent) sanitation facility constructed?",
         "type": "number",
         "meta": false,
         "options": null
-    },
-    {
+      },
+      {
         "order": 24,
         "question": "condition of the superstructure, roof, walls, and doors",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "good and well-raised wall with roof and door",
-                "color": null
-            },
-            {
-                "name": "medium - walls are decent, semi permanent door and roof",
-                "color": null
-            },
-            {
-                "name": "poor - short wall, poor or no door",
-                "color": null
-            }
+          {
+            "name": "good and well-raised wall with roof and door",
+            "color": null
+          },
+          {
+            "name": "medium - walls are decent, semi permanent door and roof",
+            "color": null
+          },
+          {
+            "name": "poor - short wall, poor or no door",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 25,
         "question": "condition are the floor/slabs/platform",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "medium - some minor cracks",
-                "color": null
-            },
-            {
-                "name": "good - no cracks or gaps",
-                "color": null
-            },
-            {
-                "name": "bad - dangerous to stand on",
-                "color": null
-            }
+          {
+            "name": "medium - some minor cracks",
+            "color": null
+          },
+          {
+            "name": "good - no cracks or gaps",
+            "color": null
+          },
+          {
+            "name": "bad - dangerous to stand on",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 26,
         "question": "latrines/cesspits last emptied?",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "never emptied",
-                "color": null
-            },
-            {
-                "name": "unknown",
-                "color": null
-            },
-            {
-                "name": "more than 3 years ago",
-                "color": null
-            },
-            {
-                "name": "less that 1 year ago",
-                "color": null
-            },
-            {
-                "name": "1 to 3 years ago",
-                "color": null
-            },
-            {
-                "name": "never empited",
-                "color": null
-            },
-            {
-                "name": "less than 1 year ago",
-                "color": null
-            }
+          {
+            "name": "never emptied",
+            "color": null
+          },
+          {
+            "name": "unknown",
+            "color": null
+          },
+          {
+            "name": "more than 3 years ago",
+            "color": null
+          },
+          {
+            "name": "less that 1 year ago",
+            "color": null
+          },
+          {
+            "name": "1 to 3 years ago",
+            "color": null
+          },
+          {
+            "name": "never empited",
+            "color": null
+          },
+          {
+            "name": "less than 1 year ago",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 27,
         "question": "who paid for the emptying service?",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "school",
-                "color": null
-            },
-            {
-                "name": "parents",
-                "color": null
-            }
+          {
+            "name": "school",
+            "color": null
+          },
+          {
+            "name": "parents",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 28,
         "question": "hygiene",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "basic",
-                "color": null
-            },
-            {
-                "name": "no service",
-                "color": null
-            },
-            {
-                "name": "limited",
-                "color": null
-            }
+          {
+            "name": "basic",
+            "color": null
+          },
+          {
+            "name": "no service",
+            "color": null
+          },
+          {
+            "name": "limited",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 29,
         "question": "is there a place for handwashing?",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "yes",
-                "color": null
-            },
-            {
-                "name": "no",
-                "color": null
-            }
+          {
+            "name": "yes",
+            "color": null
+          },
+          {
+            "name": "no",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 30,
         "question": "is there water available at the handwashing station?",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "yes",
-                "color": null
-            },
-            {
-                "name": "no",
-                "color": null
-            }
+          {
+            "name": "yes",
+            "color": null
+          },
+          {
+            "name": "no",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 31,
         "question": "is there soap at hand washing station?",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "yes",
-                "color": null
-            },
-            {
-                "name": "no",
-                "color": null
-            }
+          {
+            "name": "yes",
+            "color": null
+          },
+          {
+            "name": "no",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 32,
         "question": "are there any abandoned or not in use sanitation facilities on the plot that pose a risk or threat to the safety of children?",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "yes- collapsed or partially collapsed latrines",
-                "color": null
-            },
-            {
-                "name": "none- no observable risk from out-of-service facilities",
-                "color": null
-            },
-            {
-                "name": "yes - open pits with feces and contents exposed",
-                "color": null
-            },
-            {
-                "name": "yes - construction materials pose a risk",
-                "color": null
-            }
+          {
+            "name": "yes- collapsed or partially collapsed latrines",
+            "color": null
+          },
+          {
+            "name": "none- no observable risk from out-of-service facilities",
+            "color": null
+          },
+          {
+            "name": "yes - open pits with feces and contents exposed",
+            "color": null
+          },
+          {
+            "name": "yes - construction materials pose a risk",
+            "color": null
+          }
         ]
-    },
-    {
+      },
+      {
         "order": 33,
         "question": "do community members not attending the school ever come to use the sanitation facilities?",
         "type": "option",
         "meta": false,
         "options": [
-            {
-                "name": "rarely",
-                "color": null
-            },
-            {
-                "name": "never",
-                "color": null
-            },
-            {
-                "name": "sometimes",
-                "color": null
-            },
-            {
-                "name": "often",
-                "color": null
-            }
+          {
+            "name": "rarely",
+            "color": null
+          },
+          {
+            "name": "never",
+            "color": null
+          },
+          {
+            "name": "sometimes",
+            "color": null
+          },
+          {
+            "name": "often",
+            "color": null
+          }
         ]
-    }
+      }
+    ]
+  }
 ]

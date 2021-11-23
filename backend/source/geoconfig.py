@@ -31,16 +31,16 @@ class GeoLevels(enum.Enum):
     }]
     wai_bangladesh = [{
         "level": 0,
-        "name": "ADM1_EN",
-        "alias": "Adm 01"
-    }, {
-        "level": 1,
         "name": "ADM2_EN",
-        "alias": "Adm 02"
+        "alias": "District"
     }, {
         "level": 2,
-        "name": "ADM3_EN",
-        "alias": "Adm 03"
+        "name": "ADM4_EN",
+        "alias": "Municipality"
+    }, {
+        "level": 3,
+        "name": "WARD",
+        "alias": "Ward"
     }]
 
 
