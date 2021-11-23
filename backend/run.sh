@@ -4,8 +4,4 @@ if [[ -z "${SKIP_MIGRATION}" ]]; then
     alembic upgrade head
 fi
 
-if [[ -z "${ONLINE}" ]]; then
-    alembic upgrade head
-fi
-
 python main.py
