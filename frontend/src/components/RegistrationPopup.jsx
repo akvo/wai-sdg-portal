@@ -23,6 +23,7 @@ const RegistrationPopup = ({ user, logout, loginWithPopup }) => {
   const [formLoading, setFormLoading] = useState(true);
   const [confirmAwait, setConfirmAwait] = useState(false);
   const [organisation, setOrganisation] = useState([]);
+  const [organisationLoaded, setOrganisationLoaded] = useState(false);
   const visible = UIState.useState((s) => s.registrationPopup);
 
   const register = () => {
@@ -53,18 +54,24 @@ const RegistrationPopup = ({ user, logout, loginWithPopup }) => {
   };
 
   useEffect(() => {
-    if (!organisation.length) {
-      api.get("organisation").then((e) => {
-        setOrganisation(e.data);
-        form.setFieldsValue({
-          email: user?.email,
-          first_name: user?.family_name || "",
-          last_name: user?.given_name || "",
+    if (!organisationLoaded) {
+      api
+        .get("organisation")
+        .then((e) => {
+          setOrganisation(e.data);
+          form.setFieldsValue({
+            email: user?.email,
+            first_name: user?.family_name || "",
+            last_name: user?.given_name || "",
+          });
+          setFormLoading(false);
+          setOrganisationLoaded(true);
+        })
+        .catch(() => {
+          setOrganisationLoaded(true);
         });
-        setFormLoading(false);
-      });
     }
-  }, [form, user, organisation]);
+  }, [form, user, organisationLoaded]);
 
   if (formLoading) {
     return "";
