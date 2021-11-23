@@ -102,6 +102,9 @@ const JmpBarStack = (data, chartTitle, extra) => {
         color: "#222",
         ...TextStyle,
         ...AxisLabelFormatter,
+        formatter: (x) => {
+          return `${x} %`;
+        },
       },
       axisTick: {
         alignWithLabel: true,
