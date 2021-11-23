@@ -283,7 +283,7 @@ const Main = ({ match }) => {
               </Row>
             )}
             <MainTable
-              show={activeTab == "data"}
+              show={activeTab === "data"}
               span={24}
               current={current}
               loading={loading}

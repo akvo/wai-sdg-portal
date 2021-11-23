@@ -117,6 +117,7 @@ const Bar = (data, chartTitle, extra) => {
           itemStyle: { color: v.color || Color.color[vi] },
         })),
         type: "bar",
+        barMaxWidth: 50,
         label: {
           colorBy: "data",
           position: "insideBottom",
