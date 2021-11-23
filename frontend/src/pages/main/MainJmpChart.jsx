@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Divider, Affix } from "antd";
+import { Col } from "antd";
 
 import "./main.scss";
 import { UIState } from "../../state/ui";
@@ -23,7 +23,7 @@ const MainJmpChart = ({ current, question, show }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (selectedAdministration.length <= levels && !isEmpty(chartData)) {
+    if (selectedAdministration.length <= levels) {
       setChartData([]);
     } else {
       const updateChartData = chartData?.map((c) => ({
@@ -131,7 +131,7 @@ const MainJmpChart = ({ current, question, show }) => {
         {!loading &&
           chartData?.map((c, ci) => {
             const height =
-              (c?.data?.filter((x) => x.stack.length)?.length || 0) * 50;
+              (c?.data?.filter((x) => x?.stack?.length)?.length || 0) * 50;
             return [
               <Col
                 key={`jmp-chart-title-${ci}`}
