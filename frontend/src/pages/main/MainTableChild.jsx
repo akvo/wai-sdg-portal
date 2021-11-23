@@ -5,7 +5,7 @@ import MainEditor from "./MainEditor";
 import { UIState } from "../../state/ui";
 import api from "../../util/api";
 import { getLocationName } from "../../util/utils";
-import { titleCase } from "title-case";
+import { titleCase } from "../../util/utils.js";
 
 const changeColBackground = (dt, edited) => {
   if (edited?.[dt.props.question.id]) {

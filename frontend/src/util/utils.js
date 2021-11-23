@@ -1,5 +1,7 @@
 import reverse from "lodash/reverse";
 import isEmpty from "lodash/isEmpty";
+import startCase from "lodash/startCase";
+import toLower from "lodash/toLower";
 
 const currencyFormatter = require("currency-formatter");
 
@@ -30,4 +32,8 @@ export const formatNumber = (x) => {
     precision: 0,
     format: "%v",
   });
+};
+
+export const titleCase = (str) => {
+  return startCase(toLower(str));
 };

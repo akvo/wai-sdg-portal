@@ -1,11 +1,13 @@
-import { titleCase } from "title-case";
+import { titleCase } from "./util/utils.js";
 
 const mapColumns = (values) => {
   return values?.columns?.map((col) => {
-    const filters = col?.filters?.map((f) => ({
-      text: titleCase(f),
-      value: f,
-    }));
+    const filters = col?.filters?.map((f) => {
+      return {
+        text: titleCase(f),
+        value: f,
+      };
+    });
     if (filters) {
       col = {
         ...col,
