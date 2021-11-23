@@ -51,6 +51,30 @@
       min-height: 585px;
       background: #7070701a;
 
+      .chart-container {
+        min-height: 585px;
+        max-height: 585px;
+        margin: 24px 40px;
+        padding: 0px !important;
+        display: block !important;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        background-color: #fff;
+
+        .data-info {
+          border-bottom: 3px solid #0288d1;
+          padding: 20px;
+
+          .info.title {
+            color: #0288d1 !important;
+          }
+        }
+
+        .jmp-chart {
+          padding: 20px;
+        }
+      }
+
       .data-info {
         .info {
           font-size: 12px;
@@ -132,6 +156,7 @@
         color: #00989f !important;
         font-weight: bold;
         font-size: 18px;
+
         // padding: 20px;
       }
 

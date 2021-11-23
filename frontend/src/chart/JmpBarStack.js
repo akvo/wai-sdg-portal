@@ -29,7 +29,7 @@ const JmpBarStack = (data, chartTitle, extra) => {
   const { selectedAdministration } = extra;
   // filter only data with stack
   data = sortBy(
-    data.filter((d) => d.stack.length),
+    data.filter((d) => d.stack?.length),
     ["score"]
   );
 
@@ -82,6 +82,7 @@ const JmpBarStack = (data, chartTitle, extra) => {
     },
     grid: {
       top: "10%",
+      left: "10%",
       show: true,
       label: {
         color: "#222",

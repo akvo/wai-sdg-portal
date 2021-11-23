@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Card } from "antd";
+import { Row, Col, Divider } from "antd";
 
 import "./main.scss";
 import { UIState } from "../../state/ui";
@@ -12,7 +12,7 @@ import { titleCase } from "title-case";
 
 const levels = window.map_config?.shapeLevels?.length;
 
-const MainJmpChart = ({ current, question }) => {
+const MainJmpChart = ({ current, question, show }) => {
   const {
     user,
     selectedAdministration,
@@ -121,33 +121,42 @@ const MainJmpChart = ({ current, question }) => {
     return "";
   }
 
+  if (!show) {
+    return null;
+  }
+
   return (
-    <>
-      {!loading &&
-        chartData?.map((c, ci) => (
-          <Row
-            key={`jmp-chart-row-${ci}`}
-            align="middle"
-            className="collapse-wrapper"
-          >
-            <Col span={24} className="container">
-              <Card className="visual-card-wrapper" title={c?.name}>
-                <Chart
-                  title=""
-                  subTitle=""
-                  type={c?.type}
-                  data={c?.data}
-                  wrapper={false}
-                  height={600}
-                  extra={{
-                    selectedAdministration: c?.selectedAdministration,
-                  }}
-                />
-              </Card>
-            </Col>
-          </Row>
-        ))}
-    </>
+    <div className="container chart-container">
+      <Col span={24}>
+        {!loading &&
+          chartData?.map((c, ci) => {
+            return [
+              <Col
+                span={24}
+                key={`jmp-chart-title-${ci}`}
+                className="data-info"
+              >
+                <span className="info title">{c?.name}</span>
+              </Col>,
+              <Col key={`jmp-chart-row-${ci}`} span={24}>
+                <div className="jmp-chart">
+                  <Chart
+                    title=""
+                    subTitle=""
+                    type={c?.type}
+                    data={c?.data}
+                    wrapper={false}
+                    height={600}
+                    extra={{
+                      selectedAdministration: c?.selectedAdministration,
+                    }}
+                  />
+                </div>
+              </Col>,
+            ];
+          })}
+      </Col>
+    </div>
   );
 };
 

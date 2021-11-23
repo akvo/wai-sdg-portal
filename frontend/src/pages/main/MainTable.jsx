@@ -36,6 +36,7 @@ const MainTable = ({
   changePage,
   setPerPage,
   lastSubmitted,
+  show,
   page,
 }) => {
   const { columns, formId, title } = current;
@@ -110,110 +111,111 @@ const MainTable = ({
     }
     return col;
   });
+  if (!show) {
+    return null;
+  }
 
   return (
-    <Col span={span} xxl={14} className="table-wrapper">
-      <div className="container">
-        <Row
-          align="middle"
-          justify="space-between"
-          wrap={true}
-          className="data-info"
-        >
-          <Col span={8}>
-            <span className="info title">
-              {title}
-              {` (${total})`}
-            </span>
-          </Col>
-          <Col span={16} align="end">
-            {total ? (
-              <div className="info">
-                Last submitted: {lastSubmitted.at}
-                <br />
-                by: {lastSubmitted.by}
-              </div>
-            ) : (
-              ""
-            )}
-          </Col>
-        </Row>
-        <Divider />
-        <Row>
-          <Col span={24}>
-            <Table
+    <div className="container">
+      <Row
+        align="middle"
+        justify="space-between"
+        wrap={true}
+        className="data-info"
+      >
+        <Col span={8}>
+          <span className="info title">
+            {title}
+            {` (${total})`}
+          </span>
+        </Col>
+        <Col span={16} align="end">
+          {total ? (
+            <div className="info">
+              Last submitted: {lastSubmitted.at}
+              <br />
+              by: {lastSubmitted.by}
+            </div>
+          ) : (
+            ""
+          )}
+        </Col>
+      </Row>
+      <Divider />
+      <Row>
+        <Col span={24}>
+          <Table
+            size="small"
+            rowClassName={(record) => getRowClassName(record, editedRow)}
+            loading={loading}
+            columns={modifyColumnRender}
+            scroll={{ y: 320 }}
+            pagination={false}
+            expandable={{
+              rowExpandable: (record) => {
+                // Enable expand by Access
+                const administrationAnswers = record.detail
+                  .filter((det) =>
+                    administrationQuestionIds.includes(det.question)
+                  )
+                  .map((det) => det.value);
+                const isExpandable = !isEmpty(
+                  intersection(
+                    administrationIdsByUserAccess,
+                    administrationAnswers
+                  )
+                );
+                return isExpandable;
+              },
+              expandIconColumnIndex: columns.length,
+              expandedRowRender: (record) => (
+                <MainTableChild questionGroup={questionGroup} data={record} />
+              ),
+            }}
+            expandedRowKeys={expanded}
+            onExpand={(expanded, record) => {
+              setExpanded(expanded ? [record.key] : []);
+            }}
+            dataSource={data}
+          />
+        </Col>
+      </Row>
+      <Divider />
+      <Row align="middle" justify="space-around">
+        <Col span={16}>
+          {total ? (
+            <Pagination
+              defaultCurrent={1}
+              current={page}
+              total={total}
               size="small"
-              rowClassName={(record) => getRowClassName(record, editedRow)}
-              loading={loading}
-              columns={modifyColumnRender}
-              scroll={{ y: 320 }}
-              pagination={false}
-              expandable={{
-                rowExpandable: (record) => {
-                  // Enable expand by Access
-                  const administrationAnswers = record.detail
-                    .filter((det) =>
-                      administrationQuestionIds.includes(det.question)
-                    )
-                    .map((det) => det.value);
-                  const isExpandable = !isEmpty(
-                    intersection(
-                      administrationIdsByUserAccess,
-                      administrationAnswers
-                    )
-                  );
-                  return isExpandable;
-                },
-                expandIconColumnIndex: columns.length,
-                expandedRowRender: (record) => (
-                  <MainTableChild questionGroup={questionGroup} data={record} />
-                ),
+              onShowSizeChange={(e, s) => {
+                setPerPage(s);
               }}
-              expandedRowKeys={expanded}
-              onExpand={(expanded, record) => {
-                setExpanded(expanded ? [record.key] : []);
-              }}
-              dataSource={data}
+              pageSizeOptions={[10, 20, 50]}
+              onChange={changePage}
             />
-          </Col>
-        </Row>
-        <Divider />
-        <Row align="middle" justify="space-around">
-          <Col span={16}>
-            {total ? (
-              <Pagination
-                defaultCurrent={1}
-                current={page}
-                total={total}
-                size="small"
-                onShowSizeChange={(e, s) => {
-                  setPerPage(s);
-                }}
-                pageSizeOptions={[10, 20, 50]}
-                onChange={changePage}
-              />
-            ) : (
-              ""
-            )}
-          </Col>
-          <Col span={8} align="right">
-            <Space>
-              <Button
-                size="small"
-                loading={saving}
-                disabled={Object.keys(editedRow).length === 0}
-                onClick={saveEdit}
-              >
-                Save Edit
-              </Button>
-              <Link to={`/form/new-${title.toLowerCase()}/${formId}`}>
-                <Button size="small">Add New</Button>
-              </Link>
-            </Space>
-          </Col>
-        </Row>
-      </div>
-    </Col>
+          ) : (
+            ""
+          )}
+        </Col>
+        <Col span={8} align="right">
+          <Space>
+            <Button
+              size="small"
+              loading={saving}
+              disabled={Object.keys(editedRow).length === 0}
+              onClick={saveEdit}
+            >
+              Save Edit
+            </Button>
+            <Link to={`/form/new-${title.toLowerCase()}/${formId}`}>
+              <Button size="small">Add New</Button>
+            </Link>
+          </Space>
+        </Col>
+      </Row>
+    </div>
   );
 };
 

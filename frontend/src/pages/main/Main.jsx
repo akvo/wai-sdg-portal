@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Space, Popover, List, Affix } from "antd";
+import { Row, Col, Space, Popover, List, Radio, Affix } from "antd";
 import { InfoCircleOutlined, LineChartOutlined } from "@ant-design/icons";
 import api from "../../util/api";
 import { useHistory } from "react-router-dom";
@@ -92,6 +92,7 @@ const Main = ({ match }) => {
   const [perPage, setPerPage] = useState(10);
   const [loading, setLoading] = useState(true);
   const [lastSubmitted, setLastSubmitted] = useState({ by: "", at: "" });
+  const [activeTab, setActiveTab] = useState("data");
 
   const current = config?.[match.params.page];
   const changePage = (p) => {
@@ -208,6 +209,14 @@ const Main = ({ match }) => {
     }
   }, [user, current, selectedAdministration, advanceSearchValue]);
 
+  useEffect(() => {
+    if (current?.jmpCharts) {
+      setActiveTab("summary");
+    } else {
+      setActiveTab("data");
+    }
+  }, [user, current]);
+
   // Get question
   const question = flatten(questionGroup?.map((qg) => qg.question));
 
@@ -254,19 +263,44 @@ const Main = ({ match }) => {
               />
             </div>
           </Col>
-          <MainTable
-            span={12}
-            current={current}
-            loading={loading}
-            data={data}
-            questionGroup={questionGroup}
-            dataSource={data}
-            total={total}
-            setPerPage={setPerPage}
-            changePage={changePage}
-            lastSubmitted={lastSubmitted}
-            page={page}
-          />
+          <Col span={12} xxl={14} className="table-wrapper">
+            {current?.jmpCharts && (
+              <Row
+                style={{ margin: "20px 10px 0px" }}
+                align="middle"
+                justify="center"
+              >
+                <Col span={12} style={{ textAlign: "center" }}>
+                  <Radio.Group
+                    value={activeTab}
+                    onChange={(e) => setActiveTab(e.target.value)}
+                  >
+                    <Radio.Button value="summary">Summary</Radio.Button>
+                    <Radio.Button value="data">Data</Radio.Button>
+                  </Radio.Group>
+                </Col>
+              </Row>
+            )}
+            <MainTable
+              show={activeTab == "data"}
+              span={24}
+              current={current}
+              loading={loading}
+              data={data}
+              questionGroup={questionGroup}
+              dataSource={data}
+              total={total}
+              setPerPage={setPerPage}
+              changePage={changePage}
+              lastSubmitted={lastSubmitted}
+              page={page}
+            />
+            <MainJmpChart
+              show={activeTab !== "data"}
+              current={current}
+              question={question}
+            />
+          </Col>
         </Row>
       </Col>
       {/* History Chart */}
@@ -278,10 +312,6 @@ const Main = ({ match }) => {
       {/* Main Chart */}
       <Col span={24}>
         <MainChart current={current} question={question} />
-      </Col>
-      {/* JMP Chart */}
-      <Col span={24}>
-        <MainJmpChart current={current} question={question} />
       </Col>
     </Row>
   );
