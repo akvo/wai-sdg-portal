@@ -60,6 +60,7 @@ const JmpBarStack = (data, chartTitle, extra) => {
       name: s.name,
       type: "bar",
       stack: "percent",
+      barWidth: 25,
       emphasis: {
         focus: "series",
       },
@@ -81,8 +82,8 @@ const JmpBarStack = (data, chartTitle, extra) => {
       left: "center",
     },
     grid: {
-      top: "10%",
-      left: "10%",
+      top: "50px",
+      left: "120px",
       show: true,
       label: {
         color: "#222",

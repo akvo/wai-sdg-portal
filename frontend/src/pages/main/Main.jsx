@@ -272,6 +272,7 @@ const Main = ({ match }) => {
               >
                 <Col span={12} style={{ textAlign: "center" }}>
                   <Radio.Group
+                    size="small"
                     value={activeTab}
                     onChange={(e) => setActiveTab(e.target.value)}
                   >

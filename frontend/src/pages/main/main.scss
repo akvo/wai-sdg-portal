@@ -15,9 +15,6 @@
     .filter-select,
     .remove-filter-button {
       z-index: 1;
-      background: #ffffff 0% 0% no-repeat padding-box;
-      border: 1px solid #70707080;
-      border-radius: 4px;
     }
 
     .advance-search-container {
@@ -61,6 +58,7 @@
         background-color: #fff;
 
         .data-info {
+          border-top: 1px solid #eee;
           border-bottom: 3px solid #0288d1;
           padding: 10px;
 

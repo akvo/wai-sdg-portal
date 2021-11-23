@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Divider } from "antd";
+import { Row, Col, Divider, Affix } from "antd";
 
 import "./main.scss";
 import { UIState } from "../../state/ui";
@@ -134,8 +134,8 @@ const MainJmpChart = ({ current, question, show }) => {
               (c?.data?.filter((x) => x.stack.length)?.length || 0) * 50;
             return [
               <Col
-                span={24}
                 key={`jmp-chart-title-${ci}`}
+                span={24}
                 className="data-info"
               >
                 <span className="info title">{c?.name}</span>
@@ -148,7 +148,7 @@ const MainJmpChart = ({ current, question, show }) => {
                     type={c?.type}
                     data={c?.data}
                     wrapper={false}
-                    height={height < 300 ? 300 : height}
+                    height={height < 320 ? 320 : height}
                     extra={{
                       selectedAdministration: c?.selectedAdministration,
                     }}
