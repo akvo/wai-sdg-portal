@@ -1,5 +1,11 @@
 var site_name = "WAI Bangladesh";
 
+var features = {
+  chartFeature: {
+    stack: false,
+  },
+};
+
 var navigation_config = [
   {
     link: "water",
