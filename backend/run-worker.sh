@@ -2,4 +2,6 @@
 
 set -eu
 
+alembic upgrade head
+
 python worker.py
