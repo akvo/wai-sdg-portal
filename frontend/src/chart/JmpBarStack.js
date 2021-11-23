@@ -11,36 +11,40 @@ import uniq from "lodash/uniq";
 import isEmpty from "lodash/isEmpty";
 import sortBy from "lodash/sortBy";
 
+const NoData = {
+  title: {
+    text: "No Data",
+    subtext: "",
+    left: "center",
+    top: "20px",
+    ...TextStyle,
+  },
+};
+
 const JmpBarStack = (data, chartTitle, extra) => {
   if (isEmpty(data) || !data) {
-    return {
-      title: {
-        text: "No Data",
-        subtext: "",
-        left: "center",
-        top: "20px",
-        ...TextStyle,
-      },
-    };
+    return NoData;
   }
 
   const { selectedAdministration } = extra;
   // filter only data with stack
   data = sortBy(
-    data.filter((d) => !isEmpty(d.stack)),
+    data.filter((d) => d.stack.length),
     ["score"]
   );
 
-  let stacked = data
-    .find((d) => !isEmpty(d.stack))
-    .stack.map((x) => ({ name: x.name, color: x.color }));
+  let stacked = data.find((d) => d.stack.length);
+  if (!stacked) {
+    return NoData;
+  }
+  stacked = stacked.stack.map((x) => ({ name: x.name, color: x.color }));
   let legends = stacked.map((s, si) => ({
     name: s.name,
     itemStyle: { color: s.color || Color.color[si] },
   }));
   let xAxis = uniq(data.map((x) => x.name));
   let series = stacked.map((s) => {
-    const temp = data.map((d, di) => {
+    const temp = data.map((d) => {
       const val = d.stack.find((c) => c.name === s.name);
       const opacity = selectedAdministration === d.id ? 1 : 0.5;
       return {
@@ -56,15 +60,6 @@ const JmpBarStack = (data, chartTitle, extra) => {
       name: s.name,
       type: "bar",
       stack: "count",
-      // label: {
-      //   colorBy: "data",
-      //   position: "insideLeft",
-      //   show: true,
-      //   padding: 5,
-      //   backgroundColor: "rgba(0,0,0,.3)",
-      //   ...TextStyle,
-      //   color: "#fff",
-      // },
       emphasis: {
         focus: "series",
       },

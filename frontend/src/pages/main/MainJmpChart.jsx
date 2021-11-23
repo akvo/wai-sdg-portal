@@ -91,7 +91,9 @@ const MainJmpChart = ({ current, question }) => {
               };
             });
             return {
-              name: titleCase(selectedQuestion?.name),
+              name: selectedQuestion?.name
+                ? titleCase(selectedQuestion.name)
+                : "",
               type: chartSetting?.type,
               selectedAdministration: null,
               data: data,
