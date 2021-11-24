@@ -1,7 +1,7 @@
 import "leaflet/dist/leaflet.css";
 import React, { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Circle, GeoJSON } from "react-leaflet";
-import { Spin, Tooltip, Button, Space } from "antd";
+import { Spin, Button, Space } from "antd";
 import {
   ZoomInOutlined,
   ZoomOutOutlined,
@@ -15,7 +15,7 @@ import { generateAdvanceFilterURL } from "../../util/utils";
 import { centeroid, geojson, tile, defaultPos } from "../../util/geo-util";
 
 const { shapeLevels } = window.map_config;
-const mapMaxZoom = 15;
+const mapMaxZoom = 12;
 const colorRange = ["#bbedda", "#a7e1cb", "#92d5bd", "#7dcaaf", "#67bea1"];
 const higlightColor = "#84b4cc";
 const noDataColor = "#d3d3d3";
@@ -208,9 +208,9 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
     advanceSearchValue,
   } = UIState.useState((s) => s);
   const [map, setMap] = useState(null);
-  const [position, setPosition] = useState(defaultPos);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [currentZoom, setCurrentZoom] = useState(defaultPos.zoom);
   const [filterColor, setFilterColor] = useState(null);
   const [filterMarker, setFilterMarker] = useState(null);
   const [selectedShape, setSelectedShape] = useState(null);
@@ -281,6 +281,7 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
     if (map && administration.length) {
       const pos = centeroid(selectedAdministration, administration);
       map.setView(pos.coordinates, pos.zoom);
+      setCurrentZoom(pos.zoom);
     }
   }, [map, administration, selectedAdministration]);
 
@@ -342,40 +343,40 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
         filterMarker={filterMarker}
         setFilterMarker={setFilterMarker}
       />
-      <div className="map-buttons">
-        <Space size="small" direction="vertical">
-          <Tooltip title="reset zoom">
+      {map?._loaded && (
+        <div className="map-buttons">
+          <Space size="small" direction="vertical">
             <Button
               type="secondary"
               icon={<FullscreenOutlined />}
               onClick={() => {
                 map.setView(defaultPos.coordinates, defaultPos.zoom);
+                setCurrentZoom(defaultPos.zoom);
               }}
             />
-          </Tooltip>
-          <Tooltip title="zoom out">
             <Button
+              disabled={currentZoom <= defaultPos.zoom}
               type="secondary"
               icon={<ZoomOutOutlined />}
               onClick={() => {
-                position.zoom > 1 &&
-                  map.setView(position.coordinates, position.zoom - 0.5);
+                const current = map.getZoom() - 1;
+                map.setZoom(current);
+                setCurrentZoom(current);
               }}
-              disabled={position.zoom <= 1}
             />
-          </Tooltip>
-          <Tooltip title="zoom in">
             <Button
-              disabled={position.zoom > mapMaxZoom}
+              disabled={currentZoom >= mapMaxZoom}
               type="secondary"
               icon={<ZoomInOutlined />}
               onClick={() => {
-                map.setView(position.coordinates, position.zoom + 0.5);
+                const current = map.getZoom() + 1;
+                map.setZoom(current);
+                setCurrentZoom(current);
               }}
             />
-          </Tooltip>
-        </Space>
-      </div>
+          </Space>
+        </div>
+      )}
       <MapContainer
         center={defaultPos.coordinates}
         zoom={defaultPos.zoom}

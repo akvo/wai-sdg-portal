@@ -203,11 +203,10 @@
 
   .legends-wrapper {
     position: absolute;
-    bottom: 0px;
+    bottom: 17px;
     left: 0px;
     width: 100%;
-    padding: 12px 20px 24px;
-    border-top: solid #ddd 2px;
+    padding: 12px 20px 12px;
     background: rgba(255, 255, 255, 0.6);
     z-index: 1;
 
@@ -281,5 +280,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+}
+
+.leaflet-bottom.leaflet-right {
+  width: 100%;
+
+  .leaflet-control-attribution.leaflet-control {
+    width: 100%;
+    text-align: right;
+    padding-bottom: 5px;
+    padding-right: 22px;
   }
 }
