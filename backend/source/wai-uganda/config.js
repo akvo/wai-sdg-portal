@@ -39,18 +39,14 @@ var page_config = {
       {
         title: "Water Points",
         key: "name",
-        width: "30%",
       },
       {
         title: "Number of Households",
         key: 93,
-        align: "center",
       },
       {
         title: "Functionality",
         key: 101,
-        align: "center",
-        filters: ["yes", "no"],
       },
       {
         title: "Construction Year",
@@ -70,25 +66,18 @@ var page_config = {
       {
         title: "Facilty Name",
         key: "name",
-        width: "30%",
       },
       {
         title: "Water",
         key: 32,
-        align: "center",
-        filters: ["basic", "safely managed", "limited", "no service"],
       },
       {
         title: "Sanitation",
         key: 36,
-        align: "center",
-        filters: ["advanced", "basic", "limited", "no service"],
       },
       {
         title: "Hygiene",
         key: 44,
-        align: "center",
-        filters: ["advanced", "basic", "limited", "no service"],
       },
     ],
     maps: {
@@ -103,25 +92,18 @@ var page_config = {
       {
         title: "Name",
         key: "name",
-        width: "30%",
       },
       {
         title: "Water",
         key: 7,
-        align: "center",
-        filters: ["basic", "safely managed", "limited", "no service"],
       },
       {
         title: "Sanitation",
         key: 14,
-        align: "center",
-        filters: ["advanced", "basic", "limited", "no service"],
       },
       {
         title: "Hygiene",
         key: 20,
-        align: "center",
-        filters: ["advanced", "basic", "limited", "no service"],
       },
     ],
     maps: {
@@ -136,25 +118,18 @@ var page_config = {
       {
         title: "School Name",
         key: "name",
-        width: "30%",
       },
       {
         title: "Water",
         key: 63,
-        align: "center",
-        filters: ["basic", "safely managed", "limited", "no service"],
       },
       {
         title: "Sanitation",
         key: 68,
-        align: "center",
-        filters: ["advanced", "basic", "limited", "no service"],
       },
       {
         title: "Hygiene",
         key: 26,
-        align: "center",
-        filters: ["advanced", "basic", "limited", "no service"],
       },
     ],
     maps: {
