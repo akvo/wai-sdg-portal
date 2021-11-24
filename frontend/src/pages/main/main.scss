@@ -30,11 +30,14 @@
       max-height: 600px;
       overflow: hidden;
 
-      .map-search {
-        margin-bottom: 24px;
+      .container {
+        margin: 0px;
+        padding: 0px;
       }
 
       .map-loading {
+        z-index: 1;
+
         .ant-spin-spinning {
           position: absolute;
           top: 50%;
@@ -173,8 +176,6 @@
         color: #00989f !important;
         font-weight: bold;
         font-size: 18px;
-
-        // padding: 20px;
       }
 
       .ant-collapse-borderless {
@@ -187,10 +188,17 @@
     }
   }
 
+  .leaflet-container {
+    height: 585px;
+    width: 100%;
+    z-index: 0;
+  }
+
   .map-buttons {
     position: absolute;
     right: 24px;
     top: 24px;
+    z-index: 1;
   }
 
   .legends-wrapper {
@@ -198,6 +206,7 @@
     bottom: 24px;
     left: 24px;
     background: rgba(255, 255, 255, 0.6);
+    z-index: 1;
 
     h4 {
       font-weight: 600;
@@ -229,6 +238,7 @@
   }
 
   .marker-legends {
+    z-index: 1;
     position: absolute;
     top: 24px;
     left: 24px;

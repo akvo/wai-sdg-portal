@@ -1,5 +1,3 @@
-import { titleCase } from "./util/utils.js";
-
 const mapColumns = (values) => {
   return values?.columns?.map((col, index) => {
     if (index === 0) {

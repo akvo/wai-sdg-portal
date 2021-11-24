@@ -1,3 +1,4 @@
+import { feature } from "topojson-client";
 import { geoCentroid } from "d3-geo";
 import { takeRight } from "lodash";
 import { merge } from "topojson-client";
@@ -32,12 +33,20 @@ export const centeroid = (selected, administration) => {
   );
   const center = geoCentroid(mergeTopo);
   return {
-    coordinates: center,
-    zoom: 1.75 * (selected.length + 1),
+    coordinates: center.reverse(),
+    zoom: selected.length + 10,
   };
 };
 
 export const defaultPos = {
-  coordinates: geoCentroid(merge(topojson, geo.geometries)),
-  zoom: 1.75,
+  coordinates: geoCentroid(merge(topojson, geo.geometries)).reverse(),
+  zoom: 10,
+};
+
+export const geojson = feature(topojson, geo);
+
+export const tile = {
+  url:
+    "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
+  attribution: "Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ",
 };

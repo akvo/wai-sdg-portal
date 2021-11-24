@@ -1,12 +1,7 @@
+import "leaflet/dist/leaflet.css";
 import React, { useState, useEffect } from "react";
-import {
-  ComposableMap,
-  Geographies,
-  Geography,
-  ZoomableGroup,
-  Marker,
-} from "react-simple-maps";
-import { Spin, Tooltip, Button, Space, Row, Col } from "antd";
+import { MapContainer, TileLayer, Circle, GeoJSON } from "react-leaflet";
+import { Spin, Tooltip, Button, Space } from "antd";
 import {
   ZoomInOutlined,
   ZoomOutOutlined,
@@ -17,10 +12,10 @@ import { scaleQuantize } from "d3-scale";
 import { UIState } from "../../state/ui";
 import _ from "lodash";
 import { generateAdvanceFilterURL } from "../../util/utils";
-import { centeroid, defaultPos } from "../../util/geo-util";
+import { centeroid, geojson, tile, defaultPos } from "../../util/geo-util";
 
 const { shapeLevels } = window.map_config;
-const mapMaxZoom = 4;
+const mapMaxZoom = 15;
 const colorRange = ["#bbedda", "#a7e1cb", "#92d5bd", "#7dcaaf", "#67bea1"];
 const higlightColor = "#84b4cc";
 const noDataColor = "#d3d3d3";
@@ -40,9 +35,13 @@ const Markers = ({ data, colors, filterMarker }) => {
       stroke = "#000";
     }
     return (
-      <Marker key={id} coordinates={geo}>
-        <circle r={r} fill={fill} stroke={stroke} strokeWidth={1} />
-      </Marker>
+      <Circle
+        key={id}
+        center={geo.reverse()}
+        pathOptions={{ fillColor: fill, color: fill }}
+        radius={r * 100}
+        stroke={stroke}
+      />
     );
   });
 };
@@ -208,11 +207,13 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
     selectedAdministration,
     advanceSearchValue,
   } = UIState.useState((s) => s);
+  const [map, setMap] = useState(null);
   const [position, setPosition] = useState(defaultPos);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filterColor, setFilterColor] = useState(null);
   const [filterMarker, setFilterMarker] = useState(null);
+  const [selectedShape, setSelectedShape] = useState(null);
   const markerQuestion = question.find(
     (q) => q.id === current.maps?.marker?.id
   );
@@ -268,15 +269,6 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
   );
   const adminLevel = [false, ...shapeLevels][selectedAdministration.length - 1];
 
-  const onShapeClick = (geoProp) => {
-    const selectedShape = shapeLevels.map(
-      (s) => administration.find((a) => a.name === geoProp[s])?.id
-    );
-    UIState.update((u) => {
-      u.selectedAdministration = [null, ...selectedShape];
-    });
-  };
-
   const fillColor = (v) => {
     const color = v === 0 ? noDataColor : colorScale(v);
     if (filterColor !== null) {
@@ -286,11 +278,52 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
   };
 
   useEffect(() => {
-    setPosition(centeroid(selectedAdministration, administration));
-  }, [administration, selectedAdministration]);
+    if (map && administration.length) {
+      const pos = centeroid(selectedAdministration, administration);
+      map.setView(pos.coordinates, pos.zoom);
+    }
+  }, [map, administration, selectedAdministration]);
+
+  useEffect(() => {
+    if (selectedShape && administration.length) {
+      const selected = shapeLevels.map(
+        (s) =>
+          administration.find((a) => a.name === selectedShape?.properties?.[s])
+            ?.id
+      );
+      UIState.update((u) => {
+        u.selectedAdministration = [null, ...selected];
+      });
+    }
+  }, [selectedShape, administration]);
+
+  const geoStyle = (g) => {
+    let sc = shapeColor.find(
+      (s) => s.name === g.properties[shapeLevels[shapeLevels.length - 1]]
+    );
+    if (adminLevel && adminName) {
+      sc = g.properties[adminLevel] === adminName.name ? sc : false;
+    }
+
+    return {
+      weight: 1,
+      fillColor: sc ? fillColor(sc.values || 0) : noDataColor,
+      fillOpacity: sc ? 1 : 0.5,
+      opacity: 1,
+      color: "#FFFFFF",
+    };
+  };
+
+  const onEachFeature = (feature, layer) => {
+    layer.on({
+      click: ({ target }) => {
+        setSelectedShape(target?.feature);
+      },
+    });
+  };
 
   return (
-    <>
+    <div className="leaflet-container">
       {loading && (
         <div className="map-loading">
           <Spin />
@@ -316,7 +349,7 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
               type="secondary"
               icon={<FullscreenOutlined />}
               onClick={() => {
-                setPosition(defaultPos);
+                map.setView(defaultPos.coordinates, defaultPos.zoom);
               }}
             />
           </Tooltip>
@@ -326,90 +359,51 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
               icon={<ZoomOutOutlined />}
               onClick={() => {
                 position.zoom > 1 &&
-                  setPosition({ ...position, zoom: position.zoom - 0.5 });
+                  map.setView(position.coordinates, position.zoom - 0.5);
               }}
               disabled={position.zoom <= 1}
             />
           </Tooltip>
           <Tooltip title="zoom in">
             <Button
-              disabled={position.zoom >= mapMaxZoom}
+              disabled={position.zoom > mapMaxZoom}
               type="secondary"
               icon={<ZoomInOutlined />}
               onClick={() => {
-                setPosition({ ...position, zoom: position.zoom + 0.5 });
+                map.setView(position.coordinates, position.zoom + 0.5);
               }}
             />
           </Tooltip>
         </Space>
       </div>
-      <ComposableMap
-        data-tip=""
-        projection="geoEquirectangular"
-        height={mapHeight}
-        projectionConfig={{ scale: 25000 }}
+      <MapContainer
+        center={defaultPos.coordinates}
+        zoom={defaultPos.zoom}
+        whenCreated={setMap}
+        zoomControl={false}
+        scrollWheelZoom={false}
+        style={{
+          height: "100%",
+          width: "100%",
+        }}
       >
-        <ZoomableGroup
-          filterZoomEvent={(evt) => {
-            return evt.type === "wheel" ? false : true;
-          }}
-          maxZoom={mapMaxZoom}
-          zoom={position.zoom}
-          center={position.coordinates}
-          onMoveEnd={(x) => {
-            setPosition(x);
-          }}
-        >
-          <Geographies geography={window.topojson}>
-            {({ geographies }) =>
-              geographies.map((geo) => {
-                let sc = shapeColor.find(
-                  (s) =>
-                    s.name ===
-                    geo.properties[shapeLevels[shapeLevels.length - 1]]
-                );
-                if (adminLevel && adminName) {
-                  sc =
-                    geo.properties[adminLevel] === adminName.name ? sc : false;
-                }
-                return (
-                  <Geography
-                    key={geo.rsmKey}
-                    geography={geo}
-                    onClick={() => onShapeClick(geo.properties)}
-                    stroke="#FFFFFF"
-                    strokeWidth="0.8"
-                    strokeOpacity="0.6"
-                    cursor="pointer"
-                    style={{
-                      default: {
-                        fill: sc ? fillColor(sc.values || 0) : noDataColor,
-                        outline: "none",
-                      },
-                      hover: {
-                        fill: "#FCF176",
-                        outline: "none",
-                      },
-                      pressed: {
-                        fill: "#E42",
-                        outline: "none",
-                      },
-                    }}
-                  />
-                );
-              })
-            }
-          </Geographies>
-          {!loading && (
-            <Markers
-              data={data}
-              colors={markerQuestion?.option}
-              filterMarker={filterMarker}
-            />
-          )}
-        </ZoomableGroup>
-      </ComposableMap>
-    </>
+        <TileLayer {...tile} />
+        <GeoJSON
+          key="geodata"
+          style={geoStyle}
+          data={geojson}
+          attribution="&copy; credits due..."
+          onEachFeature={onEachFeature}
+        />
+        {!loading && (
+          <Markers
+            data={data}
+            colors={markerQuestion?.option}
+            filterMarker={filterMarker}
+          />
+        )}
+      </MapContainer>
+    </div>
   );
 };
 
