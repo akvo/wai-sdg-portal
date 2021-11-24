@@ -203,38 +203,44 @@
 
   .legends-wrapper {
     position: absolute;
-    bottom: 24px;
-    left: 24px;
-    background: rgba(255, 255, 255, 0.6);
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    padding: 12px 20px 24px;
+    background: rgba(255, 255, 255, 0.8);
     z-index: 1;
 
     h4 {
       font-weight: 600;
+      text-align: center;
     }
 
     .legends {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
+      width: 100%;
 
       .legend {
+        flex: 1 1 0;
+        width: 0;
         cursor: pointer;
         font-weight: bold;
         text-align: center;
         padding: 5px 10px;
         color: #226799;
-        min-width: 80px;
         font-size: 12px;
         border-right: solid 2px #daeaf1;
         line-height: 10px;
       }
-    }
-  }
 
-  .legend.legend-selected {
-    border: solid #036799 2px;
-    padding: 3px 8px;
-    color: #fff;
+      .legend.legend-selected {
+        border: solid #036799 2px;
+        border-right: solid 2px #036799;
+        padding: 3px 8px;
+        color: #fff;
+      }
+    }
   }
 
   .marker-legends {
