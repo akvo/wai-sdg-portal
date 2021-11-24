@@ -5,6 +5,7 @@ import Bar from "./Bar";
 import Line from "./Line";
 import BarStack from "./BarStack";
 import JmpBarStack from "./JmpBarStack";
+import Pie from "./Pie";
 
 export const generateOptions = ({ type, data, chartTitle }, extra, axis) => {
   switch (type) {
@@ -14,6 +15,8 @@ export const generateOptions = ({ type, data, chartTitle }, extra, axis) => {
       return BarStack(data, chartTitle, extra);
     case "JMP-BARSTACK":
       return JmpBarStack(data, chartTitle, extra);
+    case "PIE":
+      return Pie(data, chartTitle, extra);
     default:
       return Bar(data, chartTitle, extra);
   }
