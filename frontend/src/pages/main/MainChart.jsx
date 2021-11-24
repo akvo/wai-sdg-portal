@@ -81,7 +81,8 @@ const MainChart = ({ current, question }) => {
         const filterByText = advanceSearchValue?.map((x, xi) => {
           const { question, option } = x;
           const optText = option.split("|")?.[1];
-          return `filter by ${question} is equal to ${optText}`;
+          const filterText = !xi ? "filter by" : "";
+          return `${filterText} ${question} is equal to ${optText}`;
         });
         chartTitleTemp = `${chartTitleTemp} ${filterByText?.join(" and ")}`;
         const tempAdvance = advanceSearchValue?.map((x) =>
