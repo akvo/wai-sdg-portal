@@ -9,8 +9,10 @@ import api from "../../util/api";
 import upperFirst from "lodash/upperFirst";
 import isEmpty from "lodash/isEmpty";
 import takeRight from "lodash/takeRight";
+import reverse from "lodash/reverse";
 
 const { chartFeature } = window.features;
+const levels = window.map_config?.shapeLevels?.length;
 
 const MainChart = ({ current, question }) => {
   const {
@@ -24,6 +26,7 @@ const MainChart = ({ current, question }) => {
   const [selectedQuestion, setSelectedQuestion] = useState({});
   const [selectedStack, setSelectedStack] = useState({});
   const [chartSubTitle, setChartSubTitle] = useState([]);
+  const [chartTitle, setChartTitle] = useState(null);
 
   // Get question option only
   question = question?.filter((q) => q.type === "option");
@@ -53,9 +56,12 @@ const MainChart = ({ current, question }) => {
     if (!isEmpty(selectedQuestion) || !isEmpty(selectedStack)) {
       setLoadingChartData(true);
       let url = `chart/data/${selectedQuestion.form}?question=${selectedQuestion?.id}`;
+      let chartTitleTemp = `This chart below shows ${selectedQuestion?.name}`;
       let tempChartSubTitle = [];
+      // this if we have selected stack
       if (!isEmpty(selectedStack)) {
         url += `&stack=${selectedStack?.id}`;
+        chartTitleTemp = `${chartTitleTemp} and selectedStack?.name`;
         tempChartSubTitle = [
           ...tempChartSubTitle,
           upperFirst(selectedStack?.name),
@@ -72,10 +78,28 @@ const MainChart = ({ current, question }) => {
       // advance search
       url = generateAdvanceFilterURL(advanceSearchValue, url);
       if (!isEmpty(advanceSearchValue)) {
+        const filterByText = advanceSearchValue?.map((x, xi) => {
+          const { question, option } = x;
+          const optText = option.split("|")?.[1];
+          return `filter by ${question} is equal to ${optText}`;
+        });
+        chartTitleTemp = `${chartTitleTemp} ${filterByText?.join(" and ")}`;
         const tempAdvance = advanceSearchValue?.map((x) =>
           upperFirst(x.option.split("|")?.[1])
         );
         tempChartSubTitle = [...tempChartSubTitle, ...tempAdvance];
+      }
+      // chart title text for administration
+      if (adminId) {
+        let adminText = administration?.find((x) => x.id === adminId)?.name;
+        if (selectedAdministration?.length > levels) {
+          adminText = selectedAdministration?.filter((x) => x);
+          adminText = reverse(adminText)?.map(
+            (x) => administration?.find((a) => a.id === x)?.name
+          );
+          adminText = adminText.join(", ");
+        }
+        chartTitleTemp = `${chartTitleTemp} for ${adminText}`;
       }
       api
         .get(url)
@@ -109,6 +133,7 @@ const MainChart = ({ current, question }) => {
               };
             });
           }
+          setChartTitle(chartTitleTemp);
           setChartData({ ...res.data, data: temp });
           setLoadingChartData(false);
         })
@@ -201,8 +226,8 @@ const MainChart = ({ current, question }) => {
             <div className="chart-container">
               {!isEmpty(chartData) && !loadingChartData ? (
                 <Chart
-                  title={upperFirst(selectedQuestion?.name)}
-                  subTitle={chartSubTitle.join(" - ")}
+                  title={chartTitle || ""}
+                  // subTitle={chartSubTitle.join(" - ")}
                   type={chartData.type}
                   data={chartData.data}
                   wrapper={false}

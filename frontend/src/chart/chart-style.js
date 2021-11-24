@@ -116,5 +116,13 @@ export const Title = {
   text: "Title",
   subtext: "Sub title",
   textAlign: "center",
-  left: "center",
+  left: "50%",
+  textStyle: {
+    ...TextStyle,
+    fontSize: 14,
+    lineHeight: 20,
+    width: 950,
+    overflow: "break",
+    lineOverflow: "truncate",
+  },
 };
