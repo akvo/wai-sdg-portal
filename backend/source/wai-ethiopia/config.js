@@ -97,6 +97,16 @@ var page_config = {
       marker: { id: 8, title: "ODF Status" },
     },
     formId: 1,
+    cltsCharts: [
+      {
+        type: "PIE",
+        question: 62,
+        name: "latrine for boys and girls separate",
+      },
+      { type: "PIE", question: 65, name: "are there latrines for disabled?" },
+      { type: "PIE", question: 68, name: "presence of handwashingfacility" },
+      { type: "PIE", question: 69, name: "hand washing in use" },
+    ],
   },
   health: {
     title: "Health Facility",
