@@ -1,21 +1,16 @@
 import { titleCase } from "./util/utils.js";
 
 const mapColumns = (values) => {
-  return values?.columns?.map((col) => {
-    const filters = col?.filters?.map((f) => {
-      return {
-        text: titleCase(f),
-        value: f,
-      };
-    });
-    if (filters) {
+  return values?.columns?.map((col, index) => {
+    if (index === 0) {
       col = {
         ...col,
-        filters: filters,
+        width: "35%",
       };
     }
     return {
       ...col,
+      align: col?.align || (index === 0 ? "left" : "center"),
       dataIndex: col.key,
       ellipsis: true,
     };
