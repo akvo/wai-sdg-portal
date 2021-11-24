@@ -392,7 +392,6 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
           key="geodata"
           style={geoStyle}
           data={geojson}
-          attribution="&copy; credits due..."
           onEachFeature={onEachFeature}
         />
         {!loading && (

@@ -20,6 +20,17 @@
       background: rgba(69, 173, 217, 0.15) 0% 0% no-repeat padding-box;
       border: 1px solid rgba(69, 173, 217, 0.15);
       border-radius: 20px 0px 0px 20px;
+
+      .ant-card-body {
+        padding: 0px;
+        overflow: hidden;
+      }
+
+      .map-container {
+        width: 110%;
+        margin-left: -5%;
+        height: 500px;
+      }
     }
   }
 
@@ -80,8 +91,10 @@
       min-height: 400px;
       padding: 24px 40px;
       background: rgba(2, 136, 209, 0.06);
+
       .overview-item-col {
       }
+
       .overview-item-row {
         .overview-item-card {
           border-radius: 8px;
@@ -113,14 +126,17 @@
               font-size: 20px;
               text-transform: uppercase;
             }
+
             &.count {
               font-size: 48px;
               font-weight: bold;
             }
+
             &.text {
               font-size: 24px;
               text-transform: uppercase;
             }
+
             &.explore {
               color: #45add9;
               margin-top: 30px;
