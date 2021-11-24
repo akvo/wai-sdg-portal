@@ -74,6 +74,29 @@ def get_aggregated_jmp_chart_data(
     return value
 
 
+@chart_route.get("/chart/clts-pie-data/{form_id:path}/{question_id:path}",
+                 name="charts:get_aggregated_clts_pie_chart_data",
+                 summary="get clts pie chart aggregate data",
+                 tags=["Charts"])
+def get_aggregated_clts_pie_chart_data(
+        req: Request, form_id: int, question_id: int,
+        administration: Optional[int] = None,
+        q: Optional[List[str]] = Query(None),
+        session: Session = Depends(get_session)):
+    options = check_query(q) if q else None
+    administration_ids = False
+    if (administration):
+        administration_ids = crud_administration.get_administration_list(
+            session=session, id=administration)
+    value = crud_charts.get_clts_pie_chart_data(
+        session=session,
+        form=form_id,
+        question=question_id,
+        administration=administration_ids,
+        options=options)
+    return value
+
+
 @chart_route.get("/chart/{name:path}",
                  name="charts:get_by_name",
                  summary="get chart by name",

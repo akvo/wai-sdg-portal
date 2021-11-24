@@ -64,3 +64,31 @@ class TestChartsRoutes():
                     "score": 5.0
                 }]
             }
+
+    @pytest.mark.asyncio
+    async def test_get_aggregated_clts_pie_chart_data(
+        self, app: FastAPI,
+        session: Session,
+        client: AsyncClient
+    ) -> None:
+        res = await client.get(app.url_path_for(
+                "charts:get_aggregated_clts_pie_chart_data",
+                form_id=1, question_id=1))
+        assert res.status_code == 200
+        res = res.json()
+        assert res == {
+            "form": 1,
+            "question": 1,
+            "data": [{
+                    "count": 1,
+                    "name": 'Option 1',
+                    "total": 3,
+                    "value": 33.33,
+                },
+                {
+                    "count": 2,
+                    "name": "Option 2",
+                    "total": 3,
+                    "value": 66.67,
+                }]
+            }

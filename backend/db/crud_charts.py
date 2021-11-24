@@ -140,3 +140,29 @@ def get_jmp_chart_data(session: Session,
         })
     temp.sort(key=lambda x: x["score"], reverse=True)
     return {"form": form, "question": question, "data": temp}
+
+
+def get_clts_pie_chart_data(session: Session,
+                            form: int,
+                            question: int,
+                            administration: List[str] = None,
+                            options: List[str] = None):
+    data = filter_datapoint(session=session,
+                            form=form,
+                            administration=administration,
+                            options=options)
+    answer = session.query(
+        Answer.options, func.count(Answer.id).label('count')).filter(
+            Answer.data.in_(data)).filter(
+                Answer.question == question).group_by(
+                    Answer.options).all()
+    temp = []
+    total = sum([a.count for a in answer])
+    for a in answer:
+        temp.append({
+            "name": a.options[0],
+            "count": a.count,
+            "total": total,
+            "value": round((a.count/total) * 100, 2),
+        })
+    return {"form": form, "question": question, "data": temp}
