@@ -3,7 +3,7 @@ import { Drawer, Space, Avatar, Menu, Row, Col, Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { UIState } from "../state/ui";
 import { Link } from "react-router-dom";
-import startCase from "lodash/startCase";
+import { startCase } from "lodash";
 
 const navigationOptions = window.navigation_config;
 const sitename = window.site_name;
@@ -25,7 +25,10 @@ const Navigation = ({ logout, loginWithPopup, isAuthenticated }) => {
   };
 
   useEffect(() => {
-    document.title = startCase(page !== "" ? page : "Home", "-");
+    document.title =
+      startCase(page !== "" ? page : "Home", "-") +
+      " | " +
+      window.site_name.toUpperCase();
   }, [page]);
 
   return (
