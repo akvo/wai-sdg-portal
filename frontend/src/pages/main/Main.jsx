@@ -255,7 +255,7 @@ const Main = ({ match }) => {
           <Col span={12} xxl={10} className="map-wrapper">
             <div className="container">
               <MainMaps
-                mapHeight={660}
+                mapHeight={670}
                 question={questionGroup
                   .map((q) => q.question)
                   .flatMap((x) => x)}

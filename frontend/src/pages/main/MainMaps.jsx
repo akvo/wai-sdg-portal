@@ -182,24 +182,22 @@ const MarkerLegend = ({
           : setFilterMarker(x.name)
       }
     >
-      <span className="marker-name">{_.capitalize(x.name)}</span>
       <span
         className="marker-icon"
         style={{ backgroundColor: x.color || "#000" }}
       ></span>
+      <span className="marker-name">{_.capitalize(x.name)}</span>
     </Space>
   ));
   return (
-    <Row className="marker-legends">
-      <Col align="end" span={24}>
-        <h4>{markerQuestion?.name?.toUpperCase() || "Legend"}</h4>
-      </Col>
-      <Col align="end" span={24}>
-        <Space size="small" direction="vertical" align="end">
-          {option}
-        </Space>
-      </Col>
-    </Row>
+    <div className="marker-legends">
+      <h4>{markerQuestion?.name?.toUpperCase() || "Legend"}</h4>
+      {option.map((o, i) => (
+        <div key={i} className="marker-list">
+          {o}
+        </div>
+      ))}
+    </div>
   );
 };
 

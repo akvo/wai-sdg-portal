@@ -27,7 +27,7 @@
 
     .map-wrapper {
       background: #fff;
-      max-height: 585px;
+      max-height: 600px;
       overflow: hidden;
 
       .map-search {
@@ -193,6 +193,7 @@
     position: absolute;
     bottom: 24px;
     left: 24px;
+    background: rgba(255, 255, 255, 0.6);
 
     h4 {
       font-weight: 600;
@@ -225,8 +226,10 @@
 
   .marker-legends {
     position: absolute;
-    bottom: 24px;
-    right: 24px;
+    top: 24px;
+    left: 24px;
+    background: rgba(255, 255, 255, 0.6);
+    padding: 5px;
 
     h4 {
       font-weight: 600;
