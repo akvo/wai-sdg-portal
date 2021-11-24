@@ -124,5 +124,20 @@ export const Title = {
     width: 950,
     overflow: "break",
     lineOverflow: "truncate",
+    fontWeight: "normal",
+    rich: {
+      question: {
+        fontSize: 14,
+        fontWeight: "bold",
+        fontStyle: "italic",
+        color: "#0967AC",
+      },
+      option: {
+        fontSize: 14,
+        fontWeight: "bold",
+        fontStyle: "italic",
+        color: "#7BCCC4",
+      },
+    },
   },
 };

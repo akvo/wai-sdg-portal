@@ -56,7 +56,7 @@ const MainChart = ({ current, question }) => {
     if (!isEmpty(selectedQuestion) || !isEmpty(selectedStack)) {
       setLoadingChartData(true);
       let url = `chart/data/${selectedQuestion.form}?question=${selectedQuestion?.id}`;
-      let chartTitleTemp = `This chart below shows ${selectedQuestion?.name}`;
+      let chartTitleTemp = `This chart shows the distribution of {question|${selectedQuestion?.name}}`;
       let tempChartSubTitle = [];
       // this if we have selected stack
       if (!isEmpty(selectedStack)) {
@@ -81,10 +81,11 @@ const MainChart = ({ current, question }) => {
         const filterByText = advanceSearchValue?.map((x, xi) => {
           const { question, option } = x;
           const optText = option.split("|")?.[1];
-          const filterText = !xi ? "filter by" : "";
-          return `${filterText} ${question} is equal to ${optText}`;
+          return `{question|${question}} is {option|${optText}}`;
         });
-        chartTitleTemp = `${chartTitleTemp} ${filterByText?.join(" and ")}`;
+        chartTitleTemp = `${chartTitleTemp}, where ${filterByText?.join(
+          " and "
+        )}${adminId ? "," : ""}`;
         const tempAdvance = advanceSearchValue?.map((x) =>
           upperFirst(x.option.split("|")?.[1])
         );
@@ -100,7 +101,7 @@ const MainChart = ({ current, question }) => {
           );
           adminText = adminText.join(", ");
         }
-        chartTitleTemp = `${chartTitleTemp} for ${adminText}`;
+        chartTitleTemp = `${chartTitleTemp} for {question|${adminText}}`;
       }
       api
         .get(url)

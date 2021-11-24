@@ -61,6 +61,7 @@ const Bar = (data, chartTitle, extra) => {
           type: "jpg",
           title: "save image",
           icon: Icons.saveAsImage,
+          backgroundColor: "#EAF5FB",
         },
         dataView: {
           ...DataView,
