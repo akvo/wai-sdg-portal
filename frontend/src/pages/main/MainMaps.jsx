@@ -311,7 +311,7 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
       fillColor: sc ? fillColor(sc.values || 0) : noDataColor,
       fillOpacity: sc ? 1 : 0.5,
       opacity: 1,
-      color: "#FFFFFF",
+      color: "#00989f",
     };
   };
 
