@@ -23,16 +23,13 @@ const MainJmpChart = ({ current, question, show }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (selectedAdministration.length < levels + 1) {
+    if (
+      selectedAdministration.length < levels + 1 ||
+      !isEmpty(advanceSearchValue)
+    ) {
       setChartData([]);
-    } else {
-      const updateChartData = chartData?.map((c) => ({
-        ...c,
-        selectedAdministration: takeRight(selectedAdministration)[0],
-      }));
-      setChartData(updateChartData);
     }
-  }, [selectedAdministration]);
+  }, [selectedAdministration, advanceSearchValue]);
 
   useEffect(() => {
     if (
@@ -41,9 +38,9 @@ const MainJmpChart = ({ current, question, show }) => {
       administration.length &&
       question.length &&
       !loading &&
-      !chartData.length &&
-      selectedAdministration.length <= levels
+      !chartData.length
     ) {
+      console.log("reload");
       setLoading(true);
       const administrationId =
         selectedAdministration.length <= levels
@@ -95,7 +92,10 @@ const MainJmpChart = ({ current, question, show }) => {
                 ? titleCase(selectedQuestion.name)
                 : "",
               type: chartSetting?.type,
-              selectedAdministration: null,
+              selectedAdministration:
+                selectedAdministration.length <= levels
+                  ? null
+                  : takeRight(selectedAdministration)[0],
               data: data,
             };
           });
