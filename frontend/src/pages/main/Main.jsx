@@ -289,6 +289,7 @@ const Main = ({ match }) => {
             <MainTable
               show={activeTab === "data"}
               span={24}
+              scroll={current?.jmpCharts ? 275 : 320}
               current={current}
               loading={loading}
               data={data}

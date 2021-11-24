@@ -52,15 +52,15 @@ const Footer = () => {
       <Row align="space-between" className="footer-start">
         <FooterContent
           title="Data"
-          text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac consectetur diam. Pellentesque lacinia, erat ac efficitur molestie, sapien odio efficitur purus, non ornare sem massa euismod metus. Maecenas at dolor tortor. Praesent sit amet mauris augue. Curabitur rutrum ipsum eget augue accumsan, in porta velit dignissim. Integer mattis vulputate arcu, in aliquet tellus lobortis auctor. Phasellus lacus augue, ultrices mattis ultrices et, euismod quis erat."
+          text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac consectetur diam. Pellentesque lacinia, erat ac efficitur molestie, sapien odio efficitur purus, non ornare sem massa euismod metus."
         />
         <FooterContent
           title="Monitoring"
-          text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac consectetur diam. Pellentesque lacinia, erat ac efficitur molestie, sapien odio efficitur purus, non ornare sem massa euismod metus. Maecenas at dolor tortor. Praesent sit amet mauris augue. Curabitur rutrum ipsum eget augue accumsan, in porta velit dignissim. Integer mattis vulputate arcu, in aliquet tellus lobortis auctor. Phasellus lacus augue, ultrices mattis ultrices et, euismod quis erat."
+          text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac consectetur diam. Pellentesque lacinia, erat ac efficitur molestie, sapien odio efficitur purus, non ornare sem massa euismod metus."
         />
         <FooterContent
           title="How we work"
-          text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac consectetur diam. Pellentesque lacinia, erat ac efficitur molestie, sapien odio efficitur purus, non ornare sem massa euismod metus. Maecenas at dolor tortor. Praesent sit amet mauris augue. Curabitur rutrum ipsum eget augue accumsan, in porta velit dignissim. Integer mattis vulputate arcu, in aliquet tellus lobortis auctor. Phasellus lacus augue, ultrices mattis ultrices et, euismod quis erat."
+          text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac consectetur diam. Pellentesque lacinia, erat ac efficitur molestie, sapien odio efficitur purus, non ornare sem massa euismod metus."
         />
       </Row>
       <FooterEnd />

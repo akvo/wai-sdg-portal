@@ -28,6 +28,7 @@ const getRowClassName = (record, editedRow) => {
 
 const MainTable = ({
   span = 24,
+  scroll = 320,
   current,
   loading,
   data,
@@ -143,13 +144,13 @@ const MainTable = ({
       </Row>
       <Divider />
       <Row className="main-table-container">
-        <Col span={24}>
+        <Col span={span}>
           <Table
             size="small"
             rowClassName={(record) => getRowClassName(record, editedRow)}
             loading={loading}
             columns={modifyColumnRender}
-            scroll={{ y: 320 }}
+            scroll={{ y: scroll }}
             pagination={false}
             expandable={{
               rowExpandable: (record) => {
