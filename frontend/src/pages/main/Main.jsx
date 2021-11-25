@@ -21,10 +21,13 @@ import startCase from "lodash/startCase";
 import flatten from "lodash/flatten";
 import isEmpty from "lodash/isEmpty";
 import config from "../../config";
+import moment from "moment";
 
 const NameWithInfo = ({ record, current, question }) => {
   const { id, name, created_by, created, updated, updated_by, answer } = record;
-  const isHistory = answer.map((x) => x.history).includes(true);
+  const hasDefaultHistory = current?.default?.datapoint
+    ? answer.map((x) => x.history).includes(true)
+    : false;
   let tmpName = name;
   if (tmpName) {
     tmpName = tmpName.split(" - ");
@@ -58,7 +61,7 @@ const NameWithInfo = ({ record, current, question }) => {
       >
         <InfoCircleOutlined />
       </Popover>
-      {isHistory && (
+      {hasDefaultHistory && (
         <LineChartOutlined
           onClick={() => {
             UIState.update((s) => {
@@ -149,11 +152,15 @@ const Main = ({ match }) => {
               const ans = x.answer.find((a) => a.question === key);
               const q = current.columns.find((c) => c.key === key);
               let value = ans?.value;
+              const qtype = question.find((qs) => qs.id === q.key)?.type;
               if (q?.fn && value) {
                 value = q.fn(value);
               }
               if (!q?.fn && value) {
-                value = startCase(value);
+                value =
+                  qtype !== "date"
+                    ? startCase(value)
+                    : moment(value)?.format("DD MMM, Y");
               }
               const option = question.find((qs) => qs.id === key)?.option;
               let color = null;
