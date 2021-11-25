@@ -7,7 +7,6 @@ import { generateAdvanceFilterURL } from "../../util/utils";
 import Chart from "../../chart";
 import api from "../../util/api";
 import takeRight from "lodash/takeRight";
-import isEmpty from "lodash/isEmpty";
 import upperFirst from "lodash/upperFirst";
 
 const MainPieChart = ({ current, question }) => {
@@ -20,7 +19,7 @@ const MainPieChart = ({ current, question }) => {
   useEffect(() => {
     if (user && cltsCharts) {
       const apiCall = cltsCharts?.map((chart) => {
-        // !!## FIXME - need to change form id (4) to current form id,
+        // !!## FIXME - need to change form id 4 (schools) to CLTS form id,
         let url = `chart/clts-pie-data/4/${chart?.question}`;
         const adminId = takeRight(selectedAdministration)[0];
         if (adminId) {
@@ -51,31 +50,33 @@ const MainPieChart = ({ current, question }) => {
   }
 
   return (
-    <Col span={24}>
-      <Row
-        align="middle"
-        className="collapse-wrapper container row-gutter"
-        gutter={[24, 24]}
-      >
-        {isEmpty(pieChartData) ? (
+    <Row align="middle" className="collapse-wrapper">
+      <Col span={24} className="container">
+        {!pieChartData.length ? (
           <div className="chart-loading">
             <Spin />
           </div>
         ) : (
-          pieChartData?.map((p, pi) => (
-            <Col key={`pie-chart-col-${pi}`} span={12}>
-              <Card
-                key={`pie-chart-card-${pi}`}
-                className="visual-card-wrapper"
-                title={p?.name ? upperFirst(p?.name) : ""}
-              >
-                <Chart type={p.type} data={p.data} wrapper={false} />
-              </Card>
-            </Col>
-          ))
+          <Row>
+            {pieChartData?.map((p, pi) => (
+              <Col key={pi} span={24 / pieChartData.length}>
+                <Card
+                  className="visual-card-wrapper splited"
+                  title={p?.name ? upperFirst(p?.name) : ""}
+                >
+                  <Chart
+                    type={p.type}
+                    data={p.data}
+                    wrapper={false}
+                    height={300}
+                  />
+                </Card>
+              </Col>
+            ))}
+          </Row>
         )}
-      </Row>
-    </Col>
+      </Col>
+    </Row>
   );
 };
 

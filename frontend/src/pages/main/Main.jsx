@@ -331,12 +331,14 @@ const Main = ({ match }) => {
           <MainHistoryChart current={current} data={data} question={question} />
         </Col>
       )}
+      {/* CLTS PIE CHART */}
+      <Col span={24}>
+        <MainPieChart current={current} question={question} />
+      </Col>
       {/* Main Chart */}
       <Col span={24}>
         <MainChart current={current} question={question} />
       </Col>
-      {/* CLTS PIE CHART */}
-      <MainPieChart current={current} question={question} />
     </Row>
   );
 };

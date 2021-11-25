@@ -165,6 +165,27 @@
   .collapse-wrapper,
   .visual-card-wrapper {
     background: #45add90f 0% 0% no-repeat padding-box;
+    min-height: 300px;
+    border: 1px solid #fff;
+
+    &.splited {
+      .ant-card-head-title {
+        font-size: 14px !important;
+      }
+    }
+
+    .ant-card-head-title {
+      text-align: center;
+    }
+
+    .chart-loading {
+      .ant-spin-spinning {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin: auto;
+      }
+    }
 
     .ant-collapse {
       margin-bottom: 18px;
@@ -172,7 +193,8 @@
 
     .ant-collapse-header,
     .ant-card-head {
-      color: #00989f !important;
+      background: #00989f;
+      color: #fff !important;
       font-weight: bold;
       font-size: 18px;
     }
