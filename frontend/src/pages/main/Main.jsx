@@ -80,6 +80,27 @@ const NameWithInfo = ({ record, current, question }) => {
   );
 };
 
+const CustomTabComponent = ({ loading, show, current, question, self }) => {
+  const { component, chartList } = self;
+  const { formId } = current;
+  switch (component) {
+    case "JMP-CHARTS":
+      return (
+        <MainJmpChart
+          show={show}
+          formId={formId}
+          chartList={chartList}
+          loading={loading}
+          question={question}
+        />
+      );
+    case "CLTS-PROGRESS-CHARTS":
+      return <div>CLTS PROGRESS CHARTS</div>;
+    default:
+      return "";
+  }
+};
+
 const Main = ({ match }) => {
   const history = useHistory();
   const {
@@ -106,8 +127,8 @@ const Main = ({ match }) => {
   };
 
   useEffect(() => {
+    setQuestion([]);
     if (user && current?.formId) {
-      setQuestion([]);
       setPage(1);
       setPerPage(10);
       api.get(`form/${current.formId}`).then((d) => {
@@ -229,8 +250,9 @@ const Main = ({ match }) => {
   }, [user, current, selectedAdministration, advanceSearchValue]);
 
   useEffect(() => {
-    if (current?.jmpCharts) {
-      setActiveTab("jmp");
+    if (current?.tabs) {
+      const defaultTabSelected = current?.tabs?.find((tab) => tab?.selected);
+      setActiveTab(defaultTabSelected?.name || "data");
     } else {
       setActiveTab("data");
     }
@@ -280,19 +302,23 @@ const Main = ({ match }) => {
             </div>
           </Col>
           <Col span={12} xxl={14} className="table-wrapper">
-            {current?.jmpCharts && (
+            {current?.tabs && (
               <Row
                 style={{ margin: "20px 40px 0px" }}
                 align="middle"
                 justify="center"
               >
                 <Col span={24}>
-                  <Button
-                    onClick={() => setActiveTab("jmp")}
-                    type={activeTab === "jmp" ? "primary" : "secondary"}
-                  >
-                    JMP
-                  </Button>
+                  {!loading &&
+                    current.tabs.map((tab, tabIndex) => (
+                      <Button
+                        key={`tab-${tabIndex}`}
+                        onClick={() => setActiveTab(tab.name)}
+                        type={activeTab === tab.name ? "primary" : "secondary"}
+                      >
+                        {tab.name}
+                      </Button>
+                    ))}
                   <Button
                     onClick={() => setActiveTab("data")}
                     type={activeTab === "data" ? "primary" : "secondary"}
@@ -302,10 +328,21 @@ const Main = ({ match }) => {
                 </Col>
               </Row>
             )}
+            {current?.tabs?.map((tab, tabIndex) => (
+              <CustomTabComponent
+                show={activeTab === tab.name}
+                key={`custom-component-${tabIndex}`}
+                current={current}
+                question={question}
+                activeTab={activeTab}
+                loading={loading}
+                self={tab}
+              />
+            ))}
             <MainTable
               show={activeTab === "data"}
               span={24}
-              scroll={current?.jmpCharts ? 275 : 320}
+              scroll={current?.tabs ? 275 : 320}
               current={current}
               loading={loading}
               data={data}
@@ -316,11 +353,6 @@ const Main = ({ match }) => {
               changePage={changePage}
               lastSubmitted={lastSubmitted}
               page={page}
-            />
-            <MainJmpChart
-              show={activeTab !== "data"}
-              current={current}
-              question={question}
             />
           </Col>
         </Row>

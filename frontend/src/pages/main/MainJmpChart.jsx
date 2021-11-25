@@ -6,51 +6,35 @@ import { UIState } from "../../state/ui";
 import { generateAdvanceFilterURL } from "../../util/utils";
 import Chart from "../../chart";
 import api from "../../util/api";
-import isEmpty from "lodash/isEmpty";
 import takeRight from "lodash/takeRight";
 import { titleCase } from "title-case";
 
 const levels = window.map_config?.shapeLevels?.length;
 
-const MainJmpChart = ({ current, question, show }) => {
+const MainJmpChart = ({ formId, chartList, question, show }) => {
   const {
     user,
     selectedAdministration,
     advanceSearchValue,
     administration,
-    reloadData,
   } = UIState.useState((s) => s);
   const [chartData, setChartData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [pageLoading, setPageLoading] = useState(false);
+
+  const administrationId =
+    selectedAdministration.length <= levels
+      ? takeRight(selectedAdministration)[0]
+      : selectedAdministration[levels - 1];
+
+  const administrationList = administration.filter(
+    (adm) => adm?.parent === administrationId
+  );
 
   useEffect(() => {
-    if (
-      current?.jmpCharts &&
-      (selectedAdministration.length < levels + 1 ||
-        !isEmpty(advanceSearchValue))
-    ) {
-      setChartData([]);
-    }
-  }, [selectedAdministration, advanceSearchValue, current]);
-
-  useEffect(() => {
-    if (
-      user &&
-      current?.jmpCharts &&
-      administration.length &&
-      question.length &&
-      reloadData
-    ) {
-      setLoading(true);
-      const administrationId =
-        selectedAdministration.length <= levels
-          ? takeRight(selectedAdministration)[0]
-          : selectedAdministration[levels - 1];
-      const administrationList = administration.filter(
-        (adm) => adm?.parent === administrationId
-      );
-      const apiCall = current?.jmpCharts?.map((chart) => {
-        let url = `chart/jmp-data/${current?.formId}/${chart?.question}`;
+    if (user && chartList?.length && administration.length && question.length) {
+      setPageLoading(true);
+      const apiCall = chartList?.map((chart) => {
+        let url = `chart/jmp-data/${formId}/${chart?.question}`;
         url += `?administration=${administrationId || 0}`;
         // advance search
         url = generateAdvanceFilterURL(advanceSearchValue, url);
@@ -62,7 +46,7 @@ const MainJmpChart = ({ current, question, show }) => {
             const selectedQuestion = question.find(
               (q) => q.id === r?.data?.question
             );
-            const chartSetting = current?.jmpCharts?.find(
+            const chartSetting = chartList?.find(
               (c) => c.question === r?.data?.question
             );
             const data = administrationList.map((adm) => {
@@ -103,20 +87,20 @@ const MainJmpChart = ({ current, question, show }) => {
         })
         .then((res) => {
           setChartData(res);
-          setLoading(false);
+          setPageLoading(false);
         });
     }
   }, [
     user,
-    current,
+    chartList,
+    formId,
     administration,
     selectedAdministration,
     question,
     advanceSearchValue,
-    reloadData,
   ]);
 
-  if (!current?.jmpCharts || isEmpty(current?.jmpCharts)) {
+  if (!chartList.length) {
     return "";
   }
 
@@ -126,7 +110,7 @@ const MainJmpChart = ({ current, question, show }) => {
 
   return (
     <div className="container chart-container">
-      {loading ? (
+      {pageLoading ? (
         <div className="chart-loading">
           <Spin />
         </div>
@@ -148,7 +132,7 @@ const MainJmpChart = ({ current, question, show }) => {
                   <Chart
                     title=""
                     subTitle=""
-                    type={c?.type}
+                    type={"JMP-BARSTACK"}
                     data={c?.data}
                     wrapper={false}
                     height={height < 320 ? 320 : height}
