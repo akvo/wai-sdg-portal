@@ -216,13 +216,13 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
   const shapeQuestion = question.find((q) => q.id === current.maps?.shape?.id);
 
   useEffect(() => {
-    setLoading(true);
     if (
       user &&
       current &&
       loadedFormId !== null &&
       loadedFormId === current?.formId
     ) {
+      setLoading(true);
       let url = `maps/${current.formId}`;
       if (current.maps.shape) {
         url += `?shape=${current.maps.shape.id}`;
@@ -265,13 +265,14 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
 
   const colorScale = scaleQuantize().domain(domain).range(colorRange);
 
+  const adminLevel = [false, ...shapeLevels][selectedAdministration.length - 1];
+
   const adminName = administration.find(
     (a) => a.id === _.takeRight(selectedAdministration)[0]
   );
-  const adminLevel = [false, ...shapeLevels][selectedAdministration.length - 1];
 
   const fillColor = (v) => {
-    const color = v === 0 ? noDataColor : colorScale(v);
+    const color = v === 0 ? "#FFF" : colorScale(v);
     if (filterColor !== null) {
       return filterColor === color ? higlightColor : color;
     }
@@ -300,19 +301,26 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
   }, [selectedShape, administration]);
 
   const geoStyle = (g) => {
-    let sc = shapeColor.find(
-      (s) => s.name === g.properties[shapeLevels[shapeLevels.length - 1]]
-    );
+    const gname = g.properties[shapeLevels[shapeLevels.length - 1]];
+    let sc = shapeColor.find((s) => s.name === gname);
+    let opacity = 0.5;
+    let selectedColor = sc;
     if (adminLevel && adminName) {
       sc = g.properties[adminLevel] === adminName.name ? sc : false;
+      opacity =
+        g.properties[adminLevel] === adminName.name ? (sc ? 1 : 0.8) : 0.5;
+    }
+
+    if (adminName?.name === gname) {
+      opacity = 1;
     }
 
     return {
-      weight: 1,
+      weight: opacity == 1 ? 2 : 1,
       fillColor: sc ? fillColor(sc.values || 0) : noDataColor,
-      fillOpacity: sc ? 1 : 0.5,
+      fillOpacity: sc ? 1 : opacity,
       opacity: 1,
-      color: "#00989f",
+      color: opacity == 1 || sc ? "#00989f" : "#00989f",
     };
   };
 
@@ -378,32 +386,34 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
           </Space>
         </div>
       )}
-      <MapContainer
-        center={defaultPos.coordinates}
-        zoom={defaultPos.zoom}
-        whenCreated={setMap}
-        zoomControl={false}
-        scrollWheelZoom={false}
-        style={{
-          height: "100%",
-          width: "100%",
-        }}
-      >
-        <TileLayer {...tile} />
-        <GeoJSON
-          key="geodata"
-          style={geoStyle}
-          data={geojson}
-          onEachFeature={onEachFeature}
-        />
-        {!loading && (
-          <Markers
-            data={data}
-            colors={markerQuestion?.option}
-            filterMarker={filterMarker}
+      {administration.length && (
+        <MapContainer
+          center={defaultPos.coordinates}
+          zoom={defaultPos.zoom}
+          whenCreated={setMap}
+          zoomControl={false}
+          scrollWheelZoom={false}
+          style={{
+            height: "100%",
+            width: "100%",
+          }}
+        >
+          <TileLayer {...tile} />
+          <GeoJSON
+            key="geodata"
+            style={geoStyle}
+            data={geojson}
+            onEachFeature={onEachFeature}
           />
-        )}
-      </MapContainer>
+          {!loading && (
+            <Markers
+              data={data}
+              colors={markerQuestion?.option}
+              filterMarker={filterMarker}
+            />
+          )}
+        </MapContainer>
+      )}
     </div>
   );
 };
