@@ -8,11 +8,13 @@ import Chart from "../../chart";
 import api from "../../util/api";
 import takeRight from "lodash/takeRight";
 import isEmpty from "lodash/isEmpty";
+import upperFirst from "lodash/upperFirst";
 
 const MainPieChart = ({ current, question }) => {
   const { cltsCharts, formId } = current;
-  const { user, selectedAdministration, advanceSearchValue, administration } =
-    UIState.useState((s) => s);
+  const { user, selectedAdministration, advanceSearchValue } = UIState.useState(
+    (s) => s
+  );
   const [pieChartData, setPieChartData] = useState([]);
 
   useEffect(() => {
@@ -30,14 +32,19 @@ const MainPieChart = ({ current, question }) => {
       });
       Promise.all(apiCall)
         .then((res) => {
-          const allData = res.map((r) => r?.data);
+          const allData = res.map((r) => {
+            const chartSetting = cltsCharts?.find(
+              (c) => c.question === r?.data?.question
+            );
+            return { ...r?.data, ...chartSetting };
+          });
           return allData;
         })
         .then((data) => {
           setPieChartData(data);
         });
     }
-  }, [user, current, selectedAdministration, advanceSearchValue]);
+  }, [user, current, selectedAdministration, advanceSearchValue, cltsCharts]);
 
   if (!cltsCharts) {
     return null;
@@ -60,17 +67,9 @@ const MainPieChart = ({ current, question }) => {
               <Card
                 key={`pie-chart-card-${pi}`}
                 className="visual-card-wrapper"
-                title="Pie Charts"
+                title={p?.name ? upperFirst(p?.name) : ""}
               >
-                <div className="">
-                  <Chart
-                    title=""
-                    subTitle=""
-                    type="PIE"
-                    data={p.data}
-                    wrapper={false}
-                  />
-                </div>
+                <Chart type={p.type} data={p.data} wrapper={false} />
               </Card>
             </Col>
           ))
