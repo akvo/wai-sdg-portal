@@ -17,6 +17,7 @@ const defaultUIState = {
   administrationByAccess: [],
   rowHovered: null,
   historyChart: {},
+  loadedFormId: null,
 };
 
 export const UIState = new Store(defaultUIState);

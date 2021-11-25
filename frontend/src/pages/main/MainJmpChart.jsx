@@ -17,6 +17,7 @@ const MainJmpChart = ({ formId, chartList, question, show }) => {
     selectedAdministration,
     advanceSearchValue,
     administration,
+    loadedFormId,
   } = UIState.useState((s) => s);
   const [chartData, setChartData] = useState([]);
   const [pageLoading, setPageLoading] = useState(false);
@@ -31,7 +32,13 @@ const MainJmpChart = ({ formId, chartList, question, show }) => {
   );
 
   useEffect(() => {
-    if (user && chartList?.length && administration.length && question.length) {
+    if (
+      user &&
+      chartList?.length &&
+      administration.length &&
+      question.length &&
+      loadedFormId === formId
+    ) {
       setPageLoading(true);
       const apiCall = chartList?.map((chart) => {
         let url = `chart/jmp-data/${formId}/${chart?.question}`;
@@ -94,6 +101,7 @@ const MainJmpChart = ({ formId, chartList, question, show }) => {
     user,
     chartList,
     formId,
+    loadedFormId,
     administration,
     selectedAdministration,
     question,

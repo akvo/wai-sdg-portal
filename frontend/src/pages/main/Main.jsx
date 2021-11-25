@@ -127,7 +127,6 @@ const Main = ({ match }) => {
   };
 
   useEffect(() => {
-    setQuestion([]);
     if (user && current?.formId) {
       setPage(1);
       setPerPage(10);
@@ -210,11 +209,17 @@ const Main = ({ match }) => {
           setData(tableData);
           setTotal(d.data.total);
           setLoading(false);
+          UIState.update((s) => {
+            s.loadedFormId = current.formId;
+          });
         })
         .catch(() => {
           setData([]);
           setTotal(0);
           setLoading(false);
+          UIState.update((s) => {
+            s.loadedFormId = current.formId;
+          });
         });
     }
   }, [
