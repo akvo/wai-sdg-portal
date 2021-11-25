@@ -5,8 +5,9 @@ import Bar from "./Bar";
 import Line from "./Line";
 import BarStack from "./BarStack";
 import JmpBarStack from "./JmpBarStack";
+import Pie from "./Pie";
 
-export const generateOptions = ({ type, data, chartTitle }, extra, axis) => {
+export const generateOptions = ({ type, data, chartTitle }, extra) => {
   switch (type) {
     case "LINE":
       return Line(data, chartTitle, extra);
@@ -14,6 +15,10 @@ export const generateOptions = ({ type, data, chartTitle }, extra, axis) => {
       return BarStack(data, chartTitle, extra);
     case "JMP-BARSTACK":
       return JmpBarStack(data, chartTitle, extra);
+    case "PIE":
+      return Pie(data, chartTitle, extra);
+    case "DOUGHNUT":
+      return Pie(data, chartTitle, extra, true);
     default:
       return Bar(data, chartTitle, extra);
   }

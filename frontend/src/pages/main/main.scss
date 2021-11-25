@@ -166,24 +166,22 @@
   .visual-card-wrapper {
     background: #45add90f 0% 0% no-repeat padding-box;
 
-    .container {
-      .ant-collapse {
-        margin-bottom: 18px;
-      }
+    .ant-collapse {
+      margin-bottom: 18px;
+    }
 
-      .ant-collapse-header,
-      .ant-card-head {
-        color: #00989f !important;
-        font-weight: bold;
-        font-size: 18px;
-      }
+    .ant-collapse-header,
+    .ant-card-head {
+      color: #00989f !important;
+      font-weight: bold;
+      font-size: 18px;
+    }
 
-      .ant-collapse-borderless {
-        .ant-collapse-item {
-          border-bottom: none !important;
-          background-color: #e3edec;
-          border-radius: 5px;
-        }
+    .ant-collapse-borderless {
+      .ant-collapse-item {
+        border-bottom: none !important;
+        background-color: #e3edec;
+        border-radius: 5px;
       }
     }
   }

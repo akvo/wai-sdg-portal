@@ -15,6 +15,7 @@ import AdvanceSearch from "../../components/AdvanceSearch";
 import MainChart from "./MainChart";
 import MainHistoryChart from "./MainHistoryChart";
 import MainJmpChart from "./MainJmpChart";
+import MainPieChart from "./MainPieChart";
 import { generateAdvanceFilterURL } from "../../util/utils";
 import startCase from "lodash/startCase";
 import flatten from "lodash/flatten";
@@ -319,6 +320,8 @@ const Main = ({ match }) => {
       <Col span={24}>
         <MainChart current={current} question={question} />
       </Col>
+      {/* CLTS PIE CHART */}
+      <MainPieChart current={current} question={question} />
     </Row>
   );
 };
