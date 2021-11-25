@@ -136,6 +136,11 @@ const Main = ({ match }) => {
       }
       // advance search
       url = generateAdvanceFilterURL(advanceSearchValue, url);
+      // send question id to get the data score
+      if (current?.values?.length) {
+        const urlScore = current?.values?.map((v) => `question=${v}`).join("&");
+        url += `&${urlScore}`;
+      }
       api
         .get(url)
         .then((d) => {
