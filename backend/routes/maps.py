@@ -15,6 +15,7 @@ class MapsDict(BaseModel):
     id: int
     loc: str
     geo: Optional[List[float]] = None
+    name: str
     marker: Any
     shape: Any
 

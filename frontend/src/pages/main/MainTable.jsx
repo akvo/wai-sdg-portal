@@ -147,6 +147,18 @@ const MainTable = ({
         <Col span={span}>
           <Table
             size="small"
+            onRow={(e) => {
+              return {
+                onMouseEnter: () =>
+                  UIState.update((ui) => {
+                    ui.rowHovered = e.key;
+                  }),
+                onMouseLeave: () =>
+                  UIState.update((ui) => {
+                    ui.rowHovered = null;
+                  }),
+              };
+            }}
             rowClassName={(record) => getRowClassName(record, editedRow)}
             loading={loading}
             columns={modifyColumnRender}

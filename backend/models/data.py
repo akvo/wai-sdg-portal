@@ -123,8 +123,9 @@ class Data(Base):
     def to_maps(self):
         return {
             "id": self.id,
+            "name": self.name,
             "loc": self.administration_detail.name,
-            "geo": [self.geo[1], self.geo[0]] if self.geo else None,
+            "geo": self.geo if self.geo else None,
         }
 
     @property

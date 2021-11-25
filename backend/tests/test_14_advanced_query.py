@@ -69,13 +69,15 @@ class TestAdvancedFilter():
         res = res.json()
         assert res == [{
             "id": 1,
-            "geo": [110.331143, -7.836114],
+            "geo": [-7.836114, 110.331143],
+            "name": "Garut - Garut",
             "loc": "Garut",
             "marker": "Option 2",
             "shape": 10.0,
             }, {
             "id": 3,
-            "geo": [106.81, -6.2],
+            "geo": [-6.2, 106.81],
+            "name": "Bantul - Testing Data 2",
             "loc": "Bantul",
             "marker": "Option 2",
             "shape": 24.0

@@ -23,7 +23,8 @@ class TestMapsRoutes():
         res = res.json()
         assert res == [{
             "id": 1,
-            "geo": [110.331143, -7.836114],
+            "geo": [-7.836114, 110.331143],
+            "name": "Garut - Garut",
             "loc": "Garut",
             "marker": "Option 1",
             "shape": 10.0,

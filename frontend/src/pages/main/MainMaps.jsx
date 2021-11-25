@@ -1,7 +1,14 @@
 import "leaflet/dist/leaflet.css";
 import React, { useState, useEffect } from "react";
-import { MapContainer, TileLayer, Circle, GeoJSON } from "react-leaflet";
-import { Spin, Button, Space } from "antd";
+import {
+  MapContainer,
+  TileLayer,
+  Circle,
+  GeoJSON,
+  Tooltip,
+  CircleMarker,
+} from "react-leaflet";
+import { Spin, Button, Space, Badge } from "antd";
 import {
   ZoomInOutlined,
   ZoomOutOutlined,
@@ -22,7 +29,9 @@ const noDataColor = "#d3d3d3";
 
 const Markers = ({ data, colors, filterMarker }) => {
   data = data.filter((d) => d.geo);
-  return data.map(({ id, geo, marker }) => {
+  const rowHovered = UIState.useState((e) => e.rowHovered);
+  return data.map(({ id, geo, marker, name }) => {
+    const hovered = id === rowHovered;
     let fill = "#F00";
     let r = 3;
     let stroke = "#fff";
@@ -37,11 +46,20 @@ const Markers = ({ data, colors, filterMarker }) => {
     return (
       <Circle
         key={id}
-        center={geo.reverse()}
-        pathOptions={{ fillColor: fill, color: fill }}
-        radius={r * 100}
+        center={geo}
+        pathOptions={{
+          fillColor: hovered ? "#FFF" : fill,
+          color: fill,
+          opacity: 1,
+          fillOpacity: 1,
+        }}
+        radius={r * 100 * (hovered ? 3 : 1)}
         stroke={stroke}
-      />
+      >
+        <Tooltip direction="top">
+          <Badge count={marker} style={{ backgroundColor: fill }} /> {name}
+        </Tooltip>
+      </Circle>
     );
   });
 };
@@ -100,28 +118,6 @@ const ShapeLegend = ({
         )}
         <div className="legends">
           {[
-            <div
-              key={"legend-0"}
-              className={
-                "legend" +
-                (filterColor !== null && filterColor === noDataColor
-                  ? " legend-selected"
-                  : "")
-              }
-              style={{
-                backgroundColor:
-                  noDataColor === filterColor ? higlightColor : noDataColor,
-              }}
-              onClick={(e) => {
-                filterColor === null
-                  ? setFilterColor(noDataColor)
-                  : filterColor === noDataColor
-                  ? setFilterColor(null)
-                  : setFilterColor(noDataColor);
-              }}
-            >
-              0
-            </div>,
             ...range,
             <div
               key={"legend-last"}

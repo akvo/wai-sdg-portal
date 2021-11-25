@@ -15,6 +15,7 @@ const defaultUIState = {
   activityLog: [],
   advanceSearchValue: [],
   administrationByAccess: [],
+  rowHovered: null,
   historyChart: {},
 };
 
