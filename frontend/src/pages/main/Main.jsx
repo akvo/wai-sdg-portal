@@ -88,6 +88,7 @@ const Main = ({ match }) => {
   } = UIState.useState((s) => s);
   const [data, setData] = useState([]);
   const [questionGroup, setQuestionGroup] = useState([]);
+  const [question, setQuestion] = useState([]);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [perPage, setPerPage] = useState(10);
@@ -105,8 +106,14 @@ const Main = ({ match }) => {
     if (user && current?.formId) {
       setPage(1);
       setPerPage(10);
+      setQuestion([]);
       api.get(`form/${current.formId}`).then((d) => {
         setQuestionGroup(d.data.question_group);
+        // Get all question
+        const questionTmp = flatten(
+          d.data.question_group?.map((qg) => qg.question)
+        );
+        setQuestion(questionTmp);
         UIState.update((s) => {
           s.editedRow = {};
           s.historyChart = {};
@@ -116,13 +123,11 @@ const Main = ({ match }) => {
   }, [user, current]);
 
   useEffect(() => {
-    if (user && current && reloadData && questionGroup) {
+    if (user && current && reloadData && questionGroup && question.length) {
       // Reset history chart
       UIState.update((s) => {
         s.historyChart = {};
       });
-      // Get all question
-      const question = flatten(questionGroup.map((qg) => qg.question));
       setLoading(true);
       const adminId = takeRight(selectedAdministration)[0];
       let url = `data/form/${current.formId}?page=${page}&perpage=${perPage}`;
@@ -188,6 +193,7 @@ const Main = ({ match }) => {
     selectedAdministration,
     advanceSearchValue,
     questionGroup,
+    question,
   ]);
 
   useEffect(() => {
@@ -217,9 +223,6 @@ const Main = ({ match }) => {
       setActiveTab("data");
     }
   }, [user, current]);
-
-  // Get question
-  const question = flatten(questionGroup?.map((qg) => qg.question));
 
   if (!current) {
     return <ErrorPage status={404} />;
@@ -305,7 +308,7 @@ const Main = ({ match }) => {
             <MainJmpChart
               show={activeTab !== "data"}
               current={current}
-              question={questionGroup.map((q) => q.question).flatMap((x) => x)}
+              question={question}
             />
           </Col>
         </Row>

@@ -24,12 +24,13 @@ const MainJmpChart = ({ current, question, show }) => {
 
   useEffect(() => {
     if (
-      selectedAdministration.length < levels + 1 ||
-      !isEmpty(advanceSearchValue)
+      current?.jmpCharts &&
+      (selectedAdministration.length < levels + 1 ||
+        !isEmpty(advanceSearchValue))
     ) {
       setChartData([]);
     }
-  }, [selectedAdministration, advanceSearchValue]);
+  }, [selectedAdministration, advanceSearchValue, current]);
 
   useEffect(() => {
     if (
@@ -40,7 +41,6 @@ const MainJmpChart = ({ current, question, show }) => {
       !loading &&
       !chartData.length
     ) {
-      console.log("reload");
       setLoading(true);
       const administrationId =
         selectedAdministration.length <= levels
