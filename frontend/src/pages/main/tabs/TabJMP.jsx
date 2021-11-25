@@ -23,6 +23,12 @@ const TabJMP = ({ formId, chartList, question, show }) => {
   const [pageLoading, setPageLoading] = useState(false);
 
   useEffect(() => {
+    if (loadedFormId !== formId) {
+      setChartData([]);
+    }
+  }, [formId, loadedFormId]);
+
+  useEffect(() => {
     if (
       user &&
       chartList?.length &&
@@ -31,6 +37,7 @@ const TabJMP = ({ formId, chartList, question, show }) => {
       loadedFormId !== null &&
       loadedFormId === formId
     ) {
+      setPageLoading(true);
       const administrationId =
         selectedAdministration.length <= levels
           ? takeRight(selectedAdministration)[0]
@@ -40,7 +47,6 @@ const TabJMP = ({ formId, chartList, question, show }) => {
         (adm) => adm?.parent === administrationId
       );
 
-      setPageLoading(true);
       const apiCall = chartList?.map((chart) => {
         let url = `chart/jmp-data/${formId}/${chart?.question}`;
         url += `?administration=${administrationId || 0}`;

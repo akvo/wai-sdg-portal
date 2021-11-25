@@ -14,9 +14,9 @@ import MainMaps from "./MainMaps";
 import AdvanceSearch from "../../components/AdvanceSearch";
 import MainChart from "./MainChart";
 import MainHistoryChart from "./MainHistoryChart";
-import MainPieChart from "./MainPieChart";
 import { generateAdvanceFilterURL } from "../../util/utils";
 import TabContent from "./tabs";
+import RowContent from "./rows";
 import startCase from "lodash/startCase";
 import flatten from "lodash/flatten";
 import isEmpty from "lodash/isEmpty";
@@ -325,7 +325,6 @@ const Main = ({ match }) => {
                 current={current}
                 question={question}
                 activeTab={activeTab}
-                loading={loading}
                 self={tab}
               />
             ))}
@@ -353,10 +352,11 @@ const Main = ({ match }) => {
           <MainHistoryChart current={current} data={data} question={question} />
         </Col>
       )}
-      {/* CLTS PIE CHART */}
-      <Col span={24}>
-        <MainPieChart current={current} question={question} />
-      </Col>
+      {current?.rows?.map((row, rowIndex) => (
+        <Col span={24} key={rowIndex}>
+          <RowContent current={current} self={row} />
+        </Col>
+      ))}
       {/* Main Chart */}
       <Col span={24}>
         <MainChart current={current} question={question} />

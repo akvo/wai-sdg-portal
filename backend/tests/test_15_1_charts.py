@@ -66,13 +66,13 @@ class TestChartsRoutes():
             }
 
     @pytest.mark.asyncio
-    async def test_get_aggregated_clts_pie_chart_data(
+    async def test_get_aggregated_pie_chart_data(
         self, app: FastAPI,
         session: Session,
         client: AsyncClient
     ) -> None:
         res = await client.get(app.url_path_for(
-                "charts:get_aggregated_clts_pie_chart_data",
+                "charts:get_aggregated_pie_chart_data",
                 form_id=1, question_id=1))
         assert res.status_code == 200
         res = res.json()

@@ -1,6 +1,6 @@
 import TabJMP from "./TabJMP";
 
-const TabContent = ({ loading, show, current, question, self }) => {
+const TabContent = ({ show, current, question, self }) => {
   const { component, chartList } = self;
   const { formId } = current;
   switch (component) {
@@ -10,7 +10,6 @@ const TabContent = ({ loading, show, current, question, self }) => {
           show={show}
           formId={formId}
           chartList={chartList}
-          loading={loading}
           question={question}
         />
       );
