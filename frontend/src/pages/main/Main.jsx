@@ -104,9 +104,9 @@ const Main = ({ match }) => {
 
   useEffect(() => {
     if (user && current?.formId) {
+      setQuestion([]);
       setPage(1);
       setPerPage(10);
-      setQuestion([]);
       api.get(`form/${current.formId}`).then((d) => {
         setQuestionGroup(d.data.question_group);
         // Get all question

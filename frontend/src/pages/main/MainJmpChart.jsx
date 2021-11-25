@@ -18,6 +18,7 @@ const MainJmpChart = ({ current, question, show }) => {
     selectedAdministration,
     advanceSearchValue,
     administration,
+    reloadData,
   } = UIState.useState((s) => s);
   const [chartData, setChartData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -38,8 +39,7 @@ const MainJmpChart = ({ current, question, show }) => {
       current?.jmpCharts &&
       administration.length &&
       question.length &&
-      !loading &&
-      !chartData.length
+      reloadData
     ) {
       setLoading(true);
       const administrationId =
@@ -113,8 +113,7 @@ const MainJmpChart = ({ current, question, show }) => {
     selectedAdministration,
     question,
     advanceSearchValue,
-    loading,
-    chartData,
+    reloadData,
   ]);
 
   if (!current?.jmpCharts || isEmpty(current?.jmpCharts)) {
