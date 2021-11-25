@@ -54,7 +54,7 @@ const MainPieChart = ({ current, question }) => {
     <Col span={24}>
       <Row
         align="middle"
-        className="collapse-wrapper container"
+        className="collapse-wrapper container row-gutter"
         gutter={[24, 24]}
       >
         {isEmpty(pieChartData) ? (
