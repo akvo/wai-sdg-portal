@@ -10,7 +10,7 @@ import takeRight from "lodash/takeRight";
 import upperFirst from "lodash/upperFirst";
 
 const MainPieChart = ({ current, question }) => {
-  const { cltsCharts, formId } = current;
+  const { cltsCharts } = current;
   const { user, selectedAdministration, advanceSearchValue } = UIState.useState(
     (s) => s
   );

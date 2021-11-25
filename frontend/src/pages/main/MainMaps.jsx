@@ -6,7 +6,6 @@ import {
   Circle,
   GeoJSON,
   Tooltip,
-  CircleMarker,
 } from "react-leaflet";
 import { Spin, Button, Space, Badge } from "antd";
 import {
@@ -202,6 +201,7 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
     administration,
     selectedAdministration,
     advanceSearchValue,
+    loadedFormId,
   } = UIState.useState((s) => s);
   const [map, setMap] = useState(null);
   const [data, setData] = useState([]);
@@ -217,7 +217,12 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
 
   useEffect(() => {
     setLoading(true);
-    if (user && current) {
+    if (
+      user &&
+      current &&
+      loadedFormId !== null &&
+      loadedFormId === current?.formId
+    ) {
       let url = `maps/${current.formId}`;
       if (current.maps.shape) {
         url += `?shape=${current.maps.shape.id}`;
@@ -238,7 +243,7 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
           setLoading(false);
         });
     }
-  }, [user, current, advanceSearchValue]);
+  }, [user, current, loadedFormId, advanceSearchValue]);
 
   const shapeColor = _.chain(_.groupBy(data, "loc"))
     .map((v, k) => {

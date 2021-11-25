@@ -4,7 +4,6 @@ import {
   TextStyle,
   backgroundColor,
   Icons,
-  Legend,
   AxisLabelFormatter,
   DataView,
   Title,
@@ -130,10 +129,6 @@ const Bar = (data, chartTitle, extra) => {
         },
       },
     ],
-    legend: {
-      data: labels,
-      ...Legend,
-    },
     ...Color,
     ...backgroundColor,
     ...Easing,

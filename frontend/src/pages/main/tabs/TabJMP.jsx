@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Col, Spin } from "antd";
 
-import "./main.scss";
-import { UIState } from "../../state/ui";
-import { generateAdvanceFilterURL } from "../../util/utils";
-import Chart from "../../chart";
-import api from "../../util/api";
+import "../main.scss";
+import { UIState } from "../../../state/ui";
+import { generateAdvanceFilterURL } from "../../../util/utils";
+import Chart from "../../../chart";
+import api from "../../../util/api";
 import takeRight from "lodash/takeRight";
 import { titleCase } from "title-case";
 
 const levels = window.map_config?.shapeLevels?.length;
 
-const MainJmpChart = ({ formId, chartList, question, show }) => {
+const TabJMP = ({ formId, chartList, question, show }) => {
   const {
     user,
     selectedAdministration,
@@ -22,23 +22,24 @@ const MainJmpChart = ({ formId, chartList, question, show }) => {
   const [chartData, setChartData] = useState([]);
   const [pageLoading, setPageLoading] = useState(false);
 
-  const administrationId =
-    selectedAdministration.length <= levels
-      ? takeRight(selectedAdministration)[0]
-      : selectedAdministration[levels - 1];
-
-  const administrationList = administration.filter(
-    (adm) => adm?.parent === administrationId
-  );
-
   useEffect(() => {
     if (
       user &&
       chartList?.length &&
       administration.length &&
       question.length &&
+      loadedFormId !== null &&
       loadedFormId === formId
     ) {
+      const administrationId =
+        selectedAdministration.length <= levels
+          ? takeRight(selectedAdministration)[0]
+          : selectedAdministration[levels - 1];
+
+      const administrationList = administration.filter(
+        (adm) => adm?.parent === administrationId
+      );
+
       setPageLoading(true);
       const apiCall = chartList?.map((chart) => {
         let url = `chart/jmp-data/${formId}/${chart?.question}`;
@@ -158,4 +159,4 @@ const MainJmpChart = ({ formId, chartList, question, show }) => {
   );
 };
 
-export default MainJmpChart;
+export default TabJMP;

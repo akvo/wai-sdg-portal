@@ -44,28 +44,22 @@ const Pie = (data, chartTitle, extra, Doughnut = false) => {
         radius: !Doughnut ? ["0%", "100%"] : ["50%", "100%"],
         top: "30px",
         label: {
-          normal: {
-            formatter: function (params) {
-              if (params.value >= 0) {
-                return Math.round(params.value) + "%";
-              }
-              return "";
-            },
-            show: true,
-            position: !Doughnut ? "inner" : "outside",
-            padding: 5,
-            borderRadius: 100,
-            backgroundColor: !Doughnut ? "rgba(0,0,0,.5)" : "rgba(0,0,0,.3)",
-            textStyle: {
-              ...textStyle,
-              color: "#fff",
-            },
+          formatter: function (params) {
+            if (params.value >= 0) {
+              return Math.round(params.value) + "%";
+            }
+            return "";
           },
+          show: true,
+          position: !Doughnut ? "inner" : "outside",
+          padding: 5,
+          borderRadius: 100,
+          backgroundColor: !Doughnut ? "rgba(0,0,0,.5)" : "rgba(0,0,0,.3)",
+          ...textStyle,
+          color: "#fff",
         },
         labelLine: {
-          normal: {
-            show: true,
-          },
+          show: true,
         },
         data: data,
         ...rose,

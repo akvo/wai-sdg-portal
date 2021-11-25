@@ -14,9 +14,9 @@ import MainMaps from "./MainMaps";
 import AdvanceSearch from "../../components/AdvanceSearch";
 import MainChart from "./MainChart";
 import MainHistoryChart from "./MainHistoryChart";
-import MainJmpChart from "./MainJmpChart";
 import MainPieChart from "./MainPieChart";
 import { generateAdvanceFilterURL } from "../../util/utils";
+import TabContent from "./tabs";
 import startCase from "lodash/startCase";
 import flatten from "lodash/flatten";
 import isEmpty from "lodash/isEmpty";
@@ -80,27 +80,6 @@ const NameWithInfo = ({ record, current, question }) => {
   );
 };
 
-const CustomTabComponent = ({ loading, show, current, question, self }) => {
-  const { component, chartList } = self;
-  const { formId } = current;
-  switch (component) {
-    case "JMP-CHARTS":
-      return (
-        <MainJmpChart
-          show={show}
-          formId={formId}
-          chartList={chartList}
-          loading={loading}
-          question={question}
-        />
-      );
-    case "CLTS-PROGRESS-CHARTS":
-      return <div>CLTS PROGRESS CHARTS</div>;
-    default:
-      return "";
-  }
-};
-
 const Main = ({ match }) => {
   const history = useHistory();
   const {
@@ -109,6 +88,7 @@ const Main = ({ match }) => {
     selectedAdministration,
     advanceSearchValue,
     historyChart,
+    loadedFormId,
   } = UIState.useState((s) => s);
   const [data, setData] = useState([]);
   const [questionGroup, setQuestionGroup] = useState([]);
@@ -140,13 +120,24 @@ const Main = ({ match }) => {
         UIState.update((s) => {
           s.editedRow = {};
           s.historyChart = {};
+          s.loadedFormId = current?.formId;
         });
       });
     }
   }, [user, current]);
 
+  const questionLoaded =
+    loadedFormId !== null && loadedFormId === current?.formId;
+
   useEffect(() => {
-    if (user && current && reloadData && questionGroup && question.length) {
+    if (
+      user &&
+      current &&
+      reloadData &&
+      questionGroup &&
+      question.length &&
+      questionLoaded
+    ) {
       // Reset history chart
       UIState.update((s) => {
         s.historyChart = {};
@@ -209,17 +200,11 @@ const Main = ({ match }) => {
           setData(tableData);
           setTotal(d.data.total);
           setLoading(false);
-          UIState.update((s) => {
-            s.loadedFormId = current.formId;
-          });
         })
         .catch(() => {
           setData([]);
           setTotal(0);
           setLoading(false);
-          UIState.update((s) => {
-            s.loadedFormId = current.formId;
-          });
         });
     }
   }, [
@@ -232,10 +217,11 @@ const Main = ({ match }) => {
     advanceSearchValue,
     questionGroup,
     question,
+    questionLoaded,
   ]);
 
   useEffect(() => {
-    if (user && current) {
+    if (user && current && questionLoaded) {
       const adminId = takeRight(selectedAdministration)[0];
       let url = `last-submitted?form_id=${current.formId}`;
       if (adminId) {
@@ -252,16 +238,22 @@ const Main = ({ match }) => {
           setLastSubmitted({ by: "", at: "" });
         });
     }
-  }, [user, current, selectedAdministration, advanceSearchValue]);
+  }, [
+    user,
+    current,
+    selectedAdministration,
+    advanceSearchValue,
+    questionLoaded,
+  ]);
 
   useEffect(() => {
-    if (current?.tabs) {
+    if (current?.tabs && questionLoaded) {
       const defaultTabSelected = current?.tabs?.find((tab) => tab?.selected);
       setActiveTab(defaultTabSelected?.name || "data");
     } else {
       setActiveTab("data");
     }
-  }, [user, current]);
+  }, [user, current, questionLoaded]);
 
   if (!current) {
     return <ErrorPage status={404} />;
@@ -297,13 +289,7 @@ const Main = ({ match }) => {
         <Row align="top" className="data-container" wrap={true}>
           <Col span={12} xxl={10} className="map-wrapper">
             <div className="container">
-              <MainMaps
-                mapHeight={670}
-                question={questionGroup
-                  .map((q) => q.question)
-                  .flatMap((x) => x)}
-                current={current}
-              />
+              <MainMaps mapHeight={670} question={question} current={current} />
             </div>
           </Col>
           <Col span={12} xxl={14} className="table-wrapper">
@@ -314,16 +300,15 @@ const Main = ({ match }) => {
                 justify="center"
               >
                 <Col span={24}>
-                  {!loading &&
-                    current.tabs.map((tab, tabIndex) => (
-                      <Button
-                        key={`tab-${tabIndex}`}
-                        onClick={() => setActiveTab(tab.name)}
-                        type={activeTab === tab.name ? "primary" : "secondary"}
-                      >
-                        {tab.name}
-                      </Button>
-                    ))}
+                  {current.tabs.map((tab, tabIndex) => (
+                    <Button
+                      key={`tab-${tabIndex}`}
+                      onClick={() => setActiveTab(tab.name)}
+                      type={activeTab === tab.name ? "primary" : "secondary"}
+                    >
+                      {tab.name}
+                    </Button>
+                  ))}
                   <Button
                     onClick={() => setActiveTab("data")}
                     type={activeTab === "data" ? "primary" : "secondary"}
@@ -334,7 +319,7 @@ const Main = ({ match }) => {
               </Row>
             )}
             {current?.tabs?.map((tab, tabIndex) => (
-              <CustomTabComponent
+              <TabContent
                 show={activeTab === tab.name}
                 key={`custom-component-${tabIndex}`}
                 current={current}
