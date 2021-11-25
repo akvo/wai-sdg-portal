@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import List, Optional
 from typing_extensions import TypedDict
 from sqlalchemy.orm import Session
-from sqlalchemy import desc, func
+from sqlalchemy import desc, func, case
 from models.data import Data, DataDict
 from models.views.view_data import ViewData
 from models.answer import AnswerBase
@@ -73,23 +73,37 @@ def get_data(session: Session,
     if administration:
         data = data.filter(Data.administration.in_(administration))
     count = data.count()
-    data = data.order_by(desc(Data.id)).offset(skip).limit(perpage).all()
     # getting the score
     if (question):
-        test = session.query(
+        data_score = session.query(
             ViewDataScore.data,
-            func.sum(ViewDataScore.score).label('sum_score')
-        ).filter(
-            ViewDataScore.form == form
-        ).filter(
-            ViewDataScore.question.in_(question)
-        )
+            func.sum(ViewDataScore.score).label('score')).filter(
+                ViewDataScore.form == form).filter(
+                    ViewDataScore.question.in_(question))
         if data_id:
-            test = test.filter(
-                ViewDataScore.id.in_([d.data for d in data_id])
+            data_score = data_score.filter(
+                ViewDataScore.id.in_([d.data for d in data_id]))
+        data_score = data_score.group_by(ViewDataScore.data).all()
+        # if data have score
+        if (len(data_score)):
+            data_score_temp = []
+            for d in data_score:
+                data_score_temp.append({"data": d.data, "score": d.score})
+            data_score_temp.sort(key=lambda x: x["score"], reverse=True)
+            # order data by score
+            id_ordering = case(
+                {_id: index for index, _id in enumerate(
+                    [d["data"] for d in data_score_temp])},
+                value=Data.id
             )
-        test = test.group_by(ViewDataScore.data).all()
-        print("questions", test)
+            data = data.order_by(id_ordering)
+        else:
+            data = data.order_by(desc(Data.id))
+    else:
+        # if no question order data by id desc
+        data = data.order_by(desc(Data.id))
+
+    data = data.offset(skip).limit(perpage).all()
     return PaginatedData(data=data, count=count)
 
 
