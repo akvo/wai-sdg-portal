@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Space, Popover, List, Button, Affix } from "antd";
-import { InfoCircleOutlined, LineChartOutlined } from "@ant-design/icons";
+import {
+  InfoCircleOutlined,
+  LineChartOutlined,
+  DatabaseOutlined,
+} from "@ant-design/icons";
 import api from "../../util/api";
 import { useHistory } from "react-router-dom";
 
@@ -303,6 +307,7 @@ const Main = ({ match }) => {
                   <Button
                     onClick={() => setActiveTab("data")}
                     type={activeTab === "data" ? "primary" : "secondary"}
+                    icon={<DatabaseOutlined />}
                   >
                     Data
                   </Button>
@@ -311,6 +316,7 @@ const Main = ({ match }) => {
                       key={`tab-${tabIndex}`}
                       onClick={() => setActiveTab(tab.name)}
                       type={activeTab === tab.name ? "primary" : "secondary"}
+                      icon={<LineChartOutlined />}
                     >
                       {tab.name}
                     </Button>

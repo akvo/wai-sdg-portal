@@ -15,13 +15,6 @@ const ODFLine = (data, chartTitle, extra) => {
       text: chartTitle?.title,
       subtext: chartTitle?.subTitle,
     },
-    toolbox: {
-      feature: {
-        dataZoom: {
-          yAxisIndex: false,
-        },
-      },
-    },
     tooltip: {
       trigger: "axis",
       formatter: (p) => {
@@ -78,7 +71,7 @@ const ODFLine = (data, chartTitle, extra) => {
     },
     yAxis: {
       type: "category",
-      data: data.yAxis,
+      data: data.yAxis.reverse(),
       axisLine: {
         show: false,
       },
@@ -92,7 +85,7 @@ const ODFLine = (data, chartTitle, extra) => {
         show: false,
       },
     },
-    series: data.series.map((x, xi) => {
+    series: data.series.map((x) => {
       return {
         type: "line",
         data: x.data.map((g, gi) => ({
