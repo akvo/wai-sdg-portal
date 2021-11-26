@@ -82,7 +82,7 @@ def get_data(session: Session,
                     ViewDataScore.question.in_(question))
         if data_id:
             data_score = data_score.filter(
-                ViewDataScore.id.in_([d.data for d in data_id]))
+                ViewDataScore.data.in_([d.data for d in data_id]))
         data_score = data_score.group_by(ViewDataScore.data).all()
         # if data have score
         if (len(data_score)):
