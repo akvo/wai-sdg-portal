@@ -304,10 +304,12 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
     const gname = g.properties[shapeLevels[shapeLevels.length - 1]];
     let sc = shapeColor.find((s) => s.name === gname);
     let opacity = 0.5;
+    let color = "#00989f";
     if (adminLevel && adminName) {
       sc = g.properties[adminLevel] === adminName.name ? sc : false;
       opacity =
         g.properties[adminLevel] === adminName.name ? (sc ? 1 : 0.8) : 0.5;
+      color = g.properties[adminLevel] === adminName.name ? "#000" : "#00989f";
     }
 
     if (adminName?.name === gname) {
@@ -319,7 +321,7 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
       fillColor: sc ? fillColor(sc.values || 0) : noDataColor,
       fillOpacity: sc ? 1 : opacity,
       opacity: 1,
-      color: opacity === 1 || sc ? "#000" : opacity > 0.5 ? "#000" : "#00989f",
+      color: color,
     };
   };
 

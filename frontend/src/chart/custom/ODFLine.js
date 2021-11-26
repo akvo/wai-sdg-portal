@@ -7,7 +7,20 @@ import {
 } from "../chart-style.js";
 import moment from "moment";
 
+const NoData = {
+  title: {
+    text: "No Data",
+    subtext: "",
+    left: "center",
+    top: "20px",
+    ...TextStyle,
+  },
+};
+
 const ODFLine = (data, chartTitle, extra) => {
+  if (!data?.yAxis?.length) {
+    return NoData;
+  }
   let option = {
     title: {
       ...Title,
@@ -71,7 +84,7 @@ const ODFLine = (data, chartTitle, extra) => {
     },
     yAxis: {
       type: "category",
-      data: data.yAxis.reverse(),
+      data: data.yAxis,
       axisLine: {
         show: false,
       },

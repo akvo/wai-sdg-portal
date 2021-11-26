@@ -30,6 +30,7 @@ const TabContent = ({
       return (
         <TabODF
           show={show}
+          formId={formId}
           setting={chartSetting}
           data={data || []}
           loading={parentLoading}

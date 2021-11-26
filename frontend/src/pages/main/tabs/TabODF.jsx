@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
 import { Row, Col, Spin, Divider, Space, Pagination } from "antd";
+import { UIState } from "../../../state/ui";
 import Chart from "../../../chart";
 
 const dateFormat = "MMM YYYY";
@@ -34,17 +35,32 @@ const TabODF = ({
   loading,
   page,
   total,
+  formId,
   changePage,
   setPerPage,
 }) => {
+  const {
+    user,
+    selectedAdministration,
+    advanceSearchValue,
+    administration,
+    loadedFormId,
+  } = UIState.useState((s) => s);
   const [chartData, setChartData] = useState({
     xAxis: [],
     yAxis: [],
     series: [],
   });
 
+  data = data.reverse();
+
   useEffect(() => {
-    if (data.length) {
+    if (
+      (user,
+      administration.length,
+      data.length,
+      loadedFormId !== null && loadedFormId === formId)
+    ) {
       const values = data
         .map((x) => {
           let name = x.detail.find((v) => v.question === setting.name)?.value;
@@ -87,7 +103,15 @@ const TabODF = ({
       const yAxis = values.map((v) => v.name);
       setChartData({ xAxis: xAxis, yAxis: yAxis, series: values });
     }
-  }, [data, setting]);
+  }, [
+    user,
+    setting,
+    data,
+    formId,
+    administration,
+    selectedAdministration,
+    advanceSearchValue,
+  ]);
 
   if (!setting) {
     return "";
