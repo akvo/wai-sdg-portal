@@ -25,7 +25,6 @@ const MainChart = ({ current, question }) => {
   const [chartData, setChartData] = useState({});
   const [selectedQuestion, setSelectedQuestion] = useState({});
   const [selectedStack, setSelectedStack] = useState({});
-  const [chartSubTitle, setChartSubTitle] = useState([]);
   const [chartTitle, setChartTitle] = useState(null);
 
   // Get question option only
@@ -57,23 +56,14 @@ const MainChart = ({ current, question }) => {
       setLoadingChartData(true);
       let url = `chart/data/${selectedQuestion.form}?question=${selectedQuestion?.id}`;
       let chartTitleTemp = `This chart shows the distribution of {question|${selectedQuestion?.name}}`;
-      let tempChartSubTitle = [];
       // this if we have selected stack
       if (!isEmpty(selectedStack)) {
         url += `&stack=${selectedStack?.id}`;
         chartTitleTemp = `${chartTitleTemp} and selectedStack?.name`;
-        tempChartSubTitle = [
-          ...tempChartSubTitle,
-          upperFirst(selectedStack?.name),
-        ];
       }
       const adminId = takeRight(selectedAdministration)[0];
       if (adminId) {
         url += `&administration=${adminId}`;
-        tempChartSubTitle = [
-          ...tempChartSubTitle,
-          administration?.find((a) => a.id === adminId)?.name,
-        ];
       }
       // advance search
       url = generateAdvanceFilterURL(advanceSearchValue, url);
@@ -86,10 +76,6 @@ const MainChart = ({ current, question }) => {
         chartTitleTemp = `${chartTitleTemp}, where ${filterByText?.join(
           " and "
         )}${adminId ? "," : ""}`;
-        const tempAdvance = advanceSearchValue?.map((x) =>
-          upperFirst(x.option.split("|")?.[1])
-        );
-        tempChartSubTitle = [...tempChartSubTitle, ...tempAdvance];
       }
       // chart title text for administration
       if (adminId) {
@@ -106,7 +92,6 @@ const MainChart = ({ current, question }) => {
       api
         .get(url)
         .then((res) => {
-          setChartSubTitle(tempChartSubTitle);
           let temp = [];
           if (res.data.type === "BAR") {
             temp = selectedQuestion.option.map((opt) => {
@@ -229,7 +214,6 @@ const MainChart = ({ current, question }) => {
               {!isEmpty(chartData) && !loadingChartData ? (
                 <Chart
                   title={chartTitle || ""}
-                  // subTitle={chartSubTitle.join(" - ")}
                   type={chartData.type}
                   data={chartData.data}
                   wrapper={false}

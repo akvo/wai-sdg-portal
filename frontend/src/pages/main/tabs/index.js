@@ -1,7 +1,18 @@
 import TabJMP from "./TabJMP";
 import TabODF from "./TabODF";
 
-const TabContent = ({ parentLoading, show, current, question, self, data }) => {
+const TabContent = ({
+  parentLoading,
+  show,
+  current,
+  question,
+  self,
+  data,
+  page,
+  total,
+  changePage,
+  setPerPage,
+}) => {
   const { component, chartList, chartSetting } = self;
   const { formId } = current;
   switch (component) {
@@ -21,6 +32,10 @@ const TabContent = ({ parentLoading, show, current, question, self, data }) => {
           setting={chartSetting}
           data={data || []}
           loading={parentLoading}
+          page={page}
+          total={total}
+          changePage={changePage}
+          setPerPage={setPerPage}
         />
       );
     default:

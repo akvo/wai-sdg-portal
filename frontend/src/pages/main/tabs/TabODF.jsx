@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
-import { Col, Spin } from "antd";
+import { Row, Col, Spin, Divider, Pagination } from "antd";
 import Chart from "../../../chart";
+
+const dateFormat = "MMM YYYY";
 
 const getRange = (startDate, endDate) => {
   const type = "months";
@@ -12,7 +14,7 @@ const getRange = (startDate, endDate) => {
   for (let i = 0; i < diff; i++) {
     range.push(moment(startDate).add(i, type));
   }
-  return range.map((r) => r.format("YYYY-MM"));
+  return range.map((r) => r.format(dateFormat));
 };
 
 const abrvAdministration = (str) => {
@@ -25,7 +27,16 @@ const abrvAdministration = (str) => {
     .join("");
 };
 
-const TabODF = ({ setting, data, show, loading }) => {
+const TabODF = ({
+  setting,
+  data,
+  show,
+  loading,
+  page,
+  total,
+  changePage,
+  setPerPage,
+}) => {
   const [chartData, setChartData] = useState({
     xAxis: [],
     yAxis: [],
@@ -38,7 +49,6 @@ const TabODF = ({ setting, data, show, loading }) => {
         .map((x) => {
           let name = x.detail.find((v) => v.question === setting.name)?.value;
           const adm = abrvAdministration(x?.name?.props?.record?.name);
-          name = name ? `${name}, ${adm}` : false;
 
           let startDate = x.detail.find((v) => v.question === setting.startDate)
             ?.value;
@@ -52,29 +62,32 @@ const TabODF = ({ setting, data, show, loading }) => {
             ?.value;
 
           return {
-            name: name,
+            name: `${name}, ${adm}`,
             startValue: startValue,
             startDate: startDate ? moment(startDate) : false,
             endValue: endValue,
             endDate: endDate ? moment(endDate) : moment(),
             data: [
-              [startDate ? moment(startDate).format("YYYY-MM") : false, name],
+              [
+                startDate ? moment(startDate).format(dateFormat) : false,
+                `${name}, ${adm}`,
+              ],
               [
                 endDate
-                  ? moment(endDate).format("YYYY-MM")
-                  : moment().format("YYYY-MM"),
-                name,
+                  ? moment(endDate).format(dateFormat)
+                  : moment().format(dateFormat),
+                `${name}, ${adm}`,
               ],
             ],
           };
         })
         .filter((v) => v.name && v.startDate);
       const minDate = moment.min(values.map((v) => v.startDate));
-      const xAxis = getRange(minDate, moment().add(1, "M"));
+      const xAxis = getRange(minDate.add(-1, "M"), moment().add(1, "M"));
       const yAxis = values.map((v) => v.name);
       setChartData({ xAxis: xAxis, yAxis: yAxis, series: values });
     }
-  }, [data]);
+  }, [data, setting]);
 
   if (!setting) {
     return "";
@@ -85,27 +98,49 @@ const TabODF = ({ setting, data, show, loading }) => {
   }
 
   return (
-    <div className="container chart-container">
-      {loading ? (
-        <div className="chart-loading">
-          <Spin />
+    <Row className="container">
+      <Col span={24}>
+        <div className="chart-container odf">
+          {loading ? (
+            <div className="chart-loading">
+              <Spin />
+            </div>
+          ) : (
+            <Col span={24}>
+              <div className="odf-chart">
+                <Chart
+                  title=""
+                  subTitle=""
+                  type={"ODF-LINE"}
+                  data={chartData}
+                  transform={false}
+                  wrapper={false}
+                  height={430}
+                />
+              </div>
+            </Col>
+          )}
         </div>
-      ) : (
-        <Col span={24}>
-          <div className="odf-chart">
-            <Chart
-              title=""
-              subTitle=""
-              type={"ODF-LINE"}
-              data={chartData}
-              transform={false}
-              wrapper={false}
-              height={580}
-            />
-          </div>
-        </Col>
-      )}
-    </div>
+      </Col>
+      <Col span={24}>
+        <Divider />
+        {total ? (
+          <Pagination
+            defaultCurrent={1}
+            current={page}
+            total={total}
+            size="small"
+            onShowSizeChange={(e, s) => {
+              setPerPage(s);
+            }}
+            pageSizeOptions={[10, 20, 50]}
+            onChange={changePage}
+          />
+        ) : (
+          ""
+        )}
+      </Col>
+    </Row>
   );
 };
 

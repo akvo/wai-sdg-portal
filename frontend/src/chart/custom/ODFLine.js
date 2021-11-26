@@ -1,5 +1,4 @@
 import {
-  Easing,
   Color,
   TextStyle,
   backgroundColor,
@@ -16,13 +15,15 @@ const ODFLine = (data, chartTitle, extra) => {
       subtext: chartTitle?.subTitle,
     },
     tooltip: {
-      trigger: "axis",
+      trigger: "item",
     },
     grid: {
-      top: "50px",
+      top: "20px",
+      left: "20px",
+      bottom: "0px",
       containLabel: true,
       label: {
-        color: "#222",
+        color: "#000",
         ...TextStyle,
       },
     },
@@ -34,22 +35,36 @@ const ODFLine = (data, chartTitle, extra) => {
     yAxis: {
       type: "category",
       data: data.yAxis,
+      axisLine: {
+        show: false,
+      },
       axisLabel: {
         ...AxisLabelFormatter,
+        color: "rgba(0, 0, 0, 0.85)",
+        fontWeight: "normal",
+        fontSize: "12px",
+      },
+      axisTick: {
+        show: false,
       },
     },
     series: data.series.map((x, xi) => {
       return {
-        data: x.data,
         type: "line",
+        data: x.data,
+        itemStyle: {
+          color: "#ddd",
+        },
+        lineStyle: {
+          width: 15,
+        },
       };
     }),
+    animation: false,
     ...Color,
     ...backgroundColor,
-    ...Easing,
     ...extra,
   };
-  console.log(option);
   return option;
 };
 

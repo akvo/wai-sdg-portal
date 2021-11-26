@@ -328,6 +328,11 @@ const Main = ({ match }) => {
                 activeTab={activeTab}
                 self={tab}
                 data={data}
+                total={total}
+                setPerPage={setPerPage}
+                changePage={changePage}
+                lastSubmitted={lastSubmitted}
+                page={page}
               />
             ))}
             <MainTable
