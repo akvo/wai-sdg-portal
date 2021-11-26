@@ -1,3 +1,4 @@
+import "./custom.scss";
 import TabJMP from "./TabJMP";
 import TabODF from "./TabODF";
 

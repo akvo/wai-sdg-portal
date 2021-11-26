@@ -1,0 +1,55 @@
+.odf-legend {
+  font-size: 12px;
+  padding: 12px;
+  display: block;
+  text-align: center;
+}
+
+.dot {
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  display: inline-block;
+
+  &.trigered {
+    background-color: #1890ff;
+  }
+
+  &.verified {
+    background-color: #00989f;
+  }
+
+  &.on.going {
+    background-color: #a4a4a4;
+  }
+}
+
+.tooltip-odf {
+  display: block;
+  padding-bottom: 5px;
+  font-size: 12px;
+  color: #000;
+}
+
+.odf-badge {
+  padding: 2px;
+  min-width: 500px;
+  width: 500px;
+  border-radius: 2px;
+  color: #ffffff;
+
+  &.trigered {
+    border: 1px solid #1890ff;
+    background-color: #1890ff;
+  }
+
+  &.verified {
+    border: 1px solid #00989f;
+    background-color: #00989f;
+  }
+
+  &.on.going {
+    border: 1px solid #a4a4a4;
+    background-color: #a4a4a4;
+  }
+}

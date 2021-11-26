@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
-import { Row, Col, Spin, Divider, Pagination } from "antd";
+import { Row, Col, Spin, Divider, Space, Pagination } from "antd";
 import Chart from "../../../chart";
 
 const dateFormat = "MMM YYYY";
@@ -83,7 +83,7 @@ const TabODF = ({
         })
         .filter((v) => v.name && v.startDate);
       const minDate = moment.min(values.map((v) => v.startDate));
-      const xAxis = getRange(minDate.add(-1, "M"), moment().add(1, "M"));
+      const xAxis = getRange(minDate.add(-2, "M"), moment().add(2, "M"));
       const yAxis = values.map((v) => v.name);
       setChartData({ xAxis: xAxis, yAxis: yAxis, series: values });
     }
@@ -107,6 +107,14 @@ const TabODF = ({
             </div>
           ) : (
             <Col span={24}>
+              <div className="odf-legend">
+                <Space>
+                  <span className="dot trigered" />
+                  Initial Number of Laterines
+                  <span className="dot verified" />
+                  Final Number of Laterines
+                </Space>
+              </div>
               <div className="odf-chart">
                 <Chart
                   title=""
@@ -115,7 +123,7 @@ const TabODF = ({
                   data={chartData}
                   transform={false}
                   wrapper={false}
-                  height={440}
+                  height={390}
                 />
               </div>
             </Col>

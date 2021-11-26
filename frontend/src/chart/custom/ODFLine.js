@@ -15,8 +15,41 @@ const ODFLine = (data, chartTitle, extra) => {
       text: chartTitle?.title,
       subtext: chartTitle?.subTitle,
     },
+    toolbox: {
+      feature: {
+        dataZoom: {
+          yAxisIndex: false,
+        },
+      },
+    },
     tooltip: {
       trigger: "axis",
+      formatter: (p) => {
+        const start = p[0].dataIndex === 0;
+        const sentences = p.map((d) => {
+          const v = d.data.data;
+          let title = start ? "Trigered" : v.endValue ? "Verified" : "On Going";
+          let date = start ? v.startDate : v.endDate;
+          date = moment(date._d).format("DD MMM, YY");
+          let value = start ? v.startValue : v.endValue;
+          return [
+            "<div class='tooltip-odf'><span class='odf-badge ",
+            title.toLowerCase(),
+            "'>",
+            title,
+            " @ ",
+            date,
+            "</span> ",
+            v.name,
+            " (",
+            value || v.startValue,
+            ")</div>",
+          ]
+            .filter((x) => x)
+            .join("");
+        });
+        return sentences.join("");
+      },
     },
     grid: {
       top: "20px",
@@ -62,7 +95,14 @@ const ODFLine = (data, chartTitle, extra) => {
     series: data.series.map((x, xi) => {
       return {
         type: "line",
-        data: x.data.map((g) => ({ value: g, data: x })),
+        data: x.data.map((g, gi) => ({
+          value: g,
+          data: x,
+          label: {
+            position: gi === 0 ? "left" : "right",
+            color: gi === 0 ? "#1890ff" : "#00989f",
+          },
+        })),
         itemStyle: {
           color: (p) => {
             const start = p.dataIndex === 0;
@@ -74,7 +114,7 @@ const ODFLine = (data, chartTitle, extra) => {
           },
         },
         lineStyle: {
-          width: 7,
+          width: 2,
           color: "#a4a4a4",
         },
         label: {
@@ -83,6 +123,7 @@ const ODFLine = (data, chartTitle, extra) => {
             const val = p.data.data;
             return p.dataIndex === 0 ? val.startValue : val.endValue;
           },
+          fontWeight: "bold",
         },
         symbol: "circle",
         symbolSize: 7,
