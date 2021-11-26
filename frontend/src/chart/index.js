@@ -4,8 +4,9 @@ import ReactECharts from "echarts-for-react";
 import Bar from "./Bar";
 import Line from "./Line";
 import BarStack from "./BarStack";
-import JmpBarStack from "./JmpBarStack";
 import Pie from "./Pie";
+import JMPBarStack from "./custom/JMPBarStack";
+import ODFLine from "./custom/ODFLine";
 
 export const generateOptions = ({ type, data, chartTitle }, extra) => {
   switch (type) {
@@ -13,12 +14,14 @@ export const generateOptions = ({ type, data, chartTitle }, extra) => {
       return Line(data, chartTitle, extra);
     case "BARSTACK":
       return BarStack(data, chartTitle, extra);
-    case "JMP-BARSTACK":
-      return JmpBarStack(data, chartTitle, extra);
     case "PIE":
       return Pie(data, chartTitle, extra);
     case "DOUGHNUT":
       return Pie(data, chartTitle, extra, true);
+    case "JMP-BARSTACK":
+      return JMPBarStack(data, chartTitle, extra);
+    case "ODF-LINE":
+      return ODFLine(data, chartTitle, extra);
     default:
       return Bar(data, chartTitle, extra);
   }
@@ -35,12 +38,15 @@ const Chart = ({
   wrapper = true,
   axis = null,
   styles = {},
+  transform = true,
 }) => {
-  data = data.map((x) => ({
-    ...x,
-    name: x.name,
-    var: x.name,
-  }));
+  if (transform) {
+    data = data.map((x) => ({
+      ...x,
+      name: x.name,
+      var: x.name,
+    }));
+  }
   const chartTitle = wrapper ? {} : { title: title, subTitle: subTitle };
   const option = generateOptions(
     { type: type, data: data, chartTitle: chartTitle },

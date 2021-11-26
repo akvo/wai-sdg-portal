@@ -1,7 +1,8 @@
 import TabJMP from "./TabJMP";
+import TabODF from "./TabODF";
 
-const TabContent = ({ show, current, question, self }) => {
-  const { component, chartList } = self;
+const TabContent = ({ parentLoading, show, current, question, self, data }) => {
+  const { component, chartList, chartSetting } = self;
   const { formId } = current;
   switch (component) {
     case "JMP-CHARTS":
@@ -13,8 +14,15 @@ const TabContent = ({ show, current, question, self }) => {
           question={question}
         />
       );
-    case "CLTS-PROGRESS-CHARTS":
-      return <div>CLTS PROGRESS CHARTS</div>;
+    case "ODF-CHARTS":
+      return (
+        <TabODF
+          show={show}
+          setting={chartSetting}
+          data={data || []}
+          loading={parentLoading}
+        />
+      );
     default:
       return "";
   }

@@ -316,11 +316,11 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
     }
 
     return {
-      weight: opacity == 1 ? 2 : 1,
+      weight: opacity === 1 ? 2 : 1,
       fillColor: sc ? fillColor(sc.values || 0) : noDataColor,
       fillOpacity: sc ? 1 : opacity,
       opacity: 1,
-      color: opacity == 1 || sc ? "#00989f" : "#00989f",
+      color: opacity === 1 || sc ? "#00989f" : "#00989f",
     };
   };
 

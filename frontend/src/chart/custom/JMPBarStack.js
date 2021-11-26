@@ -5,7 +5,7 @@ import {
   AxisLabelFormatter,
   Legend,
   Title,
-} from "./chart-style.js";
+} from "../chart-style.js";
 import uniq from "lodash/uniq";
 import isEmpty from "lodash/isEmpty";
 import sortBy from "lodash/sortBy";
@@ -20,7 +20,7 @@ const NoData = {
   },
 };
 
-const JmpBarStack = (data, chartTitle, extra) => {
+const JMPBarStack = (data, chartTitle, extra) => {
   if (isEmpty(data) || !data) {
     return NoData;
   }
@@ -127,4 +127,4 @@ const JmpBarStack = (data, chartTitle, extra) => {
   return option;
 };
 
-export default JmpBarStack;
+export default JMPBarStack;

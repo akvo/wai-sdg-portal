@@ -300,6 +300,12 @@ const Main = ({ match }) => {
                 justify="center"
               >
                 <Col span={24}>
+                  <Button
+                    onClick={() => setActiveTab("data")}
+                    type={activeTab === "data" ? "primary" : "secondary"}
+                  >
+                    Data
+                  </Button>
                   {current.tabs.map((tab, tabIndex) => (
                     <Button
                       key={`tab-${tabIndex}`}
@@ -309,23 +315,19 @@ const Main = ({ match }) => {
                       {tab.name}
                     </Button>
                   ))}
-                  <Button
-                    onClick={() => setActiveTab("data")}
-                    type={activeTab === "data" ? "primary" : "secondary"}
-                  >
-                    Data
-                  </Button>
                 </Col>
               </Row>
             )}
             {current?.tabs?.map((tab, tabIndex) => (
               <TabContent
+                parentLoading={loading}
                 show={activeTab === tab.name}
                 key={`custom-component-${tabIndex}`}
                 current={current}
                 question={question}
                 activeTab={activeTab}
                 self={tab}
+                data={data}
               />
             ))}
             <MainTable
