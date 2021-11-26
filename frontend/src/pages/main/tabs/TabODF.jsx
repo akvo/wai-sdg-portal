@@ -115,7 +115,7 @@ const TabODF = ({
                   data={chartData}
                   transform={false}
                   wrapper={false}
-                  height={430}
+                  height={440}
                 />
               </div>
             </Col>
