@@ -113,6 +113,21 @@ var page_config = {
         ],
       },
     ],
+    tabs: [
+      {
+        name: "Progress",
+        component: "ODF-CHARTS",
+        selected: true,
+        showPagination: true,
+        chartSetting: {
+          name: 2,
+          startValue: 5,
+          startDate: 7,
+          endValue: 6,
+          endDate: 10,
+        },
+      },
+    ],
   },
   health: {
     title: "Health Facility",
