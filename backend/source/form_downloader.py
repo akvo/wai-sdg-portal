@@ -61,8 +61,8 @@ def set_dependency(q, qs):
     if "dependency" in q:
         qs.update({
             "dependency": [{
-                "id": q["dependency"]["question"],
-                "options": [q["dependency"]["answer-value"]]
+                "id": int(q["dependency"]["question"]),
+                "options": q["dependency"]["answer-value"].split("|")
             }]
         })
     return qs
@@ -133,5 +133,5 @@ for form_id in form_ids:
         res = generate_form(form)
         form_name = res["form"]
         form_id = str(res["id"])
-        dest.write(json.dumps(res, indent=4))
+        dest.write(json.dumps(res, indent=2))
         print(f"DOWNLOADED : {form_id} - {form_name}")
