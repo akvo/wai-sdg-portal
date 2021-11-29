@@ -255,21 +255,25 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
     })
     .value();
 
-  const domain = shapeColor.reduce(
-    (acc, curr) => {
-      const v = curr.values;
-      const [min, max] = acc;
-      return [min, v > max ? v : max];
-    },
-    [0, 0]
-  );
+  const domain = shapeColor
+    .reduce(
+      (acc, curr) => {
+        const v = curr.values;
+        const [min, max] = acc;
+        return [min, v > max ? v : max];
+      },
+      [0, 0]
+    )
+    .map((acc, index) => {
+      if (index && acc) {
+        acc =
+          Math.pow(10, Math.floor(Math.log(acc) / Math.log(10))) *
+          colorRange.length;
+      }
+      return acc;
+    });
 
-  const pow = domain[1]
-    ? Math.pow(10, Math.floor(Math.log(domain[1]) / Math.log(10))) *
-      colorRange.length
-    : 0;
-
-  const colorScale = scaleQuantize().domain([domain[0], pow]).range(colorRange);
+  const colorScale = scaleQuantize().domain(domain).range(colorRange);
 
   const adminLevel = [false, ...shapeLevels][selectedAdministration.length - 1];
 
