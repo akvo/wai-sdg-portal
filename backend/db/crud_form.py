@@ -7,7 +7,7 @@ from models.form import Form, FormDict, FormBase
 def add_form(
     session: Session,
     name: str,
-    id: Optional[int],
+    id: Optional[int] = None,
 ) -> FormDict:
     form = Form(name=name, id=id)
     session.add(form)
