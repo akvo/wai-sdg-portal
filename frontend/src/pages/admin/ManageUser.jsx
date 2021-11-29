@@ -157,9 +157,6 @@ const ManageUser = () => {
       .catch((err) => {
         console.error(err);
         setUsers([]);
-        notification.error({
-          message: "Ops, something went wrong",
-        });
       })
       .finally(() => {
         setTableLoading(false);
