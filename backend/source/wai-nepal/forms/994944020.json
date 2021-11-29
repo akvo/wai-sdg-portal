@@ -1,0 +1,5485 @@
+{
+  "form": "Household Survey",
+  "id": 994944020,
+  "question_groups": [
+    {
+      "question_group": "Demographics",
+      "questions": [
+        {
+          "id": 998904008,
+          "question": "Geolocation of household",
+          "order": 1,
+          "meta": true,
+          "type": "geo",
+          "required": true,
+          "options": null
+        },
+        {
+          "question": "location",
+          "order": 2,
+          "required": true,
+          "type": "administration",
+          "meta": true
+        },
+        {
+          "id": 990964013,
+          "question": "Name of the community/Tole",
+          "order": 3,
+          "meta": true,
+          "type": "text",
+          "required": true,
+          "options": null
+        },
+        {
+          "id": 962764007,
+          "question": "What is the gender of the respondent",
+          "order": 4,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Female",
+              "color": null
+            },
+            {
+              "name": "Male",
+              "color": null
+            },
+            {
+              "name": "Other",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 980774009,
+          "question": "What is your name?",
+          "order": 5,
+          "meta": true,
+          "type": "text",
+          "required": true,
+          "options": null
+        },
+        {
+          "id": 998914012,
+          "question": "What is your age?",
+          "order": 6,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "rule": {
+            "max": "115.0"
+          }
+        },
+        {
+          "id": 1191094197,
+          "question": "Do you have a phone number?",
+          "order": 7,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1168164138,
+          "question": "What is your phone number?",
+          "order": 8,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 1191094197,
+              "options": [
+                "Yes"
+              ]
+            }
+          ],
+          "rule": {
+            "max": "9.999999999E9",
+            "min": "9.111111111E9"
+          }
+        },
+        {
+          "id": 976454019,
+          "question": "What is the total number of household members, including yourself?",
+          "order": 9,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "rule": {
+            "max": "50.0",
+            "min": "1.0"
+          }
+        },
+        {
+          "id": 964684019,
+          "question": "Do you have children under the age of 5 years?",
+          "order": 10,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1175984154,
+          "question": "How many boy child you have under 5?",
+          "order": 11,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 964684019,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1173964191,
+          "question": "How many girl child you have under 5?",
+          "order": 12,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 964684019,
+              "options": [
+                "Yes"
+              ]
+            }
+          ],
+          "rule": {
+            "max": "9.0",
+            "min": "0.0"
+          }
+        },
+        {
+          "id": 978784010,
+          "question": "[enumerator verification] Does the total number of household members match the amount in the previous question?",
+          "order": 15,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 998894032,
+          "question": "Who is the head of the household?",
+          "order": 16,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Male member",
+              "color": null
+            },
+            {
+              "name": "Female member",
+              "color": null
+            },
+            {
+              "name": "Male Child member",
+              "color": null
+            },
+            {
+              "name": "Female Child member",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 980774010,
+          "question": "What the marital status of the head of the the household?",
+          "order": 17,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Unmarried",
+              "color": null
+            },
+            {
+              "name": "Married",
+              "color": null
+            },
+            {
+              "name": "Separated",
+              "color": null
+            },
+            {
+              "name": "Widowed",
+              "color": null
+            },
+            {
+              "name": "Divorced",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 987284014,
+          "question": "What is your religion?",
+          "order": 18,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Hinduism",
+              "color": null
+            },
+            {
+              "name": "Buddhism",
+              "color": null
+            },
+            {
+              "name": "Islam",
+              "color": null
+            },
+            {
+              "name": "Christianity",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 950844027,
+          "question": "What is your ethnicity?",
+          "order": 19,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Brahman/Chhetri/Thakuri",
+              "color": null
+            },
+            {
+              "name": "Janajati",
+              "color": null
+            },
+            {
+              "name": "Dalit",
+              "color": null
+            },
+            {
+              "name": "Madheshi",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 974704032,
+          "question": "Can the head of the household read and/or write?",
+          "order": 20,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, can read and write",
+              "color": null
+            },
+            {
+              "name": "No, cannot read or write",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 989134004,
+          "question": "What is the highest level of education that the head of the household has completed?",
+          "order": 21,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "None",
+              "color": null
+            },
+            {
+              "name": "Primary school",
+              "color": null
+            },
+            {
+              "name": "Secondary school (9-12)",
+              "color": null
+            },
+            {
+              "name": "Vocational",
+              "color": null
+            },
+            {
+              "name": "College/University",
+              "color": null
+            },
+            {
+              "name": "Other (specify)",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1000904005,
+          "question": "If other, please specify",
+          "order": 22,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 989134004,
+              "options": [
+                "Other (specify)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 966794010,
+          "question": "What is your households primary source of income?",
+          "order": 23,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Agriculturalist",
+              "color": null
+            },
+            {
+              "name": "Pastoralist",
+              "color": null
+            },
+            {
+              "name": "Petty trading",
+              "color": null
+            },
+            {
+              "name": "Small business owner",
+              "color": null
+            },
+            {
+              "name": "Household help",
+              "color": null
+            },
+            {
+              "name": "Casual labor",
+              "color": null
+            },
+            {
+              "name": "Construction",
+              "color": null
+            },
+            {
+              "name": "Factory work",
+              "color": null
+            },
+            {
+              "name": "Garment worker",
+              "color": null
+            },
+            {
+              "name": "Wholesale and retail",
+              "color": null
+            },
+            {
+              "name": "Hotels and restaurants",
+              "color": null
+            },
+            {
+              "name": "Transport (Driver including Rikshaw)",
+              "color": null
+            },
+            {
+              "name": "Real estate activities and rental",
+              "color": null
+            },
+            {
+              "name": "Remittances (from abroad)",
+              "color": null
+            },
+            {
+              "name": "Government employee",
+              "color": null
+            },
+            {
+              "name": "NGO",
+              "color": null
+            },
+            {
+              "name": "Pension",
+              "color": null
+            },
+            {
+              "name": "Other (specify)",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 950844029,
+          "question": "If other, please specify",
+          "order": 24,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 966794010,
+              "options": [
+                "Other (specify)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 992934020,
+          "question": "Does anyone from your household have difficulty walking or climbing steps?",
+          "order": 25,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "No, no difficulty",
+              "color": null
+            },
+            {
+              "name": "Some difficulty",
+              "color": null
+            },
+            {
+              "name": "A lot of difficulty",
+              "color": null
+            },
+            {
+              "name": "Cannot do at all",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 998904012,
+          "question": "Does anyone from your household have difficulty with self-care such as washing all over (bathing), eating or dressing?",
+          "order": 26,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "No, no difficulty",
+              "color": null
+            },
+            {
+              "name": "Some difficulty",
+              "color": null
+            },
+            {
+              "name": "A lot of difficulty",
+              "color": null
+            },
+            {
+              "name": "Cannot do at all",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 989104011,
+          "question": "Do you or any member of your household have difficulty seeing, even if wearing glasses?",
+          "order": 27,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "No, no difficulty",
+              "color": null
+            },
+            {
+              "name": "Some difficulty",
+              "color": null
+            },
+            {
+              "name": "A lot of difficulty",
+              "color": null
+            },
+            {
+              "name": "Cannot do at all",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 996904018,
+          "question": "Do you or any member of your household have difficulty remembering or concentrating?",
+          "order": 28,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "No, no difficulty",
+              "color": null
+            },
+            {
+              "name": "Some difficulty",
+              "color": null
+            },
+            {
+              "name": "A lot of difficulty",
+              "color": null
+            },
+            {
+              "name": "Cannot do at all",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 998904015,
+          "question": "Do you or any member of your household have difficulty hearing, even if using a hearing aid?",
+          "order": 29,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "No, no difficulty",
+              "color": null
+            },
+            {
+              "name": "Some difficulty",
+              "color": null
+            },
+            {
+              "name": "A lot of difficulty",
+              "color": null
+            },
+            {
+              "name": "Cannot do at all",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 998894038,
+          "question": "Using your usual language, do you or any member of your household have difficulty communicating?",
+          "order": 30,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "No, no difficulty",
+              "color": null
+            },
+            {
+              "name": "Some difficulty",
+              "color": null
+            },
+            {
+              "name": "A lot of difficulty",
+              "color": null
+            },
+            {
+              "name": "Cannot do at all",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 954714013,
+          "question": "Who is spending most time caring for this person / these persons within the household?",
+          "order": 31,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Elderly female",
+              "color": null
+            },
+            {
+              "name": "Elderly male",
+              "color": null
+            },
+            {
+              "name": "Adult female",
+              "color": null
+            },
+            {
+              "name": "Adult male",
+              "color": null
+            },
+            {
+              "name": "Female child",
+              "color": null
+            },
+            {
+              "name": "Male child",
+              "color": null
+            },
+            {
+              "name": "Other female member of the household",
+              "color": null
+            },
+            {
+              "name": "Other male member of the household",
+              "color": null
+            },
+            {
+              "name": "NA (not applicable)",
+              "color": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Wealth",
+      "questions": [
+        {
+          "id": 989094019,
+          "question": "Do you or any member of your household have a television?",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 994944029,
+          "question": "Do you or any member of your household have a refrigerator?",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 998904017,
+          "question": "Do you or any member of your household have a phone?",
+          "order": 3,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 966794012,
+          "question": "Do you or any member of your household have a bicycle?",
+          "order": 4,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 978774015,
+          "question": "Do you or any member of your household have a car?",
+          "order": 5,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 992934025,
+          "question": "Looking at items that you and your household members have. Do you and the members of your household own one or more cheap utensils that are worth less than $ 50 per item?",
+          "order": 6,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 964684029,
+          "question": "Looking at items that you and your household members have. Do you and the members of your household possess utensils that worth more than $ 250 per item?",
+          "order": 7,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 998904018,
+          "question": "Does your household have electricity?",
+          "order": 8,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 968494021,
+          "question": "What kind of floor material is used in your house?",
+          "order": 9,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "high quality (floor finished with parquet, carpet, tiles, linoleum, ceramic, etc)",
+              "color": null
+            },
+            {
+              "name": "middle quality (cement, concrete, wood, bamboo, etc)",
+              "color": null
+            },
+            {
+              "name": "low quality (none, earth, dung, etc)",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 980774015,
+          "question": "How many rooms does your household has for sleeping?",
+          "order": 10,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Zero or One",
+              "color": null
+            },
+            {
+              "name": "Two",
+              "color": null
+            },
+            {
+              "name": "Three or more",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Water",
+      "questions": [
+        {
+          "id": 980764019,
+          "question": "What is the main source of drinking water used by members of your household?",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Piped water into dwelling (household connection)",
+              "color": null
+            },
+            {
+              "name": "Piped water to yard/plot",
+              "color": null
+            },
+            {
+              "name": "Public tap/standpipe",
+              "color": null
+            },
+            {
+              "name": "Deep tubewell/borehole",
+              "color": null
+            },
+            {
+              "name": "Shallow tubewell/borehole",
+              "color": null
+            },
+            {
+              "name": "Shared Deep tube well / shallow tube well",
+              "color": null
+            },
+            {
+              "name": "Protected dug well",
+              "color": null
+            },
+            {
+              "name": "Unprotected dug well",
+              "color": null
+            },
+            {
+              "name": "Protected spring",
+              "color": null
+            },
+            {
+              "name": "Unprotected spring",
+              "color": null
+            },
+            {
+              "name": "Rainwater collection",
+              "color": null
+            },
+            {
+              "name": "Bottled water",
+              "color": null
+            },
+            {
+              "name": "Cart with small tank/drum",
+              "color": null
+            },
+            {
+              "name": "Tanker-truck",
+              "color": null
+            },
+            {
+              "name": "Surface water",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 998894041,
+          "question": "What is the main source of water used by your household for other purposes, such as cooking and hand washing?",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Piped water into dwelling (household connection)",
+              "color": null
+            },
+            {
+              "name": "Piped water to yard/plot",
+              "color": null
+            },
+            {
+              "name": "Public tap/standpipe",
+              "color": null
+            },
+            {
+              "name": "Deep tubewell/borehole",
+              "color": null
+            },
+            {
+              "name": "Shallow tubewell/borehole",
+              "color": null
+            },
+            {
+              "name": "Protected dug well",
+              "color": null
+            },
+            {
+              "name": "Unprotected dug well",
+              "color": null
+            },
+            {
+              "name": "Protected spring",
+              "color": null
+            },
+            {
+              "name": "Unprotected spring",
+              "color": null
+            },
+            {
+              "name": "Rainwater collection",
+              "color": null
+            },
+            {
+              "name": "Bottled water",
+              "color": null
+            },
+            {
+              "name": "Cart with small tank/drum",
+              "color": null
+            },
+            {
+              "name": "Tanker-truck",
+              "color": null
+            },
+            {
+              "name": "Surface water",
+              "color": null
+            },
+            {
+              "name": "Shared Deep tubewell / shallow tube well",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 976454028,
+          "question": "The rest of the questions is about the main drinking water source. Where is that water collected from?",
+          "order": 3,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "In own dwelling",
+              "color": null
+            },
+            {
+              "name": "In own yard / plot",
+              "color": null
+            },
+            {
+              "name": "Elsewhere",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 980764019,
+              "options": [
+                "Public tap/standpipe",
+                "Deep tubewell/borehole",
+                "Shallow tubewell/borehole",
+                "Protected dug well",
+                "Unprotected dug well",
+                "Protected spring",
+                "Unprotected spring",
+                "Rainwater collection",
+                "Cart with small tank/drum",
+                "Tanker-truck",
+                "Surface water"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 974704044,
+          "question": "What is the distance to this water source?",
+          "order": 4,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Less than 500 meters",
+              "color": null
+            },
+            {
+              "name": "More than 500 meters",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 976454028,
+              "options": [
+                "Elsewhere"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 978774018,
+          "question": "How long does it take to go there, get water and come back?",
+          "order": 5,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Less than 30 minutes",
+              "color": null
+            },
+            {
+              "name": "More than 30 minutes",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 976454028,
+              "options": [
+                "Elsewhere"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 976454029,
+          "question": "Who usually goes to this source to collect the water for your household?  (only one answer possible)",
+          "order": 6,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Adult woman",
+              "color": null
+            },
+            {
+              "name": "Adult man",
+              "color": null
+            },
+            {
+              "name": "Female child (under 15 years)",
+              "color": null
+            },
+            {
+              "name": "Male child (under 15 years)",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 976454028,
+              "options": [
+                "Elsewhere"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 980764023,
+          "question": "In the last week (since 7 days ago), how many times has this person collected water?",
+          "order": 7,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 976454029,
+              "options": [
+                "Adult woman",
+                "Adult man",
+                "Female child (under 15 years)",
+                "Male child (under 15 years)"
+              ]
+            }
+          ],
+          "rule": {
+            "max": "50.0"
+          }
+        },
+        {
+          "id": 989094023,
+          "question": "Who owns your main water source?",
+          "order": 8,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Own - household",
+              "color": null
+            },
+            {
+              "name": "Community",
+              "color": null
+            },
+            {
+              "name": "Private sector",
+              "color": null
+            },
+            {
+              "name": "Government",
+              "color": null
+            },
+            {
+              "name": "A neighbour",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 989084028,
+          "question": "How many years ago was the water connection installed ?",
+          "order": 9,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 989094023,
+              "options": [
+                "Own - household"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 992934028,
+          "question": "How much water do you get from your main source per day? (in liters)",
+          "order": 10,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null
+        },
+        {
+          "id": 996904024,
+          "question": "In the last month, has there been any time when your household did not have sufficient quantities of drinking water?",
+          "order": 11,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, at least once",
+              "color": null
+            },
+            {
+              "name": "No, always sufficient",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 987284021,
+          "question": "What was the main reason that you were unable to access water in sufficient quantities when needed?",
+          "order": 12,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Water not always available from source",
+              "color": null
+            },
+            {
+              "name": "Water too expensive",
+              "color": null
+            },
+            {
+              "name": "Source not accessible",
+              "color": null
+            },
+            {
+              "name": "Other (specify)",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 996904024,
+              "options": [
+                "Yes, at least once"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 950844035,
+          "question": "If other, please specify",
+          "order": 13,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 987284021,
+              "options": [
+                "Other (specify)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 998904022,
+          "question": "During the last year, have you experienced one of the following problems/conflicts? - mark which one they have experienced - multiple answers possible",
+          "order": 14,
+          "meta": false,
+          "type": "multiple_option",
+          "required": true,
+          "options": [
+            {
+              "name": "Water is dirty",
+              "color": null
+            },
+            {
+              "name": "Water is saline",
+              "color": null
+            },
+            {
+              "name": "Water supply is irregular",
+              "color": null
+            },
+            {
+              "name": "Water point is far away",
+              "color": null
+            },
+            {
+              "name": "Water source dries up",
+              "color": null
+            },
+            {
+              "name": "Water source gets flooded",
+              "color": null
+            },
+            {
+              "name": "Water gets polluted",
+              "color": null
+            },
+            {
+              "name": "Fluoride content is high",
+              "color": null
+            },
+            {
+              "name": "Arsenic content is high",
+              "color": null
+            },
+            {
+              "name": "Iron content is high",
+              "color": null
+            },
+            {
+              "name": "Taste is not good",
+              "color": null
+            },
+            {
+              "name": "Taste is too much chloride",
+              "color": null
+            },
+            {
+              "name": "Other",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 998904024,
+          "question": "Do you or any other household member do anything to the water to make it safer to drink?",
+          "order": 15,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 992934029,
+          "question": "What do you usally do to the water to make it safer to drink?",
+          "order": 16,
+          "meta": false,
+          "type": "multiple_option",
+          "required": true,
+          "options": [
+            {
+              "name": "Boil",
+              "color": null
+            },
+            {
+              "name": "Add bleach/chlorine",
+              "color": null
+            },
+            {
+              "name": "Strain it through a cloth",
+              "color": null
+            },
+            {
+              "name": "Use a water filter (ceramic, sand, composite etc.)",
+              "color": null
+            },
+            {
+              "name": "Solar disinfection",
+              "color": null
+            },
+            {
+              "name": "Let it stand and settle",
+              "color": null
+            },
+            {
+              "name": "Other (specify)",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 998904024,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 989084026,
+          "question": "Specify",
+          "order": 17,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 992934029,
+              "options": [
+                "Other (specify)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 974704047,
+          "question": "What do you think about the availability of  water treatment products?",
+          "order": 18,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Easy to get",
+              "color": null
+            },
+            {
+              "name": "Difficult to get",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 962764013,
+          "question": "What do you think of the prices of treatment products?",
+          "order": 19,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Cheap",
+              "color": null
+            },
+            {
+              "name": "Reasonably",
+              "color": null
+            },
+            {
+              "name": "Expensive",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 974704047,
+              "options": [
+                "Easy to get",
+                "Difficult to get"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 962764014,
+          "question": "Does your household pay for the drinking water?",
+          "order": 20,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 966794018,
+          "question": "How much do you on average pay monthly for drinking water? (in local currency)",
+          "order": 21,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 962764014,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 998894050,
+          "question": "How do you perceive the amount you pay for drinking water?",
+          "order": 22,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Cheap",
+              "color": null
+            },
+            {
+              "name": "Reasonable",
+              "color": null
+            },
+            {
+              "name": "Expensive",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 962764014,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 998894051,
+          "question": "In case you have issues with your water supply, do you know where to go to?",
+          "order": 23,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 980764025,
+          "question": "In case yes, where could you go to?",
+          "order": 24,
+          "meta": false,
+          "type": "multiple_option",
+          "required": true,
+          "options": [
+            {
+              "name": "Private mechanic",
+              "color": null
+            },
+            {
+              "name": "WASH or user committee",
+              "color": null
+            },
+            {
+              "name": "NGO",
+              "color": null
+            },
+            {
+              "name": "Community member",
+              "color": null
+            },
+            {
+              "name": "We will fix ourselves",
+              "color": null
+            },
+            {
+              "name": "CBO - community based organisation",
+              "color": null
+            },
+            {
+              "name": "Ward/Municipal office",
+              "color": null
+            },
+            {
+              "name": "WASH divisional office",
+              "color": null
+            },
+            {
+              "name": "Other (specify)",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 998894051,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 994944035,
+          "question": "Specify",
+          "order": 25,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 980764025,
+              "options": [
+                "Other (specify)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 968494025,
+          "question": "What is your relation with the water related government authority?",
+          "order": 26,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "I don't know about a water related government authority",
+              "color": null
+            },
+            {
+              "name": "I do know they are there, but I don't know what they are doing",
+              "color": null
+            },
+            {
+              "name": "I know they are there and I am informed about what they are doing",
+              "color": null
+            },
+            {
+              "name": "I know they are there, I am informed about what they are doing and they are activtely involve community members",
+              "color": null
+            },
+            {
+              "name": "Other, specify",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 964684035,
+          "question": "If other, please specify",
+          "order": 27,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 968494025,
+              "options": [
+                "Other, specify"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 974714021,
+          "question": "Were you consulted on the location of the water point before it was constructed?",
+          "order": 28,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, I have been consulted",
+              "color": null
+            },
+            {
+              "name": "No, I have been asked, but they did not listen to me",
+              "color": null
+            },
+            {
+              "name": "No- I was not living here when it was constructed",
+              "color": null
+            },
+            {
+              "name": "No- I was not asked",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 980764019,
+              "options": [
+                "Public tap/standpipe",
+                "Deep tubewell/borehole",
+                "Shallow tubewell/borehole",
+                "Protected dug well",
+                "Unprotected dug well"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 974714022,
+          "question": "Are you able to use this main water source for drinking water all year round?",
+          "order": 29,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No, not in the dry season",
+              "color": null
+            },
+            {
+              "name": "No not in the rainy season",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 954714027,
+          "question": "If no, where do you then get your drinking water from?",
+          "order": 30,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Piped water into dwelling (household connection)",
+              "color": null
+            },
+            {
+              "name": "Piped water to yard/plot",
+              "color": null
+            },
+            {
+              "name": "Public tap/standpipe",
+              "color": null
+            },
+            {
+              "name": "Deep tubewell/borehole",
+              "color": null
+            },
+            {
+              "name": "Shallow tubewell/borehole",
+              "color": null
+            },
+            {
+              "name": "Shared deep tube well/ shallow tube well",
+              "color": null
+            },
+            {
+              "name": "Protected dug well",
+              "color": null
+            },
+            {
+              "name": "Unprotected dug well",
+              "color": null
+            },
+            {
+              "name": "Protected spring",
+              "color": null
+            },
+            {
+              "name": "Unprotected spring",
+              "color": null
+            },
+            {
+              "name": "Rainwater collection",
+              "color": null
+            },
+            {
+              "name": "Bottled water",
+              "color": null
+            },
+            {
+              "name": "Cart with small tank/drum",
+              "color": null
+            },
+            {
+              "name": "Tanker-truck",
+              "color": null
+            },
+            {
+              "name": "Surface water",
+              "color": null
+            },
+            {
+              "name": "Neighbour's tap/shallow tube well/deep tube well",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 974714022,
+              "options": [
+                "No, not in the dry season",
+                "No not in the rainy season"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 978784025,
+          "question": "Has your primary water source been tested for quality?",
+          "order": 31,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 992934032,
+          "question": "If yes, who tested it?",
+          "order": 32,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Government",
+              "color": null
+            },
+            {
+              "name": "NGO",
+              "color": null
+            },
+            {
+              "name": "Own initiatives",
+              "color": null
+            },
+            {
+              "name": "Tube well sinker",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            },
+            {
+              "name": "Other (specify)",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 978784025,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 966794023,
+          "question": "If other, please specify",
+          "order": 33,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 992934032,
+              "options": [
+                "Other (specify)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 978784026,
+          "question": "If yes, what was the result?",
+          "order": 34,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Water was contaminated",
+              "color": null
+            },
+            {
+              "name": "Water was safe",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 978784025,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 987284027,
+          "question": "If no, why not?",
+          "order": 35,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "I was not aware about the need for water testing",
+              "color": null
+            },
+            {
+              "name": "I didn\u2019t think it is very important to get water tested",
+              "color": null
+            },
+            {
+              "name": "I believed that my drinking water is not contaminated",
+              "color": null
+            },
+            {
+              "name": "I did not know where and how to get the water tested",
+              "color": null
+            },
+            {
+              "name": "It is very expensive and unaffordable to get water tested",
+              "color": null
+            },
+            {
+              "name": "It is a very complicated process to get water tested",
+              "color": null
+            },
+            {
+              "name": "No one from Government or NGO approached us to offer water testing service",
+              "color": null
+            },
+            {
+              "name": "I don't know",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 978784025,
+              "options": [
+                "No"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1193014153,
+          "question": "Do you want your drinking water quality tested in this survey?",
+          "order": 36,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1175964135,
+          "question": "I am giving you a water quality test code",
+          "order": 37,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 1193014153,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Household sanitation",
+      "questions": [
+        {
+          "id": 962764019,
+          "question": "Do you use a latrine/toilet for defecation?",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 998904029,
+          "question": "What kind of toilet facility do members of your household usually use for defecation?",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Toilet that flush/pour to flush piped sewer system",
+              "color": null
+            },
+            {
+              "name": "Toilet that flush/pour to septic tank",
+              "color": null
+            },
+            {
+              "name": "Toilet that flush/pour to pit latrine",
+              "color": null
+            },
+            {
+              "name": "Toilet that flush/pour to elsewhere",
+              "color": null
+            },
+            {
+              "name": "Toilet that flush/pour to don't know",
+              "color": null
+            },
+            {
+              "name": "Ventilated Improved Pit latrine (VIP)",
+              "color": null
+            },
+            {
+              "name": "Twinpit offset latrine",
+              "color": null
+            },
+            {
+              "name": "Pit latrine with slab",
+              "color": null
+            },
+            {
+              "name": "Pit latrine without slab/open pit",
+              "color": null
+            },
+            {
+              "name": "Composting toilet",
+              "color": null
+            },
+            {
+              "name": "Bucket",
+              "color": null
+            },
+            {
+              "name": "Hanging toilet/hanging latrine",
+              "color": null
+            },
+            {
+              "name": "Other (specify)",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 962764019,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 950844044,
+          "question": "Specify",
+          "order": 3,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 998904029,
+              "options": [
+                "Other (specify)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 954714031,
+          "question": "Why are you not using a toilet/latrine?",
+          "order": 4,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "There is no latrine",
+              "color": null
+            },
+            {
+              "name": "Latrine is too far away",
+              "color": null
+            },
+            {
+              "name": "Bad quality of existing latrines (regardless of type of latrine)",
+              "color": null
+            },
+            {
+              "name": "It does not feel safe enough to use the latrine",
+              "color": null
+            },
+            {
+              "name": "Preference to defecate in the open",
+              "color": null
+            },
+            {
+              "name": "Cultural beliefs",
+              "color": null
+            },
+            {
+              "name": "I don't know that I am supposed to use a latrine",
+              "color": null
+            },
+            {
+              "name": "Other (specify)",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 962764019,
+              "options": [
+                "No"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 989084033,
+          "question": "If other, please specify",
+          "order": 5,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 954714031,
+              "options": [
+                "Other (specify)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 974714025,
+          "question": "Where do you defecate?",
+          "order": 6,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Neighbour toilet",
+              "color": null
+            },
+            {
+              "name": "Pit latrine",
+              "color": null
+            },
+            {
+              "name": "Temporary covered place",
+              "color": null
+            },
+            {
+              "name": "Beside the river",
+              "color": null
+            },
+            {
+              "name": "Open field",
+              "color": null
+            },
+            {
+              "name": "Forest",
+              "color": null
+            },
+            {
+              "name": "Other (specify)",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 962764019,
+              "options": [
+                "No"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 989094030,
+          "question": "If other, please specify",
+          "order": 7,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 974714025,
+              "options": [
+                "Other (specify)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 996904032,
+          "question": "Where is this toilet facility located?",
+          "order": 8,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "In own dwelling",
+              "color": null
+            },
+            {
+              "name": "In own plot/yard",
+              "color": null
+            },
+            {
+              "name": "Elsewhere",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 962764019,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 989104026,
+          "question": "Do you share this facility with others who are not members of your household?",
+          "order": 9,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 962764019,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 980774023,
+          "question": "Do you share this facility only with members of other households that you know, or is the facility open to the use of the general public?",
+          "order": 10,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Shared with known households",
+              "color": null
+            },
+            {
+              "name": "Shared with general public",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 989104026,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 998904032,
+          "question": "How many households in total use this toilet facility, including your own household?",
+          "order": 11,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 989104026,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 980774024,
+          "question": "Do you pay for using the latrine?",
+          "order": 12,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 996904032,
+              "options": [
+                "Elsewhere"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 989084036,
+          "question": "How much do you pay for using the latrine?",
+          "order": 13,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 980774024,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 966794030,
+          "question": "How do you perceive the amount you have to pay for using the latrine?",
+          "order": 14,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Cheap",
+              "color": null
+            },
+            {
+              "name": "Reasonable",
+              "color": null
+            },
+            {
+              "name": "Expensive",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 980774024,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 966794031,
+          "question": "Were you consulted on the location of the latrine before it was constructed?",
+          "order": 15,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No- I was not here when it was constructed",
+              "color": null
+            },
+            {
+              "name": "No- I was not asked",
+              "color": null
+            },
+            {
+              "name": "No- They did not listen to me",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 996904032,
+              "options": [
+                "Elsewhere"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 989084037,
+          "question": "How do you manage the child stools?",
+          "order": 16,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Child uses toilet/latrine",
+              "color": null
+            },
+            {
+              "name": "Put/rinsed into toilet or latrine",
+              "color": null
+            },
+            {
+              "name": "Put/rinsed into drain or ditch",
+              "color": null
+            },
+            {
+              "name": "Thrown into garbage",
+              "color": null
+            },
+            {
+              "name": "Buried",
+              "color": null
+            },
+            {
+              "name": "Left in the open",
+              "color": null
+            },
+            {
+              "name": "Other (specify)",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 964684019,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 994934020,
+          "question": "How would you rate the availability of latrine materials and construction services? (e.g. focus on the latrine/pit itself, not the materials for constructing the compartment)",
+          "order": 17,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Easy to get",
+              "color": null
+            },
+            {
+              "name": "Moderate to get",
+              "color": null
+            },
+            {
+              "name": "Difficult to get",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 998914028,
+          "question": "Has your facility ever been emptied?",
+          "order": 18,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, within the last 5 years",
+              "color": null
+            },
+            {
+              "name": "Yes, more than 5 years ago",
+              "color": null
+            },
+            {
+              "name": "Yes, but don't know when",
+              "color": null
+            },
+            {
+              "name": "No, never emptied",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 998904029,
+              "options": [
+                "Toilet that flush/pour to septic tank",
+                "Toilet that flush/pour to pit latrine",
+                "Ventilated Improved Pit latrine (VIP)",
+                "Twinpit offset latrine",
+                "Pit latrine with slab",
+                "Pit latrine without slab/open pit",
+                "Composting toilet"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 980774026,
+          "question": "If yes, how much did it cost? (in local currency)",
+          "order": 19,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 998914028,
+              "options": [
+                "Yes, within the last 5 years",
+                "Yes, more than 5 years ago",
+                "Yes, but don't know when"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 998904035,
+          "question": "If yes, how do you perceive this amount?",
+          "order": 20,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Cheap",
+              "color": null
+            },
+            {
+              "name": "Reasonable",
+              "color": null
+            },
+            {
+              "name": "Expensive",
+              "color": null
+            },
+            {
+              "name": "don't know",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 998914028,
+              "options": [
+                "Yes, within the last 5 years",
+                "Yes, more than 5 years ago",
+                "Yes, but don't know when"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 994944042,
+          "question": "If yes, the last time it was emptied, where were the contents emptied to?",
+          "order": 21,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "By service provider to a treatment plant",
+              "color": null
+            },
+            {
+              "name": "By service provider buried in a covered pit",
+              "color": null
+            },
+            {
+              "name": "By service provider but don't know where",
+              "color": null
+            },
+            {
+              "name": "By household buried in a covered pit",
+              "color": null
+            },
+            {
+              "name": "By household to uncovered pit, open ground, water body or elsewhere",
+              "color": null
+            },
+            {
+              "name": "Other (specify)",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 998914028,
+              "options": [
+                "Yes, within the last 5 years",
+                "Yes, more than 5 years ago",
+                "Yes, but don't know when"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 954714036,
+          "question": "If other, please specify",
+          "order": 22,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 994944042,
+              "options": [
+                "Other (specify)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 976454039,
+          "question": "If no, why not?",
+          "order": 23,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Latrine is not full",
+              "color": null
+            },
+            {
+              "name": "Latrine is connected to drain",
+              "color": null
+            },
+            {
+              "name": "Latrine doesn't need to be emptied (biogas, ecosan)",
+              "color": null
+            },
+            {
+              "name": "Other (specify)",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 998914028,
+              "options": [
+                "No, never emptied"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 989084039,
+          "question": "If other, please specify",
+          "order": 24,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 976454039,
+              "options": [
+                "Other (specify)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 974714029,
+          "question": "Looking at qualified pit emptiers, what do you think of their availability",
+          "order": 25,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Skilled pit emptiers are well available here",
+              "color": null
+            },
+            {
+              "name": "Pit emptiers are well available but not always skilled",
+              "color": null
+            },
+            {
+              "name": "Pit emptiers are well available but never skilled",
+              "color": null
+            },
+            {
+              "name": "Pit emptiers are not well available",
+              "color": null
+            },
+            {
+              "name": "No pit emptiers are available",
+              "color": null
+            },
+            {
+              "name": "Other (specify)",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 998914028,
+              "options": [
+                "Yes, within the last 5 years",
+                "Yes, more than 5 years ago",
+                "Yes, but don't know when",
+                "No, never emptied",
+                "Don't know"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 978784032,
+          "question": "If other, please specify",
+          "order": 26,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 974714029,
+              "options": [
+                "Other (specify)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 989104030,
+          "question": "Have you carried out any maintenance to your latrine in the past year?",
+          "order": 27,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 996904032,
+              "options": [
+                "In own dwelling",
+                "In own plot/yard"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 954714038,
+          "question": "Is there a separate latrine for female members?",
+          "order": 28,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 962764019,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 989094033,
+          "question": "How do you dispose your waste?",
+          "order": 29,
+          "meta": false,
+          "type": "multiple_option",
+          "required": true,
+          "options": [
+            {
+              "name": "Burn",
+              "color": null
+            },
+            {
+              "name": "Burry",
+              "color": null
+            },
+            {
+              "name": "Dump in flowing water",
+              "color": null
+            },
+            {
+              "name": "Dump on road sides",
+              "color": null
+            },
+            {
+              "name": "In a public bin",
+              "color": null
+            },
+            {
+              "name": "Garbage tractor",
+              "color": null
+            },
+            {
+              "name": "Recycle",
+              "color": null
+            },
+            {
+              "name": "Reuse",
+              "color": null
+            },
+            {
+              "name": "Compost",
+              "color": null
+            },
+            {
+              "name": "Other (specify)",
+              "color": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Household hygiene",
+      "questions": [
+        {
+          "id": 964694034,
+          "question": "At what moments did you wash your hands yesterday?",
+          "order": 1,
+          "meta": false,
+          "type": "multiple_option",
+          "required": true,
+          "options": [
+            {
+              "name": "Never",
+              "color": null
+            },
+            {
+              "name": "After toileting/defecation",
+              "color": null
+            },
+            {
+              "name": "Before preparing or serving food",
+              "color": null
+            },
+            {
+              "name": "Before eating",
+              "color": null
+            },
+            {
+              "name": "Before feeding children",
+              "color": null
+            },
+            {
+              "name": "After handling child's faeces",
+              "color": null
+            },
+            {
+              "name": "After using dirts (working in fields, handling cattle,etc.)",
+              "color": null
+            },
+            {
+              "name": "Before using sanitary pad",
+              "color": null
+            },
+            {
+              "name": "After using Sanitary pad",
+              "color": null
+            },
+            {
+              "name": "Other (specify)",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 980774033,
+          "question": "If other, please specify",
+          "order": 2,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 964694034,
+              "options": [
+                "Other (specify)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 962764024,
+          "question": "What do you think about the availability of soap?",
+          "order": 3,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Easy to get",
+              "color": null
+            },
+            {
+              "name": "Difficult to get",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 968494032,
+          "question": "What do you think about the price?",
+          "order": 4,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Cheap",
+              "color": null
+            },
+            {
+              "name": "Reasonable",
+              "color": null
+            },
+            {
+              "name": "Expensive",
+              "color": null
+            },
+            {
+              "name": "Don\u2019t know",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 962764024,
+              "options": [
+                "Easy to get",
+                "Difficult to get"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 976454045,
+          "question": "What kind of material do you/household members use for anal cleansing?",
+          "order": 5,
+          "meta": false,
+          "type": "multiple_option",
+          "required": true,
+          "options": [
+            {
+              "name": "Toilet paper",
+              "color": null
+            },
+            {
+              "name": "Water",
+              "color": null
+            },
+            {
+              "name": "Paper/piece of news paper",
+              "color": null
+            },
+            {
+              "name": "Leaf",
+              "color": null
+            },
+            {
+              "name": "Stone",
+              "color": null
+            },
+            {
+              "name": "None",
+              "color": null
+            },
+            {
+              "name": "Other (specify)",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 968494033,
+          "question": "If other, please specify",
+          "order": 6,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 976454045,
+              "options": [
+                "Other (specify)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 962764025,
+          "question": "What do you think about the availability of this material?",
+          "order": 7,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Easy to get",
+              "color": null
+            },
+            {
+              "name": "Difficult to get",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 976454045,
+              "options": [
+                "Toilet paper"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 974704063,
+          "question": "What do you think about the price?",
+          "order": 8,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Cheap",
+              "color": null
+            },
+            {
+              "name": "Reasonable",
+              "color": null
+            },
+            {
+              "name": "Expensive",
+              "color": null
+            },
+            {
+              "name": "Don\u2019t know",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 962764025,
+              "options": [
+                "Easy to get",
+                "Difficult to get"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 978774041,
+          "question": "Have you or any of your family members received a hygiene related message?",
+          "order": 9,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 989104034,
+          "question": "Whom did you or your family members receive those messages from?",
+          "order": 10,
+          "meta": false,
+          "type": "multiple_option",
+          "required": true,
+          "options": [
+            {
+              "name": "Parents",
+              "color": null
+            },
+            {
+              "name": "Friends",
+              "color": null
+            },
+            {
+              "name": "Teachers",
+              "color": null
+            },
+            {
+              "name": "TV",
+              "color": null
+            },
+            {
+              "name": "Radio",
+              "color": null
+            },
+            {
+              "name": "Internet",
+              "color": null
+            },
+            {
+              "name": "Youth club",
+              "color": null
+            },
+            {
+              "name": "Religious leaders",
+              "color": null
+            },
+            {
+              "name": "Other (specify)",
+              "color": null
+            },
+            {
+              "name": "NGOs",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 978774041,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 998904039,
+          "question": "If other, please specify",
+          "order": 11,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 989104034,
+              "options": [
+                "Other (specify)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 994944048,
+          "question": "What do female members in your household use during menstruation?",
+          "order": 12,
+          "meta": false,
+          "type": "multiple_option",
+          "required": true,
+          "options": [
+            {
+              "name": "Cloth",
+              "color": null
+            },
+            {
+              "name": "Toilet paper",
+              "color": null
+            },
+            {
+              "name": "Only underwear",
+              "color": null
+            },
+            {
+              "name": "Sanitary pad",
+              "color": null
+            },
+            {
+              "name": "Cotton",
+              "color": null
+            },
+            {
+              "name": "Other (specify)",
+              "color": null
+            },
+            {
+              "name": "There is no household member menstruating",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 962764007,
+              "options": [
+                "Female",
+                "Male"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 980774037,
+          "question": "If other, please specify",
+          "order": 13,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 994944048,
+              "options": [
+                "Other (specify)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 998904040,
+          "question": "What do you think about the availability of sanitary pads?",
+          "order": 14,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Easy to get",
+              "color": null
+            },
+            {
+              "name": "Difficult to get",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 994944048,
+              "options": [
+                "Cloth",
+                "Toilet paper",
+                "Only underwear",
+                "Sanitary pad",
+                "Cotton",
+                "Other (specify)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1183284242,
+          "question": "How would you dispose sanitary pads?",
+          "order": 15,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Throw into bush/open space/environment",
+              "color": null
+            },
+            {
+              "name": "Buried",
+              "color": null
+            },
+            {
+              "name": "Throw into latrine",
+              "color": null
+            },
+            {
+              "name": "Throw into garbage",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 994944048,
+              "options": [
+                "Sanitary pad"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 954714044,
+          "question": "How many times do you change the cloth?",
+          "order": 16,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Once a day",
+              "color": null
+            },
+            {
+              "name": "Twice a day",
+              "color": null
+            },
+            {
+              "name": "Three or more times a day",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 994944048,
+              "options": [
+                "Cloth"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1166014273,
+          "question": "If you use cloth, how do you dry it?",
+          "order": 17,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Direct sun dry",
+              "color": null
+            },
+            {
+              "name": "Inside dark area room",
+              "color": null
+            },
+            {
+              "name": "Covered with other cloth",
+              "color": null
+            },
+            {
+              "name": "Dried in open ground or wood",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 994944048,
+              "options": [
+                "Cloth"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 994944050,
+          "question": "Did any of your female going school children of the household stay home during menstruation?",
+          "order": 18,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, because she had a lot of pain",
+              "color": null
+            },
+            {
+              "name": "Yes, because school does not have proper WASH facilities",
+              "color": null
+            },
+            {
+              "name": "Yes, because they are not allowed to",
+              "color": null
+            },
+            {
+              "name": "Yes, but I don\u2019t know why",
+              "color": null
+            },
+            {
+              "name": "Yes, other reason (specify)",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 994944048,
+              "options": [
+                "Cloth",
+                "Toilet paper",
+                "Only underwear",
+                "Sanitary pad",
+                "Cotton",
+                "Other (specify)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 989104037,
+          "question": "If other, please specify",
+          "order": 19,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 994944050,
+              "options": [
+                "Yes, other reason (specify)"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Households other questions",
+      "questions": [
+        {
+          "id": 974704065,
+          "question": "[introduction] I would like to ask you about investments in your WASH facilities. First I am asking about costs for operation and maintenance. Then I would like to talk about investments for new construction. Is that distinction clear?",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": false,
+          "options": [
+            {
+              "name": "Understood",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 962764031,
+          "question": "[questions about maintenance] During the last year, have you spent money on the operation and maintenance of WASH facilities and services?",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 987284039,
+          "question": "If yes, how much? (Local currency)",
+          "order": 3,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 962764031,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 976454049,
+          "question": "How would you rate the availability of spare parts and other materials needed for maintaining?",
+          "order": 4,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Easy to get",
+              "color": null
+            },
+            {
+              "name": "Moderate to get",
+              "color": null
+            },
+            {
+              "name": "Difficult to get",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 978774046,
+          "question": "And how do you perceive the costs for this?",
+          "order": 5,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Cheap",
+              "color": null
+            },
+            {
+              "name": "Reasonable",
+              "color": null
+            },
+            {
+              "name": "Expensive",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 980764040,
+          "question": "[questions about investment] During the last year, have you spend money on the construction of WASH facilities (e.g. latrine, hand washing place or drinking water facility)?",
+          "order": 6,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 998894076,
+          "question": "If yes, what was the total amount of money you invested?",
+          "order": 7,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 980764040,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 962764032,
+          "question": "Did you take a loan from a financial institutions (incl. MFI)?",
+          "order": 8,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 980764040,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 978784038,
+          "question": "What were your other sources of funding?",
+          "order": 9,
+          "meta": false,
+          "type": "multiple_option",
+          "required": true,
+          "options": [
+            {
+              "name": "Household savings/income",
+              "color": null
+            },
+            {
+              "name": "Support from neighbours/friends/relatives",
+              "color": null
+            },
+            {
+              "name": "Loan from neighbours/friends/relatives",
+              "color": null
+            },
+            {
+              "name": "Loan from self-help groups (non-formal)",
+              "color": null
+            },
+            {
+              "name": "Loan from community savings groups/credit groups",
+              "color": null
+            },
+            {
+              "name": "Support from NGO/CBO",
+              "color": null
+            },
+            {
+              "name": "Other",
+              "color": null
+            },
+            {
+              "name": "No other sources of funding",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 980764040,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 978774048,
+          "question": "If other, please specify",
+          "order": 10,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 978784038,
+              "options": [
+                "Other"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 989084049,
+          "question": "How much of your own money did you invest (in local currency)?",
+          "order": 11,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 978784038,
+              "options": [
+                "Household savings/income"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 989104041,
+          "question": "How much did you loan from neighbours/friends/relatives?",
+          "order": 12,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 978784038,
+              "options": [
+                "Loan from neighbours/friends/relatives"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 978774049,
+          "question": "How much did you get support from neighbours/friends/relatives?",
+          "order": 13,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 978784038,
+              "options": [
+                "Support from neighbours/friends/relatives"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 994944051,
+          "question": "What is the size of the loan (in local currency) from self-help groups?",
+          "order": 14,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 978784038,
+              "options": [
+                "Loan from self-help groups (non-formal)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 966794042,
+          "question": "What is the size of the loan (in local currency) from community savings groups / credit groups?",
+          "order": 15,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 978784038,
+              "options": [
+                "Loan from community savings groups/credit groups"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 974704066,
+          "question": "What is the size of the loan (in local currency) from financial instutions?",
+          "order": 16,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 962764032,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 987284042,
+          "question": "[Enumerator verification] add up all the gifts and loans. Ask if the sum is corect and write it down below",
+          "order": 17,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 980764040,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 964694041,
+          "question": "How do you perceive the amount you have invested to construct the latrine?",
+          "order": 18,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Cheap",
+              "color": null
+            },
+            {
+              "name": "Reasonable",
+              "color": null
+            },
+            {
+              "name": "Expensive",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 978784038,
+              "options": [
+                "Household savings/income"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 974704067,
+          "question": "Have you considered taking a loan from a formal institution?",
+          "order": 19,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 962764032,
+              "options": [
+                "No"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 998894078,
+          "question": "Why didn't you consider a loan from a formal institution?",
+          "order": 20,
+          "meta": false,
+          "type": "multiple_option",
+          "required": true,
+          "options": [
+            {
+              "name": "No loan products available",
+              "color": null
+            },
+            {
+              "name": "Interest rate is too high / I cannot pay it back",
+              "color": null
+            },
+            {
+              "name": "I cannot access a loan",
+              "color": null
+            },
+            {
+              "name": "I am not aware, I don't think it is possible",
+              "color": null
+            },
+            {
+              "name": "I am not eligible",
+              "color": null
+            },
+            {
+              "name": "Is too expensive",
+              "color": null
+            },
+            {
+              "name": "The amount requested is too low, a loan is not possible",
+              "color": null
+            },
+            {
+              "name": "Other",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 974704067,
+              "options": [
+                "No"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 954714048,
+          "question": "During the last two weeks, has any child under 5 of your household had diarrhoea (a condition in which faeces are discharged from the bowels frequently and in a liquid form)?",
+          "order": 21,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 964684019,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 980774042,
+          "question": "Did he/she go to a health facility?",
+          "order": 22,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 954714048,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 978774051,
+          "question": "Has any other member of your household (>5 years old) had diarrhea in the past two weeks?",
+          "order": 23,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 964694042,
+          "question": "Did he/she go to a health facility?",
+          "order": 24,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 978774051,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 994944053,
+          "question": "Is your household part of a saving & credit group?",
+          "order": 25,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 978774052,
+          "question": "Who in your household takes part in that saving & credit group?",
+          "order": 26,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Female member",
+              "color": null
+            },
+            {
+              "name": "Male member",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 994944053,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 994934033,
+          "question": "Do you or does someone in your household has a bank account?",
+          "order": 27,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 962764032,
+              "options": [
+                "No"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 954714049,
+          "question": "Is there a WASH group in your community?",
+          "order": 28,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 994934034,
+          "question": "Is someone within your household part of a water user assocation or water committee?",
+          "order": 29,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No, there is no water user association",
+              "color": null
+            },
+            {
+              "name": "There is a water user assocation but we are not part of it",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 954714049,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 962764034,
+          "question": "Who in your household is part of this water user association?",
+          "order": 30,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "A female member",
+              "color": null
+            },
+            {
+              "name": "A male member",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 994934034,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 964694045,
+          "question": "Is there a women group in your community?",
+          "order": 31,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 976454053,
+          "question": "Is there a group or organisation for disabled people in your community?",
+          "order": 32,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Female participation",
+      "questions": [
+        {
+          "id": 998914039,
+          "question": "[observation] Is the respondent alone during the interview or is she with her husband, children and/or extended family?",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Alone",
+              "color": null
+            },
+            {
+              "name": "With children",
+              "color": null
+            },
+            {
+              "name": "With husband or other extended family",
+              "color": null
+            },
+            {
+              "name": "With other(s)",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 962764007,
+              "options": [
+                "Female"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 964694048,
+          "question": "Can everyone in your household express their opinion (talk) whenever they want?",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, everyone can express their opinion without hesitation",
+              "color": null
+            },
+            {
+              "name": "Most people can express their opinion",
+              "color": null
+            },
+            {
+              "name": "Only some members of the family can express their opinion (specify)",
+              "color": null
+            },
+            {
+              "name": "With other(s)",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 962764007,
+              "options": [
+                "Female"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 964694049,
+          "question": "Specify",
+          "order": 3,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 964694048,
+              "options": [
+                "Only some members of the family can express their opinion (specify)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 976454055,
+          "question": "Do members of your household listen to you  / the female member when they speak?",
+          "order": 4,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, always",
+              "color": null
+            },
+            {
+              "name": "Sometimes (specify)",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 962764007,
+              "options": [
+                "Female"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 998894081,
+          "question": "Could you please elaborate on your answer?",
+          "order": 5,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 976454055,
+              "options": [
+                "Sometimes (specify)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 994944056,
+          "question": "Does everyone has an equal contribution to the decision?",
+          "order": 6,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No, female members have a larger contribution",
+              "color": null
+            },
+            {
+              "name": "No, male members have a larger contirubtion",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 962764007,
+              "options": [
+                "Female"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 976454056,
+          "question": "Do you /  the female members feel comfortable to go outside the house whenever they want?",
+          "order": 7,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, whenever they want",
+              "color": null
+            },
+            {
+              "name": "Yes, after they get permission from the head of the household/husband or elderlies within the household",
+              "color": null
+            },
+            {
+              "name": "Sometimes, when a male member is accompanying them",
+              "color": null
+            },
+            {
+              "name": "No, they don't feel comfortable going outside of the house",
+              "color": null
+            },
+            {
+              "name": "Prefer Not to Answer",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 962764007,
+              "options": [
+                "Female"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 976454057,
+          "question": "Which factors make them feel uncomfortable?",
+          "order": 8,
+          "meta": false,
+          "type": "multiple_option",
+          "required": true,
+          "options": [
+            {
+              "name": "Safety and security",
+              "color": null
+            },
+            {
+              "name": "Cultural/family customs",
+              "color": null
+            },
+            {
+              "name": "Costs",
+              "color": null
+            },
+            {
+              "name": "Lack of proper transportation or roads",
+              "color": null
+            },
+            {
+              "name": "Other (specify)",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 976454056,
+              "options": [
+                "Sometimes, when a male member is accompanying them",
+                "No, they don't feel comfortable going outside of the house"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 976454058,
+          "question": "Specify",
+          "order": 9,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 976454057,
+              "options": [
+                "Other (specify)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 950844067,
+          "question": "Do you / the female members have attended a community/public meeting in the past?",
+          "order": 10,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No, I / they have been invited but did not attend",
+              "color": null
+            },
+            {
+              "name": "No, I / they have not been invited",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 962764007,
+              "options": [
+                "Female"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 998894084,
+          "question": "Was one of them WASH related?",
+          "order": 11,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 950844067,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 976454060,
+          "question": "Did you feel respected when attending these meetings?",
+          "order": 12,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "Sometimes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 950844067,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 989104046,
+          "question": "What made you feel so?",
+          "order": 13,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "I could not make the final decision",
+              "color": null
+            },
+            {
+              "name": "I was not allowed to speak",
+              "color": null
+            },
+            {
+              "name": "I was not listened to",
+              "color": null
+            },
+            {
+              "name": "I was not offered a proper seat/sitting place",
+              "color": null
+            },
+            {
+              "name": "I was often Interrupted",
+              "color": null
+            },
+            {
+              "name": "I was asked to leave the meeting",
+              "color": null
+            },
+            {
+              "name": "I was laughed at",
+              "color": null
+            },
+            {
+              "name": "I am poor",
+              "color": null
+            },
+            {
+              "name": "I come from a minority group",
+              "color": null
+            },
+            {
+              "name": "Specify",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 976454060,
+              "options": [
+                "Sometimes",
+                "No"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 966794051,
+          "question": "If other, please specify",
+          "order": 14,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 989104046,
+              "options": [
+                "Specify"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 950844069,
+          "question": "What made you feel so?",
+          "order": 15,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "I could  speak",
+              "color": null
+            },
+            {
+              "name": "I was listened to",
+              "color": null
+            },
+            {
+              "name": "I was offered a good place to sit",
+              "color": null
+            },
+            {
+              "name": "Others were quiet when I talked",
+              "color": null
+            },
+            {
+              "name": "My suggestion was accepted",
+              "color": null
+            },
+            {
+              "name": "The decision was made based on my input",
+              "color": null
+            },
+            {
+              "name": "Other (specify)",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 976454060,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 987284047,
+          "question": "If other, please specify",
+          "order": 16,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 950844069,
+              "options": [
+                "Other (specify)"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Observation water",
+      "questions": [
+        {
+          "id": 978774055,
+          "question": "Have a look at the drinking water that is present in the house. What do you see?",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Water looks dirty and contaminated",
+              "color": null
+            },
+            {
+              "name": "Water looks clean",
+              "color": null
+            },
+            {
+              "name": "Cannot observe",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 996904047,
+          "question": "Can I take a photograph or your water point?",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Observation hygiene",
+      "questions": [
+        {
+          "id": 978784050,
+          "question": "What kind of container do you use to store the food? Can you show it?",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Respondent shows a covered container",
+              "color": null
+            },
+            {
+              "name": "Respondent shows an open container",
+              "color": null
+            },
+            {
+              "name": "Respondent says covered container, but does not show",
+              "color": null
+            },
+            {
+              "name": "Respondent says open container, but does not show",
+              "color": null
+            },
+            {
+              "name": "Respondent has no desginated container to store food",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 996904048,
+          "question": "What kind of container do you use to store your drinking water? Can you show it?",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Respondent shows a covered container",
+              "color": null
+            },
+            {
+              "name": "Respondent shows an open container",
+              "color": null
+            },
+            {
+              "name": "Respondent says covered container, but does not show",
+              "color": null
+            },
+            {
+              "name": "Respondent says open container, but does not show",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 994944060,
+          "question": "We would like to learn where members of this household wash their hands. Can you please show me where members of your household most often wash their hands?",
+          "order": 3,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Fixed facility observed in dwelling",
+              "color": null
+            },
+            {
+              "name": "Fixed facility observed in plot/yard",
+              "color": null
+            },
+            {
+              "name": "Mobile object observed (bucket, jug, kettle)",
+              "color": null
+            },
+            {
+              "name": "No handwashing place available in dwelling/plot/yard",
+              "color": null
+            },
+            {
+              "name": "No permission to see",
+              "color": null
+            },
+            {
+              "name": "Other reason (specify)",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 994934042,
+          "question": "If other, please specify",
+          "order": 4,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 994944060,
+              "options": [
+                "Other reason (specify)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 962764039,
+          "question": "Observe presence of water at the place for handwashing (verify by checking bucket, container etc.)",
+          "order": 5,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Water is available",
+              "color": null
+            },
+            {
+              "name": "Water is not available",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 994944060,
+              "options": [
+                "Fixed facility observed in dwelling",
+                "Fixed facility observed in plot/yard",
+                "Mobile object observed (bucket, jug, kettle)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 966794053,
+          "question": "Is soap or detergent present at the place of handwashing?",
+          "order": 6,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, soap or detergent are present",
+              "color": null
+            },
+            {
+              "name": "Ash/mud/sand is present",
+              "color": null
+            },
+            {
+              "name": "No, not present",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 994944060,
+              "options": [
+                "Fixed facility observed in dwelling",
+                "Fixed facility observed in plot/yard",
+                "Mobile object observed (bucket, jug, kettle)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 989084062,
+          "question": "Do the hand wash products and facility look like they are regularly being used?",
+          "order": 7,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            },
+            {
+              "name": "Don't know / cannot see",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 994944060,
+              "options": [
+                "Fixed facility observed in dwelling",
+                "Fixed facility observed in plot/yard",
+                "Mobile object observed (bucket, jug, kettle)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 994944063,
+          "question": "Is the hand washing place located within 5 meters from the latrine?",
+          "order": 8,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            },
+            {
+              "name": "Don't know / cannot see",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 994944060,
+              "options": [
+                "Fixed facility observed in dwelling",
+                "Fixed facility observed in plot/yard",
+                "Mobile object observed (bucket, jug, kettle)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 994934043,
+          "question": "Do you have any soap or detergent, or ash/mud/sand in your house for washing hands?",
+          "order": 9,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, soap, liquid soap or detergent",
+              "color": null
+            },
+            {
+              "name": "Yes, Ash/mud/sand",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 994944060,
+              "options": [
+                "No permission to see"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Observation latrine",
+      "questions": [
+        {
+          "id": 989104051,
+          "question": "We would like to observe your latrine, is that ok?",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, consent is given by respondent",
+              "color": null
+            },
+            {
+              "name": "No, respondent doesn't want to",
+              "color": null
+            },
+            {
+              "name": "No, latrine is not located in own dwelling or plot/yard",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 996904032,
+              "options": [
+                "In own dwelling",
+                "In own plot/yard"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 962764043,
+          "question": "Is a covered bin available inside the latrine?",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 989104051,
+              "options": [
+                "Yes, consent is given by respondent"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 966794057,
+          "question": "Is a functioning lock available inside the latrine?",
+          "order": 3,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 989104051,
+              "options": [
+                "Yes, consent is given by respondent"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 976454065,
+          "question": "Is a functioning light available inside the latrine?",
+          "order": 4,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 989104051,
+              "options": [
+                "Yes, consent is given by respondent"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 978774060,
+          "question": "In general, how clean is the latrine?",
+          "order": 5,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Clean",
+              "color": null
+            },
+            {
+              "name": "Somewhat clean",
+              "color": null
+            },
+            {
+              "name": "Not clean",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 989104051,
+              "options": [
+                "Yes, consent is given by respondent"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 992934059,
+          "question": "Does the latrine provide privacy?",
+          "order": 6,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "Somewhat",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 989104051,
+              "options": [
+                "Yes, consent is given by respondent"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 976454066,
+          "question": "Does the latrine have a good superstructure?",
+          "order": 7,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "Somewhat",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 989104051,
+              "options": [
+                "Yes, consent is given by respondent"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 996904052,
+          "question": "Does the latrine smell?",
+          "order": 8,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "Somewhat",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 989104051,
+              "options": [
+                "Yes, consent is given by respondent"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 989094049,
+          "question": "Are there a lot of flies in the latrine?",
+          "order": 9,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "Somewhat",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 989104051,
+              "options": [
+                "Yes, consent is given by respondent"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Water Quality",
+      "questions": [
+        {
+          "id": 1175974340,
+          "question": "Will you conduct water quality test in this house?",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1168184250,
+          "question": "Type the code of the household",
+          "order": 2,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 1175974340,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

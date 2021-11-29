@@ -1,0 +1,2392 @@
+{
+  "form": "WASH in Health Centres",
+  "id": 1189144226,
+  "question_groups": [
+    {
+      "question_group": "Demographics",
+      "questions": [
+        {
+          "id": 1183264176,
+          "question": "Name of the Health Centre",
+          "order": 1,
+          "meta": true,
+          "type": "text",
+          "required": true,
+          "options": null
+        },
+        {
+          "question": "location",
+          "order": 2,
+          "required": true,
+          "type": "administration",
+          "meta": true
+        },
+        {
+          "id": 1183264174,
+          "question": "Where is the health centre located?",
+          "order": 4,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null
+        },
+        {
+          "id": 1183264170,
+          "question": "What type of health centre is this?",
+          "order": 5,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Community clinic/Health/Sub Health Post",
+              "color": null
+            },
+            {
+              "name": "Community Hospital",
+              "color": null
+            },
+            {
+              "name": "Government Hospital",
+              "color": null
+            },
+            {
+              "name": "Private Hospital",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1183264173,
+          "question": "Is this health centre Birthing Centre?",
+          "order": 6,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1183264171,
+          "question": "What is your role within the health centre?",
+          "order": 7,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Health Centre Chief/ Health Assistant/Doctor",
+              "color": null
+            },
+            {
+              "name": "ANM/Nurse/AHW",
+              "color": null
+            },
+            {
+              "name": "Helping Staff",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1183264175,
+          "question": "In an average, how many patient and their caretaker visit daily in this health centre?",
+          "order": 8,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null
+        }
+      ]
+    },
+    {
+      "question_group": "Water",
+      "questions": [
+        {
+          "id": 1173964215,
+          "question": "Is there regular water supply in this health centre?",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1179654241,
+          "question": "What is the main water source for the facility?",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Piped water into dwelling (into the building)",
+              "color": null
+            },
+            {
+              "name": "Piped water to yard/plot",
+              "color": null
+            },
+            {
+              "name": "Public tap/standpipe",
+              "color": null
+            },
+            {
+              "name": "Deep tubewell/borehole",
+              "color": null
+            },
+            {
+              "name": "Shallow tubewell/borehole",
+              "color": null
+            },
+            {
+              "name": "AIRP (arsenic iron removable plant)",
+              "color": null
+            },
+            {
+              "name": "Protected dug well",
+              "color": null
+            },
+            {
+              "name": "Unprotected dug well",
+              "color": null
+            },
+            {
+              "name": "Protected spring",
+              "color": null
+            },
+            {
+              "name": "Unprotected spring",
+              "color": null
+            },
+            {
+              "name": "Surface water (river, pond, canal)",
+              "color": null
+            },
+            {
+              "name": "Rainwater collection",
+              "color": null
+            },
+            {
+              "name": "Bottled water",
+              "color": null
+            },
+            {
+              "name": "Tanker-truck",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 1173964215,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1179654239,
+          "question": "If no regular supply of water, what is the source currently being used?",
+          "order": 3,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 1173964215,
+              "options": [
+                "No"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1179654242,
+          "question": "Where is the main water point for the facility located?",
+          "order": 4,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "On the premises of the health centre",
+              "color": null
+            },
+            {
+              "name": "Less than 150 meters/500 feet",
+              "color": null
+            },
+            {
+              "name": "Between 150 and 500 meter/between 500 and 1600 feet",
+              "color": null
+            },
+            {
+              "name": "Further than 500 meter/1600 feet",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 1179654241,
+              "options": [
+                "Piped water to yard/plot",
+                "Public tap/standpipe",
+                "Deep tubewell/borehole",
+                "Shallow tubewell/borehole",
+                "AIRP (arsenic iron removable plant)",
+                "Protected dug well",
+                "Unprotected dug well",
+                "Protected spring",
+                "Unprotected spring",
+                "Rainwater collection"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1173964218,
+          "question": "Is there water supply in Health Centre all the time and sufficient for all the purpose?",
+          "order": 5,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, available for daily use and enough",
+              "color": null
+            },
+            {
+              "name": "Every week five days or more supply but not enough",
+              "color": null
+            },
+            {
+              "name": "Less than 5 days in a week",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1179654240,
+          "question": "Is drinking water available is every wards and accessible to staffs, patients and caretakers?",
+          "order": 6,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, reliable drinking water station available and accessible to all staffs, patients and caretakers",
+              "color": null
+            },
+            {
+              "name": "Reliable drinking water is available in some places or some times or not accessible to everyone",
+              "color": null
+            },
+            {
+              "name": "No reliable drinking water station",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1179654235,
+          "question": "Is water easily accessible to people with disability or for people requiring support?",
+          "order": 7,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1179654236,
+          "question": "Is there enough water storage for 2 days to fulfill the pre-determined demand of Health Centre?",
+          "order": 8,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, enough water storage to fulfill demand for 2 days",
+              "color": null
+            },
+            {
+              "name": "Yes, there is storage but not enough for 2 days",
+              "color": null
+            },
+            {
+              "name": "No any storage facility",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1179654237,
+          "question": "Is there practice of water purification (point of use treatment) before drinking?",
+          "order": 9,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, always",
+              "color": null
+            },
+            {
+              "name": "Yes but only sometimes",
+              "color": null
+            },
+            {
+              "name": "No, never",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1173964216,
+          "question": "How is drinking water treatment done?",
+          "order": 10,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Boiling",
+              "color": null
+            },
+            {
+              "name": "Use of Chlorine solution (Piyush, aquatab, chlorine tab)",
+              "color": null
+            },
+            {
+              "name": "filter through clothes",
+              "color": null
+            },
+            {
+              "name": "Use of water filter",
+              "color": null
+            },
+            {
+              "name": "SODIS",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 1179654237,
+              "options": [
+                "Yes, always",
+                "Yes but only sometimes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1179654238,
+          "question": "Is there water quality test conducted in past 5 years?",
+          "order": 11,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1173964214,
+          "question": "Does the water quality test show that water is fit for drinking?",
+          "order": 12,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, water is safe for drinking",
+              "color": null
+            },
+            {
+              "name": "No, water is not safe for drinking",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 1179654238,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1173964219,
+          "question": "Is there residual chlorine in drinking water?",
+          "order": 13,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, it has required amount of chlorine",
+              "color": null
+            },
+            {
+              "name": "Yes, residual chlorine is there but less than 0.2 mg",
+              "color": null
+            },
+            {
+              "name": "No treatment of water/don't know about residual chlorine/ no capacity to test residual chlorine/ no drinking water facility",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1179654234,
+          "question": "Is there energy/electricity available for water boiling and other provisions?",
+          "order": 14,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, always available",
+              "color": null
+            },
+            {
+              "name": "Yes, available sometimes",
+              "color": null
+            },
+            {
+              "name": "Never available",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1179654233,
+          "question": "Is there bathing place and area available, accessible and operational for staffs and patients?",
+          "order": 15,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, atleast one bathing place or area available per 40 in patients, accessible and operationsl",
+              "color": null
+            },
+            {
+              "name": "Yes, at least one bathing place or area available but no water or unmanaged or available but less than 1 for every 40 patients",
+              "color": null
+            },
+            {
+              "name": "No any bathing space or area available",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1173964217,
+          "question": "Is there enough lighting on bathing space or area?",
+          "order": 16,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, enough lighting",
+              "color": null
+            },
+            {
+              "name": "Physical structure for lighting available but not operational",
+              "color": null
+            },
+            {
+              "name": "No enough lighting structure or usage",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 1179654233,
+              "options": [
+                "Yes, atleast one bathing place or area available per 40 in patients, accessible and operationsl",
+                "Yes, at least one bathing place or area available but no water or unmanaged or available but less than 1 for every 40 patients"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Sanitation",
+      "questions": [
+        {
+          "id": 1173964224,
+          "question": "Is there at least one usable toilet available for outpatients at the facility?",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1168164183,
+          "question": "What type of toilet is that?",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Pit latrine without slab/open pit",
+              "color": null
+            },
+            {
+              "name": "Pit latrine with slab",
+              "color": null
+            },
+            {
+              "name": "Hanging latrine",
+              "color": null
+            },
+            {
+              "name": "toilet that flush/poor flush but don't know where",
+              "color": null
+            },
+            {
+              "name": "Twinpit offset latrine",
+              "color": null
+            },
+            {
+              "name": "Ventilated Improved Pit latrine (VIP)",
+              "color": null
+            },
+            {
+              "name": "Composting toilet",
+              "color": null
+            },
+            {
+              "name": "Bucket",
+              "color": null
+            },
+            {
+              "name": "toilet that flush/poor flush to elsewhere",
+              "color": null
+            },
+            {
+              "name": "toilet that flush/poor flush to septic tank",
+              "color": null
+            },
+            {
+              "name": "toilet that flush/poor flush to piped sewer system",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 1173964224,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1173964228,
+          "question": "Is there at least one usable toilet designated for women and girls - patients?",
+          "order": 3,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1173964225,
+          "question": "What type of toilet is that?",
+          "order": 4,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Pit latrine without slab/open pit",
+              "color": null
+            },
+            {
+              "name": "Pit latrine with slab",
+              "color": null
+            },
+            {
+              "name": "Hanging latrine",
+              "color": null
+            },
+            {
+              "name": "toilet that flush/poor flush but don't know where",
+              "color": null
+            },
+            {
+              "name": "Twinpit offset latrine",
+              "color": null
+            },
+            {
+              "name": "Ventilated Improved Pit latrine (VIP)",
+              "color": null
+            },
+            {
+              "name": "Composting toilet",
+              "color": null
+            },
+            {
+              "name": "Bucket",
+              "color": null
+            },
+            {
+              "name": "toilet that flush/poor flush to elsewhere",
+              "color": null
+            },
+            {
+              "name": "toilet that flush/poor flush to septic tank",
+              "color": null
+            },
+            {
+              "name": "toilet that flush/poor flush to piped sewer system",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 1173964228,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1168164178,
+          "question": "Does the toilet has a bin with a lid on it within the chamber?",
+          "order": 5,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 1173964228,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1168164181,
+          "question": "Does the toilet have water and soap available in a private space for washing?",
+          "order": 6,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 1173964228,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1168164184,
+          "question": "Is there at least one usable toilet designated for staffs?",
+          "order": 7,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1173964221,
+          "question": "What type of toilet is that?",
+          "order": 8,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Pit latrine without slab/open pit",
+              "color": null
+            },
+            {
+              "name": "Pit latrine with slab",
+              "color": null
+            },
+            {
+              "name": "Hanging toilet",
+              "color": null
+            },
+            {
+              "name": "toilet that flush/poor flush but don't know where",
+              "color": null
+            },
+            {
+              "name": "Twinpit offset latrine",
+              "color": null
+            },
+            {
+              "name": "Ventilated Improved Pit latrine (VIP)",
+              "color": null
+            },
+            {
+              "name": "Composting toilet",
+              "color": null
+            },
+            {
+              "name": "Bucket",
+              "color": null
+            },
+            {
+              "name": "toilet that flush/poor flush to elsewhere",
+              "color": null
+            },
+            {
+              "name": "toilet that flush/poor flush to septic tank",
+              "color": null
+            },
+            {
+              "name": "toilet that flush/poor flush to piped sewer system",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 1168164184,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1173964226,
+          "question": "Is there at least one usable toilet designated for women and girls - staff?",
+          "order": 9,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1173964227,
+          "question": "What type of toilet is that?",
+          "order": 10,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Pit latrine without slab/open pit",
+              "color": null
+            },
+            {
+              "name": "Pit latrine with slab",
+              "color": null
+            },
+            {
+              "name": "Hanging toilet",
+              "color": null
+            },
+            {
+              "name": "toilet that flush/poor flush but don't know where",
+              "color": null
+            },
+            {
+              "name": "Twinpit offset latrine",
+              "color": null
+            },
+            {
+              "name": "Ventilated Improved Pit latrine (VIP)",
+              "color": null
+            },
+            {
+              "name": "Composting toilet",
+              "color": null
+            },
+            {
+              "name": "Bucket",
+              "color": null
+            },
+            {
+              "name": "toilet that flush/poor flush to elsewhere",
+              "color": null
+            },
+            {
+              "name": "toilet that flush/poor flush to septic tank",
+              "color": null
+            },
+            {
+              "name": "toilet that flush/poor flush to piped sewer system",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 1173964226,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1173964222,
+          "question": "Is there at least one usable  toilet that meets the needs of people with reduced mobility?",
+          "order": 11,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1168164182,
+          "question": "What type of toilet is that?",
+          "order": 12,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Pit latrine without slab/open pit",
+              "color": null
+            },
+            {
+              "name": "Pit latrine with slab",
+              "color": null
+            },
+            {
+              "name": "Hanging toilet",
+              "color": null
+            },
+            {
+              "name": "toilet that flush/poor flush but don't know where",
+              "color": null
+            },
+            {
+              "name": "Twinpit offset latrine",
+              "color": null
+            },
+            {
+              "name": "Ventilated Improved Pit latrine (VIP)",
+              "color": null
+            },
+            {
+              "name": "Composting toilet",
+              "color": null
+            },
+            {
+              "name": "Bucket",
+              "color": null
+            },
+            {
+              "name": "toilet that flush/poor flush to elsewhere",
+              "color": null
+            },
+            {
+              "name": "toilet that flush/poor flush to septic tank",
+              "color": null
+            },
+            {
+              "name": "toilet that flush/poor flush to piped sewer system",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 1173964222,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1168164186,
+          "question": "Is someone assigned for cleaning the toilet facility for patients?",
+          "order": 13,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 1173964224,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1168164187,
+          "question": "Has the facilities ever been emptied?",
+          "order": 14,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, within the last 5 years",
+              "color": null
+            },
+            {
+              "name": "Yes, more than 5 years ago",
+              "color": null
+            },
+            {
+              "name": "Yes, but don't know when",
+              "color": null
+            },
+            {
+              "name": "No, never emptied",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 1168164183,
+              "options": [
+                "Pit latrine without slab/open pit",
+                "Pit latrine with slab",
+                "Twinpit offset latrine",
+                "Ventilated Improved Pit latrine (VIP)",
+                "Composting toilet",
+                "toilet that flush/poor flush to septic tank"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1173964220,
+          "question": "Is there any potable toilet availble in the health centre?",
+          "order": 15,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            },
+            {
+              "name": "Don't Know",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1168164180,
+          "question": "Is there operational hand washing stations in the toilets of health centres?",
+          "order": 16,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, hand washing station available within 5 meters from toilets",
+              "color": null
+            },
+            {
+              "name": "Yes, hand washing station available within 5 meters from toilets but not operational or no soap or water",
+              "color": null
+            },
+            {
+              "name": "No, hand washing station is not available within 5 meters from toilets",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1173964223,
+          "question": "Is the toilet cleaning record sheet available and in the place where everyone can see?",
+          "order": 17,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, available and cleaner has signed it every time",
+              "color": null
+            },
+            {
+              "name": "Toilets are clean but not recorded",
+              "color": null
+            },
+            {
+              "name": "No record toilet are cleaned less than once in a day",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1168164179,
+          "question": "Is there appropriate insite treatment facility (septic tank/ soakage pit) or operational sewerage facility for waste water management?",
+          "order": 18,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "Yes but wastewater treatment facility is not operated properly",
+              "color": null
+            },
+            {
+              "name": "Not available",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1168164185,
+          "question": "Is there grey water management facility available and operational?",
+          "order": 19,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "Yes but not operational (waste water puddle can be seen)",
+              "color": null
+            },
+            {
+              "name": "Not available",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1173964229,
+          "question": "Are there enough lighting in the toilets (including for night as well)?",
+          "order": 20,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "Yes lighting structure available but not oerational",
+              "color": null
+            },
+            {
+              "name": "No enough physical structure or usage enough",
+              "color": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Hygiene Treatment and PPE",
+      "questions": [
+        {
+          "id": 1168164200,
+          "question": "Hand hygiene promotion materials",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, available in main spots and easily visible",
+              "color": null
+            },
+            {
+              "name": "Yes, easily visible but not available in all the places",
+              "color": null
+            },
+            {
+              "name": "Not available",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1168164198,
+          "question": "COVID-19 risk communication materials are posted in key locations",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Available",
+              "color": null
+            },
+            {
+              "name": "Available in few places not all",
+              "color": null
+            },
+            {
+              "name": "Not available",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1168164205,
+          "question": "Hand hygiene compliance activities performed regularly",
+          "order": 3,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes done regularly",
+              "color": null
+            },
+            {
+              "name": "Done but not regularly",
+              "color": null
+            },
+            {
+              "name": "Not done",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1168164201,
+          "question": "Staff regularly inspect hand hygiene stations for adequate soap, other hand cleaners and safe water levels.",
+          "order": 4,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "Yes, knows the process but not implemented",
+              "color": null
+            },
+            {
+              "name": "Does not know the process and not implemented",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1168164203,
+          "question": "Floor and working surface looks clean",
+          "order": 5,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, looks clean",
+              "color": null
+            },
+            {
+              "name": "Some floors and space looks clean but not all",
+              "color": null
+            },
+            {
+              "name": "Most or all floors doesn't look clean",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1168164204,
+          "question": "Suitable and well-kept material available for cleaning",
+          "order": 6,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes available",
+              "color": null
+            },
+            {
+              "name": "Yes available but not managed well",
+              "color": null
+            },
+            {
+              "name": "Not available",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1168164199,
+          "question": "Personal safety equipment is available for all cleaning and waste disposal staff",
+          "order": 7,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes available",
+              "color": null
+            },
+            {
+              "name": "Available but are not in a good condition",
+              "color": null
+            },
+            {
+              "name": "Not available",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1168164202,
+          "question": "Gloves, aprons, and boots are provided in good condition for all cleaning and garbage disposal staff.",
+          "order": 8,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes available",
+              "color": null
+            },
+            {
+              "name": "Available but are not in a good condition",
+              "color": null
+            },
+            {
+              "name": "Not available",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1168164207,
+          "question": "Employees can perform the correct procedures for cleaning and disposal",
+          "order": 9,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, at least one staff is capable",
+              "color": null
+            },
+            {
+              "name": "Staff can demonstrate correct procedure but is not implemented",
+              "color": null
+            },
+            {
+              "name": "Can not perform but has knowledge on correct procedures",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1168164206,
+          "question": "Cleaning records are viewed and signed by cleaners each day",
+          "order": 10,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, easily viewable and cleaning staff signed every day",
+              "color": null
+            },
+            {
+              "name": "Available but not updated regularly",
+              "color": null
+            },
+            {
+              "name": "No record",
+              "color": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Health Centre Waste Management",
+      "questions": [
+        {
+          "id": 1175964160,
+          "question": "Do you segregate waste before disposal?",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            },
+            {
+              "name": "Don't Know",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1175964165,
+          "question": "What type of dustbin are being used for waste segregation?",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Dustbins without colours",
+              "color": null
+            },
+            {
+              "name": "Dustbins with colours",
+              "color": null
+            },
+            {
+              "name": "Plastic bags",
+              "color": null
+            },
+            {
+              "name": "Nothing",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1175964169,
+          "question": "What are the different categories of segregated waste?",
+          "order": 3,
+          "meta": false,
+          "type": "multiple_option",
+          "required": true,
+          "options": [
+            {
+              "name": "Decomposible (Fruits, Vegetables, etc)",
+              "color": null
+            },
+            {
+              "name": "Non hazardous non decomposible waste (Plastic Bottles, Papers, Saline Bottles, Clothes, etc)",
+              "color": null
+            },
+            {
+              "name": "Hazardous, that can be burned (Gauze, Cotton, Medicine, Blood, etc)",
+              "color": null
+            },
+            {
+              "name": "Hazardous that cannot be burned (Syringe, Blood Packets, Gloves, etc)",
+              "color": null
+            },
+            {
+              "name": "Others",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 1175964160,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1175964163,
+          "question": "Do you treat waste by yourself?",
+          "order": 4,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1175964167,
+          "question": "How do you manage/dispose health centre's waste?",
+          "order": 5,
+          "meta": false,
+          "type": "multiple_option",
+          "required": true,
+          "options": [
+            {
+              "name": "Burn",
+              "color": null
+            },
+            {
+              "name": "Bury in special pit",
+              "color": null
+            },
+            {
+              "name": "Dump",
+              "color": null
+            },
+            {
+              "name": "Garbage Tractor",
+              "color": null
+            },
+            {
+              "name": "Reuse",
+              "color": null
+            },
+            {
+              "name": "Organically disposed",
+              "color": null
+            },
+            {
+              "name": "Use of incinerators",
+              "color": null
+            },
+            {
+              "name": "Chemically Treated",
+              "color": null
+            },
+            {
+              "name": "Encapsulation",
+              "color": null
+            },
+            {
+              "name": "Septic/Concrete Vault",
+              "color": null
+            },
+            {
+              "name": "Inertization",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 1175964160,
+              "options": [
+                "No"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1175964164,
+          "question": "How do you dispose degradable waste?",
+          "order": 6,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Bury",
+              "color": null
+            },
+            {
+              "name": "Dump",
+              "color": null
+            },
+            {
+              "name": "Compost",
+              "color": null
+            },
+            {
+              "name": "Garbage Tractor",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 1175964169,
+              "options": [
+                "Decomposible (Fruits, Vegetables, etc)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1175964161,
+          "question": "How do you dispose non-hazardous non decomposible waste?",
+          "order": 7,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Burn",
+              "color": null
+            },
+            {
+              "name": "Bury",
+              "color": null
+            },
+            {
+              "name": "Reuse",
+              "color": null
+            },
+            {
+              "name": "Recycle",
+              "color": null
+            },
+            {
+              "name": "Garbage Tractor",
+              "color": null
+            },
+            {
+              "name": "Incinerator",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 1175964169,
+              "options": [
+                "Non hazardous non decomposible waste (Plastic Bottles, Papers, Saline Bottles, Clothes, etc)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1175964168,
+          "question": "How do you dispose hazardous waste that can be burnt?",
+          "order": 8,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Burn",
+              "color": null
+            },
+            {
+              "name": "Bury",
+              "color": null
+            },
+            {
+              "name": "Reuse",
+              "color": null
+            },
+            {
+              "name": "Recycle",
+              "color": null
+            },
+            {
+              "name": "Garbage Tractor",
+              "color": null
+            },
+            {
+              "name": "Incinerator",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 1175964169,
+              "options": [
+                "Hazardous, that can be burned (Gauze, Cotton, Medicine, Blood, etc)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1189134239,
+          "question": "How do you dispose hazardous waste that cannot be burnt?",
+          "order": 9,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Reuse",
+              "color": null
+            },
+            {
+              "name": "Bury",
+              "color": null
+            },
+            {
+              "name": "Garbage Tractor",
+              "color": null
+            },
+            {
+              "name": "Recycle",
+              "color": null
+            },
+            {
+              "name": "Sterile and Reuse",
+              "color": null
+            },
+            {
+              "name": "Incinerator",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 1175964169,
+              "options": [
+                "Hazardous that cannot be burned (Syringe, Blood Packets, Gloves, etc)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1175964162,
+          "question": "How to clean reusable medical equipment? Such as scissors, forceps, blades etc.",
+          "order": 10,
+          "meta": false,
+          "type": "multiple_option",
+          "required": true,
+          "options": [
+            {
+              "name": "Use of autoclave",
+              "color": null
+            },
+            {
+              "name": "Autoclave with locally available mateials",
+              "color": null
+            },
+            {
+              "name": "Chemical treatment",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1175964166,
+          "question": "Is there responsible person available for Health centre waste management?",
+          "order": 11,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, available and trained enough",
+              "color": null
+            },
+            {
+              "name": "One person available but not trained",
+              "color": null
+            },
+            {
+              "name": "Not available",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1189134238,
+          "question": "Is there health safety measures available per waste management person?",
+          "order": 12,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes available",
+              "color": null
+            },
+            {
+              "name": "Yes but available for only few or not in well condition",
+              "color": null
+            },
+            {
+              "name": "Not available",
+              "color": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Management",
+      "questions": [
+        {
+          "id": 1195044216,
+          "question": "Enough natural ventilation and air flow in health centre",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes enough",
+              "color": null
+            },
+            {
+              "name": "Yes few ventilation but not enough",
+              "color": null
+            },
+            {
+              "name": "Not available",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1195044214,
+          "question": "Are beds of patient maintained with enough distancing (at least 1 metre)",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, every bed are at least 1 meter apart",
+              "color": null
+            },
+            {
+              "name": "Yes, but not all",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1195044219,
+          "question": "WASH FIT or any other quality improvement plan",
+          "order": 3,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes available, implemented and regularly monitored",
+              "color": null
+            },
+            {
+              "name": "Yes available but not implemented and monitored regularly",
+              "color": null
+            },
+            {
+              "name": "Not available",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1195044220,
+          "question": "Enough cleaning staff and WASH maintenance staff",
+          "order": 4,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes available and enough",
+              "color": null
+            },
+            {
+              "name": "Yes available but not enough",
+              "color": null
+            },
+            {
+              "name": "No not available",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1195044217,
+          "question": "Regular audit of hand washing station and supplies",
+          "order": 5,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "Yes plans are there but not regularly conducted",
+              "color": null
+            },
+            {
+              "name": "No audit at all",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1195044218,
+          "question": "New staff takes IPC training",
+          "order": 6,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "Yes but not all",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1195044213,
+          "question": "Regular Training/ IPC training and WASH refresher",
+          "order": 7,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, updated regularly",
+              "color": null
+            },
+            {
+              "name": "Yes but not updated annually or not every staff is trained",
+              "color": null
+            },
+            {
+              "name": "No one is trained",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1195044215,
+          "question": "Designated WASH or IPC focal person",
+          "order": 8,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "Yes, but cannot provide enough time and resource",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Other",
+      "questions": [
+        {
+          "id": 1179634216,
+          "question": "How many cases of diarrheoa of children below 5 years of age have been reported in the last 2 weeks?",
+          "order": 1,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null
+        },
+        {
+          "id": 1179634219,
+          "question": "How many cases of diarrheoa of people above 5 years of age have been reported in the last 2 weeks?",
+          "order": 2,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null
+        },
+        {
+          "id": 1179634218,
+          "question": "Is there an active community management group?",
+          "order": 3,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "There is a community management group, but not active",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1179634217,
+          "question": "Is there a fund or budget allocation for operation and maintenance for water and sanitation in the health centre?",
+          "order": 4,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Observation - water",
+      "questions": [
+        {
+          "id": 1177694222,
+          "question": "Observe: Is water available from the main water point at time of the survey?",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "Yes, reported but not observed",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 1179654242,
+              "options": [
+                "On the premises of the health centre"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Observation - sanitation",
+      "questions": [
+        {
+          "id": 1175964311,
+          "question": "Is their sanitation materials (Brush, Harpic, Disinfectant etc) avilable?",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Observation - hygiene",
+      "questions": [
+        {
+          "id": 1177674247,
+          "question": "Observe: Are hygiene stations available at the selected point of care?",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            },
+            {
+              "name": "Cannot observe",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1177674245,
+          "question": "Observe: Are the hygiene stations at the selected point of care functional on the day of the survey?",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No, not functional or lacking material",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 1177674247,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1177674248,
+          "question": "Observe: Are handwashing facilities available within 5 meters from the toilet?",
+          "order": 3,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            },
+            {
+              "name": "Cannot observe",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1177674246,
+          "question": "Observe: Are soap and water available at these handwashing facilities (within 5 meter from toilet) on the day of the survey?",
+          "order": 4,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, water and soap are available",
+              "color": null
+            },
+            {
+              "name": "No, only water is available",
+              "color": null
+            },
+            {
+              "name": "No, only soap is available",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 1177674248,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Observation Waste Management",
+      "questions": [
+        {
+          "id": 1185334263,
+          "question": "Observe: Is there separate operational waste container available?",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes available nearer to the waste production site, hazardous, non hazardous and sharp waste separated",
+              "color": null
+            },
+            {
+              "name": "Separate container available but not in proper condition",
+              "color": null
+            },
+            {
+              "name": "No not available",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1185334262,
+          "question": "Observe: Are there functional waste pits or any other available disposal methods in operation?",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes available",
+              "color": null
+            },
+            {
+              "name": "Yes available but not sufficient of managed properly",
+              "color": null
+            },
+            {
+              "name": "No not available",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1185334264,
+          "question": "Observe: Is there any treatment technology for infectious and sharp waste",
+          "order": 3,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "Yes but not operational or enough",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Water Quality",
+      "questions": [
+        {
+          "id": 1191104268,
+          "question": "Will you conduct water quality in this health care centre?",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No, permission not provided",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1191114367,
+          "question": "If yes, write the code",
+          "order": 2,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null
+        }
+      ]
+    },
+    {
+      "question_group": "Geolocation",
+      "questions": [
+        {
+          "id": 1181834108,
+          "question": "Geolocation",
+          "order": 1,
+          "meta": true,
+          "type": "geo",
+          "required": true,
+          "options": null
+        }
+      ]
+    },
+    {
+      "question_group": "Remarks",
+      "questions": [
+        {
+          "id": 1166014220,
+          "question": "Remarks",
+          "order": 1,
+          "meta": false,
+          "type": "text",
+          "required": false,
+          "options": null
+        }
+      ]
+    }
+  ]
+}

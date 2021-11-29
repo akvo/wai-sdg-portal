@@ -42,6 +42,15 @@ class GeoLevels(enum.Enum):
         "name": "WARD",
         "alias": "Ward"
     }]
+    wai_nepal = [{
+        "level": 0,
+        "name": "DISTRICT",
+        "alias": "District"
+    }, {
+        "level": 1,
+        "name": "UNIT_NAME",
+        "alias": "Municipality"
+    }]
 
 
 class GeoCenter(enum.Enum):
@@ -49,3 +58,4 @@ class GeoCenter(enum.Enum):
     wai_ethiopia = [38.6682, 7.3942]
     wai_uganda = [33.3486, 2.9251]
     wai_bangladesh = [89.02973, 22.75877]
+    wai_nepal = [81.73551085, 28.42744314]

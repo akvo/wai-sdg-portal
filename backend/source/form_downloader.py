@@ -8,19 +8,17 @@ source_path = os.environ["INSTANCE_NAME"]
 
 
 class SurveyList(enum.Enum):
-    wai_bangladesh = {
-        'domain': 'wai',
-        'formIds': ['1189144226', '994944020', '964754042'],
-        'administration': ['1183264177', '1183264172']
-    }
     wai_nepal = {
         'domain':
         'wai',
-        'formIds': [
-            '974754029', '962774003', '980804014', '1183264175', '1327205184',
-            '1323574110'
-        ],
-        'administration': []
+        'formIds':
+        ['1000944003', '1189144226', '994944020', '964754042'],
+        'administration': ['1183264177', '1183264172']
+    }
+    wai_bangladesh = {
+        'domain': 'wai',
+        'formIds': ['976564018', '974754029', '962774003', '980804014'],
+        'administration': ['1260775107', '1260775115', '1260775108']
     }
 
 
@@ -50,6 +48,8 @@ def set_options(q):
     options = []
     multiple_option = False
     if "options" in q:
+        if "option" not in q["options"]:
+            return [], False
         if type(q["options"]["option"]) == dict:
             options.append({
                 "name": str(q["options"]["option"]["text"]),
