@@ -14,8 +14,13 @@ class SurveyList(enum.Enum):
         'administration': ['1183264177', '1183264172']
     }
     wai_nepal = {
-        'domain': 'wai',
-        'formIds': ['974754029', '962774003', '980804014']
+        'domain':
+        'wai',
+        'formIds': [
+            '974754029', '962774003', '980804014', '1183264175', '1327205184',
+            '1323574110'
+        ],
+        'administration': []
     }
 
 
@@ -61,8 +66,10 @@ def set_dependency(q, qs):
     if "dependency" in q:
         qs.update({
             "dependency": [{
-                "id": int(q["dependency"]["question"]),
-                "options": q["dependency"]["answer-value"].split("|")
+                "id":
+                int(q["dependency"]["question"]),
+                "options":
+                q["dependency"]["answer-value"].split("|")
             }]
         })
     return qs
