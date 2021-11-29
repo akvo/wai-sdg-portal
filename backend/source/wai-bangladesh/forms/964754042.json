@@ -1,0 +1,1574 @@
+{
+  "form": "School Survey Questionnaire",
+  "id": 964754042,
+  "question_groups": [
+    {
+      "question_group": "Demographics",
+      "questions": [
+        {
+          "id": 1000914071,
+          "question": "What is the name of school?",
+          "order": 1,
+          "meta": true,
+          "type": "text",
+          "required": true,
+          "options": null
+        },
+        {
+          "question": "location",
+          "order": 2,
+          "required": true,
+          "type": "administration",
+          "meta": true
+        },
+        {
+          "id": 966834041,
+          "question": "What is your role within the school?",
+          "order": 3,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Teacher or Head teacher",
+              "color": null
+            },
+            {
+              "name": "Management committee member",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 987364061,
+          "question": "How many students are enrolled in the school?",
+          "order": 4,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null
+        },
+        {
+          "id": 987364062,
+          "question": "How many boys?",
+          "order": 5,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null
+        },
+        {
+          "id": 1000914078,
+          "question": "How many girls?",
+          "order": 6,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null
+        },
+        {
+          "id": 1000904070,
+          "question": "How many teachers does the school have?",
+          "order": 7,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null
+        },
+        {
+          "id": 974764058,
+          "question": "How many female teachers?",
+          "order": 8,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null
+        },
+        {
+          "id": 964754047,
+          "question": "How many male teachers?",
+          "order": 9,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null
+        },
+        {
+          "id": 1000934056,
+          "question": "Are there any students or staff members with a disability?",
+          "order": 10,
+          "meta": false,
+          "type": "multiple_option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, disabled students",
+              "color": null
+            },
+            {
+              "name": "Yes, disabled staff members",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1000914080,
+          "question": "How many boys are there with a disability?",
+          "order": 11,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": "1000934056",
+              "options": [
+                "Yes, disabled students"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 994994046,
+          "question": "How many girls are there with a disability?",
+          "order": 12,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": "1000934056",
+              "options": [
+                "Yes, disabled students"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 996984097,
+          "question": "How many staff members are there with a disability?",
+          "order": 13,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": "1000934056",
+              "options": [
+                "Yes, disabled staff members"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 992994054,
+          "question": "What type of school is this?",
+          "order": 14,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Kindergarten/Child Care Centre",
+              "color": null
+            },
+            {
+              "name": "Primary",
+              "color": null
+            },
+            {
+              "name": "Secondary",
+              "color": null
+            },
+            {
+              "name": "Higher secondary/10+2",
+              "color": null
+            },
+            {
+              "name": "Madarsa",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 993004071,
+          "question": "Who owns this school?",
+          "order": 15,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Community",
+              "color": null
+            },
+            {
+              "name": "Government",
+              "color": null
+            },
+            {
+              "name": "Private",
+              "color": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Water",
+      "questions": [
+        {
+          "id": 964754051,
+          "question": "What is the main source of drinking water provided by the school?",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Piped water into dwelling (into the building)",
+              "color": null
+            },
+            {
+              "name": "Piped water to yard/plot",
+              "color": null
+            },
+            {
+              "name": "Public tap/standpipe",
+              "color": null
+            },
+            {
+              "name": "Deep tubewell/borehole",
+              "color": null
+            },
+            {
+              "name": "Shallow tubewell/borehole",
+              "color": null
+            },
+            {
+              "name": "AIRP (arsenic iron removable plant)",
+              "color": null
+            },
+            {
+              "name": "Protected dug well",
+              "color": null
+            },
+            {
+              "name": "Unprotected dug well",
+              "color": null
+            },
+            {
+              "name": "Protected spring",
+              "color": null
+            },
+            {
+              "name": "Unprotected spring",
+              "color": null
+            },
+            {
+              "name": "Surface water (river, pond, canal)",
+              "color": null
+            },
+            {
+              "name": "Rainwater collection",
+              "color": null
+            },
+            {
+              "name": "Bottled water",
+              "color": null
+            },
+            {
+              "name": "Tanker-truck",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 996974117,
+          "question": "What does the school do mainly to make the water safe to drink?",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "No, the school doesn't do anything",
+              "color": null
+            },
+            {
+              "name": "Boil",
+              "color": null
+            },
+            {
+              "name": "Add bleach/chlorine",
+              "color": null
+            },
+            {
+              "name": "Strain it through a cloth",
+              "color": null
+            },
+            {
+              "name": "Use a water filter (ceramic, sand, composite etc.)",
+              "color": null
+            },
+            {
+              "name": "Solar disinfection",
+              "color": null
+            },
+            {
+              "name": "Let is stand and settle",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1179674020,
+          "question": "Is there water access to students with disability and students with special needs?",
+          "order": 3,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1191124016,
+          "question": "Does the school have water tanks for storage?",
+          "order": 4,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1183294021,
+          "question": "What is the total capacity of the water tank?",
+          "order": 5,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": "1191124016",
+              "options": [
+                "Yes"
+              ]
+            }
+          ],
+          "rule": {
+            "max": "10000.0",
+            "min": "100.0"
+          }
+        },
+        {
+          "id": 1185384023,
+          "question": "Where is the water tank located?",
+          "order": 6,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Underground",
+              "color": null
+            },
+            {
+              "name": "Overhead Tank",
+              "color": null
+            },
+            {
+              "name": "On the floor",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": "1191124016",
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1183294022,
+          "question": "What is the type of water tank?",
+          "order": 7,
+          "meta": false,
+          "type": "multiple_option",
+          "required": true,
+          "options": [
+            {
+              "name": "Concrete/Brick",
+              "color": null
+            },
+            {
+              "name": "Hard Plastic",
+              "color": null
+            },
+            {
+              "name": "Tin",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": "1191124016",
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1187254016,
+          "question": "What is the condition of water tank?",
+          "order": 8,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Good and functional",
+              "color": null
+            },
+            {
+              "name": "functional with some leakages",
+              "color": null
+            },
+            {
+              "name": "Not in use / Non functional",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": "1191124016",
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1158814013,
+          "question": "Does the school has drinking water facility inside the premises?",
+          "order": 9,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1185374021,
+          "question": "How many drinking water station presently available?",
+          "order": 10,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": "1158814013",
+              "options": [
+                "Yes"
+              ]
+            }
+          ],
+          "rule": {
+            "max": "99.0",
+            "min": "1.0"
+          }
+        }
+      ]
+    },
+    {
+      "question_group": "Sanitation",
+      "questions": [
+        {
+          "id": 1000914105,
+          "question": "Does your school has toilet(s) for students?",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1000934084,
+          "question": "What type of student toilets are at the school?",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Pit latrine without slab/open pit",
+              "color": null
+            },
+            {
+              "name": "Pit latrine with slab",
+              "color": null
+            },
+            {
+              "name": "Twinpit offset latrine",
+              "color": null
+            },
+            {
+              "name": "Ventilated Improved Pit latrine (VIP)",
+              "color": null
+            },
+            {
+              "name": "Composting toilet",
+              "color": null
+            },
+            {
+              "name": "toilet that flush/poor flush to septic tank",
+              "color": null
+            },
+            {
+              "name": "toilet that flush/poor flush to piped sewer system",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": "1000914105",
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 989134105,
+          "question": "Are toilets (chambers) for defecation separate for girls and boys?",
+          "order": 3,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": "1000914105",
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 994994066,
+          "question": "If yes, how many toilet chambers for defecation are there for girl students?",
+          "order": 4,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": "989134105",
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 993004095,
+          "question": "If yes, how many toilet chambers for defecation are there for boys students?",
+          "order": 5,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": "989134105",
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 996974136,
+          "question": "If no, how many toilet chambers for defecation are there for students?",
+          "order": 6,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": "989134105",
+              "options": [
+                "No"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 994994067,
+          "question": "Are the toilets for girls marked?",
+          "order": 7,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, all of them",
+              "color": null
+            },
+            {
+              "name": "Yes, but not all of them",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": "989134105",
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 987374085,
+          "question": "Are the toilets for girls separated?",
+          "order": 8,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, all of them",
+              "color": null
+            },
+            {
+              "name": "Yes, but not all of them",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": "989134105",
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 962804105,
+          "question": "Is at least one of the toilet compartments accessible for students with disabilities?",
+          "order": 9,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, at least one is accessible",
+              "color": null
+            },
+            {
+              "name": "No, the toilets are not accessible",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": "1000914105",
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 994994071,
+          "question": "How many latrines are there for staff members?",
+          "order": 10,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null
+        }
+      ]
+    },
+    {
+      "question_group": "Hand Washing",
+      "questions": [
+        {
+          "id": 964764100,
+          "question": "Are there handwashing facilities for students at the school?",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1181854019,
+          "question": "What kind of hand washing facility is available at the school?",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Platform",
+              "color": null
+            },
+            {
+              "name": "Basin",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": "964764100",
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1152564021,
+          "question": "How many handwashing platform/basin are present available at the school?",
+          "order": 3,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": "964764100",
+              "options": [
+                "Yes"
+              ]
+            }
+          ],
+          "rule": {
+            "max": "99.0",
+            "min": "1.0"
+          }
+        }
+      ]
+    },
+    {
+      "question_group": "Menstrual hygiene",
+      "questions": [
+        {
+          "id": 989134113,
+          "question": "Are sanitary materials available for girls at school?",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, girls can freely get them on a regular basis",
+              "color": null
+            },
+            {
+              "name": "Yes, but only in an emergency situation",
+              "color": null
+            },
+            {
+              "name": "Yes, but purchase from school",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 976544091,
+          "question": "Are there any facilities to dispose sanitary materials safely?",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": "989134105",
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1173984018,
+          "question": "What kind of used sanitary pads management available at the school?",
+          "order": 3,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Sanitary pad incinerator",
+              "color": null
+            },
+            {
+              "name": "A simple ditch/ collection pit for open burning",
+              "color": null
+            },
+            {
+              "name": "A simple ditch/ collection pit without burning",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": "976544091",
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Disaster Management",
+      "questions": [
+        {
+          "id": 1181864022,
+          "question": "Have the teachers and students been empowered to minimize the disasters challenges?",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1179674023,
+          "question": "Is there any precautions and planning for drinking water, sanitation and cleanliness?",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1181864023,
+          "question": "Has there been placed the disaster mapping on public place?",
+          "order": 3,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1183324019,
+          "question": "Is there marking system on the basis of hand washing, personal hygiene, and toilet cleanliness?",
+          "order": 4,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "School Waste Management",
+      "questions": [
+        {
+          "id": 987374089,
+          "question": "How do you manage the school waste?",
+          "order": 1,
+          "meta": false,
+          "type": "multiple_option",
+          "required": true,
+          "options": [
+            {
+              "name": "Burn",
+              "color": null
+            },
+            {
+              "name": "Bury",
+              "color": null
+            },
+            {
+              "name": "Dump in Water",
+              "color": null
+            },
+            {
+              "name": "Dump on the Road",
+              "color": null
+            },
+            {
+              "name": "In a public bin",
+              "color": null
+            },
+            {
+              "name": "Garbage Tractor",
+              "color": null
+            },
+            {
+              "name": "Recycle",
+              "color": null
+            },
+            {
+              "name": "Reuse",
+              "color": null
+            },
+            {
+              "name": "Compost",
+              "color": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Observation - Water",
+      "questions": [
+        {
+          "id": 987364102,
+          "question": "Observe: Is drinking water from the main water point currently available in the school?",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, running water",
+              "color": null
+            },
+            {
+              "name": "Yes, in containers, but no running water",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            },
+            {
+              "name": "Cannot check",
+              "color": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Observation - Sanitation",
+      "questions": [
+        {
+          "id": 974764089,
+          "question": "Observe: Are the toilets used by boys clean?",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, all of them",
+              "color": null
+            },
+            {
+              "name": "Yes, but not all of them",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": "989134105",
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 987364107,
+          "question": "Are the toilets used by girls clean?",
+          "order": 3,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, all of them",
+              "color": null
+            },
+            {
+              "name": "Yes, but not all of them",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": "989134105",
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 962804112,
+          "question": "Are the toilets clean?",
+          "order": 5,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, all of them",
+              "color": null
+            },
+            {
+              "name": "Yes, but not all of them",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": "989134105",
+              "options": [
+                "No"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 976544099,
+          "question": "The next questions are about the toilets used by girls: Is soap available within the compartment?",
+          "order": 7,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, in all of them",
+              "color": null
+            },
+            {
+              "name": "Yes, but not in all of them",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": "1000914105",
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1000934096,
+          "question": "Is there a bin with cover within the compartment?",
+          "order": 8,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, in all of them",
+              "color": null
+            },
+            {
+              "name": "Yes, but not in all of them",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": "1000914105",
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 996974148,
+          "question": "Can the compartment be locked from inside?",
+          "order": 9,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, all of them",
+              "color": null
+            },
+            {
+              "name": "Yes, but not all of them",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": "1000914105",
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1177704019,
+          "question": "Are the locks child friendly?",
+          "order": 10,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": "996974148",
+              "options": [
+                "Yes, all of them|Yes, but not all of them"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 976554054,
+          "question": "Is water available inside the toilet facility?",
+          "order": 11,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, in all of them",
+              "color": null
+            },
+            {
+              "name": "Yes, but not in all of them",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": "1000914105",
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 992994082,
+          "question": "Is there light inside the toilet?",
+          "order": 12,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, in all of them",
+              "color": null
+            },
+            {
+              "name": "Yes, but not in all of them",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": "1000914105",
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1000934100,
+          "question": "Observe: How many student toilets are currently usable (accessible, functional, private)?",
+          "order": 13,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": "1000914105",
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Observation - Handwashing",
+      "questions": [
+        {
+          "id": 989134128,
+          "question": "Observe: Are both soap and water currently available at the handwashing facilities for students?",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, water and soap",
+              "color": null
+            },
+            {
+              "name": "Only water",
+              "color": null
+            },
+            {
+              "name": "Only soap",
+              "color": null
+            },
+            {
+              "name": "Neither water nor soap",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": "964764100",
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Other",
+      "questions": [
+        {
+          "id": 1000904114,
+          "question": "Does a PTA (parent-teacher association) exist?",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1000904115,
+          "question": "Do student WASH groups/Child Club exist?",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 974764102,
+          "question": "Does the school has a fund or budget allocation for operation and maintenance for water and sanitation in the school?",
+          "order": 3,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            },
+            {
+              "name": "Don't know",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1177714021,
+          "question": "Is there designated focal teacher for drinking water, sanitation and menstruation?",
+          "order": 4,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1191124017,
+          "question": "Is there the concern books, newspapers, posters and informative materials on WASH and menstrual health present under the supervision of focal teacher or any other teachers?",
+          "order": 5,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Water Quality",
+      "questions": [
+        {
+          "id": 1164864414,
+          "question": "Will you conduct water quality test in this school?",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No, not allowed",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1189154315,
+          "question": "Please write the code",
+          "order": 2,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": "1164864414",
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Geolocation",
+      "questions": [
+        {
+          "id": 1000904117,
+          "question": "Geolocation",
+          "order": 1,
+          "meta": true,
+          "type": "geo",
+          "required": true,
+          "options": null
+        }
+      ]
+    },
+    {
+      "question_group": "Remarks",
+      "questions": [
+        {
+          "id": 1000914127,
+          "question": "Remarks",
+          "order": 1,
+          "meta": false,
+          "type": "text",
+          "required": false,
+          "options": null
+        }
+      ]
+    }
+  ]
+}
