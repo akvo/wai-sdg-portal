@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -exuo pipefail
 
-INSTANCES="wai-ethiopia wai-uganda wai-bangladesh"
+INSTANCES="wai-ethiopia wai-uganda wai-bangladesh wai-nepal"
 
 
 [[ "${CI_BRANCH}" !=  "main" && ! "${CI_TAG:=}" =~ promote.* ]] && { echo "Branch different than main and not a tag. Skip deploy"; exit 0; }
