@@ -264,7 +264,12 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
     [0, 0]
   );
 
-  const colorScale = scaleQuantize().domain(domain).range(colorRange);
+  const pow = domain[1]
+    ? Math.pow(10, Math.floor(Math.log(domain[1]) / Math.log(10))) *
+      colorRange.length
+    : 0;
+
+  const colorScale = scaleQuantize().domain([domain[0], pow]).range(colorRange);
 
   const adminLevel = [false, ...shapeLevels][selectedAdministration.length - 1];
 
