@@ -1,11 +1,15 @@
-from typing import List
+from typing import List, Optional
 from db.connection import engine
 from sqlalchemy.orm import Session
 from models.form import Form, FormDict, FormBase
 
 
-def add_form(session: Session, name: str) -> FormDict:
-    form = Form(name=name)
+def add_form(
+    session: Session,
+    name: str,
+    id: Optional[int],
+) -> FormDict:
+    form = Form(name=name, id=id)
     session.add(form)
     session.commit()
     session.flush()

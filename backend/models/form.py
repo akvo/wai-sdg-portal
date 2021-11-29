@@ -2,7 +2,7 @@
 # Keep the code clean and CLEAR
 
 from typing_extensions import TypedDict
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
@@ -25,7 +25,8 @@ class Form(Base):
                                   passive_deletes=True,
                                   backref="question_group")
 
-    def __init__(self, name: str):
+    def __init__(self, id: Optional[int], name: str):
+        self.id = id
         self.name = name
 
     def __repr__(self) -> int:

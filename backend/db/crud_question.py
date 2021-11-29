@@ -11,6 +11,7 @@ def add_question(session: Session,
                  question_group: int,
                  type: QuestionType,
                  meta: bool,
+                 id: Optional[id] = None,
                  order: Optional[int] = None,
                  option: Optional[List[OptionDict]] = None,
                  required: Optional[bool] = True,
@@ -23,7 +24,8 @@ def add_question(session: Session,
         last_question = last_question.order + 1
     else:
         last_question = 1
-    question = Question(name=name,
+    question = Question(id=id,
+                        name=name,
                         order=last_question,
                         form=form,
                         meta=meta,

@@ -53,9 +53,10 @@ class Question(Base):
                           passive_deletes=True,
                           backref="option")
 
-    def __init__(self, name: str, order: int, form: int, question_group: int,
-                 meta: bool, type: QuestionType, required: Optional[bool],
-                 rule: Optional[dict]):
+    def __init__(self, id: Optional[int], name: str, order: int, form: int,
+                 question_group: int, meta: bool, type: QuestionType,
+                 required: Optional[bool], rule: Optional[dict]):
+        self.id = id
         self.form = form
         self.order = order
         self.question_group = question_group
