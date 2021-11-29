@@ -18,10 +18,11 @@ import { scaleQuantize } from "d3-scale";
 import { UIState } from "../../state/ui";
 import _ from "lodash";
 import { generateAdvanceFilterURL } from "../../util/utils";
-import { centeroid, geojson, tile, defaultPos } from "../../util/geo-util";
+import { getBounds, geojson, tile, defaultPos } from "../../util/geo-util";
 
 const { shapeLevels } = window.map_config;
-const mapMaxZoom = 12;
+const mapMaxZoom = 14;
+const defPos = defaultPos();
 const colorRange = ["#bbedda", "#a7e1cb", "#92d5bd", "#7dcaaf", "#67bea1"];
 const higlightColor = "#84b4cc";
 const noDataColor = "#d3d3d3";
@@ -206,7 +207,7 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
   const [map, setMap] = useState(null);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [currentZoom, setCurrentZoom] = useState(defaultPos.zoom);
+  const [currentZoom, setCurrentZoom] = useState(null);
   const [filterColor, setFilterColor] = useState(null);
   const [filterMarker, setFilterMarker] = useState(null);
   const [selectedShape, setSelectedShape] = useState(null);
@@ -281,9 +282,9 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
 
   useEffect(() => {
     if (map && administration.length) {
-      const pos = centeroid(selectedAdministration, administration);
-      map.setView(pos.coordinates, pos.zoom);
-      setCurrentZoom(pos.zoom);
+      const pos = getBounds(selectedAdministration, administration);
+      map.fitBounds(pos.bbox);
+      setCurrentZoom(map.getZoom());
     }
   }, [map, administration, selectedAdministration]);
 
@@ -360,12 +361,11 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
               type="secondary"
               icon={<FullscreenOutlined />}
               onClick={() => {
-                map.setView(defaultPos.coordinates, defaultPos.zoom);
-                setCurrentZoom(defaultPos.zoom);
+                map.fitBounds(defPos.bbox);
+                setCurrentZoom(map.getZoom());
               }}
             />
             <Button
-              disabled={currentZoom <= defaultPos.zoom}
               type="secondary"
               icon={<ZoomOutOutlined />}
               onClick={() => {
@@ -389,8 +389,7 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
       )}
       {administration.length && (
         <MapContainer
-          center={defaultPos.coordinates}
-          zoom={defaultPos.zoom}
+          bounds={defPos.bbox}
           whenCreated={setMap}
           zoomControl={false}
           scrollWheelZoom={false}

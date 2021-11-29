@@ -1,5 +1,5 @@
 import { feature } from "topojson-client";
-import { geoCentroid } from "d3-geo";
+import { geoCentroid, geoBounds } from "d3-geo";
 import { takeRight } from "lodash";
 import { merge } from "topojson-client";
 
@@ -7,7 +7,7 @@ const topojson = window.topojson;
 const geo = topojson.objects[Object.keys(topojson.objects)[0]];
 const shapeLevels = window.map_config.shapeLevels;
 
-export const centeroid = (selected, administration) => {
+export const getBounds = (selected, administration) => {
   selected = takeRight(selected, selected.length - 1);
   selected = selected.map((x, i) => {
     const adminName = administration?.find((a) => a.id === x)?.name;
@@ -31,16 +31,24 @@ export const centeroid = (selected, administration) => {
     topojson,
     geoFilter.length ? geoFilter : geo.geometries
   );
-  const center = geoCentroid(mergeTopo);
+  const center = geoCentroid(mergeTopo).reverse();
+  const bounds = geoBounds(mergeTopo);
+  const bbox = [bounds[0].reverse(), bounds[1].reverse()];
   return {
-    coordinates: center.reverse(),
-    zoom: selected.length + 10,
+    coordinates: center,
+    bbox: bbox,
   };
 };
 
-export const defaultPos = {
-  coordinates: geoCentroid(merge(topojson, geo.geometries)).reverse(),
-  zoom: 10,
+export const defaultPos = () => {
+  const mergeTopo = merge(topojson, geo.geometries);
+  const center = geoCentroid(mergeTopo).reverse();
+  const bounds = geoBounds(mergeTopo);
+  const bbox = [bounds[0].reverse(), bounds[1].reverse()];
+  return {
+    coordinates: center,
+    bbox: bbox,
+  };
 };
 
 export const geojson = feature(topojson, geo);

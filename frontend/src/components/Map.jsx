@@ -2,12 +2,13 @@ import React from "react";
 import { MapContainer, GeoJSON, TileLayer } from "react-leaflet";
 import { defaultPos, geojson, tileStadia } from "../util/geo-util";
 
+const defPos = defaultPos();
+
 const Map = () => {
   return (
     <div className="map-container">
       <MapContainer
-        center={defaultPos.coordinates}
-        zoom={defaultPos.zoom}
+        bounds={defPos.bbox}
         zoomControl={false}
         scrollWheelZoom={false}
         style={{
