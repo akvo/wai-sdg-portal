@@ -9,16 +9,17 @@ source_path = os.environ["INSTANCE_NAME"]
 
 class SurveyList(enum.Enum):
     wai_nepal = {
-        'domain':
-        'wai',
-        'formIds':
-        ['1000944003', '1189144226', '994944020', '964754042'],
+        'domain': 'wai',
+        'formIds': ['1000944003', '1189144226', '994944020', '964754042'],
         'administration': ['1183264177', '1183264172']
     }
     wai_bangladesh = {
-        'domain': 'wai',
-        'formIds': ['976564018', '974754029', '962774003', '980804014'],
-        'administration': ['1260775107', '1260775115', '1260775108']
+        'domain':
+        'wai',
+        'formIds':
+        ['976564018', '952774024', '974754029', '962774003', '980804014'],
+        'administration':
+        ['1084694626', '1260775107', '1260775115', '1260775108', '1084684623']
     }
 
 
@@ -114,7 +115,10 @@ def generate_form(form):
             if q["id"] not in source["administration"] and q["type"] not in [
                     "cascade", "photo"
             ]:
-                question_group["questions"].append(question)
+                if q["type"] == "option" and len(options) == 0:
+                    pass
+                else:
+                    question_group["questions"].append(question)
         question_groups.append(question_group)
     return {
         "form": form_name,

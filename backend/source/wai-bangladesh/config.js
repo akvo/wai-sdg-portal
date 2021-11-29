@@ -36,19 +36,19 @@ var page_config = {
         key: "name",
       },
       {
-        title: "Hygiene Stations",
-        key: 1177674247,
+        title: "Type",
+        key: 974754044,
       },
       {
-        title: "Cases of Dierhea",
-        key: 1179634216,
+        title: "Water Source",
+        key: 994994027,
       },
     ],
     maps: {
-      shape: { id: 1179634216, name: "Cases of Diarhea" },
-      marker: { id: 1179654241, name: "Main Source" },
+      shape: { id: 1000914052, name: "Cases of Diarhea" },
+      marker: { id: 987364073, name: "Hygiene Stations" },
     },
-    formId: 1189144226,
+    formId: 952774024,
   },
   households: {
     title: "Households",
@@ -58,19 +58,19 @@ var page_config = {
         key: "name",
       },
       {
-        title: "Hand Washing Facility",
-        key: 962764039,
+        title: "Water Salinity",
+        key: 1093164024,
       },
       {
-        title: "Laterine",
-        key: 962764019,
+        title: "Arsenic",
+        key: 1089314018,
       },
     ],
     maps: {
-      shape: { id: 976454019, name: "Household Size" },
+      shape: { id: 994964007, name: "Household Size" },
       marker: { id: 962764019, title: "Laterine" },
     },
-    formId: 994944020,
+    formId: 962774003,
   },
   schools: {
     title: "Schools Facility",
@@ -80,22 +80,18 @@ var page_config = {
         key: "name",
       },
       {
-        title: "Toilet",
-        key: 1000914105,
-      },
-      {
         title: "Handwashing",
-        key: 964764100,
+        key: 987364056,
       },
       {
-        title: "School Waste",
-        key: 987374089,
+        title: "Has Toilet",
+        key: 993004033,
       },
     ],
     maps: {
-      shape: { id: 987364061, name: "Number of Student" },
-      marker: { id: 1000914105, title: "Toilet" },
+      shape: { id: 974754026, name: "Number of Student" },
+      marker: { id: 993004033, title: "Toilet" },
     },
-    formId: 964754042,
+    formId: 976564018,
   },
 };
