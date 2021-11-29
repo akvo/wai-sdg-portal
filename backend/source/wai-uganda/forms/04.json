@@ -1,0 +1,1848 @@
+{
+  "form": "Water Points",
+  "id": 4,
+  "question_groups": [
+    {
+      "question_group": "Registration",
+      "questions": [
+        {
+          "order": 1,
+          "question": "water point name",
+          "type": "text",
+          "meta": true,
+          "options": null
+        },
+        {
+          "order": 2,
+          "question": "location",
+          "type": "administration",
+          "meta": true,
+          "options": null
+        },
+        {
+          "order": 4,
+          "question": "parish",
+          "type": "text",
+          "meta": false,
+          "options": null
+        },
+        {
+          "order": 5,
+          "question": "village",
+          "type": "text",
+          "meta": false,
+          "options": null
+        },
+        {
+          "order": 6,
+          "question": "geolocation",
+          "type": "geo",
+          "meta": true,
+          "options": null
+        },
+        {
+          "order": 8,
+          "question": "dwd number of water point",
+          "type": "number",
+          "meta": false,
+          "options": null
+        },
+        {
+          "order": 9,
+          "question": "year of water point construction",
+          "type": "number",
+          "meta": false,
+          "options": null
+        },
+        {
+          "order": 10,
+          "question": "who funded the construction of this water point",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "government",
+              "color": null
+            },
+            {
+              "name": "private",
+              "color": null
+            },
+            {
+              "name": "ngo",
+              "color": null
+            },
+            {
+              "name": "religious institutions",
+              "color": null
+            },
+            {
+              "name": "community",
+              "color": null
+            },
+            {
+              "name": "politician",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 11,
+          "question": "estimate the number of households who use this water point as their source of water",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "25-50",
+              "color": null
+            },
+            {
+              "name": "50-100",
+              "color": null
+            },
+            {
+              "name": "more than 100",
+              "color": null
+            },
+            {
+              "name": "less than 25",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 12,
+          "question": "what is the main purpose for which people use water from this water point?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "water for other household and domestic use",
+              "color": null
+            },
+            {
+              "name": "drinking water",
+              "color": null
+            },
+            {
+              "name": "washing cars/ motorcycles",
+              "color": null
+            },
+            {
+              "name": "institutional use (school or healthcare facility/ health centre)",
+              "color": null
+            },
+            {
+              "name": "agriculture (crops or animals)",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 13,
+          "question": "what is the main purpose for which people use water from this water point?--other--",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "none",
+              "color": null
+            },
+            {
+              "name": "for drinking but not always because it is not clean",
+              "color": null
+            },
+            {
+              "name": "laying bricks",
+              "color": null
+            },
+            {
+              "name": "not in use",
+              "color": null
+            },
+            {
+              "name": "washing",
+              "color": null
+            },
+            {
+              "name": "brick laying",
+              "color": null
+            },
+            {
+              "name": "bricks laying",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 14,
+          "question": "is water used by vendors/collected to sell other places?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "never",
+              "color": null
+            },
+            {
+              "name": "rarely",
+              "color": null
+            },
+            {
+              "name": "sometimes",
+              "color": null
+            },
+            {
+              "name": "often",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 15,
+          "question": "are their livestock drinking facilities at the water point?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "no",
+              "color": null
+            },
+            {
+              "name": "yes",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 16,
+          "question": "type of water source",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "deep borehole",
+              "color": null
+            },
+            {
+              "name": "rain water harvesting tank",
+              "color": null
+            },
+            {
+              "name": "protected spring",
+              "color": null
+            },
+            {
+              "name": "shallow well",
+              "color": null
+            },
+            {
+              "name": "public tapstand",
+              "color": null
+            },
+            {
+              "name": "kiosk",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 17,
+          "question": "public tapstand - name of water scheme connected",
+          "type": "text",
+          "meta": true,
+          "options": null
+        },
+        {
+          "order": 18,
+          "question": "public tapstand with water meter",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "yes",
+              "color": null
+            },
+            {
+              "name": "no",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 19,
+          "question": "water meter functioning",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "yes",
+              "color": null
+            },
+            {
+              "name": "no",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 20,
+          "question": "rain water harvesting tank - volume (l)",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "nan",
+              "color": null
+            },
+            {
+              "name": "13 liters",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 21,
+          "question": "number of taps/spouts",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "one",
+              "color": null
+            },
+            {
+              "name": "more than one",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 22,
+          "question": "protected spring type",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "ordinary",
+              "color": null
+            },
+            {
+              "name": "improved",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 23,
+          "question": "how many spouts does it have?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "one",
+              "color": null
+            },
+            {
+              "name": "more than one",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 24,
+          "question": "borehole/well depth (m)",
+          "type": "number",
+          "meta": false,
+          "options": null
+        },
+        {
+          "order": 25,
+          "question": "borehole/well diameter (in)",
+          "type": "number",
+          "meta": false,
+          "options": null
+        },
+        {
+          "order": 26,
+          "question": "type of lifting device?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "handpump",
+              "color": null
+            },
+            {
+              "name": "rope pump",
+              "color": null
+            },
+            {
+              "name": "manual lifting rope",
+              "color": null
+            },
+            {
+              "name": "motorised pump",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 27,
+          "question": "handpump type",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "afridev",
+              "color": null
+            },
+            {
+              "name": "india mark",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 28,
+          "question": "what is the pipe material?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "gi",
+              "color": null
+            },
+            {
+              "name": "pvc",
+              "color": null
+            },
+            {
+              "name": "i don't know",
+              "color": null
+            },
+            {
+              "name": "stainless steel",
+              "color": null
+            },
+            {
+              "name": "hdp",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 29,
+          "question": "is the water point currently functional?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "functional in use",
+              "color": null
+            },
+            {
+              "name": "non-functional",
+              "color": null
+            },
+            {
+              "name": "functional and not in use",
+              "color": null
+            },
+            {
+              "name": "decomissioned",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 30,
+          "question": "please rate the level of functionality",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "fully functioning at 100%",
+              "color": null
+            },
+            {
+              "name": "partially functioning works with some issues/ difficulties",
+              "color": null
+            },
+            {
+              "name": "barely functioning (almost not functioning)",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 31,
+          "question": "specify the nature of the technical breakdowns",
+          "type": "text",
+          "meta": false,
+          "options": null
+        },
+        {
+          "order": 32,
+          "question": "duration of the current non-functionality (how long has it been out of service)",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "more than one year",
+              "color": null
+            },
+            {
+              "name": "1 to 5 days",
+              "color": null
+            },
+            {
+              "name": "6 to 10 days",
+              "color": null
+            },
+            {
+              "name": "more than 20 days but less than one year",
+              "color": null
+            },
+            {
+              "name": "unknown",
+              "color": null
+            },
+            {
+              "name": "11 to 20 days",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 33,
+          "question": "how many days in total was the water facility out of service during the past one year?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "more than 3 weeks total",
+              "color": null
+            },
+            {
+              "name": "it was never broken down",
+              "color": null
+            },
+            {
+              "name": "unknown",
+              "color": null
+            },
+            {
+              "name": "about 1 week in total",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 34,
+          "question": "how many hours per day is it possible to collect water from this source?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "8-16 hours",
+              "color": null
+            },
+            {
+              "name": "more than 8",
+              "color": null
+            },
+            {
+              "name": "more than 16 hours",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 35,
+          "question": "how many minutes does it take to fill a 20 litre jerry can?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "1-3 minutes",
+              "color": null
+            },
+            {
+              "name": "more than 3 minutes",
+              "color": null
+            },
+            {
+              "name": "less than 1 minute",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 36,
+          "question": "physical state of the apron",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "good",
+              "color": null
+            },
+            {
+              "name": "fair (moderate)",
+              "color": null
+            },
+            {
+              "name": "poor",
+              "color": null
+            },
+            {
+              "name": "excellent",
+              "color": null
+            },
+            {
+              "name": "very poor",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 37,
+          "question": "physical state of the pedestal",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "good",
+              "color": null
+            },
+            {
+              "name": "fair (moderate)",
+              "color": null
+            },
+            {
+              "name": "excellent",
+              "color": null
+            },
+            {
+              "name": "very poor",
+              "color": null
+            },
+            {
+              "name": "por",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 38,
+          "question": "physical state of tap/ spouts",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "fair (moderate)",
+              "color": null
+            },
+            {
+              "name": "poor",
+              "color": null
+            },
+            {
+              "name": "very poor",
+              "color": null
+            },
+            {
+              "name": "good",
+              "color": null
+            },
+            {
+              "name": "excellent",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 39,
+          "question": "status of how the tap/ spout is currently being used",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "active all are in use",
+              "color": null
+            },
+            {
+              "name": "at least one tap/ spout not in use- abandoned or never used",
+              "color": null
+            },
+            {
+              "name": "at least one tap/ spout not in use-repair needed",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 40,
+          "question": "physical state of drainage channel and soakpit",
+          "type": "text",
+          "meta": false,
+          "options": null
+        },
+        {
+          "order": 41,
+          "question": "physical state of the pumphead",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "good",
+              "color": null
+            },
+            {
+              "name": "poor",
+              "color": null
+            },
+            {
+              "name": "excellent",
+              "color": null
+            },
+            {
+              "name": "fair (moderate)",
+              "color": null
+            },
+            {
+              "name": "very poor",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 42,
+          "question": "physical state of the handle",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "good",
+              "color": null
+            },
+            {
+              "name": "poor",
+              "color": null
+            },
+            {
+              "name": "excellent",
+              "color": null
+            },
+            {
+              "name": "very poor",
+              "color": null
+            },
+            {
+              "name": "fair (moderate)",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 43,
+          "question": "physical state of the retention wall",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "good",
+              "color": null
+            },
+            {
+              "name": "very poor",
+              "color": null
+            },
+            {
+              "name": "poor",
+              "color": null
+            },
+            {
+              "name": "fair (moderate)",
+              "color": null
+            },
+            {
+              "name": "excellent",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 44,
+          "question": "physical state of the superstructure (building and door)",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "poor",
+              "color": null
+            },
+            {
+              "name": "good",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 45,
+          "question": "physical state of the plumbing works in the kiosk",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "very poor",
+              "color": null
+            },
+            {
+              "name": "good",
+              "color": null
+            },
+            {
+              "name": "fair (moderate)",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 46,
+          "question": "how many rainwater harvesting tanks are present?",
+          "type": "number",
+          "meta": false,
+          "options": null
+        },
+        {
+          "order": 47,
+          "question": "what is the total storage capacity of the tanks?",
+          "type": "number",
+          "meta": false,
+          "options": null
+        },
+        {
+          "order": 48,
+          "question": "how many rainwater harvesting tanks are in use?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "none",
+              "color": null
+            },
+            {
+              "name": "nan",
+              "color": null
+            },
+            {
+              "name": "oo",
+              "color": null
+            },
+            {
+              "name": "no one",
+              "color": null
+            },
+            {
+              "name": "all not in use",
+              "color": null
+            },
+            {
+              "name": "none.",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 49,
+          "question": "what is the total storage volume of tanks in use?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "nan",
+              "color": null
+            },
+            {
+              "name": "no one is use",
+              "color": null
+            },
+            {
+              "name": "none",
+              "color": null
+            },
+            {
+              "name": "oo",
+              "color": null
+            },
+            {
+              "name": "none in use",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 50,
+          "question": "what is the physical state of the gutters",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "very poor",
+              "color": null
+            },
+            {
+              "name": "good",
+              "color": null
+            },
+            {
+              "name": "poor",
+              "color": null
+            },
+            {
+              "name": "fair (moderate)",
+              "color": null
+            },
+            {
+              "name": "excellent",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 51,
+          "question": "what is the status of the filtration system?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "no filtration system exists",
+              "color": null
+            },
+            {
+              "name": "present and in use",
+              "color": null
+            },
+            {
+              "name": "present -not is use, repair needed",
+              "color": null
+            },
+            {
+              "name": "present not in use, not connected",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 52,
+          "question": "what is the physical state of the filtration system",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "good",
+              "color": null
+            },
+            {
+              "name": "very poor",
+              "color": null
+            },
+            {
+              "name": "poor",
+              "color": null
+            },
+            {
+              "name": "excellent",
+              "color": null
+            },
+            {
+              "name": "fair (moderate)",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 53,
+          "question": "what is the physical state of the main tank",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "fair (moderate)",
+              "color": null
+            },
+            {
+              "name": "good",
+              "color": null
+            },
+            {
+              "name": "poor",
+              "color": null
+            },
+            {
+              "name": "very poor",
+              "color": null
+            },
+            {
+              "name": "excellent",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 54,
+          "question": "please explain any other observable technical problems that require repairs",
+          "type": "text",
+          "meta": false,
+          "options": null
+        },
+        {
+          "order": 55,
+          "question": "are there any components of the well/ borehole that require total replacement?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "none",
+              "color": null
+            },
+            {
+              "name": "drainage channel",
+              "color": null
+            },
+            {
+              "name": "pumphead",
+              "color": null
+            },
+            {
+              "name": "handle",
+              "color": null
+            },
+            {
+              "name": "pedestal",
+              "color": null
+            },
+            {
+              "name": "apron",
+              "color": null
+            },
+            {
+              "name": "spout",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 56,
+          "question": "are there any components of the well/ borehole that require total replacement?--other--",
+          "type": "text",
+          "meta": false,
+          "options": null
+        },
+        {
+          "order": 57,
+          "question": "are there any components of the protected spring that require total replacement?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "catchment protection or fence",
+              "color": null
+            },
+            {
+              "name": "spouts/ taps",
+              "color": null
+            },
+            {
+              "name": "landing and steps",
+              "color": null
+            },
+            {
+              "name": "none",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 58,
+          "question": "are there any components of the protected spring that require total replacement?--other--",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "all parts",
+              "color": null
+            },
+            {
+              "name": "all parts apart",
+              "color": null
+            },
+            {
+              "name": "all parts has broken down",
+              "color": null
+            },
+            {
+              "name": "floor",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 59,
+          "question": "are there any components of the public tapstand that require total replacement?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "meters",
+              "color": null
+            },
+            {
+              "name": "tap",
+              "color": null
+            },
+            {
+              "name": "none",
+              "color": null
+            },
+            {
+              "name": "drainage channel",
+              "color": null
+            },
+            {
+              "name": "apron",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 60,
+          "question": "are there any components of the public tapstand that require total replacement?--other--",
+          "type": "text",
+          "meta": false,
+          "options": null
+        },
+        {
+          "order": 61,
+          "question": "are there any components of the kiosk that require total replacement?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "drainage channel",
+              "color": null
+            },
+            {
+              "name": "none",
+              "color": null
+            },
+            {
+              "name": "taps",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 62,
+          "question": "are there any components of the kiosk that require total replacement?--other--",
+          "type": "number",
+          "meta": false,
+          "options": null
+        },
+        {
+          "order": 63,
+          "question": "are there any components of the rainwater harvesting system that require total replacement?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "drainage channel",
+              "color": null
+            },
+            {
+              "name": "none",
+              "color": null
+            },
+            {
+              "name": "taps",
+              "color": null
+            },
+            {
+              "name": "filtration system",
+              "color": null
+            },
+            {
+              "name": "gutters",
+              "color": null
+            },
+            {
+              "name": "tank",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 64,
+          "question": "are there any components of the rainwater harvesting system that require total replacement?--other--",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "all parts",
+              "color": null
+            },
+            {
+              "name": "tank covers",
+              "color": null
+            },
+            {
+              "name": "gutters and taps should be installed",
+              "color": null
+            },
+            {
+              "name": "gutters & filtration system",
+              "color": null
+            },
+            {
+              "name": "filtration system & gutters",
+              "color": null
+            },
+            {
+              "name": "apron",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 65,
+          "question": "are there any potential sources of contamination within 10 meters of the water point?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "none-no contamination risk observed",
+              "color": null
+            },
+            {
+              "name": "animal excreta nearby",
+              "color": null
+            },
+            {
+              "name": "rubbish nearby",
+              "color": null
+            },
+            {
+              "name": "latrine nearby",
+              "color": null
+            },
+            {
+              "name": "livelihood activity nearby (e.g. brickmaking)",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 66,
+          "question": "is the catchment protected and are there any potential sources if contamination nearby?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "clothes washing in the catchment",
+              "color": null
+            },
+            {
+              "name": "animal at the catchment",
+              "color": null
+            },
+            {
+              "name": "children playing",
+              "color": null
+            },
+            {
+              "name": "no fence",
+              "color": null
+            },
+            {
+              "name": "none -no contamination risk observed",
+              "color": null
+            },
+            {
+              "name": "agriculture/ cultivation at the catchment",
+              "color": null
+            },
+            {
+              "name": "livelihood activities at the catchment (e.g. brickmaking)",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 67,
+          "question": "are there any potential sources of contamination to the rainwater system?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "none-no contamination risks observed",
+              "color": null
+            },
+            {
+              "name": "gutter channels are collecting dirty water",
+              "color": null
+            },
+            {
+              "name": "entry points or openings to the tank are not properly covered",
+              "color": null
+            },
+            {
+              "name": "visible contamination on roof catchment area (plants, dirt, excreta)",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 68,
+          "question": "is there concern about potential contamination of the water quality?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "no concern- water is clean",
+              "color": null
+            },
+            {
+              "name": "contamination from animals or human feces (e.g. latrines or od)",
+              "color": null
+            },
+            {
+              "name": "contamination from soil or metals",
+              "color": null
+            },
+            {
+              "name": "contamination from industry or chemicals",
+              "color": null
+            },
+            {
+              "name": "contamination from pesticides or herbicides (agriculture)",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 69,
+          "question": "is there concern about potential contamination of the water quality?--other--",
+          "type": "text",
+          "meta": false,
+          "options": null
+        },
+        {
+          "order": 70,
+          "question": "are there any concerns about the colour of the water?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "sometimes",
+              "color": null
+            },
+            {
+              "name": "never",
+              "color": null
+            },
+            {
+              "name": "always - problems with colour",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 71,
+          "question": "are there any concerns about the odour/smell of the water?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "never",
+              "color": null
+            },
+            {
+              "name": "always - problems with odour",
+              "color": null
+            },
+            {
+              "name": "sometimes",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 72,
+          "question": "are there any concerns about the taste of the water?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "rarely",
+              "color": null
+            },
+            {
+              "name": "sometimes",
+              "color": null
+            },
+            {
+              "name": "always - problems with taste",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 73,
+          "question": "please any other concern about water quality",
+          "type": "text",
+          "meta": false,
+          "options": null
+        },
+        {
+          "order": 74,
+          "question": "who is responsible for daly operation of the water point?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "caretaker",
+              "color": null
+            },
+            {
+              "name": "private operator",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 75,
+          "question": "who is responsible for daly operation of the water point?--other--",
+          "type": "text",
+          "meta": false,
+          "options": null
+        },
+        {
+          "order": 76,
+          "question": "is the care paid or unpaid?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "unpaid",
+              "color": null
+            },
+            {
+              "name": "paid",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 77,
+          "question": "is there a wuc/ wsc for this water point?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "yes",
+              "color": null
+            },
+            {
+              "name": "no",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 78,
+          "question": "who is responsible for the overall management of this water point?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "wuc/ wsc",
+              "color": null
+            },
+            {
+              "name": "no management",
+              "color": null
+            },
+            {
+              "name": "unknown",
+              "color": null
+            },
+            {
+              "name": "private operator",
+              "color": null
+            },
+            {
+              "name": "northern umbrella",
+              "color": null
+            },
+            {
+              "name": "national water and sewerage cooperation",
+              "color": null
+            },
+            {
+              "name": "ngo/ cso",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 79,
+          "question": "is the wuc/ wsc currently active?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "yes",
+              "color": null
+            },
+            {
+              "name": "no",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 80,
+          "question": "in the last year, has the wuc/ wsc/ management body organised any maintenance activities or repairs?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "no",
+              "color": null
+            },
+            {
+              "name": "unknown",
+              "color": null
+            },
+            {
+              "name": "yes",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 81,
+          "question": "in the last year,has the wuc/wsc received any support or guidance from the sub-county or district government?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "no",
+              "color": null
+            },
+            {
+              "name": "yes",
+              "color": null
+            },
+            {
+              "name": "unknown",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 82,
+          "question": "number of members of the wuc/ wsc",
+          "type": "number",
+          "meta": false,
+          "options": null
+        },
+        {
+          "order": 83,
+          "question": "number of active members on the wuc/wsc",
+          "type": "number",
+          "meta": false,
+          "options": null
+        },
+        {
+          "order": 84,
+          "question": "number of women on the wuc/wsc",
+          "type": "number",
+          "meta": false,
+          "options": null
+        },
+        {
+          "order": 85,
+          "question": "number of women in key positions on the wuc/wsc (chair, secretary of finance)",
+          "type": "number",
+          "meta": false,
+          "options": null
+        },
+        {
+          "order": 86,
+          "question": "is the wuc/wsc a member of the sub county water supply and sanitation board?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "unknown",
+              "color": null
+            },
+            {
+              "name": "no",
+              "color": null
+            },
+            {
+              "name": "yes",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 87,
+          "question": "does the wuc/wsc/operator keep records of the water meter readings or amount of water collected?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "no",
+              "color": null
+            },
+            {
+              "name": "yes",
+              "color": null
+            },
+            {
+              "name": "unknown",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 88,
+          "question": "does the wuc/wsc/operator keep financial records on income collected?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "yes",
+              "color": null
+            },
+            {
+              "name": "no",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 89,
+          "question": "does the wuc/wsc keep financial records on expenditure and/or a record of repairs?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "yes",
+              "color": null
+            },
+            {
+              "name": "no",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 90,
+          "question": "does the wuc/wsc have a bank account?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "no",
+              "color": null
+            },
+            {
+              "name": "yes",
+              "color": null
+            },
+            {
+              "name": "unknown",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 91,
+          "question": "when were the last water quality tests done?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "1 to 5 years ago",
+              "color": null
+            },
+            {
+              "name": "3 months to 1 year ago",
+              "color": null
+            },
+            {
+              "name": "less than 3 months ago",
+              "color": null
+            },
+            {
+              "name": "unknown",
+              "color": null
+            },
+            {
+              "name": "never",
+              "color": null
+            },
+            {
+              "name": "during construction of the water source",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 92,
+          "question": "does the operator keep financial records on expenditure and/or a record of repairs?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "no",
+              "color": null
+            },
+            {
+              "name": "yes",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 93,
+          "question": "has the wuc/wsc received any support or training from the sub county or the district in the past year?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "no",
+              "color": null
+            },
+            {
+              "name": "yes",
+              "color": null
+            },
+            {
+              "name": "unknown",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 94,
+          "question": "do users pay for water?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "yes",
+              "color": null
+            },
+            {
+              "name": "no",
+              "color": null
+            },
+            {
+              "name": "users contribute fees only when repair is needed",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 95,
+          "question": "how much is typically collected from each user when there is a breakdown or repair?",
+          "type": "number",
+          "meta": false,
+          "options": null
+        },
+        {
+          "order": 96,
+          "question": "type of tariff system",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "fixed tariff per month",
+              "color": null
+            },
+            {
+              "name": "fixed tariff per year",
+              "color": null
+            },
+            {
+              "name": "tariff per 20 litre jerry can",
+              "color": null
+            },
+            {
+              "name": "tariff per institution (schools, health centres, etc)",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 97,
+          "question": "type of tariff system--other--",
+          "type": "text",
+          "meta": false,
+          "options": null
+        },
+        {
+          "order": 98,
+          "question": "what is the monthly tariff?",
+          "type": "number",
+          "meta": false,
+          "options": null
+        },
+        {
+          "order": 99,
+          "question": "what is the annual tariff?",
+          "type": "number",
+          "meta": false,
+          "options": null
+        },
+        {
+          "order": 100,
+          "question": "what is the tariff per 20l jerry can?",
+          "type": "number",
+          "meta": false,
+          "options": null
+        },
+        {
+          "order": 101,
+          "question": "% of community paying tariffs",
+          "type": "number",
+          "meta": false,
+          "options": null
+        },
+        {
+          "order": 102,
+          "question": "are there any families or people in the village exempted from payment due to inability to pay?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "yes",
+              "color": null
+            },
+            {
+              "name": "no",
+              "color": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

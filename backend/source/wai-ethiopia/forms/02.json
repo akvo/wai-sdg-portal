@@ -1,4 +1,7 @@
-[
+{
+  "form": "Health Facilities",
+  "id": 2,
+  "question_groups": [
   {
     "question_group": "Registration",
     "questions": [
@@ -11,7 +14,7 @@
       },
       {
         "order": 3,
-        "question": "school name",
+        "question": "name of health facility",
         "type": "text",
         "meta": true,
         "options": null
@@ -25,86 +28,46 @@
       },
       {
         "order": 6,
-        "question": "school type",
+        "question": "type of healthy facility",
         "type": "option",
         "meta": false,
         "options": [
           {
-            "name": "primary(1-8)",
+            "name": "health post",
             "color": null
           },
           {
-            "name": "primary(1-4)",
-            "color": null
-          },
-          {
-            "name": "high school 9-10",
+            "name": "other",
             "color": null
           }
         ]
       },
       {
         "order": 7,
-        "question": "male pupils",
-        "type": "number",
-        "meta": false,
-        "options": null,
-        "rule": {
-          "min": 0
-        }
-      },
-      {
-        "order": 8,
-        "question": "female pupils",
-        "type": "number",
-        "meta": false,
-        "options": null,
-        "rule": {
-          "min": 0
-        }
-      },
-      {
-        "order": 9,
-        "question": "reason for inventory",
+        "question": "description of water supply in health facilities",
         "type": "option",
         "meta": false,
         "options": [
-          {
-            "name": "new scheme",
-            "color": null
-          },
-          {
-            "name": "repair",
-            "color": null
-          }
-        ]
-      },
-      {
-        "order": 10,
-        "question": "water supply source",
-        "type": "option",
-        "meta": false,
-        "options": [
-          {
-            "name": "pipeline connection",
-            "color": null
-          },
-          {
-            "name": "no water scheme",
-            "color": null
-          },
-          {
-            "name": "shallow well fitted with pump",
-            "color": null
-          },
           {
             "name": "no water supply in premises",
             "color": null
+          },
+          {
+            "name": "protected wells",
+            "color": null
+          },
+          {
+            "name": "pipeline connections",
+            "color": null
+          },
+          {
+            "name": "rain water harvesting",
+            "color": null
           }
         ]
       },
       {
-        "order": 11,
+        "order": 8,
         "question": "water",
         "type": "option",
         "meta": false,
@@ -117,7 +80,7 @@
           },
           {
             "name": "basic",
-            "color": "#40B1E6",
+            "color": "#67B769",
             "order": 2,
             "score": 10
           },
@@ -136,64 +99,27 @@
         ]
       },
       {
-        "order": 12,
-        "question": "year commisioned",
-        "type": "number",
-        "meta": false,
-        "options": null,
-        "rule": {
-          "min": 2000,
-          "max": 2020
-        }
-      },
-      {
-        "order": 13,
-        "question": "functionality status of water supply",
+        "order": 9,
+        "question": "latrine description",
         "type": "option",
         "meta": false,
         "options": [
-          {
-            "name": "functional",
-            "color": null,
-            "order": 1
-          },
-          {
-            "name": "non functional - mechanical",
-            "color": null,
-            "order": 2
-          }
-        ]
-      },
-      {
-        "order": 14,
-        "question": "yield",
-        "type": "number",
-        "meta": false,
-        "options": null,
-        "rule": {
-          "min": 0
-        }
-      },
-      {
-        "order": 15,
-        "question": "type of latrine",
-        "type": "option",
-        "meta": false,
-        "options": [
-          {
-            "name": "simple pit latrine",
-            "color": null,
-            "order": 1
-          },
           {
             "name": "no latrine",
-            "color": null,
-            "order": 2
+            "color": null
+          },
+          {
+            "name": "simple pit latrine",
+            "color": null
+          },
+          {
+            "name": "vip",
+            "color": null
           }
         ]
       },
       {
-        "order": 16,
+        "order": 10,
         "question": "sanitation",
         "type": "option",
         "meta": false,
@@ -225,85 +151,76 @@
         ]
       },
       {
-        "order": 17,
-        "question": "latrine for boys and girls separate",
+        "order": 11,
+        "question": "physically separate latrines for male female patients",
         "type": "option",
         "meta": false,
         "options": [
           {
-            "name": "no",
+            "name": "yes",
             "color": null
           },
           {
-            "name": "yes",
+            "name": "no",
             "color": null
           }
         ]
       },
       {
-        "order": 18,
-        "question": "number of boy pupils",
-        "type": "number",
-        "meta": false,
-        "options": null,
-        "required": false,
-        "rule": {
-          "min": 0
-        }
-      },
-      {
-        "order": 19,
-        "question": "number of girl pupils",
-        "type": "number",
-        "meta": false,
-        "options": null,
-        "required": false,
-        "rule": {
-          "min": 0
-        }
-      },
-      {
-        "order": 20,
-        "question": "are there latrines for disabled?",
+        "order": 12,
+        "question": "facilitated access for disabled",
         "type": "option",
         "meta": false,
         "options": [
           {
-            "name": "no",
+            "name": "yes",
             "color": null
           },
           {
-            "name": "yes",
+            "name": "no",
             "color": null
           }
         ]
       },
       {
-        "order": 21,
+        "order": 13,
         "question": "latrine condition",
         "type": "option",
         "meta": false,
         "options": [
           {
+            "name": "filthy ,unused",
+            "color": null
+          },
+          {
             "name": "clean, used",
-            "color": null,
-            "order": 1
+            "color": null
           },
           {
             "name": "dirty but used",
-            "color": null,
-            "order": 2
-          },
-          {
-            "name": "no latrine",
-            "color": null,
-            "order": 3
+            "color": null
           }
         ]
       },
       {
-        "order": 22,
-        "question": "hygiene service level",
+        "order": 14,
+        "question": "is there hand washing facility with in 5m of the toilet",
+        "type": "option",
+        "meta": false,
+        "options": [
+          {
+            "name": "yes",
+            "color": null
+          },
+          {
+            "name": "no facility",
+            "color": null
+          }
+        ]
+      },
+      {
+        "order": 15,
+        "question": "hygiene",
         "type": "option",
         "meta": false,
         "options": [
@@ -315,7 +232,7 @@
           },
           {
             "name": "basic",
-            "color": "#40B1E6",
+            "color": "#67B769",
             "order": 2,
             "score": 10
           },
@@ -334,8 +251,8 @@
         ]
       },
       {
-        "order": 23,
-        "question": "presence of handwashingfacility",
+        "order": 16,
+        "question": "is hand washing facility operating i.e with water",
         "type": "option",
         "meta": false,
         "options": [
@@ -350,8 +267,8 @@
         ]
       },
       {
-        "order": 24,
-        "question": "hand washing in use",
+        "order": 17,
+        "question": "is soap available at each hand washing stand",
         "type": "option",
         "meta": false,
         "options": [
@@ -366,8 +283,8 @@
         ]
       },
       {
-        "order": 25,
-        "question": "availability of soap",
+        "order": 18,
+        "question": "is there a toilet for staff",
         "type": "option",
         "meta": false,
         "options": [
@@ -377,54 +294,6 @@
           },
           {
             "name": "no",
-            "color": null
-          }
-        ]
-      },
-      {
-        "order": 26,
-        "question": "urinal present girls",
-        "type": "option",
-        "meta": false,
-        "options": [
-          {
-            "name": "no",
-            "color": null
-          },
-          {
-            "name": "yes",
-            "color": null
-          }
-        ]
-      },
-      {
-        "order": 27,
-        "question": "urinal present boys",
-        "type": "option",
-        "meta": false,
-        "options": [
-          {
-            "name": "no",
-            "color": null
-          },
-          {
-            "name": "yes",
-            "color": null
-          }
-        ]
-      },
-      {
-        "order": 28,
-        "question": "separate latrine for tolitet staff",
-        "type": "option",
-        "meta": false,
-        "options": [
-          {
-            "name": "no",
-            "color": null
-          },
-          {
-            "name": "yes",
             "color": null
           }
         ]

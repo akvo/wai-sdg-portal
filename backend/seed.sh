@@ -9,7 +9,7 @@ if [[ $# -eq 3 ]] ; then
     python -m seeder.admin "$@"
     python -m seeder.user 30 "$3"
     python -m seeder.form
-    python -m seeder.datapoint "$1"
+    # python -m seeder.datapoint "$1"
 else
     echo ""
     echo "This script require more than $# argument/s"

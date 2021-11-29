@@ -125,7 +125,7 @@
           "options": null,
           "dependency": [
             {
-              "id": "1000934056",
+              "id": 1000934056,
               "options": [
                 "Yes, disabled students"
               ]
@@ -142,7 +142,7 @@
           "options": null,
           "dependency": [
             {
-              "id": "1000934056",
+              "id": 1000934056,
               "options": [
                 "Yes, disabled students"
               ]
@@ -159,7 +159,7 @@
           "options": null,
           "dependency": [
             {
-              "id": "1000934056",
+              "id": 1000934056,
               "options": [
                 "Yes, disabled staff members"
               ]
@@ -377,7 +377,7 @@
           "options": null,
           "dependency": [
             {
-              "id": "1191124016",
+              "id": 1191124016,
               "options": [
                 "Yes"
               ]
@@ -411,7 +411,7 @@
           ],
           "dependency": [
             {
-              "id": "1191124016",
+              "id": 1191124016,
               "options": [
                 "Yes"
               ]
@@ -441,7 +441,7 @@
           ],
           "dependency": [
             {
-              "id": "1191124016",
+              "id": 1191124016,
               "options": [
                 "Yes"
               ]
@@ -471,7 +471,7 @@
           ],
           "dependency": [
             {
-              "id": "1191124016",
+              "id": 1191124016,
               "options": [
                 "Yes"
               ]
@@ -506,7 +506,7 @@
           "options": null,
           "dependency": [
             {
-              "id": "1158814013",
+              "id": 1158814013,
               "options": [
                 "Yes"
               ]
@@ -579,7 +579,7 @@
           ],
           "dependency": [
             {
-              "id": "1000914105",
+              "id": 1000914105,
               "options": [
                 "Yes"
               ]
@@ -605,7 +605,7 @@
           ],
           "dependency": [
             {
-              "id": "1000914105",
+              "id": 1000914105,
               "options": [
                 "Yes"
               ]
@@ -622,7 +622,7 @@
           "options": null,
           "dependency": [
             {
-              "id": "989134105",
+              "id": 989134105,
               "options": [
                 "Yes"
               ]
@@ -639,7 +639,7 @@
           "options": null,
           "dependency": [
             {
-              "id": "989134105",
+              "id": 989134105,
               "options": [
                 "Yes"
               ]
@@ -656,7 +656,7 @@
           "options": null,
           "dependency": [
             {
-              "id": "989134105",
+              "id": 989134105,
               "options": [
                 "No"
               ]
@@ -686,7 +686,7 @@
           ],
           "dependency": [
             {
-              "id": "989134105",
+              "id": 989134105,
               "options": [
                 "Yes"
               ]
@@ -716,7 +716,7 @@
           ],
           "dependency": [
             {
-              "id": "989134105",
+              "id": 989134105,
               "options": [
                 "Yes"
               ]
@@ -742,7 +742,7 @@
           ],
           "dependency": [
             {
-              "id": "1000914105",
+              "id": 1000914105,
               "options": [
                 "Yes"
               ]
@@ -800,7 +800,7 @@
           ],
           "dependency": [
             {
-              "id": "964764100",
+              "id": 964764100,
               "options": [
                 "Yes"
               ]
@@ -817,7 +817,7 @@
           "options": null,
           "dependency": [
             {
-              "id": "964764100",
+              "id": 964764100,
               "options": [
                 "Yes"
               ]
@@ -878,7 +878,7 @@
           ],
           "dependency": [
             {
-              "id": "989134105",
+              "id": 989134105,
               "options": [
                 "Yes"
               ]
@@ -908,7 +908,7 @@
           ],
           "dependency": [
             {
-              "id": "976544091",
+              "id": 976544091,
               "options": [
                 "Yes"
               ]
@@ -1102,7 +1102,7 @@
           ],
           "dependency": [
             {
-              "id": "989134105",
+              "id": 989134105,
               "options": [
                 "Yes"
               ]
@@ -1132,7 +1132,7 @@
           ],
           "dependency": [
             {
-              "id": "989134105",
+              "id": 989134105,
               "options": [
                 "Yes"
               ]
@@ -1162,7 +1162,7 @@
           ],
           "dependency": [
             {
-              "id": "989134105",
+              "id": 989134105,
               "options": [
                 "No"
               ]
@@ -1192,7 +1192,7 @@
           ],
           "dependency": [
             {
-              "id": "1000914105",
+              "id": 1000914105,
               "options": [
                 "Yes"
               ]
@@ -1222,7 +1222,7 @@
           ],
           "dependency": [
             {
-              "id": "1000914105",
+              "id": 1000914105,
               "options": [
                 "Yes"
               ]
@@ -1252,7 +1252,7 @@
           ],
           "dependency": [
             {
-              "id": "1000914105",
+              "id": 1000914105,
               "options": [
                 "Yes"
               ]
@@ -1278,9 +1278,10 @@
           ],
           "dependency": [
             {
-              "id": "996974148",
+              "id": 996974148,
               "options": [
-                "Yes, all of them|Yes, but not all of them"
+                "Yes, all of them",
+                "Yes, but not all of them"
               ]
             }
           ]
@@ -1308,7 +1309,7 @@
           ],
           "dependency": [
             {
-              "id": "1000914105",
+              "id": 1000914105,
               "options": [
                 "Yes"
               ]
@@ -1338,7 +1339,7 @@
           ],
           "dependency": [
             {
-              "id": "1000914105",
+              "id": 1000914105,
               "options": [
                 "Yes"
               ]
@@ -1355,7 +1356,7 @@
           "options": null,
           "dependency": [
             {
-              "id": "1000914105",
+              "id": 1000914105,
               "options": [
                 "Yes"
               ]
@@ -1394,7 +1395,7 @@
           ],
           "dependency": [
             {
-              "id": "964764100",
+              "id": 964764100,
               "options": [
                 "Yes"
               ]
@@ -1533,7 +1534,7 @@
           "options": null,
           "dependency": [
             {
-              "id": "1164864414",
+              "id": 1164864414,
               "options": [
                 "Yes"
               ]

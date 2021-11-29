@@ -8,16 +8,6 @@ var features = {
 
 var navigation_config = [
   {
-    link: "water",
-    name: "Water",
-    childrens: null,
-  },
-  {
-    link: "clts",
-    name: "CLTS",
-    childrens: null,
-  },
-  {
     link: "jmp",
     name: "JMP",
     childrens: [
@@ -38,54 +28,6 @@ var navigation_config = [
 ];
 
 var page_config = {
-  water: {
-    title: "Water Point",
-    columns: [
-      {
-        title: "Water Points",
-        key: "name",
-      },
-      {
-        title: "Source Type",
-        key: 79,
-      },
-      {
-        title: "Functionality",
-        key: 80,
-      },
-      {
-        title: "Number of Users",
-        key: 82,
-      },
-    ],
-    maps: {
-      shape: { id: 82, name: "Non Functional Taps" },
-      marker: { id: 80, title: "Functionality Status" },
-    },
-    formId: 5,
-  },
-  clts: {
-    title: "CLTS",
-    columns: [
-      {
-        title: "Name",
-        key: "name",
-      },
-      {
-        title: "ODF Status",
-        key: 8,
-      },
-      {
-        title: "Date Triggered",
-        key: 7,
-      },
-    ],
-    maps: {
-      shape: { id: 4, name: "Number of HHS" },
-      marker: { id: 8, title: "ODF Status" },
-    },
-    formId: 1,
-  },
   health: {
     title: "Health Facility",
     columns: [
@@ -94,20 +36,19 @@ var page_config = {
         key: "name",
       },
       {
-        title: "Water",
-        key: 19,
+        title: "Hygiene Stations",
+        key: 1177674247,
       },
       {
-        title: "Sanitation",
-        key: 21,
-      },
-      {
-        title: "Hygiene",
-        key: 26,
+        title: "Cases of Dierhea",
+        key: 1179634216,
       },
     ],
-    maps: { shape: false, marker: { id: 19, name: "Water Service Level" } },
-    formId: 2,
+    maps: {
+      shape: { id: 1179634216, name: "Cases of Diarhea" },
+      marker: { id: 1179654241, name: "Main Source" },
+    },
+    formId: 1189144226,
   },
   households: {
     title: "Households",
@@ -117,23 +58,19 @@ var page_config = {
         key: "name",
       },
       {
-        title: "Water",
-        key: 35,
+        title: "Hand Washing Facility",
+        key: 962764039,
       },
       {
-        title: "Sanitation",
-        key: 39,
-      },
-      {
-        title: "Hygiene",
-        key: 44,
+        title: "Laterine",
+        key: 962764019,
       },
     ],
     maps: {
-      shape: { id: 33, name: "Household Size" },
-      marker: { id: 35, title: "Water Service Level" },
+      shape: { id: 976454019, name: "Household Size" },
+      marker: { id: 962764019, title: "Laterine" },
     },
-    formId: 3,
+    formId: 994944020,
   },
   schools: {
     title: "Schools Facility",
@@ -143,22 +80,22 @@ var page_config = {
         key: "name",
       },
       {
-        title: "Water",
-        key: 56,
+        title: "Toilet",
+        key: 1000914105,
       },
       {
-        title: "Sanitation",
-        key: 61,
+        title: "Handwashing",
+        key: 964764100,
       },
       {
-        title: "Hygiene",
-        key: 67,
+        title: "School Waste",
+        key: 987374089,
       },
     ],
     maps: {
-      shape: { id: 48, name: "Female Pupils" },
-      marker: { id: 56, title: "Water Service Level" },
+      shape: { id: 987364061, name: "Number of Student" },
+      marker: { id: 1000914105, title: "Toilet" },
     },
-    formId: 4,
+    formId: 964754042,
   },
 };

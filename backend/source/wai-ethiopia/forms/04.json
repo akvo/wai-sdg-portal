@@ -1,0 +1,438 @@
+{
+  "form": "School",
+  "id": 4,
+  "question_groups": [
+    {
+      "question_group": "Registration",
+      "questions": [
+        {
+          "order": 1,
+          "question": "location",
+          "type": "administration",
+          "meta": true,
+          "options": null
+        },
+        {
+          "order": 3,
+          "question": "school name",
+          "type": "text",
+          "meta": true,
+          "options": null
+        },
+        {
+          "order": 4,
+          "question": "geolocation",
+          "type": "geo",
+          "meta": true,
+          "options": null
+        },
+        {
+          "order": 6,
+          "question": "school type",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "primary(1-8)",
+              "color": null
+            },
+            {
+              "name": "primary(1-4)",
+              "color": null
+            },
+            {
+              "name": "high school 9-10",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 7,
+          "question": "male pupils",
+          "type": "number",
+          "meta": false,
+          "options": null,
+          "rule": {
+            "min": 0
+          }
+        },
+        {
+          "order": 8,
+          "question": "female pupils",
+          "type": "number",
+          "meta": false,
+          "options": null,
+          "rule": {
+            "min": 0
+          }
+        },
+        {
+          "order": 9,
+          "question": "reason for inventory",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "new scheme",
+              "color": null
+            },
+            {
+              "name": "repair",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 10,
+          "question": "water supply source",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "pipeline connection",
+              "color": null
+            },
+            {
+              "name": "no water scheme",
+              "color": null
+            },
+            {
+              "name": "shallow well fitted with pump",
+              "color": null
+            },
+            {
+              "name": "no water supply in premises",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 11,
+          "question": "water",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "advanced",
+              "color": "#CFD8DB",
+              "order": 1,
+              "score": 15
+            },
+            {
+              "name": "basic",
+              "color": "#40B1E6",
+              "order": 2,
+              "score": 10
+            },
+            {
+              "name": "limited",
+              "color": "#FCF176",
+              "order": 3,
+              "score": -1
+            },
+            {
+              "name": "no service",
+              "color": "#F9CA29",
+              "order": 4,
+              "score": -2
+            }
+          ]
+        },
+        {
+          "order": 12,
+          "question": "year commisioned",
+          "type": "number",
+          "meta": false,
+          "options": null,
+          "rule": {
+            "min": 2000,
+            "max": 2020
+          }
+        },
+        {
+          "order": 13,
+          "question": "functionality status of water supply",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "functional",
+              "color": null,
+              "order": 1
+            },
+            {
+              "name": "non functional - mechanical",
+              "color": null,
+              "order": 2
+            }
+          ]
+        },
+        {
+          "order": 14,
+          "question": "yield",
+          "type": "number",
+          "meta": false,
+          "options": null,
+          "rule": {
+            "min": 0
+          }
+        },
+        {
+          "order": 15,
+          "question": "type of latrine",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "simple pit latrine",
+              "color": null,
+              "order": 1
+            },
+            {
+              "name": "no latrine",
+              "color": null,
+              "order": 2
+            }
+          ]
+        },
+        {
+          "order": 16,
+          "question": "sanitation",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "advanced",
+              "color": "#CFD8DB",
+              "order": 1,
+              "score": 15
+            },
+            {
+              "name": "basic",
+              "color": "#67B769",
+              "order": 2,
+              "score": 10
+            },
+            {
+              "name": "limited",
+              "color": "#FCF176",
+              "order": 3,
+              "score": -1
+            },
+            {
+              "name": "no service",
+              "color": "#F9CA29",
+              "order": 4,
+              "score": -2
+            }
+          ]
+        },
+        {
+          "order": 17,
+          "question": "latrine for boys and girls separate",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "no",
+              "color": null
+            },
+            {
+              "name": "yes",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 18,
+          "question": "number of boy pupils",
+          "type": "number",
+          "meta": false,
+          "options": null,
+          "required": false,
+          "rule": {
+            "min": 0
+          }
+        },
+        {
+          "order": 19,
+          "question": "number of girl pupils",
+          "type": "number",
+          "meta": false,
+          "options": null,
+          "required": false,
+          "rule": {
+            "min": 0
+          }
+        },
+        {
+          "order": 20,
+          "question": "are there latrines for disabled?",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "no",
+              "color": null
+            },
+            {
+              "name": "yes",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 21,
+          "question": "latrine condition",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "clean, used",
+              "color": null,
+              "order": 1
+            },
+            {
+              "name": "dirty but used",
+              "color": null,
+              "order": 2
+            },
+            {
+              "name": "no latrine",
+              "color": null,
+              "order": 3
+            }
+          ]
+        },
+        {
+          "order": 22,
+          "question": "hygiene service level",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "advanced",
+              "color": "#CFD8DB",
+              "order": 1,
+              "score": 15
+            },
+            {
+              "name": "basic",
+              "color": "#40B1E6",
+              "order": 2,
+              "score": 10
+            },
+            {
+              "name": "limited",
+              "color": "#FCF176",
+              "order": 3,
+              "score": -1
+            },
+            {
+              "name": "no service",
+              "color": "#F9CA29",
+              "order": 4,
+              "score": -2
+            }
+          ]
+        },
+        {
+          "order": 23,
+          "question": "presence of handwashingfacility",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "yes",
+              "color": null
+            },
+            {
+              "name": "no",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 24,
+          "question": "hand washing in use",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "yes",
+              "color": null
+            },
+            {
+              "name": "no",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 25,
+          "question": "availability of soap",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "yes",
+              "color": null
+            },
+            {
+              "name": "no",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 26,
+          "question": "urinal present girls",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "no",
+              "color": null
+            },
+            {
+              "name": "yes",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 27,
+          "question": "urinal present boys",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "no",
+              "color": null
+            },
+            {
+              "name": "yes",
+              "color": null
+            }
+          ]
+        },
+        {
+          "order": 28,
+          "question": "separate latrine for tolitet staff",
+          "type": "option",
+          "meta": false,
+          "options": [
+            {
+              "name": "no",
+              "color": null
+            },
+            {
+              "name": "yes",
+              "color": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

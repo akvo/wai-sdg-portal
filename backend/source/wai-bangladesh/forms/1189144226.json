@@ -195,7 +195,7 @@
           ],
           "dependency": [
             {
-              "id": "1173964215",
+              "id": 1173964215,
               "options": [
                 "Yes"
               ]
@@ -212,7 +212,7 @@
           "options": null,
           "dependency": [
             {
-              "id": "1173964215",
+              "id": 1173964215,
               "options": [
                 "No"
               ]
@@ -250,9 +250,18 @@
           ],
           "dependency": [
             {
-              "id": "1179654241",
+              "id": 1179654241,
               "options": [
-                "Piped water to yard/plot|Public tap/standpipe|Deep tubewell/borehole|Shallow tubewell/borehole|AIRP (arsenic iron removable plant)|Protected dug well|Unprotected dug well|Protected spring|Unprotected spring|Rainwater collection"
+                "Piped water to yard/plot",
+                "Public tap/standpipe",
+                "Deep tubewell/borehole",
+                "Shallow tubewell/borehole",
+                "AIRP (arsenic iron removable plant)",
+                "Protected dug well",
+                "Unprotected dug well",
+                "Protected spring",
+                "Unprotected spring",
+                "Rainwater collection"
               ]
             }
           ]
@@ -394,9 +403,10 @@
           ],
           "dependency": [
             {
-              "id": "1179654237",
+              "id": 1179654237,
               "options": [
-                "Yes, always|Yes but only sometimes"
+                "Yes, always",
+                "Yes but only sometimes"
               ]
             }
           ]
@@ -446,7 +456,7 @@
           ],
           "dependency": [
             {
-              "id": "1179654238",
+              "id": 1179654238,
               "options": [
                 "Yes"
               ]
@@ -542,9 +552,10 @@
           ],
           "dependency": [
             {
-              "id": "1179654233",
+              "id": 1179654233,
               "options": [
-                "Yes, atleast one bathing place or area available per 40 in patients, accessible and operationsl|Yes, at least one bathing place or area available but no water or unmanaged or available but less than 1 for every 40 patients"
+                "Yes, atleast one bathing place or area available per 40 in patients, accessible and operationsl",
+                "Yes, at least one bathing place or area available but no water or unmanaged or available but less than 1 for every 40 patients"
               ]
             }
           ]
@@ -627,7 +638,7 @@
           ],
           "dependency": [
             {
-              "id": "1173964224",
+              "id": 1173964224,
               "options": [
                 "Yes"
               ]
@@ -707,7 +718,7 @@
           ],
           "dependency": [
             {
-              "id": "1173964228",
+              "id": 1173964228,
               "options": [
                 "Yes"
               ]
@@ -733,7 +744,7 @@
           ],
           "dependency": [
             {
-              "id": "1173964228",
+              "id": 1173964228,
               "options": [
                 "Yes"
               ]
@@ -759,7 +770,7 @@
           ],
           "dependency": [
             {
-              "id": "1173964228",
+              "id": 1173964228,
               "options": [
                 "Yes"
               ]
@@ -839,7 +850,7 @@
           ],
           "dependency": [
             {
-              "id": "1168164184",
+              "id": 1168164184,
               "options": [
                 "Yes"
               ]
@@ -919,7 +930,7 @@
           ],
           "dependency": [
             {
-              "id": "1173964226",
+              "id": 1173964226,
               "options": [
                 "Yes"
               ]
@@ -999,7 +1010,7 @@
           ],
           "dependency": [
             {
-              "id": "1173964222",
+              "id": 1173964222,
               "options": [
                 "Yes"
               ]
@@ -1029,7 +1040,7 @@
           ],
           "dependency": [
             {
-              "id": "1173964224",
+              "id": 1173964224,
               "options": [
                 "Yes"
               ]
@@ -1067,9 +1078,14 @@
           ],
           "dependency": [
             {
-              "id": "1168164183",
+              "id": 1168164183,
               "options": [
-                "Pit latrine without slab/open pit|Pit latrine with slab|Twinpit offset latrine|Ventilated Improved Pit latrine (VIP)|Composting toilet|toilet that flush/poor flush to septic tank"
+                "Pit latrine without slab/open pit",
+                "Pit latrine with slab",
+                "Twinpit offset latrine",
+                "Ventilated Improved Pit latrine (VIP)",
+                "Composting toilet",
+                "toilet that flush/poor flush to septic tank"
               ]
             }
           ]
@@ -1515,7 +1531,7 @@
           ],
           "dependency": [
             {
-              "id": "1175964160",
+              "id": 1175964160,
               "options": [
                 "Yes"
               ]
@@ -1595,7 +1611,7 @@
           ],
           "dependency": [
             {
-              "id": "1175964160",
+              "id": 1175964160,
               "options": [
                 "No"
               ]
@@ -1629,7 +1645,7 @@
           ],
           "dependency": [
             {
-              "id": "1175964169",
+              "id": 1175964169,
               "options": [
                 "Decomposible (Fruits, Vegetables, etc)"
               ]
@@ -1671,7 +1687,7 @@
           ],
           "dependency": [
             {
-              "id": "1175964169",
+              "id": 1175964169,
               "options": [
                 "Non hazardous non decomposible waste (Plastic Bottles, Papers, Saline Bottles, Clothes, etc)"
               ]
@@ -1713,7 +1729,7 @@
           ],
           "dependency": [
             {
-              "id": "1175964169",
+              "id": 1175964169,
               "options": [
                 "Hazardous, that can be burned (Gauze, Cotton, Medicine, Blood, etc)"
               ]
@@ -1755,7 +1771,7 @@
           ],
           "dependency": [
             {
-              "id": "1175964169",
+              "id": 1175964169,
               "options": [
                 "Hazardous that cannot be burned (Syringe, Blood Packets, Gloves, etc)"
               ]
@@ -2104,7 +2120,7 @@
           ],
           "dependency": [
             {
-              "id": "1179654242",
+              "id": 1179654242,
               "options": [
                 "On the premises of the health centre"
               ]
@@ -2180,7 +2196,7 @@
           ],
           "dependency": [
             {
-              "id": "1177674247",
+              "id": 1177674247,
               "options": [
                 "Yes"
               ]
@@ -2232,7 +2248,7 @@
           ],
           "dependency": [
             {
-              "id": "1177674248",
+              "id": 1177674248,
               "options": [
                 "Yes"
               ]
