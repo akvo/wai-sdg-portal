@@ -61,7 +61,7 @@ const ManageData = ({ handleTabClick }) => {
   const [questionGroup, setQuestionGroup] = useState([]);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
-  const [form, setForm] = useState("water");
+  const [form, setForm] = useState(Object.keys(window.page_config)[0]);
   const [perPage, setPerPage] = useState(10);
   const [loading, setLoading] = useState(true);
   const [selectedRow, setSelectedRow] = useState([]);

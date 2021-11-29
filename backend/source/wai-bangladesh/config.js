@@ -28,28 +28,6 @@ var navigation_config = [
 ];
 
 var page_config = {
-  health: {
-    title: "Health Facility",
-    columns: [
-      {
-        title: "Facilty Name",
-        key: "name",
-      },
-      {
-        title: "Type",
-        key: 974754044,
-      },
-      {
-        title: "Water Source",
-        key: 994994027,
-      },
-    ],
-    maps: {
-      shape: { id: 1000914052, name: "Cases of Diarhea" },
-      marker: { id: 987364073, name: "Hygiene Stations" },
-    },
-    formId: 952774024,
-  },
   households: {
     title: "Households",
     columns: [
@@ -93,5 +71,27 @@ var page_config = {
       marker: { id: 993004033, title: "Toilet" },
     },
     formId: 976564018,
+  },
+  health: {
+    title: "Health Facility",
+    columns: [
+      {
+        title: "Facilty Name",
+        key: "name",
+      },
+      {
+        title: "Type",
+        key: 974754044,
+      },
+      {
+        title: "Water Source",
+        key: 994994027,
+      },
+    ],
+    maps: {
+      shape: { id: 1000914052, name: "Cases of Diarhea" },
+      marker: { id: 987364073, name: "Hygiene Stations" },
+    },
+    formId: 952774024,
   },
 };
