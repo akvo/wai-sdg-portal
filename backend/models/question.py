@@ -25,6 +25,11 @@ class QuestionType(enum.Enum):
     administration = 'administration'
 
 
+class DependencyDict(TypedDict):
+    id: int
+    options: List[str]
+
+
 class QuestionDict(TypedDict):
     id: int
     form: int
@@ -35,6 +40,7 @@ class QuestionDict(TypedDict):
     type: QuestionType
     required: bool
     rule: Optional[dict]
+    dependency: Optional[List[DependencyDict]] = None
 
 
 class Question(Base):
@@ -48,6 +54,7 @@ class Question(Base):
     type = Column(Enum(QuestionType), default=QuestionType.text)
     required = Column(Boolean, nullable=True)
     rule = Column(MutableDict.as_mutable(pg.JSONB), nullable=True)
+    dependency = Column(pg.ARRAY(pg.JSONB), nullable=True)
     option = relationship("Option",
                           cascade="all, delete",
                           passive_deletes=True,
@@ -55,7 +62,8 @@ class Question(Base):
 
     def __init__(self, id: Optional[int], name: str, order: int, form: int,
                  question_group: int, meta: bool, type: QuestionType,
-                 required: Optional[bool], rule: Optional[dict]):
+                 required: Optional[bool], rule: Optional[dict],
+                 dependency: Optional[List[DependencyDict]]):
         self.id = id
         self.form = form
         self.order = order
@@ -65,6 +73,7 @@ class Question(Base):
         self.type = type
         self.required = required
         self.rule = rule
+        self.dependency = dependency
 
     def __repr__(self) -> int:
         return f"<Question {self.id}>"
@@ -81,6 +90,7 @@ class Question(Base):
             "type": self.type,
             "required": self.required,
             "rule": self.rule,
+            "dependency": self.dependency,
             "option": self.option,
         }
 
@@ -98,6 +108,7 @@ class Question(Base):
             "type": self.type,
             "required": self.required,
             "rule": self.rule,
+            "dependency": self.dependency,
             "options": options,
         }
 
@@ -112,6 +123,7 @@ class QuestionBase(BaseModel):
     type: QuestionType
     required: bool
     rule: Optional[dict]
+    dependency: Optional[List[DependencyDict]] = None
     option: List[OptionBase]
 
     class Config:

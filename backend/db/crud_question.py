@@ -2,20 +2,23 @@ from typing import List, Optional
 from sqlalchemy import and_
 from sqlalchemy.orm import Session
 from models.question import Question, QuestionDict, QuestionBase, QuestionType
+from models.question import DependencyDict
 from models.option import Option, OptionDict
 
 
-def add_question(session: Session,
-                 name: str,
-                 form: int,
-                 question_group: int,
-                 type: QuestionType,
-                 meta: bool,
-                 id: Optional[id] = None,
-                 order: Optional[int] = None,
-                 option: Optional[List[OptionDict]] = None,
-                 required: Optional[bool] = True,
-                 rule: Optional[dict] = None) -> QuestionBase:
+def add_question(
+        session: Session,
+        name: str,
+        form: int,
+        question_group: int,
+        type: QuestionType,
+        meta: bool,
+        id: Optional[id] = None,
+        order: Optional[int] = None,
+        option: Optional[List[OptionDict]] = None,
+        required: Optional[bool] = True,
+        rule: Optional[dict] = None,
+        dependency: Optional[List[DependencyDict]] = None) -> QuestionBase:
     last_question = session.query(Question).filter(
         and_(Question.form == form,
              Question.question_group == question_group)).order_by(
@@ -32,7 +35,8 @@ def add_question(session: Session,
                         question_group=question_group,
                         type=type,
                         required=required,
-                        rule=rule)
+                        rule=rule,
+                        dependency=dependency)
     if option:
         for o in option:
             opt = Option(name=o["name"])
