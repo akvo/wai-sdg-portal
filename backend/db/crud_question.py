@@ -65,11 +65,6 @@ def get_question_by_id(session: Session, id: int) -> QuestionDict:
     return session.query(Question).filter(Question.id == id).first()
 
 
-def get_question_type(session: Session, id: int) -> QuestionDict:
-    question = session.query(Question).filter(Question.id == id).first()
-    return question
-
-
 def get_question_by_name(session: Session, form: int,
                          name: str) -> QuestionDict:
     name = name.replace("_", " ").lower().strip()
@@ -120,3 +115,24 @@ def get_definition(session: Session, form: int):
                 "rule": rule
             })
     return framed
+
+
+def validate_dependency(session: Session, dependency: List[DependencyDict]):
+    errors = []
+    for question in dependency:
+        qid = question["id"]
+        opt = question["options"]
+        if not len(opt):
+            errors.append("Should have at least 1 option")
+        question = get_question_by_id(session=session, id=qid)
+        if not question:
+            errors.append(f"Question {qid} not found")
+        if question.type not in [
+                QuestionType.option, QuestionType.multiple_option
+        ]:
+            errors.append(f"Question {qid} type should be option")
+        options = [o.name for o in question.option]
+        for o in opt:
+            if o not in options:
+                errors.append(f"Option {o} is not part of {qid}")
+    return errors

@@ -40,6 +40,7 @@ class QuestionDict(TypedDict):
     type: QuestionType
     required: bool
     rule: Optional[dict]
+    option: Optional[List[OptionBase]] = None
     dependency: Optional[List[DependencyDict]] = None
 
 
@@ -123,8 +124,8 @@ class QuestionBase(BaseModel):
     type: QuestionType
     required: bool
     rule: Optional[dict]
-    dependency: Optional[List[DependencyDict]] = None
     option: List[OptionBase]
+    dependency: Optional[List[DependencyDict]]
 
     class Config:
         orm_mode = True

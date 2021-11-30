@@ -88,7 +88,7 @@ def add(req: Request,
     answerlist = []
     names = []
     for a in answers:
-        q = crud_question.get_question_type(session=session, id=a["question"])
+        q = crud_question.get_question_by_id(session=session, id=a["question"])
         answer = Answer(question=q.id,
                         created_by=user.id,
                         created=datetime.now())

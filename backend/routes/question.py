@@ -1,4 +1,4 @@
-from fastapi import Depends, Request, APIRouter, Query
+from fastapi import Depends, Request, APIRouter, Query, HTTPException
 from fastapi.security import HTTPBearer
 from fastapi.security import HTTPBasicCredentials as credentials
 from typing import List
@@ -7,6 +7,7 @@ import db.crud_question as crud
 import db.crud_question_group as crud_question_group
 from db.connection import get_session
 from models.question import QuestionDict, QuestionBase, QuestionType
+from models.question import DependencyDict
 from models.option import OptionDict
 from middleware import verify_admin
 
@@ -36,8 +37,7 @@ class PostQueryParams:
             default=True, description="Wether question is required or not"),
         min: int = Query(
             default=0,
-            description="Minimum number for number question type, default: 0"
-        ),
+            description="Minimum number for number question type, default: 0"),
         max: int = Query(None,
                          description="Max number for number question type"),
         form: int = Query(
@@ -64,6 +64,7 @@ class PostQueryParams:
 def add(req: Request,
         params: PostQueryParams = Depends(),
         option: List[OptionDict] = [],
+        dependency: List[DependencyDict] = None,
         session: Session = Depends(get_session),
         credentials: credentials = Depends(security)):
     verify_admin(req.state.authenticated, session)
@@ -76,6 +77,13 @@ def add(req: Request,
         option = None
     rule = {}
     has_rule = False
+    if dependency:
+        dependency_errors = crud.validate_dependency(session=session,
+                                                     dependency=dependency)
+        print(dependency_errors)
+        if len(dependency_errors):
+            raise HTTPException(status_code=404,
+                                detail=", ".join(dependency_errors))
     if params.type == QuestionType.number:
         if params.min is not None:
             has_rule = True
@@ -91,6 +99,7 @@ def add(req: Request,
                                  type=params.type,
                                  required=params.required,
                                  rule=rule if has_rule else None,
+                                 dependency=dependency,
                                  question_group=question_group.id,
                                  option=option)
     return question.serialize
