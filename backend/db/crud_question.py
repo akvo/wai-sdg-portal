@@ -89,12 +89,21 @@ def get_definition(session: Session, form: int):
     framed = []
     for q in [qs.to_definition for qs in questions]:
         rule = ""
+        dependency = ""
         if q["rule"]:
             rule = []
             for r in q["rule"]:
                 rtext = f"{r}: " + str(q["rule"][r])
                 rule.append(rtext)
             rule = " ".join(rule)
+        if q["dependency"]:
+            dependency = []
+            for d in q["dependency"]:
+                did = d["id"]
+                options = "|".join(d["options"])
+                dtext = f"{did}: " + options
+                dependency.append(dtext)
+            dependency = "\n".join(dependency)
         if q["options"]:
             for o in q["options"]:
                 framed.append({
@@ -103,7 +112,8 @@ def get_definition(session: Session, form: int):
                     "type": q["type"],
                     "option": o,
                     "required": "YES" if q["required"] else "NO",
-                    "rule": rule
+                    "rule": rule,
+                    "dependency": dependency
                 })
         else:
             framed.append({
@@ -112,7 +122,8 @@ def get_definition(session: Session, form: int):
                 "type": q["type"],
                 "option": "",
                 "required": "YES" if q["required"] else "NO",
-                "rule": rule
+                "rule": rule,
+                "dependency": dependency
             })
     return framed
 

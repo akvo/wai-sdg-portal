@@ -13,7 +13,6 @@ today = datetime.today().strftime("%B %d, %Y")
 
 
 class TestSubmissionRoutes():
-
     @pytest.mark.asyncio
     async def test_get_form(self, app: FastAPI, session: Session,
                             client: AsyncClient) -> None:
@@ -90,7 +89,10 @@ class TestSubmissionRoutes():
                     "required": True,
                     "rule": None,
                     "option": [],
-                    "dependency": [{"id": 1, "options": ["Option 1"]}],
+                    "dependency": [{
+                        "id": 1,
+                        "options": ["Option 1"]
+                    }],
                 }]
             }]
         }
@@ -108,7 +110,10 @@ class TestSubmissionRoutes():
                 "value": [2, 10]
             }, {
                 "question": 3,
-                "value": {"lat": -7.836114, "lng": 110.331143}
+                "value": {
+                    "lat": -7.836114,
+                    "lng": 110.331143
+                }
             }, {
                 "question": 4,
                 "value": "Garut"
@@ -117,26 +122,35 @@ class TestSubmissionRoutes():
         assert res.status_code == 200
         res = res.json()
         assert res == {
-                "id": 1,
-                "name": "Garut - Garut",
-                "administration": 10,
-                "created": today,
-                "created_by": "Akvo Support",
-                "form": 1,
-                "geo": {"lat": -7.836114, "long": 110.331143},
-                "updated": None,
-                "updated_by": None,
-                "answer": [
-                    {"question": 1, "value": "Option 1"},
-                    {"question": 2, "value": 10},
-                    {"question": 3, "value": "-7.836114|110.331143"},
-                    {"question": 4, "value": "Garut"}
-                ]
-            }
+            "id": 1,
+            "name": "Garut - Garut",
+            "administration": 10,
+            "created": today,
+            "created_by": "Akvo Support",
+            "form": 1,
+            "geo": {
+                "lat": -7.836114,
+                "long": 110.331143
+            },
+            "updated": None,
+            "updated_by": None,
+            "answer": [{
+                "question": 1,
+                "value": "Option 1"
+            }, {
+                "question": 2,
+                "value": 10
+            }, {
+                "question": 3,
+                "value": "-7.836114|110.331143"
+            }, {
+                "question": 4,
+                "value": "Garut"
+            }]
+        }
 
     @pytest.mark.asyncio
-    async def test_get_all_option(self, app: FastAPI,
-                                  session: Session,
+    async def test_get_all_option(self, app: FastAPI, session: Session,
                                   client: AsyncClient) -> None:
         res = await client.get(
             app.url_path_for("option:get"),
@@ -145,25 +159,24 @@ class TestSubmissionRoutes():
         assert res.status_code == 200
         res = res.json()
         assert res == [{
-                "id": 1,
-                "name": "Option 1",
-                "color": "#333",
-                "order": 1
-            }, {
-                "id": 2,
-                "name": "Option 2",
-                "color": "#333",
-                "order": 2
-            }, {
-                "id": 3,
-                "name": "Option 3",
-                "color": None,
-                "order": None
-            }]
+            "id": 1,
+            "name": "Option 1",
+            "color": "#333",
+            "order": 1
+        }, {
+            "id": 2,
+            "name": "Option 2",
+            "color": "#333",
+            "order": 2
+        }, {
+            "id": 3,
+            "name": "Option 3",
+            "color": None,
+            "order": None
+        }]
 
     @pytest.mark.asyncio
-    async def test_update_option(self, app: FastAPI,
-                                 session: Session,
+    async def test_update_option(self, app: FastAPI, session: Session,
                                  client: AsyncClient) -> None:
         res = await client.put(
             app.url_path_for("option:update", id=1),
@@ -177,8 +190,8 @@ class TestSubmissionRoutes():
         assert res.status_code == 200
         res = res.json()
         assert res == {
-                "color": "#333",
-                "id": 1,
-                "name": "Option 1",
-                "order": 1,
-            }
+            "color": "#333",
+            "id": 1,
+            "name": "Option 1",
+            "order": 1,
+        }

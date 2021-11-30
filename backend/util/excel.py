@@ -35,7 +35,7 @@ def generate_definition_sheet(session: Session, form: int):
     df = pd.DataFrame(definitions)
     df["type"] = df["type"].apply(lambda x: str(x).split(".")[1])
     return df.groupby(["id", "question", "type", "option", "required",
-                       "rule"]).first()
+                       "rule", "dependency"]).first()
 
 
 def generate_excel_template(session: Session, form: int):
@@ -67,8 +67,7 @@ def generate_excel_template(session: Session, form: int):
     definitions = generate_definition_sheet(session=session, form=form)
     definitions.to_excel(writer,
                          sheet_name='definitions',
-                         startrow=0,
-                         header=False)
+                         startrow=-1)
 
     source_path = os.environ["INSTANCE_NAME"]
     TESTING = os.environ.get("TESTING")
@@ -85,7 +84,7 @@ def generate_excel_template(session: Session, form: int):
     administration = administration[["administration"]]
     administration.to_excel(writer,
                             sheet_name='administration',
-                            startrow=0,
+                            startrow=-1,
                             header=False,
                             index=False)
     writer.save()

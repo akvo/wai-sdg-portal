@@ -1,0 +1,35 @@
+id,name,parent
+1,Barguna,
+2,Satkhira,
+3,Agardari,Satkhira
+4,Amtali,Barguna
+5,Arpangashia,Barguna
+6,Ayla Patakata,Barguna
+7,Banshdaha,Satkhira
+8,Burir Char,Barguna
+9,Chowra,Barguna
+10,Haldia,Barguna
+11,Jhaudanga,Satkhira
+12,Kuskhali,Satkhira
+13,Labsa,Satkhira
+14,Paurashava,Barguna
+15,Satkhira Paurashava,Satkhira
+16,Shibpur,Satkhira
+17,1,Paurashava
+18,1,Agardari
+19,2,Paurashava
+20,2,Agardari
+21,3,Paurashava
+22,3,Agardari
+23,4,Paurashava
+24,4,Agardari
+25,5,Paurashava
+26,5,Agardari
+27,6,Paurashava
+28,6,Agardari
+29,7,Paurashava
+30,7,Agardari
+31,8,Paurashava
+32,8,Agardari
+33,9,Agardari
+34,9,Paurashava
