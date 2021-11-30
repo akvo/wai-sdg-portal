@@ -45,6 +45,7 @@ for file in sorted(files):
                 order=q["order"],
                 required=q["required"] if "required" in q else False,
                 rule=q["rule"] if "rule" in q else None,
+                dependency=q["dependency"] if "dependency" in q else None,
                 option=q["options"] if "options" in q else [])
             print(f"{i}.{question.name}")
     print("------------------------------------------")
