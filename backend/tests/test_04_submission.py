@@ -54,6 +54,7 @@ class TestSubmissionRoutes():
                         "order": None,
                         "score": 10,
                     }],
+                    "dependency": None,
                 }, {
                     "form": 1,
                     "id": 2,
@@ -65,6 +66,7 @@ class TestSubmissionRoutes():
                     "required": True,
                     "rule": None,
                     "option": [],
+                    "dependency": None,
                 }, {
                     "form": 1,
                     "id": 3,
@@ -76,6 +78,7 @@ class TestSubmissionRoutes():
                     "required": True,
                     "rule": None,
                     "option": [],
+                    "dependency": None,
                 }, {
                     "form": 1,
                     "id": 4,
@@ -87,6 +90,7 @@ class TestSubmissionRoutes():
                     "required": True,
                     "rule": None,
                     "option": [],
+                    "dependency": None,
                 }]
             }]
         }
