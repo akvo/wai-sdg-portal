@@ -90,7 +90,7 @@ class TestSubmissionRoutes():
                     "required": True,
                     "rule": None,
                     "option": [],
-                    "dependency": None,
+                    "dependency": [{"id": 1, "options": ["Option 1"]}],
                 }]
             }]
         }

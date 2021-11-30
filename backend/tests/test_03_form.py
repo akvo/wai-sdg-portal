@@ -39,22 +39,24 @@ class TestFormRoutes():
                 "meta": True,
                 "type": "option"
             },
-            json=[{
-                "name": "Option 1",
-                "color": "#333",
-                "order": 1,
-                "score": None
-            }, {
-                "name": "Option 2",
-                "color": "#333",
-                "order": 2,
-                "score": 5
-            }, {
-                "name": "Option 3",
-                "color": None,
-                "order": None,
-                "score": 10
-            }],
+            json={
+                "option": [{
+                    "name": "Option 1",
+                    "color": "#333",
+                    "order": 1,
+                    "score": None
+                }, {
+                    "name": "Option 2",
+                    "color": "#333",
+                    "order": 2,
+                    "score": 5
+                }, {
+                    "name": "Option 3",
+                    "color": None,
+                    "order": None,
+                    "score": 10
+                }]
+            },
             headers={"Authorization": f"Bearer {account.token}"},
         )
         assert res.status_code == 200
@@ -111,8 +113,7 @@ class TestFormRoutes():
         assert res["type"] == "administration"
 
     @pytest.mark.asyncio
-    async def test_add_geo_question(self, app: FastAPI,
-                                    session: Session,
+    async def test_add_geo_question(self, app: FastAPI, session: Session,
                                     client: AsyncClient) -> None:
         res = await client.post(
             app.url_path_for("question:create"),
@@ -150,6 +151,10 @@ class TestFormRoutes():
                 "meta": True,
                 "type": "text"
             },
+            json={"dependency": [{
+                "id": 1,
+                "options": ["Option 1"],
+            }]},
             headers={"Authorization": f"Bearer {account.token}"},
         )
         assert res.status_code == 200
@@ -163,3 +168,7 @@ class TestFormRoutes():
         assert res["required"] is True
         assert res["rule"] is None
         assert res["type"] == "text"
+        assert res["dependency"] == [{
+            "id": 1,
+            "options": ["Option 1"],
+        }]
