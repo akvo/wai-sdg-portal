@@ -42,7 +42,7 @@ def get(req: Request,
         credentials: credentials = Depends(security)):
     verify_editor(req.state.authenticated, session)
     filepath = excel.generate_excel_template(session=session, form=form_id)
-    filename = filepath.split("/")[-1]
+    filename = filepath.split("/")[-1].replace(" ", "-")
     return FileResponse(path=filepath, filename=filename, media_type=ftype)
 
 

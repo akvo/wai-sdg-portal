@@ -79,7 +79,7 @@ const ManageUpload = () => {
     activityLog,
     administrationByAccess,
   } = UIState.useState((s) => s);
-  const [form, setForm] = useState("water");
+  const [form, setForm] = useState(Object.keys(window.page_config)[0]);
   const [fileName, setFileName] = useState(null);
   const { formId } = config[form];
   const [selectedAdm, setSelectedAdm] = useState(null);
