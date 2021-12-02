@@ -210,8 +210,9 @@ def validate(session: Session, form: int, administration: int, file: str):
         excel_head.update({excel_cols[index]: header})
     header_error = []
     data_error = []
-    childs = crud_administration.get_nested_children_ids(
-        session, [administration])
+    childs = crud_administration.get_grand_children(session=session,
+                                                    parents=[administration],
+                                                    current=[])
     adm = crud_administration.get_administration_by_id(session=session,
                                                        id=administration)
     adm = {"id": adm.id, "name": adm.name, "childs": childs}

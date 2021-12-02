@@ -36,14 +36,13 @@ def get_all_ids(
     id: Optional[List[int]] = Query(None),
     session: Session = Depends(get_session)
 ) -> List[int]:
-    ids = crud.get_nested_children_ids(session=session, parents=id)
-    return ids
+    administration_ids = crud.get_grand_children(session=session)
+    return administration_ids
 
 
-@administration_route.get(
-    "/administration-simple",
-    summary="get simplified administration data",
-    tags=["Administration"])
+@administration_route.get("/administration-simple",
+                          summary="get simplified administration data",
+                          tags=["Administration"])
 def get_all_with_parent_name(req: Request,
                              session: Session = Depends(get_session)):
     adm = crud.get_administration(session=session)

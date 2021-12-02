@@ -79,26 +79,6 @@ def get_administration_name(session: Session,
     return ", ".join(name)
 
 
-def get_nested_children_ids(session: Session,
-                            current: Optional[List[int]] = [],
-                            parents: Optional[List[int]] = None):
-    if parents is None:
-        current = session.query(Administration.id).all()
-        current = [c.id for c in current]
-    else:
-        for parent in parents:
-            childrens = session.query(Administration.id).filter(
-                Administration.parent == parent).all()
-            if childrens:
-                for children in childrens:
-                    current.append(children.id)
-                current = get_nested_children_ids(
-                    session=session,
-                    current=current,
-                    parents=[c.id for c in childrens])
-    return current
-
-
 def get_administration_list(session: Session, id: int) -> List[int]:
     administration_ids = [id]
     administration = get_administration_by_id(session, id=id)
@@ -106,3 +86,26 @@ def get_administration_list(session: Session, id: int) -> List[int]:
         for a in administration.cascade["children"]:
             administration_ids.append(a["value"])
     return administration_ids
+
+
+def get_grand_children(session: Session,
+                       parents: Optional[List[int]] = None,
+                       current: Optional[List[int]] = []) -> List[int]:
+    if parents is None:
+        current = session.query(Administration.id).all()
+        current = [c[0] for c in current]
+    else:
+        childrens = session.query(Administration).filter(
+            Administration.parent.in_(parents)).all()
+        has_childs = False
+        current = current + [c.id for c in childrens]
+        for c in childrens:
+            if not has_childs and len(c.children):
+                has_childs = True
+        if has_childs:
+            current = get_grand_children(session=session,
+                                         current=current,
+                                         parents=current)
+        else:
+            current = parents + current
+    return current

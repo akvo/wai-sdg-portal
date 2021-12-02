@@ -12,8 +12,10 @@ from middleware import check_query
 chart_route = APIRouter()
 
 
-@chart_route.get("/chart/", name="charts:get",
-                 summary="get chart list", tags=["Charts"])
+@chart_route.get("/chart/",
+                 name="charts:get",
+                 summary="get chart list",
+                 tags=["Charts"])
 def get(req: Request, session: Session = Depends(get_session)) -> List[str]:
     return Charts.list
 
@@ -22,18 +24,21 @@ def get(req: Request, session: Session = Depends(get_session)) -> List[str]:
                  name="charts:get_aggregated_chart_data",
                  summary="get chart aggregate data",
                  tags=["Charts"])
-def get_aggregated_chart_data(
-        req: Request, form_id: int, question: int,
-        stack: Optional[int] = None,
-        administration: Optional[int] = None,
-        q: Optional[List[str]] = Query(None),
-        session: Session = Depends(get_session)):
+def get_aggregated_chart_data(req: Request,
+                              form_id: int,
+                              question: int,
+                              stack: Optional[int] = None,
+                              administration: Optional[int] = None,
+                              q: Optional[List[str]] = Query(None),
+                              session: Session = Depends(get_session)):
     options = check_query(q) if q else None
     administration_ids = False
-    if (administration):
-        administration_ids = crud_administration.get_administration_list(
-            session=session, id=administration)
-    if (question == stack):
+    if administration:
+        administration_ids = crud_administration.get_grand_children(
+            session=session, parents=[administration], current=[])
+        if not len(administration_ids):
+            raise HTTPException(status_code=404, detail="Not found")
+    if question == stack:
         raise HTTPException(status_code=406, detail="Not Acceptable")
     value = crud_charts.get_chart_data(session=session,
                                        form=form_id,
@@ -48,22 +53,24 @@ def get_aggregated_chart_data(
                  name="charts:get_aggregated_pie_chart_data",
                  summary="get pie chart aggregate data",
                  tags=["Charts"])
-def get_aggregated_pie_chart_data(
-        req: Request, form_id: int, question_id: int,
-        administration: Optional[int] = None,
-        q: Optional[List[str]] = Query(None),
-        session: Session = Depends(get_session)):
+def get_aggregated_pie_chart_data(req: Request,
+                                  form_id: int,
+                                  question_id: int,
+                                  administration: Optional[int] = None,
+                                  q: Optional[List[str]] = Query(None),
+                                  session: Session = Depends(get_session)):
     options = check_query(q) if q else None
     administration_ids = False
-    if (administration):
-        administration_ids = crud_administration.get_administration_list(
-            session=session, id=administration)
-    value = crud_charts.get_pie_chart_data(
-        session=session,
-        form=form_id,
-        question=question_id,
-        administration=administration_ids,
-        options=options)
+    if administration:
+        administration_ids = crud_administration.get_grand_children(
+            session=session, parents=[administration], current=[])
+        if not len(administration_ids):
+            raise HTTPException(status_code=404, detail="Not found")
+    value = crud_charts.get_pie_chart_data(session=session,
+                                           form=form_id,
+                                           question=question_id,
+                                           administration=administration_ids,
+                                           options=options)
     return value
 
 
@@ -71,22 +78,26 @@ def get_aggregated_pie_chart_data(
                  name="charts:get_aggregated_jmp_chart_data",
                  summary="get jmp chart aggregate data",
                  tags=["Charts"])
-def get_aggregated_jmp_chart_data(
-        req: Request, form_id: int, question_id: int,
-        administration: Optional[int] = None,
-        q: Optional[List[str]] = Query(None),
-        session: Session = Depends(get_session)):
+def get_aggregated_jmp_chart_data(req: Request,
+                                  form_id: int,
+                                  question_id: int,
+                                  administration: Optional[int] = None,
+                                  q: Optional[List[str]] = Query(None),
+                                  session: Session = Depends(get_session)):
     options = check_query(q) if q else None
     parent_administration = crud_administration.get_parent_administration(
         session=session)
-    parent_administration = [x.simplify_serialize_with_children
-                             for x in parent_administration]
-    administration_ids = crud_administration.get_nested_children_ids(
+    parent_administration = [
+        x.simplify_serialize_with_children for x in parent_administration
+    ]
+    administration_ids = crud_administration.get_grand_children(
         session=session)
-    if (administration):
+    if administration:
         parent_administration = False
-        administration_ids = crud_administration.get_administration_list(
-            session=session, id=administration)
+        administration_ids = crud_administration.get_grand_children(
+            session=session, parents=[administration], current=[])
+        if not len(administration_ids):
+            raise HTTPException(status_code=404, detail="Not found")
     value = crud_charts.get_jmp_chart_data(
         session=session,
         form=form_id,
@@ -101,9 +112,9 @@ def get_aggregated_jmp_chart_data(
                  name="charts:get_by_name",
                  summary="get chart by name",
                  tags=["Charts"])
-def get_by_name(
-        req: Request, name: str,
-        session: Session = Depends(get_session)):
+def get_by_name(req: Request,
+                name: str,
+                session: Session = Depends(get_session)):
     chart = Charts.get[name]
     value = get_chart_value(session=session, chart=chart)
     return value

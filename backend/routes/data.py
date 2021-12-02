@@ -50,8 +50,11 @@ def get(req: Request,
     verify_editor(req.state.authenticated, session)
     administration_ids = False
     if administration:
-        administration_ids = crud_administration.get_administration_list(
-            session=session, id=administration)
+        administration_ids = crud_administration.get_grand_children(
+            session=session, parents=[administration], current=[])
+        if not len(administration_ids):
+            raise HTTPException(status_code=404, detail="Not found")
+        print(administration_ids)
     data = crud.get_data(session=session,
                          form=form_id,
                          administration=administration_ids,
@@ -254,8 +257,10 @@ def get_last_submission(req: Request,
         options = check_query(q)
     administration_ids = False
     if administration:
-        administration_ids = crud_administration.get_administration_list(
-            session=session, id=administration)
+        administration_ids = crud_administration.get_grand_children(
+            session=session, parents=[administration], current=[])
+        if not len(administration_ids):
+            raise HTTPException(status_code=404, detail="Not found")
     last_submitted = crud.get_last_submitted(session=session,
                                              form=form_id,
                                              options=options,

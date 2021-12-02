@@ -52,7 +52,7 @@ class TestAdministrationRoute():
         administration = ca.get_administration_name(session=session, id=12)
         assert administration == "Sumedang, Jawa Barat"
 
-        ids = ca.get_nested_children_ids(session=session, parents=[3])
+        ids = ca.get_grand_children(session=session, parents=[3], current=[])
         childs = origin[origin["UNIT_TYPE"] == "Yogyakarta"]
         childs = list(childs["name"])
         for id in ids:
