@@ -7,104 +7,10 @@ import CountUp from "react-countup";
 import "./home.scss";
 import Map from "../../components/Map";
 
-import waterPointIcon from "../../sources/icons/landing-water-points-icon.png";
-import odfIcon from "../../sources/icons/landing-odf-icon.png";
-import healthFacilityIcon from "../../sources/icons/landing-health-facilities-icon.png";
-import schoolIcon from "../../sources/icons/landing-schools-icon.png";
-
 const level1 = window.levels[0];
 const level2 = window.levels[1];
 
-const datasetsInPortal = [
-  {
-    title: "JMP/SDG Status",
-    description:
-      "The JMP/SDG indicators describe the WASH service levels of communities, schools and health facilities, offering an approach to rank the vulnerability of these entities. This section helps WASH authorities to prioritize funding and resources to the most vulnerable.",
-    readmore: "#",
-    explore: "#",
-  },
-  {
-    title: "CLTS + Progress",
-    description:
-      "Community Led Total Sanitation Plus is a methodology for achieving open defecation free and adequate coverage of sanitation facilities. This section tracks the progress of CLTS implementors.",
-    readmore: "#",
-    explore: "#",
-  },
-  {
-    title: "Water Infrastructure",
-    description:
-      "This section contains technical and management data, and tracks the functionality of community water points. This is useful for month to month planning of maintenance and rehabilitation activities.",
-    readmore: "#",
-    explore: "#",
-  },
-];
-
-const overviews = [
-  [
-    {
-      type: "chart",
-      category: "water-point",
-    },
-    {
-      type: "info",
-      category: "water-point",
-      icon: waterPointIcon,
-      woreda: 2,
-      percent: 78,
-      count: 282,
-      text: "OF ##count## WATER POINTS ARE FUNCTIONAL",
-      explore: "#",
-    },
-  ],
-  [
-    {
-      type: "info",
-      category: "odf",
-      icon: odfIcon,
-      woreda: 1,
-      percent: 81,
-      count: null,
-      text: "OF ODF VILLAGES PER " + level1?.toUpperCase(),
-      explore: "#",
-    },
-    {
-      type: "chart",
-      category: "odf",
-    },
-  ],
-  [
-    {
-      type: "chart",
-      category: "health-facilities",
-    },
-    {
-      type: "info",
-      category: "health-facilities",
-      icon: healthFacilityIcon,
-      woreda: 1,
-      percent: 4.5,
-      count: null,
-      text: "OF HEALTH FACILITIES HAVE BASIC WATER ACCESS",
-      explore: "#",
-    },
-  ],
-  [
-    {
-      type: "info",
-      category: "schools",
-      icon: schoolIcon,
-      woreda: 1,
-      percent: 3.5,
-      count: null,
-      text: "OF SCHOOLS HAVE BASIC WATER ACCESS",
-      explore: "#",
-    },
-    {
-      type: "chart",
-      category: "schools",
-    },
-  ],
-];
+const { datasetsInPortal, overviews } = window.landing_config;
 
 const Home = () => {
   return (
@@ -188,8 +94,7 @@ const Home = () => {
                       ({
                         type,
                         category,
-                        icon,
-                        woreda,
+                        adm_level,
                         percent,
                         count,
                         text,
@@ -224,7 +129,7 @@ const Home = () => {
                                   <Image
                                     className="overview-icon"
                                     width="100%"
-                                    src={icon}
+                                    src={`/icons/landing-${category}-icon.png`}
                                     alt={category}
                                     preview={false}
                                   />
@@ -232,8 +137,8 @@ const Home = () => {
                                 <Col span={16}>
                                   <div className="area">
                                     Across{" "}
-                                    {woreda > 1
-                                      ? `${woreda} ${level2}`
+                                    {adm_level > 1
+                                      ? `${adm_level} ${level2}`
                                       : "the " + level1}
                                   </div>
                                   <div className="count">

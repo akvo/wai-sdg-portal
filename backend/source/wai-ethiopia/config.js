@@ -110,6 +110,7 @@ var page_config = {
             name: "presence of handwashingfacility",
           },
           { type: "PIE", question: 69, name: "hand washing in use" },
+          { type: "PIE", question: 8, formId: 1, name: "ODF Status" },
         ],
       },
     ],
@@ -219,4 +220,92 @@ var page_config = {
     },
     formId: 4,
   },
+};
+
+var landing_config = {
+  datasetsInPortal: [
+    {
+      title: "JMP/SDG Status",
+      description:
+        "The JMP/SDG indicators describe the WASH service levels of communities, schools and health facilities, offering an approach to rank the vulnerability of these entities. This section helps WASH authorities to prioritize funding and resources to the most vulnerable.",
+      readmore: "#",
+      explore: "#",
+    },
+    {
+      title: "CLTS + Progress",
+      description:
+        "Community Led Total Sanitation Plus is a methodology for achieving open defecation free and adequate coverage of sanitation facilities. This section tracks the progress of CLTS implementors.",
+      readmore: "#",
+      explore: "#",
+    },
+    {
+      title: "Water Infrastructure",
+      description:
+        "This section contains technical and management data, and tracks the functionality of community water points. This is useful for month to month planning of maintenance and rehabilitation activities.",
+      readmore: "#",
+      explore: "#",
+    },
+  ],
+  overviews: [
+    [
+      {
+        type: "chart",
+        category: "water-point",
+      },
+      {
+        type: "info",
+        category: "water-point",
+        adm_level: 2,
+        percent: 78,
+        count: 282,
+        text: "OF ##count## WATER POINTS ARE FUNCTIONAL",
+        explore: "#",
+      },
+    ],
+    [
+      {
+        type: "info",
+        category: "odf",
+        adm_level: 1,
+        percent: 81,
+        count: null,
+        text: "OF ODF VILLAGES PER " + levels[0],
+        explore: "#",
+      },
+      {
+        type: "chart",
+        category: "odf",
+      },
+    ],
+    [
+      {
+        type: "chart",
+        category: "health-facilities",
+      },
+      {
+        type: "info",
+        category: "health-facilities",
+        adm_level: 1,
+        percent: 4.5,
+        count: null,
+        text: "OF HEALTH FACILITIES HAVE BASIC WATER ACCESS",
+        explore: "#",
+      },
+    ],
+    [
+      {
+        type: "info",
+        category: "schools",
+        adm_level: 1,
+        percent: 3.5,
+        count: null,
+        text: "OF SCHOOLS HAVE BASIC WATER ACCESS",
+        explore: "#",
+      },
+      {
+        type: "chart",
+        category: "schools",
+      },
+    ],
+  ],
 };

@@ -22,15 +22,16 @@ INSTANCE_NAME = os.environ["INSTANCE_NAME"]
 CONFIG_NAME = INSTANCE_NAME.replace("-", "_")
 SOURCE_PATH = f"./source/{INSTANCE_NAME}"
 JS_FILE = f"{SOURCE_PATH}/config"
-MINJS = jsmin(open(f"{JS_FILE}.js").read())
+JS_FILE = jsmin(open(f"{JS_FILE}.js").read())
 GEO_CONFIG = GeoLevels[CONFIG_NAME].value
 
-MINJS += jsmin("".join([
+MINJS = jsmin("".join([
     "var levels=" + str([g["alias"] for g in GEO_CONFIG]) + ";"
     "var map_config={shapeLevels:" + str([g["name"]
                                           for g in GEO_CONFIG]) + "};",
     "var topojson=",
-    open(f"{SOURCE_PATH}/topojson.json").read(), ";"
+    open(f"{SOURCE_PATH}/topojson.json").read(),
+    ";", JS_FILE,
 ]))
 JS_FILE = f"{SOURCE_PATH}/config.min.js"
 open(JS_FILE, 'w').write(MINJS)
