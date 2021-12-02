@@ -26,7 +26,8 @@ const RowPieChartGroup = ({ formId, configFormId, chartList }) => {
       loadedFormId === formId
     ) {
       const apiCall = chartList?.map((chart) => {
-        const fid = configFormId || formId;
+        const fid = chart?.formId || configFormId || formId;
+        /* FIXME we should remove fid once the fixed chart is available */
         let url = `chart/pie-data/${fid}/${chart?.question}`;
         const adminId = takeRight(selectedAdministration)[0];
         if (adminId) {
@@ -73,21 +74,27 @@ const RowPieChartGroup = ({ formId, configFormId, chartList }) => {
           </div>
         ) : (
           <Row>
-            {pieChartData?.map((p, pi) => (
-              <Col key={pi} span={24 / pieChartData.length}>
-                <Card
-                  className="visual-card-wrapper splited"
-                  title={p?.name ? upperFirst(p?.name) : ""}
-                >
-                  <Chart
-                    type={p.type}
-                    data={p.data}
-                    wrapper={false}
-                    height={300}
-                  />
-                </Card>
-              </Col>
-            ))}
+            <Col span={24}>
+              <div className="flexible-container">
+                {pieChartData?.map((p, pi) => {
+                  return (
+                    <div key={pi} className="flexible-columns">
+                      <Card
+                        className="visual-card-wrapper splited"
+                        title={p?.name ? upperFirst(p?.name) : ""}
+                      >
+                        <Chart
+                          type={p.type}
+                          data={p.data}
+                          wrapper={false}
+                          height={250}
+                        />
+                      </Card>
+                    </div>
+                  );
+                })}
+              </div>
+            </Col>
           </Row>
         )}
       </Col>

@@ -316,3 +316,15 @@
   margin-right: 0 !important;
   margin-left: 0 !important;
 }
+
+.flexible-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .flexible-columns {
+    flex: 1 1 0;
+    width: 0;
+  }
+}
