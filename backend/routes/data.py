@@ -54,7 +54,6 @@ def get(req: Request,
             session=session, parents=[administration], current=[])
         if not len(administration_ids):
             raise HTTPException(status_code=404, detail="Not found")
-        print(administration_ids)
     data = crud.get_data(session=session,
                          form=form_id,
                          administration=administration_ids,

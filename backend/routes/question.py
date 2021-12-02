@@ -80,7 +80,6 @@ def add(req: Request,
     if dependency:
         dependency_errors = crud.validate_dependency(session=session,
                                                      dependency=dependency)
-        print(dependency_errors)
         if len(dependency_errors):
             raise HTTPException(status_code=404,
                                 detail=", ".join(dependency_errors))
