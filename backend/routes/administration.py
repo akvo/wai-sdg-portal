@@ -36,7 +36,7 @@ def get_all_ids(
     id: Optional[List[int]] = Query(None),
     session: Session = Depends(get_session)
 ) -> List[int]:
-    administration_ids = crud.get_grand_children(session=session)
+    administration_ids = crud.get_all_childs(session=session)
     return administration_ids
 
 

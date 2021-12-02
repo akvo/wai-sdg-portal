@@ -52,12 +52,13 @@ class TestAdministrationRoute():
         administration = ca.get_administration_name(session=session, id=12)
         assert administration == "Sumedang, Jawa Barat"
 
-        ids = ca.get_grand_children(session=session, parents=[3], current=[])
+        ids = ca.get_all_childs(session=session, parents=[3], current=[])
         childs = origin[origin["UNIT_TYPE"] == "Yogyakarta"]
         childs = list(childs["name"])
         for id in ids:
             administration = ca.get_administration_name(session=session, id=id)
-            assert administration in childs
+            if administration != "Yogyakarta":
+                assert administration in childs
         adms = ca.get_parent_administration(session=session, access=[1, 2])
         for a in adms:
             adm = a.cascade

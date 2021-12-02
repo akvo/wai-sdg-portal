@@ -88,9 +88,9 @@ def get_administration_list(session: Session, id: int) -> List[int]:
     return administration_ids
 
 
-def get_grand_children(session: Session,
-                       parents: Optional[List[int]] = None,
-                       current: Optional[List[int]] = []) -> List[int]:
+def get_all_childs(session: Session,
+                   parents: Optional[List[int]] = None,
+                   current: Optional[List[int]] = []) -> List[int]:
     if parents is None:
         current = session.query(Administration.id).all()
         current = [c[0] for c in current]
@@ -103,9 +103,9 @@ def get_grand_children(session: Session,
             if not has_childs and len(c.children):
                 has_childs = True
         if has_childs:
-            current = get_grand_children(session=session,
-                                         current=current,
-                                         parents=current)
+            current = get_all_childs(session=session,
+                                     current=current,
+                                     parents=current)
         else:
             current = parents + current
     return current

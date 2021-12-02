@@ -34,7 +34,7 @@ def get_aggregated_chart_data(req: Request,
     options = check_query(q) if q else None
     administration_ids = False
     if administration:
-        administration_ids = crud_administration.get_grand_children(
+        administration_ids = crud_administration.get_all_childs(
             session=session, parents=[administration], current=[])
         if not len(administration_ids):
             raise HTTPException(status_code=404, detail="Not found")
@@ -62,7 +62,7 @@ def get_aggregated_pie_chart_data(req: Request,
     options = check_query(q) if q else None
     administration_ids = False
     if administration:
-        administration_ids = crud_administration.get_grand_children(
+        administration_ids = crud_administration.get_all_childs(
             session=session, parents=[administration], current=[])
         if not len(administration_ids):
             raise HTTPException(status_code=404, detail="Not found")
@@ -90,11 +90,10 @@ def get_aggregated_jmp_chart_data(req: Request,
     parent_administration = [
         x.simplify_serialize_with_children for x in parent_administration
     ]
-    administration_ids = crud_administration.get_grand_children(
-        session=session)
+    administration_ids = crud_administration.get_all_childs(session=session)
     if administration:
         parent_administration = False
-        administration_ids = crud_administration.get_grand_children(
+        administration_ids = crud_administration.get_all_childs(
             session=session, parents=[administration], current=[])
         if not len(administration_ids):
             raise HTTPException(status_code=404, detail="Not found")
