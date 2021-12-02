@@ -135,9 +135,11 @@ const TabODF = ({
               <div className="odf-legend">
                 <Space>
                   <span className="dot trigered" />
-                  Initial Number of Laterines
+                  Date Triggered
                   <span className="dot verified" />
-                  Final Number of Laterines
+                  Date of Verification
+                  <span className="dot on going" />
+                  Today
                 </Space>
               </div>
               <div className="odf-chart">

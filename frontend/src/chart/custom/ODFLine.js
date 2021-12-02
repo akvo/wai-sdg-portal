@@ -17,6 +17,13 @@ const NoData = {
   },
 };
 
+const getDate = ({ _d }) => {
+  if (_d) {
+    return moment(_d).format("DD MMM");
+  }
+  return null;
+};
+
 const ODFLine = (data, chartTitle, extra) => {
   if (!data?.yAxis?.length) {
     return NoData;
@@ -32,7 +39,7 @@ const ODFLine = (data, chartTitle, extra) => {
       trigger: "axis",
       formatter: (p) => {
         const start = p[0].dataIndex === 0;
-        const sentences = p.map((d) => {
+        const sentences = p.reverse().map((d) => {
           const v = d.data.data;
           let title = start ? "Trigered" : v.endValue ? "Verified" : "On Going";
           let date = start ? v.startDate : v.endDate;
@@ -88,6 +95,9 @@ const ODFLine = (data, chartTitle, extra) => {
       axisLine: {
         show: false,
       },
+      splitArea: {
+        show: true,
+      },
       axisLabel: {
         ...AxisLabelFormatter,
         color: "rgba(0, 0, 0, 0.85)",
@@ -124,12 +134,7 @@ const ODFLine = (data, chartTitle, extra) => {
           color: "#a4a4a4",
         },
         label: {
-          show: true,
-          formatter: (p) => {
-            const val = p.data.data;
-            return p.dataIndex === 0 ? val.startValue : val.endValue;
-          },
-          fontWeight: "bold",
+          show: false,
         },
         symbol: "circle",
         symbolSize: 7,
