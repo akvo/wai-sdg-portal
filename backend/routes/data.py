@@ -50,7 +50,7 @@ def get(req: Request,
     verify_editor(req.state.authenticated, session)
     administration_ids = False
     if administration:
-        administration_ids = crud_administration.get_grand_children(
+        administration_ids = crud_administration.get_all_childs(
             session=session, parents=[administration], current=[])
         if not len(administration_ids):
             raise HTTPException(status_code=404, detail="Not found")
@@ -256,7 +256,7 @@ def get_last_submission(req: Request,
         options = check_query(q)
     administration_ids = False
     if administration:
-        administration_ids = crud_administration.get_grand_children(
+        administration_ids = crud_administration.get_all_childs(
             session=session, parents=[administration], current=[])
         if not len(administration_ids):
             raise HTTPException(status_code=404, detail="Not found")
