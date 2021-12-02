@@ -17,13 +17,6 @@ const NoData = {
   },
 };
 
-const getDate = ({ _d }) => {
-  if (_d) {
-    return moment(_d).format("DD MMM");
-  }
-  return null;
-};
-
 const ODFLine = (data, chartTitle, extra) => {
   if (!data?.yAxis?.length) {
     return NoData;
