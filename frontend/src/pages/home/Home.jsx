@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Row, Col, Card, Space, Carousel, Image } from "antd";
 import { RightOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import CountUp from "react-countup";
+import api from "../../util/api";
 
 import "./home.scss";
 import Map from "../../components/Map";
+import isEmpty from "lodash/isEmpty";
 
 const level1 = window.levels[0];
 const level2 = window.levels[1];
@@ -13,6 +15,24 @@ const level2 = window.levels[1];
 const { datasetsInPortal, overviews } = window.landing_config;
 
 const Home = () => {
+  const [overviewData, setOverviewData] = useState([]);
+
+  useEffect(() => {
+    if (!isEmpty(overviews)) {
+      const apiCall = overviews?.map(({ form_id, question, option }) => {
+        let url = `chart/overviews/${form_id}/${question}/${option}`;
+        return api.get(url);
+      });
+      Promise.all(apiCall).then((res) => {
+        const test = res?.map((r) => {
+          const { form_id, question, data } = r?.data;
+          return data;
+        });
+        console.log(test);
+      });
+    }
+  }, []);
+
   return (
     <Row className="home-container">
       {/* Jumbotron */}
@@ -90,7 +110,7 @@ const Home = () => {
                     gutter={[24, 24]}
                     className="overview-item-row"
                   >
-                    {items.map(
+                    {/* {items.map(
                       ({
                         type,
                         category,
@@ -162,7 +182,7 @@ const Home = () => {
                           </Col>
                         );
                       }
-                    )}
+                    )} */}
                   </Row>
                 </div>
               ))}
