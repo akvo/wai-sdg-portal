@@ -166,3 +166,36 @@ def get_pie_chart_data(session: Session,
             "value": round((a.count / total) * 100, 2),
         })
     return {"form": form, "question": question, "data": temp}
+
+
+def get_overviews_visualization(session: Session,
+                                form: int,
+                                question: int,
+                                option: str):
+    answer = session.query(Answer.options,
+                           func.count(Answer.id).label('count')).filter(
+                               Answer.question == question).group_by(
+                                   Answer.options).all()
+    chart_data = []
+    info_data = None
+    total = sum([a.count for a in answer])
+    for a in answer:
+        opt = a.options[0]
+        value = {
+            "name": opt,
+            "count": a.count,
+            "total": total,
+            "value": round((a.count / total) * 100, 2),
+        }
+        if opt.lower() == option.lower():
+            info_data = value
+        chart_data.append(value)
+    data = [{
+                "type": "info",
+                "data": info_data
+            },
+            {
+                "type": "chart",
+                "data": chart_data
+            }]
+    return {"form": form, "question": question, "data": data}

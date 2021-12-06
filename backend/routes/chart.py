@@ -107,6 +107,24 @@ def get_aggregated_jmp_chart_data(req: Request,
     return value
 
 
+@chart_route.get(
+    "/chart/overviews/{form_id:path}/{question_id:path}/{option:path}",
+    name="charts:get_overviews_chart_and_info",
+    summary="get overviews chart and info data",
+    tags=["Charts"])
+def get_overviews_chart_and_info_data(req: Request,
+                                      form_id: int,
+                                      question_id: int,
+                                      option: str,
+                                      session: Session = Depends(get_session)):
+    value = crud_charts.get_overviews_visualization(
+        session=session,
+        form=form_id,
+        question=question_id,
+        option=option)
+    return value
+
+
 @chart_route.get("/chart/{name:path}",
                  name="charts:get_by_name",
                  summary="get chart by name",
