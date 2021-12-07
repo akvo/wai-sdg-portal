@@ -93,6 +93,10 @@
       background: rgba(2, 136, 209, 0.06);
 
       .overview-item-col {
+        .overview-icon {
+          max-height: 200px;
+          object-fit: contain;
+        }
       }
 
       .overview-item-row {
@@ -146,7 +150,7 @@
       }
 
       .ant-carousel .slick-dots-bottom {
-        bottom: -48px;
+        bottom: -3rem;
       }
 
       .ant-carousel .slick-dots li {
@@ -173,6 +177,15 @@
         background: transparent;
         opacity: 1;
       }
+    }
+  }
+
+  .chart-loading {
+    .ant-spin-spinning {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin: auto;
     }
   }
 }
