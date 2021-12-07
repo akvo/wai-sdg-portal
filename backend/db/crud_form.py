@@ -29,6 +29,10 @@ def get_form_by_name(session: Session, name: str) -> FormBase:
     return session.query(Form).filter(Form.name == name.upper()).first()
 
 
+def search_form_by_name(session: Session, name: str) -> FormBase:
+    return session.query(Form).filter(Form.name.ilike(f"{name}%")).first()
+
+
 def get_form_name(session: Session, id: int) -> str:
     form = session.query(Form.name).filter(Form.id == id).first()
     return form.name

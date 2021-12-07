@@ -195,8 +195,8 @@ for sheet in sheets:
                     "longitude"] else None,
                 axis=1)
             data = data.drop(columns=lat_long, axis=1)
-        form_name = sheet.replace(source_path, '').strip().upper()
-        form = crud_form.get_form_by_name(session=session, name=form_name)
+        form_name = sheet.replace(source_path, '').strip()
+        form = crud_form.search_form_by_name(session=session, name=form_name)
         data = data.to_dict("records")
         for d in data:
             rec = record(d, form, user)
