@@ -18,7 +18,7 @@ const OverviewInfo = ({ item, order }) => {
   const { above_text, number_text, explore, value, total } = data;
   let text = number_text;
   if (text?.includes("##total##")) {
-    text = text.replace("##total##", total);
+    text = text.replace("##total##", total || "");
   }
   return (
     <Col

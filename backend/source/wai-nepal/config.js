@@ -118,65 +118,23 @@ var landing_config = {
     },
   ],
   overviews: [
-    [
-      {
-        type: "chart",
-        category: "water-point",
-      },
-      {
-        type: "info",
-        category: "water-point",
-        adm_level: 2,
-        percent: 78,
-        count: 282,
-        text: "OF ##count## WATER POINTS ARE FUNCTIONAL",
-        explore: "#",
-      },
-    ],
-    [
-      {
-        type: "info",
-        category: "odf",
-        adm_level: 1,
-        percent: 81,
-        count: null,
-        text: "OF ODF VILLAGES PER " + levels[0],
-        explore: "#",
-      },
-      {
-        type: "chart",
-        category: "odf",
-      },
-    ],
-    [
-      {
-        type: "chart",
-        category: "health-facilities",
-      },
-      {
-        type: "info",
-        category: "health-facilities",
-        adm_level: 1,
-        percent: 4.5,
-        count: null,
-        text: "OF HEALTH FACILITIES HAVE BASIC WATER ACCESS",
-        explore: "#",
-      },
-    ],
-    [
-      {
-        type: "info",
-        category: "schools",
-        adm_level: 1,
-        percent: 3.5,
-        count: null,
-        text: "OF SCHOOLS HAVE BASIC WATER ACCESS",
-        explore: "#",
-      },
-      {
-        type: "chart",
-        category: "schools",
-      },
-    ],
+    {
+      form_id: 964754042,
+      name: "Schools",
+      question: 1000914105,
+      option: "yes",
+      above_text: "Across the District",
+      number_text: "of ##total## schools have toilet",
+      explore: "#",
+    },
+    {
+      form_id: 1189144226,
+      name: "Health Facilities",
+      question: 1177674247,
+      option: "yes",
+      above_text: "Across the District",
+      number_text: "of ##total## hygiene stations available",
+      explore: "#",
+    },
   ],
 };
