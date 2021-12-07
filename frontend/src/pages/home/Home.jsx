@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Row, Col, Card, Space, Carousel, Image } from "antd";
+import { Row, Col, Card, Space, Carousel, Image, Spin } from "antd";
 import { RightOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import CountUp from "react-countup";
 import api from "../../util/api";
@@ -9,10 +9,76 @@ import "./home.scss";
 import Map from "../../components/Map";
 import isEmpty from "lodash/isEmpty";
 
-const level1 = window.levels[0];
 const level2 = window.levels[1];
 
 const { datasetsInPortal, overviews } = window.landing_config;
+
+const OverviewInfo = ({ item }) => {
+  const { type, category, data } = item;
+  const { above_text, number_text, explore, value, total } = data;
+  let text = number_text;
+  if (text?.includes("##total##")) {
+    text = text.replace("##total##", total);
+  }
+  return (
+    <Col key={`${type}-${category}`} span={12} className="overview-item-col">
+      <Card className={`overview-item-card ${category}`}>
+        <Row
+          className="overview-item"
+          gutter={[24, 24]}
+          align="middle"
+          justify="center"
+        >
+          <Col span={8} align="center">
+            <Image
+              className="overview-icon"
+              width="100%"
+              src={`/icons/landing-${category}-icon.png`}
+              alt={category}
+              preview={false}
+            />
+          </Col>
+          <Col span={16}>
+            <div className="area">{above_text}</div>
+            <div className="count">
+              <CountUp decimals={1} end={value || 0} />%
+            </div>
+            <div className="text">{text}</div>
+            <div className="explore">
+              <Link to={explore}>
+                <Space align="center" size="small">
+                  Explore <ArrowRightOutlined />
+                </Space>
+              </Link>
+            </div>
+          </Col>
+        </Row>
+      </Card>
+    </Col>
+  );
+};
+
+const OverviewChart = ({ item }) => {
+  const { type, category } = item;
+  return (
+    <Col key={`${type}-${category}`} span={12} className="overview-item-col">
+      <Card className={`overview-item-card ${category}`}>
+        <Row className="overview-item">
+          <Col span={24}>Chart here</Col>
+        </Row>
+      </Card>
+    </Col>
+  );
+};
+
+const OverviewColumn = ({ items }) => {
+  return items.map((item, idx) => {
+    if (item?.type === "info") {
+      return <OverviewInfo key={`${item?.type}-${idx}`} item={item} />;
+    }
+    return <OverviewChart key={`${item?.type}-${idx}`} item={item} />;
+  });
+};
 
 const Home = () => {
   const [overviewData, setOverviewData] = useState([]);
@@ -23,13 +89,46 @@ const Home = () => {
         let url = `chart/overviews/${form_id}/${question}/${option}`;
         return api.get(url);
       });
-      Promise.all(apiCall).then((res) => {
-        const test = res?.map((r) => {
-          const { form_id, question, data } = r?.data;
-          return data;
+      Promise.all(apiCall)
+        .then((res) => {
+          const allData = res?.map((r) => {
+            const { form, question, data } = r?.data;
+            // find overview config
+            const overview = overviews?.find(
+              (x) => x.form_id === form && x.question === question
+            );
+            // map res data to add more overview config
+            const dataTmp = data.map((d) => {
+              const { above_text, number_text, explore, name } = overview;
+              const category = name
+                ? name.toLowerCase().split(" ").join("-")
+                : "";
+              if (d?.type === "info") {
+                return {
+                  ...d,
+                  category: category,
+                  name: name,
+                  data: {
+                    ...d?.data,
+                    above_text,
+                    number_text,
+                    explore,
+                  },
+                };
+              }
+              return {
+                ...d,
+                category: category,
+                name: name,
+              };
+            });
+            return dataTmp;
+          });
+          return allData;
+        })
+        .then((res) => {
+          setOverviewData(res);
         });
-        console.log(test);
-      });
     }
   }, []);
 
@@ -101,91 +200,28 @@ const Home = () => {
           </Col>
           <Col span={24} className="overview-content-wrapper">
             <Carousel autoplay effect="fade">
-              {overviews.map((items, i) => (
-                <div key={`overview-${i}`}>
-                  <Row
-                    align="middle"
-                    justify="space-between"
-                    wrap={true}
-                    gutter={[24, 24]}
-                    className="overview-item-row"
-                  >
-                    {/* {items.map(
-                      ({
-                        type,
-                        category,
-                        adm_level,
-                        percent,
-                        count,
-                        text,
-                        explore,
-                      }) => {
-                        return type === "chart" ? (
-                          <Col
-                            key={`${type}-${category}`}
-                            span={12}
-                            className="overview-item-col"
-                          >
-                            <Card className={`overview-item-card ${category}`}>
-                              <Row className="overview-item">
-                                <Col span={24}>Chart here</Col>
-                              </Row>
-                            </Card>
-                          </Col>
-                        ) : (
-                          <Col
-                            key={`${type}-${category}`}
-                            span={12}
-                            className="overview-item-col"
-                          >
-                            <Card className={`overview-item-card ${category}`}>
-                              <Row
-                                className="overview-item"
-                                gutter={[24, 24]}
-                                align="middle"
-                                justify="center"
-                              >
-                                <Col span={8} align="center">
-                                  <Image
-                                    className="overview-icon"
-                                    width="100%"
-                                    src={`/icons/landing-${category}-icon.png`}
-                                    alt={category}
-                                    preview={false}
-                                  />
-                                </Col>
-                                <Col span={16}>
-                                  <div className="area">
-                                    Across{" "}
-                                    {adm_level > 1
-                                      ? `${adm_level} ${level2}`
-                                      : "the " + level1}
-                                  </div>
-                                  <div className="count">
-                                    <CountUp decimals={1} end={percent} />%
-                                  </div>
-                                  <div className="text">
-                                    {!count
-                                      ? text
-                                      : text.replace("##count##", count)}
-                                  </div>
-                                  <div className="explore">
-                                    <Link to={explore}>
-                                      <Space align="center" size="small">
-                                        Explore <ArrowRightOutlined />
-                                      </Space>
-                                    </Link>
-                                  </div>
-                                </Col>
-                              </Row>
-                            </Card>
-                          </Col>
-                        );
-                      }
-                    )} */}
-                  </Row>
+              {isEmpty(overviewData) && (
+                <div className="chart-loading">
+                  <Spin />
                 </div>
-              ))}
+              )}
+              {!isEmpty(overviewData) &&
+                overviewData?.map((items, i) => (
+                  <div key={`overview-${i}`}>
+                    <Row
+                      align="middle"
+                      justify="space-between"
+                      wrap={true}
+                      gutter={[24, 24]}
+                      className="overview-item-row"
+                    >
+                      <OverviewColumn
+                        key={`overview-column-${i}`}
+                        items={items}
+                      />
+                    </Row>
+                  </div>
+                ))}
             </Carousel>
           </Col>
         </Row>

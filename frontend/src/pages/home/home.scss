@@ -175,4 +175,13 @@
       }
     }
   }
+
+  .chart-loading {
+    .ant-spin-spinning {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin: auto;
+    }
+  }
 }
