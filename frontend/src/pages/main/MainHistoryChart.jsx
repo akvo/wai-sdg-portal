@@ -28,13 +28,30 @@ const MainHistoryChart = ({ current, data, question }) => {
         .get(url)
         .then((res) => {
           setSelectedData(temp?.name?.props?.record || {});
-          setHistoryChartData(
-            res.data.map((x, i) => ({
-              ...x,
-              key: `history-${i}`,
-              question: question,
-            }))
-          );
+          let data = res?.data?.map((x, i) => ({
+            ...x,
+            key: `history-${i}`,
+          }));
+          if (question?.type === "option") {
+            data = question?.option?.map((opt) => {
+              const find = data?.find(
+                (d) => d?.value?.toLowerCase() === opt?.name?.toLowerCase()
+              );
+              return {
+                ...opt,
+                ...find,
+                type: question?.type,
+              };
+            });
+          }
+          if (question?.type === "number") {
+            data = data?.map((d) => ({
+              ...d,
+              type: question?.type,
+              rule: question?.rule,
+            }));
+          }
+          setHistoryChartData(data);
         })
         .catch((err) => {
           setHistoryChartData([]);

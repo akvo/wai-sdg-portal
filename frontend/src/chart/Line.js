@@ -27,9 +27,12 @@ const Line = (data, chartTitle, extra) => {
   let seriesData = [];
   data = !data ? [] : data;
   if (data.length > 0) {
-    data = sortBy(data, "date");
+    yAxisVal = data?.map((x) => x.value || x.name);
+    yAxisVal = uniq(sortBy(yAxisVal).filter((x) => x));
+    data = sortBy(data, "date")
+      .reverse()
+      .filter((d) => d?.date); // show only data have date
     seriesData = data.map((x) => x.value || x.name);
-    yAxisVal = uniq(sortBy(seriesData).filter((x) => x));
     labels = data.map((x) => x.date);
     seriesData = seriesData.map((x) => String(x));
   }
