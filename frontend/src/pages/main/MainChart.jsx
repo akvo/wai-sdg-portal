@@ -59,7 +59,7 @@ const MainChart = ({ current, question }) => {
       // this if we have selected stack
       if (!isEmpty(selectedStack)) {
         url += `&stack=${selectedStack?.id}`;
-        chartTitleTemp = `${chartTitleTemp} and selectedStack?.name`;
+        chartTitleTemp = `${chartTitleTemp} and {question|${selectedStack?.name}}`;
       }
       const adminId = takeRight(selectedAdministration)[0];
       if (adminId) {
