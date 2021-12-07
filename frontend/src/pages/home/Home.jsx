@@ -152,7 +152,7 @@ const Home = () => {
           setOverviewData(res);
         });
     }
-  }, []);
+  }, [overviewData]);
 
   return (
     <Row className="home-container">
