@@ -13,7 +13,7 @@ const level2 = window.levels[1];
 
 const { datasetsInPortal, overviews } = window.landing_config;
 
-const OverviewInfo = ({ item }) => {
+const OverviewInfo = ({ item, order }) => {
   const { type, category, data } = item;
   const { above_text, number_text, explore, value, total } = data;
   let text = number_text;
@@ -21,7 +21,12 @@ const OverviewInfo = ({ item }) => {
     text = text.replace("##total##", total);
   }
   return (
-    <Col key={`${type}-${category}`} span={12} className="overview-item-col">
+    <Col
+      key={`${type}-${category}`}
+      span={12}
+      className="overview-item-col"
+      order={order}
+    >
       <Card className={`overview-item-card ${category}`}>
         <Row
           className="overview-item"
@@ -58,25 +63,42 @@ const OverviewInfo = ({ item }) => {
   );
 };
 
-const OverviewChart = ({ item }) => {
-  const { type, category } = item;
+const OverviewChart = ({ item, order }) => {
+  const { type, name, category } = item;
   return (
-    <Col key={`${type}-${category}`} span={12} className="overview-item-col">
+    <Col
+      key={`${type}-${category}`}
+      span={12}
+      className="overview-item-col"
+      order={order}
+    >
       <Card className={`overview-item-card ${category}`}>
         <Row className="overview-item">
-          <Col span={24}>Chart here</Col>
+          <Col span={24}>Chart {name} here</Col>
         </Row>
       </Card>
     </Col>
   );
 };
 
-const OverviewColumn = ({ items }) => {
+const OverviewColumn = ({ items, index }) => {
   return items.map((item, idx) => {
     if (item?.type === "info") {
-      return <OverviewInfo key={`${item?.type}-${idx}`} item={item} />;
+      return (
+        <OverviewInfo
+          key={`${item?.type}-${idx}`}
+          item={item}
+          order={index % 2 === 0 ? 2 : 1}
+        />
+      );
     }
-    return <OverviewChart key={`${item?.type}-${idx}`} item={item} />;
+    return (
+      <OverviewChart
+        key={`${item?.type}-${idx}`}
+        item={item}
+        order={index % 2 === 0 ? 1 : 2}
+      />
+    );
   });
 };
 
@@ -84,7 +106,7 @@ const Home = () => {
   const [overviewData, setOverviewData] = useState([]);
 
   useEffect(() => {
-    if (!isEmpty(overviews)) {
+    if (!isEmpty(overviews) && isEmpty(overviewData)) {
       const apiCall = overviews?.map(({ form_id, question, option }) => {
         let url = `chart/overviews/${form_id}/${question}/${option}`;
         return api.get(url);
@@ -218,6 +240,7 @@ const Home = () => {
                       <OverviewColumn
                         key={`overview-column-${i}`}
                         items={items}
+                        index={i}
                       />
                     </Row>
                   </div>
