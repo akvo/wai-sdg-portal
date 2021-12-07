@@ -8,6 +8,7 @@ import {
   Legend,
   DataView,
   Title,
+  axisTitle,
 } from "./chart-style.js";
 import uniq from "lodash/uniq";
 import isEmpty from "lodash/isEmpty";
@@ -27,15 +28,7 @@ const BarStack = (data, chartTitle, extra) => {
   }
 
   // Custom Axis Title
-  const { x, y } = extra?.axisTitle;
-  let xAxisTitle = Array.isArray(x)
-    ? x
-        ?.filter((it) => it)
-        .map((it) => upperFirst(it))
-        .join(" - ")
-    : x;
-  let yAxisTitle = upperFirst(y);
-  //
+  const { xAxisTitle, yAxisTitle } = axisTitle(extra);
 
   let stacked = data[0].stack.map((x) => ({ name: x.name, color: x.color }));
   let legends = stacked.map((s, si) => ({

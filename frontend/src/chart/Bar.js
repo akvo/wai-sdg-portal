@@ -7,6 +7,7 @@ import {
   AxisLabelFormatter,
   DataView,
   Title,
+  axisTitle,
 } from "./chart-style.js";
 import sortBy from "lodash/sortBy";
 import isEmpty from "lodash/isEmpty";
@@ -26,15 +27,7 @@ const Bar = (data, chartTitle, extra) => {
   }
 
   // Custom Axis Title
-  const { x, y } = extra?.axisTitle;
-  let xAxisTitle = Array.isArray(x)
-    ? x
-        ?.filter((it) => it)
-        .map((it) => upperFirst(it))
-        .join(" - ")
-    : x;
-  let yAxisTitle = upperFirst(y);
-  //
+  const { xAxisTitle, yAxisTitle } = axisTitle(extra);
 
   data = sortBy(data, "order");
   let labels = data.map((x) => x.name);

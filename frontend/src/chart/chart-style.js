@@ -141,3 +141,16 @@ export const Title = {
     },
   },
 };
+
+export const axisTitle = (extra) => {
+  // Custom Axis Title
+  const { x, y } = extra?.axisTitle;
+  let xAxisTitle = Array.isArray(x)
+    ? x
+        ?.filter((it) => it)
+        .map((it) => upperFirst(it))
+        .join(" - ")
+    : x;
+  let yAxisTitle = upperFirst(y);
+  return { xAxisTitle, yAxisTitle };
+};
