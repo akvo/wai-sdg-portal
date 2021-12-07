@@ -11,6 +11,7 @@ mjkey = os.environ['MAILJET_APIKEY']
 mjsecret = os.environ['MAILJET_SECRET']
 webdomain = os.environ["WEBDOMAIN"]
 image_url = f"{webdomain}/email-icons"
+instance_name = os.environ["INSTANCE_NAME"]
 
 mailjet = Client(auth=(mjkey, mjsecret))
 loader = FileSystemLoader('.')
@@ -188,12 +189,18 @@ class Email:
         body = type["body"]
         if self.body:
             body = self.body
+        # instance name based on env
+        instance = instance_name.split("-")
+        instance = [a.title() for a in instance]
+        instance[0] = instance[0].upper()
+        instance = " ".join(instance)
         html = html_template.render(logo=f"{webdomain}/wai-logo.png",
-                                         title=type["title"],
-                                         body=body,
-                                         image=type["image"],
-                                         message=type["message"],
-                                         context=self.context)
+                                    instance_name=instance,
+                                    title=type["title"],
+                                    body=body,
+                                    image=type["image"],
+                                    message=type["message"],
+                                    context=self.context)
         payload = {
             "FromEmail": "noreply@akvo.org",
             "Subject": type["subject"],
