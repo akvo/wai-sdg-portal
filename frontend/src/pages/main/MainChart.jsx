@@ -217,6 +217,15 @@ const MainChart = ({ current, question }) => {
                   type={chartData.type}
                   data={chartData.data}
                   wrapper={false}
+                  extra={{
+                    axisTitle: {
+                      x: [
+                        selectedQuestion?.name || null,
+                        selectedStack?.name || null,
+                      ],
+                      y: "count",
+                    },
+                  }}
                 />
               ) : loadingChartData ? (
                 <Spin />

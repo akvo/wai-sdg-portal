@@ -25,6 +25,18 @@ const BarStack = (data, chartTitle, extra) => {
       },
     };
   }
+
+  // Custom Axis Title
+  const { x, y } = extra?.axisTitle;
+  let xAxisTitle = Array.isArray(x)
+    ? x
+        ?.filter((it) => it)
+        .map((it) => upperFirst(it))
+        .join(" - ")
+    : x;
+  let yAxisTitle = upperFirst(y);
+  //
+
   let stacked = data[0].stack.map((x) => ({ name: x.name, color: x.color }));
   let legends = stacked.map((s, si) => ({
     name: s.name,
@@ -134,7 +146,7 @@ const BarStack = (data, chartTitle, extra) => {
     },
     yAxis: {
       type: "value",
-      name: "Option",
+      name: yAxisTitle || "",
       nameTextStyle: { ...TextStyle },
       nameLocation: "middle",
       nameGap: 50,
@@ -142,8 +154,10 @@ const BarStack = (data, chartTitle, extra) => {
     xAxis: {
       data: xAxis,
       type: "category",
-      name: "Question",
+      name: xAxisTitle || "",
       nameTextStyle: { ...TextStyle },
+      nameLocation: "middle",
+      nameGap: 50,
       axisLabel: {
         color: "#222",
         ...TextStyle,

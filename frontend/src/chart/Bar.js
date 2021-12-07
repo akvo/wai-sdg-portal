@@ -24,6 +24,18 @@ const Bar = (data, chartTitle, extra) => {
       },
     };
   }
+
+  // Custom Axis Title
+  const { x, y } = extra?.axisTitle;
+  let xAxisTitle = Array.isArray(x)
+    ? x
+        ?.filter((it) => it)
+        .map((it) => upperFirst(it))
+        .join(" - ")
+    : x;
+  let yAxisTitle = upperFirst(y);
+  //
+
   data = sortBy(data, "order");
   let labels = data.map((x) => x.name);
   let option = {
@@ -90,7 +102,7 @@ const Bar = (data, chartTitle, extra) => {
     },
     yAxis: {
       type: "value",
-      name: "Option",
+      name: yAxisTitle || "",
       nameTextStyle: { ...TextStyle },
       nameLocation: "middle",
       nameGap: 50,
@@ -98,8 +110,10 @@ const Bar = (data, chartTitle, extra) => {
     xAxis: {
       type: "category",
       data: labels,
-      name: "Question",
+      name: xAxisTitle || "",
       nameTextStyle: { ...TextStyle },
+      nameLocation: "middle",
+      nameGap: 50,
       axisLabel: {
         color: "#222",
         ...TextStyle,
