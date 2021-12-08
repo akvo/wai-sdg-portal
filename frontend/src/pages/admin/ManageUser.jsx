@@ -18,8 +18,11 @@ import api from "../../util/api";
 import capitalize from "lodash/capitalize";
 import isEmpty from "lodash/isEmpty";
 import { UIState } from "../../state/ui";
+import uiText from "../../util/i18n";
 
 const ManageUser = () => {
+  const { notificationText, buttonText, adminText, formText } = uiText;
+  const { manageUserTableText } = uiText?.tableText;
   const { organisations, administration } = UIState.useState((s) => s);
   const [form] = Form.useForm();
   const [showPendingUser, setShowPendingUser] = useState(true);
@@ -47,9 +50,9 @@ const ManageUser = () => {
         notification.success({
           message: active
             ? isInformUser
-              ? "Email has been sent"
-              : "Update process has been applied"
-            : "User approved",
+              ? notificationText?.emailSentText
+              : notificationText?.updateSuccessText
+            : notificationText?.userApprovedText,
         });
         getUsers(active, paginate.current);
       })
@@ -57,7 +60,7 @@ const ManageUser = () => {
         console.error(err);
         setUsers([]);
         notification.error({
-          message: "Ops, something went wrong",
+          message: notificationText?.errorText,
         });
       })
       .finally(() => {
@@ -80,12 +83,12 @@ const ManageUser = () => {
 
   const userColumns = [
     {
-      title: "Name",
+      title: manageUserTableText?.colName,
       dataIndex: "name",
       key: "name",
     },
     {
-      title: "Email",
+      title: manageUserTableText?.colEmail,
       dataIndex: "email",
       key: "email",
       render: (val, prop) => {
@@ -102,13 +105,13 @@ const ManageUser = () => {
       },
     },
     {
-      title: "Organisation",
+      title: manageUserTableText?.colOrg,
       dataIndex: "organisation",
       key: "organisation",
       render: (val, prop) => organisations?.find((org) => org.id === val)?.name,
     },
     {
-      title: "Role",
+      title: manageUserTableText?.colRole,
       dataIndex: "role",
       key: "role",
       render: (val, prop) => capitalize(val),
@@ -125,7 +128,7 @@ const ManageUser = () => {
               icon={<EditOutlined />}
               onClick={() => fetchUserDetail(id)}
             >
-              Edit
+              {buttonText?.btnEdit}
             </Button>
           ) : (
             <Button
@@ -134,7 +137,7 @@ const ManageUser = () => {
               disabled={!prop.email_verified}
               onClick={() => fetchUserDetail(id)}
             >
-              Approve
+              {buttonText?.btnApprove}
             </Button>
           )}
         </Space>
@@ -197,7 +200,7 @@ const ManageUser = () => {
               type="link"
               onClick={() => setShowPendingUser(!showPendingUser)}
             >
-              Show Pending Users
+              {adminText?.checkboxShowPendingUserText}
             </Button>
             <Checkbox
               className="checkbox-input"
@@ -223,11 +226,17 @@ const ManageUser = () => {
       </div>
 
       <Modal
-        title={`${active ? "Edit" : "Approve"} User`}
+        title={
+          active
+            ? adminText?.modalEditUserTitle
+            : adminText?.modalApproveUserTitle
+        }
         centered
         visible={isUserModalVisible}
         footer={[
-          <Button onClick={() => setIsUserModalVisible(false)}>Cancel</Button>,
+          <Button onClick={() => setIsUserModalVisible(false)}>
+            {buttonText?.btnCancel}
+          </Button>,
           active ? (
             <Button
               loading={isInformUser}
@@ -236,7 +245,7 @@ const ManageUser = () => {
                 form.submit();
               }}
             >
-              Inform User
+              {buttonText?.btnInformUser}
             </Button>
           ) : (
             ""
@@ -249,7 +258,9 @@ const ManageUser = () => {
               form.submit();
             }}
           >
-            {selectedValue?.active ? "Confirm Changes" : "Approve"}
+            {selectedValue?.active
+              ? buttonText?.btnConfirmChanges
+              : buttonText?.btnApprove}
           </Button>,
         ]}
         onCancel={() => setIsUserModalVisible(false)}
@@ -262,22 +273,44 @@ const ManageUser = () => {
           initialValue={selectedValue}
           onFinish={onFinish}
         >
-          <Form.Item label="Name" name="name" valuePropName="name">
+          <Form.Item
+            key="name"
+            label={formText?.labelName}
+            name="name"
+            valuePropName="name"
+          >
             <Input value={selectedValue?.name} disabled bordered={false} />
           </Form.Item>
 
-          <Form.Item label="Email" name="email" valuePropName="email">
+          <Form.Item
+            key="email"
+            label={formText?.labelEmail}
+            name="email"
+            valuePropName="email"
+          >
             <Input value={selectedValue?.email} disabled bordered={false} />
           </Form.Item>
 
-          <Form.Item label="Role" name="role" valuePropName="role">
+          <Form.Item
+            key="role"
+            label={formText?.labelRole}
+            name="role"
+            valuePropName="role"
+          >
             <Select onChange={onRoleChange} value={selectedValue?.role}>
-              <Select.Option value="admin">Admin</Select.Option>
-              <Select.Option value="editor">Editor</Select.Option>
-              <Select.Option value="user">User</Select.Option>
+              <Select.Option key="opt-admin" value="admin">
+                {formText?.optionRoleAdmin}
+              </Select.Option>
+              <Select.Option key="opt-editor" value="editor">
+                {formText?.optionRoleEditor}
+              </Select.Option>
+              <Select.Option key="opt-user" value="user">
+                {formText?.optionRoleUser}
+              </Select.Option>
             </Select>
           </Form.Item>
           <Form.Item
+            key="group-form"
             noStyle
             shouldUpdate={(prevValues, currentValues) =>
               prevValues.role !== currentValues.role
@@ -286,7 +319,8 @@ const ManageUser = () => {
             {({ getFieldValue }) =>
               getFieldValue("role") !== "admin" ? (
                 <Form.Item
-                  label="Access"
+                  key="access"
+                  label={formText?.labelAccess}
                   name="access"
                   valuePropName="access"
                   shouldUpdate={(prevValues, currentValues) =>
@@ -312,7 +346,8 @@ const ManageUser = () => {
           </Form.Item>
 
           <Form.Item
-            label="Organisation"
+            key="organisation"
+            label={formText?.labelOrg}
             name="organisation"
             valuePropName="organisation"
           >
