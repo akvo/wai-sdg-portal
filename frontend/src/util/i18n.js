@@ -17,6 +17,15 @@ const footer = {
   privacyPolicy: "Privacy Policy",
   termsOfService: "Terms of Service",
   developer: "Developer",
+  dataTitle: "Data",
+  dataText:
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac consectetur diam. Pellentesque lacinia, erat ac efficitur molestie, sapien odio efficitur purus, non ornare sem massa euismod metus.",
+  monitoringTitle: "Monitoring",
+  monitoringText:
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac consectetur diam. Pellentesque lacinia, erat ac efficitur molestie, sapien odio efficitur purus, non ornare sem massa euismod metus.",
+  workTitle: "How we work",
+  workText:
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac consectetur diam. Pellentesque lacinia, erat ac efficitur molestie, sapien odio efficitur purus, non ornare sem massa euismod metus.",
 };
 
 const home = {

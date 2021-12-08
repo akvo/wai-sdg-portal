@@ -49,22 +49,16 @@ const FooterEnd = () => {
 };
 
 const Footer = () => {
-  // TODO:: Move this content to cofig
+  const { footer } = uiText;
   return (
     <>
       <Row align="space-between" className="footer-start">
+        <FooterContent title={footer?.dataTitle} text={footer?.dataText} />
         <FooterContent
-          title="Data"
-          text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac consectetur diam. Pellentesque lacinia, erat ac efficitur molestie, sapien odio efficitur purus, non ornare sem massa euismod metus."
+          title={footer?.monitoringTitle}
+          text={footer?.monitoringText}
         />
-        <FooterContent
-          title="Monitoring"
-          text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac consectetur diam. Pellentesque lacinia, erat ac efficitur molestie, sapien odio efficitur purus, non ornare sem massa euismod metus."
-        />
-        <FooterContent
-          title="How we work"
-          text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac consectetur diam. Pellentesque lacinia, erat ac efficitur molestie, sapien odio efficitur purus, non ornare sem massa euismod metus."
-        />
+        <FooterContent title={footer?.workTitle} text={footer?.workText} />
       </Row>
       <FooterEnd />
     </>
