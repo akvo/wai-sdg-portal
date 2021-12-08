@@ -5,27 +5,28 @@ import {
   UploadOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
+import uiText from "../util/ui-text";
 
 const modalProps = (type, secureDelete, setSecureDelete) => {
+  const { submitText, deleteText, saveText } = uiText?.confirmationModal;
   switch (type) {
     case "submit":
       return {
         icon: <UploadOutlined />,
-        title: "Submit Entry?",
-        subTitle: "Are you sure you want to submit this entry?",
-        btnOkText: "Yes, Submit This Entry",
+        title: submitText?.title,
+        subTitle: submitText?.subTitle,
+        btnOkText: submitText?.btnOkText,
       };
     case "delete":
       return {
         icon: <DeleteOutlined />,
-        title: "Delete Entry?",
-        subTitle:
-          "This changes are irreversible, this will permanently delete the data and it's history as well.",
+        title: deleteText?.title,
+        subTitle: deleteText?.subTitle,
         secure: (
           <>
             <Space direction="vertical">
               <div>
-                Please type <b>DELETE</b> to confirm
+                {deleteText?.inputTitle}
                 <Input
                   value={secureDelete.text}
                   onChange={(e) =>
@@ -46,19 +47,19 @@ const modalProps = (type, secureDelete, setSecureDelete) => {
                   })
                 }
               >
-                I understand the consequences.
+                {deleteText?.checkboxText}
               </Checkbox>
             </Space>
           </>
         ),
-        btnOkText: "Yes, Delete This Entry",
+        btnOkText: deleteText?.btnOkText,
       };
     default:
       return {
         icon: <SaveOutlined />,
-        title: "Save Entry?",
-        subTitle: "You can come back at any time to complete and submit",
-        btnOkText: "Yes, Save This Entry",
+        title: saveText?.title,
+        subTitle: saveText?.subTitle,
+        btnOkText: saveText?.btnOkText,
       };
   }
 };
@@ -81,7 +82,7 @@ const ConfirmationModal = ({ visible, type, onOk, onCancel }) => {
   return (
     <Modal
       className="popup-notification"
-      title="Basic Modal"
+      title=""
       visible={visible}
       centered={true}
       onCancel={onCancel}
