@@ -18,7 +18,12 @@ import { scaleQuantize } from "d3-scale";
 import { UIState } from "../../state/ui";
 import _ from "lodash";
 import { generateAdvanceFilterURL } from "../../util/utils";
-import { getBounds, geojson, tile, defaultPos } from "../../util/geo-util";
+import {
+  getBounds,
+  geojson,
+  tileAlidade,
+  defaultPos,
+} from "../../util/geo-util";
 
 const { shapeLevels } = window.map_config;
 const mapMaxZoom = 14;
@@ -407,7 +412,7 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
             width: "100%",
           }}
         >
-          <TileLayer {...tile} />
+          <TileLayer {...tileAlidade} />
           <GeoJSON
             key="geodata"
             style={geoStyle}
