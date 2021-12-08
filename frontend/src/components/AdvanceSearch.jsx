@@ -7,6 +7,7 @@ import upperFirst from "lodash/upperFirst";
 import isEmpty from "lodash/isEmpty";
 import sortBy from "lodash/sortBy";
 import flatten from "lodash/flatten";
+import uiText from "../util/i18n";
 
 const { Panel } = Collapse;
 
@@ -18,6 +19,7 @@ const AdvanceSearch = ({
   buttonPos = "left",
   customStyle = {},
 }) => {
+  const { mainText, buttonText } = uiText;
   // Get question option only
   const question = flatten(
     questionGroup.map((qg) => qg.question.filter((q) => q.type === "option"))
@@ -78,7 +80,7 @@ const AdvanceSearch = ({
           className="advance-search-panel"
           header={
             <Button style={{ float: buttonPos }} icon={<FilterOutlined />}>
-              Advanced Filter
+              {buttonText?.btnAdvancedFilter}
             </Button>
           }
           showArrow={false}
@@ -91,7 +93,7 @@ const AdvanceSearch = ({
           >
             <Select
               showSearch
-              placeholder="Type to search..."
+              placeholder={mainText?.advanceSearchSelectOptionPlaceholder}
               className="search-question-select"
               options={question.map((q) => ({
                 label: upperFirst(q.name),

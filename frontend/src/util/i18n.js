@@ -97,6 +97,7 @@ const mainText = {
   mainChartStackSelectOptionPlaceholder: "Select Second Question",
   historyChartCardTitle: "History Chart",
   historyChartSelectOptionPlaceholder: "Select Question",
+  advanceSearchSelectOptionPlaceholder: "Type to search...",
 };
 
 const tableText = {
@@ -142,6 +143,7 @@ const buttonText = {
   btnSubmit: "Submit",
   btnUseAnotherEmail: "Use other email",
   btnTryAgain: "Try Again",
+  btnAdvancedFilter: "Advanced Filter",
 };
 
 const formText = {
