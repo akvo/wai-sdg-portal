@@ -3,6 +3,7 @@ import { Row, Col } from "antd";
 import { FacebookFilled, TwitterOutlined } from "@ant-design/icons";
 import { UIState } from "../state/ui";
 import { Link } from "react-router-dom";
+import uiText from "../util/ui-text";
 
 const FooterContent = ({ title, text }) => {
   return (
@@ -14,6 +15,7 @@ const FooterContent = ({ title, text }) => {
 };
 
 const FooterEnd = () => {
+  const { privacyPolicy, termsOfService, developer } = uiText?.footer;
   const { user } = UIState.useState((c) => c);
   const changePage = ({ key }) => {
     UIState.update((s) => {
@@ -34,11 +36,11 @@ const FooterEnd = () => {
         © 2021
       </Col>
       <Col span={8} className="end">
-        {/* <Link to="/privacy-policy">Privacy Policy</Link> */}
-        {/* <Link to="/tos">Terms of Service</Link> */}
+        {/* <Link to="/privacy-policy">{privacyPolicy}</Link> */}
+        {/* <Link to="/tos">{termsOfService}</Link> */}
         {user && (
           <Link to="/documentation" onClick={() => changePage("documentation")}>
-            Developer
+            {developer}
           </Link>
         )}
       </Col>
@@ -47,6 +49,7 @@ const FooterEnd = () => {
 };
 
 const Footer = () => {
+  // TODO:: Move this content to cofig
   return (
     <>
       <Row align="space-between" className="footer-start">
