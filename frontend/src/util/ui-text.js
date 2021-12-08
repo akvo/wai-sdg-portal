@@ -59,11 +59,20 @@ const confirmationModal = {
   },
 };
 
+const admin = {
+  welcomeText: "Welcome Admin",
+  tabManageDataText: "Manage Data",
+  tabExportText: "Exports",
+  tabDataUploadText: "Data Upload",
+  tabManageUserText: "Manage Users",
+};
+
 const uiText = {
   header,
   navigation,
   footer,
   home,
+  admin,
   chart,
   confirmationModal,
 };

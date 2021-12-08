@@ -8,6 +8,7 @@ import ManageUpload from "./ManageUpload";
 import Export from "./Export";
 import { useHistory } from "react-router-dom";
 import "./admin.scss";
+import uiText from "../../util/ui-text";
 
 const { TabPane } = Tabs;
 
@@ -23,6 +24,13 @@ api
   });
 
 const Admin = ({ match }) => {
+  const {
+    welcomeText,
+    tabManageDataText,
+    tabExportText,
+    tabDataUploadText,
+    tabManageUserText,
+  } = uiText?.admin;
   const [page, setPage] = useState(match?.params?.page);
   const history = useHistory();
   const { user } = UIState.useState((e) => e);
@@ -46,7 +54,7 @@ const Admin = ({ match }) => {
       <Col span={24}>
         <Row className="jumbotron-container">
           <Col span={24} className="container">
-            <h1>Welcome Admin</h1>
+            <h1>{welcomeText}</h1>
           </Col>
         </Row>
       </Col>
@@ -60,19 +68,19 @@ const Admin = ({ match }) => {
             activeKey={page}
             onTabClick={handleTabClick}
           >
-            <TabPane tab="Manage Data" key="manage-data">
+            <TabPane tab={tabManageDataText} key="manage-data">
               {page === "manage-data" && (
                 <ManageData handleTabClick={handleTabClick} currentTab={page} />
               )}
             </TabPane>
-            <TabPane tab="Exports" key="exports">
+            <TabPane tab={tabExportText} key="exports">
               {page === "exports" && <Export />}
             </TabPane>
-            <TabPane tab="Data Upload" key="data-upload">
+            <TabPane tab={tabDataUploadText} key="data-upload">
               {page === "data-upload" && <ManageUpload />}
             </TabPane>
             {user?.role === "admin" && (
-              <TabPane tab="Manage Users" key="manage-users">
+              <TabPane tab={tabManageUserText} key="manage-users">
                 {page === "manage-users" && <ManageUser />}
               </TabPane>
             )}
