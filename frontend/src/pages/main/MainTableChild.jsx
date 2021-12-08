@@ -122,6 +122,7 @@ const MainTableChild = ({ questionGroup, data, size = "small", scroll }) => {
     });
     return (
       <Table
+        title={() => <b>{g?.name || ""}</b>}
         className={"main-child-table"}
         size={size}
         scroll={scroll ? { y: scroll } : false}
