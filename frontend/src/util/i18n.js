@@ -72,6 +72,7 @@ const adminText = {
     "If you do not already have a template file, please download it",
   dataUploadSectionText: "Upload your data",
   exportFilterListText: "Filters",
+  exportNoneTagListText: "None",
   exportPopoverAdministrationText: "Administration Level",
   exportEndOfListText: "End of the list",
   lastSubmittedAtText: "Last submitted",

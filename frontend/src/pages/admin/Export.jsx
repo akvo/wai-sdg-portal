@@ -49,7 +49,7 @@ const ItemDescription = ({ created, tags, adminid }) => {
             </Tag>
           ))
         ) : (
-          <Tag className="dotted-tag">None</Tag>
+          <Tag className="dotted-tag">{adminText?.exportNoneTagListText}</Tag>
         )}
       </div>
     </Space>
