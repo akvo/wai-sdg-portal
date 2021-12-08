@@ -196,6 +196,7 @@ class Email:
         instance = " ".join(instance)
         html = html_template.render(logo=f"{webdomain}/wai-logo.png",
                                     instance_name=instance,
+                                    webdomain=webdomain,
                                     title=type["title"],
                                     body=body,
                                     image=type["image"],
