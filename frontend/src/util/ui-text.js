@@ -19,6 +19,16 @@ const footer = {
   developer: "Developer",
 };
 
+const home = {
+  jumbotronText:
+    "This portal is used by ##administration## to see the relative WASH vulnerability of communities and institutions, and track the status of water and sanitation infrastructure",
+  datasetSectionTitle: "Datasets in this Portal",
+  overviewSectionTitle: "Overview of",
+  exploreText: "Explore",
+  exploreDataText: "EXPLORE THE DATA",
+  readMoreText: "Read more",
+};
+
 const chart = {
   tbColCategory: "Category",
   tbColCount: "Count",
@@ -53,6 +63,7 @@ const uiText = {
   header,
   navigation,
   footer,
+  home,
   chart,
   confirmationModal,
 };

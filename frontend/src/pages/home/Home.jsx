@@ -5,6 +5,7 @@ import { RightOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import CountUp from "react-countup";
 import api from "../../util/api";
 
+import uiText from "../../util/ui-text";
 import "./home.scss";
 import Map from "../../components/Map";
 import isEmpty from "lodash/isEmpty";
@@ -14,6 +15,7 @@ const level2 = window.levels[1];
 const { datasetsInPortal, overviews } = window.landing_config;
 
 const OverviewInfo = ({ item, order }) => {
+  const { exploreText } = uiText?.home;
   const { type, category, data } = item;
   const { above_text, number_text, explore, value, total } = data;
   let text = number_text;
@@ -52,7 +54,7 @@ const OverviewInfo = ({ item, order }) => {
             <div className="explore">
               <Link to={explore}>
                 <Space align="center" size="small">
-                  Explore <ArrowRightOutlined />
+                  {exploreText} <ArrowRightOutlined />
                 </Space>
               </Link>
             </div>
@@ -103,6 +105,13 @@ const OverviewColumn = ({ items, index }) => {
 };
 
 const Home = () => {
+  const {
+    exploreDataText,
+    readMoreText,
+    overviewSectionTitle,
+    datasetSectionTitle,
+    jumbotronText,
+  } = uiText?.home;
   const [overviewData, setOverviewData] = useState([]);
 
   useEffect(() => {
@@ -166,9 +175,9 @@ const Home = () => {
         >
           <Col lg={9}>
             <h1 className="jumbotron-text">
-              This portal is used by {level2} to see the relative WASH
-              vulnerability of communities and institutions, and track the
-              status of water and sanitation infrastructure
+              {jumbotronText?.includes("##administration##")
+                ? jumbotronText.replace("##administration##", level2)
+                : jumbotronText}
             </h1>
           </Col>
           <Col lg={14}>
@@ -182,7 +191,7 @@ const Home = () => {
       <Col span={24}>
         <Row className="dataset-container" align="middle">
           <Col className="container dataset-col" span={24}>
-            <h1>Datasets in this Portal</h1>
+            <h1>{datasetSectionTitle}</h1>
             <Row align="middle" justify="space-around" wrap={true}>
               {datasetsInPortal.map(
                 ({ title, description, readmore, explore }) => (
@@ -194,14 +203,14 @@ const Home = () => {
                         <div className="read-more">
                           <Link to={readmore}>
                             <Space align="center" size="small">
-                              Read more <ArrowRightOutlined />
+                              {readMoreText} <ArrowRightOutlined />
                             </Space>
                           </Link>
                         </div>
                         <div className="explore">
                           <Link to={explore}>
                             <Space align="center" size="small">
-                              EXPLORE THE DATA <RightOutlined />
+                              {exploreDataText} <RightOutlined />
                             </Space>
                           </Link>
                         </div>
@@ -218,7 +227,9 @@ const Home = () => {
       <Col span={24}>
         <Row className="overview-container">
           <Col span={24} className="container">
-            <h1>Overview of {level2}</h1>
+            <h1>
+              {overviewSectionTitle} {level2}
+            </h1>
           </Col>
           <Col span={24} className="overview-content-wrapper">
             <Carousel autoplay effect="fade">
