@@ -4,9 +4,11 @@ import { Row, Col, Affix, notification, Progress } from "antd";
 import startCase from "lodash/startCase";
 import api from "../util/api";
 import { useHistory } from "react-router-dom";
+import uiText from "../util/i18n";
 
 const Forms = ({ match }) => {
   let history = useHistory();
+  const { notificationText } = uiText;
   const [loading, setLoading] = useState(true);
   const [forms, setForms] = useState([]);
   const [percentage, setPercentage] = useState(0);
@@ -24,7 +26,10 @@ const Forms = ({ match }) => {
       .then((res) => {
         setLoading(true);
         notification.success({
-          message: `Data ID: ${res.data.id} - ${res.data.name} Saved`,
+          message: notificationText?.formPostDataSuccessText.replace(
+            "##content##",
+            `${res.data.id} - ${res.data.name}`
+          ),
         });
         setTimeout(() => {
           history.goBack();
@@ -33,7 +38,7 @@ const Forms = ({ match }) => {
       .catch((err) => {
         console.log(err);
         notification.success({
-          message: "Ops, something went wrong",
+          message: notificationText?.errorText,
         });
       });
   };

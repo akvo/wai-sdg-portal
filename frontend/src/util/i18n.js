@@ -154,6 +154,7 @@ const notificationText = {
   failedText: "Failed",
   bulkDeleteSuccessText: "Bulk delete success",
   dataExportCreatedText: "Data Export Created",
+  formPostDataSuccessText: "Data ID: ##content## Saved",
 };
 
 const uiText = {
