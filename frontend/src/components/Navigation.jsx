@@ -10,8 +10,13 @@ const navigationOptions = window.navigation_config;
 const sitename = window.site_name;
 
 const Navigation = ({ logout, loginWithPopup, isAuthenticated }) => {
-  const { adminText, aboutText, signupText, loginText, logoutText } =
-    uiText?.navigation;
+  const {
+    adminText,
+    aboutText,
+    signupText,
+    loginText,
+    logoutText,
+  } = uiText?.navigation;
   const { page, user } = UIState.useState((c) => c);
   const visible = UIState.useState((s) => s.showNav);
 
