@@ -134,6 +134,7 @@ const buttonText = {
   btnSaveEdit: "Save Edit",
   btnSubmit: "Submit",
   btnUseAnotherEmail: "Use other email",
+  btnTryAgain: "Try Again",
 };
 
 const formText = {
@@ -168,6 +169,22 @@ const notificationText = {
   formPostDataSuccessText: "Data ID: ##content## Saved",
 };
 
+const errorPageText = {
+  notFoundText: {
+    title: "Page not found",
+    subTitle: "Sorry, we couldn't find that page",
+  },
+  notAuthorizedText: {
+    title: "Not Authorized",
+    subTitle: "Sorry, you are not allowed to access this page",
+  },
+  errorText: {
+    title: "Oops, Something went wrong",
+    subTitle:
+      "Try to refresh this page or feel free to contact us if the problem persist.",
+  },
+};
+
 const uiText = {
   header,
   navigation,
@@ -181,6 +198,7 @@ const uiText = {
   buttonText,
   formText,
   mainText,
+  errorPageText,
 };
 
 export default uiText;

@@ -1,38 +1,40 @@
 import React from "react";
 import { Result, Button } from "antd";
 import { InfoCircleFilled } from "@ant-design/icons";
+import uiText from "../util/i18n";
 
 const ErrorIcon = () => <InfoCircleFilled style={{ color: "#ff4d4f" }} />;
 
 const RefreshButton = () => {
+  const { buttonText } = uiText;
   return (
     <Button type="default" onClick={() => window.location.reload()} danger>
-      Try Again
+      {buttonText?.btnTryAgain}
     </Button>
   );
 };
 
 const pageProps = (status) => {
+  const { notFoundText, notAuthorizedText, errorText } = uiText?.errorPageText;
   switch (status) {
     case 404:
       return {
         status: "warning",
-        title: "Page not found",
-        subTitle: "Sorry, we couldn't find that page",
+        title: notFoundText?.title,
+        subTitle: notFoundText?.subTitle,
       };
     case 401:
       return {
         status: "warning",
-        title: "Not Authorized",
-        subTitle: "Sorry, you are not allowed to access this page",
+        title: notAuthorizedText?.title,
+        subTitle: notAuthorizedText?.subTitle,
       };
     default:
       return {
         status: "info",
         icon: <ErrorIcon />,
-        title: "Oops, Something went wrong",
-        subTitle:
-          "Try to refresh this page or feel free to contact us if the problem persist.",
+        title: errorText?.title,
+        subTitle: errorText?.subTitle,
         extra: <RefreshButton />,
       };
   }
