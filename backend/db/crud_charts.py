@@ -9,6 +9,8 @@ import collections
 from itertools import groupby
 from typing import List
 
+default_color_config = {"yes": "#91cc75", "no": "#ee6666"}
+
 
 def filter_datapoint(session: Session,
                      form: int,
@@ -156,21 +158,33 @@ def get_pie_chart_data(session: Session,
                                Answer.data.in_(data)).filter(
                                    Answer.question == question).group_by(
                                        Answer.options).all()
+    options = session.query(
+        Option.name, Option.color).filter(Option.question == question).all()
+    options = [{"name": o[0], "color": o[1]} for o in options]
     temp = []
     total = sum([a.count for a in answer])
     for a in answer:
-        temp.append({
+        color = default_color_config[a.options[0].lower(
+        )] if a.options[0].lower() in default_color_config else None
+        option = list(
+            filter(lambda x: x["name"].lower() == a.options[0].lower(),
+                   options))
+        if len(option):
+            if option[0]["color"]:
+                color = option[0]["color"]
+        data = {
             "name": a.options[0],
             "count": a.count,
             "total": total,
             "value": round((a.count / total) * 100, 2),
-        })
+        }
+        if color:
+            data.update({"itemStyle": {"color": color}})
+        temp.append(data)
     return {"form": form, "question": question, "data": temp}
 
 
-def get_overviews_visualization(session: Session,
-                                form: int,
-                                question: int,
+def get_overviews_visualization(session: Session, form: int, question: int,
                                 option: str):
     answer = session.query(Answer.options,
                            func.count(Answer.id).label('count')).filter(
@@ -191,11 +205,10 @@ def get_overviews_visualization(session: Session,
             info_data = value
         chart_data.append(value)
     data = [{
-                "type": "info",
-                "data": info_data
-            },
-            {
-                "type": "chart",
-                "data": chart_data
-            }]
+        "type": "info",
+        "data": info_data
+    }, {
+        "type": "chart",
+        "data": chart_data
+    }]
     return {"form": form, "question": question, "data": data}
