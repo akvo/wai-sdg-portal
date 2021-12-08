@@ -5,20 +5,11 @@ import {
   AxisLabelFormatter,
   Legend,
   Title,
+  NoData,
 } from "../chart-style.js";
 import uniq from "lodash/uniq";
 import isEmpty from "lodash/isEmpty";
 import sortBy from "lodash/sortBy";
-
-const NoData = {
-  title: {
-    text: "No Data",
-    subtext: "",
-    left: "center",
-    top: "20px",
-    ...TextStyle,
-  },
-};
 
 const JMPBarStack = (data, chartTitle, extra) => {
   if (isEmpty(data) || !data) {

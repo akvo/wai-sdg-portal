@@ -8,26 +8,19 @@ import {
   DataView,
   Title,
   axisTitle,
+  NoData,
 } from "./chart-style.js";
-import uiText from "../util/i18n.js";
 import sortBy from "lodash/sortBy";
 import isEmpty from "lodash/isEmpty";
 import upperFirst from "lodash/upperFirst";
+import uiText from "../util/i18n.js";
 
 const Bar = (data, chartTitle, extra) => {
+  const { chartText } = uiText;
   if (isEmpty(data) || !data) {
-    return {
-      title: {
-        text: "No Data",
-        subtext: "",
-        left: "center",
-        top: "20px",
-        ...TextStyle,
-      },
-    };
+    return NoData;
   }
 
-  const { tbColCategory, tbColCount } = uiText?.chartText;
   // Custom Axis Title
   const { xAxisTitle, yAxisTitle } = axisTitle(extra);
 
@@ -65,7 +58,7 @@ const Bar = (data, chartTitle, extra) => {
       feature: {
         saveAsImage: {
           type: "jpg",
-          title: "save image",
+          title: chartText?.btnSaveImage,
           icon: Icons.saveAsImage,
           backgroundColor: "#EAF5FB",
         },
@@ -76,8 +69,8 @@ const Bar = (data, chartTitle, extra) => {
             var table =
               '<table border="1" style="width:90%;text-align:center">';
             table += "<thead><tr>";
-            table += "<th>" + tbColCategory + "</th>";
-            table += "<th>" + tbColCount + "</th>";
+            table += "<th>" + chartText?.tbColCategory + "</th>";
+            table += "<th>" + chartText?.tbColCount + "</th>";
             table += "</tr></thead><tbody>";
             for (var i = 0, l = series.length; i < l; i++) {
               table += "<tr>";

@@ -1,4 +1,7 @@
 import upperFirst from "lodash/upperFirst";
+import uiText from "../util/i18n";
+
+const { chartText } = uiText;
 
 export const popupFormatter = (params) => {
   var value = (params.value + "").split(".");
@@ -65,7 +68,7 @@ export const visualMap = {
     color: ["#f4f7b5", "#1890ff"],
   },
   itemHeight: "520px",
-  text: ["High", "Low"],
+  text: [chartText?.highText, chartText?.lowText],
   calculable: true,
 };
 
@@ -103,18 +106,18 @@ export const Icons = {
 
 export const DataView = {
   show: true,
-  title: "table view",
+  title: chartText?.tableViewTitle,
   icon: Icons.dataView,
   readOnly: true,
-  lang: ["Table View", "Back", "Refresh"],
+  lang: [chartText?.tableViewTitle, chartText?.btnBack, chartText?.btnRefresh],
   buttonColor: "#009fe2",
   textAreaBorderColor: "#fff",
 };
 
 export const Title = {
   show: false,
-  text: "Title",
-  subtext: "Sub title",
+  text: "",
+  subtext: "",
   textAlign: "center",
   left: "50%",
   textStyle: {
@@ -153,4 +156,14 @@ export const axisTitle = (extra) => {
     : x;
   let yAxisTitle = upperFirst(y);
   return { xAxisTitle, yAxisTitle };
+};
+
+export const NoData = {
+  title: {
+    text: chartText?.noDataText,
+    subtext: "",
+    left: "center",
+    top: "20px",
+    ...TextStyle,
+  },
 };

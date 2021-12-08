@@ -4,18 +4,9 @@ import {
   backgroundColor,
   Title,
   AxisLabelFormatter,
+  NoData,
 } from "../chart-style.js";
 import moment from "moment";
-
-const NoData = {
-  title: {
-    text: "No Data",
-    subtext: "",
-    left: "center",
-    top: "20px",
-    ...TextStyle,
-  },
-};
 
 const ODFLine = (data, chartTitle, extra) => {
   if (!data?.yAxis?.length) {

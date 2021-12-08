@@ -9,22 +9,17 @@ import {
   DataView,
   Title,
   axisTitle,
+  NoData,
 } from "./chart-style.js";
 import uniq from "lodash/uniq";
 import isEmpty from "lodash/isEmpty";
 import upperFirst from "lodash/upperFirst";
+import uiText from "../util/i18n.js";
 
 const BarStack = (data, chartTitle, extra) => {
+  const { chartText } = uiText;
   if (isEmpty(data) || !data) {
-    return {
-      title: {
-        text: "No Data",
-        subtext: "",
-        left: "center",
-        top: "20px",
-        ...TextStyle,
-      },
-    };
+    return NoData;
   }
 
   // Custom Axis Title
@@ -103,7 +98,7 @@ const BarStack = (data, chartTitle, extra) => {
       feature: {
         saveAsImage: {
           type: "jpg",
-          title: "save image",
+          title: chartText?.btnSaveImage,
           icon: Icons.saveAsImage,
           backgroundColor: "#EAF5FB",
         },

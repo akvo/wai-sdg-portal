@@ -5,6 +5,7 @@ import {
   backgroundColor,
   Title,
   AxisLabelFormatter,
+  NoData,
 } from "./chart-style.js";
 import sortBy from "lodash/sortBy";
 import uniq from "lodash/uniq";
@@ -12,15 +13,7 @@ import isEmpty from "lodash/isEmpty";
 
 const Line = (data, chartTitle, extra) => {
   if (isEmpty(data)) {
-    return {
-      title: {
-        text: "No Data",
-        subtext: "",
-        left: "center",
-        top: "20px",
-        ...TextStyle,
-      },
-    };
+    return NoData;
   }
   let yAxisVal = [];
   let labels = [];

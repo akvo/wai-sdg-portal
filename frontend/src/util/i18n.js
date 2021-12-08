@@ -32,6 +32,13 @@ const home = {
 const chartText = {
   tbColCategory: "Category",
   tbColCount: "Count",
+  noDataText: "No Data",
+  highText: "High",
+  lowText: "Low",
+  tableViewTitle: "Table View",
+  btnBack: "Back",
+  btnRefresh: "Refresh",
+  btnSaveImage: "save image",
 };
 
 const confirmationModalText = {
