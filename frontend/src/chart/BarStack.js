@@ -36,7 +36,7 @@ const BarStack = (data, chartTitle, extra) => {
       const val = d.stack.find((c) => c.name === s.name);
       return {
         name: val?.name || null,
-        value: val?.value || 0,
+        value: val?.value || null,
         itemStyle: { color: val?.color || s.color },
       };
     });
@@ -53,6 +53,7 @@ const BarStack = (data, chartTitle, extra) => {
         ...TextStyle,
         color: "#fff",
       },
+      barMaxWidth: 50,
       emphasis: {
         focus: "series",
       },

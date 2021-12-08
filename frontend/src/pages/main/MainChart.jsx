@@ -220,6 +220,7 @@ const MainChart = ({ current, question }) => {
                   title={chartTitle || ""}
                   type={chartData.type}
                   data={chartData.data}
+                  height={550}
                   wrapper={false}
                   extra={{
                     axisTitle: {
