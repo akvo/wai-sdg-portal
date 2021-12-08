@@ -89,6 +89,7 @@ const adminText = {
 const mainText = {
   createdText: "Created",
   updatedText: "Updated",
+  modalRegistrationTitle: "Register your account",
 };
 
 const tableText = {
@@ -131,6 +132,8 @@ const buttonText = {
   btnClose: "Close",
   btnResetAll: "Reset All",
   btnSaveEdit: "Save Edit",
+  btnSubmit: "Submit",
+  btnUseAnotherEmail: "Use other email",
 };
 
 const formText = {
@@ -139,11 +142,14 @@ const formText = {
   labelRole: "Role",
   labelAccess: "Access",
   labelOrg: "Organisation",
+  labelFirstName: "First Name",
+  labelLastName: "Last Name",
   optionRoleAdmin: "Admin",
   optionRoleEditor: "Editor",
   optionRoleUser: "User",
   inputFilePlaceholder: "Click or drag file to this area to upload",
   supportExcelFileText: "Supported filetypes: .xls and .xlsx.",
+  validationNameRequiredText: "Please input your name!",
 };
 
 const notificationText = {

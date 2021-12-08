@@ -14,11 +14,13 @@ import {
 import { UserOutlined } from "@ant-design/icons";
 import { NonActiveUserMessage } from "./Notifications";
 import api from "../util/api";
+import uiText from "../util/i18n";
 
 const fieldValues = ["email", "first_name", "last_name", "organisation"];
 const { Option } = Select;
 
 const RegistrationPopup = ({ user, logout, loginWithPopup }) => {
+  const { notificationText, formText, buttonText, mainText } = uiText;
   const [form] = Form.useForm();
   const [formLoading, setFormLoading] = useState(true);
   const [confirmAwait, setConfirmAwait] = useState(false);
@@ -43,7 +45,7 @@ const RegistrationPopup = ({ user, logout, loginWithPopup }) => {
       })
       .catch(() => {
         notification.warning({
-          message: "Oops, Something Wrong!",
+          message: notificationText?.errorText,
         });
         setConfirmAwait(false);
       });
@@ -79,7 +81,7 @@ const RegistrationPopup = ({ user, logout, loginWithPopup }) => {
 
   return (
     <Modal
-      title="Register your account"
+      title={mainText?.modalRegistrationTitle}
       centered
       visible={visible}
       footer={null}
@@ -109,11 +111,11 @@ const RegistrationPopup = ({ user, logout, loginWithPopup }) => {
       >
         <Form.Item
           name="email"
-          label="Email"
+          label={formText?.labelEmail}
           tooltip={{
             title: (
               <Button icon={<UserOutlined />} onClick={cancel} type="link">
-                Use other email
+                {buttonText?.btnUseAnotherEmail}
               </Button>
             ),
             color: "#FFF",
@@ -125,21 +127,26 @@ const RegistrationPopup = ({ user, logout, loginWithPopup }) => {
           <Col span={11}>
             <Form.Item
               name="first_name"
-              label="First Name"
-              rules={[{ required: true, message: "Please input your name!" }]}
+              label={formText?.labelFirstName}
+              rules={[
+                {
+                  required: true,
+                  message: formText?.validationNameRequiredText,
+                },
+              ]}
             >
               <Input />
             </Form.Item>
           </Col>
           <Col span={11}>
-            <Form.Item name="last_name" label="Last Name">
+            <Form.Item name="last_name" label={formText?.labelLastName}>
               <Input />
             </Form.Item>
           </Col>
         </Row>
         <Form.Item
           name="organisation"
-          label="Organisation"
+          label={formText?.labelOrg}
           rules={[{ required: true }]}
         >
           <Select>
@@ -159,7 +166,7 @@ const RegistrationPopup = ({ user, logout, loginWithPopup }) => {
                 loading={confirmAwait}
                 disabled={confirmAwait}
               >
-                Submit
+                {buttonText?.btnSubmit}
               </Button>
             </Form.Item>
           </Col>
