@@ -5,7 +5,7 @@ import { RightOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import CountUp from "react-countup";
 import api from "../../util/api";
 
-import uiText from "../../util/ui-text";
+import uiText from "../../util/i18n";
 import "./home.scss";
 import Map from "../../components/Map";
 import isEmpty from "lodash/isEmpty";

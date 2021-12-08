@@ -29,12 +29,12 @@ const home = {
   readMoreText: "Read more",
 };
 
-const chart = {
+const chartText = {
   tbColCategory: "Category",
   tbColCount: "Count",
 };
 
-const confirmationModal = {
+const confirmationModalText = {
   submitText: {
     title: "Submit Entry?",
     subTitle: "Are you sure you want to submit this entry?",
@@ -59,12 +59,50 @@ const confirmationModal = {
   },
 };
 
-const admin = {
+const adminText = {
   welcomeText: "Welcome Admin",
   tabManageDataText: "Manage Data",
   tabExportText: "Exports",
   tabDataUploadText: "Data Upload",
   tabManageUserText: "Manage Users",
+  modalEditUserTitle: "Edit User",
+  modalApproveUserTitle: "Approve User",
+  checkboxShowPendingUserText: "Show Pending Users",
+};
+
+const tableText = {
+  manageUserTableText: {
+    colName: "Name",
+    colEmail: "Email",
+    colOrg: "Organisation",
+    colRole: "Role",
+  },
+};
+
+const buttonText = {
+  btnEdit: "Edit",
+  btnApprove: "Approve",
+  btnCancel: "Cancel",
+  btnInformUser: "Inform User",
+  btnConfirmChanges: "Confirm Changes",
+};
+
+const formText = {
+  labelName: "Name",
+  labelEmail: "Email",
+  labelRole: "Role",
+  labelAccess: "Access",
+  labelOrg: "Organisation",
+  optionRoleAdmin: "Admin",
+  optionRoleEditor: "Editor",
+  optionRoleUser: "User",
+};
+
+const notificationText = {
+  emailSentText: "Email has been sent",
+  updateSuccessText: "Update process has been applied",
+  userApprovedText: "User approved",
+  errorText: "Ops, something went wrong",
 };
 
 const uiText = {
@@ -72,9 +110,13 @@ const uiText = {
   navigation,
   footer,
   home,
-  admin,
-  chart,
-  confirmationModal,
+  adminText,
+  chartText,
+  confirmationModalText,
+  notificationText,
+  tableText,
+  buttonText,
+  formText,
 };
 
 export default uiText;

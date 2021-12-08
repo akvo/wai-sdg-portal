@@ -21,7 +21,7 @@ import {
   DownloadOutlined,
 } from "@ant-design/icons";
 import { UIState } from "../state/ui";
-import uiText from "../util/ui-text";
+import uiText from "../util/i18n";
 
 const {
   noActivityText,

@@ -8,7 +8,7 @@ import ManageUpload from "./ManageUpload";
 import Export from "./Export";
 import { useHistory } from "react-router-dom";
 import "./admin.scss";
-import uiText from "../../util/ui-text";
+import uiText from "../../util/i18n";
 
 const { TabPane } = Tabs;
 
@@ -30,7 +30,7 @@ const Admin = ({ match }) => {
     tabExportText,
     tabDataUploadText,
     tabManageUserText,
-  } = uiText?.admin;
+  } = uiText?.adminText;
   const [page, setPage] = useState(match?.params?.page);
   const history = useHistory();
   const { user } = UIState.useState((e) => e);

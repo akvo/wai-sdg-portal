@@ -9,7 +9,7 @@ import {
   Title,
   axisTitle,
 } from "./chart-style.js";
-import uiText from "../util/ui-text.js";
+import uiText from "../util/i18n.js";
 import sortBy from "lodash/sortBy";
 import isEmpty from "lodash/isEmpty";
 import upperFirst from "lodash/upperFirst";
@@ -27,7 +27,7 @@ const Bar = (data, chartTitle, extra) => {
     };
   }
 
-  const { tbColCategory, tbColCount } = uiText?.chart;
+  const { tbColCategory, tbColCount } = uiText?.chartText;
   // Custom Axis Title
   const { xAxisTitle, yAxisTitle } = axisTitle(extra);
 

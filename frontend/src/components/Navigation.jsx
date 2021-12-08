@@ -4,7 +4,7 @@ import { UserOutlined } from "@ant-design/icons";
 import { UIState } from "../state/ui";
 import { Link } from "react-router-dom";
 import { startCase } from "lodash";
-import uiText from "../util/ui-text";
+import uiText from "../util/i18n";
 
 const navigationOptions = window.navigation_config;
 const sitename = window.site_name;

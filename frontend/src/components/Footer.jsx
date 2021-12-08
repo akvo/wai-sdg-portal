@@ -3,7 +3,7 @@ import { Row, Col } from "antd";
 import { FacebookFilled, TwitterOutlined } from "@ant-design/icons";
 import { UIState } from "../state/ui";
 import { Link } from "react-router-dom";
-import uiText from "../util/ui-text";
+import uiText from "../util/i18n";
 
 const FooterContent = ({ title, text }) => {
   return (

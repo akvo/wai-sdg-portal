@@ -5,10 +5,10 @@ import {
   UploadOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
-import uiText from "../util/ui-text";
+import uiText from "../util/i18n";
 
 const modalProps = (type, secureDelete, setSecureDelete) => {
-  const { submitText, deleteText, saveText } = uiText?.confirmationModal;
+  const { submitText, deleteText, saveText } = uiText?.confirmationModalText;
   switch (type) {
     case "submit":
       return {
