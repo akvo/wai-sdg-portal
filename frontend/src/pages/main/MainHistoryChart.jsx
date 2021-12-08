@@ -8,8 +8,10 @@ import api from "../../util/api";
 import Chart from "../../chart";
 import isEmpty from "lodash/isEmpty";
 import upperFirst from "lodash/upperFirst";
+import uiText from "../../util/i18n";
 
 const MainHistoryChart = ({ current, data, question }) => {
+  const { mainText } = uiText;
   const { historyChart } = UIState.useState((s) => s);
   const [historyChartData, setHistoryChartData] = useState([]);
   const [selectedData, setSelectedData] = useState({});
@@ -82,7 +84,7 @@ const MainHistoryChart = ({ current, data, question }) => {
           title={
             <Row align="middle">
               <Col align="start" span={12}>
-                History Chart
+                {mainText?.historyChartCardTitle}
               </Col>
               <Col align="end" span={12}>
                 <CloseSquareOutlined
@@ -101,7 +103,7 @@ const MainHistoryChart = ({ current, data, question }) => {
             <Select
               allowClear
               showSearch
-              placeholder="Select Question"
+              placeholder={mainText?.historyChartSelectOptionPlaceholder}
               style={{ width: "100%" }}
               options={question.map((q) => ({
                 label: upperFirst(q.name),
@@ -126,7 +128,7 @@ const MainHistoryChart = ({ current, data, question }) => {
               ) : loadingChartData ? (
                 <Spin />
               ) : (
-                "No Data"
+                mainText?.noDataText
               )}
             </div>
           </Space>

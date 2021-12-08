@@ -88,12 +88,15 @@ const adminText = {
 };
 
 const mainText = {
+  noDataText: "No Data",
   createdText: "Created",
   updatedText: "Updated",
   modalRegistrationTitle: "Register your account",
   mainChartCardTitle: "Visualisations",
   mainChartSelectOptionPlaceholder: "Select Question",
   mainChartStackSelectOptionPlaceholder: "Select Second Question",
+  historyChartCardTitle: "History Chart",
+  historyChartSelectOptionPlaceholder: "Select Question",
 };
 
 const tableText = {
