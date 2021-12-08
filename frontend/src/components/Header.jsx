@@ -21,6 +21,14 @@ import {
   DownloadOutlined,
 } from "@ant-design/icons";
 import { UIState } from "../state/ui";
+import uiText from "../util/ui-text";
+
+const {
+  noActivity,
+  activityLog,
+  recentActivityLog,
+  attachment,
+} = uiText?.header;
 
 const IconList = ({ type }) => {
   if (type === "warning") {
@@ -47,7 +55,7 @@ const ActivityLog = () => {
               <div>
                 {item.status}
                 <a className="attachment-badge" href={item.attachment}>
-                  <DownloadOutlined /> Attachment
+                  <DownloadOutlined /> {attachment}
                 </a>
               </div>
             );
@@ -65,7 +73,7 @@ const ActivityLog = () => {
       />
     );
   }
-  return <Card>No Activity</Card>;
+  return <Card>{noActivity}</Card>;
 };
 
 const Header = () => {
@@ -90,13 +98,13 @@ const Header = () => {
           {user && (
             <>
               <Popover
-                title={"Recent Activity Log"}
+                title={recentActivityLog}
                 placement="bottom"
                 content={<ActivityLog />}
                 trigger="click"
               >
                 <Badge count={activityLog.length}>
-                  <Button icon={<FieldTimeOutlined />}>Activity Log</Button>
+                  <Button icon={<FieldTimeOutlined />}>{activityLog}</Button>
                 </Badge>
               </Popover>
               {user?.picture ? (
