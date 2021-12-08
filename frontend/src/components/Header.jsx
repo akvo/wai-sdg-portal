@@ -24,10 +24,10 @@ import { UIState } from "../state/ui";
 import uiText from "../util/ui-text";
 
 const {
-  noActivity,
-  activityLog,
-  recentActivityLog,
-  attachment,
+  noActivityText,
+  activityLogText,
+  recentActivityLogText,
+  attachmentText,
 } = uiText?.header;
 
 const IconList = ({ type }) => {
@@ -55,7 +55,7 @@ const ActivityLog = () => {
               <div>
                 {item.status}
                 <a className="attachment-badge" href={item.attachment}>
-                  <DownloadOutlined /> {attachment}
+                  <DownloadOutlined /> {attachmentText}
                 </a>
               </div>
             );
@@ -73,7 +73,7 @@ const ActivityLog = () => {
       />
     );
   }
-  return <Card>{noActivity}</Card>;
+  return <Card>{noActivityText}</Card>;
 };
 
 const Header = () => {
@@ -98,13 +98,15 @@ const Header = () => {
           {user && (
             <>
               <Popover
-                title={recentActivityLog}
+                title={recentActivityLogText}
                 placement="bottom"
                 content={<ActivityLog />}
                 trigger="click"
               >
                 <Badge count={activityLog.length}>
-                  <Button icon={<FieldTimeOutlined />}>{activityLog}</Button>
+                  <Button icon={<FieldTimeOutlined />}>
+                    {activityLogText}
+                  </Button>
                 </Badge>
               </Popover>
               {user?.picture ? (

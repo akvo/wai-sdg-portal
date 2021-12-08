@@ -4,11 +4,14 @@ import { UserOutlined } from "@ant-design/icons";
 import { UIState } from "../state/ui";
 import { Link } from "react-router-dom";
 import { startCase } from "lodash";
+import uiText from "../util/ui-text";
 
 const navigationOptions = window.navigation_config;
 const sitename = window.site_name;
 
 const Navigation = ({ logout, loginWithPopup, isAuthenticated }) => {
+  const { adminText, aboutText, signupText, loginText, logoutText } =
+    uiText?.navigation;
   const { page, user } = UIState.useState((c) => c);
   const visible = UIState.useState((s) => s.showNav);
 
@@ -76,10 +79,10 @@ const Navigation = ({ logout, loginWithPopup, isAuthenticated }) => {
           )}
           {(user?.role === "admin" || user?.role === "editor") && (
             <Menu.Item key="admin">
-              <Link to="/admin/manage-data">Admin</Link>
+              <Link to="/admin/manage-data">{adminText}</Link>
             </Menu.Item>
           )}
-          <Menu.Item key="about">About</Menu.Item>
+          <Menu.Item key="about">{aboutText}</Menu.Item>
         </Menu>
         <Row
           className="auth-button-wrapper"
@@ -91,11 +94,11 @@ const Navigation = ({ logout, loginWithPopup, isAuthenticated }) => {
             <>
               <Col span={6}>
                 <Button icon={<UserOutlined />} onClick={loginWithPopup}>
-                  Login
+                  {loginText}
                 </Button>
               </Col>
               <Col span={6} onClick={loginWithPopup}>
-                <Button type="link">Signup</Button>
+                <Button type="link">{signupText}</Button>
               </Col>
             </>
           ) : (
@@ -105,7 +108,7 @@ const Navigation = ({ logout, loginWithPopup, isAuthenticated }) => {
                   icon={<UserOutlined />}
                   onClick={() => logout({ returnTo: window.location.origin })}
                 >
-                  Logout
+                  {logoutText}
                 </Button>
               </Col>
             </>

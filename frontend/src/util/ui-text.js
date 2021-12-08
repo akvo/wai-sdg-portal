@@ -1,8 +1,16 @@
 const header = {
-  noActivity: "No Activity",
-  activityLog: "Activity Log",
-  recentActivityLog: "Recent Activity Log",
-  attachment: "Attachment",
+  noActivityText: "No Activity",
+  activityLogText: "Activity Log",
+  recentActivityLogText: "Recent Activity Log",
+  attachmentText: "Attachment",
+};
+
+const navigation = {
+  adminText: "Admin",
+  aboutText: "About",
+  signupText: "Signup",
+  logoutText: "Logout",
+  loginText: "Login",
 };
 
 const footer = {
@@ -43,6 +51,7 @@ const confirmationModal = {
 
 const uiText = {
   header,
+  navigation,
   footer,
   chart,
   confirmationModal,
