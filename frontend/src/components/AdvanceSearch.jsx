@@ -50,6 +50,7 @@ const AdvanceSearch = ({
         },
       ];
     });
+    setSelectedPanel([]);
   };
 
   useEffect(() => {
