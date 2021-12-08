@@ -9,6 +9,7 @@ import {
   Title,
   axisTitle,
 } from "./chart-style.js";
+import uiText from "../util/ui-text.js";
 import sortBy from "lodash/sortBy";
 import isEmpty from "lodash/isEmpty";
 import upperFirst from "lodash/upperFirst";
@@ -26,6 +27,7 @@ const Bar = (data, chartTitle, extra) => {
     };
   }
 
+  const { tbColCategory, tbColCount } = uiText?.chart;
   // Custom Axis Title
   const { xAxisTitle, yAxisTitle } = axisTitle(extra);
 
@@ -74,8 +76,8 @@ const Bar = (data, chartTitle, extra) => {
             var table =
               '<table border="1" style="width:90%;text-align:center">';
             table += "<thead><tr>";
-            table += "<th>Category</th>";
-            table += "<th>Count</th>";
+            table += "<th>" + tbColCategory + "</th>";
+            table += "<th>" + tbColCount + "</th>";
             table += "</tr></thead><tbody>";
             for (var i = 0, l = series.length; i < l; i++) {
               table += "<tr>";
