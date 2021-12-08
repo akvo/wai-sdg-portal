@@ -112,6 +112,7 @@ const buttonText = {
   btnSaveDraft: "Save Draft",
   btnClose: "Close",
   btnResetAll: "Reset All",
+  btnSaveEdit: "Save Edit",
 };
 
 const formText = {

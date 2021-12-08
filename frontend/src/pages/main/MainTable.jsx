@@ -17,6 +17,7 @@ import { DataUpdateMessage } from "./../../components/Notifications";
 import flatten from "lodash/flatten";
 import isEmpty from "lodash/isEmpty";
 import intersection from "lodash/intersection";
+import uiText from "../../util/i18n";
 
 const getRowClassName = (record, editedRow) => {
   const edited = editedRow?.[record.key];
@@ -40,6 +41,7 @@ const MainTable = ({
   show,
   page,
 }) => {
+  const { buttonText, adminText } = uiText;
   const { columns, formId, title } = current;
   const [saving, setSaving] = useState(false);
   const [expanded, setExpanded] = useState([]);
@@ -133,9 +135,9 @@ const MainTable = ({
         <Col span={16} align="end">
           {total ? (
             <div className="info">
-              Last submitted: {lastSubmitted.at}
+              {`${adminText?.lastSubmittedAtText}: ${lastSubmitted.at}`}
               <br />
-              by: {lastSubmitted.by}
+              {`${adminText?.lastSubmittedByText}: ${lastSubmitted.by}`}
             </div>
           ) : (
             ""
@@ -220,10 +222,10 @@ const MainTable = ({
               disabled={Object.keys(editedRow).length === 0}
               onClick={saveEdit}
             >
-              Save Edit
+              {buttonText?.btnSaveEdit}
             </Button>
             <Link to={`/form/new-${title.toLowerCase()}/${formId}`}>
-              <Button size="small">Add New</Button>
+              <Button size="small">{buttonText?.btnAddNew}</Button>
             </Link>
           </Space>
         </Col>
