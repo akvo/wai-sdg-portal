@@ -68,6 +68,9 @@ const adminText = {
   modalEditUserTitle: "Edit User",
   modalApproveUserTitle: "Approve User",
   checkboxShowPendingUserText: "Show Pending Users",
+  dataUploadTemplateDownloadSectionText:
+    "If you do not already have a template file, please download it",
+  dataUploadSectionText: "Upload your data",
 };
 
 const tableText = {
@@ -85,6 +88,7 @@ const buttonText = {
   btnCancel: "Cancel",
   btnInformUser: "Inform User",
   btnConfirmChanges: "Confirm Changes",
+  btnDownload: "Download",
 };
 
 const formText = {
@@ -96,13 +100,21 @@ const formText = {
   optionRoleAdmin: "Admin",
   optionRoleEditor: "Editor",
   optionRoleUser: "User",
+  inputFilePlaceholder: "Click or drag file to this area to upload",
+  supportExcelFileText: "Supported filetypes: .xls and .xlsx.",
 };
 
 const notificationText = {
   emailSentText: "Email has been sent",
   updateSuccessText: "Update process has been applied",
   userApprovedText: "User approved",
-  errorText: "Ops, something went wrong",
+  errorText: "Something wen't wrong",
+  statusWaitingValidationText: "Waiting for validation",
+  statusFailedValidationText: "Failed",
+  statusSuccessValidationText: "Submitted",
+  loadingText: "Loading...",
+  doneText: "Done!",
+  failedText: "Failed",
 };
 
 const uiText = {

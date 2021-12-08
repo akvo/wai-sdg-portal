@@ -17,6 +17,7 @@ import { DropdownNavigation } from "../../components/common";
 import api from "../../util/api";
 import axios from "axios";
 import config from "../../config";
+import uiText from "../../util/i18n";
 
 const { Dragger } = Upload;
 const allowedFiles = [
@@ -26,6 +27,7 @@ const allowedFiles = [
 const regExpFilename = /filename="(?<filename>.*)"/;
 
 const checkJobs = (id, filename) => {
+  const { notificationText } = uiText;
   axios.get(`/worker/jobs/status/${id}`).then(function (res) {
     const status = res.data.status;
     if (status === "on_progress" || status === "pending") {
@@ -34,7 +36,7 @@ const checkJobs = (id, filename) => {
           {
             id: id,
             file: filename,
-            status: "Waiting for validation",
+            status: notificationText?.statusWaitingValidationText,
             icon: "warning",
           },
           ...e.activityLog.filter((x) => x.id !== id),
@@ -49,7 +51,7 @@ const checkJobs = (id, filename) => {
           {
             id: id,
             file: filename,
-            status: "Failed",
+            status: notificationText?.statusFailedValidationText,
             icon: "danger",
             attachment: res.data.attachment,
           },
@@ -62,7 +64,7 @@ const checkJobs = (id, filename) => {
           {
             id: id,
             file: filename,
-            status: "Submitted",
+            status: notificationText?.statusSuccessValidationText,
             icon: "success",
           },
           ...e.activityLog,
@@ -73,6 +75,7 @@ const checkJobs = (id, filename) => {
 };
 
 const ManageUpload = () => {
+  const { notificationText, adminText, buttonText, formText } = uiText;
   const {
     user,
     administration,
@@ -92,12 +95,16 @@ const ManageUpload = () => {
     const nextState = {};
     switch (info.file.status) {
       case "uploading":
-        message.loading({ content: "Loading...", key });
+        message.loading({ content: notificationText?.loadingText, key });
         nextState.selectedFile = info.file;
         nextState.selectedFileList = [info.file];
         break;
       case "done":
-        message.success({ content: "Done!", key, duration: 2 });
+        message.success({
+          content: notificationText?.doneText,
+          key,
+          duration: 2,
+        });
         nextState.selectedFile = info.file;
         nextState.file = info.file;
         break;
@@ -118,7 +125,11 @@ const ManageUpload = () => {
         setJobState(res.data);
       })
       .catch((err) => {
-        message.error({ content: "Failed", key, duration: 2 });
+        message.error({
+          content: notificationText?.failedText,
+          key,
+          duration: 2,
+        });
       });
   };
 
@@ -171,13 +182,13 @@ const ManageUpload = () => {
           link.click();
         } else {
           notification.error({
-            message: "Something wen't wrong",
+            message: notificationText?.errorText,
           });
         }
       })
       .catch(() => {
         notification.error({
-          message: "Something wen't wrong",
+          message: notificationText?.errorText,
         });
       });
   };
@@ -188,11 +199,11 @@ const ManageUpload = () => {
         <Row className="filter-wrapper" align="middle" justify="space-between">
           <Col span={24} align="center">
             <Space size={20} align="center" wrap={true}>
-              <h3>
-                If you do not already have a template file, please download it
-              </h3>
+              <h3>{adminText?.dataUploadTemplateDownloadSectionText}</h3>
               <DropdownNavigation value={form} onChange={setForm} />
-              <Button onClick={downloadTemplate}>Download</Button>
+              <Button onClick={downloadTemplate}>
+                {buttonText?.btnDownload}
+              </Button>
             </Space>
           </Col>
         </Row>
@@ -201,7 +212,7 @@ const ManageUpload = () => {
         <Row className="filter-wrapper" align="middle" justify="space-between">
           <Col span={24} align="center">
             <Space size={20} align="center" wrap={true}>
-              <h3>Upload your data</h3>
+              <h3>{adminText?.dataUploadSectionText}</h3>
               <DropdownNavigation value={form} onChange={setForm} />
               <Select onChange={setSelectedAdm} value={selectedAdm}>
                 {administrationByAccess
@@ -238,11 +249,11 @@ const ManageUpload = () => {
                       {uploadState.selectedFile.status}
                     </div>
                   ) : (
-                    "Click or drag file to this area to upload"
+                    formText?.inputFilePlaceholder
                   )}
                 </p>
                 <p className="ant-upload-hint">
-                  Supported filetypes: .xls and .xlsx.
+                  {formText?.supportExcelFileText}
                 </p>
               </Dragger>
             </div>
