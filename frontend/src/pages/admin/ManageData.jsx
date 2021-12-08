@@ -37,6 +37,7 @@ import without from "lodash/without";
 import union from "lodash/union";
 import xor from "lodash/xor";
 import config from "../../config";
+import uiText from "../../util/i18n";
 
 const getRowClassName = (record, editedRow) => {
   const edited = editedRow?.[record.key];
@@ -47,6 +48,7 @@ const getRowClassName = (record, editedRow) => {
 };
 
 const ManageData = ({ handleTabClick }) => {
+  const { notificationText, buttonText, adminText } = uiText;
   const {
     user,
     editedRow,
@@ -150,7 +152,7 @@ const ManageData = ({ handleTabClick }) => {
         return res;
       })
       .catch((err) => {
-        notification.error({ message: "Opps, something went wrong." });
+        notification.error({ message: notificationText?.errorText });
       })
       .finally(() => {
         handleCloseConfirmationModal();
@@ -167,14 +169,16 @@ const ManageData = ({ handleTabClick }) => {
       .delete(`data?id=${ids}`)
       .then((res) => {
         setSelectedRow([]);
-        notification.success({ message: "Bulk delete success." });
+        notification.success({
+          message: notificationText?.bulkDeleteSuccessText,
+        });
         UIState.update((e) => {
           e.reloadData = true;
         });
         return res;
       })
       .catch((err) => {
-        notification.error({ message: "Opps, something went wrong." });
+        notification.error({ message: notificationText?.errorText });
       })
       .finally(() => {
         handleCloseConfirmationModal();
@@ -193,7 +197,9 @@ const ManageData = ({ handleTabClick }) => {
     api
       .get(url)
       .then((d) => {
-        notification.success({ message: "Data Export Created." });
+        notification.success({
+          message: notificationText?.dataExportCreatedText,
+        });
         setExportLoading(false);
         handleTabClick("exports");
       })
@@ -273,7 +279,7 @@ const ManageData = ({ handleTabClick }) => {
                     onClick={() => showModal(x.id)}
                     disabled={isActionDisabled}
                   >
-                    Edit
+                    {buttonText?.btnEdit}
                   </Button>
                   <Button
                     size="small"
@@ -287,7 +293,7 @@ const ManageData = ({ handleTabClick }) => {
                     }
                     disabled={isActionDisabled}
                   >
-                    Delete
+                    {buttonText?.btnDelete}
                   </Button>
                 </Space>
               ),
@@ -353,7 +359,7 @@ const ManageData = ({ handleTabClick }) => {
           onClick={handleExport}
           disabled={exportLoading}
         >
-          Export Filtered Data
+          {buttonText?.btnExportFilterData}
         </Button>
       </div>
       <AdvanceSearch
@@ -381,9 +387,9 @@ const ManageData = ({ handleTabClick }) => {
         <Col span={16} align="end">
           {total ? (
             <div className="info">
-              Last submitted: {lastSubmitted.at}
+              {`${adminText?.lastSubmittedAtText}: ${lastSubmitted.at}`}
               <br />
-              by: {lastSubmitted.by}
+              {`${adminText?.lastSubmittedByText}: ${lastSubmitted.by}`}
             </div>
           ) : (
             ""
@@ -433,7 +439,7 @@ const ManageData = ({ handleTabClick }) => {
                 disabled={Object.keys(editedRow).length === 0}
                 onClick={saveEdit}
               >
-                Save Changes
+                {buttonText?.btnSaveChanges}
               </Button>
               <Button
                 loading={deleting}
@@ -446,10 +452,10 @@ const ManageData = ({ handleTabClick }) => {
                   })
                 }
               >
-                Delete Selected
+                {buttonText?.btnDeleteSelected}
               </Button>
               <Link to={`/form/new-${title.toLowerCase()}/${formId}`}>
-                <Button>Add New</Button>
+                <Button>{buttonText?.btnAddNew}</Button>
               </Link>
             </Space>
           </Col>
@@ -464,8 +470,12 @@ const ManageData = ({ handleTabClick }) => {
           centered
           width={640}
           onOk={handleOk}
-          okText={editedRow?.[dataId] ? "Save Draft" : "Close"}
-          cancelText={"Reset All"}
+          okText={
+            editedRow?.[dataId]
+              ? buttonText?.btnSaveDraft
+              : buttonText?.btnClose
+          }
+          cancelText={buttonText?.btnResetAll}
           cancelButtonProps={{
             icon: <UndoOutlined />,
             type: "danger",

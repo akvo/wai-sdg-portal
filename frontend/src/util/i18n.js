@@ -74,6 +74,8 @@ const adminText = {
   exportFilterListText: "Filters",
   exportPopoverAdministrationText: "Administration Level",
   exportEndOfListText: "End of the list",
+  lastSubmittedAtText: "Last submitted",
+  lastSubmittedByText: "by",
 };
 
 const tableText = {
@@ -82,6 +84,13 @@ const tableText = {
     colEmail: "Email",
     colOrg: "Organisation",
     colRole: "Role",
+  },
+  manageDataTableText: {
+    colName: "Entry",
+    colAdministration: "Region",
+    colCreatedBy: "Submitter",
+    colCreated: "Last Updated",
+    colAction: "Action",
   },
 };
 
@@ -95,6 +104,14 @@ const buttonText = {
   btnDownloading: "Downloading",
   btnLoadMore: "Load More",
   btnGenerating: "Generating",
+  btnDelete: "Delete",
+  btnExportFilterData: "Export Filtered Data",
+  btnSaveChanges: "Save Changes",
+  btnDeleteSelected: "Delete Selected",
+  btnAddNew: "Add New",
+  btnSaveDraft: "Save Draft",
+  btnClose: "Close",
+  btnResetAll: "Reset All",
 };
 
 const formText = {
@@ -121,6 +138,8 @@ const notificationText = {
   loadingText: "Loading...",
   doneText: "Done!",
   failedText: "Failed",
+  bulkDeleteSuccessText: "Bulk delete success",
+  dataExportCreatedText: "Data Export Created",
 };
 
 const uiText = {
