@@ -39,6 +39,7 @@ const chartText = {
   btnBack: "Back",
   btnRefresh: "Refresh",
   btnSaveImage: "save image",
+  countText: "Count",
 };
 
 const confirmationModalText = {
@@ -90,6 +91,9 @@ const mainText = {
   createdText: "Created",
   updatedText: "Updated",
   modalRegistrationTitle: "Register your account",
+  mainChartCardTitle: "Visualisations",
+  mainChartSelectOptionPlaceholder: "Select Question",
+  mainChartStackSelectOptionPlaceholder: "Select Second Question",
 };
 
 const tableText = {

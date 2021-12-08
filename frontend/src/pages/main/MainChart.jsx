@@ -10,11 +10,13 @@ import upperFirst from "lodash/upperFirst";
 import isEmpty from "lodash/isEmpty";
 import takeRight from "lodash/takeRight";
 import reverse from "lodash/reverse";
+import uiText from "../../util/i18n";
 
 const { chartFeature } = window.features;
 const levels = window.map_config?.shapeLevels?.length;
 
 const MainChart = ({ current, question }) => {
+  const { mainText, chartText } = uiText;
   const {
     user,
     selectedAdministration,
@@ -160,7 +162,7 @@ const MainChart = ({ current, question }) => {
       <Col span={24} className="container">
         <Card
           className="visual-card-wrapper"
-          title="Visualisations"
+          title={mainText?.mainChartCardTitle}
           key="main-chart-card"
         >
           <Space size="large" direction="vertical" style={{ width: "100%" }}>
@@ -169,7 +171,7 @@ const MainChart = ({ current, question }) => {
                 <Select
                   allowClear
                   showSearch
-                  placeholder="Select Question"
+                  placeholder={mainText?.mainChartSelectOptionPlaceholder}
                   style={{ width: "100%" }}
                   options={question
                     ?.filter((q) => q.id !== selectedStack?.id)
@@ -190,7 +192,9 @@ const MainChart = ({ current, question }) => {
                   <Select
                     allowClear
                     showSearch
-                    placeholder="Select Second Question"
+                    placeholder={
+                      mainText?.mainChartStackSelectOptionPlaceholder
+                    }
                     style={{ width: "100%" }}
                     options={question
                       ?.filter((q) => q.id !== selectedQuestion?.id)
@@ -223,7 +227,7 @@ const MainChart = ({ current, question }) => {
                         selectedQuestion?.name || null,
                         selectedStack?.name || null,
                       ],
-                      y: "count",
+                      y: chartText?.countText,
                     },
                   }}
                 />
