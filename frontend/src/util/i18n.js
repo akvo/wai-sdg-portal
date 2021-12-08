@@ -144,6 +144,8 @@ const buttonText = {
   btnUseAnotherEmail: "Use other email",
   btnTryAgain: "Try Again",
   btnAdvancedFilter: "Advanced Filter",
+  btnSave: "Save",
+  btnUndo: "Undo",
 };
 
 const formText = {

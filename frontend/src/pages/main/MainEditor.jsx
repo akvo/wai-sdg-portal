@@ -14,12 +14,14 @@ import { UndoOutlined, SaveOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { pickBy, startCase } from "lodash";
 import { UIState } from "../../state/ui";
+import uiText from "../../util/i18n";
 
 const { Option } = Select;
 const { Text } = Typography;
 const defInputNumberPopoverState = { visible: [], content: "" };
 
 const MainEditor = ({ value, question, edited, dataPointId }) => {
+  const { buttonText } = uiText;
   const [fieldActive, setFieldActive] = useState(null);
   const [newValue, setNewValue] = useState(null);
   const [inputNumberPopover, setInputNumberPopover] = useState(
@@ -127,7 +129,7 @@ const MainEditor = ({ value, question, edited, dataPointId }) => {
             onClick={() => onSave(question)}
             icon={<SaveOutlined />}
           >
-            Save
+            {buttonText?.btnSave}
           </Button>
         </Col>
       </Row>
@@ -146,7 +148,7 @@ const MainEditor = ({ value, question, edited, dataPointId }) => {
             </Col>
             <Col span={6}>
               <Button size="small" onClick={onReset} icon={<UndoOutlined />}>
-                Undo
+                {buttonText?.btnUndo}
               </Button>
             </Col>
           </Row>
@@ -164,7 +166,7 @@ const MainEditor = ({ value, question, edited, dataPointId }) => {
         </Col>
         <Col span={6}>
           <Button size="small" onClick={onReset} icon={<UndoOutlined />}>
-            Undo
+            {buttonText?.btnUndo}
           </Button>
         </Col>
       </Row>
