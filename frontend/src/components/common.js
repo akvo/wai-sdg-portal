@@ -2,12 +2,14 @@ import React from "react";
 import { Select, Button, Result, Space } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { UIState } from "../state/ui";
+import uiText from "../util/i18n";
 
 const navigationOptions = window.navigation_config;
 const levels = window.levels;
 const { Option, OptGroup } = Select;
 
 export const SelectLevel = ({ setPage, setSelectedRow }) => {
+  const { buttonText, mainText } = uiText;
   const { selectedAdministration, administrationByAccess } = UIState.useState(
     (s) => s
   );
@@ -41,7 +43,7 @@ export const SelectLevel = ({ setPage, setSelectedRow }) => {
               key={si}
               value={selectedAdministration[si + 1]}
               showSearch
-              placeholder={`Select ${levels[si]}`}
+              placeholder={`${mainText?.mainSelectPlaceholder} ${levels[si]}`}
               options={list}
               optionFilterProp="label"
               onSelect={onSelect}
@@ -66,7 +68,7 @@ export const SelectLevel = ({ setPage, setSelectedRow }) => {
           });
         }}
       >
-        Remove Filter
+        {buttonText?.btnRemoveFilter}
       </Button>
     </Space>
   );
@@ -95,11 +97,12 @@ export const DropdownNavigation = ({ value, onChange }) => {
 };
 
 export const Loading = () => {
+  const { notificationText } = uiText;
   return (
     <Result
       className="loading"
       icon={<LoadingOutlined spin />}
-      subTitle="Loading"
+      subTitle={notificationText?.loadingText}
     />
   );
 };

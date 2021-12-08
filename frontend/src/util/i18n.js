@@ -98,6 +98,7 @@ const mainText = {
   historyChartCardTitle: "History Chart",
   historyChartSelectOptionPlaceholder: "Select Question",
   advanceSearchSelectOptionPlaceholder: "Type to search...",
+  mainSelectPlaceholder: "Select",
 };
 
 const tableText = {
@@ -146,6 +147,7 @@ const buttonText = {
   btnAdvancedFilter: "Advanced Filter",
   btnSave: "Save",
   btnUndo: "Undo",
+  btnRemoveFilter: "Remove Filter",
 };
 
 const formText = {
