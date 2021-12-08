@@ -26,8 +26,10 @@ import flatten from "lodash/flatten";
 import isEmpty from "lodash/isEmpty";
 import config from "../../config";
 import moment from "moment";
+import uiText from "../../util/i18n";
 
 const NameWithInfo = ({ record, current, question }) => {
+  const { mainText } = uiText;
   const { id, name, created_by, created, updated, updated_by, answer } = record;
   const hasDefaultHistory = current?.default?.datapoint
     ? answer.map((x) => x.history).includes(true)
@@ -38,9 +40,12 @@ const NameWithInfo = ({ record, current, question }) => {
     tmpName = tmpName.map((n) => startCase(n));
     tmpName = tmpName.join(" - ");
   }
-  let data = [{ text: "Created", date: created, by: created_by }];
+  let data = [{ text: mainText?.createdText, date: created, by: created_by }];
   if (updated) {
-    data = [...data, { text: "Updated", date: updated, by: updated_by }];
+    data = [
+      ...data,
+      { text: mainText?.updatedText, date: updated, by: updated_by },
+    ];
   }
   return (
     <Space>

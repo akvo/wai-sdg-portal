@@ -86,6 +86,11 @@ const adminText = {
   lastSubmittedByText: "by",
 };
 
+const mainText = {
+  createdText: "Created",
+  updatedText: "Updated",
+};
+
 const tableText = {
   manageUserTableText: {
     colName: "Name",
@@ -169,6 +174,7 @@ const uiText = {
   tableText,
   buttonText,
   formText,
+  mainText,
 };
 
 export default uiText;
