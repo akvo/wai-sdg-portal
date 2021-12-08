@@ -36,7 +36,7 @@ const Markers = ({ data, colors, filterMarker }) => {
   data = data.filter((d) => d.geo);
   const rowHovered = UIState.useState((e) => e.rowHovered);
   return data.map(({ id, geo, marker, name }) => {
-    const hovered = id === rowHovered;
+    let hovered = id === rowHovered;
     let fill = "#F00";
     let r = 3;
     let stroke = "#fff";
@@ -45,8 +45,7 @@ const Markers = ({ data, colors, filterMarker }) => {
       fill = option ? option.color : "#FF0";
     }
     if (filterMarker === marker?.toLowerCase()) {
-      r = 4;
-      stroke = "#000";
+      hovered = true;
     }
     return (
       <Circle
