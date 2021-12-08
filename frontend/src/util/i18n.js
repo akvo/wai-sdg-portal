@@ -100,6 +100,11 @@ const tableText = {
     colCreated: "Last Updated",
     colAction: "Action",
   },
+  mainTableChildText: {
+    colValue: "History",
+    colDate: "Updated at",
+    colUser: "Updated by",
+  },
 };
 
 const buttonText = {
