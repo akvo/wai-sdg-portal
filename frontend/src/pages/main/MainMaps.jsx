@@ -21,7 +21,7 @@ import { generateAdvanceFilterURL } from "../../util/utils";
 import {
   getBounds,
   geojson,
-  tileAlidade,
+  tileDelorme,
   defaultPos,
 } from "../../util/geo-util";
 
@@ -412,7 +412,7 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
             width: "100%",
           }}
         >
-          <TileLayer {...tileAlidade} />
+          <TileLayer {...tileDelorme} />
           <GeoJSON
             key="geodata"
             style={geoStyle}
