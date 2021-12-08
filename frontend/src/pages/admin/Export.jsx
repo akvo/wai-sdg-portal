@@ -9,20 +9,25 @@ import api from "../../util/api";
 import { UIState } from "../../state/ui";
 import upperFirst from "lodash/upperFirst";
 import { getLocationName } from "../../util/utils";
+import uiText from "../../util/i18n";
 
 const ItemDescription = ({ created, tags, adminid }) => {
+  const { adminText } = uiText;
   const { administration } = UIState.useState((e) => e);
   const admin_name = adminid ? getLocationName(adminid, administration) : false;
   return (
     <Space direction="vertical">
       <div>{created}</div>
       <div>
-        Filters:{" "}
+        {adminText?.exportFilterListText}:{" "}
         {admin_name && (
           <Tag
             key="admin-level"
             icon={
-              <Popover title="Administration Level" placement="topRight">
+              <Popover
+                title={adminText?.exportPopoverAdministrationText}
+                placement="topRight"
+              >
                 <InfoCircleOutlined />
               </Popover>
             }
@@ -52,6 +57,7 @@ const ItemDescription = ({ created, tags, adminid }) => {
 };
 
 const Export = () => {
+  const { adminText, buttonText } = uiText;
   const [fileList, setFileList] = useState([]);
   const [pendingFile, setPendingFile] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -141,9 +147,9 @@ const Export = () => {
         }}
       >
         {loadMoreButton ? (
-          <Button onClick={onLoadMore}>Load More</Button>
+          <Button onClick={onLoadMore}>{buttonText?.btnLoadMore}</Button>
         ) : (
-          "End of the list"
+          adminText?.exportEndOfListText
         )}
       </div>
     ) : null;
@@ -188,8 +194,11 @@ const Export = () => {
                   loading={!done}
                   disabled={!done || isDownloading}
                 >
-                  {!done ? "Generating" : "Download"}
-                  {isDownloading && "ing"}
+                  {!done
+                    ? buttonText?.btnGenerating
+                    : !isDownloading
+                    ? buttonText?.btnDownload
+                    : buttonText?.btnDownloading}
                 </Button>
               </List.Item>
             );

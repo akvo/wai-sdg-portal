@@ -71,6 +71,9 @@ const adminText = {
   dataUploadTemplateDownloadSectionText:
     "If you do not already have a template file, please download it",
   dataUploadSectionText: "Upload your data",
+  exportFilterListText: "Filters",
+  exportPopoverAdministrationText: "Administration Level",
+  exportEndOfListText: "End of the list",
 };
 
 const tableText = {
@@ -89,6 +92,9 @@ const buttonText = {
   btnInformUser: "Inform User",
   btnConfirmChanges: "Confirm Changes",
   btnDownload: "Download",
+  btnDownloading: "Downloading",
+  btnLoadMore: "Load More",
+  btnGenerating: "Generating",
 };
 
 const formText = {
