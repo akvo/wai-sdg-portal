@@ -189,6 +189,19 @@ const notificationText = {
   bulkDeleteSuccessText: "Bulk delete success",
   dataExportCreatedText: "Data Export Created",
   formPostDataSuccessText: "Data ID: ##content## Saved",
+  isUpdatedText: "is updated",
+  isDeletedText: "is deleted",
+  registrationVerifyEmailText: (
+    <>
+      <b>
+        Click on the link we sent in your email to verify your email address.
+      </b>
+      We will review your sign-up request as soon as you verify your email
+      address. Please, allow for 1 business day.
+    </>
+  ),
+  registrationEmailVerifiedText:
+    "We will review your sign-up request. Please, allow for 1 business day.",
 };
 
 const errorPageText = {
