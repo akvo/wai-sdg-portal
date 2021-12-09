@@ -10,6 +10,7 @@ from models.jobs import JobType, JobStatus
 import util.storage as storage
 from db.crud_user import get_user_by_id
 from util.mailer import Email, MailTypeEnum
+from util.i18n import ValidationText
 
 
 def print_log_start(message):
@@ -58,12 +59,12 @@ def run_seed(session: Session, jobs: dict):
 
 
 def run_validate(session: Session, jobs: dict):
-    start_time = print_log_start("DATA VALIDATION STARTED")
+    start_time = print_log_start(ValidationText.start_validation.value)
     original_filename = jobs["info"]["original_filename"]
     user = get_user_by_id(session=session, id=jobs["created_by"])
     info = jobs["info"]
     id = jobs["id"]
-    message = "IS SUCCESSFULY VALIDATED"
+    message = ValidationText.successfully_validation.value
     payload = None
     error = validation.validate(session=session,
                                 form=info["form_id"],
@@ -84,7 +85,7 @@ def run_validate(session: Session, jobs: dict):
         # end of email
         error_file = storage.upload(error_file, "error", public=True)
         payload = error_file
-        message = "VALIDATION ERROR"
+        message = ValidationText.error_validation.value
     print(f"JOBS #{id} {message}")
     status = JobStatus.failed if len(error) else None
     jobs = crud.update(session=session,

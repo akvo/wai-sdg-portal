@@ -10,6 +10,7 @@ from tests.test_01_auth import Acc
 from util.excel import generate_excel_template
 from tasks import validation
 from tasks.validation import ExcelError
+from util.i18n import ValidationText
 
 pytestmark = pytest.mark.asyncio
 sys.path.append("..")
@@ -121,7 +122,7 @@ class TestExcelValidation():
                                      file=excel_file)
         assert errors == [{
             'error': ExcelError.sheet,
-            "error_message": "You have uploaded an empty sheet",
+            "error_message": ValidationText.file_empty_validation.value,
         }]
         # Header and Value Error
         df = pd.DataFrame(wrong_data, columns=columns)

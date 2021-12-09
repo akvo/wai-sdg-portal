@@ -8,6 +8,7 @@ from models.question import Question, QuestionType
 from sqlalchemy.orm import Session
 from string import ascii_uppercase
 from util.helper import HText
+from util.i18n import ValidationText
 
 
 class ExcelError(enum.Enum):
@@ -27,17 +28,21 @@ def generate_excel_columns():
 def validate_header_names(header, col, header_names):
     default = {"error": ExcelError.header, "cell": col}
     if "Unnamed:" in header:
-        default.update({"error_message": "Header name is missing"})
+        default.update({
+            "error_message": ValidationText.header_name_missing.value
+        })
         return default
     if "|" not in header:
         default.update({
-            "error_message": f"{header} doesn't have question id",
+            "error_message":
+                f"{header} {ValidationText.header_no_question_id.value}",
         })
         return default
     if "|" in header:
         if header not in header_names:
             default.update({
-                "error_message": f"{header} has invalid id",
+                "error_message":
+                    f"{header} {ValidationText.header_invalid_id.value}",
             })
             return default
     return False
@@ -47,18 +52,24 @@ def validate_number(answer, question):
     try:
         answer = int(answer)
     except ValueError:
-        return {"error_message": "Value should be numeric"}
+        return {"error_message": ValidationText.numeric_validation.value}
     if question.rule:
         rule = question.rule
         qname = question.name
         for r in rule:
             if r == "max" and rule[r] < answer:
                 return {
-                    "error_message": f"Maximum value for {qname} is {rule[r]}"
+                    "error_message":
+                        ValidationText.numeric_max_rule.value.replace(
+                                "##question##", qname).replace(
+                                "##rule##", str(rule[r]))
                 }
             if r == "min" and rule[r] > answer:
                 return {
-                    "error_message": f"Minimum value for {qname} is {rule[r]}"
+                    "error_message":
+                        ValidationText.numeric_min_rule.value.replace(
+                                "##question##", qname).replace(
+                                "##rule##", str(rule[r]))
                 }
     return False
 
@@ -69,17 +80,17 @@ def validate_geo(answer):
         for a in answer.split(","):
             float(a)
     except ValueError:
-        return {"error_message": "Invalid lat long format"}
+        return {"error_message": ValidationText.lat_long_validation.value}
     if "," not in answer:
-        return {"error_message": "Invalid lat long format"}
+        return {"error_message": ValidationText.lat_long_validation.value}
     answer = answer.split(",")
     if len(answer) != 2:
-        return {"error_message": "Invalid lat long format"}
+        return {"error_message": ValidationText.lat_long_validation.value}
     for a in answer:
         try:
             a = float(a)
         except ValueError:
-            return {"error_message": "Invalid lat long format"}
+            return {"error_message": ValidationText.lat_long_validation.value}
     return False
 
 
@@ -87,14 +98,23 @@ def validate_administration(session, answer, adm):
     aw = answer.split("|")
     name = adm["name"]
     if len(aw) < 2:
-        return {"error_message": "Wrong administration format"}
+        return {"error_message":
+                ValidationText.administration_validation.value}
     if aw[0] != adm["name"]:
-        return {"error_message": f"Wrong administration data for {name}"}
+        return {
+            "error_message":
+                f"{ValidationText.administration_not_valid.value} {name}"
+        }
     children = crud_administration.get_administration_by_name(session=session,
                                                               name=aw[-1],
                                                               parent=adm["id"])
     if not children:
-        return {"error_message": f"{aw[-1]} is not part of {name}"}
+        return {
+            "error_message":
+                ValidationText.administration_not_part_of.value.replace(
+                    "##answer##", str(aw[-1])).replace(
+                        "##administration##", name)
+        }
     return False
 
 
@@ -149,7 +169,10 @@ def validate_row_data(session, col, answer, question, adm):
     default = {"error": ExcelError.value, "cell": col}
     if answer != answer:
         if question.required:
-            default.update({"error_message": f"{question.name} is required"})
+            default.update({
+                "error_message":
+                    f"{question.name} {ValidationText.is_required.value}"
+            })
             return default
         return False
     if isinstance(answer, str):
@@ -192,8 +215,7 @@ def validate(session: Session, form: int, administration: int, file: str):
     if 'data' not in sheet_names:
         return [{
             "error": ExcelError.sheet,
-            "error_message":
-            "Wrong sheet name, there should be sheet named data",
+            "error_message": ValidationText.filename_validation.value,
             "sheets": ",".join(sheet_names)
         }]
     questions = crud_question.get_excel_question(session=session, form=form)
@@ -202,7 +224,7 @@ def validate(session: Session, form: int, administration: int, file: str):
     if df.shape[0] == 0:
         return [{
             "error": ExcelError.sheet,
-            "error_message": "You have uploaded an empty sheet",
+            "error_message": ValidationText.file_empty_validation.value,
         }]
     excel_head = {}
     excel_cols = list(itertools.islice(generate_excel_columns(), df.shape[1]))
