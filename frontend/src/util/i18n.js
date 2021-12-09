@@ -62,11 +62,7 @@ const confirmationModalText = {
     subTitle:
       "This changes are irreversible, this will permanently delete the data and it's history as well.",
     btnOkText: "Yes, Delete This Entry",
-    inputTitle: (
-      <>
-        Please type <b>DELETE</b> to confirm
-      </>
-    ),
+    inputTitle: "Please type DELETE to confirm",
     checkboxText: "I understand the consequences.",
   },
   saveText: {

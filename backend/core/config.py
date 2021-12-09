@@ -24,6 +24,8 @@ SOURCE_PATH = f"./source/{INSTANCE_NAME}"
 JS_FILE = f"{SOURCE_PATH}/config"
 JS_FILE = jsmin(open(f"{JS_FILE}.js").read())
 GEO_CONFIG = GeoLevels[CONFIG_NAME].value
+JS_i18n_FILE = f"{SOURCE_PATH}/i18n"
+JS_i18n_FILE = jsmin(open(f"{JS_i18n_FILE}.js").read())
 
 MINJS = jsmin("".join([
     "var levels=" + str([g["alias"] for g in GEO_CONFIG]) + ";"
@@ -31,7 +33,7 @@ MINJS = jsmin("".join([
                                           for g in GEO_CONFIG]) + "};",
     "var topojson=",
     open(f"{SOURCE_PATH}/topojson.json").read(),
-    ";", JS_FILE,
+    ";", JS_FILE, JS_i18n_FILE
 ]))
 JS_FILE = f"{SOURCE_PATH}/config.min.js"
 open(JS_FILE, 'w').write(MINJS)
