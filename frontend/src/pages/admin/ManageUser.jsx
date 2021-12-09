@@ -57,7 +57,6 @@ const ManageUser = () => {
         getUsers(active, paginate.current);
       })
       .catch((err) => {
-        console.error(err);
         setUsers([]);
         notification.error({
           message: notificationText?.errorText,
@@ -158,7 +157,6 @@ const ManageUser = () => {
         });
       })
       .catch((err) => {
-        console.error(err);
         setUsers([]);
       })
       .finally(() => {
@@ -234,11 +232,15 @@ const ManageUser = () => {
         centered
         visible={isUserModalVisible}
         footer={[
-          <Button onClick={() => setIsUserModalVisible(false)}>
+          <Button
+            key="button-cancel"
+            onClick={() => setIsUserModalVisible(false)}
+          >
             {buttonText?.btnCancel}
           </Button>,
           active ? (
             <Button
+              key="button-inform-user"
               loading={isInformUser}
               onClick={() => {
                 setIsInformUser(true);
@@ -251,6 +253,7 @@ const ManageUser = () => {
             ""
           ),
           <Button
+            key="button-submit"
             type="primary"
             loading={loading}
             onClick={() => {
@@ -270,7 +273,7 @@ const ManageUser = () => {
           name="user-form"
           labelCol={{ span: 6 }}
           wrapperCol={{ span: 16 }}
-          initialValue={selectedValue}
+          initialValues={selectedValue}
           onFinish={onFinish}
         >
           <Form.Item

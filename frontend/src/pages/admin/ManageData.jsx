@@ -204,7 +204,6 @@ const ManageData = ({ handleTabClick }) => {
         handleTabClick("exports");
       })
       .catch((error) => {
-        console.log(error);
         setExportLoading(false);
       });
   };

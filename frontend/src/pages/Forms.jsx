@@ -36,7 +36,6 @@ const Forms = ({ match }) => {
         }, 3000);
       })
       .catch((err) => {
-        console.log(err);
         notification.success({
           message: notificationText?.errorText,
         });

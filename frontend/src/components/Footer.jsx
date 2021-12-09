@@ -15,7 +15,7 @@ const FooterContent = ({ title, text }) => {
 };
 
 const FooterEnd = () => {
-  const { privacyPolicy, termsOfService, developer } = uiText?.footer;
+  const { footer } = uiText;
   const { user } = UIState.useState((c) => c);
   const changePage = ({ key }) => {
     UIState.update((s) => {
@@ -36,11 +36,11 @@ const FooterEnd = () => {
         © 2021
       </Col>
       <Col span={8} className="end">
-        {/* <Link to="/privacy-policy">{privacyPolicy}</Link> */}
-        {/* <Link to="/tos">{termsOfService}</Link> */}
+        {/* <Link to="/privacy-policy">{footer?.privacyPolicy}</Link> */}
+        {/* <Link to="/tos">{footer?.termsOfService}</Link> */}
         {user && (
           <Link to="/documentation" onClick={() => changePage("documentation")}>
-            {developer}
+            {footer?.developer}
           </Link>
         )}
       </Col>
