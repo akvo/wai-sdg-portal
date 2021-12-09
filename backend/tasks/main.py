@@ -10,7 +10,7 @@ from models.jobs import JobType, JobStatus
 import util.storage as storage
 from db.crud_user import get_user_by_id
 from util.mailer import Email, MailTypeEnum
-from util.i18n import ValidationText
+from util.i18n import ValidationText, EmailText
 
 
 def print_log_start(message):
@@ -37,16 +37,16 @@ def run_seed(session: Session, jobs: dict):
     if (data):
         info.update({"records": len(data)})
         # success email
-        body = f"Thank you for uploading data file {original_filename}"
-        body += " to the portal."
+        body = EmailText.data_upload_body.value.replace(
+            "##filename##", str(original_filename))
         email = Email(recipients=[user.recipient],
                       type=MailTypeEnum.data_submission_success,
                       body=body)
         email.send
     else:
         # failed email
-        body = f"Thank you for uploading data file {original_filename}"
-        body += " to the portal."
+        body = EmailText.data_upload_body.value.replace(
+            "##filename##", str(original_filename))
         email = Email(recipients=[user.recipient],
                       type=MailTypeEnum.data_submission_failed,
                       body=body)
