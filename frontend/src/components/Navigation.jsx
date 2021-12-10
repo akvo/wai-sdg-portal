@@ -4,19 +4,18 @@ import { UserOutlined } from "@ant-design/icons";
 import { UIState } from "../state/ui";
 import { Link } from "react-router-dom";
 import { startCase } from "lodash";
-import uiText from "../util/i18n";
 
 const navigationOptions = window.navigation_config;
 const sitename = window.site_name;
+const {
+  adminText,
+  aboutText,
+  signupText,
+  loginText,
+  logoutText,
+} = window?.i18n?.navigation;
 
 const Navigation = ({ logout, loginWithPopup, isAuthenticated }) => {
-  const {
-    adminText,
-    aboutText,
-    signupText,
-    loginText,
-    logoutText,
-  } = uiText?.navigation;
   const { page, user } = UIState.useState((c) => c);
   const visible = UIState.useState((s) => s.showNav);
 

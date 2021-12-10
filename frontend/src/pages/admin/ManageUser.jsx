@@ -18,11 +18,17 @@ import api from "../../util/api";
 import capitalize from "lodash/capitalize";
 import isEmpty from "lodash/isEmpty";
 import { UIState } from "../../state/ui";
-import uiText from "../../util/i18n";
+
+const {
+  notificationText,
+  buttonText,
+  adminText,
+  formText,
+  tableText,
+} = window?.i18n;
 
 const ManageUser = () => {
-  const { notificationText, buttonText, adminText, formText } = uiText;
-  const { manageUserTableText } = uiText?.tableText;
+  const { manageUserTableText } = tableText;
   const { organisations, administration } = UIState.useState((s) => s);
   const [form] = Form.useForm();
   const [showPendingUser, setShowPendingUser] = useState(true);

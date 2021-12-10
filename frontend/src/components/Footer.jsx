@@ -3,7 +3,8 @@ import { Row, Col } from "antd";
 import { FacebookFilled, TwitterOutlined } from "@ant-design/icons";
 import { UIState } from "../state/ui";
 import { Link } from "react-router-dom";
-import uiText from "../util/i18n";
+
+const { footer } = window?.i18n;
 
 const FooterContent = ({ title, text }) => {
   return (
@@ -15,7 +16,6 @@ const FooterContent = ({ title, text }) => {
 };
 
 const FooterEnd = () => {
-  const { footer } = uiText;
   const { user } = UIState.useState((c) => c);
   const changePage = ({ key }) => {
     UIState.update((s) => {
@@ -49,7 +49,6 @@ const FooterEnd = () => {
 };
 
 const Footer = () => {
-  const { footer } = uiText;
   return (
     <>
       <Row align="space-between" className="footer-start">

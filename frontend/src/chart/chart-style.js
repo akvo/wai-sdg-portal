@@ -1,7 +1,6 @@
 import upperFirst from "lodash/upperFirst";
-import uiText from "../util/i18n";
 
-const { chartText } = uiText;
+const { chartText } = window?.i18n;
 
 export const popupFormatter = (params) => {
   var value = (params.value + "").split(".");

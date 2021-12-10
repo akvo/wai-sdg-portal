@@ -26,10 +26,10 @@ import flatten from "lodash/flatten";
 import isEmpty from "lodash/isEmpty";
 import config from "../../config";
 import moment from "moment";
-import uiText from "../../util/i18n";
+
+const { mainText } = window?.i18n;
 
 const NameWithInfo = ({ record, current, question }) => {
-  const { mainText } = uiText;
   const { id, name, created_by, created, updated, updated_by, answer } = record;
   const hasDefaultHistory = current?.default?.datapoint
     ? answer.map((x) => x.history).includes(true)

@@ -21,14 +21,13 @@ import {
   DownloadOutlined,
 } from "@ant-design/icons";
 import { UIState } from "../state/ui";
-import uiText from "../util/i18n";
 
 const {
   noActivityText,
   activityLogText,
   recentActivityLogText,
   attachmentText,
-} = uiText?.header;
+} = window?.i18n?.header;
 
 const IconList = ({ type }) => {
   if (type === "warning") {

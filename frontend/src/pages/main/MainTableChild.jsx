@@ -6,7 +6,8 @@ import { UIState } from "../../state/ui";
 import api from "../../util/api";
 import { getLocationName } from "../../util/utils";
 import { titleCase } from "../../util/utils.js";
-import uiText from "../../util/i18n";
+
+const { mainTableChildText } = window?.i18n?.tableText;
 
 const changeColBackground = (dt, edited) => {
   if (edited?.[dt.props.question.id]) {
@@ -27,7 +28,6 @@ const NormalCol = ({ value }) => {
 };
 
 const HistoryTable = ({ record, data }) => {
-  const { mainTableChildText } = uiText?.tableText;
   const [historyData, setHistoryData] = useState(null);
 
   useEffect(() => {

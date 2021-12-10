@@ -37,7 +37,8 @@ import without from "lodash/without";
 import union from "lodash/union";
 import xor from "lodash/xor";
 import config from "../../config";
-import uiText from "../../util/i18n";
+
+const { notificationText, buttonText, adminText } = window?.i18n;
 
 const getRowClassName = (record, editedRow) => {
   const edited = editedRow?.[record.key];
@@ -48,7 +49,6 @@ const getRowClassName = (record, editedRow) => {
 };
 
 const ManageData = ({ handleTabClick }) => {
-  const { notificationText, buttonText, adminText } = uiText;
   const {
     user,
     editedRow,

@@ -5,10 +5,14 @@ import {
   UploadOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
-import uiText from "../util/i18n";
+
+const {
+  submitText,
+  deleteText,
+  saveText,
+} = window?.i18n?.confirmationModalText;
 
 const modalProps = (type, secureDelete, setSecureDelete) => {
-  const { submitText, deleteText, saveText } = uiText?.confirmationModalText;
   switch (type) {
     case "submit":
       return {
@@ -26,7 +30,7 @@ const modalProps = (type, secureDelete, setSecureDelete) => {
           <>
             <Space direction="vertical">
               <div>
-                {deleteText?.inputTitle}
+                <b>{deleteText?.inputTitle}</b>
                 <Input
                   value={secureDelete.text}
                   onChange={(e) =>

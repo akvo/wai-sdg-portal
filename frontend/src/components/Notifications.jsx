@@ -1,6 +1,4 @@
-import uiText from "../util/i18n";
-
-const { notificationText } = uiText;
+const { notificationText } = window?.i18n;
 
 export const NonActiveUserMessage = ({ user }) => {
   return (

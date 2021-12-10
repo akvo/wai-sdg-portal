@@ -14,10 +14,10 @@ import {
 import uniq from "lodash/uniq";
 import isEmpty from "lodash/isEmpty";
 import upperFirst from "lodash/upperFirst";
-import uiText from "../util/i18n.js";
+
+const { chartText } = window?.i18n;
 
 const BarStack = (data, chartTitle, extra) => {
-  const { chartText } = uiText;
   if (isEmpty(data) || !data) {
     return NoData;
   }

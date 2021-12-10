@@ -5,17 +5,22 @@ import { RightOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import CountUp from "react-countup";
 import api from "../../util/api";
 
-import uiText from "../../util/i18n";
 import "./home.scss";
 import Map from "../../components/Map";
 import isEmpty from "lodash/isEmpty";
 
 const level2 = window.levels[1];
-
 const { datasetsInPortal, overviews } = window.landing_config;
+const {
+  exploreText,
+  exploreDataText,
+  readMoreText,
+  overviewSectionTitle,
+  datasetSectionTitle,
+  jumbotronText,
+} = window?.i18n?.home;
 
 const OverviewInfo = ({ item, order }) => {
-  const { exploreText } = uiText?.home;
   const { type, category, data } = item;
   const { above_text, number_text, explore, value, total } = data;
   let text = number_text;
@@ -105,13 +110,6 @@ const OverviewColumn = ({ items, index }) => {
 };
 
 const Home = () => {
-  const {
-    exploreDataText,
-    readMoreText,
-    overviewSectionTitle,
-    datasetSectionTitle,
-    jumbotronText,
-  } = uiText?.home;
   const [overviewData, setOverviewData] = useState([]);
 
   useEffect(() => {

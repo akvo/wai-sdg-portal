@@ -2,14 +2,14 @@ import React from "react";
 import { Select, Button, Result, Space } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { UIState } from "../state/ui";
-import uiText from "../util/i18n";
 
 const navigationOptions = window.navigation_config;
 const levels = window.levels;
 const { Option, OptGroup } = Select;
 
+const { buttonText, mainText, notificationText } = window?.i18n;
+
 export const SelectLevel = ({ setPage, setSelectedRow }) => {
-  const { buttonText, mainText } = uiText;
   const { selectedAdministration, administrationByAccess } = UIState.useState(
     (s) => s
   );
@@ -97,7 +97,6 @@ export const DropdownNavigation = ({ value, onChange }) => {
 };
 
 export const Loading = () => {
-  const { notificationText } = uiText;
   return (
     <Result
       className="loading"

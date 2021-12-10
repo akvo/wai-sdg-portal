@@ -17,7 +17,6 @@ import { DropdownNavigation } from "../../components/common";
 import api from "../../util/api";
 import axios from "axios";
 import config from "../../config";
-import uiText from "../../util/i18n";
 
 const { Dragger } = Upload;
 const allowedFiles = [
@@ -25,9 +24,9 @@ const allowedFiles = [
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
 ];
 const regExpFilename = /filename="(?<filename>.*)"/;
+const { notificationText, adminText, buttonText, formText } = window?.i18n;
 
 const checkJobs = (id, filename) => {
-  const { notificationText } = uiText;
   axios.get(`/worker/jobs/status/${id}`).then(function (res) {
     const status = res.data.status;
     if (status === "on_progress" || status === "pending") {
@@ -75,7 +74,6 @@ const checkJobs = (id, filename) => {
 };
 
 const ManageUpload = () => {
-  const { notificationText, adminText, buttonText, formText } = uiText;
   const {
     user,
     administration,

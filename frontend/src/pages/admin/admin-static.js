@@ -1,6 +1,4 @@
-import uiText from "../../util/i18n";
-
-const { manageDataTableText } = uiText?.tableText;
+const { manageDataTableText } = window?.i18n?.tableText;
 
 export const columnNames = [
   { title: manageDataTableText?.colName, key: "name", width: "20%" },

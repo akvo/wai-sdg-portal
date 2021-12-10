@@ -8,10 +8,10 @@ import api from "../../util/api";
 import Chart from "../../chart";
 import isEmpty from "lodash/isEmpty";
 import upperFirst from "lodash/upperFirst";
-import uiText from "../../util/i18n";
+
+const { mainText } = window?.i18n;
 
 const MainHistoryChart = ({ current, data, question }) => {
-  const { mainText } = uiText;
   const { historyChart } = UIState.useState((s) => s);
   const [historyChartData, setHistoryChartData] = useState([]);
   const [selectedData, setSelectedData] = useState({});

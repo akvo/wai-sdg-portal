@@ -8,9 +8,9 @@ import ManageUpload from "./ManageUpload";
 import Export from "./Export";
 import { useHistory } from "react-router-dom";
 import "./admin.scss";
-import uiText from "../../util/i18n";
 
 const { TabPane } = Tabs;
+const { adminText } = window?.i18n;
 
 api
   .get("/organisation")
@@ -30,7 +30,7 @@ const Admin = ({ match }) => {
     tabExportText,
     tabDataUploadText,
     tabManageUserText,
-  } = uiText?.adminText;
+  } = adminText;
   const [page, setPage] = useState(match?.params?.page);
   const history = useHistory();
   const { user } = UIState.useState((e) => e);

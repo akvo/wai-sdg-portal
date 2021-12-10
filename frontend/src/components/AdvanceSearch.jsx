@@ -7,9 +7,9 @@ import upperFirst from "lodash/upperFirst";
 import isEmpty from "lodash/isEmpty";
 import sortBy from "lodash/sortBy";
 import flatten from "lodash/flatten";
-import uiText from "../util/i18n";
 
 const { Panel } = Collapse;
+const { mainText, buttonText } = window?.i18n;
 
 const AdvanceSearch = ({
   formId,
@@ -19,7 +19,6 @@ const AdvanceSearch = ({
   buttonPos = "left",
   customStyle = {},
 }) => {
-  const { mainText, buttonText } = uiText;
   // Get question option only
   const question = flatten(
     questionGroup.map((qg) => qg.question.filter((q) => q.type === "option"))

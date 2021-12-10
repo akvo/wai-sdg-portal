@@ -10,13 +10,12 @@ import upperFirst from "lodash/upperFirst";
 import isEmpty from "lodash/isEmpty";
 import takeRight from "lodash/takeRight";
 import reverse from "lodash/reverse";
-import uiText from "../../util/i18n";
 
 const { chartFeature } = window.features;
 const levels = window.map_config?.shapeLevels?.length;
+const { mainText, chartText } = window?.i18n;
 
 const MainChart = ({ current, question }) => {
-  const { mainText, chartText } = uiText;
   const {
     user,
     selectedAdministration,

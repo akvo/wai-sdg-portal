@@ -17,7 +17,8 @@ import { DataUpdateMessage } from "./../../components/Notifications";
 import flatten from "lodash/flatten";
 import isEmpty from "lodash/isEmpty";
 import intersection from "lodash/intersection";
-import uiText from "../../util/i18n";
+
+const { buttonText, adminText } = window?.i18n;
 
 const getRowClassName = (record, editedRow) => {
   const edited = editedRow?.[record.key];
@@ -41,7 +42,6 @@ const MainTable = ({
   show,
   page,
 }) => {
-  const { buttonText, adminText } = uiText;
   const { columns, formId, title } = current;
   const [saving, setSaving] = useState(false);
   const [expanded, setExpanded] = useState([]);

@@ -14,14 +14,13 @@ import { UndoOutlined, SaveOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { pickBy, startCase } from "lodash";
 import { UIState } from "../../state/ui";
-import uiText from "../../util/i18n";
 
 const { Option } = Select;
 const { Text } = Typography;
+const { buttonText } = window?.i18n;
 const defInputNumberPopoverState = { visible: [], content: "" };
 
 const MainEditor = ({ value, question, edited, dataPointId }) => {
-  const { buttonText } = uiText;
   const [fieldActive, setFieldActive] = useState(null);
   const [newValue, setNewValue] = useState(null);
   const [inputNumberPopover, setInputNumberPopover] = useState(

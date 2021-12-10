@@ -9,10 +9,10 @@ import api from "../../util/api";
 import { UIState } from "../../state/ui";
 import upperFirst from "lodash/upperFirst";
 import { getLocationName } from "../../util/utils";
-import uiText from "../../util/i18n";
+
+const { adminText, buttonText } = window?.i18n;
 
 const ItemDescription = ({ created, tags, adminid }) => {
-  const { adminText } = uiText;
   const { administration } = UIState.useState((e) => e);
   const admin_name = adminid ? getLocationName(adminid, administration) : false;
   return (
@@ -57,7 +57,6 @@ const ItemDescription = ({ created, tags, adminid }) => {
 };
 
 const Export = () => {
-  const { adminText, buttonText } = uiText;
   const [fileList, setFileList] = useState([]);
   const [pendingFile, setPendingFile] = useState(null);
   const [loading, setLoading] = useState(true);

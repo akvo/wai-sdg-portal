@@ -4,11 +4,11 @@ import { Row, Col, Affix, notification, Progress } from "antd";
 import startCase from "lodash/startCase";
 import api from "../util/api";
 import { useHistory } from "react-router-dom";
-import uiText from "../util/i18n";
+
+const { notificationText } = window?.i18n;
 
 const Forms = ({ match }) => {
   let history = useHistory();
-  const { notificationText } = uiText;
   const [loading, setLoading] = useState(true);
   const [forms, setForms] = useState([]);
   const [percentage, setPercentage] = useState(0);
