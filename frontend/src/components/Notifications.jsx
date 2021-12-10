@@ -5,7 +5,7 @@ export const NonActiveUserMessage = ({ user }) => {
     <p>
       {user?.email_verified === false
         ? notificationText?.registrationVerifyEmailText?.map((x, xi) =>
-            xi === 0 ? <b>{`${x} `}</b> : x
+            xi === 0 ? <b key={`reg-${xi}`}>{`${x} `}</b> : x
           )
         : notificationText?.registrationEmailVerifiedText}
     </p>
