@@ -106,9 +106,20 @@ const MainTableChild = ({
           <NormalCol
             value={
               <div>
+                {q.type === "geo" && answer?.value ? (
+                  <Space direction="vertical">
+                    {answer.value.split("|").map((a, ai) => (
+                      <b key={ai}>
+                        {ai ? "Long" : "Lat"}: {a}
+                      </b>
+                    ))}
+                  </Space>
+                ) : (
+                  ""
+                )}
                 {q.type === "administration" && answer?.value
                   ? getLocationName(answer?.value, administration)
-                  : answer?.value}
+                  : ""}
               </div>
             }
             question={q}
