@@ -7,7 +7,9 @@ import api from "../../util/api";
 
 import "./home.scss";
 import Map from "../../components/Map";
+import Chart from "../../chart";
 import isEmpty from "lodash/isEmpty";
+import upperFirst from "lodash/upperFirst";
 
 const level2 = window.levels[1];
 const { datasetsInPortal, overviews } = window.landing_config;
@@ -71,7 +73,7 @@ const OverviewInfo = ({ item, order }) => {
 };
 
 const OverviewChart = ({ item, order }) => {
-  const { type, name, category } = item;
+  const { type, name, category, data } = item;
   return (
     <Col
       key={`${type}-${category}`}
@@ -80,8 +82,13 @@ const OverviewChart = ({ item, order }) => {
       order={order}
     >
       <Card className={`overview-item-card ${category}`}>
-        <Row className="overview-item">
-          <Col span={24}>Chart {name} here</Col>
+        <Row align="middle" justify="center" className="overview-item">
+          <Col span={24} align="center">
+            <Space direction="vertical" size="large" style={{ width: "100%" }}>
+              <div className="chart-title">{name ? upperFirst(name) : ""}</div>
+              <Chart type="PIE" data={data} wrapper={false} height={260} />
+            </Space>
+          </Col>
         </Row>
       </Card>
     </Col>

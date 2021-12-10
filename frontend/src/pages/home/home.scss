@@ -126,6 +126,12 @@
           }
 
           div {
+            &.chart-title {
+              padding-bottom: 12px;
+              font-size: 16px;
+              text-transform: uppercase;
+              border-bottom: 1px solid #eeeeee;
+            }
             &.area {
               font-size: 20px;
               text-transform: uppercase;
