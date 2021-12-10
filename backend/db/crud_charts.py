@@ -235,6 +235,6 @@ def get_overviews_visualization(session: Session, form: int, question: int,
     return {
         "form": form,
         "question": question,
-        "question_name": findQuestion.name if findQuestion else "",
+        "question_name": findQuestion.name if findQuestion else None,
         "data": data
     }

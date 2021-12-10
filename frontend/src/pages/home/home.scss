@@ -129,7 +129,7 @@
             &.chart-title {
               padding-bottom: 12px;
               font-size: 16px;
-              text-transform: uppercase;
+              word-wrap: break-word;
               border-bottom: 1px solid #eeeeee;
             }
             &.area {

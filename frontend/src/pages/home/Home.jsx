@@ -73,7 +73,7 @@ const OverviewInfo = ({ item, order }) => {
 };
 
 const OverviewChart = ({ item, order }) => {
-  const { type, name, category, data } = item;
+  const { type, name, category, data, qname } = item;
   return (
     <Col
       key={`${type}-${category}`}
@@ -85,8 +85,10 @@ const OverviewChart = ({ item, order }) => {
         <Row align="middle" justify="center" className="overview-item">
           <Col span={24} align="center">
             <Space direction="vertical" size="large" style={{ width: "100%" }}>
-              <div className="chart-title">{name ? upperFirst(name) : ""}</div>
-              <Chart type="PIE" data={data} wrapper={false} height={260} />
+              <div className="chart-title">
+                {qname ? upperFirst(qname) : upperFirst(name)}
+              </div>
+              <Chart type="PIE" data={data} wrapper={false} height={250} />
             </Space>
           </Col>
         </Row>
@@ -128,7 +130,7 @@ const Home = () => {
       Promise.all(apiCall)
         .then((res) => {
           const allData = res?.map((r) => {
-            const { form, question, data } = r?.data;
+            const { form, question, question_name, data } = r?.data;
             // find overview config
             const overview = overviews?.find(
               (x) => x.form_id === form && x.question === question
@@ -155,6 +157,7 @@ const Home = () => {
               return {
                 ...d,
                 category: category,
+                qname: question_name,
                 name: name,
               };
             });
