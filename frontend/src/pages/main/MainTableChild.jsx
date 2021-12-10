@@ -66,7 +66,13 @@ const HistoryTable = ({ record, data }) => {
   );
 };
 
-const MainTableChild = ({ questionGroup, data, size = "small", scroll }) => {
+const MainTableChild = ({
+  questionGroup,
+  data,
+  size = "small",
+  scroll,
+  showHistoryChartBtn = false,
+}) => {
   const { editedRow, administration } = UIState.useState((e) => e);
   const [expanded, setExpanded] = useState([]);
   const edited = editedRow?.[data.key];
@@ -141,7 +147,10 @@ const MainTableChild = ({ questionGroup, data, size = "small", scroll }) => {
           expandIcon: ({ expanded, onExpand, record }) => {
             const { dataPointId, question } = record.value.props;
             let showChartButton = "";
-            if (question.type === "number" || question.type === "option") {
+            if (
+              showHistoryChartBtn &&
+              (question.type === "number" || question.type === "option")
+            ) {
               showChartButton = (
                 <LineChartOutlined
                   onClick={() => {

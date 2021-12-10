@@ -344,3 +344,22 @@
     padding-right: 22px;
   }
 }
+
+.main-child-table {
+  .ant-table-title {
+    background: #fff !important;
+    border-color: #fafafa;
+    border-bottom: 3px solid #0288d1;
+    color: #0288d1;
+    font-weight: bold;
+    padding: 10px;
+
+    &:first-child {
+      padding-left: 20px;
+    }
+
+    &.ant-table-cell-scrollbar {
+      box-shadow: none;
+    }
+  }
+}

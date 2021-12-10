@@ -184,7 +184,11 @@ const MainTable = ({
               },
               expandIconColumnIndex: columns.length,
               expandedRowRender: (record) => (
-                <MainTableChild questionGroup={questionGroup} data={record} />
+                <MainTableChild
+                  questionGroup={questionGroup}
+                  data={record}
+                  showHistoryChartBtn={true}
+                />
               ),
             }}
             expandedRowKeys={expanded}

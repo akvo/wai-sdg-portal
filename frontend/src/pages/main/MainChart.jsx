@@ -96,7 +96,9 @@ const MainChart = ({ current, question }) => {
           let temp = [];
           if (res.data.type === "BAR") {
             temp = selectedQuestion.option.map((opt) => {
-              const val = res.data.data.find((d) => d.name === opt.name);
+              const val = res.data.data.find(
+                (d) => d.name.toLowerCase() === opt.name.toLowerCase()
+              );
               return {
                 ...opt,
                 value: val?.value || 0,
@@ -105,10 +107,14 @@ const MainChart = ({ current, question }) => {
           }
           if (res.data.type === "BARSTACK") {
             temp = selectedQuestion.option.map((opt) => {
-              const group = res.data.data.find((d) => d.group === opt.name);
+              const group = res.data.data.find(
+                (d) => d.group.toLowerCase() === opt.name.toLowerCase()
+              );
               const child = group?.child.length
                 ? selectedStack.option.map((sopt) => {
-                    const val = group.child.find((c) => c.name === sopt.name);
+                    const val = group.child.find(
+                      (c) => c.name.toLowerCase() === sopt.name.toLowerCase()
+                    );
                     return {
                       ...sopt,
                       value: val?.value || 0,
