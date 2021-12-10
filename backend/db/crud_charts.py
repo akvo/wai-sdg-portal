@@ -5,6 +5,7 @@ from models.data import Data
 from models.option import Option
 from models.views.view_data import ViewData
 from models.views.view_data_score import ViewDataScore
+from db import crud_question
 import collections
 from itertools import groupby
 from typing import List
@@ -190,6 +191,9 @@ def get_overviews_visualization(session: Session, form: int, question: int,
                            func.count(Answer.id).label('count')).filter(
                                Answer.question == question).group_by(
                                    Answer.options).all()
+
+    findQuestion = crud_question.get_question_by_id(
+        session=session, id=question)
     options = session.query(
         Option.name, Option.color).filter(Option.question == question).all()
     options = [{"name": o[0], "color": o[1]} for o in options]
@@ -228,4 +232,9 @@ def get_overviews_visualization(session: Session, form: int, question: int,
         "type": "chart",
         "data": chart_data
     }]
-    return {"form": form, "question": question, "data": data}
+    return {
+        "form": form,
+        "question": question,
+        "question_name": findQuestion.name if findQuestion else "",
+        "data": data
+    }

@@ -109,6 +109,7 @@ class TestChartsRoutes():
         assert res == {
             "form": 1,
             "question": 1,
+            "question_name": "Test Option Question",
             "data": [{
                         "data": {
                             "itemStyle": {"color": "#333"},
