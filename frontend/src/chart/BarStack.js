@@ -31,7 +31,7 @@ const BarStack = (data, chartTitle, extra) => {
     itemStyle: { color: s.color || Color.color[si] },
   }));
   let xAxis = uniq(data.map((x) => x.name));
-  let series = stacked.map((s) => {
+  let series = stacked.map((s, si) => {
     const temp = data.map((d, di) => {
       const val = d.stack.find((c) => c.name === s.name);
       return {
@@ -46,7 +46,7 @@ const BarStack = (data, chartTitle, extra) => {
       stack: "count",
       label: {
         colorBy: "data",
-        position: "insideBottom",
+        position: si % 2 === 0 ? "left" : "right",
         show: true,
         padding: 5,
         backgroundColor: "rgba(0,0,0,.3)",
