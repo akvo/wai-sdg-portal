@@ -4,7 +4,9 @@ export const NonActiveUserMessage = ({ user }) => {
   return (
     <p>
       {user?.email_verified === false
-        ? notificationText?.registrationVerifyEmailText
+        ? notificationText?.registrationVerifyEmailText?.map((x, xi) =>
+            xi === 0 ? <b>{`${x} `}</b> : x
+          )
         : notificationText?.registrationEmailVerifiedText}
     </p>
   );

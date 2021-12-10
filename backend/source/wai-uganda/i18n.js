@@ -102,8 +102,10 @@ var i18n = {
     formPostDataSuccessText: "Data ID: ##content## Saved",
     isUpdatedText: "is updated",
     isDeletedText: "is deleted",
-    registrationVerifyEmailText:
-      "Click on the link we sent in your email to verify your email address. We will review your sign-up request as soon as you verify your email address. Please, allow for 1 business day.",
+    registrationVerifyEmailText: [
+      "Click on the link we sent in your email to verify your email address.",
+      "We will review your sign-up request as soon as you verify your email address. Please, allow for 1 business day.",
+    ],
     registrationEmailVerifiedText:
       "We will review your sign-up request. Please, allow for 1 business day.",
   },
