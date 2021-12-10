@@ -111,6 +111,7 @@ class TestChartsRoutes():
             "question": 1,
             "data": [{
                         "data": {
+                            "itemStyle": {"color": "#333"},
                             "count": 2,
                             "name": "Option 2",
                             "total": 3,
@@ -122,11 +123,13 @@ class TestChartsRoutes():
                         "data": [
                             {
                                 "count": 1,
+                                "itemStyle": {"color": "#333"},
                                 "name": 'Option 1',
                                 "total": 3,
                                 "value": 33.33,
                             }, {
                                 "count": 2,
+                                "itemStyle": {"color": "#333"},
                                 "name": "Option 2",
                                 "total": 3,
                                 "value": 66.67,

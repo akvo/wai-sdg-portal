@@ -190,17 +190,34 @@ def get_overviews_visualization(session: Session, form: int, question: int,
                            func.count(Answer.id).label('count')).filter(
                                Answer.question == question).group_by(
                                    Answer.options).all()
+    options = session.query(
+        Option.name, Option.color).filter(Option.question == question).all()
+    options = [{"name": o[0], "color": o[1]} for o in options]
+
     chart_data = []
     info_data = None
     total = sum([a.count for a in answer])
     for a in answer:
         opt = a.options[0]
+
+        color = default_color_config[opt.lower(
+            )]if opt.lower() in default_color_config else None
+        findOption = list(
+            filter(lambda x: x["name"].lower() == opt.lower(),
+                   options))
+        if len(findOption):
+            if findOption[0]["color"]:
+                color = findOption[0]["color"]
+
         value = {
             "name": opt,
             "count": a.count,
             "total": total,
             "value": round((a.count / total) * 100, 2),
         }
+
+        if color:
+            value.update({"itemStyle": {"color": color}})
         if opt.lower() == option.lower():
             info_data = value
         chart_data.append(value)
