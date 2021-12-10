@@ -10,13 +10,15 @@
           "question": "location",
           "type": "administration",
           "meta": true,
+          "required": true,
           "options": null
         },
         {
           "order": 3,
           "question": "village",
           "type": "text",
-          "meta": false,
+          "meta": true,
+          "required": true,
           "options": null
         },
         {
@@ -24,6 +26,7 @@
           "question": "name of respondent",
           "type": "text",
           "meta": true,
+          "required": true,
           "options": null
         },
         {
@@ -31,6 +34,7 @@
           "question": "household size",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null,
           "rule": {
             "min": 0
@@ -41,6 +45,7 @@
           "question": "main source of drinking water",
           "type": "text",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "Public tap/standpipe",
@@ -89,6 +94,7 @@
           "question": "water service level",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "safely managed",
@@ -127,6 +133,7 @@
           "question": "specific location of water collection",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "in own dwelling",
@@ -150,6 +157,7 @@
           "question": "time to collect water",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "less than 30 minutes",
@@ -168,6 +176,7 @@
           "question": "times in last month when drinking water quantity was insufficient",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "no, always sufficient",
@@ -191,6 +200,7 @@
           "question": "sanitation service level",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "safely managed",
@@ -229,6 +239,7 @@
           "question": "type of toilet facility",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "toilet that flush/pour to flush piped sewer system",
@@ -269,6 +280,7 @@
           "question": "facility is shared with others outside of the household",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "yes",
@@ -285,6 +297,7 @@
           "question": "location of sanitation facility",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "in own dwelling",
@@ -305,6 +318,7 @@
           "question": "emptying of on-site sanitation facilities",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "no, never emptied",
@@ -325,6 +339,7 @@
           "question": "hygiene service level",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "basic",
@@ -351,6 +366,7 @@
           "question": "type of handwashing facility used most often",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "fixed facility observed in dwelling",
@@ -384,6 +400,7 @@
           "question": "water available at handwashing facility",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "water is available",
@@ -402,6 +419,7 @@
           "question": "soap is available",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "yes, soap or detergent are present",

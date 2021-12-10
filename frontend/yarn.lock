@@ -2467,15 +2467,16 @@ ajv@^8.0.1:
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
-akvo-react-form@^1.2.4:
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/akvo-react-form/-/akvo-react-form-1.2.4.tgz#c13e789d9359b5ae1f1be8ff65cbc2caae12c971"
-  integrity sha512-AdTkDrFrrgeRujJFxONreEsiyhsiWWolnHSz+E2VCHnYG0vGuDIvUYgq/H67KxhHHkrTFrxsAdBD+uU78piF4g==
+akvo-react-form@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/akvo-react-form/-/akvo-react-form-1.2.5.tgz#b54ebd1c4379b0b72c73a9460c8654ac7ecab05c"
+  integrity sha512-l6y+tpU2RRZ36OgshMbdofWOZILsfic3TjFB/prKvdeDRmvkt0Q4XnnRxjAUBLb5q1ronQgc+lrfBo7tWJW3jQ==
   dependencies:
     "@react-leaflet/core" ">=1.0.0 <1.1.0 || ^1.1.1"
     antd "^4.16.13"
     axios "^0.23.0"
     leaflet "^1.7.1"
+    react-icons "^4.3.1"
     react-leaflet ">=3.1.0 <3.2.0 || ^3.2.1"
 
 alphanum-sort@^1.0.0:
@@ -10834,6 +10835,11 @@ react-error-overlay@^6.0.9:
   version "6.0.9"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.9.tgz#3c743010c9359608c375ecd6bc76f35d93995b0a"
   integrity sha512-nQTTcUu+ATDbrSD1BZHr5kgSD4oF8OFjxun8uAaL8RwPBacGBNPf/yAuVVdx17N8XNzRDMrZ9XcKZHCjPW+9ew==
+
+react-icons@^4.3.1:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-4.3.1.tgz#2fa92aebbbc71f43d2db2ed1aed07361124e91ca"
+  integrity sha512-cB10MXLTs3gVuXimblAdI71jrJx8njrJZmNMEMC+sQu5B/BIOmlsAjskdqpn81y8UBVEGuHODd7/ci5DvoSzTQ==
 
 react-immutable-proptypes@2.2.0:
   version "2.2.0"

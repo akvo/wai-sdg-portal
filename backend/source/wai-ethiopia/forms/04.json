@@ -10,6 +10,7 @@
           "question": "location",
           "type": "administration",
           "meta": true,
+          "required": true,
           "options": null
         },
         {
@@ -17,6 +18,7 @@
           "question": "school name",
           "type": "text",
           "meta": true,
+          "required": true,
           "options": null
         },
         {
@@ -24,6 +26,7 @@
           "question": "geolocation",
           "type": "geo",
           "meta": true,
+          "required": true,
           "options": null
         },
         {
@@ -31,6 +34,7 @@
           "question": "school type",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "primary(1-8)",
@@ -51,6 +55,7 @@
           "question": "male pupils",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null,
           "rule": {
             "min": 0
@@ -61,6 +66,7 @@
           "question": "female pupils",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null,
           "rule": {
             "min": 0
@@ -71,6 +77,7 @@
           "question": "reason for inventory",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "new scheme",
@@ -87,6 +94,7 @@
           "question": "water supply source",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "pipeline connection",
@@ -111,6 +119,7 @@
           "question": "water",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "advanced",
@@ -143,6 +152,7 @@
           "question": "year commisioned",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null,
           "rule": {
             "min": 2000,
@@ -154,6 +164,7 @@
           "question": "functionality status of water supply",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "functional",
@@ -172,6 +183,7 @@
           "question": "yield",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null,
           "rule": {
             "min": 0
@@ -182,6 +194,7 @@
           "question": "type of latrine",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "simple pit latrine",
@@ -200,6 +213,7 @@
           "question": "sanitation",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "advanced",
@@ -232,6 +246,7 @@
           "question": "latrine for boys and girls separate",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "no",
@@ -248,8 +263,8 @@
           "question": "number of boy pupils",
           "type": "number",
           "meta": false,
-          "options": null,
           "required": false,
+          "options": null,
           "rule": {
             "min": 0
           }
@@ -259,8 +274,8 @@
           "question": "number of girl pupils",
           "type": "number",
           "meta": false,
-          "options": null,
           "required": false,
+          "options": null,
           "rule": {
             "min": 0
           }
@@ -270,6 +285,7 @@
           "question": "are there latrines for disabled?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "no",
@@ -286,6 +302,7 @@
           "question": "latrine condition",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "clean, used",
@@ -309,6 +326,7 @@
           "question": "hygiene service level",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "advanced",
@@ -341,6 +359,7 @@
           "question": "presence of handwashingfacility",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "yes",
@@ -357,6 +376,7 @@
           "question": "hand washing in use",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "yes",
@@ -373,6 +393,7 @@
           "question": "availability of soap",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "yes",
@@ -389,6 +410,7 @@
           "question": "urinal present girls",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "no",
@@ -405,6 +427,7 @@
           "question": "urinal present boys",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "no",
@@ -421,6 +444,7 @@
           "question": "separate latrine for tolitet staff",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "no",

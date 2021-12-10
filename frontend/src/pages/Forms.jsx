@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Webform } from "akvo-react-form";
+import "akvo-react-form/dist/index.css";
 import { Row, Col, Affix, notification, Progress } from "antd";
 import startCase from "lodash/startCase";
 import api from "../util/api";
@@ -73,11 +74,6 @@ const Forms = ({ match }) => {
       </Affix>
       <Col span={24} className="webform">
         <Col span={24} className="blue-header"></Col>
-        <Row justify="center">
-          <Col span={22}>
-            <h1>{startCase(match.params.title)}</h1>
-          </Col>
-        </Row>
         <Row justify="center">
           <Col span={22} className="form-container">
             <Webform forms={forms} onFinish={onFinish} onChange={onChange} />

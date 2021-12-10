@@ -10,13 +10,15 @@
           "question": "location",
           "type": "administration",
           "meta": true,
+          "required": true,
           "options": null
         },
         {
           "order": 3,
           "question": "village",
           "type": "text",
-          "meta": false,
+          "meta": true,
+          "required": true,
           "options": null
         },
         {
@@ -24,6 +26,7 @@
           "question": "site name",
           "type": "text",
           "meta": true,
+          "required": true,
           "options": null
         },
         {
@@ -31,6 +34,7 @@
           "question": "geolocation",
           "type": "geo",
           "meta": true,
+          "required": true,
           "options": null
         },
         {
@@ -38,6 +42,7 @@
           "question": "water source type 1",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "hand dug well fitted with pump or windlass",
@@ -62,6 +67,7 @@
           "question": "water source type",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "hand dug well",
@@ -90,6 +96,7 @@
           "question": "functionality status",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "functional",
@@ -114,6 +121,7 @@
           "question": "souce of energy",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "manual operation",
@@ -146,6 +154,7 @@
           "question": "estimated number of users",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null,
           "rule": {
             "min": 0
@@ -156,6 +165,7 @@
           "question": "hand pump type",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "afridev",
@@ -176,6 +186,7 @@
           "question": "organisation that installed the water pump",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "cda",
@@ -196,6 +207,7 @@
           "question": "year commisioned",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null,
           "rule": {
             "min": 2000,
@@ -207,6 +219,7 @@
           "question": "reason for inventory",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "inspection",
@@ -235,8 +248,8 @@
           "question": "functional taps in the scheme",
           "type": "number",
           "meta": false,
-          "options": null,
           "required": false,
+          "options": null,
           "rule": {
             "min": 0
           }
@@ -246,8 +259,8 @@
           "question": "number of non functional taps in the scheme",
           "type": "number",
           "meta": false,
-          "options": null,
           "required": false,
+          "options": null,
           "rule": {
             "min": 0
           }
@@ -257,6 +270,7 @@
           "question": "depth",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null,
           "rule": {
             "min": 0,
@@ -268,6 +282,7 @@
           "question": "yield",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null,
           "rule": {
             "min": 0
