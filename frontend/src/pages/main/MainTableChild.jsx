@@ -40,6 +40,7 @@ const HistoryTable = ({ record, data }) => {
   }, [historyData, data, record]);
   return (
     <Table
+      size="small"
       columns={[
         {
           title: mainTableChildText?.colValue,
