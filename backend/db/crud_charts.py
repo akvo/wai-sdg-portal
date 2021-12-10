@@ -222,7 +222,7 @@ def get_overviews_visualization(session: Session, form: int, question: int,
 
         if color:
             value.update({"itemStyle": {"color": color}})
-        if opt.lower() == option.lower():
+        if opt.lower().strip() == option.lower().strip():
             info_data = value
         chart_data.append(value)
     data = [{

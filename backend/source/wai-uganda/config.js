@@ -169,7 +169,7 @@ var landing_config = {
       form_id: 4,
       name: "Water Point",
       question: 101,
-      option: "functional",
+      option: "yes",
       above_text: "Across the District",
       number_text: "of ##total## water points are functional",
       explore: "#",
