@@ -10,6 +10,7 @@
           "question": "location",
           "type": "administration",
           "meta": true,
+          "required": true,
           "options": null
         },
         {
@@ -17,6 +18,7 @@
           "question": "parish",
           "type": "text",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -24,6 +26,7 @@
           "question": "village",
           "type": "text",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -31,6 +34,7 @@
           "question": "geolocation",
           "type": "geo",
           "meta": true,
+          "required": true,
           "options": null
         },
         {
@@ -38,6 +42,7 @@
           "question": "name of household",
           "type": "text",
           "meta": true,
+          "required": true,
           "options": null
         },
         {
@@ -45,6 +50,7 @@
           "question": "what is the total number of household members, including yourself?",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -52,6 +58,7 @@
           "question": "water service level",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "basic",
@@ -76,6 +83,7 @@
           "question": "main source of drinking water",
           "type": "text",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -83,6 +91,7 @@
           "question": "main source of water for other purposes",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -90,6 +99,7 @@
           "question": "specific location of water collection",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "elsewhere",
@@ -110,6 +120,7 @@
           "question": "time to collect water",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "less than 30 minutes",
@@ -130,6 +141,7 @@
           "question": "times in last month when drinking water quantity was insufficient",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "yes, at least once",
@@ -150,6 +162,7 @@
           "question": "fecal and chemical levels acceptable",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -157,6 +170,7 @@
           "question": "sanitation service level",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "basic",
@@ -185,6 +199,7 @@
           "question": "type of toilet facility",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "pit latrine with slab",
@@ -209,6 +224,7 @@
           "question": "facility is shared with others outside of the household",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "no",
@@ -225,6 +241,7 @@
           "question": "location of sanitation facility",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "in own plot/yard",
@@ -245,6 +262,7 @@
           "question": "emptying of on-site sanitation facilities",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "no, never emptied",
@@ -269,6 +287,7 @@
           "question": "disposal of excreta from onite sanitation facilities",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "by service provider to a treatment plant",
@@ -301,6 +320,7 @@
           "question": "hygiene",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "basic",
@@ -325,6 +345,7 @@
           "question": "type of handwashing facility used most often",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "fixed facility observed in plot/yard",
@@ -357,6 +378,7 @@
           "question": "water available at handwashing facility",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "water is available",
@@ -373,6 +395,7 @@
           "question": "soap available",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "yes, soap or detergent are present",

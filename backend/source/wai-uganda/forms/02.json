@@ -10,6 +10,7 @@
           "question": "location",
           "type": "administration",
           "meta": true,
+          "required": true,
           "options": null
         },
         {
@@ -17,6 +18,7 @@
           "question": "parish",
           "type": "text",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -24,6 +26,7 @@
           "question": "village",
           "type": "text",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -31,6 +34,7 @@
           "question": "name of health facility",
           "type": "text",
           "meta": true,
+          "required": true,
           "options": null
         },
         {
@@ -38,6 +42,7 @@
           "question": "geolocation",
           "type": "geo",
           "meta": true,
+          "required": true,
           "options": null
         },
         {
@@ -45,6 +50,7 @@
           "question": "health facility level",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "hc iii",
@@ -61,6 +67,7 @@
           "question": "type of health facility",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "government health facility ",
@@ -77,6 +84,7 @@
           "question": "average number of patients per day",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -84,6 +92,7 @@
           "question": "water service level",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "basic ",
@@ -104,6 +113,7 @@
           "question": "main water supply for the facility",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "rain water harvesting",
@@ -120,6 +130,7 @@
           "question": "distance of main water supply from facility",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "on premises",
@@ -136,6 +147,7 @@
           "question": "water is available at the time of survey",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "yes",
@@ -152,6 +164,7 @@
           "question": "sanitation service level",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "limited ",
@@ -176,6 +189,7 @@
           "question": "is there an improved toilet with permanent superstructure (wall constructed of bricks with concrete floor slab and galvanised iron sheet roofing).",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "yes",
@@ -192,6 +206,7 @@
           "question": "type of toilet for patients",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -199,6 +214,7 @@
           "question": "at least one toilet is usable",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "yes",
@@ -215,6 +231,7 @@
           "question": "toilets dedicated for staff",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "no",
@@ -231,6 +248,7 @@
           "question": "toilets are in sex-separated or gender-neutral rooms",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "yes",
@@ -247,6 +265,7 @@
           "question": "toilets have menstrual hygiene facilites",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -254,6 +273,7 @@
           "question": "toilets accessible for people with limited mobility",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -261,6 +281,7 @@
           "question": "hygiene service level",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "no service",
@@ -285,6 +306,7 @@
           "question": "functional hand hygien facility at points of care",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "yes",
@@ -301,6 +323,7 @@
           "question": "functional handwashing facility at one or more toilets",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "no",
@@ -317,6 +340,7 @@
           "question": "health care waste service level",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "basic",
@@ -337,6 +361,7 @@
           "question": "waste is correctly segregated into at least three labelled bins in the consultation area",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "yes",
@@ -353,6 +378,7 @@
           "question": "main method for disposing infectious waste",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "incinerated",
@@ -365,6 +391,7 @@
           "question": "main method used for disposing sharps waste",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -372,6 +399,7 @@
           "question": "environmental cleaning service level",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "basic",
@@ -392,6 +420,7 @@
           "question": "cleaning protocols are available",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "yes",
@@ -408,6 +437,7 @@
           "question": "all staff responsible for cleaning received training",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "yes",

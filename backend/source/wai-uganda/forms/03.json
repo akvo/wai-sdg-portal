@@ -17,6 +17,7 @@
           "question": "parish",
           "type": "text",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -24,6 +25,7 @@
           "question": "school name",
           "type": "text",
           "meta": true,
+          "required": true,
           "options": null
         },
         {
@@ -31,6 +33,7 @@
           "question": "geolocation",
           "type": "geo",
           "meta": true,
+          "required": true,
           "options": null
         },
         {
@@ -38,6 +41,7 @@
           "question": "school type",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "primary",
@@ -70,6 +74,7 @@
           "question": "total number of boys enrolled in the school",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -77,6 +82,7 @@
           "question": "total number of girls enrolled in the school",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -84,6 +90,7 @@
           "question": "what is the total enrolment in the school?",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -91,6 +98,7 @@
           "question": "what is the regular number of staff in the school?",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -98,6 +106,7 @@
           "question": "drinking water",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "basic",
@@ -118,6 +127,7 @@
           "question": "is there an improved water source that serves the school?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "yes-school has its own improved water sources",
@@ -138,6 +148,7 @@
           "question": "what is the type of improved water source?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "deep borehole",
@@ -154,6 +165,7 @@
           "question": "what year was the water facility constructed?",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -161,6 +173,7 @@
           "question": "who funded the construction of the water point?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "government",
@@ -189,6 +202,7 @@
           "question": "sanitation",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "basic",
@@ -209,6 +223,7 @@
           "question": "does the school have any sanitation facilities?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "yes",
@@ -225,6 +240,7 @@
           "question": "what type of sanitation facilities are present?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "vip latrine",
@@ -253,6 +269,7 @@
           "question": "in total, how many functioning stances are for females?",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -260,6 +277,7 @@
           "question": "in total, how many functioning stances are for males?",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -267,6 +285,7 @@
           "question": "is there a sanitation facility accessible to students with disabilities?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "yes",
@@ -283,6 +302,7 @@
           "question": "in what year was the latest (most recent) sanitation facility constructed?",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -290,6 +310,7 @@
           "question": "condition of the superstructure, roof, walls, and doors",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "good and well-raised wall with roof and door",
@@ -310,6 +331,7 @@
           "question": "condition are the floor/slabs/platform",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "medium - some minor cracks",
@@ -330,6 +352,7 @@
           "question": "latrines/cesspits last emptied?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "never emptied",
@@ -366,6 +389,7 @@
           "question": "who paid for the emptying service?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "school",
@@ -382,6 +406,7 @@
           "question": "hygiene",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "basic",
@@ -402,6 +427,7 @@
           "question": "is there a place for handwashing?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "yes",
@@ -418,6 +444,7 @@
           "question": "is there water available at the handwashing station?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "yes",
@@ -434,6 +461,7 @@
           "question": "is there soap at hand washing station?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "yes",
@@ -450,6 +478,7 @@
           "question": "are there any abandoned or not in use sanitation facilities on the plot that pose a risk or threat to the safety of children?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "yes- collapsed or partially collapsed latrines",
@@ -474,6 +503,7 @@
           "question": "do community members not attending the school ever come to use the sanitation facilities?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "rarely",

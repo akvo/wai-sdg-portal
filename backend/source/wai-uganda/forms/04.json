@@ -10,6 +10,7 @@
           "question": "water point name",
           "type": "text",
           "meta": true,
+          "required": true,
           "options": null
         },
         {
@@ -17,6 +18,7 @@
           "question": "location",
           "type": "administration",
           "meta": true,
+          "required": true,
           "options": null
         },
         {
@@ -24,6 +26,7 @@
           "question": "parish",
           "type": "text",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -31,6 +34,7 @@
           "question": "village",
           "type": "text",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -45,6 +49,7 @@
           "question": "dwd number of water point",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -52,6 +57,7 @@
           "question": "year of water point construction",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -59,6 +65,7 @@
           "question": "who funded the construction of this water point",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "government",
@@ -91,6 +98,7 @@
           "question": "estimate the number of households who use this water point as their source of water",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "25-50",
@@ -115,6 +123,7 @@
           "question": "what is the main purpose for which people use water from this water point?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "water for other household and domestic use",
@@ -143,6 +152,7 @@
           "question": "what is the main purpose for which people use water from this water point?--other--",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "none",
@@ -179,6 +189,7 @@
           "question": "is water used by vendors/collected to sell other places?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "never",
@@ -203,6 +214,7 @@
           "question": "are their livestock drinking facilities at the water point?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "no",
@@ -219,6 +231,7 @@
           "question": "type of water source",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "deep borehole",
@@ -258,6 +271,7 @@
           "question": "public tapstand with water meter",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "yes",
@@ -274,6 +288,7 @@
           "question": "water meter functioning",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "yes",
@@ -290,6 +305,7 @@
           "question": "rain water harvesting tank - volume (l)",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "nan",
@@ -306,6 +322,7 @@
           "question": "number of taps/spouts",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "one",
@@ -322,6 +339,7 @@
           "question": "protected spring type",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "ordinary",
@@ -338,6 +356,7 @@
           "question": "how many spouts does it have?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "one",
@@ -354,6 +373,7 @@
           "question": "borehole/well depth (m)",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -361,6 +381,7 @@
           "question": "borehole/well diameter (in)",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -368,6 +389,7 @@
           "question": "type of lifting device?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "handpump",
@@ -392,6 +414,7 @@
           "question": "handpump type",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "afridev",
@@ -408,6 +431,7 @@
           "question": "what is the pipe material?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "gi",
@@ -436,6 +460,7 @@
           "question": "is the water point currently functional?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "functional in use",
@@ -460,6 +485,7 @@
           "question": "please rate the level of functionality",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "fully functioning at 100%",
@@ -480,6 +506,7 @@
           "question": "specify the nature of the technical breakdowns",
           "type": "text",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -487,6 +514,7 @@
           "question": "duration of the current non-functionality (how long has it been out of service)",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "more than one year",
@@ -519,6 +547,7 @@
           "question": "how many days in total was the water facility out of service during the past one year?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "more than 3 weeks total",
@@ -543,6 +572,7 @@
           "question": "how many hours per day is it possible to collect water from this source?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "8-16 hours",
@@ -563,6 +593,7 @@
           "question": "how many minutes does it take to fill a 20 litre jerry can?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "1-3 minutes",
@@ -583,6 +614,7 @@
           "question": "physical state of the apron",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "good",
@@ -611,6 +643,7 @@
           "question": "physical state of the pedestal",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "good",
@@ -639,6 +672,7 @@
           "question": "physical state of tap/ spouts",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "fair (moderate)",
@@ -667,6 +701,7 @@
           "question": "status of how the tap/ spout is currently being used",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "active all are in use",
@@ -687,6 +722,7 @@
           "question": "physical state of drainage channel and soakpit",
           "type": "text",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -694,6 +730,7 @@
           "question": "physical state of the pumphead",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "good",
@@ -722,6 +759,7 @@
           "question": "physical state of the handle",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "good",
@@ -750,6 +788,7 @@
           "question": "physical state of the retention wall",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "good",
@@ -778,6 +817,7 @@
           "question": "physical state of the superstructure (building and door)",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "poor",
@@ -794,6 +834,7 @@
           "question": "physical state of the plumbing works in the kiosk",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "very poor",
@@ -814,6 +855,7 @@
           "question": "how many rainwater harvesting tanks are present?",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -821,6 +863,7 @@
           "question": "what is the total storage capacity of the tanks?",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -828,6 +871,7 @@
           "question": "how many rainwater harvesting tanks are in use?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "none",
@@ -860,6 +904,7 @@
           "question": "what is the total storage volume of tanks in use?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "nan",
@@ -888,6 +933,7 @@
           "question": "what is the physical state of the gutters",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "very poor",
@@ -916,6 +962,7 @@
           "question": "what is the status of the filtration system?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "no filtration system exists",
@@ -940,6 +987,7 @@
           "question": "what is the physical state of the filtration system",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "good",
@@ -968,6 +1016,7 @@
           "question": "what is the physical state of the main tank",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "fair (moderate)",
@@ -996,6 +1045,7 @@
           "question": "please explain any other observable technical problems that require repairs",
           "type": "text",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -1003,6 +1053,7 @@
           "question": "are there any components of the well/ borehole that require total replacement?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "none",
@@ -1039,6 +1090,7 @@
           "question": "are there any components of the well/ borehole that require total replacement?--other--",
           "type": "text",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -1046,6 +1098,7 @@
           "question": "are there any components of the protected spring that require total replacement?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "catchment protection or fence",
@@ -1070,6 +1123,7 @@
           "question": "are there any components of the protected spring that require total replacement?--other--",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "all parts",
@@ -1094,6 +1148,7 @@
           "question": "are there any components of the public tapstand that require total replacement?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "meters",
@@ -1122,6 +1177,7 @@
           "question": "are there any components of the public tapstand that require total replacement?--other--",
           "type": "text",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -1129,6 +1185,7 @@
           "question": "are there any components of the kiosk that require total replacement?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "drainage channel",
@@ -1149,6 +1206,7 @@
           "question": "are there any components of the kiosk that require total replacement?--other--",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -1156,6 +1214,7 @@
           "question": "are there any components of the rainwater harvesting system that require total replacement?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "drainage channel",
@@ -1188,6 +1247,7 @@
           "question": "are there any components of the rainwater harvesting system that require total replacement?--other--",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "all parts",
@@ -1220,6 +1280,7 @@
           "question": "are there any potential sources of contamination within 10 meters of the water point?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "none-no contamination risk observed",
@@ -1248,6 +1309,7 @@
           "question": "is the catchment protected and are there any potential sources if contamination nearby?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "clothes washing in the catchment",
@@ -1284,6 +1346,7 @@
           "question": "are there any potential sources of contamination to the rainwater system?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "none-no contamination risks observed",
@@ -1308,6 +1371,7 @@
           "question": "is there concern about potential contamination of the water quality?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "no concern- water is clean",
@@ -1336,6 +1400,7 @@
           "question": "is there concern about potential contamination of the water quality?--other--",
           "type": "text",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -1343,6 +1408,7 @@
           "question": "are there any concerns about the colour of the water?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "sometimes",
@@ -1363,6 +1429,7 @@
           "question": "are there any concerns about the odour/smell of the water?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "never",
@@ -1383,6 +1450,7 @@
           "question": "are there any concerns about the taste of the water?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "rarely",
@@ -1403,6 +1471,7 @@
           "question": "please any other concern about water quality",
           "type": "text",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -1410,6 +1479,7 @@
           "question": "who is responsible for daly operation of the water point?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "caretaker",
@@ -1426,6 +1496,7 @@
           "question": "who is responsible for daly operation of the water point?--other--",
           "type": "text",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -1433,6 +1504,7 @@
           "question": "is the care paid or unpaid?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "unpaid",
@@ -1449,6 +1521,7 @@
           "question": "is there a wuc/ wsc for this water point?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "yes",
@@ -1465,6 +1538,7 @@
           "question": "who is responsible for the overall management of this water point?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "wuc/ wsc",
@@ -1501,6 +1575,7 @@
           "question": "is the wuc/ wsc currently active?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "yes",
@@ -1517,6 +1592,7 @@
           "question": "in the last year, has the wuc/ wsc/ management body organised any maintenance activities or repairs?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "no",
@@ -1537,6 +1613,7 @@
           "question": "in the last year,has the wuc/wsc received any support or guidance from the sub-county or district government?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "no",
@@ -1557,6 +1634,7 @@
           "question": "number of members of the wuc/ wsc",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -1564,6 +1642,7 @@
           "question": "number of active members on the wuc/wsc",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -1571,6 +1650,7 @@
           "question": "number of women on the wuc/wsc",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -1578,6 +1658,7 @@
           "question": "number of women in key positions on the wuc/wsc (chair, secretary of finance)",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -1585,6 +1666,7 @@
           "question": "is the wuc/wsc a member of the sub county water supply and sanitation board?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "unknown",
@@ -1605,6 +1687,7 @@
           "question": "does the wuc/wsc/operator keep records of the water meter readings or amount of water collected?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "no",
@@ -1625,6 +1708,7 @@
           "question": "does the wuc/wsc/operator keep financial records on income collected?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "yes",
@@ -1641,6 +1725,7 @@
           "question": "does the wuc/wsc keep financial records on expenditure and/or a record of repairs?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "yes",
@@ -1657,6 +1742,7 @@
           "question": "does the wuc/wsc have a bank account?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "no",
@@ -1677,6 +1763,7 @@
           "question": "when were the last water quality tests done?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "1 to 5 years ago",
@@ -1709,6 +1796,7 @@
           "question": "does the operator keep financial records on expenditure and/or a record of repairs?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "no",
@@ -1725,6 +1813,7 @@
           "question": "has the wuc/wsc received any support or training from the sub county or the district in the past year?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "no",
@@ -1745,6 +1834,7 @@
           "question": "do users pay for water?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "yes",
@@ -1765,6 +1855,7 @@
           "question": "how much is typically collected from each user when there is a breakdown or repair?",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -1772,6 +1863,7 @@
           "question": "type of tariff system",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "fixed tariff per month",
@@ -1796,6 +1888,7 @@
           "question": "type of tariff system--other--",
           "type": "text",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -1803,6 +1896,7 @@
           "question": "what is the monthly tariff?",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -1810,6 +1904,7 @@
           "question": "what is the annual tariff?",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -1817,6 +1912,7 @@
           "question": "what is the tariff per 20l jerry can?",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -1824,6 +1920,7 @@
           "question": "% of community paying tariffs",
           "type": "number",
           "meta": false,
+          "required": true,
           "options": null
         },
         {
@@ -1831,6 +1928,7 @@
           "question": "are there any families or people in the village exempted from payment due to inability to pay?",
           "type": "option",
           "meta": false,
+          "required": true,
           "options": [
             {
               "name": "yes",
