@@ -30,7 +30,13 @@ const modalProps = (type, secureDelete, setSecureDelete) => {
           <>
             <Space direction="vertical">
               <div>
-                <b>{deleteText?.inputTitle}</b>
+                {deleteText?.deleteInputTitle?.map((x, xi) =>
+                  xi === 1 ? (
+                    <b key={`delete-input-title-${xi}`}>{` ${x} `}</b>
+                  ) : (
+                    x
+                  )
+                )}
                 <Input
                   value={secureDelete.text}
                   onChange={(e) =>
@@ -85,6 +91,7 @@ const ConfirmationModal = ({ visible, type, onOk, onCancel }) => {
 
   return (
     <Modal
+      key="confirmation-modal"
       className="popup-notification"
       title=""
       visible={visible}

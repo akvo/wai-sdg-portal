@@ -462,6 +462,7 @@ const ManageData = ({ handleTabClick }) => {
       </div>
       {dataSelected ? (
         <Modal
+          key="main-table-child-modal"
           title={dataSelected?.name}
           bodyStyle={{ padding: "0px" }}
           visible={dataSelected}
