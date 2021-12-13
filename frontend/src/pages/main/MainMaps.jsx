@@ -24,6 +24,7 @@ import {
   tileDelorme,
   defaultPos,
 } from "../../util/geo-util";
+import { Color } from "../../chart/chart-style";
 
 const { shapeLevels } = window.map_config;
 const mapMaxZoom = 14;
@@ -32,7 +33,7 @@ const colorRange = ["#bbedda", "#a7e1cb", "#92d5bd", "#7dcaaf", "#67bea1"];
 const higlightColor = "#84b4cc";
 const noDataColor = "#d3d3d3";
 
-const Markers = ({ data, colors, filterMarker }) => {
+const Markers = ({ data, colors, filterMarker, defaultColors }) => {
   data = data.filter((d) => d.geo);
   const rowHovered = UIState.useState((e) => e.rowHovered);
   return data.map(({ id, geo, marker, name }) => {
@@ -45,6 +46,11 @@ const Markers = ({ data, colors, filterMarker }) => {
         (c) => c.name?.toLowerCase() === marker?.toLowerCase()
       );
       fill = option ? option.color : "#FF0";
+      if (!fill) {
+        fill = defaultColors?.find(
+          (d) => d.name?.toLowerCase() === marker?.toLowerCase()
+        )?.color;
+      }
     }
     if (filterMarker?.toLowerCase() === marker?.toLowerCase()) {
       hovered = true;
@@ -188,7 +194,7 @@ const MarkerLegend = ({
     >
       <span
         className="marker-icon"
-        style={{ backgroundColor: x.color || "#000" }}
+        style={{ backgroundColor: x.color || Color.color[i] }}
       ></span>
       <span className="marker-name">{x.name}</span>
     </Space>
@@ -223,6 +229,10 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
   const markerQuestion = question.find(
     (q) => q.id === current.maps?.marker?.id
   );
+  const defaultMarkerColor = _.sortBy(markerQuestion?.option)?.map((m, i) => ({
+    ...m,
+    color: m.color || Color.color[i],
+  }));
   const shapeQuestion = question.find((q) => q.id === current.maps?.shape?.id);
 
   useEffect(() => {
@@ -427,6 +437,7 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
             <Markers
               data={data}
               colors={markerQuestion?.option}
+              defaultColors={defaultMarkerColor}
               filterMarker={filterMarker}
             />
           )}
