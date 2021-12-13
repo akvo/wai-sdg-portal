@@ -25,7 +25,11 @@ const ODFLine = (data, chartTitle, extra) => {
         const start = p[0].dataIndex === 0;
         const sentences = p.reverse().map((d) => {
           const v = d.data.data;
-          let title = start ? "Trigered" : v.endValue ? "Verified" : "On Going";
+          let title = start
+            ? "Trigered ODF"
+            : v.endValue
+            ? "Verified ODF"
+            : "On Going";
           let date = start ? v.startDate : v.endDate;
           date = moment(date._d).format("DD MMM, YY");
           let value = start ? v.startValue : v.endValue;
