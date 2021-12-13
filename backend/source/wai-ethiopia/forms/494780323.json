@@ -10,7 +10,7 @@
           "order": 1,
           "required": true,
           "type": "administration",
-          "meta": true
+          "meta": false
         }
       ]
     },
@@ -152,15 +152,15 @@
           "options": [
             {
               "name": "Functional",
-              "color": null
+              "color": "#91cc75"
             },
             {
               "name": "Not functional",
-              "color": null
+              "color": "#e39f00"
             },
             {
               "name": "No water supply",
-              "color": null
+              "color": "#ee6666"
             }
           ]
         },
@@ -659,7 +659,7 @@
               "score": -1
             },
             {
-              "name": "No service",
+              "name": "No Service",
               "color": "#F1AC2A",
               "score": -2
             }
@@ -684,7 +684,7 @@
               "score": -1
             },
             {
-              "name": "No service",
+              "name": "No Service",
               "color": "#F1AC2A",
               "score": -2
             }
@@ -709,7 +709,7 @@
               "score": -1
             },
             {
-              "name": "No service",
+              "name": "No Service",
               "color": "#F1AC2A",
               "score": -2
             }

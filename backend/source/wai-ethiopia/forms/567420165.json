@@ -551,19 +551,19 @@
               "name": "Limited",
               "color": "#FDF177",
               "order": 3,
-              "score": 1
+              "score": -1
             },
             {
               "name": "Unimproved",
               "color": "#FBD256",
               "order": 4,
-              "score": -1
+              "score": -2
             },
             {
               "name": "Open Defecation",
               "color": "#F1AC2A",
               "order": 5,
-              "score": -2
+              "score": -3
             }
           ]
         },
@@ -586,7 +586,7 @@
               "score": -1
             },
             {
-              "name": "No service",
+              "name": "No Facility",
               "color": "#F1AC2A",
               "score": -2
             }

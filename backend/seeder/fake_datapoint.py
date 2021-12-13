@@ -75,6 +75,9 @@ for form in forms:
         names = []
         administration = get_random_administration(fake, session)
         geo = None
+        # For ODF
+        status_verified = fake.boolean()
+        not_triggered = fake.boolean(chance_of_getting_true=5)
         for qg in form.question_group:
             for q in qg.question:
                 value = False
@@ -85,12 +88,34 @@ for form in forms:
                         QuestionType.option, QuestionType.multiple_option
                 ]:
                     fa = fake.random_int(min=0, max=len(q.option) - 1)
-                    answer.options = [q.option[fa].name]
+                    # ODF
+                    if q.id not in [557700349]:
+                        answer.options = [q.option[fa].name]
+                    if q.id == 557700349:
+                        if status_verified:
+                            answer.options = ["Verified ODF"]
+                        if not status_verified and not not_triggered:
+                            answer.options = ["Triggered"]
+                        if not_triggered:
+                            answer.options = ["Open Defecation"]
                     value = True
                 if q.type == QuestionType.number:
-                    fa = fake.random_int(min=0, max=10)
+                    fa = fake.random_int(min=1, max=20)
                     answer.value = fa
                     value = True
+                if q.type == QuestionType.date:
+                    fa = fake.date_this_century()
+                    value = not not_triggered
+                    # ODF
+                    if q.id != 557690351:
+                        fm = fake.random_int(min=11, max=12)
+                        fd = fa.strftime("%d")
+                        answer.text = f"2019-{fm}-{fd}"
+                    if q.id == 557690351 and status_verified:
+                        fm = fake.random_int(min=6, max=9)
+                        fd = fa.strftime("%d")
+                        answer.text = f"2021-{fm}-{fd}"
+                        value = status_verified
                 if q.type == QuestionType.text:
                     fa = fake.text(max_nb_chars=10)
                     answer.text = fa
