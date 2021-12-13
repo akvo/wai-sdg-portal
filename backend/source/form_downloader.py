@@ -21,6 +21,16 @@ class SurveyList(enum.Enum):
         'administration':
         ['1084694626', '1260775107', '1260775115', '1260775108', '1084684623']
     }
+    wai_ethiopia = {
+        'domain':
+        'pilots',
+        'formIds': [
+            '567420197', '494780323', '567420165', '551870264', '551870264',
+            '571070071'
+        ],
+        'administration':
+        ['1084694626', '1260775107', '1260775115', '1260775108', '1084684623']
+    }
 
 
 api = "https://tech-consultancy.akvo.org/akvo-flow-web-api/"

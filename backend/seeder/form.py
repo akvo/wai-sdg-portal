@@ -15,7 +15,7 @@ session = SessionLocal()
 source_path = os.environ["INSTANCE_NAME"]
 file_path = f"./source/{source_path}/forms/"
 
-files = os.listdir(file_path)
+files = list(filter(lambda x: ".bak" not in x, os.listdir(file_path)))
 start_time = time.process_time()
 
 for table in ["form", "question_group", "question", "option"]:
