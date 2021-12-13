@@ -2,6 +2,7 @@ import os
 import sys
 import time
 import json
+import pandas as pd
 from datetime import datetime
 from faker import Faker
 from db import crud_administration
@@ -25,6 +26,12 @@ administration_level = [g["alias"] for g in GeoLevels[class_path].value]
 config = GeoLevels[class_path].value
 levels = [c["name"] for c in config]
 source_geo = f"./source/{source_path}/topojson.json"
+random_point_file = f"./source/{source_path}/random-points.csv"
+random_point = os.path.exists(random_point_file)
+sample_geo = False
+if random_point:
+    sample_geo = pd.read_csv(random_point_file)
+    sample_geo = sample_geo.rename(columns={levels[-1]: "name"})
 with open(source_geo, 'r') as geo:
     geo = json.load(geo)
     ob = geo["objects"]
@@ -65,6 +72,14 @@ def get_random_administration(fake, session):
     return administration.children[fa]
 
 
+def get_odf_value(status_verified, not_triggered):
+    if status_verified:
+        return ["Verified ODF"]
+    if not status_verified and not not_triggered:
+        return ["Triggered"]
+    return ["Open Defecation"]
+
+
 for form in forms:
     form = crud_form.get_form_by_id(session=session, id=form.id)
     repeats = 10
@@ -75,6 +90,13 @@ for form in forms:
         names = []
         administration = get_random_administration(fake, session)
         geo = None
+        if random_point:
+            geo = sample_geo[sample_geo['name'] == administration.name]
+            if geo.shape[0]:
+                geo = geo.to_dict("records")[0]
+                geo = [geo['lat'], geo['long']]
+            else:
+                geo = None
         # For ODF
         status_verified = fake.boolean()
         not_triggered = fake.boolean(chance_of_getting_true=5)
@@ -88,19 +110,13 @@ for form in forms:
                         QuestionType.option, QuestionType.multiple_option
                 ]:
                     fa = fake.random_int(min=0, max=len(q.option) - 1)
-                    # ODF
-                    if q.id not in [557700349]:
-                        answer.options = [q.option[fa].name]
+                    answer.options = [q.option[fa].name]
                     if q.id == 557700349:
-                        if status_verified:
-                            answer.options = ["Verified ODF"]
-                        if not status_verified and not not_triggered:
-                            answer.options = ["Triggered"]
-                        if not_triggered:
-                            answer.options = ["Open Defecation"]
+                        answer.options = get_odf_value(status_verified,
+                                                       not_triggered)
                     value = True
                 if q.type == QuestionType.number:
-                    fa = fake.random_int(min=1, max=20)
+                    fa = fake.random_int(min=10, max=50)
                     answer.value = fa
                     value = True
                 if q.type == QuestionType.date:
@@ -116,6 +132,8 @@ for form in forms:
                         fd = fa.strftime("%d")
                         answer.text = f"2021-{fm}-{fd}"
                         value = status_verified
+                if q.type == QuestionType.geo and geo:
+                    answer.text = ("{}|{}").format(geo[0], geo[1])
                 if q.type == QuestionType.text:
                     fa = fake.text(max_nb_chars=10)
                     answer.text = fa
@@ -126,8 +144,9 @@ for form in forms:
                     value = True
                 if q.type == QuestionType.administration:
                     answer.value = administration.id
-                    names.append(administration.name)
                     value = True
+                    if q.meta:
+                        names.append(administration.name)
                 if value:
                     answers.append(answer)
         name = " - ".join(names)
