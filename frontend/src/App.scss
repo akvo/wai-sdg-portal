@@ -162,17 +162,34 @@
   }
 }
 
+.webform-progress-bar {
+  padding: 20px;
+  width: 100%;
+  background: #fafafa;
+  transition: background-color linear 0.2s;
+}
+
+.ant-affix {
+  .webform-progress-bar {
+    background: #ffffff;
+  }
+}
+
 .webform {
   .blue-header {
     background-color: #0288d133;
     height: 300px;
     width: 100%;
     position: absolute;
+    transition: background-color linear 0.2s;
+  }
+
+  .blue-header.to-white {
+    background-color: #ffffff;
   }
 
   h1 {
     font-weight: bold;
-    padding: 20px 0px;
     color: #0288d1;
   }
 
@@ -181,6 +198,19 @@
     margin-bottom: 50px;
     border-left: 1px solid #eee;
     border-bottom: 1px solid #eee;
+
+    .arf-sticky {
+      top: 62px;
+    }
+
+    .arf-form-header.arf-sticky {
+      border-top: 1px solid #f0f0f0;
+      border-right: 1px solid #f0f0f0;
+    }
+
+    .arf-sidebar.arf-sticky {
+      top: 121px;
+    }
   }
 }
 

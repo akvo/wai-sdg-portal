@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Webform } from "akvo-react-form";
 import "akvo-react-form/dist/index.css";
 import { Row, Col, Affix, notification, Progress } from "antd";
-import startCase from "lodash/startCase";
 import api from "../util/api";
 import { useHistory } from "react-router-dom";
 
@@ -12,6 +11,7 @@ const Forms = ({ match }) => {
   let history = useHistory();
   const [loading, setLoading] = useState(true);
   const [forms, setForms] = useState([]);
+  const [offset, setOffset] = useState(0);
   const [percentage, setPercentage] = useState(0);
 
   const onFinish = (values) => {
@@ -58,6 +58,12 @@ const Forms = ({ match }) => {
     })();
   }, [match, loading]);
 
+  useEffect(() => {
+    window.onscroll = () => {
+      setOffset(window.pageYOffset);
+    };
+  }, []);
+
   if (loading) {
     return "";
   }
@@ -67,16 +73,24 @@ const Forms = ({ match }) => {
 
   return (
     <Row>
-      <Affix style={{ width: "100%", zIndex: 1001 }}>
-        <div style={{ padding: 20, width: "100%", background: "#fafafa" }}>
+      <Affix style={{ width: "100%", zIndex: 1002 }}>
+        <div className="webform-progress-bar">
           <Progress percent={percentage} />
         </div>
       </Affix>
       <Col span={24} className="webform">
-        <Col span={24} className="blue-header"></Col>
+        <Col
+          span={24}
+          className={offset > 66 ? "blue-header to-white" : "blue-header"}
+        ></Col>
         <Row justify="center">
           <Col span={22} className="form-container">
-            <Webform forms={forms} onFinish={onFinish} onChange={onChange} />
+            <Webform
+              forms={forms}
+              onFinish={onFinish}
+              onChange={onChange}
+              sticky={true}
+            />
           </Col>
         </Row>
       </Col>
