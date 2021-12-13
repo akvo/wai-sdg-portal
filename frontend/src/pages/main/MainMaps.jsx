@@ -46,7 +46,7 @@ const Markers = ({ data, colors, filterMarker }) => {
       );
       fill = option ? option.color : "#FF0";
     }
-    if (filterMarker === marker?.toLowerCase()) {
+    if (filterMarker?.toLowerCase() === marker?.toLowerCase()) {
       hovered = true;
     }
     return (
@@ -175,10 +175,13 @@ const MarkerLegend = ({
       size="small"
       align="center"
       className={
-        "marker-item" + (filterMarker === x.name ? " marker-item-selected" : "")
+        "marker-item" +
+        (filterMarker?.toLowerCase() === x.name?.toLowerCase()
+          ? " marker-item-selected"
+          : "")
       }
       onClick={() =>
-        filterMarker === x.name
+        filterMarker?.toLowerCase() === x.name?.toLowerCase()
           ? setFilterMarker(null)
           : setFilterMarker(x.name)
       }
@@ -187,7 +190,7 @@ const MarkerLegend = ({
         className="marker-icon"
         style={{ backgroundColor: x.color || "#000" }}
       ></span>
-      <span className="marker-name">{_.capitalize(x.name)}</span>
+      <span className="marker-name">{x.name}</span>
     </Space>
   ));
   return (

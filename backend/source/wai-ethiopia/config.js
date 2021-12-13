@@ -157,6 +157,38 @@ var page_config = {
       shape: { id: 569080377, name: "Water" },
       marker: { id: 569080377, name: "Water Service Level" },
     },
+    rows: [
+      {
+        component: "PIE-CHART-GROUP",
+        chartList: [
+          {
+            type: "PIE",
+            question: 559830320,
+            name: "Toilets are Sex-Separated",
+          },
+          {
+            type: "PIE",
+            question: 559830321,
+            name: "At Least One Toilet was Usable",
+          },
+          {
+            type: "PIE",
+            question: 559830322,
+            name: "Dedicated Toilet for Staff",
+          },
+          {
+            type: "PIE",
+            question: 559830318,
+            name: "Toilets have Menstrual Hygiene Facilities",
+          },
+          {
+            type: "PIE",
+            question: 559830319,
+            name: "Toilets Accessible for People with Limited Mobility",
+          },
+        ],
+      },
+    ],
     formId: 494780323,
   },
   households: {
@@ -221,6 +253,38 @@ var page_config = {
       shape: { id: 561200194, name: "Water Yield" },
       marker: { id: 561200191, title: "Functionality Status" },
     },
+    rows: [
+      {
+        component: "PIE-CHART-GROUP",
+        chartList: [
+          {
+            type: "PIE",
+            question: 557690281,
+            name: "Toilets are Sex-Separated",
+          },
+          {
+            type: "PIE",
+            question: 557690277,
+            name: "Separate Toilets for Staff",
+          },
+          {
+            type: "PIE",
+            question: 555930269,
+            name: "Usable Urinals Available for Boys",
+          },
+          {
+            type: "PIE",
+            question: 555950240,
+            name: "Usable Urinals Available for Girls",
+          },
+          {
+            type: "PIE",
+            question: 557690283,
+            name: "Toilets Accessible for People with Limited Mobility",
+          },
+        ],
+      },
+    ],
     formId: 551870264,
   },
 };
@@ -251,10 +315,10 @@ var landing_config = {
   ],
   overviews: [
     {
-      formId: 571070071,
+      form_id: 571070071,
       name: "Water Point",
       question: 567450085,
-      option: "functional",
+      option: "Functional",
       above_text: "Across 2 Kebele",
       number_text: "of ##total## water points are functional",
       explore: "#",
@@ -263,7 +327,7 @@ var landing_config = {
       form_id: 567420197,
       name: "CLTS",
       question: 557700349,
-      option: "verified odf",
+      option: "Verified ODF",
       above_text: "Across the Woreda",
       number_text: "of odf villages per Woreda",
       explore: "#",
@@ -272,7 +336,7 @@ var landing_config = {
       form_id: 494780323,
       name: "Health Facilities",
       question: 569080378,
-      option: "basic",
+      option: "Basic",
       above_text: "Across the Woreda",
       number_text: "of health facilities have basic water access",
       explore: "#",
@@ -281,7 +345,7 @@ var landing_config = {
       form_id: 551870264,
       name: "Schools",
       question: 559810275,
-      option: "basic",
+      option: "Basic",
       above_text: "Across the Woreda",
       number_text: "of schools have basic water access",
       explore: "#",
