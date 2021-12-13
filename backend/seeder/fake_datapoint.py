@@ -93,8 +93,9 @@ for form in forms:
         if random_point:
             geo = sample_geo[sample_geo['name'] == administration.name]
             if geo.shape[0]:
-                geo = geo.to_dict("records")[0]
-                geo = [geo['lat'], geo['long']]
+                geo = geo.to_dict("records")
+                iloc = fake.random_int(min=0, max=len(geo) - 1)
+                geo = [geo[iloc]['lat'], geo[iloc]['long']]
             else:
                 geo = None
         # For ODF
