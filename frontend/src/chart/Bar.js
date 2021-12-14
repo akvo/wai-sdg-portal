@@ -13,6 +13,7 @@ import {
 import sortBy from "lodash/sortBy";
 import isEmpty from "lodash/isEmpty";
 import upperFirst from "lodash/upperFirst";
+import sumBy from "lodash/sumBy";
 
 const { chartText } = window?.i18n;
 
@@ -23,8 +24,9 @@ const Bar = (data, chartTitle, extra) => {
 
   // Custom Axis Title
   const { xAxisTitle, yAxisTitle } = axisTitle(extra);
-
+  const total = sumBy(data, "value");
   data = sortBy(data, "order");
+  data = data.map((x) => ({ ...x, percentage: (x.value / total) * 100 }));
   let labels = data.map((x) => x.name);
   let option = {
     ...Color,
@@ -71,10 +73,12 @@ const Bar = (data, chartTitle, extra) => {
             table += "<thead><tr>";
             table += "<th>" + chartText?.tbColCategory + "</th>";
             table += "<th>" + chartText?.tbColCount + "</th>";
+            table += "<th>" + chartText?.tbColPercentage + "</th>";
             table += "</tr></thead><tbody>";
             for (var i = 0, l = series.length; i < l; i++) {
               table += "<tr>";
               table += "<td>" + upperFirst(series[i].name) + "</td>";
+              table += "<td>" + series[i].count + "</td>";
               table += "<td>" + series[i].value + "</td>";
               table += "</tr>";
             }
@@ -115,19 +119,23 @@ const Bar = (data, chartTitle, extra) => {
       {
         data: data.map((v, vi) => ({
           name: v.name,
-          value: v.value,
+          value: v.percentage?.toFixed(2),
+          count: v.value,
           itemStyle: { color: v.color || Color.color[vi] },
         })),
         type: "bar",
         barMaxWidth: 50,
         label: {
           colorBy: "data",
-          position: "insideBottom",
+          position: "top",
           show: true,
           padding: 5,
           backgroundColor: "rgba(0,0,0,.3)",
           ...TextStyle,
           color: "#fff",
+          formatter: (s) => {
+            return `${s.data.count} (${s.value} %)`;
+          },
         },
       },
     ],

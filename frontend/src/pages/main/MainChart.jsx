@@ -233,7 +233,7 @@ const MainChart = ({ current, question }) => {
                         selectedQuestion?.name || null,
                         selectedStack?.name || null,
                       ],
-                      y: chartText?.countText,
+                      y: chartText?.percentageText,
                     },
                   }}
                 />
