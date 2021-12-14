@@ -39,7 +39,10 @@
       background-color: #45add9;
       color: #fff;
       font-size: 14px;
-      padding: 20px 0px 0px 0px;
+
+      /* FIXME: Revert once footer is changed */
+      // padding: 20px 0px 0px 0px;
+      padding: 0px;
 
       .footer-start,
       .footer-end {
@@ -54,7 +57,8 @@
       }
 
       .footer-end {
-        margin-top: 20px;
+        /* FIXME: Revert once footer is changed */
+        // margin-top: 20px;
         background-color: #0288d1b7;
         color: #fff;
         padding-top: 10px;

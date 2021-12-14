@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 const { footer } = window?.i18n;
 
+/* ## FIXME: Enable once footer text is ready
 const FooterContent = ({ title, text }) => {
   return (
     <Col span={7}>
@@ -14,6 +15,7 @@ const FooterContent = ({ title, text }) => {
     </Col>
   );
 };
+*/
 
 const FooterEnd = () => {
   const { user } = UIState.useState((c) => c);
@@ -51,6 +53,7 @@ const FooterEnd = () => {
 const Footer = () => {
   return (
     <>
+      {/* ## FIXME: Enable once footer text is ready
       <Row align="space-between" className="footer-start">
         <FooterContent title={footer?.dataTitle} text={footer?.dataText} />
         <FooterContent
@@ -59,6 +62,7 @@ const Footer = () => {
         />
         <FooterContent title={footer?.workTitle} text={footer?.workText} />
       </Row>
+        */}
       <FooterEnd />
     </>
   );

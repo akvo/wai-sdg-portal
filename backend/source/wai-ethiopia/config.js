@@ -9,17 +9,17 @@ var features = {
 var navigation_config = [
   {
     link: "water",
-    name: "Water",
+    name: "Water Points",
     childrens: null,
   },
   {
     link: "clts",
-    name: "CLTS",
+    name: "CLTS Plus",
     childrens: null,
   },
   {
     link: "jmp",
-    name: "JMP",
+    name: "WASH Service Levels",
     childrens: [
       {
         link: "households",
@@ -46,20 +46,20 @@ var page_config = {
         key: "name",
       },
       {
-        title: "Source Type",
+        title: "Water Source Type",
         key: 571050096,
       },
       {
-        title: "Functionality",
+        title: "Functionality Status",
         key: 567450085,
       },
       {
-        title: "Number of Users",
-        key: 567400198,
+        title: "Problems With Water System",
+        key: 571060084,
       },
     ],
     maps: {
-      shape: { id: 546560207, name: "Non Functional Taps" },
+      shape: { id: 567400198, name: "Number of Users" },
       marker: { id: 567450085, title: "Functionality Status" },
     },
     formId: 571070071,
@@ -292,21 +292,21 @@ var page_config = {
 var landing_config = {
   datasetsInPortal: [
     {
-      title: "JMP/SDG Status",
+      title: "WASH Service Levels",
       description:
         "The JMP/SDG indicators describe the WASH service levels of communities, schools and health facilities, offering an approach to rank the vulnerability of these entities. This section helps WASH authorities to prioritize funding and resources to the most vulnerable.",
       readmore: "#",
       explore: "#",
     },
     {
-      title: "CLTS + Progress",
+      title: "CLTS Plus",
       description:
         "Community Led Total Sanitation Plus is a methodology for achieving open defecation free and adequate coverage of sanitation facilities. This section tracks the progress of CLTS implementors.",
       readmore: "#",
       explore: "#",
     },
     {
-      title: "Water Infrastructure",
+      title: "Community Water Points",
       description:
         "This section contains technical and management data, and tracks the functionality of community water points. This is useful for month to month planning of maintenance and rehabilitation activities.",
       readmore: "#",
@@ -319,7 +319,7 @@ var landing_config = {
       name: "Water Point",
       question: 567450085,
       option: "Functional",
-      above_text: "Across 2 Kebele",
+      above_text: "",
       number_text: "of ##total## water points are functional",
       explore: "#",
     },
@@ -328,8 +328,8 @@ var landing_config = {
       name: "CLTS",
       question: 557700349,
       option: "Verified ODF",
-      above_text: "Across the Woreda",
-      number_text: "of odf villages per Woreda",
+      above_text: "",
+      number_text: "of villages are Verified ODF",
       explore: "#",
     },
     {
@@ -337,7 +337,7 @@ var landing_config = {
       name: "Health Facilities",
       question: 569080378,
       option: "Basic",
-      above_text: "Across the Woreda",
+      above_text: "",
       number_text: "of health facilities have basic water access",
       explore: "#",
     },
@@ -346,7 +346,7 @@ var landing_config = {
       name: "Schools",
       question: 559810275,
       option: "Basic",
-      above_text: "Across the Woreda",
+      above_text: "",
       number_text: "of schools have basic water access",
       explore: "#",
     },

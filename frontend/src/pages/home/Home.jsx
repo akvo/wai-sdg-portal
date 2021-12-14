@@ -11,7 +11,7 @@ import Chart from "../../chart";
 import isEmpty from "lodash/isEmpty";
 import upperFirst from "lodash/upperFirst";
 
-const level2 = window.levels[1];
+const level2 = window.levels[0];
 const { datasetsInPortal, overviews } = window.landing_config;
 const {
   exploreText,
@@ -235,9 +235,7 @@ const Home = () => {
       <Col span={24}>
         <Row className="overview-container">
           <Col span={24} className="container">
-            <h1>
-              {overviewSectionTitle} {level2}
-            </h1>
+            <h1>{overviewSectionTitle}</h1>
           </Col>
           <Col span={24} className="overview-content-wrapper">
             <Carousel autoplay effect="fade">
