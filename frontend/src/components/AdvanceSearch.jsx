@@ -3,7 +3,6 @@ import { Collapse, Button, Tag, Space, Select, Radio, Popover } from "antd";
 import { FilterOutlined, InfoCircleOutlined } from "@ant-design/icons";
 
 import { UIState } from "../state/ui";
-import upperFirst from "lodash/upperFirst";
 import isEmpty from "lodash/isEmpty";
 import sortBy from "lodash/sortBy";
 import flatten from "lodash/flatten";
@@ -95,7 +94,7 @@ const AdvanceSearch = ({
               placeholder={mainText?.advanceSearchSelectOptionPlaceholder}
               className="search-question-select"
               options={question.map((q) => ({
-                label: upperFirst(q.name),
+                label: q.name,
                 value: q.id,
               }))}
               optionFilterProp="label"
@@ -134,7 +133,7 @@ const RenderQuestionOption = ({
   const OptionToRender = ({ questionId, option }) => {
     return sortBy(option, "order").map((opt) => (
       <Radio key={`${opt.id}-${opt.name}`} value={`${questionId}|${opt.name}`}>
-        {upperFirst(opt.name)}
+        {opt.name}
       </Radio>
     ));
   };
@@ -174,14 +173,14 @@ const RenderFilterTag = ({ setPage, setSelectedRow }) => {
       <Tag
         key={`tag-${val.option}`}
         icon={
-          <Popover title={upperFirst(val.question)} placement="topRight">
+          <Popover title={val.question} placement="topRight">
             <InfoCircleOutlined />
           </Popover>
         }
         closable
         onClose={(e) => handleOnCloseTag(val.option)}
       >
-        {upperFirst(val.option.split("|")[1])}
+        {val.option.split("|")[1]}
       </Tag>
     ));
   };

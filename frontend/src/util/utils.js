@@ -20,7 +20,7 @@ export const generateAdvanceFilterURL = (advanceSearchValue, url) => {
     const advanceFilter = advanceSearchValue
       .map((x) => encodeURIComponent(x.option))
       .join("&q=");
-    url += `&q=${advanceFilter}`;
+    url += `&q=${advanceFilter?.toLowerCase()}`;
   }
   return url;
 };
