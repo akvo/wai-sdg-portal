@@ -73,6 +73,11 @@ const NameWithInfo = ({ record, current, question }) => {
       {hasDefaultHistory && (
         <LineChartOutlined
           onClick={() => {
+            window.scrollTo({
+              top: 640,
+              left: 0,
+              behavior: "smooth",
+            });
             UIState.update((s) => {
               s.historyChart = {
                 dataPointId: id,

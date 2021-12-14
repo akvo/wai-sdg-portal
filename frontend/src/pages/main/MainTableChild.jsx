@@ -166,6 +166,11 @@ const MainTableChild = ({
               showChartButton = (
                 <LineChartOutlined
                   onClick={() => {
+                    window.scrollTo({
+                      top: 640,
+                      left: 0,
+                      behavior: "smooth",
+                    });
                     UIState.update((s) => {
                       s.historyChart = {
                         dataPointId: dataPointId,

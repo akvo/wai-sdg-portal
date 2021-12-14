@@ -89,6 +89,10 @@ const MainHistoryChart = ({ current, data, question }) => {
               <Col align="end" span={12}>
                 <CloseSquareOutlined
                   onClick={() => {
+                    window.scrollTo({
+                      top: 0,
+                      behavior: "smooth",
+                    });
                     UIState.update((s) => {
                       s.historyChart = {};
                     });
