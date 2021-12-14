@@ -39,7 +39,7 @@ const JMPBarStack = (data, chartTitle, extra) => {
       const opacity = selectedAdministration === d.id ? 1 : 0.5;
       return {
         name: val?.name || null,
-        value: val?.value || 0,
+        value: val?.value?.toFixed(2) || 0,
         itemStyle: {
           color: val?.color || s.color,
           opacity: selectedAdministration ? opacity : 1,
