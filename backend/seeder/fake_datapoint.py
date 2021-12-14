@@ -45,6 +45,10 @@ if len(sys.argv) < 2:
     print("You should provide admin address")
     sys.exit()
 
+if len(sys.argv) < 3:
+    print("You should provide number of datapoints")
+    sys.exit()
+
 user = crud_user.get_user_by_email(session=session, email=sys.argv[1])
 if not user:
     print("{} user is not available")
@@ -82,9 +86,7 @@ def get_odf_value(status_verified, not_triggered):
 
 for form in forms:
     form = crud_form.get_form_by_id(session=session, id=form.id)
-    repeats = 10
-    if len(sys.argv) > 2:
-        repeats = int(sys.argv[2])
+    repeats = int(sys.argv[2])
     for i in range(repeats):
         answers = []
         names = []
