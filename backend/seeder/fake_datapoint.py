@@ -40,6 +40,8 @@ parent_administration = set([
     d[levels[-2]]
     for d in [p["properties"] for p in ob[ob_name]["geometries"]]
 ])
+forms = crud_form.get_form(session=session)
+forms = [f.id for f in forms]
 
 if len(sys.argv) < 2:
     print("You should provide admin address")
@@ -48,6 +50,15 @@ if len(sys.argv) < 2:
 if len(sys.argv) < 3:
     print("You should provide number of datapoints")
     sys.exit()
+
+
+if len(sys.argv) == 4:
+    fid = sys.argv[3]
+    if fid not in forms:
+        print(f"{fid} not found")
+        sys.exit()
+    forms = [fid]
+
 
 user = crud_user.get_user_by_email(session=session, email=sys.argv[1])
 if not user:
@@ -62,7 +73,6 @@ for table in ["data", "answer", "history"]:
     action = truncate(session=session, table=table)
     print(action)
 
-forms = crud_form.get_form(session=session)
 fake = Faker()
 
 
@@ -85,7 +95,7 @@ def get_odf_value(status_verified, not_triggered):
 
 
 for form in forms:
-    form = crud_form.get_form_by_id(session=session, id=form.id)
+    form = crud_form.get_form_by_id(session=session, id=form)
     repeats = int(sys.argv[2])
     for i in range(repeats):
         answers = []
