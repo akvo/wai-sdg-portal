@@ -53,7 +53,11 @@ if len(sys.argv) < 3:
 
 
 if len(sys.argv) == 4:
-    fid = sys.argv[3]
+    try:
+        fid = int(sys.argv[3])
+    except ValueError:
+        print("Form ID should be an integer")
+        sys.exit()
     if fid not in forms:
         print(f"{fid} not found")
         sys.exit()
@@ -70,8 +74,9 @@ if user.role != UserRole.admin:
     sys.exit()
 
 for table in ["data", "answer", "history"]:
-    action = truncate(session=session, table=table)
-    print(action)
+    if len(sys.argv) < 4:
+        action = truncate(session=session, table=table)
+        print(action)
 
 fake = Faker()
 
