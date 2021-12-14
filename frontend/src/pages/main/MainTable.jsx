@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import MainTableChild from "./MainTableChild";
 import { UIState } from "../../state/ui";
 import api from "../../util/api";
+import { getLuma } from "../../util/color";
 import { DataUpdateMessage } from "./../../components/Notifications";
 import flatten from "lodash/flatten";
 import isEmpty from "lodash/isEmpty";
@@ -105,7 +106,10 @@ const MainTable = ({
         render(text) {
           return {
             props: {
-              style: { background: text?.color || "" },
+              style: {
+                background: text?.color || "",
+                color: getLuma(text?.color),
+              },
             },
             children: text?.value,
           };

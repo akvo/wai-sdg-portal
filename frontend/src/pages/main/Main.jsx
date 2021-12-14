@@ -186,8 +186,9 @@ const Main = ({ match }) => {
               let color = null;
               if (!isEmpty(option)) {
                 color =
-                  option.find((opt) => opt.name === value?.toLowerCase())
-                    ?.color || null;
+                  option.find(
+                    (opt) => opt.name?.toLowerCase() === value?.toLowerCase()
+                  )?.color || null;
               }
               return Object.assign(o, {
                 [key]: { value: value, color: color },
