@@ -28,9 +28,9 @@ var i18n = {
   },
   home: {
     jumbotronText:
-      "This portal is used by ##administration## to see the relative WASH vulnerability of communities and institutions, and track the status of water and sanitation infrastructure",
+      "This portal is used at the ##administration## level to see the relative WASH vulnerability of communities and institutions, and track the status of water and sanitation infrastructure",
     datasetSectionTitle: "Datasets in this Portal",
-    overviewSectionTitle: "Overview of",
+    overviewSectionTitle: "Overview",
     exploreText: "Explore",
     exploreDataText: "EXPLORE THE DATA",
     readMoreText: "Read more",
@@ -57,6 +57,7 @@ var i18n = {
   chartText: {
     tbColCategory: "Category",
     tbColCount: "Count",
+    tbColPercentage: "Percentage",
     noDataText: "No Data",
     highText: "High",
     lowText: "Low",
@@ -65,6 +66,7 @@ var i18n = {
     btnRefresh: "Refresh",
     btnSaveImage: "save image",
     countText: "Count",
+    percentageText: "Percentage",
   },
   confirmationModalText: {
     submitText: {
@@ -176,7 +178,7 @@ var i18n = {
     createdText: "Created",
     updatedText: "Updated",
     modalRegistrationTitle: "Register your account",
-    mainChartCardTitle: "Visualisations",
+    mainChartCardTitle: "Bar Chart for Any Indicator",
     mainChartSelectOptionPlaceholder: "Select Question",
     mainChartStackSelectOptionPlaceholder: "Select Second Question",
     historyChartCardTitle: "History Chart",
