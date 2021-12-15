@@ -3,20 +3,10 @@ import moment from "moment";
 import { Row, Col, Spin, Divider, Space, Pagination } from "antd";
 import { UIState } from "../../../state/ui";
 import Chart from "../../../chart";
+import { getDateRange } from "../../../util/date.js";
 
 const dateFormat = "MMM YYYY";
-
-const getRange = (startDate, endDate) => {
-  const type = "months";
-  let fromDate = moment(startDate);
-  let toDate = moment(endDate);
-  let diff = toDate.diff(fromDate, type);
-  let range = [];
-  for (let i = 0; i < diff; i++) {
-    range.push(moment(startDate).add(i, type));
-  }
-  return range.map((r) => r.format(dateFormat));
-};
+const serverDateFormat = "YYYY-MM-DD";
 
 const abrvAdministration = (str) => {
   if (!str) {
@@ -80,17 +70,19 @@ const TabODF = ({
           return {
             name: `${name}, ${adm}`,
             startValue: startValue,
-            startDate: startDate ? moment(startDate) : false,
+            startDate: startDate ? moment(startDate, serverDateFormat) : false,
             endValue: endValue,
-            endDate: endDate ? moment(endDate) : moment(),
+            endDate: endDate ? moment(endDate, serverDateFormat) : moment(),
             data: [
               [
-                startDate ? moment(startDate).format(dateFormat) : false,
+                startDate
+                  ? moment(startDate, serverDateFormat).format(dateFormat)
+                  : false,
                 `${name}, ${adm}`,
               ],
               [
                 endDate
-                  ? moment(endDate).format(dateFormat)
+                  ? moment(endDate, serverDateFormat).format(dateFormat)
                   : moment().format(dateFormat),
                 `${name}, ${adm}`,
               ],
@@ -99,7 +91,11 @@ const TabODF = ({
         })
         .filter((v) => v.name && v.startDate);
       const minDate = moment.min(values.map((v) => v.startDate));
-      const xAxis = getRange(minDate.add(-2, "M"), moment().add(2, "M"));
+      const xAxis = getDateRange({
+        startDate: minDate.add(-2, "months"),
+        endDate: moment().add(2, "months"),
+        dateFormat: dateFormat,
+      });
       const yAxis = values.map((v) => v.name);
       setChartData({ xAxis: xAxis, yAxis: yAxis, series: values });
     }

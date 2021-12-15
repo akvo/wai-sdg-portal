@@ -45,8 +45,8 @@ const NameWithInfo = ({ record, current, question }) => {
     ];
   }
   const disabledHistory = answer?.filter((x) => !x.history);
-  const hasHistory = answer?.filter((x) => x.history);
-  const defaultDoesntHaveValue = disabledHistory
+  const histories = answer?.filter((x) => x.history);
+  const defaultHasValue = histories
     ?.map((d) => d.question)
     ?.includes(current?.default?.datapoint);
   return (
@@ -72,7 +72,7 @@ const NameWithInfo = ({ record, current, question }) => {
       >
         <InfoCircleOutlined />
       </Popover>
-      {hasHistory.length && (
+      {histories.length ? (
         <LineChartOutlined
           onClick={() => {
             window.scrollTo({
@@ -84,16 +84,18 @@ const NameWithInfo = ({ record, current, question }) => {
               s.historyChart = {
                 dataPointId: id,
                 selected: question?.find((q) => {
-                  if (defaultDoesntHaveValue) {
-                    return q.id === hasHistory[0].question;
+                  if (defaultHasValue) {
+                    return q.id === current?.default?.datapoint;
                   }
-                  return q.id === current?.default?.datapoint;
+                  return q.id === histories[0].question;
                 }),
                 disabled: disabledHistory,
               };
             });
           }}
         />
+      ) : (
+        ""
       )}
       {tmpName}
     </Space>

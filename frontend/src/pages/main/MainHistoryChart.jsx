@@ -7,7 +7,6 @@ import { UIState } from "../../state/ui";
 import api from "../../util/api";
 import Chart from "../../chart";
 import isEmpty from "lodash/isEmpty";
-import upperFirst from "lodash/upperFirst";
 
 const { mainText } = window?.i18n;
 const { Option } = Select;
@@ -133,7 +132,7 @@ const MainHistoryChart = ({ current, data, question }) => {
               {!isEmpty(historyChartData) && !loadingChartData ? (
                 <Chart
                   title={`${selectedData?.name} Datapoint`}
-                  subTitle={upperFirst(historyChart?.selected?.name)}
+                  subTitle={historyChart?.selected?.name}
                   type="LINE"
                   data={historyChartData}
                   wrapper={false}
