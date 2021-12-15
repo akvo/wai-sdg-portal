@@ -83,16 +83,30 @@ const MainEditor = ({ value, question, edited, dataPointId }) => {
     return (
       <Row className="editor" justify="space-around" align="middle">
         <Col span={18}>
-          {question.type === "option" || question.type === "multiple_option" ? (
+          {question.type === "option" ? (
             <Select
-              defaultValue={newValue || startCase(value) || null}
+              defaultValue={newValue || value || null}
               style={{ width: "100%" }}
               onChange={setNewValue}
               size="small"
             >
               {question.option.map((o, oi) => (
-                <Option key={oi} value={startCase(o.name)}>
-                  {startCase(o.name)}
+                <Option key={oi} value={o.name}>
+                  {o.name}
+                </Option>
+              ))}
+            </Select>
+          ) : question.type === "multiple_option" ? (
+            <Select
+              defaultValue={newValue || value || null}
+              style={{ width: "100%" }}
+              onChange={setNewValue}
+              size="small"
+              mode="multiple"
+            >
+              {question.option.map((o, oi) => (
+                <Option key={oi} value={o.name}>
+                  {o.name}
                 </Option>
               ))}
             </Select>
@@ -156,12 +170,15 @@ const MainEditor = ({ value, question, edited, dataPointId }) => {
       return <div onClick={() => setFieldActive(true)}>{dateValue}</div>;
     }
   }
-
   if (edited?.[question.id]) {
     return (
       <Row justify="space-around" align="middle">
         <Col span={18}>
-          <div onClick={() => setFieldActive(true)}>{startCase(newValue)}</div>
+          <div onClick={() => setFieldActive(true)}>
+            {question.type !== "multiple_option"
+              ? newValue
+              : newValue.join(", ")}
+          </div>
         </Col>
         <Col span={6}>
           <Button size="small" onClick={onReset} icon={<UndoOutlined />}>
@@ -174,7 +191,11 @@ const MainEditor = ({ value, question, edited, dataPointId }) => {
 
   return (
     <div onClick={() => setFieldActive(true)}>
-      {value ? startCase(value) : "-"}
+      {value?.length
+        ? question.type !== "multiple_option"
+          ? value
+          : value.join(", ")
+        : "-"}
     </div>
   );
 };
