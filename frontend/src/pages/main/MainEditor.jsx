@@ -83,7 +83,7 @@ const MainEditor = ({ value, question, edited, dataPointId }) => {
     return (
       <Row className="editor" justify="space-around" align="middle">
         <Col span={18}>
-          {question.type === "option" ? (
+          {question.type === "option" || question.type === "multiple_option" ? (
             <Select
               defaultValue={newValue || startCase(value) || null}
               style={{ width: "100%" }}
