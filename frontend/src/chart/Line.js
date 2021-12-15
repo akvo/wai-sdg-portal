@@ -27,13 +27,23 @@ const Line = (data, chartTitle, extra) => {
     ...x,
     moment: x?.date ? moment(x.date, dateFormat).toDate() : false,
   }));
+  let yAxis = {
+    type: "value",
+  };
   if (data.length > 0) {
     yAxisVal = data?.map((x) => x.value || x.name);
     yAxisVal = uniq(sortBy(yAxisVal).filter((x) => x));
-    data = sortBy(data, "moment").filter((d) => d?.moment); // show only data have date
+    data = sortBy(data, "moment").filter((d) => d?.moment);
+    const hasNaN = data.map((x) => x.value || x.name).filter((x) => isNaN(x));
+    if (hasNaN.length) {
+      yAxis = {
+        type: "category",
+        data: yAxisVal,
+      };
+    }
     seriesData = data.map((x) => {
       const value = x.value || x.name;
-      return [x.date, value?.toString() || null];
+      return [x.date, value || null];
     });
     labels = uniq(data.map((x) => x.date));
     const minDate = moment.min(labels.map((x) => moment(x, dateFormat)));
@@ -73,8 +83,7 @@ const Line = (data, chartTitle, extra) => {
       },
     },
     yAxis: {
-      type: "category",
-      data: yAxisVal,
+      ...yAxis,
       axisLabel: {
         ...AxisLabelFormatter,
         inside: true,
