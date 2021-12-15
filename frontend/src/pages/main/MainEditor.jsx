@@ -12,7 +12,7 @@ import {
 } from "antd";
 import { UndoOutlined, SaveOutlined } from "@ant-design/icons";
 import moment from "moment";
-import { pickBy, startCase } from "lodash";
+import { pickBy } from "lodash";
 import { UIState } from "../../state/ui";
 
 const { Option } = Select;

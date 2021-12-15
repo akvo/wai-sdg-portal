@@ -95,6 +95,7 @@ const MainTableChild = ({
       render: (dt) => changeColBackground(dt, edited),
     },
   ];
+  const disabledHistory = data.detail.filter((x) => !x.history);
 
   return questionGroup.map((g, gi) => {
     const source = g.question.map((q, qi) => {
@@ -179,7 +180,8 @@ const MainTableChild = ({
                     UIState.update((s) => {
                       s.historyChart = {
                         dataPointId: dataPointId,
-                        question: question,
+                        selected: question,
+                        disabled: disabledHistory,
                       };
                     });
                   }}

@@ -31,9 +31,6 @@ const { mainText } = window?.i18n;
 
 const NameWithInfo = ({ record, current, question }) => {
   const { id, name, created_by, created, updated, updated_by, answer } = record;
-  const hasDefaultHistory = current?.default?.datapoint
-    ? answer.map((x) => x.history).includes(true)
-    : false;
   let tmpName = name;
   if (tmpName) {
     tmpName = tmpName.split(" - ");
@@ -47,6 +44,11 @@ const NameWithInfo = ({ record, current, question }) => {
       { text: mainText?.updatedText, date: updated, by: updated_by },
     ];
   }
+  const disabledHistory = answer?.filter((x) => !x.history);
+  const hasHistory = answer?.filter((x) => x.history);
+  const defaultDoesntHaveValue = disabledHistory
+    ?.map((d) => d.question)
+    ?.includes(current?.default?.datapoint);
   return (
     <Space>
       <Popover
@@ -70,7 +72,7 @@ const NameWithInfo = ({ record, current, question }) => {
       >
         <InfoCircleOutlined />
       </Popover>
-      {hasDefaultHistory && (
+      {hasHistory.length && (
         <LineChartOutlined
           onClick={() => {
             window.scrollTo({
@@ -81,9 +83,13 @@ const NameWithInfo = ({ record, current, question }) => {
             UIState.update((s) => {
               s.historyChart = {
                 dataPointId: id,
-                question: question?.find(
-                  (q) => q.id === current?.default?.datapoint
-                ),
+                selected: question?.find((q) => {
+                  if (defaultDoesntHaveValue) {
+                    return q.id === hasHistory[0].question;
+                  }
+                  return q.id === current?.default?.datapoint;
+                }),
+                disabled: disabledHistory,
               };
             });
           }}

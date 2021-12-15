@@ -10,22 +10,29 @@ import isEmpty from "lodash/isEmpty";
 import upperFirst from "lodash/upperFirst";
 
 const { mainText } = window?.i18n;
+const { Option } = Select;
 
 const MainHistoryChart = ({ current, data, question }) => {
   const { historyChart } = UIState.useState((s) => s);
+  const { disabled } = historyChart;
   const [historyChartData, setHistoryChartData] = useState([]);
   const [selectedData, setSelectedData] = useState({});
   const [loadingChartData, setLoadingChartData] = useState(false);
 
   // Filter question option & number
-  question = question.filter((q) => ["option", "number"].includes(q.type));
+  question = question
+    .filter((q) => ["option", "number"].includes(q.type))
+    .map((q) => ({
+      ...q,
+      disabled: disabled?.map((d) => d.question)?.includes(q.id),
+    }));
 
   useEffect(() => {
     if (!isEmpty(historyChart) && !isEmpty(data)) {
       setLoadingChartData(true);
-      const { dataPointId, question } = historyChart;
+      const { dataPointId, selected } = historyChart;
       const temp = data.find((d) => d.key === dataPointId);
-      const url = `history/${dataPointId}/${question?.id}`;
+      const url = `history/${dataPointId}/${selected?.id}`;
       api
         .get(url)
         .then((res) => {
@@ -34,23 +41,23 @@ const MainHistoryChart = ({ current, data, question }) => {
             ...x,
             key: `history-${i}`,
           }));
-          if (question?.type === "option") {
-            data = question?.option?.map((opt) => {
+          if (selected?.type === "option") {
+            data = selected?.option?.map((opt) => {
               const find = data?.find(
                 (d) => d?.value?.toLowerCase() === opt?.name?.toLowerCase()
               );
               return {
                 ...opt,
                 ...find,
-                type: question?.type,
+                type: selected?.type,
               };
             });
           }
-          if (question?.type === "number") {
+          if (selected?.type === "number") {
             data = data?.map((d) => ({
               ...d,
-              type: question?.type,
-              rule: question?.rule,
+              type: selected?.type,
+              rule: selected?.rule,
             }));
           }
           setHistoryChartData(data);
@@ -71,7 +78,7 @@ const MainHistoryChart = ({ current, data, question }) => {
     UIState.update((s) => {
       s.historyChart = {
         ...historyChart,
-        question: selectedQuestion,
+        selected: selectedQuestion,
       };
     });
   };
@@ -109,22 +116,24 @@ const MainHistoryChart = ({ current, data, question }) => {
               showSearch
               placeholder={mainText?.historyChartSelectOptionPlaceholder}
               style={{ width: "100%" }}
-              options={question.map((q) => ({
-                label: upperFirst(q.name),
-                value: q.id,
-              }))}
               optionFilterProp="label"
               filterOption={(input, option) =>
                 option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
               }
               onChange={handleOnChangeChartQuestion}
-              value={isEmpty(historyChart) ? [] : [historyChart.question.id]}
-            />
+              value={isEmpty(historyChart) ? [] : [historyChart.selected.id]}
+            >
+              {question.map((q, qi) => (
+                <Option key={qi} value={q.id} disabled={q.disabled}>
+                  {q.name}
+                </Option>
+              ))}
+            </Select>
             <div className="chart-container">
               {!isEmpty(historyChartData) && !loadingChartData ? (
                 <Chart
                   title={`${selectedData?.name} Datapoint`}
-                  subTitle={upperFirst(historyChart?.question?.name)}
+                  subTitle={upperFirst(historyChart?.selected?.name)}
                   type="LINE"
                   data={historyChartData}
                   wrapper={false}

@@ -153,18 +153,6 @@ const MainTable = ({
         <Col span={span}>
           <Table
             size="small"
-            onRow={(e) => {
-              return {
-                onMouseEnter: () =>
-                  UIState.update((ui) => {
-                    ui.rowHovered = e.key;
-                  }),
-                onMouseLeave: () =>
-                  UIState.update((ui) => {
-                    ui.rowHovered = null;
-                  }),
-              };
-            }}
             rowClassName={(record) => getRowClassName(record, editedRow)}
             loading={loading}
             columns={modifyColumnRender}
@@ -197,6 +185,9 @@ const MainTable = ({
             }}
             expandedRowKeys={expanded}
             onExpand={(expanded, record) => {
+              UIState.update((ui) => {
+                ui.rowHovered = expanded ? record.key : null;
+              });
               setExpanded(expanded ? [record.key] : []);
             }}
             dataSource={data}
