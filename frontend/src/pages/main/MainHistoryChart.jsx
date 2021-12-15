@@ -18,7 +18,7 @@ const MainHistoryChart = ({ current, data, question }) => {
   const [loadingChartData, setLoadingChartData] = useState(false);
 
   // Filter question option & number
-  question = question.filter((q) => q.type === "option" || q.type === "number");
+  question = question.filter((q) => ["option", "number"].includes(q.type));
 
   useEffect(() => {
     if (!isEmpty(historyChart) && !isEmpty(data)) {

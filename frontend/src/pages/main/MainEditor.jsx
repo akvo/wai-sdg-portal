@@ -191,7 +191,7 @@ const MainEditor = ({ value, question, edited, dataPointId }) => {
 
   return (
     <div onClick={() => setFieldActive(true)}>
-      {value?.length
+      {value
         ? question.type !== "multiple_option"
           ? value
           : value.join(", ")

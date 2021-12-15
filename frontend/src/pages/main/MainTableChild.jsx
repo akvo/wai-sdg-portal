@@ -29,12 +29,17 @@ const NormalCol = ({ value }) => {
 
 const HistoryTable = ({ record, data }) => {
   const [historyData, setHistoryData] = useState(null);
-
   useEffect(() => {
     if (historyData === null) {
       let url = `history/${data.key}/${record.name.props.question.id}`;
       api.get(url).then((res) => {
-        setHistoryData(res.data.map((x, i) => ({ ...x, key: `history-${i}` })));
+        const data = res.data.map((x, i) => {
+          if (record.name.props.question.type !== "multiple_option") {
+            return { ...x, key: `history-${i}` };
+          }
+          return { ...x, value: x.value.join(", "), key: `history-${i}` };
+        });
+        setHistoryData(data);
       });
     }
   }, [historyData, data, record]);
@@ -161,7 +166,7 @@ const MainTableChild = ({
             let showChartButton = "";
             if (
               showHistoryChartBtn &&
-              (question.type === "number" || question.type === "option")
+              ["number", "option"].includes(question.type)
             ) {
               showChartButton = (
                 <LineChartOutlined
