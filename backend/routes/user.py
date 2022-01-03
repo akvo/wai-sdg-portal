@@ -1,6 +1,7 @@
+from http import HTTPStatus
 import pandas as pd
 from math import ceil
-from fastapi import Depends, Request, APIRouter, HTTPException
+from fastapi import Depends, Request, APIRouter, HTTPException, Response
 from fastapi.security import HTTPBearer
 from fastapi.security import HTTPBasicCredentials as credentials
 from typing import List
@@ -196,3 +197,20 @@ def update_by_id(req: Request,
                       context=context)
         email.send
     return user.serialize
+
+
+@user_route.delete("/user/{id:path}",
+                   responses={204: {
+                       "model": None
+                    }},
+                   status_code=HTTPStatus.NO_CONTENT,
+                   summary="delete non admin user by id",
+                   name="user:delete",
+                   tags=["User"])
+def delete_user_by_id(req: Request,
+                      id: int,
+                      session: Session = Depends(get_session),
+                      credentials: credentials = Depends(security)):
+    verify_admin(req.state.authenticated, session)
+    crud.delete_user_by_id(session=session, id=id)
+    return Response(status_code=HTTPStatus.NO_CONTENT.value)

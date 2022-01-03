@@ -117,3 +117,12 @@ def delete_non_admin_user(session: Session) -> None:
 def get_all_admin_recipient(session: Session) -> User:
     admin_list = session.query(User).filter(User.role == UserRole.admin).all()
     return [admin.recipient for admin in admin_list]
+
+
+def delete_user_by_id(session: Session, id: int) -> None:
+    data = session.query(User).filter(
+        User.role != UserRole.admin).filter(
+            User.id == id).one()
+    if data:
+        session.delete(data)
+        session.commit()

@@ -10,6 +10,7 @@ const {
   submitText,
   deleteText,
   saveText,
+  deleteUserText,
 } = window?.i18n?.confirmationModalText;
 
 const modalProps = (type, secureDelete, setSecureDelete) => {
@@ -20,6 +21,13 @@ const modalProps = (type, secureDelete, setSecureDelete) => {
         title: submitText?.title,
         subTitle: submitText?.subTitle,
         btnOkText: submitText?.btnOkText,
+      };
+    case "delete-user":
+      return {
+        icon: <DeleteOutlined />,
+        title: deleteUserText?.title,
+        subTitle: deleteUserText?.subTitle,
+        btnOkText: deleteUserText?.btnOkText,
       };
     case "delete":
       return {
@@ -101,7 +109,7 @@ const ConfirmationModal = ({ visible, type, onOk, onCancel }) => {
         <Button
           key="confirm-ok"
           size="large"
-          className={type}
+          className={type.includes("delete") ? "delete" : type}
           onClick={onOk}
           disabled={disabledOkBtn}
         >
@@ -112,7 +120,7 @@ const ConfirmationModal = ({ visible, type, onOk, onCancel }) => {
       <Row align="middle" justify="center">
         <Col span={24} align="center">
           <Avatar
-            className={type}
+            className={type.includes("delete") ? "delete" : type}
             icon={modalProp?.icon}
             alt={modalProp?.title}
             size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}

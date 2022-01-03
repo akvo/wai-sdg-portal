@@ -13,11 +13,12 @@ import {
   Select,
   Input,
 } from "antd";
-import { EditOutlined, CheckOutlined } from "@ant-design/icons";
+import { EditOutlined, CheckOutlined, DeleteOutlined } from "@ant-design/icons";
 import api from "../../util/api";
 import capitalize from "lodash/capitalize";
 import isEmpty from "lodash/isEmpty";
 import { UIState } from "../../state/ui";
+import ConfirmationModal from "../../components/ConfirmationModal";
 
 const {
   notificationText,
@@ -43,6 +44,13 @@ const ManageUser = () => {
   const [isUserModalVisible, setIsUserModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isInformUser, setIsInformUser] = useState(false);
+
+  //ConfirmationModal state
+  const [confirmationModal, setConfirmationModal] = useState({
+    visible: false,
+    handleOk: null,
+    type: "default",
+  });
 
   const active = showPendingUser ? 0 : 1;
 
@@ -87,6 +95,35 @@ const ManageUser = () => {
     });
   };
 
+  const handleCloseConfirmationModal = () => {
+    setConfirmationModal({
+      ...confirmationModal,
+      visible: false,
+    });
+  };
+
+  const handleDeleteUser = (prop) => {
+    const { id, email } = prop;
+    setLoading(id);
+    api
+      .delete(`/user/${id}`)
+      .then((res) => {
+        notification.success({
+          message: `${email} ${notificationText?.isDeletedText}`,
+        });
+        getUsers(active);
+      })
+      .catch((err) => {
+        notification.error({
+          message: notificationText?.errorText,
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+        handleCloseConfirmationModal();
+      });
+  };
+
   const userColumns = [
     {
       title: manageUserTableText?.colName,
@@ -129,13 +166,30 @@ const ManageUser = () => {
       render: (id, prop) => (
         <Space size="small" align="center" wrap={true}>
           {active ? (
-            <Button
-              size="small"
-              icon={<EditOutlined />}
-              onClick={() => fetchUserDetail(id)}
-            >
-              {buttonText?.btnEdit}
-            </Button>
+            <>
+              <Button
+                size="small"
+                icon={<EditOutlined />}
+                onClick={() => fetchUserDetail(id)}
+              >
+                {buttonText?.btnEdit}
+              </Button>
+              <Button
+                size="small"
+                icon={<DeleteOutlined />}
+                onClick={() =>
+                  setConfirmationModal({
+                    visible: true,
+                    handleOk: () => handleDeleteUser(prop),
+                    type: "delete-user",
+                  })
+                }
+                loading={loading === id}
+                disabled={prop?.role === "admin"}
+              >
+                {buttonText?.btnDelete}
+              </Button>
+            </>
           ) : (
             <Button
               size="small"
@@ -378,6 +432,14 @@ const ManageUser = () => {
           </Form.Item>
         </Form>
       </Modal>
+
+      {/* ConfirmationModal */}
+      <ConfirmationModal
+        visible={confirmationModal.visible}
+        type={confirmationModal.type}
+        onOk={confirmationModal.handleOk}
+        onCancel={() => handleCloseConfirmationModal()}
+      />
     </>
   );
 };

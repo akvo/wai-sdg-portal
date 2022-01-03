@@ -87,6 +87,11 @@ var i18n = {
       subTitle: "You can come back at any time to complete and submit",
       btnOkText: "Yes, Save This Entry",
     },
+    deleteUserText: {
+      title: "Delete User?",
+      subTitle: "Are you sure you want to delete this user?",
+      btnOkText: "Yes, Delete This User",
+    },
   },
   notificationText: {
     emailSentText: "Email has been sent",
