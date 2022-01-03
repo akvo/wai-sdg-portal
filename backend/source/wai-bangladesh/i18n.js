@@ -172,6 +172,7 @@ var i18n = {
     inputFilePlaceholder: "Click or drag file to this area to upload",
     supportExcelFileText: "Supported filetypes: .xls and .xlsx.",
     validationNameRequiredText: "Please input your name!",
+    validationAccessRequiredText: "Please select region!",
   },
   mainText: {
     noDataText: "No Data",

@@ -47,6 +47,7 @@ const ManageUser = () => {
   const active = showPendingUser ? 0 : 1;
 
   const onFinish = (values) => {
+    setLoading(true);
     api
       .put(
         `/user/${selectedValue.id}?active=1&role=${values.role}&organisation=${values.organisation}`,
@@ -263,7 +264,6 @@ const ManageUser = () => {
             type="primary"
             loading={loading}
             onClick={() => {
-              setLoading(true);
               form.submit();
             }}
           >
@@ -332,6 +332,12 @@ const ManageUser = () => {
                   label={formText?.labelAccess}
                   name="access"
                   valuePropName="access"
+                  rules={[
+                    {
+                      required: true,
+                      message: formText?.validationAccessRequiredText,
+                    },
+                  ]}
                   shouldUpdate={(prevValues, currentValues) =>
                     prevValues.role !== currentValues.role
                   }
