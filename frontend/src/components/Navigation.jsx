@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import { Drawer, Space, Avatar, Menu, Row, Col, Button } from "antd";
-import { UserOutlined } from "@ant-design/icons";
+import { Drawer, Space, Avatar, Menu } from "antd";
 import { UIState } from "../state/ui";
 import { Link } from "react-router-dom";
 import { startCase } from "lodash";
