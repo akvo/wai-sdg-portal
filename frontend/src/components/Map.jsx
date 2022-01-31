@@ -5,10 +5,14 @@ import { defaultPos, geojson, tileStadia } from "../util/geo-util";
 const defPos = defaultPos();
 
 const Map = () => {
+  const boundsAlignToRight = defPos.bbox.map((x) => {
+    x[1] = x[1] - 0.6;
+    return x;
+  });
   return (
     <div className="map-container">
       <MapContainer
-        bounds={defPos.bbox}
+        bounds={boundsAlignToRight}
         zoomControl={false}
         scrollWheelZoom={false}
         style={{

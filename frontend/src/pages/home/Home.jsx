@@ -199,17 +199,17 @@ const Home = () => {
       {/* Jumbotron */}
       <Col span={24}>
         <Row
-          className="container jumbotron-wrapper"
+          className="jumbotron-wrapper"
           align="top"
           justify="space-between"
           wrap={true}
         >
-          <Col lg={9}>
+          <div lg={24} className="jumbotron-overlay-container">
             <JumbotronInfo jumbotronText={jumbotronText} />
-          </Col>
-          <Col lg={14}>
+          </div>
+          <Col lg={24}>
             <Card className="map-wrapper">
-              <Map mapHeight={550} />
+              <Map />
             </Card>
           </Col>
         </Row>
