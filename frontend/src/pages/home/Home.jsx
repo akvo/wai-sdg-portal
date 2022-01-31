@@ -58,13 +58,14 @@ const OverviewInfo = ({ item, order }) => {
               <CountUp decimals={1} end={value || 0} />%
             </div>
             <div className="text">{text}</div>
-            <div className="explore">
+            {/* Hide hyperlink for now */}
+            {/* <div className="explore">
               <Link to={explore}>
                 <Space align="center" size="small">
                   {exploreText} <ArrowRightOutlined />
                 </Space>
               </Link>
-            </div>
+            </div> */}
           </Col>
         </Row>
       </Card>
