@@ -7,12 +7,25 @@
 
   .jumbotron-wrapper {
     margin-bottom: 24px;
+    .title,
+    .list,
+    .jumbotron-text {
+      color: #00989f;
+      text-shadow: 1px 1px 0px #45add9;
+    }
+
+    .title {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .list {
+      font-size: 20px;
+    }
 
     .jumbotron-text {
       font-size: 37px;
       font-weight: bold;
-      color: #00989f;
-      text-shadow: 1px 1px 0px #45add9;
     }
 
     .map-wrapper {

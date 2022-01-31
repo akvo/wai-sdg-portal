@@ -28,7 +28,7 @@ var i18n = {
   },
   home: {
     jumbotronText:
-      "This portal is used at the ##administration## level to see the relative WASH vulnerability of communities and institutions, and track the status of water and sanitation infrastructure",
+      "This portal is to support ##administration## authorities decision-making by tracking:##title##WASH vulnerability of communities and institutions.##ordered-list##ODF status of communities.##ordered-list##Water infrastructure status and functionality.",
     datasetSectionTitle: "Datasets in this Portal",
     overviewSectionTitle: "Overview",
     exploreText: "Explore",

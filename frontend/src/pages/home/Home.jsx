@@ -119,6 +119,28 @@ const OverviewColumn = ({ items, index }) => {
   });
 };
 
+const JumbotronInfo = ({ jumbotronText }) => {
+  let text = jumbotronText;
+  if (text?.includes("##administration##")) {
+    text = text.replace("##administration##", level2);
+  }
+  if (text.includes("##title##") && text.includes("##ordered-list##")) {
+    const title = text.split("##title##");
+    const lists = title[1].split("##ordered-list##");
+    return (
+      <>
+        <h4 className="title">{title[0]}</h4>
+        <ol className="list">
+          {lists.map((l, il) => (
+            <li key={il}>{l}</li>
+          ))}
+        </ol>
+      </>
+    );
+  }
+  return <h4 className="jumbotron-text">{text}</h4>;
+};
+
 const Home = () => {
   const [overviewData, setOverviewData] = useState([]);
 
@@ -183,11 +205,7 @@ const Home = () => {
           wrap={true}
         >
           <Col lg={9}>
-            <h1 className="jumbotron-text">
-              {jumbotronText?.includes("##administration##")
-                ? jumbotronText.replace("##administration##", level2)
-                : jumbotronText}
-            </h1>
+            <JumbotronInfo jumbotronText={jumbotronText} />
           </Col>
           <Col lg={14}>
             <Card className="map-wrapper">
