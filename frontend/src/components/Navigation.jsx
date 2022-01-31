@@ -7,15 +7,9 @@ import { startCase } from "lodash";
 
 const navigationOptions = window.navigation_config;
 const sitename = window.site_name;
-const {
-  adminText,
-  aboutText,
-  signupText,
-  loginText,
-  logoutText,
-} = window?.i18n?.navigation;
+const { adminText, aboutText } = window?.i18n?.navigation;
 
-const Navigation = ({ logout, loginWithPopup, isAuthenticated }) => {
+const Navigation = () => {
   const { page, user } = UIState.useState((c) => c);
   const visible = UIState.useState((s) => s.showNav);
 
@@ -88,36 +82,6 @@ const Navigation = ({ logout, loginWithPopup, isAuthenticated }) => {
           )}
           <Menu.Item key="about">{aboutText}</Menu.Item>
         </Menu>
-        <Row
-          className="auth-button-wrapper"
-          align="middle"
-          justify="space-around"
-          wrap={true}
-        >
-          {!isAuthenticated ? (
-            <>
-              <Col span={6}>
-                <Button icon={<UserOutlined />} onClick={loginWithPopup}>
-                  {loginText}
-                </Button>
-              </Col>
-              <Col span={6} onClick={loginWithPopup}>
-                <Button type="link">{signupText}</Button>
-              </Col>
-            </>
-          ) : (
-            <>
-              <Col span={12}>
-                <Button
-                  icon={<UserOutlined />}
-                  onClick={() => logout({ returnTo: window.location.origin })}
-                >
-                  {logoutText}
-                </Button>
-              </Col>
-            </>
-          )}
-        </Row>
       </Drawer>
     </>
   );
