@@ -103,7 +103,11 @@ function App() {
         />
         <Layout theme="light">
           <Layout.Header>
-            <Header />
+            <Header
+              loginWithPopup={loginWithPopup}
+              isAuthenticated={isAuthenticated}
+              logout={logout}
+            />
           </Layout.Header>
           <Layout.Content>
             <Content />

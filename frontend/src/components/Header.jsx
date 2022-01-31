@@ -29,6 +29,8 @@ const {
   attachmentText,
 } = window?.i18n?.header;
 
+const { loginText, logoutText } = window?.i18n?.navigation;
+
 const IconList = ({ type }) => {
   if (type === "warning") {
     return <ExclamationCircleTwoTone twoToneColor="#c4c41a" />;
@@ -75,7 +77,7 @@ const ActivityLog = () => {
   return <Card>{noActivityText}</Card>;
 };
 
-const Header = () => {
+const Header = ({ logout, loginWithPopup, isAuthenticated }) => {
   const { user, activityLog } = UIState.useState((c) => c);
   const onOpen = () => {
     UIState.update((s) => {
@@ -94,29 +96,42 @@ const Header = () => {
       </Col>
       <Col span={8} className="header-menu">
         <Space size={20}>
+          {/* Activity Log  */}
           {user && (
-            <>
-              <Popover
-                title={recentActivityLogText}
-                placement="bottom"
-                content={<ActivityLog />}
-                trigger="click"
-              >
-                <Badge count={activityLog.length}>
-                  <Button icon={<FieldTimeOutlined />}>
-                    {activityLogText}
-                  </Button>
-                </Badge>
-              </Popover>
-              {user?.picture ? (
-                <Avatar
-                  src={`${user.picture}#${window.location.origin}/img.jpg`}
-                  alt="user-avatar"
-                />
-              ) : (
-                <Avatar icon={<UserOutlined />} alt="user-avatar" />
-              )}
-            </>
+            <Popover
+              title={recentActivityLogText}
+              placement="bottom"
+              content={<ActivityLog />}
+              trigger="click"
+            >
+              <Badge count={activityLog.length}>
+                <Button icon={<FieldTimeOutlined />}>{activityLogText}</Button>
+              </Badge>
+            </Popover>
+          )}
+          {/* Login, Sign-up - Logout button */}
+          {!isAuthenticated ? (
+            <Button icon={<UserOutlined />} onClick={loginWithPopup}>
+              {loginText}
+            </Button>
+          ) : (
+            <Button
+              icon={<UserOutlined />}
+              onClick={() => logout({ returnTo: window.location.origin })}
+            >
+              {logoutText}
+            </Button>
+          )}
+          {/* User profile button */}
+          {user && user?.picture ? (
+            <Avatar
+              src={`${user.picture}#${window.location.origin}/img.jpg`}
+              alt="user-avatar"
+            />
+          ) : user ? (
+            user(<Avatar icon={<UserOutlined />} alt="user-avatar" />)
+          ) : (
+            ""
           )}
           <MenuOutlined onClick={onOpen} className="menu-outlined" />
         </Space>
