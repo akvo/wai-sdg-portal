@@ -207,7 +207,8 @@ const Home = () => {
                     <Card className="dataset-item">
                       <h2>{title}</h2>
                       <p>{description}</p>
-                      <div className="button-wrapper">
+                      {/* Hide hyperlink for now */}
+                      {/* <div className="button-wrapper">
                         <div className="read-more">
                           <Link to={readmore}>
                             <Space align="center" size="small">
@@ -222,7 +223,7 @@ const Home = () => {
                             </Space>
                           </Link>
                         </div>
-                      </div>
+                      </div> */}
                     </Card>
                   </Col>
                 )
