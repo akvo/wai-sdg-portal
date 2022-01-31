@@ -10,7 +10,7 @@ var i18n = {
     aboutText: "About",
     signupText: "Signup",
     logoutText: "Logout",
-    loginText: "Login",
+    loginText: "Login or Signup",
   },
   footer: {
     privacyPolicy: "Privacy Policy",
