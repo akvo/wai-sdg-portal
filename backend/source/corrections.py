@@ -3,7 +3,7 @@ import enum
 
 class Corrections(enum.Enum):
     wai_ethiopia = {
-        "Negele Arsi": "Arsi Negele",
+        "Negele Arsi": "Negelle Arsi",
         "Shahamene": "Shahemene",
         "Jigessa Korke": "Jegesa Korke",
         "Jigesa qorke": "Jegesa Korke",
