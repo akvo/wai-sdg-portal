@@ -12,14 +12,13 @@ import isEmpty from "lodash/isEmpty";
 import upperFirst from "lodash/upperFirst";
 
 const level2 = window.levels[0];
-const { datasetsInPortal, overviews } = window.landing_config;
+const { jumbotron, datasetsInPortal, overviews } = window.landing_config;
 const {
   exploreText,
   exploreDataText,
   readMoreText,
   overviewSectionTitle,
   datasetSectionTitle,
-  jumbotronText,
 } = window?.i18n?.home;
 
 const OverviewInfo = ({ item, order }) => {
@@ -119,26 +118,31 @@ const OverviewColumn = ({ items, index }) => {
   });
 };
 
-const JumbotronInfo = ({ jumbotronText }) => {
-  let text = jumbotronText;
-  if (text?.includes("##administration##")) {
-    text = text.replace("##administration##", level2);
+const JumbotronInfo = ({ jumbotron }) => {
+  const ListComponent = ({ listType, className, children }) => {
+    if (listType === "number") {
+      return <ol className={className}>{children}</ol>;
+    }
+    return <ul className={className}>{children}</ul>;
+  };
+  const { title, list_type, list } = jumbotron;
+  let titleText = title;
+  if (titleText?.includes("##administration##")) {
+    titleText = titleText.replace("##administration##", level2);
   }
-  if (text.includes("##title##") && text.includes("##ordered-list##")) {
-    const title = text.split("##title##");
-    const lists = title[1].split("##ordered-list##");
+  if (list.length && list_type) {
     return (
       <>
-        <h4 className="title">{title[0]}</h4>
-        <ol className="list">
-          {lists.map((l, il) => (
+        <h4 className="title">{titleText}</h4>
+        <ListComponent listType={list_type} className="list">
+          {list.map((l, il) => (
             <li key={il}>{l}</li>
           ))}
-        </ol>
+        </ListComponent>
       </>
     );
   }
-  return <h4 className="jumbotron-text">{text}</h4>;
+  return <h4 className="jumbotron-text">{titleText}</h4>;
 };
 
 const Home = () => {
@@ -205,7 +209,7 @@ const Home = () => {
           wrap={true}
         >
           <div lg={24} className="jumbotron-overlay-container">
-            <JumbotronInfo jumbotronText={jumbotronText} />
+            <JumbotronInfo jumbotron={jumbotron} />
           </div>
           <Col lg={24}>
             <Card className="map-wrapper">
