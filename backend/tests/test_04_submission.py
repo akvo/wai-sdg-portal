@@ -39,16 +39,19 @@ class TestSubmissionRoutes():
                     "rule": None,
                     "option": [{
                         "color": "#333",
+                        "id": 1,
                         "name": "Option 1",
                         "order": 1,
                         "score": None,
                     }, {
                         "color": "#333",
+                        "id": 2,
                         "name": "Option 2",
                         "order": 2,
                         "score": 5,
                     }, {
                         "color": None,
+                        "id": 3,
                         "name": "Option 3",
                         "order": None,
                         "score": 10,
@@ -162,17 +165,20 @@ class TestSubmissionRoutes():
             "id": 1,
             "name": "Option 1",
             "color": "#333",
-            "order": 1
+            "order": 1,
+            "score": None
         }, {
             "id": 2,
             "name": "Option 2",
             "color": "#333",
-            "order": 2
+            "order": 2,
+            "score": 5,
         }, {
             "id": 3,
             "name": "Option 3",
             "color": None,
-            "order": None
+            "order": None,
+            "score": 10,
         }]
 
     @pytest.mark.asyncio
@@ -194,4 +200,5 @@ class TestSubmissionRoutes():
             "id": 1,
             "name": "Option 1",
             "order": 1,
+            "score": None,
         }
