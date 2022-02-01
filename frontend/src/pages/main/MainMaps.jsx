@@ -16,7 +16,7 @@ import {
 import api from "../../util/api";
 import { scaleQuantize } from "d3-scale";
 import { UIState } from "../../state/ui";
-import _ from "lodash";
+import _, { round } from "lodash";
 import { generateAdvanceFilterURL } from "../../util/utils";
 import {
   getBounds,
@@ -82,6 +82,7 @@ const ShapeLegend = ({
   filterColor,
   setFilterColor,
   shapeQuestion,
+  current,
 }) => {
   if (_.isEmpty(data)) {
     return "";
@@ -126,7 +127,10 @@ const ShapeLegend = ({
     return (
       <div className="legends-wrapper">
         {!_.isEmpty(shapeQuestion) && (
-          <h4>{shapeQuestion?.name?.toUpperCase()}</h4>
+          <h4>
+            {current?.maps?.shape?.name?.toUpperCase() ||
+              shapeQuestion?.name?.toUpperCase()}
+          </h4>
         )}
         <div className="legends">
           {[
@@ -255,7 +259,29 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
       api
         .get(url)
         .then((res) => {
-          setData(res.data);
+          const { option } = shapeQuestion;
+          const { calculatedBy } = current.maps?.shape;
+          // fetch option value to calculated from question options
+          const optionToCalculated = option.filter((opt) =>
+            calculatedBy.map((x) => x.id).includes(opt?.id)
+          );
+          let data = res.data;
+          if (shapeQuestion?.type === "option") {
+            // transformed the data
+            data = data.map((d) => {
+              // find the option by shape === option name from optionToCalculated
+              const findOption = optionToCalculated.find(
+                (opt) => opt?.name?.toLowerCase() === d?.shape?.toLowerCase()
+              );
+              return {
+                ...d,
+                // replace shape value with option score, or
+                // replace with 0 if option answer is not in calculatedBy config
+                shape: findOption?.score || 0,
+              };
+            });
+          }
+          setData(data);
           setLoading(false);
         })
         .catch(() => {
@@ -265,32 +291,42 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
     }
   }, [user, current, loadedFormId, advanceSearchValue]);
 
+  const shapeShadingType = current?.maps?.shape?.type;
   const shapeColor = _.chain(_.groupBy(data, "loc"))
     .map((v, k) => {
+      let values = _.sumBy(v, "shape");
+      // change shapeColor calculation if type described in config
+      if (shapeShadingType === "percentage") {
+        const filterData = v.filter((x) => x.shape);
+        values = round((filterData.length / v.length) * 100);
+      }
       return {
         name: k,
-        values: _.sumBy(v, "shape"),
+        values: values,
       };
     })
     .value();
 
-  const domain = shapeColor
-    .reduce(
-      (acc, curr) => {
-        const v = curr.values;
-        const [min, max] = acc;
-        return [min, v > max ? v : max];
-      },
-      [0, 0]
-    )
-    .map((acc, index) => {
-      if (index && acc) {
-        acc =
-          Math.pow(10, Math.floor(Math.log(acc) / Math.log(10))) *
-          colorRange.length;
-      }
-      return acc;
-    });
+  const domain =
+    shapeShadingType === "percentage"
+      ? [0, 100]
+      : shapeColor
+          .reduce(
+            (acc, curr) => {
+              const v = curr.values;
+              const [min, max] = acc;
+              return [min, v > max ? v : max];
+            },
+            [0, 0]
+          )
+          .map((acc, index) => {
+            if (index && acc) {
+              acc =
+                Math.pow(10, Math.floor(Math.log(acc) / Math.log(10))) *
+                colorRange.length;
+            }
+            return acc;
+          });
 
   const colorScale = scaleQuantize().domain(domain).range(colorRange);
 
@@ -375,6 +411,7 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
         filterColor={filterColor}
         setFilterColor={setFilterColor}
         shapeQuestion={shapeQuestion}
+        current={current}
       />
       <MarkerLegend
         data={data}
