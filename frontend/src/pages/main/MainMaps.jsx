@@ -330,9 +330,12 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
           )
           .map((acc, index) => {
             if (index && acc) {
-              acc =
-                Math.pow(10, Math.floor(Math.log(acc) / Math.log(10))) *
-                colorRange.length;
+              acc = acc < 10 ? 10 : acc;
+              const neaerestTo = Math.pow(
+                10,
+                Math.floor(Math.log(acc) / Math.log(10))
+              );
+              acc = Math.ceil(acc / neaerestTo) * neaerestTo;
             }
             return acc;
           });
