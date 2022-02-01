@@ -97,6 +97,15 @@ var page_config = {
 };
 
 var landing_config = {
+  jumbotron: {
+    // title, the text or list title
+    title:
+      "This portal is used at the ##administration## level to see the relative WASH vulnerability of communities and institutions, and track the status of water and sanitation infrastructure",
+    // list_type, can be bullet/number or null if no list
+    list_type: null,
+    // list, describe the list as an array of text or empty array [] if no list
+    list: [],
+  },
   datasetsInPortal: [
     {
       title: "JMP/SDG Status",

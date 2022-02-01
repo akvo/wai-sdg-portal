@@ -27,8 +27,6 @@ var i18n = {
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac consectetur diam. Pellentesque lacinia, erat ac efficitur molestie, sapien odio efficitur purus, non ornare sem massa euismod metus.",
   },
   home: {
-    jumbotronText:
-      "This portal is to support ##administration## authorities decision-making by tracking:##title##WASH vulnerability of communities and institutions.##ordered-list##ODF status of communities.##ordered-list##Water infrastructure status and functionality.",
     datasetSectionTitle: "Datasets in this Portal",
     overviewSectionTitle: "Overview",
     exploreText: "Explore",
