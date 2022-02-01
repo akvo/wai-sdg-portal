@@ -11,7 +11,7 @@ from sqlalchemy import Boolean, Integer, String, Enum
 from sqlalchemy.orm import relationship
 import sqlalchemy.dialects.postgresql as pg
 from db.connection import Base
-from models.option import OptionBase
+from models.option import OptionBase, OptionBaseWithId
 
 
 class QuestionType(enum.Enum):
@@ -124,7 +124,7 @@ class QuestionBase(BaseModel):
     type: QuestionType
     required: bool
     rule: Optional[dict]
-    option: List[OptionBase]
+    option: List[OptionBaseWithId]
     dependency: Optional[List[DependencyDict]]
 
     class Config:
