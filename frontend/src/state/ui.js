@@ -18,6 +18,7 @@ const defaultUIState = {
   rowHovered: null,
   historyChart: {},
   loadedFormId: null,
+  boundsAlignToRight: null,
 };
 
 export const UIState = new Store(defaultUIState);

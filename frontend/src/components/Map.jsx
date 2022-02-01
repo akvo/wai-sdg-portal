@@ -1,18 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { MapContainer, GeoJSON, TileLayer } from "react-leaflet";
 import { defaultPos, geojson, tileStadia } from "../util/geo-util";
+import { UIState } from "../state/ui";
 
 const defPos = defaultPos();
 
 const Map = () => {
-  const boundsAlignToRight = defPos.bbox.map((x) => {
-    x[1] = x[1] - 0.6;
-    return x;
-  });
+  const { boundsAlignToRight } = UIState.useState((s) => s);
+  const newBbox = boundsAlignToRight
+    ? boundsAlignToRight
+    : defPos.bbox.map((x) => {
+        x[1] = x[1] - 0.6;
+        return x;
+      });
+
+  useEffect(() => {
+    if (!boundsAlignToRight) {
+      UIState.update((u) => {
+        u.boundsAlignToRight = newBbox;
+      });
+    }
+  }, [boundsAlignToRight, newBbox]);
+
   return (
     <div className="map-container">
       <MapContainer
-        bounds={boundsAlignToRight}
+        bounds={newBbox}
         zoomControl={false}
         scrollWheelZoom={false}
         style={{
