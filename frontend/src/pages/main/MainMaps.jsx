@@ -88,6 +88,8 @@ const ShapeLegend = ({
     return "";
   }
 
+  const shapeCalculationType = current?.maps?.shape?.type;
+  const percentSuffix = shapeCalculationType === "percentage" ? "%" : "";
   thresholds = Array.from(
     new Set(thresholds.map((x) => Math.round(Math.floor(x) / 10) * 10))
   );
@@ -117,8 +119,8 @@ const ShapeLegend = ({
         {i === 0 && x === 1
           ? x
           : i === 0
-          ? "1 - " + x
-          : thresholds[i - 1] + " - " + x}
+          ? `1${percentSuffix} - ${x}${percentSuffix}`
+          : `${thresholds[i - 1]}${percentSuffix} - ${x}${percentSuffix}`}
       </div>
     );
   });
@@ -160,6 +162,7 @@ const ShapeLegend = ({
             >
               {"> "}
               {thresholds[thresholds.length - 1]}
+              {percentSuffix}
             </div>,
           ]}
         </div>
@@ -261,12 +264,15 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
         .then((res) => {
           const { option } = shapeQuestion;
           const { calculatedBy } = current.maps?.shape;
-          // fetch option value to calculated from question options
-          const optionToCalculated = option.filter((opt) =>
-            calculatedBy.map((x) => x.id).includes(opt?.id)
-          );
           let data = res.data;
           if (shapeQuestion?.type === "option") {
+            // fetch option value to calculated from question options
+            let optionToCalculated =
+              calculatedBy === "all" || !calculatedBy.length
+                ? option
+                : option.filter((opt) =>
+                    calculatedBy.map((x) => x.id).includes(opt?.id)
+                  );
             // transformed the data
             data = data.map((d) => {
               // find the option by shape === option name from optionToCalculated
@@ -299,6 +305,9 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
       if (shapeShadingType === "percentage") {
         const filterData = v.filter((x) => x.shape);
         values = round((filterData.length / v.length) * 100);
+      }
+      if (shapeShadingType === "score") {
+        values = values;
       }
       return {
         name: k,
