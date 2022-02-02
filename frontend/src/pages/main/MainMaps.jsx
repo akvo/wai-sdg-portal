@@ -83,6 +83,7 @@ const ShapeLegend = ({
   setFilterColor,
   shapeQuestion,
   current,
+  updatedColorRange,
 }) => {
   if (_.isEmpty(data)) {
     return "";
@@ -100,20 +101,22 @@ const ShapeLegend = ({
         key={`legend-${i + 1}`}
         className={
           "legend" +
-          (filterColor !== null && filterColor === colorRange[i]
+          (filterColor !== null && filterColor === updatedColorRange[i]
             ? " legend-selected"
             : "")
         }
         onClick={(e) => {
           filterColor === null
-            ? setFilterColor(colorRange[i])
-            : filterColor === colorRange[i]
+            ? setFilterColor(updatedColorRange[i])
+            : filterColor === updatedColorRange[i]
             ? setFilterColor(null)
-            : setFilterColor(colorRange[i]);
+            : setFilterColor(updatedColorRange[i]);
         }}
         style={{
           backgroundColor:
-            colorRange[i] === filterColor ? higlightColor : colorRange[i],
+            updatedColorRange[i] === filterColor
+              ? higlightColor
+              : updatedColorRange[i],
         }}
       >
         {i === 0 && x === 1
@@ -142,22 +145,22 @@ const ShapeLegend = ({
               className={
                 "legend" +
                 (filterColor !== null &&
-                filterColor === colorRange[range.length]
+                filterColor === updatedColorRange[range.length]
                   ? " legend-selected"
                   : "")
               }
               style={{
                 backgroundColor:
-                  colorRange[range.length] === filterColor
+                  updatedColorRange[range.length] === filterColor
                     ? higlightColor
-                    : colorRange[range.length],
+                    : updatedColorRange[range.length],
               }}
               onClick={(e) => {
                 filterColor === null
-                  ? setFilterColor(colorRange[range.length])
-                  : filterColor === colorRange[range.length]
+                  ? setFilterColor(updatedColorRange[range.length])
+                  : filterColor === updatedColorRange[range.length]
                   ? setFilterColor(null)
-                  : setFilterColor(colorRange[range.length]);
+                  : setFilterColor(updatedColorRange[range.length]);
               }}
             >
               {"> "}
@@ -389,8 +392,8 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
   useEffect(() => {
     // this is use to set the shape tooltip element by mouseover on leaflet maps
     if (hoveredShape && data.length && shapeQuestion) {
-      const { UNIT_NAME, R_NAME, UNIT_TYPE, Z_NAME } = hoveredShape?.properties;
-      const location = UNIT_NAME || R_NAME || UNIT_TYPE || Z_NAME;
+      const location =
+        hoveredShape?.properties[shapeLevels[shapeLevels.length - 1]];
       const filteredData = data?.filter(
         (d) => d.loc.toLowerCase() === location.toLowerCase()
       );
@@ -510,6 +513,7 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
         setFilterColor={setFilterColor}
         shapeQuestion={shapeQuestion}
         current={current}
+        updatedColorRange={updatedColorRange}
       />
       <MarkerLegend
         data={data}
