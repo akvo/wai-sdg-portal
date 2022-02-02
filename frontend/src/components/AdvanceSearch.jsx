@@ -218,13 +218,14 @@ const RenderFilterTag = ({ setPage, setSelectedRow }) => {
     if (type === "multiple_option") {
       deleteFilter = advanceSearchValue
         .map((x) => {
-          const filterOpt = x.option.filter((opt) => opt !== option);
-          if (x.option.includes(option)) {
+          if (x.type === "multiple_option" && x.option.includes(option)) {
+            const filterOpt = x.option.filter((opt) => opt !== option);
             return {
               ...x,
               option: filterOpt.length ? filterOpt : null,
             };
           }
+          // other than multiple_options value in advanceSearchValue state
           return x;
         })
         .filter((x) => x.option);
