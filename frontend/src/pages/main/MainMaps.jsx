@@ -283,7 +283,7 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
                 ...d,
                 // replace shape value with option score, or
                 // replace with 0 if option answer is not in calculatedBy config
-                shape: findOption?.score || 0,
+                score: findOption?.score || 0,
               };
             });
           }
@@ -295,7 +295,7 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
           setLoading(false);
         });
     }
-  }, [user, current, loadedFormId, advanceSearchValue]);
+  }, [user, current, loadedFormId, advanceSearchValue, shapeQuestion]);
 
   const shapeShadingType = current?.maps?.shape?.type;
   const shapeColor = _.chain(_.groupBy(data, "loc"))
@@ -303,11 +303,11 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
       let values = _.sumBy(v, "shape");
       // change shapeColor calculation if type described in config
       if (shapeShadingType === "percentage") {
-        const filterData = v.filter((x) => x.shape);
+        const filterData = v.filter((x) => x.score);
         values = round((filterData.length / v.length) * 100);
       }
       if (shapeShadingType === "score") {
-        values = values;
+        values = _.sumBy(v, "score");
       }
       return {
         name: k,
