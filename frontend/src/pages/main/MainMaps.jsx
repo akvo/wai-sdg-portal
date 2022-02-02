@@ -94,6 +94,7 @@ const ShapeLegend = ({
   thresholds = thresholds.filter((x) => x !== 0);
 
   if (_.isEmpty(data) || !thresholds.length) {
+    setFilterColor(null);
     return "";
   }
 
