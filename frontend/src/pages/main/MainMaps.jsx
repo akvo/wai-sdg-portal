@@ -86,7 +86,13 @@ const ShapeLegend = ({
   current,
   updatedColorRange,
 }) => {
-  if (_.isEmpty(data)) {
+  const shapeCalculationType = current?.maps?.shape?.type;
+  const percentSuffix = shapeCalculationType === "percentage" ? "%" : "";
+  thresholds = Array.from(
+    new Set(thresholds.map((x) => Math.round(Math.floor(x) / 10) * 10))
+  );
+  thresholds = thresholds.filter((x) => x !== 0);
+  if (_.isEmpty(data) || !thresholds.length) {
     return "";
   }
 
@@ -109,91 +115,6 @@ const ShapeLegend = ({
       />
     </div>
   );
-
-  // const shapeCalculationType = current?.maps?.shape?.type;
-  // const percentSuffix = shapeCalculationType === "percentage" ? "%" : "";
-  // thresholds = Array.from(
-  //   new Set(thresholds.map((x) => Math.round(Math.floor(x) / 10) * 10))
-  // );
-  // thresholds = thresholds.filter((x) => x !== 0);
-  // const range = thresholds.map((x, i) => {
-  //   return (
-  //     <div
-  //       key={`legend-${i + 1}`}
-  //       className={
-  //         "legend" +
-  //         (filterColor !== null && filterColor === updatedColorRange[i]
-  //           ? " legend-selected"
-  //           : "")
-  //       }
-  //       onClick={(e) => {
-  //         filterColor === null
-  //           ? setFilterColor(updatedColorRange[i])
-  //           : filterColor === updatedColorRange[i]
-  //           ? setFilterColor(null)
-  //           : setFilterColor(updatedColorRange[i]);
-  //       }}
-  //       style={{
-  //         backgroundColor:
-  //           updatedColorRange[i] === filterColor
-  //             ? higlightColor
-  //             : updatedColorRange[i],
-  //       }}
-  //     >
-  //       {i === 0 && x === 1
-  //         ? x
-  //         : i === 0
-  //         ? `1${percentSuffix} - ${x}${percentSuffix}`
-  //         : `${thresholds[i - 1]}${percentSuffix} - ${x}${percentSuffix}`}
-  //     </div>
-  //   );
-  // });
-
-  // if (thresholds.length) {
-  //   return (
-  //     <div className="legends-wrapper">
-  //       {!_.isEmpty(shapeQuestion) && (
-  //         <h4>
-  //           {current?.maps?.shape?.name?.toUpperCase() ||
-  //             shapeQuestion?.name?.toUpperCase()}
-  //         </h4>
-  //       )}
-  //       <div className="legends">
-  //         {[
-  //           ...range,
-  //           <div
-  //             key={"legend-last"}
-  //             className={
-  //               "legend" +
-  //               (filterColor !== null &&
-  //               filterColor === updatedColorRange[range.length]
-  //                 ? " legend-selected"
-  //                 : "")
-  //             }
-  //             style={{
-  //               backgroundColor:
-  //                 updatedColorRange[range.length] === filterColor
-  //                   ? higlightColor
-  //                   : updatedColorRange[range.length],
-  //             }}
-  //             onClick={(e) => {
-  //               filterColor === null
-  //                 ? setFilterColor(updatedColorRange[range.length])
-  //                 : filterColor === updatedColorRange[range.length]
-  //                 ? setFilterColor(null)
-  //                 : setFilterColor(updatedColorRange[range.length]);
-  //             }}
-  //           >
-  //             {"> "}
-  //             {thresholds[thresholds.length - 1]}
-  //             {percentSuffix}
-  //           </div>,
-  //         ]}
-  //       </div>
-  //     </div>
-  //   );
-  // }
-  // return "";
 };
 
 const MarkerLegend = ({
@@ -387,7 +308,6 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
       const start = filterColor[0];
       const end = filterColor[1];
       return _.inRange(v, start, end) ? color : "#fff";
-      // return filterColor === color ? higlightColor : color;
     }
     return color;
   };
