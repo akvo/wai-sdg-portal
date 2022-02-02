@@ -232,7 +232,7 @@
           "question": "Problems With Water System",
           "order": 12,
           "meta": false,
-          "type": "multiple_option",
+          "type": "option",
           "required": false,
           "options": [
             {
