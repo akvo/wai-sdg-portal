@@ -20,19 +20,29 @@ class TestAdvancedFilter():
                                               client: AsyncClient) -> None:
         data_view = session.query(ViewData).all()
         data_view = [d.raw for d in data_view]
-        assert data_view == [[{
-            "id": 1,
-            "question": "1",
-            "answer": "option 2"
-        }], [{
-            "id": 2,
-            "question": "1",
-            "answer": "option 1"
-        }], [{
-            "id": 3,
-            "question": "1",
-            "answer": "option 2"
-        }]]
+        assert data_view == [[
+            {"answer": "option 2", "id": 3, "question": "1"},
+            {"answer": "o", "id": 3, "question": "6"},
+            {"answer": "p", "id": 3, "question": "6"},
+            {"answer": "t", "id": 3, "question": "6"},
+            {"answer": "i", "id": 3, "question": "6"},
+            {"answer": "o", "id": 3, "question": "6"},
+            {"answer": "n", "id": 3, "question": "6"},
+            {"answer": " ", "id": 3, "question": "6"},
+            {"answer": "b", "id": 3, "question": "6"}
+        ], [
+            {"answer": "option 2", "id": 1, "question": "1"}
+        ], [
+            {"answer": "option 1", "id": 2, "question": "1"},
+            {"answer": "o", "id": 2, "question": "6"},
+            {"answer": "p", "id": 2, "question": "6"},
+            {"answer": "t", "id": 2, "question": "6"},
+            {"answer": "i", "id": 2, "question": "6"},
+            {"answer": "o", "id": 2, "question": "6"},
+            {"answer": "n", "id": 2, "question": "6"},
+            {"answer": " ", "id": 2, "question": "6"},
+            {"answer": "a", "id": 2, "question": "6"}
+        ]]
         res = await client.get(
             app.url_path_for("data:get", form_id=1),
             params={"q": "1|option 1"},
