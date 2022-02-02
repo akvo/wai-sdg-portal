@@ -214,7 +214,7 @@ var page_config = {
     maps: {
       shape: {
         id: 569090236,
-        name: "Sanitation Service Level (Basic + Safely Managed)",
+        name: "Sanitation Service Level",
         // describe option value will be included for the calculation
         calculatedBy: [
           { id: 234, name: "Safely Managed" },

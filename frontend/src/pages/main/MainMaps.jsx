@@ -76,6 +76,32 @@ const Markers = ({ data, colors, filterMarker, defaultColors }) => {
   });
 };
 
+const ShapeLegendTitle = ({ current, shapeQuestion }) => {
+  const title = current?.maps?.shape?.name || shapeQuestion?.name;
+  const extraTitle = current?.maps?.shape?.calculatedBy
+    ? current.maps.shape.calculatedBy
+        .map((s) => shapeQuestion?.option?.find((x) => x.id === s.id))
+        .filter((x) => x)
+    : [];
+  return (
+    <h4>
+      {title}
+      {extraTitle.map((x, xi) => (
+        <div key={xi} className="extra-title">
+          {x?.color && (
+            <span
+              className="legend-icon"
+              style={{ backgroundColor: x.color }}
+            ></span>
+          )}
+          {x?.name}{" "}
+          {xi + 1 !== extraTitle.length && extraTitle.length !== 1 && "+"}
+        </div>
+      ))}
+    </h4>
+  );
+};
+
 const ShapeLegend = ({
   data,
   domain,
@@ -101,10 +127,7 @@ const ShapeLegend = ({
   return (
     <div className="legends-wrapper">
       {!_.isEmpty(shapeQuestion) && (
-        <h4>
-          {current?.maps?.shape?.name?.toUpperCase() ||
-            shapeQuestion?.name?.toUpperCase()}
-        </h4>
+        <ShapeLegendTitle current={current} shapeQuestion={shapeQuestion} />
       )}
       <Slider
         range
@@ -455,27 +478,30 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
 
   return (
     <div className="leaflet-container">
-      {loading && (
+      {loading ? (
         <div className="map-loading">
           <Spin />
         </div>
+      ) : (
+        <>
+          <ShapeLegend
+            data={data}
+            domain={domain}
+            thresholds={colorScale.thresholds()}
+            filterColor={filterColor}
+            setFilterColor={setFilterColor}
+            shapeQuestion={shapeQuestion}
+            current={current}
+            updatedColorRange={updatedColorRange}
+          />
+          <MarkerLegend
+            data={data}
+            markerQuestion={markerQuestion}
+            filterMarker={filterMarker}
+            setFilterMarker={setFilterMarker}
+          />
+        </>
       )}
-      <ShapeLegend
-        data={data}
-        domain={domain}
-        thresholds={colorScale.thresholds()}
-        filterColor={filterColor}
-        setFilterColor={setFilterColor}
-        shapeQuestion={shapeQuestion}
-        current={current}
-        updatedColorRange={updatedColorRange}
-      />
-      <MarkerLegend
-        data={data}
-        markerQuestion={markerQuestion}
-        filterMarker={filterMarker}
-        setFilterMarker={setFilterMarker}
-      />
       {map?._loaded && (
         <div className="map-buttons">
           <Space size="small" direction="vertical">
