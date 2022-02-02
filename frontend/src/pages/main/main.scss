@@ -363,3 +363,44 @@
     }
   }
 }
+
+.shape-tooltip-container {
+  padding: 4px 7px;
+  min-width: 200px;
+  max-width: 250px;
+  h4 {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .ant-space-vertical {
+    width: 100%;
+  }
+  .shape-tooltip-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .shape-tooltip-name {
+      font-size: 12px;
+    }
+    .shape-tooltip-value {
+      margin-left: 12px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    .shape-tooltip-left-wrapper {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      .shape-tooltip-icon {
+        width: 12px;
+        height: 12px;
+        border-radius: 12px;
+      }
+      .shape-tooltip-name {
+        margin-left: 6px;
+        font-size: 12px;
+      }
+    }
+  }
+}

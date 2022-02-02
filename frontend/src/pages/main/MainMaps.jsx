@@ -16,7 +16,7 @@ import {
 import api from "../../util/api";
 import { scaleQuantize } from "d3-scale";
 import { UIState } from "../../state/ui";
-import _, { round } from "lodash";
+import _ from "lodash";
 import { generateAdvanceFilterURL } from "../../util/utils";
 import {
   getBounds,
@@ -233,6 +233,8 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
   const [filterColor, setFilterColor] = useState(null);
   const [filterMarker, setFilterMarker] = useState(null);
   const [selectedShape, setSelectedShape] = useState(null);
+  const [hoveredShape, setHoveredShape] = useState(null);
+  const [shapeTooltip, setShapeTooltip] = useState("");
   const markerQuestion = question.find(
     (q) => q.id === current.maps?.marker?.id
   );
@@ -311,7 +313,7 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
       // change shapeColor calculation if type described in config
       if (shapeShadingType === "percentage") {
         const filterData = v.filter((x) => x.score);
-        values = round((filterData.length / v.length) * 100);
+        values = Math.round((filterData.length / v.length) * 100);
       }
       if (shapeShadingType === "score") {
         values = _.sumBy(v, "score");
@@ -384,6 +386,80 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
     }
   }, [selectedShape, administration]);
 
+  useEffect(() => {
+    // this is use to set the shape tooltip element by mouseover on leaflet maps
+    if (hoveredShape && data.length && shapeQuestion) {
+      const { UNIT_NAME, R_NAME, UNIT_TYPE, Z_NAME } = hoveredShape?.properties;
+      const location = UNIT_NAME || R_NAME || UNIT_TYPE || Z_NAME;
+      const filteredData = data?.filter(
+        (d) => d.loc.toLowerCase() === location.toLowerCase()
+      );
+      let tooltipElement = "";
+      if (shapeQuestion?.type === "option") {
+        let summaryData = _.chain(_.groupBy(filteredData, "shape"))
+          .map((v, k) => {
+            const percent = Math.round((v.length / filteredData.length) * 100);
+            return {
+              name: k,
+              value: `${percent}%`,
+            };
+          })
+          .value();
+        // map to options
+        summaryData = shapeQuestion?.option?.map((opt) => {
+          const findOption = summaryData.find(
+            (s) => s.name.toLowerCase() === opt.name.toLowerCase()
+          );
+          return {
+            ...opt,
+            value: findOption ? findOption.value : "0%",
+          };
+        });
+        summaryData = _.orderBy(summaryData, ["order"]);
+        tooltipElement = (
+          <div className="shape-tooltip-container">
+            <h4>{location}</h4>
+            <Space direction="vertical">
+              {summaryData?.map((x, i) => (
+                <div
+                  key={`${x.name}-${x.id}`}
+                  className="shape-tooltip-wrapper"
+                >
+                  <span className="shape-tooltip-left-wrapper">
+                    <span
+                      className="shape-tooltip-icon"
+                      style={{ backgroundColor: x.color || Color.color[i] }}
+                    ></span>
+                    <span className="shape-tooltip-name">{x.name}</span>
+                  </span>
+                  <span className="shape-tooltip-value">{x.value}</span>
+                </div>
+              ))}
+            </Space>
+          </div>
+        );
+      }
+      if (shapeQuestion?.type !== "option") {
+        const summaryData = _.sumBy(filteredData, "shape");
+        tooltipElement = (
+          <div className="shape-tooltip-container">
+            <h4>{location}</h4>
+            <Space direction="vertical">
+              <div
+                key={`${shapeQuestion.name}-${shapeQuestion.id}`}
+                className="shape-tooltip-wrapper"
+              >
+                <span className="shape-tooltip-name">{shapeQuestion.name}</span>
+                <span className="shape-tooltip-value">{summaryData}</span>
+              </div>
+            </Space>
+          </div>
+        );
+      }
+      setShapeTooltip(tooltipElement);
+    }
+  }, [hoveredShape, data, shapeQuestion]);
+
   const geoStyle = (g) => {
     const gname = g.properties[shapeLevels[shapeLevels.length - 1]];
     let sc = shapeColor.find((s) => s.name === gname);
@@ -413,6 +489,9 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
     layer.on({
       click: ({ target }) => {
         setSelectedShape(target?.feature);
+      },
+      mouseover: ({ target }) => {
+        setHoveredShape(target?.feature);
       },
     });
   };
@@ -488,7 +567,9 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
             style={geoStyle}
             data={geojson}
             onEachFeature={onEachFeature}
-          />
+          >
+            {hoveredShape && <Tooltip>{shapeTooltip}</Tooltip>}
+          </GeoJSON>
           {!loading && (
             <Markers
               data={data}
