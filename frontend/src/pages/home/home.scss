@@ -7,15 +7,40 @@
 
   .jumbotron-wrapper {
     margin-bottom: 24px;
+    .jumbotron-overlay-container {
+      position: absolute;
+      max-width: 60%;
+      top: 50px;
+      left: 55px;
+      z-index: 2;
+      background: rgba(255, 255, 255, 0.5);
+      padding: 14px 20px 0 20px;
+      border-radius: 5px;
+    }
 
+    .title,
+    .list,
     .jumbotron-text {
-      font-size: 37px;
-      font-weight: bold;
       color: #00989f;
       text-shadow: 1px 1px 0px #45add9;
     }
 
+    .title {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .list {
+      font-size: 22px;
+    }
+
+    .jumbotron-text {
+      font-size: 30px;
+      font-weight: bold;
+    }
+
     .map-wrapper {
+      z-index: 1;
       height: 100%;
       background: rgba(69, 173, 217, 0.15) 0% 0% no-repeat padding-box;
       border: 1px solid rgba(69, 173, 217, 0.15);
@@ -29,7 +54,7 @@
       .map-container {
         width: 110%;
         margin-left: -5%;
-        height: 500px;
+        height: 550px;
       }
     }
   }
@@ -46,7 +71,8 @@
       text-align: center;
 
       .dataset-item {
-        min-height: 325px;
+        // min-height: 325px;
+        min-height: 200px;
         background: #fcfcfc 0% 0% no-repeat padding-box;
         border-radius: 8px;
 

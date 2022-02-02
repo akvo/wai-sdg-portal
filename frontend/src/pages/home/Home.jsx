@@ -12,14 +12,13 @@ import isEmpty from "lodash/isEmpty";
 import upperFirst from "lodash/upperFirst";
 
 const level2 = window.levels[0];
-const { datasetsInPortal, overviews } = window.landing_config;
+const { jumbotron, datasetsInPortal, overviews } = window.landing_config;
 const {
   exploreText,
   exploreDataText,
   readMoreText,
   overviewSectionTitle,
   datasetSectionTitle,
-  jumbotronText,
 } = window?.i18n?.home;
 
 const OverviewInfo = ({ item, order }) => {
@@ -58,13 +57,14 @@ const OverviewInfo = ({ item, order }) => {
               <CountUp decimals={1} end={value || 0} />%
             </div>
             <div className="text">{text}</div>
-            <div className="explore">
+            {/* Hide hyperlink for now */}
+            {/* <div className="explore">
               <Link to={explore}>
                 <Space align="center" size="small">
                   {exploreText} <ArrowRightOutlined />
                 </Space>
               </Link>
-            </div>
+            </div> */}
           </Col>
         </Row>
       </Card>
@@ -116,6 +116,33 @@ const OverviewColumn = ({ items, index }) => {
       />
     );
   });
+};
+
+const JumbotronInfo = ({ jumbotron }) => {
+  const ListComponent = ({ listType, className, children }) => {
+    if (listType === "number") {
+      return <ol className={className}>{children}</ol>;
+    }
+    return <ul className={className}>{children}</ul>;
+  };
+  const { title, list_type, list } = jumbotron;
+  let titleText = title;
+  if (titleText?.includes("##administration##")) {
+    titleText = titleText.replace("##administration##", level2);
+  }
+  if (list.length && list_type) {
+    return (
+      <>
+        <h4 className="title">{titleText}</h4>
+        <ListComponent listType={list_type} className="list">
+          {list.map((l, il) => (
+            <li key={il}>{l}</li>
+          ))}
+        </ListComponent>
+      </>
+    );
+  }
+  return <h4 className="jumbotron-text">{titleText}</h4>;
 };
 
 const Home = () => {
@@ -176,21 +203,17 @@ const Home = () => {
       {/* Jumbotron */}
       <Col span={24}>
         <Row
-          className="container jumbotron-wrapper"
+          className="jumbotron-wrapper"
           align="top"
           justify="space-between"
           wrap={true}
         >
-          <Col lg={9}>
-            <h1 className="jumbotron-text">
-              {jumbotronText?.includes("##administration##")
-                ? jumbotronText.replace("##administration##", level2)
-                : jumbotronText}
-            </h1>
-          </Col>
-          <Col lg={14}>
+          <div lg={24} className="jumbotron-overlay-container">
+            <JumbotronInfo jumbotron={jumbotron} />
+          </div>
+          <Col lg={24}>
             <Card className="map-wrapper">
-              <Map mapHeight={550} />
+              <Map />
             </Card>
           </Col>
         </Row>
@@ -207,7 +230,8 @@ const Home = () => {
                     <Card className="dataset-item">
                       <h2>{title}</h2>
                       <p>{description}</p>
-                      <div className="button-wrapper">
+                      {/* Hide hyperlink for now */}
+                      {/* <div className="button-wrapper">
                         <div className="read-more">
                           <Link to={readmore}>
                             <Space align="center" size="small">
@@ -222,7 +246,7 @@ const Home = () => {
                             </Space>
                           </Link>
                         </div>
-                      </div>
+                      </div> */}
                     </Card>
                   </Col>
                 )

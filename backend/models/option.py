@@ -88,6 +88,7 @@ class OptionBaseWithId(BaseModel):
     name: str
     order: Optional[int] = None
     color: Optional[str] = None
+    score: Optional[int] = None
 
     class Config:
         orm_mode = True

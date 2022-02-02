@@ -266,6 +266,24 @@
       text-align: center;
     }
 
+    .ant-slider-rail,
+    .ant-slider-track {
+      height: 8px;
+    }
+    .ant-slider-track {
+      background-color: #67bea1;
+    }
+    .ant-slider-handle {
+      width: 18px;
+      height: 18px;
+      border: solid 3px #67bea1;
+    }
+    .slider-number-wrapper {
+      margin-top: 4px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
     .legends {
       display: flex;
       flex-wrap: wrap;
@@ -360,6 +378,47 @@
 
     &.ant-table-cell-scrollbar {
       box-shadow: none;
+    }
+  }
+}
+
+.shape-tooltip-container {
+  padding: 4px 7px;
+  min-width: 200px;
+  max-width: 250px;
+  h4 {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .ant-space-vertical {
+    width: 100%;
+  }
+  .shape-tooltip-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .shape-tooltip-name {
+      font-size: 12px;
+    }
+    .shape-tooltip-value {
+      margin-left: 12px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    .shape-tooltip-left-wrapper {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      .shape-tooltip-icon {
+        width: 12px;
+        height: 12px;
+        border-radius: 12px;
+      }
+      .shape-tooltip-name {
+        margin-left: 6px;
+        font-size: 12px;
+      }
     }
   }
 }

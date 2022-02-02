@@ -10,7 +10,7 @@ var i18n = {
     aboutText: "About",
     signupText: "Signup",
     logoutText: "Logout",
-    loginText: "Login",
+    loginText: "Login or Signup",
   },
   footer: {
     privacyPolicy: "Privacy Policy",
@@ -27,8 +27,6 @@ var i18n = {
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac consectetur diam. Pellentesque lacinia, erat ac efficitur molestie, sapien odio efficitur purus, non ornare sem massa euismod metus.",
   },
   home: {
-    jumbotronText:
-      "This portal is used at the ##administration## level to see the relative WASH vulnerability of communities and institutions, and track the status of water and sanitation infrastructure",
     datasetSectionTitle: "Datasets in this Portal",
     overviewSectionTitle: "Overview",
     exploreText: "Explore",

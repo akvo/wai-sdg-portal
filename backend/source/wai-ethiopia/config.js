@@ -212,7 +212,17 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 559820212, name: "Household Size" },
+      shape: {
+        id: 569090236,
+        name: "Sanitation Service Level (Basic + Safely Managed)",
+        // describe option value will be included for the calculation
+        calculatedBy: [
+          { id: 234, name: "Safely Managed" },
+          { id: 235, name: "Basic" },
+        ],
+        // describe the shape calculation type
+        type: "percentage",
+      },
       marker: { id: 573020156, title: "Water Service Level" },
     },
     formId: 567420165,
@@ -290,6 +300,19 @@ var page_config = {
 };
 
 var landing_config = {
+  jumbotron: {
+    // title, the text or list title
+    title:
+      "This portal is to support ##administration## authorities decision-making by tracking:", // the text or list title
+    // list_type, can be bullet/number or null if no list
+    list_type: "number",
+    // list, describe the list as an array of text or empty array [] if no list
+    list: [
+      "WASH vulnerability of communities and institutions.",
+      "ODF status of communities.",
+      "Water infrastructure status and functionality.",
+    ],
+  },
   datasetsInPortal: [
     {
       title: "WASH Service Levels",

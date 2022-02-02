@@ -96,14 +96,14 @@ function App() {
   return (
     <Router history={history}>
       <div className="App">
-        <Navigation
-          loginWithPopup={loginWithPopup}
-          isAuthenticated={isAuthenticated}
-          logout={logout}
-        />
+        <Navigation />
         <Layout theme="light">
           <Layout.Header>
-            <Header />
+            <Header
+              loginWithPopup={loginWithPopup}
+              isAuthenticated={isAuthenticated}
+              logout={logout}
+            />
           </Layout.Header>
           <Layout.Content>
             <Content />

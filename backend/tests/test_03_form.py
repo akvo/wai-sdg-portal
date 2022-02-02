@@ -70,16 +70,19 @@ class TestFormRoutes():
         assert res["type"] == "option"
         assert res["option"] == [{
             "color": "#333",
+            "id": 1,
             "order": 1,
             "name": "Option 1",
             "score": None
         }, {
             "color": "#333",
+            "id": 2,
             "order": 2,
             "name": "Option 2",
             "score": 5
         }, {
             "color": None,
+            "id": 3,
             "order": None,
             "name": "Option 3",
             "score": 10
