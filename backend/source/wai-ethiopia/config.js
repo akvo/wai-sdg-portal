@@ -212,7 +212,17 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 559820212, name: "Household Size" },
+      shape: {
+        id: 569090236,
+        name: "Sanitation Service Level (Basic + Safely Managed)",
+        // describe option value will be included for the calculation
+        calculatedBy: [
+          { id: 234, name: "Safely Managed" },
+          { id: 235, name: "Basic" },
+        ],
+        // describe the shape calculation type
+        type: "percentage",
+      },
       marker: { id: 573020156, title: "Water Service Level" },
     },
     formId: 567420165,

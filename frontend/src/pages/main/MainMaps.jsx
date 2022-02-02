@@ -7,7 +7,7 @@ import {
   GeoJSON,
   Tooltip,
 } from "react-leaflet";
-import { Spin, Button, Space, Badge } from "antd";
+import { Spin, Button, Space, Badge, Slider, Row, Col } from "antd";
 import {
   ZoomInOutlined,
   ZoomOutOutlined,
@@ -78,91 +78,53 @@ const Markers = ({ data, colors, filterMarker, defaultColors }) => {
 
 const ShapeLegend = ({
   data,
+  domain,
   thresholds,
   filterColor,
   setFilterColor,
   shapeQuestion,
+  current,
+  updatedColorRange,
 }) => {
-  if (_.isEmpty(data)) {
-    return "";
-  }
-
+  const shapeCalculationType = current?.maps?.shape?.type;
+  const percentSuffix = shapeCalculationType === "percentage" ? "%" : "";
   thresholds = Array.from(
     new Set(thresholds.map((x) => Math.round(Math.floor(x) / 10) * 10))
   );
   thresholds = thresholds.filter((x) => x !== 0);
-  const range = thresholds.map((x, i) => {
-    return (
-      <div
-        key={`legend-${i + 1}`}
-        className={
-          "legend" +
-          (filterColor !== null && filterColor === colorRange[i]
-            ? " legend-selected"
-            : "")
-        }
-        onClick={(e) => {
-          filterColor === null
-            ? setFilterColor(colorRange[i])
-            : filterColor === colorRange[i]
-            ? setFilterColor(null)
-            : setFilterColor(colorRange[i]);
-        }}
-        style={{
-          backgroundColor:
-            colorRange[i] === filterColor ? higlightColor : colorRange[i],
-        }}
-      >
-        {i === 0 && x === 1
-          ? x
-          : i === 0
-          ? "1 - " + x
-          : thresholds[i - 1] + " - " + x}
-      </div>
-    );
-  });
 
-  if (thresholds.length) {
-    return (
-      <div className="legends-wrapper">
-        {!_.isEmpty(shapeQuestion) && (
-          <h4>{shapeQuestion?.name?.toUpperCase()}</h4>
-        )}
-        <div className="legends">
-          {[
-            ...range,
-            <div
-              key={"legend-last"}
-              className={
-                "legend" +
-                (filterColor !== null &&
-                filterColor === colorRange[range.length]
-                  ? " legend-selected"
-                  : "")
-              }
-              style={{
-                backgroundColor:
-                  colorRange[range.length] === filterColor
-                    ? higlightColor
-                    : colorRange[range.length],
-              }}
-              onClick={(e) => {
-                filterColor === null
-                  ? setFilterColor(colorRange[range.length])
-                  : filterColor === colorRange[range.length]
-                  ? setFilterColor(null)
-                  : setFilterColor(colorRange[range.length]);
-              }}
-            >
-              {"> "}
-              {thresholds[thresholds.length - 1]}
-            </div>,
-          ]}
-        </div>
-      </div>
-    );
+  if (_.isEmpty(data) || !thresholds.length) {
+    setFilterColor(null);
+    return "";
   }
-  return "";
+
+  return (
+    <div className="legends-wrapper">
+      {!_.isEmpty(shapeQuestion) && (
+        <h4>
+          {current?.maps?.shape?.name?.toUpperCase() ||
+            shapeQuestion?.name?.toUpperCase()}
+        </h4>
+      )}
+      <Slider
+        range
+        min={domain[0]}
+        max={domain[1]}
+        value={filterColor ? filterColor : domain}
+        onChange={(val) => {
+          setFilterColor(val);
+        }}
+      />
+      <Row
+        align="center"
+        justify="space-between"
+        className="slider-number-wrapper"
+      >
+        <Col>{domain[0]}</Col>
+        <Col>{domain[1]}</Col>
+      </Row>
+    </div>
+  );
 };
 
 const MarkerLegend = ({
@@ -226,6 +188,8 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
   const [filterColor, setFilterColor] = useState(null);
   const [filterMarker, setFilterMarker] = useState(null);
   const [selectedShape, setSelectedShape] = useState(null);
+  const [hoveredShape, setHoveredShape] = useState(null);
+  const [shapeTooltip, setShapeTooltip] = useState("");
   const markerQuestion = question.find(
     (q) => q.id === current.maps?.marker?.id
   );
@@ -255,7 +219,32 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
       api
         .get(url)
         .then((res) => {
-          setData(res.data);
+          const { option } = shapeQuestion;
+          const { calculatedBy } = current.maps?.shape;
+          let data = res.data;
+          if (shapeQuestion?.type === "option" && calculatedBy) {
+            // fetch option value to calculated from question options
+            let optionToCalculated =
+              calculatedBy === "all" || !calculatedBy.length
+                ? option
+                : option.filter((opt) =>
+                    calculatedBy.map((x) => x.id).includes(opt?.id)
+                  );
+            // transformed the data
+            data = data.map((d) => {
+              // find the option by shape === option name from optionToCalculated
+              const findOption = optionToCalculated.find(
+                (opt) => opt?.name?.toLowerCase() === d?.shape?.toLowerCase()
+              );
+              return {
+                ...d,
+                // replace shape value with option score, or
+                // replace with 0 if option answer is not in calculatedBy config
+                score: findOption?.score || 0,
+              };
+            });
+          }
+          setData(data);
           setLoading(false);
         })
         .catch(() => {
@@ -263,36 +252,59 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
           setLoading(false);
         });
     }
-  }, [user, current, loadedFormId, advanceSearchValue]);
+  }, [user, current, loadedFormId, advanceSearchValue, shapeQuestion]);
+
+  const shapeShadingType = current?.maps?.shape?.type;
+  const jmpColorRange = _.orderBy(
+    shapeQuestion?.option,
+    ["order"],
+    ["desc"]
+  )?.map((opt) => opt.color);
+  const updatedColorRange = jmpColorRange.length ? jmpColorRange : colorRange;
 
   const shapeColor = _.chain(_.groupBy(data, "loc"))
     .map((v, k) => {
+      let values = _.sumBy(v, "shape");
+      // change shapeColor calculation if type described in config
+      if (shapeShadingType === "percentage") {
+        const filterData = v.filter((x) => x.score);
+        values = Math.round((filterData.length / v.length) * 100);
+      }
+      if (shapeShadingType === "score") {
+        values = _.sumBy(v, "score");
+      }
       return {
         name: k,
-        values: _.sumBy(v, "shape"),
+        values: values,
       };
     })
     .value();
 
-  const domain = shapeColor
-    .reduce(
-      (acc, curr) => {
-        const v = curr.values;
-        const [min, max] = acc;
-        return [min, v > max ? v : max];
-      },
-      [0, 0]
-    )
-    .map((acc, index) => {
-      if (index && acc) {
-        acc =
-          Math.pow(10, Math.floor(Math.log(acc) / Math.log(10))) *
-          colorRange.length;
-      }
-      return acc;
-    });
+  const domain =
+    shapeShadingType === "percentage"
+      ? [0, 100]
+      : shapeColor
+          .reduce(
+            (acc, curr) => {
+              const v = curr.values;
+              const [min, max] = acc;
+              return [min, v > max ? v : max];
+            },
+            [0, 0]
+          )
+          .map((acc, index) => {
+            if (index && acc) {
+              acc = acc < 10 ? 10 : acc;
+              const neaerestTo = Math.pow(
+                10,
+                Math.floor(Math.log(acc) / Math.log(10))
+              );
+              acc = Math.ceil(acc / neaerestTo) * neaerestTo;
+            }
+            return acc;
+          });
 
-  const colorScale = scaleQuantize().domain(domain).range(colorRange);
+  const colorScale = scaleQuantize().domain(domain).range(updatedColorRange);
 
   const adminLevel = [false, ...shapeLevels][selectedAdministration.length - 1];
 
@@ -303,7 +315,9 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
   const fillColor = (v) => {
     const color = v === 0 ? "#FFF" : colorScale(v);
     if (filterColor !== null) {
-      return filterColor === color ? higlightColor : color;
+      const start = filterColor[0];
+      const end = filterColor[1];
+      return _.inRange(v, start, end) ? color : "#fff";
     }
     return color;
   };
@@ -328,6 +342,80 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
       });
     }
   }, [selectedShape, administration]);
+
+  useEffect(() => {
+    // this is use to set the shape tooltip element by mouseover on leaflet maps
+    if (hoveredShape && data.length && shapeQuestion) {
+      const location =
+        hoveredShape?.properties[shapeLevels[shapeLevels.length - 1]];
+      const filteredData = data?.filter(
+        (d) => d.loc.toLowerCase() === location.toLowerCase()
+      );
+      let tooltipElement = "";
+      if (shapeQuestion?.type === "option") {
+        let summaryData = _.chain(_.groupBy(filteredData, "shape"))
+          .map((v, k) => {
+            const percent = Math.round((v.length / filteredData.length) * 100);
+            return {
+              name: k,
+              value: `${percent}%`,
+            };
+          })
+          .value();
+        // map to options
+        summaryData = shapeQuestion?.option?.map((opt) => {
+          const findOption = summaryData.find(
+            (s) => s.name.toLowerCase() === opt.name.toLowerCase()
+          );
+          return {
+            ...opt,
+            value: findOption ? findOption.value : "0%",
+          };
+        });
+        summaryData = _.orderBy(summaryData, ["order"]);
+        tooltipElement = (
+          <div className="shape-tooltip-container">
+            <h4>{location}</h4>
+            <Space direction="vertical">
+              {summaryData?.map((x, i) => (
+                <div
+                  key={`${x.name}-${x.id}`}
+                  className="shape-tooltip-wrapper"
+                >
+                  <span className="shape-tooltip-left-wrapper">
+                    <span
+                      className="shape-tooltip-icon"
+                      style={{ backgroundColor: x.color || Color.color[i] }}
+                    ></span>
+                    <span className="shape-tooltip-name">{x.name}</span>
+                  </span>
+                  <span className="shape-tooltip-value">{x.value}</span>
+                </div>
+              ))}
+            </Space>
+          </div>
+        );
+      }
+      if (shapeQuestion?.type !== "option") {
+        const summaryData = _.sumBy(filteredData, "shape");
+        tooltipElement = (
+          <div className="shape-tooltip-container">
+            <h4>{location}</h4>
+            <Space direction="vertical">
+              <div
+                key={`${shapeQuestion.name}-${shapeQuestion.id}`}
+                className="shape-tooltip-wrapper"
+              >
+                <span className="shape-tooltip-name">{shapeQuestion.name}</span>
+                <span className="shape-tooltip-value">{summaryData}</span>
+              </div>
+            </Space>
+          </div>
+        );
+      }
+      setShapeTooltip(tooltipElement);
+    }
+  }, [hoveredShape, data, shapeQuestion]);
 
   const geoStyle = (g) => {
     const gname = g.properties[shapeLevels[shapeLevels.length - 1]];
@@ -359,6 +447,9 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
       click: ({ target }) => {
         setSelectedShape(target?.feature);
       },
+      mouseover: ({ target }) => {
+        setHoveredShape(target?.feature);
+      },
     });
   };
 
@@ -371,10 +462,13 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
       )}
       <ShapeLegend
         data={data}
+        domain={domain}
         thresholds={colorScale.thresholds()}
         filterColor={filterColor}
         setFilterColor={setFilterColor}
         shapeQuestion={shapeQuestion}
+        current={current}
+        updatedColorRange={updatedColorRange}
       />
       <MarkerLegend
         data={data}
@@ -432,7 +526,9 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
             style={geoStyle}
             data={geojson}
             onEachFeature={onEachFeature}
-          />
+          >
+            {hoveredShape && <Tooltip>{shapeTooltip}</Tooltip>}
+          </GeoJSON>
           {!loading && (
             <Markers
               data={data}
