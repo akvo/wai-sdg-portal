@@ -265,7 +265,7 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
           const { option } = shapeQuestion;
           const { calculatedBy } = current.maps?.shape;
           let data = res.data;
-          if (shapeQuestion?.type === "option") {
+          if (shapeQuestion?.type === "option" && calculatedBy) {
             // fetch option value to calculated from question options
             let optionToCalculated =
               calculatedBy === "all" || !calculatedBy.length
@@ -298,6 +298,13 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
   }, [user, current, loadedFormId, advanceSearchValue, shapeQuestion]);
 
   const shapeShadingType = current?.maps?.shape?.type;
+  const jmpColorRange = _.orderBy(
+    shapeQuestion?.option,
+    ["order"],
+    ["desc"]
+  )?.map((opt) => opt.color);
+  const updatedColorRange = jmpColorRange.length ? jmpColorRange : colorRange;
+
   const shapeColor = _.chain(_.groupBy(data, "loc"))
     .map((v, k) => {
       let values = _.sumBy(v, "shape");
@@ -340,7 +347,7 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
             return acc;
           });
 
-  const colorScale = scaleQuantize().domain(domain).range(colorRange);
+  const colorScale = scaleQuantize().domain(domain).range(updatedColorRange);
 
   const adminLevel = [false, ...shapeLevels][selectedAdministration.length - 1];
 
