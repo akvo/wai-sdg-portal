@@ -266,6 +266,24 @@
       text-align: center;
     }
 
+    .ant-slider-rail,
+    .ant-slider-track {
+      height: 8px;
+    }
+    .ant-slider-track {
+      background-color: #67bea1;
+    }
+    .ant-slider-handle {
+      width: 18px;
+      height: 18px;
+      border: solid 3px #67bea1;
+    }
+    .slider-number-wrapper {
+      margin-top: 4px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
     .legends {
       display: flex;
       flex-wrap: wrap;

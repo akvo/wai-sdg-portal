@@ -7,7 +7,7 @@ import {
   GeoJSON,
   Tooltip,
 } from "react-leaflet";
-import { Spin, Button, Space, Badge, Slider } from "antd";
+import { Spin, Button, Space, Badge, Slider, Row, Col } from "antd";
 import {
   ZoomInOutlined,
   ZoomOutOutlined,
@@ -92,6 +92,7 @@ const ShapeLegend = ({
     new Set(thresholds.map((x) => Math.round(Math.floor(x) / 10) * 10))
   );
   thresholds = thresholds.filter((x) => x !== 0);
+
   if (_.isEmpty(data) || !thresholds.length) {
     return "";
   }
@@ -113,6 +114,14 @@ const ShapeLegend = ({
           setFilterColor(val);
         }}
       />
+      <Row
+        align="center"
+        justify="space-between"
+        className="slider-number-wrapper"
+      >
+        <Col>{domain[0]}</Col>
+        <Col>{domain[1]}</Col>
+      </Row>
     </div>
   );
 };
