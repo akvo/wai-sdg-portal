@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Collapse, Button, Tag, Space, Select, Radio, Popover } from "antd";
+import {
+  Collapse,
+  Button,
+  Tag,
+  Space,
+  Select,
+  Radio,
+  Popover,
+  Checkbox,
+} from "antd";
 import { FilterOutlined, InfoCircleOutlined } from "@ant-design/icons";
 
 import { UIState } from "../state/ui";
@@ -20,7 +29,11 @@ const AdvanceSearch = ({
 }) => {
   // Get question option only
   const question = flatten(
-    questionGroup.map((qg) => qg.question.filter((q) => q.type === "option"))
+    questionGroup.map((qg) =>
+      qg.question.filter(
+        (q) => q.type === "option" || q.type === "multiple_option"
+      )
+    )
   );
 
   const { user, advanceSearchValue } = UIState.useState((s) => s);
@@ -32,7 +45,7 @@ const AdvanceSearch = ({
     setSelectedQuestion(filterQuestion);
   };
 
-  const handleOnChangeQuestionOption = (value) => {
+  const handleOnChangeQuestionOption = (value, type) => {
     setPage(1);
     if (setSelectedRow) {
       setSelectedRow([]);
@@ -40,15 +53,19 @@ const AdvanceSearch = ({
     const filterAdvanceSearchValue = advanceSearchValue.filter(
       (x) => x.qid !== selectedQuestion?.id
     );
+    let updatedValue = [
+      {
+        qid: selectedQuestion?.id,
+        question: selectedQuestion?.name,
+        option: value,
+        type: type,
+      },
+    ];
+    if (type === "multiple_option") {
+      updatedValue = value.length ? updatedValue : [];
+    }
     UIState.update((s) => {
-      s.advanceSearchValue = [
-        ...filterAdvanceSearchValue,
-        {
-          qid: selectedQuestion?.id,
-          question: selectedQuestion?.name,
-          option: value,
-        },
-      ];
+      s.advanceSearchValue = [...filterAdvanceSearchValue, ...updatedValue];
     });
     setSelectedPanel([]);
   };
@@ -138,11 +155,43 @@ const RenderQuestionOption = ({
     ));
   };
 
+  const MultipleOptionToRender = ({ questionId, option }) => {
+    return sortBy(option, "order").map((opt) => (
+      <Checkbox
+        key={`${opt.id}-${opt.name}`}
+        value={`${questionId}|${opt.name}`}
+      >
+        {opt.name}
+      </Checkbox>
+    ));
+  };
+
+  if (selectedQuestion?.type === "multiple_option") {
+    return (
+      <Checkbox.Group
+        key={`${selectedQuestion.id}-${selectedQuestion.name}`}
+        value={selectedRadioValue?.option}
+        onChange={(e) =>
+          handleOnChangeQuestionOption(e, selectedQuestion?.type)
+        }
+      >
+        <Space direction="vertical">
+          <MultipleOptionToRender
+            option={selectedQuestion.option}
+            questionId={selectedQuestion.id}
+          />
+        </Space>
+      </Checkbox.Group>
+    );
+  }
+
   return (
     <Radio.Group
       key={`${selectedQuestion.id}-${selectedQuestion.name}`}
       value={selectedRadioValue?.option}
-      onChange={(e) => handleOnChangeQuestionOption(e.target.value)}
+      onChange={(e) =>
+        handleOnChangeQuestionOption(e.target.value, selectedQuestion?.type)
+      }
     >
       <Space direction="vertical">
         <OptionToRender
@@ -157,32 +206,67 @@ const RenderQuestionOption = ({
 const RenderFilterTag = ({ setPage, setSelectedRow }) => {
   const { advanceSearchValue } = UIState.useState((s) => s);
 
-  const handleOnCloseTag = (option) => {
+  const handleOnCloseTag = (type, option) => {
     setPage(1);
     if (setSelectedRow) {
       setSelectedRow([]);
     }
-    const deleteFilter = advanceSearchValue.filter((x) => x.option !== option);
+    let deleteFilter = [];
+    if (type === "option") {
+      deleteFilter = advanceSearchValue.filter((x) => x.option !== option);
+    }
+    if (type === "multiple_option") {
+      deleteFilter = advanceSearchValue
+        .map((x) => {
+          const filterOpt = x.option.filter((opt) => opt !== option);
+          if (x.option.includes(option)) {
+            return {
+              ...x,
+              option: filterOpt.length ? filterOpt : null,
+            };
+          }
+          return x;
+        })
+        .filter((x) => x.option);
+    }
     UIState.update((s) => {
       s.advanceSearchValue = deleteFilter;
     });
   };
 
   const TagToRender = () => {
-    return advanceSearchValue.map((val) => (
-      <Tag
-        key={`tag-${val.option}`}
-        icon={
-          <Popover title={val.question} placement="topRight">
-            <InfoCircleOutlined />
-          </Popover>
-        }
-        closable
-        onClose={(e) => handleOnCloseTag(val.option)}
-      >
-        {val.option.split("|")[1]}
-      </Tag>
-    ));
+    return advanceSearchValue.map((val) => {
+      if (val.type === "multiple_option") {
+        return val.option.map((opt) => (
+          <Tag
+            key={`tag-${opt}`}
+            icon={
+              <Popover title={val.question} placement="topRight">
+                <InfoCircleOutlined />
+              </Popover>
+            }
+            closable
+            onClose={(e) => handleOnCloseTag(val.type, opt)}
+          >
+            {opt.split("|")[1]}
+          </Tag>
+        ));
+      }
+      return (
+        <Tag
+          key={`tag-${val.option}`}
+          icon={
+            <Popover title={val.question} placement="topRight">
+              <InfoCircleOutlined />
+            </Popover>
+          }
+          closable
+          onClose={(e) => handleOnCloseTag(val.type, val.option)}
+        >
+          {val.option.split("|")[1]}
+        </Tag>
+      );
+    });
   };
 
   return (

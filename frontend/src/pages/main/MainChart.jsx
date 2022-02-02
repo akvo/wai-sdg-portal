@@ -70,8 +70,14 @@ const MainChart = ({ current, question }) => {
       url = generateAdvanceFilterURL(advanceSearchValue, url);
       if (!isEmpty(advanceSearchValue)) {
         const filterByText = advanceSearchValue?.map((x, xi) => {
-          const { question, option } = x;
-          const optText = option.split("|")?.[1];
+          const { question, option, type } = x;
+          let optText = "";
+          if (type === "option") {
+            optText = option.split("|")?.[1];
+          }
+          if (type === "multiple_option") {
+            optText = option.map((opt) => opt.split("|")[1]).join(", ");
+          }
           return `{question|${question}} is {option|${optText}}`;
         });
         chartTitleTemp = `${chartTitleTemp}, where ${filterByText?.join(

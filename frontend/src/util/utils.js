@@ -18,7 +18,8 @@ export const generateAdvanceFilterURL = (advanceSearchValue, url) => {
   // advance search
   if (!isEmpty(advanceSearchValue)) {
     const advanceFilter = advanceSearchValue
-      .map((x) => encodeURIComponent(x.option))
+      .flatMap((x) => x.option)
+      .map((x) => encodeURIComponent(x))
       .join("&q=");
     url += `&q=${advanceFilter?.toLowerCase()}`;
   }
