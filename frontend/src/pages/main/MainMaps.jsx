@@ -351,7 +351,11 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
                 ...d,
                 // replace shape value with option score, or
                 // replace with 0 if option answer is not in calculatedBy config
-                score: findOption?.score || 0,
+                score: findOption
+                  ? findOption?.score
+                    ? findOption.score
+                    : 1 // manage if score not defined
+                  : 0,
               };
             });
           }
