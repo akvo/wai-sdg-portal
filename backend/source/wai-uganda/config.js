@@ -107,7 +107,19 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 6, name: "Household Size" },
+      shape: {
+        id: 14,
+        name: "Sanitation Service Level (Basic or higher)",
+        // set to true if title of shape legend by calculatedBy value
+        isTitleByCalculated: false,
+        // describe option value will be included for the calculation
+        calculatedBy: [
+          { id: 18, name: "Safely Managed" },
+          { id: 14, name: "Basic" },
+        ],
+        // describe the shape calculation type
+        type: "percentage",
+      },
       marker: { id: 7, title: "Water Service Level" },
     },
     formId: 1,
