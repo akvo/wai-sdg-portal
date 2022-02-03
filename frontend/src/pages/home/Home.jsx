@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { Row, Col, Card, Space, Carousel, Image, Spin } from "antd";
-import { RightOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import CountUp from "react-countup";
 import api from "../../util/api";
 
@@ -13,17 +11,11 @@ import upperFirst from "lodash/upperFirst";
 
 const level2 = window.levels[0];
 const { jumbotron, datasetsInPortal, overviews } = window.landing_config;
-const {
-  exploreText,
-  exploreDataText,
-  readMoreText,
-  overviewSectionTitle,
-  datasetSectionTitle,
-} = window?.i18n?.home;
+const { overviewSectionTitle, datasetSectionTitle } = window?.i18n?.home;
 
 const OverviewInfo = ({ item, order }) => {
   const { type, category, data } = item;
-  const { above_text, number_text, explore, value, total } = data;
+  const { above_text, number_text, value, total } = data;
   let text = number_text;
   if (text?.includes("##total##")) {
     text = text.replace("##total##", total || "");
