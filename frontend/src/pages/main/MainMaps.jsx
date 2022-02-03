@@ -463,8 +463,12 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
     if (hoveredShape && data.length && shapeQuestion) {
       const location =
         hoveredShape?.properties[shapeLevels[shapeLevels.length - 1]];
+      if (!location) {
+        setShapeTooltip(null);
+        return;
+      }
       const filteredData = data?.filter(
-        (d) => d.loc.toLowerCase() === location.toLowerCase()
+        (d) => d?.loc?.toLowerCase() === location?.toLowerCase()
       );
       let tooltipElement = "";
       if (shapeQuestion?.type === "option") {
@@ -645,7 +649,7 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
             data={geojson}
             onEachFeature={onEachFeature}
           >
-            {hoveredShape && <Tooltip>{shapeTooltip}</Tooltip>}
+            {hoveredShape && shapeTooltip && <Tooltip>{shapeTooltip}</Tooltip>}
           </GeoJSON>
           {!loading && (
             <Markers
