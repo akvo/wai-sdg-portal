@@ -357,10 +357,15 @@
   .marker-legends {
     z-index: 1;
     position: absolute;
-    top: 48px;
     left: 24px;
     background: rgba(255, 255, 255, 0.6);
     padding: 5px;
+    &.dropdown-visible {
+      top: 48px;
+    }
+    &.dropdown-hidden {
+      top: 24px;
+    }
 
     h4 {
       font-weight: 600;

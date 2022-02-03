@@ -251,6 +251,7 @@ const MarkerLegend = ({
   markerQuestion,
   filterMarker,
   setFilterMarker,
+  renderSelectableMarker,
 }) => {
   if (_.isEmpty(data)) {
     return "";
@@ -281,7 +282,11 @@ const MarkerLegend = ({
     </Space>
   ));
   return (
-    <div className="marker-legends">
+    <div
+      className={`marker-legends ${
+        renderSelectableMarker ? "dropdown-visible" : "dropdown-hidden"
+      }`}
+    >
       <h4>{markerQuestion?.name?.toUpperCase() || "Legend"}</h4>
       {option.map((o, i) => (
         <div key={i} className="marker-list">
@@ -665,6 +670,7 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
             }
             filterMarker={filterMarker}
             setFilterMarker={setFilterMarker}
+            renderSelectableMarker={!_.isEmpty(questionWithColorCoded)}
           />
         </>
       )}
