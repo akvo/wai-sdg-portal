@@ -7,7 +7,7 @@ import {
   GeoJSON,
   Tooltip,
 } from "react-leaflet";
-import { Spin, Button, Space, Badge, Slider, Row, Col } from "antd";
+import { Spin, Button, Space, Badge, Slider, Row, Col, Select } from "antd";
 import {
   ZoomInOutlined,
   ZoomOutOutlined,
@@ -309,14 +309,27 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
   const [selectedShape, setSelectedShape] = useState(null);
   const [hoveredShape, setHoveredShape] = useState(null);
   const [shapeTooltip, setShapeTooltip] = useState("");
+  const [selectableMarkerQuestion, setSelectableMarkerQuestion] = useState(
+    null
+  );
   const markerQuestion = question.find(
     (q) => q.id === current.maps?.marker?.id
   );
-  const defaultMarkerColor = _.sortBy(markerQuestion?.option)?.map((m, i) => ({
+  // support selectable marker question
+  const defaultMarkerColor = _.sortBy(
+    _.isEmpty(selectableMarkerQuestion)
+      ? markerQuestion?.option
+      : selectableMarkerQuestion?.option
+  )?.map((m, i) => ({
     ...m,
     color: m.color || Color.color[i],
   }));
   const shapeQuestion = question.find((q) => q.id === current.maps?.shape?.id);
+  // support selectable marker question
+  // filter option which has option color coded
+  const questionWithColorCoded = question.filter(
+    (q) => q.option.map((opt) => opt?.color).filter((o) => o)?.length
+  );
 
   useEffect(() => {
     if (
@@ -601,6 +614,36 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
         </div>
       ) : (
         <>
+          {/* support selectable marker question */}
+          {/* Marker selectable dropdown */}
+          {!_.isEmpty(questionWithColorCoded) && (
+            <div className="marker-dropdown-container">
+              <Select
+                showSearch
+                placeholder="Select here..."
+                className="marker-select"
+                options={questionWithColorCoded.map((q) => ({
+                  label: q.name,
+                  value: q.id,
+                }))}
+                optionFilterProp="label"
+                filterOption={(input, option) =>
+                  option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                }
+                value={
+                  _.isEmpty(selectableMarkerQuestion)
+                    ? current?.maps?.marker?.id
+                    : selectableMarkerQuestion?.id
+                }
+                onChange={(val) =>
+                  setSelectableMarkerQuestion(
+                    question.find((q) => q.id === val)
+                  )
+                }
+              />
+            </div>
+          )}
+          {/* EOL Marker selectable dropdown */}
           <ShapeLegend
             data={data}
             domain={domain}
@@ -613,7 +656,12 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
           />
           <MarkerLegend
             data={data}
-            markerQuestion={markerQuestion}
+            markerQuestion={
+              // support selectable marker question
+              _.isEmpty(selectableMarkerQuestion)
+                ? markerQuestion
+                : selectableMarkerQuestion
+            }
             filterMarker={filterMarker}
             setFilterMarker={setFilterMarker}
           />
@@ -675,7 +723,12 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
           {!loading && (
             <Markers
               data={data}
-              colors={markerQuestion?.option}
+              colors={
+                // support selectable marker question
+                _.isEmpty(selectableMarkerQuestion)
+                  ? markerQuestion?.option
+                  : selectableMarkerQuestion?.option
+              }
               defaultColors={defaultMarkerColor}
               filterMarker={filterMarker}
             />
