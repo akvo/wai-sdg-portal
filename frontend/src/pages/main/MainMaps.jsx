@@ -339,6 +339,7 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
       loadedFormId === current?.formId
     ) {
       setLoading(true);
+      setSelectableMarkerQuestion(null);
       let url = `maps/${current.formId}`;
       if (current.maps.shape) {
         url += `?shape=${current.maps.shape.id}`;
