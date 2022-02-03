@@ -61,13 +61,14 @@ const AdvanceSearch = ({
         type: type,
       },
     ];
-    if (type === "multiple_option") {
+    // support multiple select on advanced filter option
+    // delete filter from state if value length = 0
+    if (Array.isArray(value)) {
       updatedValue = value.length ? updatedValue : [];
     }
     UIState.update((s) => {
       s.advanceSearchValue = [...filterAdvanceSearchValue, ...updatedValue];
     });
-    setSelectedPanel([]);
   };
 
   useEffect(() => {
@@ -122,10 +123,15 @@ const AdvanceSearch = ({
               onChange={handleOnChangeQuestionDropdown}
             />
             {!isEmpty(selectedQuestion) && (
-              <RenderQuestionOption
-                selectedQuestion={selectedQuestion}
-                handleOnChangeQuestionOption={handleOnChangeQuestionOption}
-              />
+              <>
+                <RenderQuestionOption
+                  selectedQuestion={selectedQuestion}
+                  handleOnChangeQuestionOption={handleOnChangeQuestionOption}
+                />
+                <Button block={true} onClick={() => setSelectedPanel([])}>
+                  {buttonText?.btnClose}
+                </Button>
+              </>
             )}
           </Space>
         </Panel>
@@ -166,7 +172,10 @@ const RenderQuestionOption = ({
     ));
   };
 
-  if (selectedQuestion?.type === "multiple_option") {
+  if (
+    selectedQuestion?.type === "multiple_option" ||
+    selectedQuestion?.type === "option"
+  ) {
     return (
       <Checkbox.Group
         key={`${selectedQuestion.id}-${selectedQuestion.name}`}
@@ -207,18 +216,16 @@ const RenderFilterTag = ({ setPage, setSelectedRow }) => {
   const { advanceSearchValue } = UIState.useState((s) => s);
 
   const handleOnCloseTag = (type, option) => {
+    console.log(option);
     setPage(1);
     if (setSelectedRow) {
       setSelectedRow([]);
     }
     let deleteFilter = [];
-    if (type === "option") {
-      deleteFilter = advanceSearchValue.filter((x) => x.option !== option);
-    }
-    if (type === "multiple_option") {
+    if (type === "multiselect") {
       deleteFilter = advanceSearchValue
         .map((x) => {
-          if (x.type === "multiple_option" && x.option.includes(option)) {
+          if (x.option.includes(option)) {
             const filterOpt = x.option.filter((opt) => opt !== option);
             return {
               ...x,
@@ -229,6 +236,8 @@ const RenderFilterTag = ({ setPage, setSelectedRow }) => {
           return x;
         })
         .filter((x) => x.option);
+    } else {
+      deleteFilter = advanceSearchValue.filter((x) => x.option !== option);
     }
     UIState.update((s) => {
       s.advanceSearchValue = deleteFilter;
@@ -237,7 +246,8 @@ const RenderFilterTag = ({ setPage, setSelectedRow }) => {
 
   const TagToRender = () => {
     return advanceSearchValue.map((val) => {
-      if (val.type === "multiple_option") {
+      // support multiple select on advanced filter option
+      if (Array.isArray(val.option)) {
         return val.option.map((opt) => (
           <Tag
             key={`tag-${opt}`}
@@ -247,7 +257,7 @@ const RenderFilterTag = ({ setPage, setSelectedRow }) => {
               </Popover>
             }
             closable
-            onClose={(e) => handleOnCloseTag(val.type, opt)}
+            onClose={(e) => handleOnCloseTag("multiselect", opt)}
           >
             {opt.split("|")[1]}
           </Tag>
@@ -262,7 +272,7 @@ const RenderFilterTag = ({ setPage, setSelectedRow }) => {
             </Popover>
           }
           closable
-          onClose={(e) => handleOnCloseTag(val.type, val.option)}
+          onClose={(e) => handleOnCloseTag("radio", val.option)}
         >
           {val.option.split("|")[1]}
         </Tag>
