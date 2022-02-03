@@ -79,6 +79,8 @@ const Markers = ({ data, colors, filterMarker, defaultColors }) => {
 
 const ShapeLegendTitle = ({ current, shapeQuestion }) => {
   const title = current?.maps?.shape?.name || shapeQuestion?.name;
+  const shapeLegendIsTitleByCalculated =
+    current?.maps?.shape?.isTitleByCalculated;
   const extraTitle = current?.maps?.shape?.calculatedBy
     ? current.maps.shape.calculatedBy
         .map((s) => shapeQuestion?.option?.find((x) => x.id === s.id))
@@ -87,18 +89,19 @@ const ShapeLegendTitle = ({ current, shapeQuestion }) => {
   return (
     <h4>
       {title}
-      {extraTitle.map((x, xi) => (
-        <div key={xi} className="extra-title">
-          {x?.color && (
-            <span
-              className="legend-icon"
-              style={{ backgroundColor: x.color }}
-            ></span>
-          )}
-          {x?.name}{" "}
-          {xi + 1 !== extraTitle.length && extraTitle.length !== 1 && "+"}
-        </div>
-      ))}
+      {shapeLegendIsTitleByCalculated &&
+        extraTitle.map((x, xi) => (
+          <div key={xi} className="extra-title">
+            {x?.color && (
+              <span
+                className="legend-icon"
+                style={{ backgroundColor: x.color }}
+              ></span>
+            )}
+            {x?.name}{" "}
+            {xi + 1 !== extraTitle.length && extraTitle.length !== 1 && "+"}
+          </div>
+        ))}
     </h4>
   );
 };
