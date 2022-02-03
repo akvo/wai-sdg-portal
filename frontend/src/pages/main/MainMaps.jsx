@@ -30,7 +30,7 @@ const { shapeLevels } = window.map_config;
 const mapMaxZoom = 14;
 const defPos = defaultPos();
 const colorRange = ["#bbedda", "#a7e1cb", "#92d5bd", "#7dcaaf", "#67bea1"];
-const higlightColor = "#84b4cc";
+// const higlightColor = "#84b4cc";
 const noDataColor = "#d3d3d3";
 
 const Markers = ({ data, colors, filterMarker, defaultColors }) => {
@@ -143,8 +143,14 @@ const ShapeLegend = ({
         justify="space-between"
         className="slider-number-wrapper"
       >
-        <Col>{domain[0]}</Col>
-        <Col>{domain[1]}</Col>
+        <Col>
+          {domain[0]}
+          {percentSuffix}
+        </Col>
+        <Col>
+          {domain[1]}
+          {percentSuffix}
+        </Col>
       </Row>
     </div>
   );
