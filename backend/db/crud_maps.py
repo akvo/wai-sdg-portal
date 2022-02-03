@@ -1,5 +1,6 @@
 from typing import List
 from sqlalchemy.orm import Session
+from sqlalchemy import or_
 from models.data import Data
 from models.views.view_data import ViewData
 from models.answer import Answer
@@ -11,8 +12,10 @@ def get_data(session: Session,
              options: List[str] = None):
     data = session.query(Data).filter(Data.form == form)
     if options:
-        data_id = session.query(ViewData.data).filter(
-            ViewData.options.contains(options)).all()
+        # support multiple select options filter
+        # change query to filter data by or_ condition
+        or_query = or_(ViewData.options.contains([opt]) for opt in options)
+        data_id = session.query(ViewData.data).filter(or_query).all()
         data = data.filter(Data.id.in_([d.data for d in data_id]))
     data = data.all()
     answer = session.query(Answer).filter(Answer.question.in_(question)).all()

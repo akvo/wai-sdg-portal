@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session, aliased
-from sqlalchemy import and_, func
+from sqlalchemy import and_, func, or_
 from models.answer import Answer
 from models.data import Data
 from models.option import Option
@@ -20,8 +20,10 @@ def filter_datapoint(session: Session,
     # get list of data ids
     data = session.query(Data.id).filter(Data.form == form)
     if options:
-        data_id = session.query(ViewData.data).filter(
-            ViewData.options.contains(options)).all()
+        # support multiple select options filter
+        # change query to filter data by or_ condition
+        or_query = or_(ViewData.options.contains([opt]) for opt in options)
+        data_id = session.query(ViewData.data).filter(or_query).all()
         data = data.filter(Data.id.in_([d.data for d in data_id]))
     if administration:
         data = data.filter(Data.administration.in_(administration))
