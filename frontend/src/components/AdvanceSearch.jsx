@@ -18,6 +18,7 @@ import flatten from "lodash/flatten";
 
 const { Panel } = Collapse;
 const { mainText, buttonText } = window?.i18n;
+const { advancedFilterFeature } = window.features;
 
 const AdvanceSearch = ({
   formId,
@@ -69,6 +70,9 @@ const AdvanceSearch = ({
     UIState.update((s) => {
       s.advanceSearchValue = [...filterAdvanceSearchValue, ...updatedValue];
     });
+    if (!advancedFilterFeature?.isMultiSelect) {
+      setSelectedPanel([]);
+    }
   };
 
   useEffect(() => {
@@ -128,9 +132,11 @@ const AdvanceSearch = ({
                   selectedQuestion={selectedQuestion}
                   handleOnChangeQuestionOption={handleOnChangeQuestionOption}
                 />
-                <Button block={true} onClick={() => setSelectedPanel([])}>
-                  {buttonText?.btnClose}
-                </Button>
+                {advancedFilterFeature?.isMultiSelect && (
+                  <Button block={true} onClick={() => setSelectedPanel([])}>
+                    {buttonText?.btnClose}
+                  </Button>
+                )}
               </>
             )}
           </Space>
@@ -173,8 +179,8 @@ const RenderQuestionOption = ({
   };
 
   if (
-    selectedQuestion?.type === "multiple_option" ||
-    selectedQuestion?.type === "option"
+    advancedFilterFeature?.isMultiSelect ||
+    selectedQuestion?.type === "multiple_option"
   ) {
     return (
       <Checkbox.Group
@@ -216,7 +222,6 @@ const RenderFilterTag = ({ setPage, setSelectedRow }) => {
   const { advanceSearchValue } = UIState.useState((s) => s);
 
   const handleOnCloseTag = (type, option) => {
-    console.log(option);
     setPage(1);
     if (setSelectedRow) {
       setSelectedRow([]);
