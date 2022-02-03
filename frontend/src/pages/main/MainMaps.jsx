@@ -79,6 +79,8 @@ const Markers = ({ data, colors, filterMarker, defaultColors }) => {
 
 const ShapeLegendTitle = ({ current, shapeQuestion }) => {
   const title = current?.maps?.shape?.name || shapeQuestion?.name;
+  const shapeLegendIsTitleByCalculated =
+    current?.maps?.shape?.isTitleByCalculated;
   const extraTitle = current?.maps?.shape?.calculatedBy
     ? current.maps.shape.calculatedBy
         .map((s) => shapeQuestion?.option?.find((x) => x.id === s.id))
@@ -87,18 +89,19 @@ const ShapeLegendTitle = ({ current, shapeQuestion }) => {
   return (
     <h4>
       {title}
-      {extraTitle.map((x, xi) => (
-        <div key={xi} className="extra-title">
-          {x?.color && (
-            <span
-              className="legend-icon"
-              style={{ backgroundColor: x.color }}
-            ></span>
-          )}
-          {x?.name}{" "}
-          {xi + 1 !== extraTitle.length && extraTitle.length !== 1 && "+"}
-        </div>
-      ))}
+      {shapeLegendIsTitleByCalculated &&
+        extraTitle.map((x, xi) => (
+          <div key={xi} className="extra-title">
+            {x?.color && (
+              <span
+                className="legend-icon"
+                style={{ backgroundColor: x.color }}
+              ></span>
+            )}
+            {x?.name}{" "}
+            {xi + 1 !== extraTitle.length && extraTitle.length !== 1 && "+"}
+          </div>
+        ))}
     </h4>
   );
 };
@@ -348,7 +351,11 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
                 ...d,
                 // replace shape value with option score, or
                 // replace with 0 if option answer is not in calculatedBy config
-                score: findOption?.score || 0,
+                score: findOption
+                  ? findOption?.score
+                    ? findOption.score
+                    : 1 // manage if score not defined
+                  : 0,
               };
             });
           }
@@ -460,8 +467,12 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
     if (hoveredShape && data.length && shapeQuestion) {
       const location =
         hoveredShape?.properties[shapeLevels[shapeLevels.length - 1]];
+      if (!location) {
+        setShapeTooltip(null);
+        return;
+      }
       const filteredData = data?.filter(
-        (d) => d.loc.toLowerCase() === location.toLowerCase()
+        (d) => d?.loc?.toLowerCase() === location?.toLowerCase()
       );
       let tooltipElement = "";
       if (shapeQuestion?.type === "option") {
@@ -642,7 +653,7 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
             data={geojson}
             onEachFeature={onEachFeature}
           >
-            {hoveredShape && <Tooltip>{shapeTooltip}</Tooltip>}
+            {hoveredShape && shapeTooltip && <Tooltip>{shapeTooltip}</Tooltip>}
           </GeoJSON>
           {!loading && (
             <Markers

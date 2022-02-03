@@ -214,7 +214,9 @@ var page_config = {
     maps: {
       shape: {
         id: 569090236,
-        name: "Sanitation Service Level",
+        name: "Sanitation Service Level (Basic or higher)",
+        // set to true if title of shape legend by calculatedBy value
+        isTitleByCalculated: false,
         // describe option value will be included for the calculation
         calculatedBy: [
           { id: 234, name: "Safely Managed" },
