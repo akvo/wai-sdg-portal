@@ -49,14 +49,6 @@ const OverviewInfo = ({ item, order }) => {
               <CountUp decimals={1} end={value || 0} />%
             </div>
             <div className="text">{text}</div>
-            {/* Hide hyperlink for now */}
-            {/* <div className="explore">
-              <Link to={explore}>
-                <Space align="center" size="small">
-                  {exploreText} <ArrowRightOutlined />
-                </Space>
-              </Link>
-            </div> */}
           </Col>
         </Row>
       </Card>
@@ -222,23 +214,6 @@ const Home = () => {
                     <Card className="dataset-item">
                       <h2>{title}</h2>
                       <p>{description}</p>
-                      {/* Hide hyperlink for now */}
-                      {/* <div className="button-wrapper">
-                        <div className="read-more">
-                          <Link to={readmore}>
-                            <Space align="center" size="small">
-                              {readMoreText} <ArrowRightOutlined />
-                            </Space>
-                          </Link>
-                        </div>
-                        <div className="explore">
-                          <Link to={explore}>
-                            <Space align="center" size="small">
-                              {exploreDataText} <RightOutlined />
-                            </Space>
-                          </Link>
-                        </div>
-                      </div> */}
                     </Card>
                   </Col>
                 )
