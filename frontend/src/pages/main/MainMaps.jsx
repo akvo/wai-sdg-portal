@@ -30,8 +30,9 @@ const { shapeLevels } = window.map_config;
 const mapMaxZoom = 14;
 const defPos = defaultPos();
 const colorRange = ["#bbedda", "#a7e1cb", "#92d5bd", "#7dcaaf", "#67bea1"];
-// const higlightColor = "#84b4cc";
+const higlightColor = "#84b4cc";
 const noDataColor = "#d3d3d3";
+const sliderSetting = false;
 
 const Markers = ({ data, colors, filterMarker, defaultColors }) => {
   data = data.filter((d) => d.geo);
@@ -124,36 +125,114 @@ const ShapeLegend = ({
     return "";
   }
 
-  return (
-    <div className="legends-wrapper">
-      {!_.isEmpty(shapeQuestion) && (
-        <ShapeLegendTitle current={current} shapeQuestion={shapeQuestion} />
-      )}
-      <Slider
-        range
-        min={domain[0]}
-        max={domain[1]}
-        value={filterColor ? filterColor : domain}
-        onChange={(val) => {
-          setFilterColor(val);
+  if (sliderSetting) {
+    return (
+      <div className="legends-wrapper">
+        {!_.isEmpty(shapeQuestion) && (
+          <ShapeLegendTitle current={current} shapeQuestion={shapeQuestion} />
+        )}
+        <Slider
+          range
+          min={domain[0]}
+          max={domain[1]}
+          value={filterColor ? filterColor : domain}
+          onChange={(val) => {
+            setFilterColor(val);
+          }}
+        />
+        <Row
+          align="center"
+          justify="space-between"
+          className="slider-number-wrapper"
+        >
+          <Col>
+            {domain[0]}
+            {percentSuffix}
+          </Col>
+          <Col>
+            {domain[1]}
+            {percentSuffix}
+          </Col>
+        </Row>
+      </div>
+    );
+  }
+
+  const range = thresholds.map((x, i) => {
+    return (
+      <div
+        key={`legend-${i + 1}`}
+        className={
+          "legend" +
+          (filterColor !== null && filterColor === updatedColorRange[i]
+            ? " legend-selected"
+            : "")
+        }
+        onClick={(e) => {
+          filterColor === null
+            ? setFilterColor(updatedColorRange[i])
+            : filterColor === updatedColorRange[i]
+            ? setFilterColor(null)
+            : setFilterColor(updatedColorRange[i]);
         }}
-      />
-      <Row
-        align="center"
-        justify="space-between"
-        className="slider-number-wrapper"
+        style={{
+          backgroundColor:
+            updatedColorRange[i] === filterColor
+              ? higlightColor
+              : updatedColorRange[i],
+        }}
       >
-        <Col>
-          {domain[0]}
-          {percentSuffix}
-        </Col>
-        <Col>
-          {domain[1]}
-          {percentSuffix}
-        </Col>
-      </Row>
-    </div>
-  );
+        {i === 0 && x === 1
+          ? x
+          : i === 0
+          ? `1${percentSuffix} - ${x}${percentSuffix}`
+          : `${thresholds[i - 1]}${percentSuffix} - ${x}${percentSuffix}`}
+      </div>
+    );
+  });
+
+  if (thresholds.length) {
+    return (
+      <div className="legends-wrapper">
+        {!_.isEmpty(shapeQuestion) && (
+          <ShapeLegendTitle current={current} shapeQuestion={shapeQuestion} />
+        )}
+        <div className="legends">
+          {[
+            ...range,
+            <div
+              key={"legend-last"}
+              className={
+                "legend" +
+                (filterColor !== null &&
+                filterColor === updatedColorRange[range.length]
+                  ? " legend-selected"
+                  : "")
+              }
+              style={{
+                backgroundColor:
+                  updatedColorRange[range.length] === filterColor
+                    ? higlightColor
+                    : updatedColorRange[range.length],
+              }}
+              onClick={(e) => {
+                filterColor === null
+                  ? setFilterColor(updatedColorRange[range.length])
+                  : filterColor === updatedColorRange[range.length]
+                  ? setFilterColor(null)
+                  : setFilterColor(updatedColorRange[range.length]);
+              }}
+            >
+              {"> "}
+              {thresholds[thresholds.length - 1]}
+              {percentSuffix}
+            </div>,
+          ]}
+        </div>
+      </div>
+    );
+  }
+  return "";
 };
 
 const MarkerLegend = ({
@@ -289,7 +368,8 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
     ["order"],
     ["desc"]
   )?.map((opt) => opt.color);
-  const updatedColorRange = jmpColorRange.length ? jmpColorRange : colorRange;
+  const updatedColorRange =
+    sliderSetting && jmpColorRange.length ? jmpColorRange : colorRange;
 
   const shapeColor = _.chain(_.groupBy(data, "loc"))
     .map((v, k) => {
@@ -343,7 +423,10 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
 
   const fillColor = (v) => {
     const color = v === 0 ? "#FFF" : colorScale(v);
-    if (filterColor !== null) {
+    if (!sliderSetting && filterColor !== null) {
+      return filterColor === color ? higlightColor : color;
+    }
+    if (sliderSetting && filterColor !== null) {
       const start = filterColor[0];
       const end = filterColor[1];
       return _.inRange(v, start, end) ? color : "#fff";
