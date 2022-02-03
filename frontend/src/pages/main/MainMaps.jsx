@@ -32,7 +32,6 @@ const defPos = defaultPos();
 const colorRange = ["#bbedda", "#a7e1cb", "#92d5bd", "#7dcaaf", "#67bea1"];
 const higlightColor = "#84b4cc";
 const noDataColor = "#d3d3d3";
-const sliderSetting = false;
 
 const Markers = ({ data, colors, filterMarker, defaultColors }) => {
   data = data.filter((d) => d.geo);
@@ -117,6 +116,9 @@ const ShapeLegend = ({
   updatedColorRange,
 }) => {
   const shapeCalculationType = current?.maps?.shape?.type;
+  const shapeLegendType = current?.maps?.shape?.legend;
+  const shapeLegendColor = current?.maps?.shape?.color;
+  const shapeLegendJmpType = current?.maps?.shape?.jmpType;
   const percentSuffix = shapeCalculationType === "percentage" ? "%" : "";
   thresholds = Array.from(
     new Set(thresholds.map((x) => Math.round(Math.floor(x) / 10) * 10))
@@ -128,7 +130,7 @@ const ShapeLegend = ({
     return "";
   }
 
-  if (sliderSetting) {
+  if (shapeLegendType === "slider") {
     return (
       <div className="legends-wrapper">
         {!_.isEmpty(shapeQuestion) && (
@@ -142,6 +144,12 @@ const ShapeLegend = ({
           onChange={(val) => {
             setFilterColor(val);
           }}
+          tipFormatter={(val) => `${val}${percentSuffix}`}
+          className={`shape-legend-slider ${
+            shapeLegendColor === "jmp" && shapeLegendJmpType
+              ? shapeLegendJmpType
+              : ""
+          }`}
         />
         <Row
           align="center"
@@ -369,14 +377,20 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
     }
   }, [user, current, loadedFormId, advanceSearchValue, shapeQuestion]);
 
+  // shape config
   const shapeShadingType = current?.maps?.shape?.type;
+  const shapeLegendType = current?.maps?.shape?.legend;
+  const shapeLegendColor = current?.maps?.shape?.color;
+
   const jmpColorRange = _.orderBy(
     shapeQuestion?.option,
     ["order"],
     ["desc"]
   )?.map((opt) => opt.color);
   const updatedColorRange =
-    sliderSetting && jmpColorRange.length ? jmpColorRange : colorRange;
+    shapeLegendColor === "jmp" && jmpColorRange.length
+      ? jmpColorRange
+      : colorRange;
 
   const shapeColor = _.chain(_.groupBy(data, "loc"))
     .map((v, k) => {
@@ -430,10 +444,13 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
 
   const fillColor = (v) => {
     const color = v === 0 ? "#FFF" : colorScale(v);
-    if (!sliderSetting && filterColor !== null) {
+    if (
+      (!shapeLegendType || shapeLegendType !== "slider") &&
+      filterColor !== null
+    ) {
       return filterColor === color ? higlightColor : color;
     }
-    if (sliderSetting && filterColor !== null) {
+    if (shapeLegendType === "slider" && filterColor !== null) {
       const start = filterColor[0];
       const end = filterColor[1];
       return _.inRange(v, start, end) ? color : "#fff";

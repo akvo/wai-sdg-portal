@@ -224,6 +224,12 @@ var page_config = {
         ],
         // describe the shape calculation type
         type: "percentage",
+        // shape legend type, slider or null (default)
+        legend: "slider",
+        // color range for shape shading, jmp or null (default)
+        color: "jmp",
+        // sanitation / water / hygiene / null (default)
+        jmpType: "sanitation",
       },
       marker: { id: 573020156, title: "Water Service Level" },
     },
