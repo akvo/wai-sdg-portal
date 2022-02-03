@@ -70,7 +70,7 @@ const MainChart = ({ current, question }) => {
       url = generateAdvanceFilterURL(advanceSearchValue, url);
       if (!isEmpty(advanceSearchValue)) {
         const filterByText = advanceSearchValue?.map((x, xi) => {
-          const { question, option, type } = x;
+          const { question, option } = x;
           let optText = "";
           // support multiple select on advanced filter option
           if (Array.isArray(option)) {
