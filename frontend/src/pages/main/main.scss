@@ -401,7 +401,7 @@
 .shape-tooltip-container {
   padding: 4px 7px;
   min-width: 200px;
-  max-width: 100%;
+  max-width: 250px;
 
   h4 {
     font-size: 14px;
@@ -420,6 +420,11 @@
 
     .shape-tooltip-name {
       font-size: 12px;
+      inline-size: 135px;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      white-space: initial;
+      min-height: 0;
     }
 
     .shape-tooltip-value {
@@ -441,7 +446,6 @@
 
       .shape-tooltip-name {
         margin-left: 6px;
-        font-size: 12px;
       }
     }
   }
