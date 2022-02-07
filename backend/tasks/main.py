@@ -38,7 +38,7 @@ def run_seed(session: Session, jobs: dict):
         info.update({"records": len(data)})
         # success email
         body = EmailText.data_upload_body.value.replace(
-            "##filename##", str(original_filename))
+            "--filename--", str(original_filename))
         email = Email(recipients=[user.recipient],
                       type=MailTypeEnum.data_submission_success,
                       body=body)
@@ -46,7 +46,7 @@ def run_seed(session: Session, jobs: dict):
     else:
         # failed email
         body = EmailText.data_upload_body.value.replace(
-            "##filename##", str(original_filename))
+            "--filename--", str(original_filename))
         email = Email(recipients=[user.recipient],
                       type=MailTypeEnum.data_submission_failed,
                       body=body)

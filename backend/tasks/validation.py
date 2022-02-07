@@ -28,21 +28,20 @@ def generate_excel_columns():
 def validate_header_names(header, col, header_names):
     default = {"error": ExcelError.header, "cell": col}
     if "Unnamed:" in header:
-        default.update({
-            "error_message": ValidationText.header_name_missing.value
-        })
+        default.update(
+            {"error_message": ValidationText.header_name_missing.value})
         return default
     if "|" not in header:
         default.update({
             "error_message":
-                f"{header} {ValidationText.header_no_question_id.value}",
+            f"{header} {ValidationText.header_no_question_id.value}",
         })
         return default
     if "|" in header:
         if header not in header_names:
             default.update({
                 "error_message":
-                    f"{header} {ValidationText.header_invalid_id.value}",
+                f"{header} {ValidationText.header_invalid_id.value}",
             })
             return default
     return False
@@ -60,16 +59,16 @@ def validate_number(answer, question):
             if r == "max" and rule[r] < answer:
                 return {
                     "error_message":
-                        ValidationText.numeric_max_rule.value.replace(
-                                "##question##", qname).replace(
-                                "##rule##", str(rule[r]))
+                    ValidationText.numeric_max_rule.value.replace(
+                        "--question--", qname).replace("--rule--",
+                                                       str(rule[r]))
                 }
             if r == "min" and rule[r] > answer:
                 return {
                     "error_message":
-                        ValidationText.numeric_min_rule.value.replace(
-                                "##question##", qname).replace(
-                                "##rule##", str(rule[r]))
+                    ValidationText.numeric_min_rule.value.replace(
+                        "--question--", qname).replace("--rule--",
+                                                       str(rule[r]))
                 }
     return False
 
@@ -78,7 +77,7 @@ def validate_geo(answer):
     answer = str(answer)
     try:
         for a in answer.split(","):
-            float(a)
+            float(a.strip())
     except ValueError:
         return {"error_message": ValidationText.lat_long_validation.value}
     if "," not in answer:
@@ -88,7 +87,7 @@ def validate_geo(answer):
         return {"error_message": ValidationText.lat_long_validation.value}
     for a in answer:
         try:
-            a = float(a)
+            a = float(a.strip())
         except ValueError:
             return {"error_message": ValidationText.lat_long_validation.value}
     return False
@@ -98,12 +97,13 @@ def validate_administration(session, answer, adm):
     aw = answer.split("|")
     name = adm["name"]
     if len(aw) < 2:
-        return {"error_message":
-                ValidationText.administration_validation.value}
+        return {
+            "error_message": ValidationText.administration_validation.value
+        }
     if aw[0] != adm["name"]:
         return {
             "error_message":
-                f"{ValidationText.administration_not_valid.value} {name}"
+            f"{ValidationText.administration_not_valid.value} {name}"
         }
     children = crud_administration.get_administration_by_name(session=session,
                                                               name=aw[-1],
@@ -111,9 +111,8 @@ def validate_administration(session, answer, adm):
     if not children:
         return {
             "error_message":
-                ValidationText.administration_not_part_of.value.replace(
-                    "##answer##", str(aw[-1])).replace(
-                        "##administration##", name)
+            ValidationText.administration_not_part_of.value.replace(
+                "--answer--", str(aw[-1])).replace("--administration--", name)
         }
     return False
 
@@ -171,7 +170,7 @@ def validate_row_data(session, col, answer, question, adm):
         if question.required:
             default.update({
                 "error_message":
-                    f"{question.name} {ValidationText.is_required.value}"
+                f"{question.name} {ValidationText.is_required.value}"
             })
             return default
         return False
