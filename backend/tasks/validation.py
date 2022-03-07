@@ -211,12 +211,13 @@ def validate_sheet_name(file: str):
 
 def validate(session: Session, form: int, administration: int, file: str):
     sheet_names = validate_sheet_name(file)
-    if 'data' not in sheet_names:
-        return [{
-            "error": ExcelError.sheet,
-            "error_message": ValidationText.filename_validation.value,
-            "sheets": ",".join(sheet_names)
-        }]
+    for sheet_tab in ['data', 'definitions', 'administration']:
+        if sheet_tab not in sheet_names:
+            return [{
+                "error": ExcelError.sheet,
+                "error_message": ValidationText.template_validation.value,
+                "sheets": ",".join(sheet_names)
+            }]
     questions = crud_question.get_excel_question(session=session, form=form)
     header_names = [q.to_excel_header for q in questions.all()]
     df = pd.read_excel(file, sheet_name='data')

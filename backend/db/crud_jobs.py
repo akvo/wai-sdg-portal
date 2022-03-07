@@ -86,6 +86,13 @@ def pending(session: Session) -> Union[int, bool]:
     return jobs.id if jobs else False
 
 
+def on_progress(session: Session) -> Union[JobsBase, bool]:
+    jobs = session.query(Jobs).filter(
+        Jobs.status == JobStatus.on_progress).order_by(asc(
+            Jobs.created)).first()
+    return jobs if jobs else False
+
+
 def is_not_busy(session: Session) -> bool:
     return session.query(
         Jobs.id).filter(Jobs.status == JobStatus.on_progress).first() is None
