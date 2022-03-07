@@ -16,7 +16,7 @@ class ValidationText(enum.Enum):
     administration_validation = "Wrong administration format"
     administration_not_valid = "Wrong administration data for"
     administration_not_part_of = "--answer-- is not part of --administration--"
-    filename_validation = "Wrong sheet name, there should be sheet named data"
+    template_validation = "Wrong sheet names or invalid file upload template"
     file_empty_validation = "You have uploaded an empty sheet"
     is_required = "is required"
     start_validation = "DATA VALIDATION STARTED"
@@ -67,6 +67,17 @@ class EmailText(enum.Enum):
         "message": '''
                     <div style="color: #9F0031;">
                         There were some errors during the data processing.
+                    </div>
+                    ''',
+        "image": f"{image_url}/exclamation-circle.png"
+    }
+    data_submission_too_many_error = {
+        "title": "Data Upload Failed",
+        "subject": "Data Upload Failed",
+        "body": None,
+        "message": '''
+                    <div style="color: #9F0031;">
+                        Too many errors, Jobs is canceled by the system
                     </div>
                     ''',
         "image": f"{image_url}/exclamation-circle.png"

@@ -110,7 +110,7 @@ class TestExcelValidation():
         assert errors == [{
             'error': ExcelError.sheet,
             "error_message":
-            "Wrong sheet name, there should be sheet named data",
+            "Wrong sheet names or invalid file upload template",
             'sheets': "NOT DATA"
         }]
         # Empty Sheet Error

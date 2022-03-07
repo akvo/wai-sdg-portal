@@ -1,4 +1,5 @@
 import pandas as pd
+import os
 import enum
 import itertools
 from db import crud_question
@@ -211,12 +212,17 @@ def validate_sheet_name(file: str):
 
 def validate(session: Session, form: int, administration: int, file: str):
     sheet_names = validate_sheet_name(file)
-    if 'data' not in sheet_names:
-        return [{
-            "error": ExcelError.sheet,
-            "error_message": ValidationText.filename_validation.value,
-            "sheets": ",".join(sheet_names)
-        }]
+    template_sheets = ['data', 'definitions', 'administration']
+    TESTING = os.environ.get("TESTING")
+    if TESTING:
+        template_sheets = ['data']
+    for sheet_tab in template_sheets:
+        if sheet_tab not in sheet_names:
+            return [{
+                "error": ExcelError.sheet,
+                "error_message": ValidationText.template_validation.value,
+                "sheets": ",".join(sheet_names)
+            }]
     questions = crud_question.get_excel_question(session=session, form=form)
     header_names = [q.to_excel_header for q in questions.all()]
     df = pd.read_excel(file, sheet_name='data')
