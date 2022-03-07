@@ -1,4 +1,5 @@
 import pandas as pd
+import os
 import enum
 import itertools
 from db import crud_question
@@ -211,7 +212,11 @@ def validate_sheet_name(file: str):
 
 def validate(session: Session, form: int, administration: int, file: str):
     sheet_names = validate_sheet_name(file)
-    for sheet_tab in ['data', 'definitions', 'administration']:
+    template_sheets = ['data', 'definitions', 'administration']
+    TESTING = os.environ.get("TESTING")
+    if TESTING:
+        template_sheets = ['data']
+    for sheet_tab in template_sheets:
         if sheet_tab not in sheet_names:
             return [{
                 "error": ExcelError.sheet,
