@@ -57,8 +57,7 @@ def delete_by_id(session: Session, id: int) -> None:
 def delete_bulk(session: Session, ids: List[int]) -> None:
     session.query(History).filter(History.data.in_(ids)).delete()
     session.query(Answer).filter(Answer.data.in_(ids)).delete()
-    session.query(Data).filter(
-        Data.id.in_(ids)).delete(synchronize_session='fetch')
+    session.query(Data).filter(Data.id.in_(ids)).delete()
     session.commit()
 
 
