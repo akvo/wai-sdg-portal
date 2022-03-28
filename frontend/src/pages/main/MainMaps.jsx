@@ -76,9 +76,14 @@ const Markers = ({
   const HoverContent = ({ marker, fill, name, customHover, hoverData }) => {
     if (!customHover) {
       return (
-        <>
-          <Badge count={marker} style={{ backgroundColor: fill }} /> {name}
-        </>
+        <div className="marker-tooltip-container">
+          <Badge
+            count={marker}
+            style={{ backgroundColor: fill }}
+            size="small"
+          />
+          <h4>{name}</h4>
+        </div>
       );
     }
 
@@ -86,22 +91,22 @@ const Markers = ({
       const findData = hoverData?.find((d) => d?.id === x.id);
       const value = findData?.value || "NA";
       return (
-        <div key={`${x.name}-${x.id}`} className="shape-tooltip-wrapper">
-          <span className="shape-tooltip-left-wrapper">
-            <span
-              className="shape-tooltip-icon"
-              style={{ backgroundColor: fill }}
-            ></span>
-            <span className="shape-tooltip-name">{x.name}</span>
-          </span>
-          <span className="shape-tooltip-value">{value}</span>
+        <div key={`${x.name}-${x.id}`} className="marker-tooltip-wrapper">
+          <div className="marker-tooltip-title">{x.name}</div>
+          <div className="marker-tooltip-value">{value}</div>
         </div>
       );
     });
     return (
-      <div className="shape-tooltip-container">
-        <h4>{name}</h4>
-        <Space direction="vertical">{content}</Space>
+      <div className="marker-tooltip-container">
+        <Space direction="vertical">
+          <Badge
+            count={marker}
+            size="small"
+            style={{ backgroundColor: fill }}
+          />
+          {content}
+        </Space>
       </div>
     );
   };

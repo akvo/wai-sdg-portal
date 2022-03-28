@@ -487,3 +487,44 @@
     }
   }
 }
+
+.marker-tooltip-container {
+  padding: 4px 7px;
+  min-width: 225px;
+  max-width: 325px;
+
+  h4 {
+    font-size: 13px;
+    font-weight: bold;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: initial;
+  }
+
+  .marker-tooltip-icon {
+    width: 12px;
+    height: 12px;
+    border-radius: 12px;
+  }
+
+  .ant-space-vertical {
+    width: 100%;
+  }
+
+  .marker-tooltip-wrapper {
+    width: 100%;
+
+    .marker-tooltip-title {
+      font-size: 12px;
+    }
+
+    .marker-tooltip-value {
+      font-size: 12px;
+      font-weight: bold;
+
+      &::before {
+        content: "\25CF    ";
+      }
+    }
+  }
+}
