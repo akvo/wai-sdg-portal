@@ -63,6 +63,7 @@ class TestAdvancedFilter():
                                params={
                                    "marker": 1,
                                    "shape": 2,
+                                   "hover_ids": "1|2",
                                    "q": "1|option 2"
                                })
         assert res.status_code == 200
@@ -73,6 +74,16 @@ class TestAdvancedFilter():
             "name": "Garut - Garut",
             "loc": "Garut",
             "marker": "Option 2",
+            "marker_hover": [
+                {
+                    "id": 2,
+                    "value": 10.0,
+                },
+                {
+                    "id": 1,
+                    "value": "Option 2",
+                }
+            ],
             "shape": 10.0,
             }, {
             "id": 3,
@@ -80,5 +91,15 @@ class TestAdvancedFilter():
             "name": "Bantul - Testing Data 2",
             "loc": "Bantul",
             "marker": "Option 2",
+            "marker_hover": [
+                {
+                    "id": 1,
+                    "value": "Option 2",
+                },
+                {
+                    "id": 2,
+                    "value": 24.0,
+                }
+            ],
             "shape": 24.0
         }]

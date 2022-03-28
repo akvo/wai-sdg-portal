@@ -27,5 +27,6 @@ class TestMapsRoutes():
             "name": "Garut - Garut",
             "loc": "Garut",
             "marker": "Option 1",
+            "marker_hover": None,
             "shape": 10.0,
         }]
