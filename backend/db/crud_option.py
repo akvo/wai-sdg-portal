@@ -1,13 +1,30 @@
 from typing import List, Optional
 from sqlalchemy.orm import Session
 from models.option import Option, OptionDictWithId
+from models.question import Question
 
 
 def get_option(session: Session) -> List[OptionDictWithId]:
     return session.query(Option).all()
 
 
-def update_option(session: Session, id: int,
+def add_option(session: Session,
+               question=int,
+               name=str,
+               order=Optional[str],
+               score=Optional[str],
+               color=Optional[str]) -> OptionDictWithId:
+    question = session.query(Question).filter(Question.id == question).first()
+    option = Option(name=name, order=order, color=color, score=score)
+    question.option.append(option)
+    session.flush()
+    session.commit()
+    session.refresh(option)
+    return option
+
+
+def update_option(session: Session,
+                  id: int,
                   name: Optional[str] = None,
                   order: Optional[str] = None,
                   color: Optional[str] = None,
