@@ -192,7 +192,16 @@ var page_config = {
       {
         id: 557700349,
         name: "Open Defecation Status",
-        hover: [],
+        hover: [
+          {
+            id: 569070281,
+            name: "Village Name",
+          },
+          {
+            id: 567440335,
+            name: "Number of households in the Village",
+          },
+        ],
       },
       {
         id: 569090299,
@@ -207,7 +216,16 @@ var page_config = {
             color: "#F67070",
           },
         ],
-        hover: [],
+        hover: [
+          {
+            id: 569070281,
+            name: "Village Name",
+          },
+          {
+            id: 567440335,
+            name: "Number of households in the Village",
+          },
+        ],
       },
     ],
   },
@@ -272,24 +290,72 @@ var page_config = {
       {
         id: 569080377,
         name: "Water service level",
-        hover: [],
+        hover: [
+          {
+            id: 555940315,
+            name: "Health Care Facility Name",
+          },
+          {
+            id: 555940316,
+            name: "Health Care Facility Type",
+          },
+        ],
       },
       {
         id: 569080376,
         name: "Sanitation service level",
-        hover: [],
+        hover: [
+          {
+            id: 555940315,
+            name: "Health Care Facility Name",
+          },
+          {
+            id: 555940316,
+            name: "Health Care Facility Type",
+          },
+        ],
       },
       {
         id: 569080380,
         name: "Hygiene service level",
+        hover: [
+          {
+            id: 555940315,
+            name: "Health Care Facility Name",
+          },
+          {
+            id: 555940316,
+            name: "Health Care Facility Type",
+          },
+        ],
       },
       {
         id: 569080379,
         name: "Environmental Cleaning service level",
+        hover: [
+          {
+            id: 555940315,
+            name: "Health Care Facility Name",
+          },
+          {
+            id: 555940316,
+            name: "Health Care Facility Type",
+          },
+        ],
       },
       {
         id: 569080378,
         name: "Waste service level",
+        hover: [
+          {
+            id: 555940315,
+            name: "Health Care Facility Name",
+          },
+          {
+            id: 555940316,
+            name: "Health Care Facility Type",
+          },
+        ],
       },
     ],
   },
@@ -352,14 +418,35 @@ var page_config = {
       {
         id: 573020156,
         name: "Water Service Level",
+        hover: [
+          { id: 554110154, name: "Village Name" },
+          {
+            id: 559820212,
+            name: "Household Size",
+          },
+        ],
       },
       {
         id: 569090236,
         name: "Sanitation Service Level",
+        hover: [
+          { id: 554110154, name: "Village Name" },
+          {
+            id: 559820212,
+            name: "Household Size",
+          },
+        ],
       },
       {
         id: 573010267,
         name: "Hygiene Service Level",
+        hover: [
+          { id: 554110154, name: "Village Name" },
+          {
+            id: 559820212,
+            name: "Household Size",
+          },
+        ],
       },
     ],
   },
@@ -424,14 +511,44 @@ var page_config = {
       {
         id: 559810275,
         name: "Water service levels",
+        hover: [
+          {
+            id: 546580264,
+            name: "School Name",
+          },
+          {
+            id: 546580263,
+            name: "School Type",
+          },
+        ],
       },
       {
         id: 571070148,
         name: "Sanitation service levels",
+        hover: [
+          {
+            id: 546580264,
+            name: "School Name",
+          },
+          {
+            id: 546580263,
+            name: "School Type",
+          },
+        ],
       },
       {
         id: 546580270,
         name: "Hygiene service levels",
+        hover: [
+          {
+            id: 546580264,
+            name: "School Name",
+          },
+          {
+            id: 546580263,
+            name: "School Type",
+          },
+        ],
       },
     ],
   },
