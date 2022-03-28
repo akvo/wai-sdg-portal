@@ -314,43 +314,79 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
   const [selectedShape, setSelectedShape] = useState(null);
   const [hoveredShape, setHoveredShape] = useState(null);
   const [shapeTooltip, setShapeTooltip] = useState("");
+
+  const shapeQuestion = question.find((q) => q.id === current.maps?.shape?.id);
+
+  // support selectable marker question
+  const { selectableMarkerDropdown } = current;
   const [selectableMarkerQuestion, setSelectableMarkerQuestion] = useState(
     null
   );
-  const markerQuestion = question.find(
-    (q) => q.id === current.maps?.marker?.id
+
+  // support selectable marker question & custom color coded
+  const defaultMarkerColor = _.sortBy(selectableMarkerQuestion?.option)?.map(
+    (m, i) => ({
+      ...m,
+      color: m.color || Color.color[i],
+    })
   );
-  // support selectable marker question
-  const defaultMarkerColor = _.sortBy(
-    _.isEmpty(selectableMarkerQuestion)
-      ? markerQuestion?.option
-      : selectableMarkerQuestion?.option
-  )?.map((m, i) => ({
-    ...m,
-    color: m.color || Color.color[i],
-  }));
-  const shapeQuestion = question.find((q) => q.id === current.maps?.shape?.id);
+
   // support selectable marker question
   // filter option which has option color coded
-  const questionWithColorCoded = question.filter(
-    (q) => q.option.map((opt) => opt?.color).filter((o) => o)?.length
-  );
+  let selectableMarkerDropdownOptionValues = [];
+  if (selectableMarkerDropdown) {
+    selectableMarkerDropdownOptionValues = question.filter((q) =>
+      selectableMarkerDropdown.find((x) => x.id === q.id)
+    );
+  }
+
+  useEffect(() => {
+    if (question.length) {
+      let findQuestion = question.find(
+        (q) => q.id === current?.maps?.marker?.id
+      );
+      // map color coded option from selectable marker option setting
+      if (selectableMarkerDropdown && findQuestion?.option) {
+        const findFromSetting = selectableMarkerDropdown?.find(
+          (x) => x.id === current?.maps?.marker?.id
+        );
+        const options = findQuestion?.option?.map((opt) => {
+          let color = opt.color;
+          if (findFromSetting?.color) {
+            const findColor = findFromSetting.color?.find(
+              (x) => x.name.toLowerCase() === opt.name.toLowerCase()
+            );
+            color = findColor?.color;
+          }
+          return {
+            ...opt,
+            color: color,
+          };
+        });
+        findQuestion = {
+          ...findQuestion,
+          option: options,
+        };
+      }
+      setSelectableMarkerQuestion(findQuestion);
+    }
+  }, [question, current, selectableMarkerDropdown]);
 
   useEffect(() => {
     if (
       user &&
       current &&
       loadedFormId !== null &&
-      loadedFormId === current?.formId
+      loadedFormId === current?.formId &&
+      selectableMarkerQuestion?.id
     ) {
       setLoading(true);
-      setSelectableMarkerQuestion(null);
       let url = `maps/${current.formId}`;
       if (current.maps.shape) {
         url += `?shape=${current.maps.shape.id}`;
       }
       if (current.maps.shape) {
-        url += `&marker=${current.maps.marker.id}`;
+        url += `&marker=${selectableMarkerQuestion?.id}`;
       }
       // advance search
       url = generateAdvanceFilterURL(advanceSearchValue, url);
@@ -394,7 +430,14 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
           setLoading(false);
         });
     }
-  }, [user, current, loadedFormId, advanceSearchValue, shapeQuestion]);
+  }, [
+    user,
+    current,
+    loadedFormId,
+    advanceSearchValue,
+    shapeQuestion,
+    selectableMarkerQuestion,
+  ]);
 
   // shape config
   const shapeShadingType = current?.maps?.shape?.type;
@@ -622,13 +665,13 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
         <>
           {/* support selectable marker question */}
           {/* Marker selectable dropdown */}
-          {!_.isEmpty(questionWithColorCoded) && (
+          {!_.isEmpty(selectableMarkerDropdownOptionValues) && (
             <div className="marker-dropdown-container">
               <Select
                 showSearch
                 placeholder="Select here..."
                 className="marker-select"
-                options={questionWithColorCoded.map((q) => ({
+                options={selectableMarkerDropdownOptionValues.map((q) => ({
                   label: q.name,
                   value: q.id,
                 }))}
@@ -636,11 +679,7 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
                 filterOption={(input, option) =>
                   option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
                 }
-                value={
-                  _.isEmpty(selectableMarkerQuestion)
-                    ? current?.maps?.marker?.id
-                    : selectableMarkerQuestion?.id
-                }
+                value={selectableMarkerQuestion?.id}
                 onChange={(val) =>
                   setSelectableMarkerQuestion(
                     question.find((q) => q.id === val)
@@ -662,15 +701,12 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
           />
           <MarkerLegend
             data={data}
-            markerQuestion={
-              // support selectable marker question
-              _.isEmpty(selectableMarkerQuestion)
-                ? markerQuestion
-                : selectableMarkerQuestion
-            }
+            markerQuestion={selectableMarkerQuestion}
             filterMarker={filterMarker}
             setFilterMarker={setFilterMarker}
-            renderSelectableMarker={!_.isEmpty(questionWithColorCoded)}
+            renderSelectableMarker={
+              !_.isEmpty(selectableMarkerDropdownOptionValues)
+            }
           />
         </>
       )}
@@ -730,12 +766,7 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
           {!loading && (
             <Markers
               data={data}
-              colors={
-                // support selectable marker question
-                _.isEmpty(selectableMarkerQuestion)
-                  ? markerQuestion?.option
-                  : selectableMarkerQuestion?.option
-              }
+              colors={selectableMarkerQuestion?.option}
               defaultColors={defaultMarkerColor}
               filterMarker={filterMarker}
             />

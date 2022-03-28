@@ -67,6 +67,62 @@ var page_config = {
       datapoint: 567450085,
       visualization: 571050096,
     },
+    selectableMarkerDropdown: [
+      {
+        id: 567450085,
+        name: "Functionality Status",
+        hover: [
+          {
+            id: 571070074,
+            name: "Water Point Name",
+          },
+          {
+            id: 571060084,
+            name: "Problems With Water System",
+          },
+        ],
+      },
+      {
+        id: 571050096,
+        name: "Water Source Type",
+        color: [
+          {
+            name: "Deep well with distribution",
+            color: "#4475B4",
+          },
+          {
+            name: "Hand dug well",
+            color: "#73ADD1",
+          },
+          {
+            name: "Shallow well",
+            color: "#AAD9E8",
+          },
+          {
+            name: "Protected spring",
+            color: "#FBE08F",
+          },
+          {
+            name: "Unprotected spring",
+            color: "#F8AE60",
+          },
+          {
+            name: "Rainwater collection",
+            color: "#F36C42",
+          },
+          {
+            name: "Surface water",
+            color: "#D73027",
+          },
+        ],
+        hover: [
+          {
+            id: 573000210,
+            name: "Maximum Yield (lpd)",
+          },
+        ],
+      },
+    ],
   },
   clts: {
     title: "CLTS",
