@@ -29,8 +29,15 @@ class AnswerDictWithHistory(TypedDict):
 class Answer(Base):
     __tablename__ = "answer"
     id = Column(Integer, primary_key=True, index=True, nullable=True)
-    question = Column(Integer, ForeignKey('question.id'))
-    data = Column(Integer, ForeignKey('data.id'))
+    question = Column(Integer,
+                      ForeignKey('question.id',
+                                 onupdate="CASCADE",
+                                 ondelete="CASCADE"),
+                      primary_key=True)
+    data = Column(Integer,
+                  ForeignKey('data.id', onupdate="CASCADE",
+                             ondelete="CASCADE"),
+                  primary_key=True)
     text = Column(Text, nullable=True)
     value = Column(Float, nullable=True)
     options = Column(pg.ARRAY(String), nullable=True)
