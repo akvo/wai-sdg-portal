@@ -38,7 +38,7 @@ def run_seed(session: Session, jobs: dict):
         info.update({"records": len(data)})
         # success email
         body = EmailText.data_upload_body.value.replace(
-            "##filename##", str(original_filename))
+            "--filename--", str(original_filename))
         email = Email(recipients=[user.recipient],
                       type=MailTypeEnum.data_submission_success,
                       body=body)
@@ -46,7 +46,7 @@ def run_seed(session: Session, jobs: dict):
     else:
         # failed email
         body = EmailText.data_upload_body.value.replace(
-            "##filename##", str(original_filename))
+            "--filename--", str(original_filename))
         email = Email(recipients=[user.recipient],
                       type=MailTypeEnum.data_submission_failed,
                       body=body)
@@ -126,6 +126,19 @@ def run_download(session: Session, jobs: dict):
         print_log_done(f"FILE CREATED {output}", start_time)
     else:
         print_log_done(f"FAILED TO CREATED {file}", start_time)
+
+
+def force_remove_task(session: Session, jobs):
+    user = get_user_by_id(session=session, id=jobs["created_by"])
+    email = Email(recipients=[user.recipient],
+                  type=MailTypeEnum.data_submission_failed,
+                  attachment=storage.download(jobs["payload"]))
+    sent = email.send
+    if sent:
+        crud.update(session=session, id=jobs["id"], status=JobStatus.failed)
+    else:
+        print("Force removed jobs_id {} by {}".format(jobs["id"],
+                                                      user["email"]))
 
 
 def do_task(session: Session, jobs):

@@ -44,8 +44,8 @@ def save(session: Session, user: int, form: int, dp: dict, qs: dict):
                     names.append(adm_list[-1].name)
             if q.type == QuestionType.geo:
                 if aw:
-                    geo = aw.split(",")
-                    answer.text = ("{}|{}").format(aw[0], aw[1])
+                    geo = [float(g.strip()) for g in aw.split(",")]
+                    answer.text = ("{}|{}").format(geo[0], geo[1])
                 else:
                     valid = False
             if q.type == QuestionType.text:

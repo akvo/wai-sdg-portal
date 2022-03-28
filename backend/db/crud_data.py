@@ -4,6 +4,8 @@ from typing_extensions import TypedDict
 from sqlalchemy.orm import Session
 from sqlalchemy import desc, func, case
 from models.data import Data, DataDict
+from models.answer import Answer
+from models.history import History
 from models.views.view_data import ViewData
 from models.answer import AnswerBase
 from models.views.view_data_score import ViewDataScore
@@ -46,12 +48,17 @@ def update_data(session: Session, data: Data) -> DataDict:
 
 
 def delete_by_id(session: Session, id: int) -> None:
-    data = session.query(Data).filter(Data.id == id).one()
-    session.delete(data)
+    session.query(History).filter(History.data == id).delete()
+    session.query(Answer).filter(Answer.data == id).delete()
+    session.query(Data).filter(Data.id == id).delete()
     session.commit()
 
 
 def delete_bulk(session: Session, ids: List[int]) -> None:
+    session.query(History).filter(
+        History.data.in_(ids)).delete(synchronize_session='fetch')
+    session.query(Answer).filter(
+        Answer.data.in_(ids)).delete(synchronize_session='fetch')
     session.query(Data).filter(
         Data.id.in_(ids)).delete(synchronize_session='fetch')
     session.commit()
@@ -92,10 +99,12 @@ def get_data(session: Session,
             data_score_temp.sort(key=lambda x: x["score"], reverse=True)
             # order data by score
             id_ordering = case(
-                {_id: index for index, _id in enumerate(
-                    [d["data"] for d in data_score_temp])},
-                value=Data.id
-            )
+                {
+                    _id: index
+                    for index, _id in enumerate(
+                        [d["data"] for d in data_score_temp])
+                },
+                value=Data.id)
             data = data.order_by(id_ordering)
         else:
             data = data.order_by(desc(Data.id))

@@ -448,7 +448,7 @@ var landing_config = {
     list: [
       "WASH vulnerability of communities and institutions.",
       "ODF status of communities.",
-      "Water infrastructure status and functionality.",
+      "Water infrastructure status.",
     ],
   },
   datasetsInPortal: [
