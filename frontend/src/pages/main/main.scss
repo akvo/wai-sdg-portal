@@ -431,12 +431,15 @@
 
 .shape-tooltip-container {
   padding: 4px 7px;
-  min-width: 200px;
-  max-width: 250px;
+  min-width: 225px;
+  max-width: 325px;
 
   h4 {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: bold;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: initial;
   }
 
   .ant-space-vertical {
@@ -462,6 +465,9 @@
       margin-left: 12px;
       font-size: 12px;
       font-weight: bold;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      white-space: initial;
     }
 
     .shape-tooltip-left-wrapper {

@@ -51,6 +51,13 @@ const fetchCustomColor = (question, selectableMarkerDropdown, qid) => {
         color: color,
       };
     });
+    if (findFromSetting?.hover) {
+      return {
+        ...findQuestion,
+        option: options,
+        hover: findFromSetting.hover,
+      };
+    }
     return {
       ...findQuestion,
       option: options,
@@ -59,10 +66,49 @@ const fetchCustomColor = (question, selectableMarkerDropdown, qid) => {
   return findQuestion;
 };
 
-const Markers = ({ data, colors, filterMarker, defaultColors }) => {
+const Markers = ({
+  data,
+  colors,
+  filterMarker,
+  defaultColors,
+  customHover,
+}) => {
+  const HoverContent = ({ marker, fill, name, customHover, hoverData }) => {
+    if (!customHover) {
+      return (
+        <>
+          <Badge count={marker} style={{ backgroundColor: fill }} /> {name}
+        </>
+      );
+    }
+
+    const content = customHover.map((x) => {
+      const findData = hoverData?.find((d) => d?.id === x.id);
+      const value = findData?.value || "NA";
+      return (
+        <div key={`${x.name}-${x.id}`} className="shape-tooltip-wrapper">
+          <span className="shape-tooltip-left-wrapper">
+            <span
+              className="shape-tooltip-icon"
+              style={{ backgroundColor: fill }}
+            ></span>
+            <span className="shape-tooltip-name">{x.name}</span>
+          </span>
+          <span className="shape-tooltip-value">{value}</span>
+        </div>
+      );
+    });
+    return (
+      <div className="shape-tooltip-container">
+        <h4>{name}</h4>
+        <Space direction="vertical">{content}</Space>
+      </div>
+    );
+  };
+
   data = data.filter((d) => d.geo);
   const rowHovered = UIState.useState((e) => e.rowHovered);
-  return data.map(({ id, geo, marker, name }) => {
+  return data.map(({ id, geo, marker, name, marker_hover }) => {
     let hovered = id === rowHovered;
     let fill = "#F00";
     let r = 3;
@@ -95,7 +141,13 @@ const Markers = ({ data, colors, filterMarker, defaultColors }) => {
         stroke={stroke}
       >
         <Tooltip direction="top">
-          <Badge count={marker} style={{ backgroundColor: fill }} /> {name}
+          <HoverContent
+            marker={marker}
+            fill={fill}
+            name={name}
+            customHover={customHover}
+            hoverData={marker_hover}
+          />
         </Tooltip>
       </Circle>
     );
@@ -366,11 +418,11 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
     );
   }
 
-  const handleOnChangeSelectableMarker = (val) => {
+  const handleOnChangeSelectableMarker = (qid) => {
     const findQuestion = fetchCustomColor(
       question,
       selectableMarkerDropdown,
-      val
+      qid
     );
     setSelectableMarkerQuestion(findQuestion);
   };
@@ -401,6 +453,13 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
       }
       if (current.maps.shape) {
         url += `&marker=${selectableMarkerQuestion?.id}`;
+      }
+      // custom hover
+      if (selectableMarkerQuestion?.hover) {
+        const hoverIds = selectableMarkerQuestion.hover
+          ?.map((x) => x.id)
+          .join("|");
+        url += `&hover_ids=${hoverIds}`;
       }
       // advance search
       url = generateAdvanceFilterURL(advanceSearchValue, url);
@@ -779,6 +838,7 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
               colors={selectableMarkerQuestion?.option}
               defaultColors={defaultMarkerColor}
               filterMarker={filterMarker}
+              customHover={selectableMarkerQuestion?.hover}
             />
           )}
         </MapContainer>
