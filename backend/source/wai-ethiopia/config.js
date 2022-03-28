@@ -188,6 +188,28 @@ var page_config = {
         },
       },
     ],
+    selectableMarkerDropdown: [
+      {
+        id: 557700349,
+        name: "Open Defecation Status",
+        hover: [],
+      },
+      {
+        id: 569090299,
+        name: "Presence of Handwashing Facility with Water and Soap",
+        color: [
+          {
+            name: "Yes",
+            color: "#9FE07F",
+          },
+          {
+            name: "No",
+            color: "#F67070",
+          },
+        ],
+        hover: [],
+      },
+    ],
   },
   health: {
     title: "Health Facility",
@@ -246,6 +268,30 @@ var page_config = {
       },
     ],
     formId: 494780323,
+    selectableMarkerDropdown: [
+      {
+        id: 569080377,
+        name: "Water service level",
+        hover: [],
+      },
+      {
+        id: 569080376,
+        name: "Sanitation service level",
+        hover: [],
+      },
+      {
+        id: 569080380,
+        name: "Hygiene service level",
+      },
+      {
+        id: 569080379,
+        name: "Environmental Cleaning service level",
+      },
+      {
+        id: 569080378,
+        name: "Waste service level",
+      },
+    ],
   },
   households: {
     title: "Households",
@@ -302,6 +348,20 @@ var page_config = {
         ],
       },
     ],
+    selectableMarkerDropdown: [
+      {
+        id: 573020156,
+        name: "Water Service Level",
+      },
+      {
+        id: 569090236,
+        name: "Sanitation Service Level",
+      },
+      {
+        id: 573010267,
+        name: "Hygiene Service Level",
+      },
+    ],
   },
   schools: {
     title: "Schools Facility",
@@ -325,7 +385,7 @@ var page_config = {
     ],
     maps: {
       shape: { id: 561200194, name: "Water Yield" },
-      marker: { id: 561200191, title: "Functionality Status" },
+      marker: { id: 559810275, title: "Water service levels" },
     },
     rows: [
       {
@@ -360,6 +420,20 @@ var page_config = {
       },
     ],
     formId: 551870264,
+    selectableMarkerDropdown: [
+      {
+        id: 559810275,
+        name: "Water service levels",
+      },
+      {
+        id: 571070148,
+        name: "Sanitation service levels",
+      },
+      {
+        id: 546580270,
+        name: "Hygiene service levels",
+      },
+    ],
   },
 };
 
