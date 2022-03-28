@@ -55,9 +55,12 @@ def delete_by_id(session: Session, id: int) -> None:
 
 
 def delete_bulk(session: Session, ids: List[int]) -> None:
-    session.query(History).filter(History.data.in_(ids)).delete()
-    session.query(Answer).filter(Answer.data.in_(ids)).delete()
-    session.query(Data).filter(Data.id.in_(ids)).delete()
+    session.query(History).filter(
+        History.data.in_(ids)).delete(synchronize_session='fetch')
+    session.query(Answer).filter(
+        Answer.data.in_(ids)).delete(synchronize_session='fetch')
+    session.query(Data).filter(
+        Data.id.in_(ids)).delete(synchronize_session='fetch')
     session.commit()
 
 
@@ -96,10 +99,12 @@ def get_data(session: Session,
             data_score_temp.sort(key=lambda x: x["score"], reverse=True)
             # order data by score
             id_ordering = case(
-                {_id: index for index, _id in enumerate(
-                    [d["data"] for d in data_score_temp])},
-                value=Data.id
-            )
+                {
+                    _id: index
+                    for index, _id in enumerate(
+                        [d["data"] for d in data_score_temp])
+                },
+                value=Data.id)
             data = data.order_by(id_ordering)
         else:
             data = data.order_by(desc(Data.id))
