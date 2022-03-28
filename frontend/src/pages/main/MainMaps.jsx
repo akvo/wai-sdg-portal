@@ -33,6 +33,32 @@ const colorRange = ["#bbedda", "#a7e1cb", "#92d5bd", "#7dcaaf", "#67bea1"];
 const higlightColor = "#84b4cc";
 const noDataColor = "#d3d3d3";
 
+const fetchCustomColor = (question, selectableMarkerDropdown, qid) => {
+  let findQuestion = question.find((q) => q.id === qid);
+  // map color coded option from selectable marker option setting
+  if (selectableMarkerDropdown && findQuestion?.option) {
+    const findFromSetting = selectableMarkerDropdown?.find((x) => x.id === qid);
+    const options = findQuestion?.option?.map((opt) => {
+      let color = opt.color;
+      if (findFromSetting?.color) {
+        const findColor = findFromSetting.color?.find(
+          (x) => x.name.toLowerCase() === opt.name.toLowerCase()
+        );
+        color = findColor?.color;
+      }
+      return {
+        ...opt,
+        color: color,
+      };
+    });
+    return {
+      ...findQuestion,
+      option: options,
+    };
+  }
+  return findQuestion;
+};
+
 const Markers = ({ data, colors, filterMarker, defaultColors }) => {
   data = data.filter((d) => d.geo);
   const rowHovered = UIState.useState((e) => e.rowHovered);
@@ -340,34 +366,22 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
     );
   }
 
+  const handleOnChangeSelectableMarker = (val) => {
+    const findQuestion = fetchCustomColor(
+      question,
+      selectableMarkerDropdown,
+      val
+    );
+    setSelectableMarkerQuestion(findQuestion);
+  };
+
   useEffect(() => {
-    if (question.length) {
-      let findQuestion = question.find(
-        (q) => q.id === current?.maps?.marker?.id
+    if (question.length && current?.maps?.marker?.id) {
+      const findQuestion = fetchCustomColor(
+        question,
+        selectableMarkerDropdown,
+        current?.maps?.marker?.id
       );
-      // map color coded option from selectable marker option setting
-      if (selectableMarkerDropdown && findQuestion?.option) {
-        const findFromSetting = selectableMarkerDropdown?.find(
-          (x) => x.id === current?.maps?.marker?.id
-        );
-        const options = findQuestion?.option?.map((opt) => {
-          let color = opt.color;
-          if (findFromSetting?.color) {
-            const findColor = findFromSetting.color?.find(
-              (x) => x.name.toLowerCase() === opt.name.toLowerCase()
-            );
-            color = findColor?.color;
-          }
-          return {
-            ...opt,
-            color: color,
-          };
-        });
-        findQuestion = {
-          ...findQuestion,
-          option: options,
-        };
-      }
       setSelectableMarkerQuestion(findQuestion);
     }
   }, [question, current, selectableMarkerDropdown]);
@@ -680,11 +694,7 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
                   option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
                 }
                 value={selectableMarkerQuestion?.id}
-                onChange={(val) =>
-                  setSelectableMarkerQuestion(
-                    question.find((q) => q.id === val)
-                  )
-                }
+                onChange={handleOnChangeSelectableMarker}
               />
             </div>
           )}
