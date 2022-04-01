@@ -267,19 +267,35 @@
       text-transform: uppercase;
     }
 
-    .ant-slider-rail,
-    .ant-slider-track {
-      height: 8px;
-    }
+    .ant-slider.shape-legend-slider {
+      .ant-slider-rail,
+      .ant-slider-track {
+        height: 8px;
+      }
 
-    .ant-slider-track {
-      background-color: #67bea1;
-    }
+      .ant-slider-track {
+        background-color: #67bea1;
+      }
 
-    .ant-slider-handle {
-      width: 18px;
-      height: 18px;
-      border: solid 3px #67bea1;
+      .ant-slider-handle {
+        width: 18px;
+        height: 18px;
+        border: solid 3px #67bea1;
+      }
+
+      // &.sanitation {
+      //   .ant-slider-track {
+      //     background-image: linear-gradient(
+      //       to right,
+      //       #fff,
+      //       #f1ac2a,
+      //       #fbd256,
+      //       #fdf177,
+      //       #79be7d,
+      //       #368541
+      //     );
+      //   }
+      // }
     }
 
     .slider-number-wrapper {
@@ -328,13 +344,28 @@
     }
   }
 
+  .marker-dropdown-container {
+    position: absolute;
+    top: 8px;
+    left: 24px;
+    z-index: 1;
+    .marker-select {
+      width: 320px;
+    }
+  }
+
   .marker-legends {
     z-index: 1;
     position: absolute;
-    top: 24px;
     left: 24px;
     background: rgba(255, 255, 255, 0.6);
     padding: 5px;
+    &.dropdown-visible {
+      top: 48px;
+    }
+    &.dropdown-hidden {
+      top: 24px;
+    }
 
     h4 {
       font-weight: 600;
@@ -400,12 +431,15 @@
 
 .shape-tooltip-container {
   padding: 4px 7px;
-  min-width: 200px;
-  max-width: 250px;
+  min-width: 225px;
+  max-width: 325px;
 
   h4 {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: bold;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: initial;
   }
 
   .ant-space-vertical {
@@ -431,6 +465,9 @@
       margin-left: 12px;
       font-size: 12px;
       font-weight: bold;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      white-space: initial;
     }
 
     .shape-tooltip-left-wrapper {
@@ -446,6 +483,47 @@
 
       .shape-tooltip-name {
         margin-left: 6px;
+      }
+    }
+  }
+}
+
+.marker-tooltip-container {
+  padding: 4px 7px;
+  min-width: 225px;
+  max-width: 325px;
+
+  h4 {
+    font-size: 13px;
+    font-weight: bold;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: initial;
+  }
+
+  .marker-tooltip-icon {
+    width: 12px;
+    height: 12px;
+    border-radius: 12px;
+  }
+
+  .ant-space-vertical {
+    width: 100%;
+  }
+
+  .marker-tooltip-wrapper {
+    width: 100%;
+
+    .marker-tooltip-title {
+      font-size: 12px;
+    }
+
+    .marker-tooltip-value {
+      font-size: 12px;
+      font-weight: bold;
+
+      &::before {
+        content: "\25CF    ";
       }
     }
   }
