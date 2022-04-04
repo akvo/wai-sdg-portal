@@ -7,7 +7,7 @@ import {
   GeoJSON,
   Tooltip,
 } from "react-leaflet";
-import { Spin, Button, Space, Badge, Slider, Row, Col } from "antd";
+import { Spin, Button, Space, Badge, Slider, Row, Col, Select } from "antd";
 import {
   ZoomInOutlined,
   ZoomOutOutlined,
@@ -32,12 +32,88 @@ const defPos = defaultPos();
 const colorRange = ["#bbedda", "#a7e1cb", "#92d5bd", "#7dcaaf", "#67bea1"];
 const higlightColor = "#84b4cc";
 const noDataColor = "#d3d3d3";
-const sliderSetting = false;
 
-const Markers = ({ data, colors, filterMarker, defaultColors }) => {
+const fetchCustomColor = (question, selectableMarkerDropdown, qid) => {
+  let findQuestion = question.find((q) => q.id === qid);
+  // map color coded option from selectable marker option setting
+  if (selectableMarkerDropdown && findQuestion?.option) {
+    const findFromSetting = selectableMarkerDropdown?.find((x) => x.id === qid);
+    const options = findQuestion?.option?.map((opt) => {
+      let color = opt.color;
+      if (findFromSetting?.color) {
+        const findColor = findFromSetting.color?.find(
+          (x) => x.name.toLowerCase() === opt.name.toLowerCase()
+        );
+        color = findColor?.color;
+      }
+      return {
+        ...opt,
+        color: color,
+      };
+    });
+    if (findFromSetting?.hover) {
+      return {
+        ...findQuestion,
+        option: options,
+        hover: findFromSetting.hover,
+      };
+    }
+    return {
+      ...findQuestion,
+      option: options,
+    };
+  }
+  return findQuestion;
+};
+
+const Markers = ({
+  data,
+  colors,
+  filterMarker,
+  defaultColors,
+  customHover,
+}) => {
+  const HoverContent = ({ marker, fill, name, customHover, hoverData }) => {
+    if (!customHover) {
+      return (
+        <div className="marker-tooltip-container">
+          <Badge
+            count={marker}
+            style={{ backgroundColor: fill }}
+            size="small"
+          />
+          <h4>{name}</h4>
+        </div>
+      );
+    }
+
+    const content = customHover.map((x) => {
+      const findData = hoverData?.find((d) => d?.id === x.id);
+      const value = findData?.value || "NA";
+      return (
+        <div key={`${x.name}-${x.id}`} className="marker-tooltip-wrapper">
+          <div className="marker-tooltip-title">{x.name}</div>
+          <div className="marker-tooltip-value">{value}</div>
+        </div>
+      );
+    });
+    return (
+      <div className="marker-tooltip-container">
+        <Space direction="vertical">
+          <Badge
+            count={marker}
+            size="small"
+            style={{ backgroundColor: fill }}
+          />
+          {content}
+        </Space>
+      </div>
+    );
+  };
+
   data = data.filter((d) => d.geo);
   const rowHovered = UIState.useState((e) => e.rowHovered);
-  return data.map(({ id, geo, marker, name }) => {
+  return data.map(({ id, geo, marker, name, marker_hover }) => {
     let hovered = id === rowHovered;
     let fill = "#F00";
     let r = 3;
@@ -70,7 +146,13 @@ const Markers = ({ data, colors, filterMarker, defaultColors }) => {
         stroke={stroke}
       >
         <Tooltip direction="top">
-          <Badge count={marker} style={{ backgroundColor: fill }} /> {name}
+          <HoverContent
+            marker={marker}
+            fill={fill}
+            name={name}
+            customHover={customHover}
+            hoverData={marker_hover}
+          />
         </Tooltip>
       </Circle>
     );
@@ -117,6 +199,9 @@ const ShapeLegend = ({
   updatedColorRange,
 }) => {
   const shapeCalculationType = current?.maps?.shape?.type;
+  const shapeLegendType = current?.maps?.shape?.legend;
+  const shapeLegendColor = current?.maps?.shape?.color;
+  const shapeLegendJmpType = current?.maps?.shape?.jmpType;
   const percentSuffix = shapeCalculationType === "percentage" ? "%" : "";
   thresholds = Array.from(
     new Set(thresholds.map((x) => Math.round(Math.floor(x) / 10) * 10))
@@ -128,7 +213,7 @@ const ShapeLegend = ({
     return "";
   }
 
-  if (sliderSetting) {
+  if (shapeLegendType === "slider") {
     return (
       <div className="legends-wrapper">
         {!_.isEmpty(shapeQuestion) && (
@@ -142,6 +227,12 @@ const ShapeLegend = ({
           onChange={(val) => {
             setFilterColor(val);
           }}
+          tipFormatter={(val) => `${val}${percentSuffix}`}
+          className={`shape-legend-slider ${
+            shapeLegendColor === "jmp" && shapeLegendJmpType
+              ? shapeLegendJmpType
+              : ""
+          }`}
         />
         <Row
           align="center"
@@ -243,6 +334,7 @@ const MarkerLegend = ({
   markerQuestion,
   filterMarker,
   setFilterMarker,
+  renderSelectableMarker,
 }) => {
   if (_.isEmpty(data)) {
     return "";
@@ -273,7 +365,11 @@ const MarkerLegend = ({
     </Space>
   ));
   return (
-    <div className="marker-legends">
+    <div
+      className={`marker-legends ${
+        renderSelectableMarker ? "dropdown-visible" : "dropdown-hidden"
+      }`}
+    >
       <h4>{markerQuestion?.name?.toUpperCase() || "Legend"}</h4>
       {option.map((o, i) => (
         <div key={i} className="marker-list">
@@ -301,21 +397,59 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
   const [selectedShape, setSelectedShape] = useState(null);
   const [hoveredShape, setHoveredShape] = useState(null);
   const [shapeTooltip, setShapeTooltip] = useState("");
-  const markerQuestion = question.find(
-    (q) => q.id === current.maps?.marker?.id
-  );
-  const defaultMarkerColor = _.sortBy(markerQuestion?.option)?.map((m, i) => ({
-    ...m,
-    color: m.color || Color.color[i],
-  }));
+
   const shapeQuestion = question.find((q) => q.id === current.maps?.shape?.id);
+
+  // support selectable marker question
+  const { selectableMarkerDropdown } = current;
+  const [selectableMarkerQuestion, setSelectableMarkerQuestion] = useState(
+    null
+  );
+
+  // support selectable marker question & custom color coded
+  const defaultMarkerColor = _.sortBy(selectableMarkerQuestion?.option)?.map(
+    (m, i) => ({
+      ...m,
+      color: m.color || Color.color[i],
+    })
+  );
+
+  // support selectable marker question
+  // filter option which has option color coded
+  let selectableMarkerDropdownOptionValues = [];
+  if (selectableMarkerDropdown) {
+    selectableMarkerDropdownOptionValues = question.filter((q) =>
+      selectableMarkerDropdown.find((x) => x.id === q.id)
+    );
+  }
+
+  const handleOnChangeSelectableMarker = (qid) => {
+    const findQuestion = fetchCustomColor(
+      question,
+      selectableMarkerDropdown,
+      qid
+    );
+    setSelectableMarkerQuestion(findQuestion);
+  };
+
+  useEffect(() => {
+    if (question.length && current?.maps?.marker?.id) {
+      const findQuestion = fetchCustomColor(
+        question,
+        selectableMarkerDropdown,
+        current?.maps?.marker?.id
+      );
+      setSelectableMarkerQuestion(findQuestion);
+    }
+  }, [question, current, selectableMarkerDropdown]);
 
   useEffect(() => {
     if (
       user &&
       current &&
       loadedFormId !== null &&
-      loadedFormId === current?.formId
+      loadedFormId === current?.formId &&
+      selectableMarkerQuestion?.id
     ) {
       setLoading(true);
       let url = `maps/${current.formId}`;
@@ -323,7 +457,14 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
         url += `?shape=${current.maps.shape.id}`;
       }
       if (current.maps.shape) {
-        url += `&marker=${current.maps.marker.id}`;
+        url += `&marker=${selectableMarkerQuestion?.id}`;
+      }
+      // custom hover
+      if (selectableMarkerQuestion?.hover) {
+        const hoverIds = selectableMarkerQuestion.hover
+          ?.map((x) => x.id)
+          .join("|");
+        url += `&hover_ids=${hoverIds}`;
       }
       // advance search
       url = generateAdvanceFilterURL(advanceSearchValue, url);
@@ -367,16 +508,29 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
           setLoading(false);
         });
     }
-  }, [user, current, loadedFormId, advanceSearchValue, shapeQuestion]);
+  }, [
+    user,
+    current,
+    loadedFormId,
+    advanceSearchValue,
+    shapeQuestion,
+    selectableMarkerQuestion,
+  ]);
 
+  // shape config
   const shapeShadingType = current?.maps?.shape?.type;
+  const shapeLegendType = current?.maps?.shape?.legend;
+  const shapeLegendColor = current?.maps?.shape?.color;
+
   const jmpColorRange = _.orderBy(
     shapeQuestion?.option,
     ["order"],
     ["desc"]
   )?.map((opt) => opt.color);
   const updatedColorRange =
-    sliderSetting && jmpColorRange.length ? jmpColorRange : colorRange;
+    shapeLegendColor === "jmp" && jmpColorRange.length
+      ? jmpColorRange
+      : colorRange;
 
   const shapeColor = _.chain(_.groupBy(data, "loc"))
     .map((v, k) => {
@@ -430,10 +584,13 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
 
   const fillColor = (v) => {
     const color = v === 0 ? "#FFF" : colorScale(v);
-    if (!sliderSetting && filterColor !== null) {
+    if (
+      (!shapeLegendType || shapeLegendType !== "slider") &&
+      filterColor !== null
+    ) {
       return filterColor === color ? higlightColor : color;
     }
-    if (sliderSetting && filterColor !== null) {
+    if (shapeLegendType === "slider" && filterColor !== null) {
       const start = filterColor[0];
       const end = filterColor[1];
       return _.inRange(v, start, end) ? color : "#fff";
@@ -584,6 +741,28 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
         </div>
       ) : (
         <>
+          {/* support selectable marker question */}
+          {/* Marker selectable dropdown */}
+          {!_.isEmpty(selectableMarkerDropdownOptionValues) && (
+            <div className="marker-dropdown-container">
+              <Select
+                showSearch
+                placeholder="Select here..."
+                className="marker-select"
+                options={selectableMarkerDropdownOptionValues.map((q) => ({
+                  label: q.name,
+                  value: q.id,
+                }))}
+                optionFilterProp="label"
+                filterOption={(input, option) =>
+                  option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                }
+                value={selectableMarkerQuestion?.id}
+                onChange={handleOnChangeSelectableMarker}
+              />
+            </div>
+          )}
+          {/* EOL Marker selectable dropdown */}
           <ShapeLegend
             data={data}
             domain={domain}
@@ -596,9 +775,12 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
           />
           <MarkerLegend
             data={data}
-            markerQuestion={markerQuestion}
+            markerQuestion={selectableMarkerQuestion}
             filterMarker={filterMarker}
             setFilterMarker={setFilterMarker}
+            renderSelectableMarker={
+              !_.isEmpty(selectableMarkerDropdownOptionValues)
+            }
           />
         </>
       )}
@@ -658,9 +840,10 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
           {!loading && (
             <Markers
               data={data}
-              colors={markerQuestion?.option}
+              colors={selectableMarkerQuestion?.option}
               defaultColors={defaultMarkerColor}
               filterMarker={filterMarker}
+              customHover={selectableMarkerQuestion?.hover}
             />
           )}
         </MapContainer>

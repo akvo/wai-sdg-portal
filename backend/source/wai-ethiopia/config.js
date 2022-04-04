@@ -67,6 +67,62 @@ var page_config = {
       datapoint: 567450085,
       visualization: 571050096,
     },
+    selectableMarkerDropdown: [
+      {
+        id: 567450085,
+        name: "Functionality Status",
+        hover: [
+          {
+            id: 571070074,
+            name: "Water Point Name",
+          },
+          {
+            id: 571060084,
+            name: "Problems With Water System",
+          },
+        ],
+      },
+      {
+        id: 571050096,
+        name: "Water Source Type",
+        color: [
+          {
+            name: "Deep well with distribution",
+            color: "#4475B4",
+          },
+          {
+            name: "Hand dug well",
+            color: "#73ADD1",
+          },
+          {
+            name: "Shallow well",
+            color: "#AAD9E8",
+          },
+          {
+            name: "Protected spring",
+            color: "#FBE08F",
+          },
+          {
+            name: "Unprotected spring",
+            color: "#F8AE60",
+          },
+          {
+            name: "Rainwater collection",
+            color: "#F36C42",
+          },
+          {
+            name: "Surface water",
+            color: "#D73027",
+          },
+        ],
+        hover: [
+          {
+            id: 573000210,
+            name: "Maximum Yield (lpd)",
+          },
+        ],
+      },
+    ],
   },
   clts: {
     title: "CLTS",
@@ -132,6 +188,46 @@ var page_config = {
         },
       },
     ],
+    selectableMarkerDropdown: [
+      {
+        id: 557700349,
+        name: "Open Defecation Status",
+        hover: [
+          {
+            id: 569070281,
+            name: "Village Name",
+          },
+          {
+            id: 567440335,
+            name: "Number of households in the Village",
+          },
+        ],
+      },
+      {
+        id: 569090299,
+        name: "Presence of Handwashing Facility with Water and Soap",
+        color: [
+          {
+            name: "Yes",
+            color: "#9FE07F",
+          },
+          {
+            name: "No",
+            color: "#F67070",
+          },
+        ],
+        hover: [
+          {
+            id: 569070281,
+            name: "Village Name",
+          },
+          {
+            id: 567440335,
+            name: "Number of households in the Village",
+          },
+        ],
+      },
+    ],
   },
   health: {
     title: "Health Facility",
@@ -190,6 +286,78 @@ var page_config = {
       },
     ],
     formId: 494780323,
+    selectableMarkerDropdown: [
+      {
+        id: 569080377,
+        name: "Water service level",
+        hover: [
+          {
+            id: 555940315,
+            name: "Health Care Facility Name",
+          },
+          {
+            id: 555940316,
+            name: "Health Care Facility Type",
+          },
+        ],
+      },
+      {
+        id: 569080376,
+        name: "Sanitation service level",
+        hover: [
+          {
+            id: 555940315,
+            name: "Health Care Facility Name",
+          },
+          {
+            id: 555940316,
+            name: "Health Care Facility Type",
+          },
+        ],
+      },
+      {
+        id: 569080380,
+        name: "Hygiene service level",
+        hover: [
+          {
+            id: 555940315,
+            name: "Health Care Facility Name",
+          },
+          {
+            id: 555940316,
+            name: "Health Care Facility Type",
+          },
+        ],
+      },
+      {
+        id: 569080379,
+        name: "Environmental Cleaning service level",
+        hover: [
+          {
+            id: 555940315,
+            name: "Health Care Facility Name",
+          },
+          {
+            id: 555940316,
+            name: "Health Care Facility Type",
+          },
+        ],
+      },
+      {
+        id: 569080378,
+        name: "Waste service level",
+        hover: [
+          {
+            id: 555940315,
+            name: "Health Care Facility Name",
+          },
+          {
+            id: 555940316,
+            name: "Health Care Facility Type",
+          },
+        ],
+      },
+    ],
   },
   households: {
     title: "Households",
@@ -224,6 +392,12 @@ var page_config = {
         ],
         // describe the shape calculation type
         type: "percentage",
+        // shape legend type, slider or null (default)
+        legend: null,
+        // color range for shape shading, jmp or null (default)
+        color: "jmp",
+        // sanitation / water / hygiene / null (default)
+        jmpType: null,
       },
       marker: { id: 573020156, title: "Water Service Level" },
     },
@@ -237,6 +411,41 @@ var page_config = {
           { question: 573020156, name: "Water Service Level" },
           { question: 569090236, name: "Sanitation Service Level" },
           { question: 573010267, name: "Hygiene Service Level" },
+        ],
+      },
+    ],
+    selectableMarkerDropdown: [
+      {
+        id: 573020156,
+        name: "Water Service Level",
+        hover: [
+          { id: 554110154, name: "Village Name" },
+          {
+            id: 559820212,
+            name: "Household Size",
+          },
+        ],
+      },
+      {
+        id: 569090236,
+        name: "Sanitation Service Level",
+        hover: [
+          { id: 554110154, name: "Village Name" },
+          {
+            id: 559820212,
+            name: "Household Size",
+          },
+        ],
+      },
+      {
+        id: 573010267,
+        name: "Hygiene Service Level",
+        hover: [
+          { id: 554110154, name: "Village Name" },
+          {
+            id: 559820212,
+            name: "Household Size",
+          },
         ],
       },
     ],
@@ -263,7 +472,7 @@ var page_config = {
     ],
     maps: {
       shape: { id: 561200194, name: "Water Yield" },
-      marker: { id: 561200191, title: "Functionality Status" },
+      marker: { id: 559810275, title: "Water service levels" },
     },
     rows: [
       {
@@ -298,6 +507,50 @@ var page_config = {
       },
     ],
     formId: 551870264,
+    selectableMarkerDropdown: [
+      {
+        id: 559810275,
+        name: "Water service levels",
+        hover: [
+          {
+            id: 546580264,
+            name: "School Name",
+          },
+          {
+            id: 546580263,
+            name: "School Type",
+          },
+        ],
+      },
+      {
+        id: 571070148,
+        name: "Sanitation service levels",
+        hover: [
+          {
+            id: 546580264,
+            name: "School Name",
+          },
+          {
+            id: 546580263,
+            name: "School Type",
+          },
+        ],
+      },
+      {
+        id: 546580270,
+        name: "Hygiene service levels",
+        hover: [
+          {
+            id: 546580264,
+            name: "School Name",
+          },
+          {
+            id: 546580263,
+            name: "School Type",
+          },
+        ],
+      },
+    ],
   },
 };
 
