@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import List, Optional
 from typing_extensions import TypedDict
 from sqlalchemy.orm import Session
-from sqlalchemy import desc, func, case
+from sqlalchemy import desc, func, case, or_
 from models.data import Data, DataDict
 from models.answer import Answer
 from models.history import History
@@ -74,8 +74,10 @@ def get_data(session: Session,
     data = session.query(Data).filter(Data.form == form)
     data_id = False
     if options:
-        data_id = session.query(ViewData.data).filter(
-            ViewData.options.contains(options)).all()
+        # support multiple select options filter
+        # change query to filter data by or_ condition
+        or_query = or_(ViewData.options.contains([opt]) for opt in options)
+        data_id = session.query(ViewData.data).filter(or_query).all()
         data = data.filter(Data.id.in_([d.data for d in data_id]))
     if administration:
         data = data.filter(Data.administration.in_(administration))
@@ -140,8 +142,10 @@ def get_last_submitted(session: Session,
                        administration: List[int] = None) -> DataDict:
     data = session.query(Data).filter(Data.form == form)
     if options:
-        data_id = session.query(ViewData.data).filter(
-            ViewData.options.contains(options)).all()
+        # support multiple select options filter
+        # change query to filter data by or_ condition
+        or_query = or_(ViewData.options.contains([opt]) for opt in options)
+        data_id = session.query(ViewData.data).filter(or_query).all()
         data = data.filter(Data.id.in_([d.data for d in data_id]))
     if administration:
         data = data.filter(Data.administration.in_(administration))
