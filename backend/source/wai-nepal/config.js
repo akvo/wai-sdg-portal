@@ -28,6 +28,16 @@ var navigation_config = [
       },
     ],
   },
+  {
+    link: "projects",
+    name: "Projects",
+    childrens: [
+      {
+        link: "project",
+        name: "Project Details",
+      },
+    ],
+  },
 ];
 
 var page_config = {
@@ -100,6 +110,28 @@ var page_config = {
       marker: { id: 578820186, name: "Hygiene Service Levels" },
     },
     formId: 557950127,
+  },
+  project: {
+    title: "Projects Details",
+    columns: [
+      {
+        title: "Project Name",
+        key: "name",
+      },
+      {
+        title: "Construction Year",
+        key: 1260775113,
+      },
+      {
+        title: "Project Type",
+        key: 1260775111,
+      },
+    ],
+    maps: {
+      shape: { id: 1260775111, name: "Project Type" },
+      marker: { id: 1260775109, name: "Construction Agency" },
+    },
+    formId: 1323574110,
   },
 };
 
