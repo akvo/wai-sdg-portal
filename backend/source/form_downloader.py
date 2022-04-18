@@ -9,27 +9,42 @@ source_path = os.environ["INSTANCE_NAME"]
 
 class SurveyList(enum.Enum):
     wai_nepal = {
-        'domain': 'wai',
-        'formIds': ['1000944003', '1189144226', '994944020', '964754042'],
-        'administration': ['1183264177', '1183264172']
+        'instances': [{
+            "domain": "pilots",
+            "forms": ['556240162', '554360198', '557950127']
+        }, {
+            "domain":
+            "wai",
+            "forms": [
+                '1323574110', '1322834054', '1260775092', '1327205184',
+                '1338414049'
+            ],
+        }],
+        'administration':
+        ['573330120', '567820007', '571300147', '1359274105'],
+        "skip_question": ['1260775107', '1260775115', '1260775108'],
     }
     wai_bangladesh = {
-        'domain':
-        'wai',
-        'formIds':
-        ['976564018', '952774024', '974754029', '962774003', '980804014'],
+        'instances': [{
+            "domain":
+            "wai",
+            "forms":
+            ['976564018', '952774024', '974754029', '962774003', '980804014'],
+        }],
         'administration':
-        ['1084694626', '1260775107', '1260775115', '1260775108', '1084684623']
+        ['1084694626', '1260775107', '1260775115', '1260775108', '1084684623'],
+        'skips_question': []
     }
     wai_ethiopia = {
-        'domain':
-        'pilots',
-        'formIds': [
-            '567420197', '494780323', '567420165', '551870264', '551870264',
-            '571070071'
-        ],
+        'instances': [{
+            "domain":
+            "pilots",
+            "forms":
+            ['976564018', '952774024', '974754029', '962774003', '980804014'],
+        }],
         'administration':
-        ['1084694626', '1260775107', '1260775115', '1260775108', '1084684623']
+        ['1084694626', '1260775107', '1260775115', '1260775108', '1084684623'],
+        'skips_question': []
     }
 
 
@@ -39,8 +54,8 @@ if not os.path.exists(dest_folder):
     os.makedirs(dest_folder)
 class_path = source_path.replace("-", "_")
 source = SurveyList[class_path].value
-flow_instance = source["domain"]
-form_ids = source["formIds"]
+instances = source["instances"]
+skip_question_id = source["skip_question"] + source["administration"]
 
 
 def set_original(q, options, multiple_option):
@@ -122,7 +137,7 @@ def generate_form(form):
                 question.update({"meta": True, "required": True})
             if len(list(rule)):
                 question.update({"rule": rule})
-            if q["id"] not in source["administration"] and q["type"] not in [
+            if q["id"] not in skip_question_id and q["type"] not in [
                     "cascade", "photo"
             ]:
                 if q["type"] == "option" and len(options) == 0:
@@ -137,22 +152,24 @@ def generate_form(form):
     }
 
 
-for form_id in form_ids:
-    print(f"DOWNLOADING: {form_id}")
-    form = r.get(f"{api}{flow_instance}/{form_id}/update")
-    form = form.json()
-    form_name = form["name"]
+for instance in instances:
+    flow_instance = instance["domain"]
+    for form_id in instance["forms"]:
+        print(f"DOWNLOADING: {form_id}")
+        form = r.get(f"{api}{flow_instance}/{form_id}/update")
+        form = form.json()
+        form_name = form["name"]
 
-    if type(form["questionGroup"]) == dict:
-        form.update({"questionGroup": [form["questionGroup"]]})
+        if type(form["questionGroup"]) == dict:
+            form.update({"questionGroup": [form["questionGroup"]]})
 
-    for qg in form["questionGroup"]:
-        if type(qg["question"]) == dict:
-            qg.update({"question": [qg["question"]]})
+        for qg in form["questionGroup"]:
+            if type(qg["question"]) == dict:
+                qg.update({"question": [qg["question"]]})
 
-    with open(f"{dest_folder}/{form_id}.json", "w") as dest:
-        res = generate_form(form)
-        form_name = res["form"]
-        form_id = str(res["id"])
-        dest.write(json.dumps(res, indent=2))
-        print(f"DOWNLOADED : {form_id} - {form_name}")
+        with open(f"{dest_folder}/{form_id}.json", "w") as dest:
+            res = generate_form(form)
+            form_name = res["form"]
+            form_id = str(res["id"])
+            dest.write(json.dumps(res, indent=2))
+            print(f"DOWNLOADED : {form_id} - {form_name}")
