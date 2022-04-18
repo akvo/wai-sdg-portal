@@ -1,0 +1,171 @@
+{
+  "form": "Reservoir Information",
+  "id": 1260775092,
+  "question_groups": [
+    {
+      "question_group": "Reservoir",
+      "questions": [
+        {
+          "id": 1361884006,
+          "question": "Project Code",
+          "order": 1,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null
+        },
+        {
+          "id": 1312464879,
+          "question": "RVT No in the Scheme",
+          "order": 2,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null
+        },
+        {
+          "id": 1317494088,
+          "question": "RVT Type",
+          "order": 3,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "No Data",
+              "color": null
+            },
+            {
+              "name": "Ferro Cement",
+              "color": null
+            },
+            {
+              "name": "RCC",
+              "color": null
+            },
+            {
+              "name": "Masonary",
+              "color": null
+            },
+            {
+              "name": "HDPE",
+              "color": null
+            },
+            {
+              "name": "Steel",
+              "color": null
+            },
+            {
+              "name": "Elevated RCC",
+              "color": null
+            },
+            {
+              "name": "Elevated Steel",
+              "color": null
+            },
+            {
+              "name": "Elevated HDPE",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1304404070,
+          "question": "Geolocation of RVT",
+          "order": 4,
+          "meta": true,
+          "type": "geo",
+          "required": true,
+          "options": null
+        },
+        {
+          "id": 1284004080,
+          "question": "RVT Capacity (cum)",
+          "order": 5,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null
+        },
+        {
+          "id": 1312455208,
+          "question": "Adequacy of RVT",
+          "order": 6,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "No Data",
+              "color": null
+            },
+            {
+              "name": "Adequate",
+              "color": null
+            },
+            {
+              "name": "Not Adequate",
+              "color": null
+            },
+            {
+              "name": "Over Sized",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1325445108,
+          "question": "RVT Condition",
+          "order": 7,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Good",
+              "color": null
+            },
+            {
+              "name": "Minor Repair",
+              "color": null
+            },
+            {
+              "name": "Major Repair",
+              "color": null
+            },
+            {
+              "name": "Reconstruction",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 1310005205,
+          "question": "Natural Disaster/Calamities Effect",
+          "order": 8,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "No Data",
+              "color": null
+            },
+            {
+              "name": "None",
+              "color": null
+            },
+            {
+              "name": "Minor Damage",
+              "color": null
+            },
+            {
+              "name": "Major Damage",
+              "color": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
