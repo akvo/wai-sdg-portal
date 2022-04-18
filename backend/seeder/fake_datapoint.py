@@ -9,6 +9,7 @@ from db import crud_administration
 from db import crud_form
 from db import crud_user
 from db import crud_data
+from db import crud_answer
 from models.question import QuestionType
 from models.answer import Answer
 from models.user import UserRole
@@ -42,6 +43,10 @@ parent_administration = set([
 ])
 forms = crud_form.get_form(session=session)
 forms = [f.id for f in forms]
+child_forms = []
+limit_seed = {"id": 1323574110, "repeats": 10}
+if source_path == "wai-nepal":
+    child_forms = [1322834054, 1260775092, 1327205184, 1338414049]
 
 if len(sys.argv) < 2:
     print("You should provide admin address")
@@ -50,7 +55,6 @@ if len(sys.argv) < 2:
 if len(sys.argv) < 3:
     print("You should provide number of datapoints")
     sys.exit()
-
 
 if len(sys.argv) == 4:
     try:
@@ -62,7 +66,6 @@ if len(sys.argv) == 4:
         print(f"{fid} not found")
         sys.exit()
     forms = [fid]
-
 
 user = crud_user.get_user_by_email(session=session, email=sys.argv[1])
 if not user:
@@ -102,11 +105,25 @@ def get_odf_value(status_verified, not_triggered):
 for form in forms:
     form = crud_form.get_form_by_id(session=session, id=form)
     repeats = int(sys.argv[2])
+    if form.id == limit_seed["id"]:
+        repeats = limit_seed["repeats"]
+    answer_options = []
+    if form.id in child_forms:
+        answer_options = crud_answer.get_answer_by_question(
+            session=session, question=1260775116)
     for i in range(repeats):
         answers = []
         names = []
         administration = get_random_administration(fake, session)
         geo = None
+        project_id = None
+        if form.id in child_forms:
+            project_id = fake.random_choices(elements=answer_options,
+                                             length=1)[0]
+            administration = crud_data.get_data_by_id(session=session,
+                                                      id=project_id.data)
+            administration = crud_administration.get_administration_by_id(
+                session=session, id=administration.administration)
         if random_point:
             geo = sample_geo[sample_geo['name'] == administration.name]
             if geo.shape[0]:
@@ -133,10 +150,17 @@ for form in forms:
                         answer.options = get_odf_value(status_verified,
                                                        not_triggered)
                     value = True
+                if q.type == QuestionType.answer_list:
+                    answer.value = project_id.value
+                    value = True
+                    if q.meta:
+                        names.append(str(project_id.value))
                 if q.type == QuestionType.number:
                     fa = fake.random_int(min=10, max=50)
                     answer.value = fa
                     value = True
+                    if q.meta:
+                        names.append(str(fa))
                 if q.type == QuestionType.date:
                     fa = fake.date_this_century()
                     value = not not_triggered
@@ -167,6 +191,7 @@ for form in forms:
                         names.append(administration.name)
                 if value:
                     answers.append(answer)
+        names.reverse()
         name = " - ".join(names)
         administration = administration.id
         data = crud_data.add_data(session=session,

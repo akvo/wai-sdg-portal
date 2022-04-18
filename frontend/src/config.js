@@ -40,6 +40,7 @@ const config = {
   health: mapAll(window.page_config?.health),
   households: mapAll(window.page_config?.households),
   schools: mapAll(window.page_config?.schools),
+  project: mapAll(window.page_config?.project),
 };
 
 export default config;

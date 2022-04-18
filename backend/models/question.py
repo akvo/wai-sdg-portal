@@ -23,6 +23,7 @@ class QuestionType(enum.Enum):
     date = 'date'
     geo = 'geo'
     administration = 'administration'
+    answer_list = 'answer_list'
 
 
 class DependencyDict(TypedDict):
