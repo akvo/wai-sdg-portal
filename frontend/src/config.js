@@ -1,3 +1,5 @@
+import { keyBy } from "lodash";
+
 const mapColumns = (values) => {
   return values?.columns?.map((col, index) => {
     if (index === 0) {
@@ -34,13 +36,13 @@ const mapAll = (properties) => {
   };
 };
 
-const config = {
-  water: mapAll(window.page_config?.water),
-  clts: mapAll(window.page_config?.clts),
-  health: mapAll(window.page_config?.health),
-  households: mapAll(window.page_config?.households),
-  schools: mapAll(window.page_config?.schools),
-  project: mapAll(window.page_config?.project),
-};
+const mapper = Object.keys(window.page_config).map((v, k) => {
+  return {
+    name: v,
+    ...mapAll(window.page_config[v]),
+  };
+});
+
+const config = keyBy(mapper, "name");
 
 export default config;
