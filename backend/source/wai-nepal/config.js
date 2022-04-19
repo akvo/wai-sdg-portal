@@ -9,6 +9,29 @@ var features = {
   },
 };
 
+var links = [
+  {
+    title: "Project Details",
+    to: "project",
+  },
+  {
+    title: "Reservoir",
+    to: "reservoir",
+  },
+  {
+    title: "Water Source",
+    to: "waterSource",
+  },
+  {
+    title: "Taps",
+    to: "taps",
+  },
+  {
+    title: "WUSC",
+    to: "wusc",
+  },
+];
+
 var navigation_config = [
   {
     link: "jmp",
@@ -35,6 +58,22 @@ var navigation_config = [
       {
         link: "project",
         name: "Project Details",
+      },
+      {
+        link: "reservoir",
+        name: "Reservoir",
+      },
+      {
+        link: "tap",
+        name: "Taps",
+      },
+      {
+        link: "waterSource",
+        name: "Water Source",
+      },
+      {
+        link: "wusc",
+        name: "WUSC",
       },
     ],
   },
@@ -132,6 +171,82 @@ var page_config = {
       marker: { id: 1260775109, name: "Construction Agency" },
     },
     formId: 1323574110,
+    links: links,
+  },
+  reservoir: {
+    title: "Reservoir",
+    columns: [
+      {
+        title: "Project Name",
+        key: "name",
+      },
+      {
+        title: "Project Code",
+        key: 1361884006,
+      },
+    ],
+    maps: {
+      shape: { id: 1260775111, name: "Project Type" },
+      marker: { id: 1361884006, name: "Project Code" },
+    },
+    formId: 1260775092,
+    links: links,
+  },
+  waterSource: {
+    title: "Water Source",
+    columns: [
+      {
+        title: "Project Name",
+        key: "name",
+      },
+      {
+        title: "Project Code",
+        key: 1332184057,
+      },
+    ],
+    maps: {
+      shape: { id: 1260775111, name: "Project Type" },
+      marker: { id: 1332184057, name: "Project Code" },
+    },
+    links: links,
+  },
+  taps: {
+    title: "Taps",
+    columns: [
+      {
+        title: "Project Name",
+        key: "name",
+      },
+      {
+        title: "Project Code",
+        key: 1361834041,
+      },
+    ],
+    maps: {
+      shape: { id: 1260775111, name: "Project Type" },
+      marker: { id: 1361834041, name: "Project Code" },
+    },
+    formId: 1322834054,
+    links: links,
+  },
+  wusc: {
+    title: "WUSC",
+    columns: [
+      {
+        title: "Project Name",
+        key: "name",
+      },
+      {
+        title: "Project Code",
+        key: 1336894024,
+      },
+    ],
+    maps: {
+      shape: { id: 1260775111, name: "Project Type" },
+      marker: { id: 1336894024, name: "Project Code" },
+    },
+    formId: 1338414049,
+    links: links,
   },
 };
 

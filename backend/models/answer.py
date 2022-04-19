@@ -94,12 +94,13 @@ class Answer(Base):
             "history": True if self.updated_by else False
         }
         type = self.question_detail.type
-        if type == QuestionType.administration:
+        if type in [
+                QuestionType.administration, QuestionType.number,
+                QuestionType.answer_list
+        ]:
             answer.update({"value": self.value})
         if type in [QuestionType.text, QuestionType.geo, QuestionType.date]:
             answer.update({"value": self.text})
-        if type == QuestionType.number:
-            answer.update({"value": self.value})
         if type == QuestionType.option:
             answer.update({"value": self.options[0]})
         if type == QuestionType.multiple_option:
@@ -120,7 +121,10 @@ class Answer(Base):
     @property
     def only_value(self) -> List:
         type = self.question_detail.type
-        if type in [QuestionType.administration, QuestionType.number]:
+        if type in [
+                QuestionType.administration, QuestionType.number,
+                QuestionType.answer_list
+        ]:
             return self.value
         if type in [QuestionType.text, QuestionType.geo, QuestionType.date]:
             return self.text
@@ -140,12 +144,13 @@ class Answer(Base):
         date = self.updated or self.created
         type = self.question_detail.type
         answer = None
-        if type == QuestionType.administration:
+        if type in [
+                QuestionType.administration, QuestionType.number,
+                QuestionType.answer_list
+        ]:
             answer = self.value
         if type in [QuestionType.text, QuestionType.geo, QuestionType.date]:
             answer = self.text
-        if type == QuestionType.number:
-            answer = self.value
         if type == QuestionType.option:
             answer = self.options[0] if self.options else None
         if type == QuestionType.multiple_option:
@@ -162,12 +167,13 @@ class Answer(Base):
     def to_maps(self) -> List:
         answer = {"question": self.question, "data": self.data}
         type = self.question_detail.type
-        if type == QuestionType.administration:
+        if type in [
+                QuestionType.administration, QuestionType.number,
+                QuestionType.answer_list
+        ]:
             answer.update({"value": self.value})
         if type in [QuestionType.text, QuestionType.geo, QuestionType.date]:
             answer.update({"value": self.text})
-        if type == QuestionType.number:
-            answer.update({"value": self.value})
         if type == QuestionType.option:
             answer.update({"value": self.options[0] if self.options else None})
         if type == QuestionType.multiple_option:
@@ -181,12 +187,13 @@ class Answer(Base):
         answer = None
         q = self.question_detail
         qname = f"{self.question_detail.id}|{self.question_detail.name}"
-        if q.type == QuestionType.administration:
+        if q.type in [
+                QuestionType.administration, QuestionType.number,
+                QuestionType.answer_list
+        ]:
             answer = self.value
         if q.type in [QuestionType.text, QuestionType.geo, QuestionType.date]:
             answer = self.text
-        if q.type == QuestionType.number:
-            answer = self.value
         if q.type == QuestionType.option:
             answer = self.options[0] if self.options else None
         if q.type == QuestionType.multiple_option:
