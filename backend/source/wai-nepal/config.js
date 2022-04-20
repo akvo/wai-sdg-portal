@@ -155,15 +155,24 @@ var page_config = {
     columns: [
       {
         title: "Project Name",
-        key: "name",
-      },
-      {
-        title: "Construction Year",
-        key: 1260775113,
+        key: 1260775110,
       },
       {
         title: "Project Type",
         key: 1260775111,
+        align: "left",
+      },
+      {
+        title: "Water Source",
+        key: 1332184057,
+      },
+      {
+        title: "Reservoirs",
+        key: 1361884006,
+      },
+      {
+        title: "Taps",
+        key: 1322834054,
       },
     ],
     maps: {
@@ -173,41 +182,62 @@ var page_config = {
     formId: 1323574110,
     links: links,
   },
-  reservoir: {
-    title: "Reservoir",
-    columns: [
-      {
-        title: "Project Name",
-        key: "name",
-      },
-      {
-        title: "Project Code",
-        key: 1361884006,
-      },
-    ],
-    maps: {
-      shape: { id: 1260775111, name: "Project Type" },
-      marker: { id: 1361884006, name: "Project Code" },
-    },
-    formId: 1260775092,
-    links: links,
-  },
   waterSource: {
     title: "Water Source",
     columns: [
       {
-        title: "Project Name",
-        key: "name",
+        title: "Name",
+        key: 1348864008,
       },
       {
-        title: "Project Code",
-        key: 1332184057,
+        title: "Registration",
+        key: 1351624037,
+      },
+      {
+        title: "Type",
+        key: 1322844012,
+      },
+      {
+        title: "Present",
+        key: 1351624035,
+      },
+      {
+        title: "Quality",
+        key: 1322844007,
       },
     ],
     maps: {
-      shape: { id: 1260775111, name: "Project Type" },
-      marker: { id: 1332184057, name: "Project Code" },
+      shape: { id: 1322844012, name: "Water Source Type" },
+      marker: { id: 1322844007, name: "Quality" },
     },
+    formId: 1322834054,
+    links: links,
+  },
+  reservoir: {
+    title: "Reservoir",
+    columns: [
+      {
+        title: "RVT No",
+        key: 1312464879,
+      },
+      {
+        title: "Type",
+        key: 1317494088,
+      },
+      {
+        title: "Adequacy",
+        key: 1312455208,
+      },
+      {
+        title: "Condition",
+        key: 1325445108,
+      },
+    ],
+    maps: {
+      shape: { id: 1284004080, name: "RVT Capacity" },
+      marker: { id: 1317494088, name: "RVT Type" },
+    },
+    formId: 1260775092,
     links: links,
   },
   taps: {
@@ -218,15 +248,27 @@ var page_config = {
         key: "name",
       },
       {
-        title: "Project Code",
-        key: 1361834041,
+        title: "Type",
+        key: 1323564078,
+      },
+      {
+        title: "Metered Connection",
+        key: 1325524076,
+      },
+      {
+        title: "# of Household",
+        key: 1329264106,
+      },
+      {
+        title: "Tap Condition",
+        key: 1325534094,
       },
     ],
     maps: {
-      shape: { id: 1260775111, name: "Project Type" },
-      marker: { id: 1361834041, name: "Project Code" },
+      shape: { id: 1329264106, name: "Number of Household" },
+      marker: { id: 1323564078, name: "Tap Type" },
     },
-    formId: 1322834054,
+    formId: 1327205184,
     links: links,
   },
   wusc: {

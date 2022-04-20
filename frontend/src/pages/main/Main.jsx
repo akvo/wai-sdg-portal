@@ -322,26 +322,30 @@ const Main = ({ match }) => {
               <Row
                 style={{ margin: "20px 40px 0px" }}
                 align="middle"
-                justify="space-between"
+                justify="left"
               >
-                {current.links.map((link, linkIndex) => (
-                  <Link key={`link-${linkIndex}`} to={`/data/${link.to}`}>
-                    <Button
-                      type={
-                        match.params.page === link.to ? "primary" : "secondary"
-                      }
-                      icon={
-                        !linkIndex ? (
-                          <ProjectOutlined />
-                        ) : (
-                          <UnorderedListOutlined />
-                        )
-                      }
-                    >
-                      {link.title}
-                    </Button>
-                  </Link>
-                ))}
+                <Col span={24}>
+                  {current.links.map((link, linkIndex) => (
+                    <Link key={`link-${linkIndex}`} to={`/data/${link.to}`}>
+                      <Button
+                        type={
+                          match.params.page === link.to
+                            ? "primary"
+                            : "secondary"
+                        }
+                        icon={
+                          !linkIndex ? (
+                            <ProjectOutlined />
+                          ) : (
+                            <UnorderedListOutlined />
+                          )
+                        }
+                      >
+                        {link.title}
+                      </Button>
+                    </Link>
+                  ))}
+                </Col>
               </Row>
             )}
             {current?.tabs && (
