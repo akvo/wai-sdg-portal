@@ -17,7 +17,7 @@ from models.answer import Answer, AnswerDict
 from models.question import QuestionType
 from models.history import History
 from db.connection import get_session
-from models.data import DataResponse, DataDict, SubmissionInfo
+from models.data import DataResponse, DataDict, DataDictWithHistory, SubmissionInfo
 from middleware import verify_editor, check_query
 
 security = HTTPBearer()
@@ -30,6 +30,36 @@ def check_access(adm, user) -> None:
     access = [a.administration for a in user.access]
     if int(adm) not in access:
         raise HTTPException(status_code=404, detail="Forbidden")
+
+
+# PROJECT BASE
+def check_project(session: Session, data: List[DataDictWithHistory],
+                  question: List[int],
+                  form_id: int) -> List[DataDictWithHistory]:
+    form_question = crud_question.get_question_ids(session=session,
+                                                   form=form_id)
+    form_question = [fq.id for fq in form_question]
+    external = [q for q in question
+                if q not in form_question] if question else []
+    if len(external):
+        question = crud_question.get_question_by_id(session=session,
+                                                    id=external[0])
+        question = int(question.option[0].name)
+        for d in data:
+            project_id = list(
+                filter(lambda x: x["question"] == question, d["answer"]))
+            project_id = project_id[0]["value"]
+            for ex in external:
+                total_projects = crud_answer.get_project_count(
+                    session=session, question=ex, value=project_id)
+                total_projects = {
+                    "question": ex,
+                    "value": total_projects,
+                    "history": False
+                }
+                d["answer"].append(total_projects)
+    return data
+# END PROJECT BASE
 
 
 @data_route.get("/data/form/{form_id:path}",
@@ -68,30 +98,11 @@ def get(req: Request,
         raise HTTPException(status_code=404, detail="Not found")
     count = data["count"]
     data = [d.serialize for d in data["data"]]
-    # NEPAL
-    form_question = crud_question.get_question_ids(session=session,
-                                                   form=form_id)
-    form_question = [fq.id for fq in form_question]
-    external = [q for q in question
-                if q not in form_question] if question else []
-    if len(external):
-        question = crud_question.get_question_by_id(session=session,
-                                                    id=external[0])
-        question = int(question.option[0].name)
-        for d in data:
-            project_id = list(
-                filter(lambda x: x["question"] == question, d["answer"]))
-            project_id = project_id[0]["value"]
-            for ex in external:
-                total_projects = crud_answer.get_project_count(
-                    session=session, question=ex, value=project_id)
-                total_projects = {
-                    "question": ex,
-                    "value": total_projects,
-                    "history": False
-                }
-                d["answer"].append(total_projects)
-    # END NEPAL
+    if question:
+        data = check_project(session=session,
+                             data=data,
+                             question=question,
+                             form=form_id)
     return {
         'current': page,
         'data': data,
