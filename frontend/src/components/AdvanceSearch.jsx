@@ -31,8 +31,8 @@ const AdvanceSearch = ({
   // Get question option only
   const question = flatten(
     questionGroup.map((qg) =>
-      qg.question.filter(
-        (q) => q.type === "option" || q.type === "multiple_option"
+      qg.question.filter((q) =>
+        ["option", "multiple_option", "answer_list"].includes(q.type)
       )
     )
   );

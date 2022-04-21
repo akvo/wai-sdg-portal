@@ -1,3 +1,4 @@
+/* eslint-disable */
 var site_name = "WAI Nepal";
 
 var features = {
@@ -64,7 +65,7 @@ var navigation_config = [
         name: "Reservoir",
       },
       {
-        link: "tap",
+        link: "taps",
         name: "Taps",
       },
       {

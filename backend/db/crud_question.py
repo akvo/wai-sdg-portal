@@ -152,3 +152,9 @@ def validate_dependency(session: Session, dependency: List[DependencyDict]):
             if o not in options:
                 errors.append(f"Option {o} is not part of {qid}")
     return errors
+
+
+def get_project_question(session: Session, form: int) -> QuestionDict:
+    return session.query(Question).filter(
+        and_(Question.form == form,
+             Question.type == QuestionType.answer_list)).first()

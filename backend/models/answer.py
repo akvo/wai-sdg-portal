@@ -203,8 +203,8 @@ class Answer(Base):
         return {qname: answer}
 
     @property
-    def to_project(self) -> List:
-        return {"id": self.id, "name": self.value}
+    def to_project(self) -> dict:
+        return {"id": self.id, "name": int(self.value)}
 
 
 class AnswerBase(BaseModel):
