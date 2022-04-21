@@ -36,9 +36,9 @@ def check_access(adm, user) -> None:
 # PROJECT BASE
 def check_project(session: Session, data: List[DataDictWithHistory],
                   question: List[int],
-                  form_id: int) -> List[DataDictWithHistory]:
+                  form: int) -> List[DataDictWithHistory]:
     form_question = crud_question.get_question_ids(session=session,
-                                                   form=form_id)
+                                                   form=form)
     form_question = [fq.id for fq in form_question]
     external = [q for q in question
                 if q not in form_question] if question else []
