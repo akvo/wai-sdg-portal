@@ -4,7 +4,7 @@
 import enum
 from typing import Optional, List
 from typing_extensions import TypedDict
-from pydantic import BaseModel, validator
+from pydantic import BaseModel
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy.ext.mutable import MutableDict
 from sqlalchemy import Boolean, Integer, String, Enum
@@ -114,6 +114,10 @@ class Question(Base):
             "options": options,
         }
 
+    @property
+    def id_list(self) -> list:
+        return self.id
+
 
 class QuestionBase(BaseModel):
     id: int
@@ -131,6 +135,6 @@ class QuestionBase(BaseModel):
     class Config:
         orm_mode = True
 
-    @validator("option", pre=True, always=True)
-    def modify_option(cls, value, values):
-        return value
+
+class QuestionIds(BaseModel):
+    id: int

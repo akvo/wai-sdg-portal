@@ -1,7 +1,8 @@
 from datetime import datetime
 from typing import List, Union
 from sqlalchemy.orm import Session
-from sqlalchemy import and_, desc
+from sqlalchemy import Integer, and_, desc
+from sqlalchemy.sql.expression import cast
 from models.answer import Answer, AnswerDict, AnswerBase
 from models.history import History
 from models.question import QuestionType
@@ -78,3 +79,9 @@ def get_history(session: Session, data: int, question: int):
              History.question == question)).order_by(desc(History.id)).all()
     history = [h.simplified for h in history]
     return [answer] + history
+
+
+def get_project_count(session: Session, question: int, value: int) -> int:
+    return session.query(Answer).filter(
+        and_(Answer.question == question,
+             cast(Answer.value, Integer) == value)).count()

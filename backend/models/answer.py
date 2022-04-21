@@ -202,6 +202,10 @@ class Answer(Base):
             answer = self.text
         return {qname: answer}
 
+    @property
+    def to_project(self) -> List:
+        return {"id": self.id, "name": self.value}
+
 
 class AnswerBase(BaseModel):
     id: int

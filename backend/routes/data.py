@@ -66,10 +66,35 @@ def get(req: Request,
     total_page = ceil(data["count"] / 10) if data["count"] > 0 else 0
     if total_page < page:
         raise HTTPException(status_code=404, detail="Not found")
+    count = data["count"]
+    data = [d.serialize for d in data["data"]]
+    # NEPAL
+    form_question = crud_question.get_question_ids(session=session,
+                                                   form=form_id)
+    form_question = [fq.id for fq in form_question]
+    external = [q for q in question if q not in form_question]
+    if len(external):
+        question = crud_question.get_question_by_id(session=session,
+                                                    id=external[0])
+        question = int(question.option[0].name)
+        for d in data:
+            project_id = list(
+                filter(lambda x: x["question"] == question, d["answer"]))
+            project_id = project_id[0]["value"]
+            for ex in external:
+                total_projects = crud_answer.get_project_count(
+                    session=session, question=ex, value=project_id)
+                total_projects = {
+                    "question": ex,
+                    "value": total_projects,
+                    "history": False
+                }
+                d["answer"].append(total_projects)
+    # END NEPAL
     return {
         'current': page,
-        'data': [d.serialize for d in data["data"]],
-        'total': data["count"],
+        'data': data,
+        'total': count,
         'total_page': total_page,
     }
 
