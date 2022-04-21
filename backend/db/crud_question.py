@@ -1,7 +1,8 @@
 from typing import List, Optional
 from sqlalchemy import and_
 from sqlalchemy.orm import Session
-from models.question import Question, QuestionIds, QuestionDict, QuestionBase, QuestionType
+from models.question import Question, QuestionIds
+from models.question import QuestionDict, QuestionBase, QuestionType
 from models.question import DependencyDict
 from models.option import Option, OptionDict
 
