@@ -17,7 +17,8 @@ from models.answer import Answer, AnswerDict
 from models.question import QuestionType
 from models.history import History
 from db.connection import get_session
-from models.data import DataResponse, DataDict, DataDictWithHistory, SubmissionInfo
+from models.data import DataResponse, DataDict
+from models.data import DataDictWithHistory, SubmissionInfo
 from middleware import verify_editor, check_query
 
 security = HTTPBearer()
