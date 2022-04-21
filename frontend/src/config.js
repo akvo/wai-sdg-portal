@@ -5,7 +5,7 @@ const mapColumns = (values) => {
     if (index === 0) {
       col = {
         ...col,
-        width: "35%",
+        width: col?.width || "35%",
       };
     }
     return {
