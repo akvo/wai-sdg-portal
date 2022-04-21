@@ -72,7 +72,8 @@ def get(req: Request,
     form_question = crud_question.get_question_ids(session=session,
                                                    form=form_id)
     form_question = [fq.id for fq in form_question]
-    external = [q for q in question if q not in form_question]
+    external = [q for q in question
+                if q not in form_question] if question else []
     if len(external):
         question = crud_question.get_question_by_id(session=session,
                                                     id=external[0])
