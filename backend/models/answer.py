@@ -204,7 +204,7 @@ class Answer(Base):
 
     @property
     def to_project(self) -> dict:
-        return {"id": self.id, "name": int(self.value)}
+        return {"id": self.data, "name": int(self.value)}
 
 
 class AnswerBase(BaseModel):

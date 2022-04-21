@@ -38,17 +38,20 @@ def get_project_form(session: Session, form: FormBase,
                 projects = crud_answer.get_answer_by_question(
                     session=session, question=project.option[0].name)
                 option = [p.to_project for p in projects]
+                option.reverse()
                 for o in option:
                     data_id = o["id"]
                     data_name = crud_data.get_data_name_by_id(session=session,
                                                               id=data_id)
-                    o.update({"name": f"{data_id} - {data_name}"})
+                    o.update({"id": data_id, "name": data_name})
                 q.update({"option": option})
             questions.append(q)
         qg.update({"question": questions})
         question_group.append(qg)
     form.update({"question_group": question_group})
     return form
+
+
 # END PROJECT BASE
 
 
