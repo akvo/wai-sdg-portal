@@ -18,6 +18,13 @@ export const generateAdvanceFilterURL = (advanceSearchValue, url) => {
   // advance search
   if (!isEmpty(advanceSearchValue)) {
     const queryUrlPrefix = url.includes("?") ? "&" : "?";
+    advanceSearchValue = advanceSearchValue.map((x) => {
+      if (x.type === "answer_list") {
+        const option = x.option.map((o) => o.split(" ")[0]);
+        return { ...x, option };
+      }
+      return x;
+    });
     const advanceFilter = advanceSearchValue
       .flatMap((x) => x.option)
       .map((x) => encodeURIComponent(x))

@@ -262,7 +262,7 @@ const RenderFilterTag = ({ setPage, setSelectedRow }) => {
               </Popover>
             }
             closable
-            onClose={(e) => handleOnCloseTag("multiselect", opt)}
+            onClose={() => handleOnCloseTag("multiselect", opt)}
           >
             {opt.split("|")[1]}
           </Tag>
@@ -277,7 +277,7 @@ const RenderFilterTag = ({ setPage, setSelectedRow }) => {
             </Popover>
           }
           closable
-          onClose={(e) => handleOnCloseTag("radio", val.option)}
+          onClose={() => handleOnCloseTag("radio", val.option)}
         >
           {val.option.split("|")[1]}
         </Tag>
