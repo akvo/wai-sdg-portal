@@ -62,13 +62,12 @@ export const SelectLevel = ({ setPage, setSelectedRow }) => {
           if (setSelectedRow) {
             setSelectedRow([]);
           }
+          const selectedAdministration =
+            user?.role === "admin" || user?.access?.length > 1
+              ? [null]
+              : [null, user?.access?.[0]];
           UIState.update((u) => {
-            u.selectedAdministration =
-              user?.role === "admin"
-                ? [null]
-                : user?.access?.length === 1
-                ? [null, user?.access?.[0]]
-                : [null];
+            u.selectedAdministration = selectedAdministration;
           });
         }}
       >
