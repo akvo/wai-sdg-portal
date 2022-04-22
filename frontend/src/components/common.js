@@ -10,8 +10,11 @@ const { Option, OptGroup } = Select;
 const { buttonText, mainText, notificationText } = window?.i18n;
 
 export const SelectLevel = ({ setPage, setSelectedRow }) => {
-  const { selectedAdministration, administrationByAccess, user } =
-    UIState.useState((s) => s);
+  const {
+    selectedAdministration,
+    administrationByAccess,
+    user,
+  } = UIState.useState((s) => s);
   return (
     <Space>
       {selectedAdministration.map((s, si) => {
