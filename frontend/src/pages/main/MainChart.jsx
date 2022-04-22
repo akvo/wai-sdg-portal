@@ -71,7 +71,13 @@ const MainChart = ({ current, question }) => {
       if (!isEmpty(advanceSearchValue)) {
         const filterByText = advanceSearchValue?.map((x, xi) => {
           const { question, option } = x;
-          const optText = option.split("|")?.[1];
+          let optText = "";
+          // support multiple select on advanced filter option
+          if (Array.isArray(option)) {
+            optText = option.map((opt) => opt.split("|")[1]).join(", ");
+          } else {
+            optText = option.split("|")?.[1];
+          }
           return `{question|${question}} is {option|${optText}}`;
         });
         chartTitleTemp = `${chartTitleTemp}, where ${filterByText?.join(

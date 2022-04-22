@@ -4,6 +4,9 @@ var features = {
   chartFeature: {
     stack: false,
   },
+  advancedFilterFeature: {
+    isMultiSelect: true,
+  },
 };
 
 var navigation_config = [

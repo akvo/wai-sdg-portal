@@ -1,7 +1,8 @@
 from typing import List, Optional
 from sqlalchemy import and_
 from sqlalchemy.orm import Session
-from models.question import Question, QuestionDict, QuestionBase, QuestionType
+from models.question import Question, QuestionIds
+from models.question import QuestionDict, QuestionBase, QuestionType
 from models.question import DependencyDict
 from models.option import Option, OptionDict
 
@@ -59,6 +60,10 @@ def get_question(session: Session,
     if form:
         return session.query(Question).filter(Question.form == form).all()
     return session.query(Question).all()
+
+
+def get_question_ids(session: Session, form: int) -> List[QuestionIds]:
+    return session.query(Question).filter(Question.form == form).all()
 
 
 def get_question_by_id(session: Session, id: int) -> QuestionDict:
@@ -147,3 +152,9 @@ def validate_dependency(session: Session, dependency: List[DependencyDict]):
             if o not in options:
                 errors.append(f"Option {o} is not part of {qid}")
     return errors
+
+
+def get_project_question(session: Session, form: int) -> QuestionDict:
+    return session.query(Question).filter(
+        and_(Question.form == form,
+             Question.type == QuestionType.answer_list)).first()

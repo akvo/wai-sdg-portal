@@ -23,6 +23,7 @@ class QuestionType(enum.Enum):
     date = 'date'
     geo = 'geo'
     administration = 'administration'
+    answer_list = 'answer_list'
 
 
 class DependencyDict(TypedDict):
@@ -113,6 +114,10 @@ class Question(Base):
             "options": options,
         }
 
+    @property
+    def id_list(self) -> list:
+        return self.id
+
 
 class QuestionBase(BaseModel):
     id: int
@@ -129,3 +134,7 @@ class QuestionBase(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class QuestionIds(BaseModel):
+    id: int

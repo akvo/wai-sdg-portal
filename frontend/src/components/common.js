@@ -10,9 +10,11 @@ const { Option, OptGroup } = Select;
 const { buttonText, mainText, notificationText } = window?.i18n;
 
 export const SelectLevel = ({ setPage, setSelectedRow }) => {
-  const { selectedAdministration, administrationByAccess } = UIState.useState(
-    (s) => s
-  );
+  const {
+    selectedAdministration,
+    administrationByAccess,
+    user,
+  } = UIState.useState((s) => s);
   return (
     <Space>
       {selectedAdministration.map((s, si) => {
@@ -63,8 +65,12 @@ export const SelectLevel = ({ setPage, setSelectedRow }) => {
           if (setSelectedRow) {
             setSelectedRow([]);
           }
+          const selectedAdministration =
+            user?.role === "admin" || user?.access?.length > 1
+              ? [null]
+              : [null, user?.access?.[0]];
           UIState.update((u) => {
-            u.selectedAdministration = [null];
+            u.selectedAdministration = selectedAdministration;
           });
         }}
       >

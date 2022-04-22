@@ -9,27 +9,57 @@ source_path = os.environ["INSTANCE_NAME"]
 
 class SurveyList(enum.Enum):
     wai_nepal = {
-        'domain': 'wai',
-        'formIds': ['1000944003', '1189144226', '994944020', '964754042'],
-        'administration': ['1183264177', '1183264172']
+        'instances': [{
+            "domain": "pilots",
+            "forms": ['556240162', '554360198', '557950127']
+        }, {
+            "domain":
+            "wai",
+            "forms": [
+                '1323574110', '1322834054', '1260775092', '1327205184',
+                '1338414049'
+            ],
+        }],
+        'child_forms':
+        ['1322834054', '1260775092', '1327205184', '1338414049'],
+        'administration':
+        ['573330120', '567820007', '571300147', '1359274105'],
+        'answer_list_type': [{
+            'id': '1332184057',
+            'list_from': '1260775116'
+        }, {
+            'id': '1361834041',
+            'list_from': '1260775116'
+        }, {
+            'id': '1361884006',
+            'list_from': '1260775116'
+        }, {
+            'id': '1336894024',
+            'list_from': '1260775116'
+        }],
+        'skip_question': ['1260775107', '1260775115', '1260775108'],
     }
     wai_bangladesh = {
-        'domain':
-        'wai',
-        'formIds':
-        ['976564018', '952774024', '974754029', '962774003', '980804014'],
+        'instances': [{
+            "domain":
+            "wai",
+            "forms":
+            ['976564018', '952774024', '974754029', '962774003', '980804014'],
+        }],
         'administration':
-        ['1084694626', '1260775107', '1260775115', '1260775108', '1084684623']
+        ['1084694626', '1260775107', '1260775115', '1260775108', '1084684623'],
+        'skip_question': []
     }
     wai_ethiopia = {
-        'domain':
-        'pilots',
-        'formIds': [
-            '567420197', '494780323', '567420165', '551870264', '551870264',
-            '571070071'
-        ],
+        'instances': [{
+            "domain":
+            "pilots",
+            "forms":
+            ['976564018', '952774024', '974754029', '962774003', '980804014'],
+        }],
         'administration':
-        ['1084694626', '1260775107', '1260775115', '1260775108', '1084684623']
+        ['1084694626', '1260775107', '1260775115', '1260775108', '1084684623'],
+        'skip_question': []
     }
 
 
@@ -39,8 +69,12 @@ if not os.path.exists(dest_folder):
     os.makedirs(dest_folder)
 class_path = source_path.replace("-", "_")
 source = SurveyList[class_path].value
-flow_instance = source["domain"]
-form_ids = source["formIds"]
+instances = source["instances"]
+answer_list_type = [] if not source.get(
+    "answer_list_type") else source["answer_list_type"]
+skip_answer_list_type = [x["id"] for x in answer_list_type]
+skip_question_id = source["skip_question"] + source["administration"]
+child_forms = source.get("child_forms") or []
 
 
 def set_original(q, options, multiple_option):
@@ -53,6 +87,24 @@ def set_original(q, options, multiple_option):
         "required": q["mandatory"],
         "options": options if len(options) else None
     }
+
+
+def set_answer_type_list(q):
+    if q["id"] in [int(s) for s in skip_answer_list_type]:
+        option = list(
+            filter(lambda x: int(x["id"]) == q["id"], answer_list_type))
+        return {
+            "id": int(q["id"]),
+            "question": q["question"],
+            "order": q["order"],
+            "meta": True,
+            "required": True,
+            "type": "answer_list",
+            "options": [{
+                "name": int(o["list_from"])
+            } for o in option]
+        }
+    return q
 
 
 def set_options(q):
@@ -86,7 +138,7 @@ def set_dependency(q, qs):
     return qs
 
 
-def generate_form(form):
+def generate_form(form, child=False):
     question_groups = []
     for qg in form["questionGroup"]:
         question_group = {"question_group": qg["heading"], "questions": []}
@@ -97,6 +149,9 @@ def generate_form(form):
             options, multiple_option = set_options(q)
             question = set_original(q, options, multiple_option)
             question = set_dependency(q, question)
+            # TRANSFORM FOR NEPAL
+            question = set_answer_type_list(question)
+            # END NEPAL
             if adm:
                 if q["id"] in source["administration"] or q[
                         "type"] == "cascade":
@@ -109,7 +164,7 @@ def generate_form(form):
                     })
                     question_group["questions"].append(administration)
                     adm = False
-            if q["type"] == "free":
+            if question["type"] == "free":
                 question.update({"type": "text"})
                 if "validationRule" in list(q):
                     if q["validationRule"]["validationType"] == "numeric":
@@ -118,11 +173,11 @@ def generate_form(form):
                         rule.update({"max": q["validationRule"]["maxVal"]})
                     if "minVal" in q["validationRule"]:
                         rule.update({"min": q["validationRule"]["minVal"]})
-            if q["type"] == "geo":
+            if question["type"] == "geo":
                 question.update({"meta": True, "required": True})
             if len(list(rule)):
                 question.update({"rule": rule})
-            if q["id"] not in source["administration"] and q["type"] not in [
+            if q["id"] not in skip_question_id and q["type"] not in [
                     "cascade", "photo"
             ]:
                 if q["type"] == "option" and len(options) == 0:
@@ -132,27 +187,32 @@ def generate_form(form):
         question_groups.append(question_group)
     return {
         "form": form_name,
-        "id": int(form_id),
+        "id": form_id,
         "question_groups": question_groups
     }
 
 
-for form_id in form_ids:
-    print(f"DOWNLOADING: {form_id}")
-    form = r.get(f"{api}{flow_instance}/{form_id}/update")
-    form = form.json()
-    form_name = form["name"]
+for instance in instances:
+    flow_instance = instance["domain"]
+    for form_id in instance["forms"]:
+        print(f"DOWNLOADING: {form_id}")
+        form = r.get(f"{api}{flow_instance}/{form_id}/update")
+        form = form.json()
+        form_name = form["name"]
+        file_name = form_id
 
-    if type(form["questionGroup"]) == dict:
-        form.update({"questionGroup": [form["questionGroup"]]})
+        if type(form["questionGroup"]) == dict:
+            form.update({"questionGroup": [form["questionGroup"]]})
 
-    for qg in form["questionGroup"]:
-        if type(qg["question"]) == dict:
-            qg.update({"question": [qg["question"]]})
+        for qg in form["questionGroup"]:
+            if type(qg["question"]) == dict:
+                qg.update({"question": [qg["question"]]})
 
-    with open(f"{dest_folder}/{form_id}.json", "w") as dest:
-        res = generate_form(form)
-        form_name = res["form"]
-        form_id = str(res["id"])
-        dest.write(json.dumps(res, indent=2))
-        print(f"DOWNLOADED : {form_id} - {form_name}")
+        if form_id in child_forms:
+            file_name = f"child-{form_id}"
+        with open(f"{dest_folder}/{file_name}.json", "w") as dest:
+            res = generate_form(form, form_id in child_forms)
+            form_name = res["form"]
+            form_id = str(res["id"])
+            dest.write(json.dumps(res, indent=2))
+            print(f"DOWNLOADED : {form_id} - {form_name}")

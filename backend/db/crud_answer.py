@@ -1,9 +1,11 @@
 from datetime import datetime
-from typing import List, Union
-from sqlalchemy.orm import Session
-from sqlalchemy import and_, desc
+from typing import List, Union, Optional
+from sqlalchemy.orm import Session, load_only
+from sqlalchemy import Integer, and_, desc
+from sqlalchemy.sql.expression import cast
 from models.answer import Answer, AnswerDict, AnswerBase
 from models.history import History
+from models.data import Data
 from models.question import QuestionType
 
 
@@ -58,8 +60,17 @@ def get_answer(session: Session) -> List[AnswerDict]:
     return session.query(Answer).all()
 
 
-def get_answer_by_question(session: Session,
-                           question: int) -> List[AnswerDict]:
+def get_answer_by_question(
+        session: Session,
+        question: int,
+        administrations: Optional[List[int]] = []) -> List[AnswerDict]:
+    if len(administrations):
+        data = session.query(Data).filter(
+            Data.administration.in_(administrations)).options(
+                load_only("id")).all()
+        return session.query(Answer).filter(
+            and_(Answer.question == question,
+                 Answer.data.in_([d.id for d in data]))).all()
     return session.query(Answer).filter(Answer.question == question).all()
 
 
@@ -78,3 +89,9 @@ def get_history(session: Session, data: int, question: int):
              History.question == question)).order_by(desc(History.id)).all()
     history = [h.simplified for h in history]
     return [answer] + history
+
+
+def get_project_count(session: Session, question: int, value: int) -> int:
+    return session.query(Answer).filter(
+        and_(Answer.question == question,
+             cast(Answer.value, Integer) == value)).count()

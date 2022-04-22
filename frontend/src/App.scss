@@ -331,8 +331,19 @@
         }
       }
 
-      .ant-radio-wrapper {
+      .ant-radio-wrapper,
+      .ant-checkbox-wrapper {
         display: block;
+        margin-left: 0;
+      }
+
+      .ant-checkbox-wrapper {
+        .ant-checkbox-inner {
+          display: inline-block;
+        }
+        .ant-checkbox-checked::after {
+          top: -2px;
+        }
       }
     }
   }

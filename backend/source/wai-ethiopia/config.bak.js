@@ -4,6 +4,9 @@ var features = {
   chartFeature: {
     stack: false,
   },
+  advancedFilterFeature: {
+    isMultiSelect: true,
+  },
 };
 
 var navigation_config = [
@@ -223,6 +226,19 @@ var page_config = {
 };
 
 var landing_config = {
+  jumbotron: {
+    // title, the text or list title
+    title:
+      "This portal is to support ##administration## authorities decision-making by tracking:", // the text or list title
+    // list_type, can be bullet/number or null if no list
+    list_type: "number",
+    // list, describe the list as an array of text or empty array [] if no list
+    list: [
+      "WASH vulnerability of communities and institutions.",
+      "ODF status of communities.",
+      "Water infrastructure status and functionality.",
+    ],
+  },
   datasetsInPortal: [
     {
       title: "JMP/SDG Status",
