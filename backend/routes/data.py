@@ -19,7 +19,7 @@ from models.history import History
 from db.connection import get_session
 from models.data import DataResponse, DataDict
 from models.data import DataDictWithHistory, SubmissionInfo
-from middleware import verify_editor, check_query
+from middleware import verify_user, verify_editor, check_query
 
 security = HTTPBearer()
 data_route = APIRouter()
@@ -35,10 +35,8 @@ def check_access(adm, user) -> None:
 
 # PROJECT BASE
 def check_project(session: Session, data: List[DataDictWithHistory],
-                  question: List[int],
-                  form: int) -> List[DataDictWithHistory]:
-    form_question = crud_question.get_question_ids(session=session,
-                                                   form=form)
+                  question: List[int], form: int) -> List[DataDictWithHistory]:
+    form_question = crud_question.get_question_ids(session=session, form=form)
     form_question = [fq.id for fq in form_question]
     external = [q for q in question
                 if q not in form_question] if question else []
@@ -60,6 +58,8 @@ def check_project(session: Session, data: List[DataDictWithHistory],
                 }
                 d["answer"].append(total_projects)
     return data
+
+
 # END PROJECT BASE
 
 
@@ -78,8 +78,13 @@ def get(req: Request,
         session: Session = Depends(get_session),
         credentials: credentials = Depends(security)):
     options = check_query(q) if q else None
-    verify_editor(req.state.authenticated, session)
+    user = verify_user(req.state.authenticated, session)
     administration_ids = False
+    if not administration:
+        administration_ids = crud_administration.get_all_childs(
+            session=session,
+            parents=[a.administration for a in user.access],
+            current=[])
     if administration:
         administration_ids = crud_administration.get_all_childs(
             session=session, parents=[administration], current=[])

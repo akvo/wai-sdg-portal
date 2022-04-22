@@ -79,7 +79,7 @@ const MainTableChild = ({
   scroll,
   showHistoryChartBtn = false,
 }) => {
-  const { editedRow, administration } = UIState.useState((e) => e);
+  const { editedRow, administration, user } = UIState.useState((e) => e);
   const [expanded, setExpanded] = useState([]);
   const edited = editedRow?.[data.key];
   const childcolumns = [
@@ -100,7 +100,10 @@ const MainTableChild = ({
   return questionGroup.map((g, gi) => {
     const source = g.question.map((q, qi) => {
       const answer = data.detail.find((d) => d.question === q.id);
-      const nonEditable = (q.type === "administration") | (q.type === "geo");
+      const nonEditable =
+        (user?.role === "user") |
+        (q.type === "administration") |
+        (q.type === "geo");
       return {
         name: (
           <NormalCol
@@ -121,12 +124,15 @@ const MainTableChild = ({
                       </b>
                     ))}
                   </Space>
+                ) : q.type === "administration" && answer?.value ? (
+                  getLocationName(answer?.value, administration)
                 ) : (
                   ""
                 )}
-                {q.type === "administration" && answer?.value
-                  ? getLocationName(answer?.value, administration)
-                  : ""}
+                {(q.type !== "geo" && answer?.value) ||
+                  (q.type !== "administration" &&
+                    answer?.value &&
+                    answer.value)}
               </div>
             }
             question={q}
@@ -162,7 +168,7 @@ const MainTableChild = ({
         }}
         expandable={{
           expandIconColumnIndex: 3,
-          expandIcon: ({ expanded, onExpand, record }) => {
+          expandIcon: ({ onExpand, record }) => {
             const { dataPointId, question } = record.value.props;
             let showChartButton = "";
             if (

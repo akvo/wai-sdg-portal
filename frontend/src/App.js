@@ -17,13 +17,8 @@ import "./App.scss";
 const history = createBrowserHistory();
 
 function App() {
-  const {
-    isAuthenticated,
-    loginWithPopup,
-    logout,
-    user,
-    getIdTokenClaims,
-  } = useAuth0();
+  const { isAuthenticated, loginWithPopup, logout, user, getIdTokenClaims } =
+    useAuth0();
   const { registrationPopup } = UIState.useState((s) => s);
 
   useEffect(() => {
@@ -59,6 +54,12 @@ function App() {
                 UIState.update((u) => {
                   u.administration = a.data;
                   u.administrationByAccess = administrationByAccess;
+                  u.selectedAdministration =
+                    user?.role === "admin"
+                      ? [null]
+                      : data?.access?.length === 1
+                      ? [null, data?.access?.[0]]
+                      : [null];
                 });
               });
             }

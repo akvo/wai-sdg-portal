@@ -157,17 +157,17 @@ var page_config = {
       {
         title: "Project Name",
         key: 1260775110,
-        width: "150px",
       },
       {
         title: "Project Type",
         key: 1260775111,
         align: "left",
+        width: "150px",
       },
       {
         title: "Water Source",
         key: 1332184057,
-        width: "100px",
+        width: "120px",
       },
       {
         title: "Reservoirs",
@@ -177,7 +177,7 @@ var page_config = {
       {
         title: "Taps",
         key: 1361834041,
-        width: "100px",
+        width: "80px",
       },
     ],
     maps: {

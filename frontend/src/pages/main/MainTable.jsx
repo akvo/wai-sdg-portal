@@ -71,8 +71,8 @@ const MainTable = ({
     UIState.update((e) => {
       e.reloadData = false;
     });
-    const savedValues = Object.keys(editedRow).map((k, v) => {
-      const values = Object.keys(editedRow[k]).map((o, v) => ({
+    const savedValues = Object.keys(editedRow).map((k, _) => {
+      const values = Object.keys(editedRow[k]).map((o, _) => ({
         question: o,
         value: editedRow[k][o],
       }));
