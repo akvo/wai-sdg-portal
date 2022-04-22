@@ -159,24 +159,23 @@ var page_config = {
         key: 1260775110,
       },
       {
-        title: "Project Type",
-        key: 1260775111,
-        align: "left",
-        width: "150px",
-      },
-      {
-        title: "Water Source",
+        title: "#Water Source",
         key: 1332184057,
         width: "120px",
       },
       {
-        title: "Reservoirs",
+        title: "#Reservoirs",
         key: 1361884006,
         width: "100px",
       },
       {
-        title: "Taps",
+        title: "#Taps",
         key: 1361834041,
+        width: "80px",
+      },
+      {
+        title: "#WUSC",
+        key: 1336894024,
         width: "80px",
       },
     ],

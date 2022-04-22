@@ -13,7 +13,7 @@ from db.connection import get_session
 from models.form import FormDict, FormBase
 from models.user import UserRole
 from models.question import QuestionType, QuestionDict
-from middleware import verify_admin, verify_editor
+from middleware import verify_user, verify_admin, verify_editor
 from source.geoconfig import GeoCenter
 
 INSTANCE_NAME = os.environ["INSTANCE_NAME"]
@@ -26,8 +26,8 @@ geo_center = {"lat": geo_center[1], "lng": geo_center[0]}
 
 
 # PROJECT BASE
-def get_project_form(session: Session, form: FormBase,
-                     project: QuestionDict) -> FormBase:
+def get_project_form(session: Session, form: FormBase, project: QuestionDict,
+                     administrations: List[int]) -> FormBase:
     question_group = []
     for qg in form["question_group"]:
         qg = qg.serialize
@@ -36,7 +36,9 @@ def get_project_form(session: Session, form: FormBase,
             q = q.serialize
             if q["id"] == project.id:
                 projects = crud_answer.get_answer_by_question(
-                    session=session, question=project.option[0].name)
+                    session=session,
+                    question=project.option[0].name,
+                    administrations=administrations)
                 option = [p.to_project for p in projects]
                 option.reverse()
                 for o in option:
@@ -71,10 +73,19 @@ def get(req: Request, session: Session = Depends(get_session)):
                 tags=["Form"])
 def get_by_id(req: Request, id: int, session: Session = Depends(get_session)):
     form = crud.get_form_by_id(session=session, id=id)
-    project = crud_question.get_project_question(session=session, form=id)
     form = form.serialize
-    if project:
-        form = get_project_form(session=session, form=form, project=project)
+    if req.headers.get("Authorization"):
+        user = verify_user(req.state.authenticated, session)
+        project = crud_question.get_project_question(session=session, form=id)
+        if project:
+            administration_ids = crud_administration.get_all_childs(
+                session=session,
+                parents=[a.administration for a in user.access],
+                current=[])
+            form = get_project_form(session=session,
+                                    form=form,
+                                    project=project,
+                                    administrations=administration_ids)
     return form
 
 
@@ -102,7 +113,9 @@ def get_webform_by_id(req: Request,
             if q["type"] == QuestionType.answer_list:
                 if q["id"] == project.id:
                     projects = crud_answer.get_answer_by_question(
-                        session=session, question=project.option[0].name)
+                        session=session,
+                        question=project.option[0].name,
+                        administrations=access)
                     option = [p.to_project for p in projects]
                     option.reverse()
                     for o in option:

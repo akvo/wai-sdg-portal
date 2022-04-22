@@ -191,7 +191,6 @@ for form in forms:
                         names.append(administration.name)
                 if value:
                     answers.append(answer)
-        names.reverse()
         name = " - ".join(names)
         administration = administration.id
         data = crud_data.add_data(session=session,
