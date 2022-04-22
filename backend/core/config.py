@@ -11,6 +11,7 @@ from routes.user import user_route
 from routes.form import form_route
 from routes.question import question_route
 from routes.data import data_route
+from routes.project import project_route
 from routes.maps import maps_route
 from routes.chart import chart_route
 from routes.file import file_route
@@ -74,6 +75,7 @@ app.include_router(data_route)
 app.include_router(maps_route)
 app.include_router(chart_route)
 app.include_router(file_route)
+app.include_router(project_route)
 app.include_router(log_route)
 
 

@@ -56,9 +56,14 @@ function App() {
                   );
                 }
 
+                const selectedAdministration =
+                  user?.role === "admin" || data?.access?.length > 1
+                    ? [null]
+                    : [null, data?.access?.[0]];
                 UIState.update((u) => {
                   u.administration = a.data;
                   u.administrationByAccess = administrationByAccess;
+                  u.selectedAdministration = selectedAdministration;
                 });
               });
             }

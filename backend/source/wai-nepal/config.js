@@ -1,3 +1,4 @@
+/* eslint-disable */
 var site_name = "WAI Nepal";
 
 var features = {
@@ -8,6 +9,29 @@ var features = {
     isMultiSelect: true,
   },
 };
+
+var links = [
+  {
+    title: "Project Details",
+    to: "project",
+  },
+  {
+    title: "Reservoir",
+    to: "reservoir",
+  },
+  {
+    title: "Water Source",
+    to: "waterSource",
+  },
+  {
+    title: "Taps",
+    to: "taps",
+  },
+  {
+    title: "WUSC",
+    to: "wusc",
+  },
+];
 
 var navigation_config = [
   {
@@ -28,6 +52,32 @@ var navigation_config = [
       },
     ],
   },
+  {
+    link: "projects",
+    name: "Projects",
+    childrens: [
+      {
+        link: "project",
+        name: "Project Details",
+      },
+      {
+        link: "reservoir",
+        name: "Reservoir",
+      },
+      {
+        link: "taps",
+        name: "Taps",
+      },
+      {
+        link: "waterSource",
+        name: "Water Source",
+      },
+      {
+        link: "wusc",
+        name: "WUSC",
+      },
+    ],
+  },
 ];
 
 var page_config = {
@@ -39,19 +89,19 @@ var page_config = {
         key: "name",
       },
       {
-        title: "Hand Washing Facility",
-        key: 962764039,
+        title: "Sanitation Service Level",
+        key: 569340075,
       },
       {
-        title: "Laterine",
-        key: 962764019,
+        title: "Water Service Level",
+        key: 569340077,
       },
     ],
     maps: {
-      shape: { id: 976454019, name: "Household Size" },
-      marker: { id: 962764019, title: "Laterine" },
+      shape: { id: 573330121, name: "Household Size" },
+      marker: { id: 569340077, title: "Water Service Level" },
     },
-    formId: 994944020,
+    formId: 556240162,
   },
   schools: {
     title: "Schools Facility",
@@ -62,22 +112,22 @@ var page_config = {
       },
       {
         title: "Toilet",
-        key: 1000914105,
+        key: 567800083,
       },
       {
         title: "Handwashing",
-        key: 964764100,
+        key: 578820194,
       },
       {
-        title: "School Waste",
-        key: 987374089,
+        title: "Water Service Levels",
+        key: 573300191,
       },
     ],
     maps: {
-      shape: { id: 987364061, name: "Number of Student" },
+      shape: { id: 573300189, name: "Sanitation Service Levels" },
       marker: { id: 1000914105, title: "Toilet" },
     },
-    formId: 964754042,
+    formId: 554360198,
   },
   health: {
     title: "Health Facility",
@@ -87,19 +137,162 @@ var page_config = {
         key: "name",
       },
       {
-        title: "Hygiene Stations",
-        key: 1177674247,
+        title: "Water Service Levels",
+        key: 578820188,
       },
       {
-        title: "Cases of Dierhea",
-        key: 1179634216,
+        title: "Sanitation Service Levels",
+        key: 578820187,
       },
     ],
     maps: {
-      shape: { id: 1179634216, name: "Cases of Diarhea" },
-      marker: { id: 1179654241, name: "Main Source" },
+      shape: { id: 578820188, name: "Water Service Levels" },
+      marker: { id: 578820186, name: "Hygiene Service Levels" },
     },
-    formId: 1189144226,
+    formId: 557950127,
+  },
+  project: {
+    title: "Projects Details",
+    columns: [
+      {
+        title: "Project Name",
+        key: 1260775110,
+      },
+      {
+        title: "#Water Source",
+        key: 1332184057,
+        width: "120px",
+      },
+      {
+        title: "#Reservoirs",
+        key: 1361884006,
+        width: "100px",
+      },
+      {
+        title: "#Taps",
+        key: 1361834041,
+        width: "80px",
+      },
+      {
+        title: "#WUSC",
+        key: 1336894024,
+        width: "80px",
+      },
+    ],
+    maps: {
+      shape: { id: 1260775111, name: "Project Type" },
+      marker: { id: 1260775109, name: "Construction Agency" },
+    },
+    formId: 1323574110,
+    links: links,
+  },
+  waterSource: {
+    title: "Water Source",
+    columns: [
+      {
+        title: "Name",
+        key: 1348864008,
+      },
+      {
+        title: "Registration",
+        key: 1351624037,
+      },
+      {
+        title: "Type",
+        key: 1322844012,
+      },
+      {
+        title: "Present",
+        key: 1351624035,
+      },
+      {
+        title: "Quality",
+        key: 1322844007,
+      },
+    ],
+    maps: {
+      shape: { id: 1322844012, name: "Water Source Type" },
+      marker: { id: 1322844007, name: "Quality" },
+    },
+    formId: 1322834054,
+    links: links,
+  },
+  reservoir: {
+    title: "Reservoir",
+    columns: [
+      {
+        title: "RVT No",
+        key: 1312464879,
+      },
+      {
+        title: "Type",
+        key: 1317494088,
+      },
+      {
+        title: "Adequacy",
+        key: 1312455208,
+      },
+      {
+        title: "Condition",
+        key: 1325445108,
+      },
+    ],
+    maps: {
+      shape: { id: 1284004080, name: "RVT Capacity" },
+      marker: { id: 1317494088, name: "RVT Type" },
+    },
+    formId: 1260775092,
+    links: links,
+  },
+  taps: {
+    title: "Taps",
+    columns: [
+      {
+        title: "Project Name",
+        key: "name",
+      },
+      {
+        title: "Type",
+        key: 1323564078,
+      },
+      {
+        title: "Metered Connection",
+        key: 1325524076,
+      },
+      {
+        title: "# of Household",
+        key: 1329264106,
+      },
+      {
+        title: "Tap Condition",
+        key: 1325534094,
+      },
+    ],
+    maps: {
+      shape: { id: 1329264106, name: "Number of Household" },
+      marker: { id: 1323564078, name: "Tap Type" },
+    },
+    formId: 1327205184,
+    links: links,
+  },
+  wusc: {
+    title: "WUSC",
+    columns: [
+      {
+        title: "Project Name",
+        key: "name",
+      },
+      {
+        title: "Project Code",
+        key: 1336894024,
+      },
+    ],
+    maps: {
+      shape: { id: 1260775111, name: "Project Type" },
+      marker: { id: 1336894024, name: "Project Code" },
+    },
+    formId: 1338414049,
+    links: links,
   },
 };
 
@@ -131,21 +324,21 @@ var landing_config = {
   ],
   overviews: [
     {
-      form_id: 964754042,
+      form_id: 554360198,
       name: "Schools",
-      question: 1000914105,
+      question: 567800083,
       option: "yes",
       above_text: "Across the District",
       number_text: "of ##total## schools have toilet",
       explore: "#",
     },
     {
-      form_id: 1189144226,
+      form_id: 557950127,
       name: "Health Facilities",
-      question: 1177674247,
+      question: 554400065,
       option: "yes",
       above_text: "Across the District",
-      number_text: "of ##total## hygiene stations available",
+      number_text: "of ##total## health facilities have toilet",
       explore: "#",
     },
   ],

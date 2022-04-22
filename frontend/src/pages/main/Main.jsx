@@ -4,9 +4,11 @@ import {
   InfoCircleOutlined,
   LineChartOutlined,
   DatabaseOutlined,
+  ProjectOutlined,
+  UnorderedListOutlined,
 } from "@ant-design/icons";
 import api from "../../util/api";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 import "./main.scss";
 import { SelectLevel, DropdownNavigation } from "../../components/common";
@@ -316,6 +318,36 @@ const Main = ({ match }) => {
             </div>
           </Col>
           <Col span={12} xxl={14} className="table-wrapper">
+            {current?.links && (
+              <Row
+                style={{ margin: "20px 40px 0px" }}
+                align="middle"
+                justify="left"
+              >
+                <Col span={24}>
+                  {current.links.map((link, linkIndex) => (
+                    <Link key={`link-${linkIndex}`} to={`/data/${link.to}`}>
+                      <Button
+                        type={
+                          match.params.page === link.to
+                            ? "primary"
+                            : "secondary"
+                        }
+                        icon={
+                          !linkIndex ? (
+                            <ProjectOutlined />
+                          ) : (
+                            <UnorderedListOutlined />
+                          )
+                        }
+                      >
+                        {link.title}
+                      </Button>
+                    </Link>
+                  ))}
+                </Col>
+              </Row>
+            )}
             {current?.tabs && (
               <Row
                 style={{ margin: "20px 40px 0px" }}
