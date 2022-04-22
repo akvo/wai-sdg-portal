@@ -88,6 +88,7 @@ def get_webform_by_id(req: Request,
     user = verify_editor(req.state.authenticated, session)
     access = [a.administration for a in user.access]
     form = crud.get_form_by_id(session=session, id=id)
+    project = crud_question.get_project_question(session=session, form=id)
     form = form.serialize
     form["question_group"] = [qg.serialize for qg in form["question_group"]]
     for qg in form["question_group"]:
@@ -98,6 +99,18 @@ def get_webform_by_id(req: Request,
                 q.update({"type": "cascade"})
             if q["type"] == QuestionType.geo:
                 q.update({"center": geo_center})
+            if q["type"] == QuestionType.answer_list:
+                if q["id"] == project.id:
+                    projects = crud_answer.get_answer_by_question(
+                        session=session, question=project.option[0].name)
+                    option = [p.to_project for p in projects]
+                    option.reverse()
+                    for o in option:
+                        data_id = o["id"]
+                        data_name = crud_data.get_data_name_by_id(
+                            session=session, id=data_id)
+                        o.update({"id": data_id, "name": data_name})
+                q.update({"option": option, "type": "option"})
     administration = crud_administration.get_parent_administration(
         session=session,
         access=None if user.role == UserRole.admin else access)
