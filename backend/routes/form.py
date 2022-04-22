@@ -112,10 +112,14 @@ def get_webform_by_id(req: Request,
                 q.update({"center": geo_center})
             if q["type"] == QuestionType.answer_list:
                 if q["id"] == project.id:
+                    administration_ids = crud_administration.get_all_childs(
+                        session=session,
+                        parents=[a.administration for a in user.access],
+                        current=[])
                     projects = crud_answer.get_answer_by_question(
                         session=session,
                         question=project.option[0].name,
-                        administrations=access)
+                        administrations=administration_ids)
                     option = [p.to_project for p in projects]
                     option.reverse()
                     for o in option:
