@@ -93,6 +93,10 @@ var page_config = {
         key: 569340075,
       },
       {
+        title: "Level",
+        key: 569340076,
+      },
+      {
         title: "Water Service Level",
         key: 569340077,
       },
@@ -102,6 +106,18 @@ var page_config = {
       marker: { id: 569340077, title: "Water Service Level" },
     },
     formId: 556240162,
+    tabs: [
+      {
+        name: "JMP",
+        component: "JMP-CHARTS",
+        selected: true,
+        chartList: [
+          { question: 569340077, name: "Water Service Level" },
+          { question: 569340075, name: "Sanitation Service Level" },
+          { question: 569340076, name: "Hygiene Service Level" },
+        ],
+      },
+    ],
   },
   schools: {
     title: "Schools Facility",
@@ -128,6 +144,18 @@ var page_config = {
       marker: { id: 1000914105, title: "Toilet" },
     },
     formId: 554360198,
+    tabs: [
+      {
+        name: "JMP",
+        component: "JMP-CHARTS",
+        selected: true,
+        chartList: [
+          { question: 567800083, name: "Toilet" },
+          { question: 573300191, name: "Water Service Levels" },
+          { question: 578820194, name: "Handwashing" },
+        ],
+      },
+    ],
   },
   health: {
     title: "Health Facility",
@@ -150,6 +178,17 @@ var page_config = {
       marker: { id: 578820186, name: "Hygiene Service Levels" },
     },
     formId: 557950127,
+    tabs: [
+      {
+        name: "JMP",
+        component: "JMP-CHARTS",
+        selected: true,
+        chartList: [
+          { question: 578820188, name: "Water Service Levels" },
+          { question: 578820187, name: "Sanitation Service Levels" },
+        ],
+      },
+    ],
   },
   project: {
     title: "Projects Details",
