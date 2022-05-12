@@ -93,7 +93,7 @@ var page_config = {
         key: 569340075,
       },
       {
-        title: "Level",
+        title: "Hygiene Service Level",
         key: 569340076,
       },
       {
@@ -103,7 +103,7 @@ var page_config = {
     ],
     maps: {
       shape: { id: 573330121, name: "Household Size" },
-      marker: { id: 569340077, title: "Water Service Level" },
+      marker: { id: 569340075, title: "Water Service Level" },
     },
     formId: 556240162,
     tabs: [
@@ -141,7 +141,7 @@ var page_config = {
     ],
     maps: {
       shape: { id: 573300189, name: "Sanitation Service Levels" },
-      marker: { id: 1000914105, title: "Toilet" },
+      marker: { id: 567800083, title: "Toilet" },
     },
     formId: 554360198,
     tabs: [
