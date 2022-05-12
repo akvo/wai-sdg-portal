@@ -68,17 +68,15 @@ const TabJMP = ({ formId, chartList, question, show }) => {
                 (d) => d.administration === adm.id
               );
               let stack = [];
-              if (findData) {
-                stack = selectedQuestion?.option?.map((opt) => {
-                  const findStack = findData?.child?.find(
-                    (c) => c?.option?.toLowerCase() === opt?.name?.toLowerCase()
-                  );
-                  return {
-                    ...opt,
-                    value: findStack?.percent || 0,
-                  };
-                });
-              }
+              stack = selectedQuestion?.option?.map((opt) => {
+                const findStack = findData?.child?.find(
+                  (c) => c?.option?.toLowerCase() === opt?.name?.toLowerCase()
+                );
+                return {
+                  ...opt,
+                  value: findStack?.percent || 0,
+                };
+              });
               return {
                 ...adm,
                 score: findData?.score || null,

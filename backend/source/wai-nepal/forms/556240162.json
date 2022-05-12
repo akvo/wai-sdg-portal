@@ -786,7 +786,7 @@
       ]
     },
     {
-      "question_group": "Service Levels - Water, Sanitation, and Hygiene",
+      "question_group": "Service Levels - Water",
       "questions": [
         {
           "id": 569340077,
@@ -817,7 +817,12 @@
               "color": null
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "question_group": "Sanitation",
+      "questions": [
         {
           "id": 569340075,
           "question": "Sanitation Service Level",
@@ -847,7 +852,12 @@
               "color": null
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "question_group": "Hygiene",
+      "questions": [        
         {
           "id": 569340076,
           "question": "Hygiene Service Level",
