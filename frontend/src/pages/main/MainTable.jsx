@@ -111,10 +111,10 @@ const MainTable = ({
           const questionVal = generateColors(current.columns, questionGroup)
           let bgColor = text?.color;
           let color = getLuma(bgColor);
-          if(current.title !== "Households" && text?.color === null) {
+          if(text?.color === null) {
             const options = questionVal.find((opt) => opt.title === col.title)
             const newColor = options?.values.find((c) => {
-              return c.name.includes(text?.value)
+              return c.name.toLowerCase().includes(text?.value.toLowerCase())
             })
             bgColor = newColor?.color;
             color = getLuma(bgColor);

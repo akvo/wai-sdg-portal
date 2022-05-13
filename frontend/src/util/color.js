@@ -35,16 +35,6 @@ export const genColors = (id, color) => {
     } 
 }
 
-export const levelColorDefinitions = {
-  [ "Safely Managed"]: "#297EB5",
-  [ "Basic"]: "#5EBADF",
-  [ "Limited"]: "#FDF177",
-  [ "Unimproved"]: "#FBD256",
-  [ "Surface wate"]: "#F1AC2A",
-  [ "Yes"]: "#4475B4",
-  [ "No"]: "#73ADD1",
-}
-
 export const defaultColor = [
   {
     name: "Water service level", // match this with config or question name
@@ -139,13 +129,12 @@ export const defaultColor = [
       }
     ]
   }
-  //... other options
 ];
 
 export const generateColors = (column) => {
   const col = column.map((c) => {
     const colors = defaultColor.find((clr) => {
-      return clr.name.includes(c.title)
+      return clr.name.toLocaleLowerCase().includes(c.title.toLocaleLowerCase())
     })
     const option = colors?.options;
     return {

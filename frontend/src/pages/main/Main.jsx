@@ -28,7 +28,6 @@ import flatten from "lodash/flatten";
 import isEmpty from "lodash/isEmpty";
 import config from "../../config";
 import moment from "moment";
-import { colors } from '../../util/color';
 
 const { mainText } = window?.i18n;
 
