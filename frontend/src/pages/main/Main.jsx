@@ -28,6 +28,7 @@ import flatten from "lodash/flatten";
 import isEmpty from "lodash/isEmpty";
 import config from "../../config";
 import moment from "moment";
+import { colors } from '../../util/color';
 
 const { mainText } = window?.i18n;
 
@@ -200,10 +201,10 @@ const Main = ({ match }) => {
               const option = question.find((qs) => qs.id === key)?.option;
               let color = null;
               if (!isEmpty(option)) {
-                color =
+                color = 
                   option.find(
                     (opt) => opt.name?.toLowerCase() === value?.toLowerCase()
-                  )?.color || null;
+                  )?.color;
               }
               return Object.assign(o, {
                 [key]: { value: value, color: color },
@@ -402,6 +403,7 @@ const Main = ({ match }) => {
               questionGroup={questionGroup}
               dataSource={data}
               total={total}
+              question={question}
               setPerPage={setPerPage}
               changePage={changePage}
               lastSubmitted={lastSubmitted}

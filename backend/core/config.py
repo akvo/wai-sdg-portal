@@ -67,6 +67,7 @@ app = FastAPI(
 
 app.include_router(administration_route)
 app.include_router(organisation_route)
+
 app.include_router(user_route)
 app.include_router(form_route)
 app.include_router(question_route)
