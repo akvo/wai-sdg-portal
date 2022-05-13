@@ -35,7 +35,6 @@ const MainTable = ({
   current,
   loading,
   data,
-  question,
   questionGroup,
   total,
   changePage,

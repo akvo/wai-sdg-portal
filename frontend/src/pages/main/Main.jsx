@@ -402,7 +402,6 @@ const Main = ({ match }) => {
               questionGroup={questionGroup}
               dataSource={data}
               total={total}
-              question={question}
               setPerPage={setPerPage}
               changePage={changePage}
               lastSubmitted={lastSubmitted}
