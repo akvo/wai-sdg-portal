@@ -99,7 +99,6 @@ const MainTable = ({
     });
   };
 
-  
   // Modify column config to add render function
   const modifyColumnRender = current.columns.map((col, idx) => {
     if (current.values.includes(col.key)) {

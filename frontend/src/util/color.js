@@ -27,17 +27,9 @@ export const getLuma = (c) => {
   return luma < 200 ? "#fff" : "#000";
 };
 
-
-export const genColors = (id, color) => {
-  return {
-      id : id,
-      color : color
-    } 
-}
-
 export const defaultColor = [
   {
-    name: "Water service level", // match this with config or question name
+    name: "Water service level",
     options: [
       {
         name: "Safely Managed",
