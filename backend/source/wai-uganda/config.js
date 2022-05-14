@@ -126,6 +126,18 @@ var page_config = {
       marker: { id: 7, title: "Water Service Level" },
     },
     formId: 1,
+    tabs: [
+      {
+        name: "JMP",
+        component: "JMP-CHARTS",
+        selected: true,
+        chartList: [
+          { question: 573020156, name: "Water" },
+          { question: 569090236, name: "Sanitation" },
+          { question: 573010267, name: "Hygiene" },
+        ],
+      },
+    ],
   },
   schools: {
     title: "Schools Facility",
