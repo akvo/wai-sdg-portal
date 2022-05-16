@@ -52,6 +52,17 @@ var page_config = {
       marker: { id: 962764019, title: "Laterine" },
     },
     formId: 962774003,
+    tabs: [
+      {
+        name: "JMP",
+        component: "JMP-CHARTS",
+        selected: true,
+        chartList: [
+          { question: 1093164024, name: "Water Salinity" },
+          { question: 1089314018, name: "Arsenic" },
+        ],
+      },
+    ],
   },
   schools: {
     title: "Schools Facility",
