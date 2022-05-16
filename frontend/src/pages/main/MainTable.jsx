@@ -106,22 +106,16 @@ const MainTable = ({
         ...col,
         render(text) {
           const textValue = text?.value;
-          const questionVal = generateColors(current.columns, questionGroup);
-          let bgColor = text?.color;
-          let color = getLuma(bgColor);
-          if (text?.color === null) {
-            const options = questionVal.find((opt) => opt.title === col.title);
-            const newColor = options?.values.find((c) => {
-              return c.name.toLowerCase().includes(text?.value.toLowerCase());
-            });
-            bgColor = newColor?.color;
-            color = getLuma(bgColor);
-          }
+          const questionVal = generateColors(current.columns);
+          const options = questionVal.find((opt) => opt.title === col.title);
+          const newColor = options?.values.find((c) => {
+            return c.name.toLowerCase().includes(text?.value.toLowerCase());
+          });
           return {
             props: {
               style: {
-                background: bgColor || "",
-                color: color,
+                background: newColor?.color || "",
+                color: getLuma(newColor?.color),
               },
             },
             children: textValue,
