@@ -200,10 +200,9 @@ const Main = ({ match }) => {
               const option = question.find((qs) => qs.id === key)?.option;
               let color = null;
               if (!isEmpty(option)) {
-                color =
-                  option.find(
-                    (opt) => opt.name?.toLowerCase() === value?.toLowerCase()
-                  )?.color || null;
+                color = option.find(
+                  (opt) => opt.name?.toLowerCase() === value?.toLowerCase()
+                )?.color;
               }
               return Object.assign(o, {
                 [key]: { value: value, color: color },

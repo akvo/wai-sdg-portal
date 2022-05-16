@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import MainTableChild from "./MainTableChild";
 import { UIState } from "../../state/ui";
 import api from "../../util/api";
-import { getLuma } from "../../util/color";
+import { generateColors, getLuma } from "../../util/color";
 import { DataUpdateMessage } from "./../../components/Notifications";
 import flatten from "lodash/flatten";
 import isEmpty from "lodash/isEmpty";
@@ -78,6 +78,7 @@ const MainTable = ({
       }));
       return { dataId: k, values: values };
     });
+
     const promises = savedValues.map((saved) => {
       return api.put(`data/${saved.dataId}`, saved.values).then((res) => {
         notification.success({
@@ -99,25 +100,38 @@ const MainTable = ({
   };
 
   // Modify column config to add render function
-  const modifyColumnRender = current.columns.map((col) => {
+  const modifyColumnRender = current.columns.map((col, idx) => {
     if (current.values.includes(col.key)) {
       return {
         ...col,
         render(text) {
+          const textValue = text?.value;
+          const questionVal = generateColors(current.columns, questionGroup);
+          let bgColor = text?.color;
+          let color = getLuma(bgColor);
+          if (text?.color === null) {
+            const options = questionVal.find((opt) => opt.title === col.title);
+            const newColor = options?.values.find((c) => {
+              return c.name.toLowerCase().includes(text?.value.toLowerCase());
+            });
+            bgColor = newColor?.color;
+            color = getLuma(bgColor);
+          }
           return {
             props: {
               style: {
-                background: text?.color || "",
-                color: getLuma(text?.color),
+                background: bgColor || "",
+                color: color,
               },
             },
-            children: text?.value,
+            children: textValue,
           };
         },
       };
     }
     return col;
   });
+
   if (!show) {
     return null;
   }
