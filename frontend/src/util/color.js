@@ -51,6 +51,10 @@ export const defaultColor = [
         name: "Surface water",
         color: "#F1AC2A",
       },
+      {
+        name: "No Service",
+        color: "#F9CA29",
+      },
     ],
   },
   {
@@ -76,6 +80,10 @@ export const defaultColor = [
         name: "Open Defecation",
         color: "#F1AC2A",
       },
+      {
+        name: "No Service",
+        color: "#F9CA29",
+      },
     ],
   },
   {
@@ -92,6 +100,10 @@ export const defaultColor = [
       {
         name: "No Facility",
         color: "#F1AC2A",
+      },
+      {
+        name: "No Service",
+        color: "#F9CA29",
       },
     ],
   },
