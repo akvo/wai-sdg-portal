@@ -50,8 +50,8 @@ export const defaultColor = [
       {
         name: "Surface water",
         color: "#F1AC2A",
-      }
-    ]
+      },
+    ],
   },
   {
     name: "Sanitation service level",
@@ -75,7 +75,7 @@ export const defaultColor = [
       {
         name: "Open Defecation",
         color: "#F1AC2A",
-      }
+      },
     ],
   },
   {
@@ -92,8 +92,8 @@ export const defaultColor = [
       {
         name: "No Facility",
         color: "#F1AC2A",
-      }
-    ]
+      },
+    ],
   },
   {
     name: "Toilet",
@@ -105,8 +105,8 @@ export const defaultColor = [
       {
         name: "No",
         color: "#73ADD1",
-      }
-    ]
+      },
+    ],
   },
   {
     name: "Handwashing",
@@ -118,21 +118,21 @@ export const defaultColor = [
       {
         name: "No",
         color: "#73ADD1",
-      }
-    ]
-  }
+      },
+    ],
+  },
 ];
 
 export const generateColors = (column) => {
   const col = column.map((c) => {
     const colors = defaultColor.find((clr) => {
-      return clr.name.toLocaleLowerCase().includes(c.title.toLocaleLowerCase())
-    })
+      return clr.name.toLocaleLowerCase().includes(c.title.toLocaleLowerCase());
+    });
     const option = colors?.options;
     return {
       ...c,
-      values: option
-    }
-  })
+      values: option,
+    };
+  });
   return col;
-}
+};

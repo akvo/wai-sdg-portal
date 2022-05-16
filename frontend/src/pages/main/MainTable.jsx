@@ -105,15 +105,15 @@ const MainTable = ({
       return {
         ...col,
         render(text) {
-          const textValue = text?.value
-          const questionVal = generateColors(current.columns, questionGroup)
+          const textValue = text?.value;
+          const questionVal = generateColors(current.columns, questionGroup);
           let bgColor = text?.color;
           let color = getLuma(bgColor);
-          if(text?.color === null) {
-            const options = questionVal.find((opt) => opt.title === col.title)
+          if (text?.color === null) {
+            const options = questionVal.find((opt) => opt.title === col.title);
             const newColor = options?.values.find((c) => {
-              return c.name.toLowerCase().includes(text?.value.toLowerCase())
-            })
+              return c.name.toLowerCase().includes(text?.value.toLowerCase());
+            });
             bgColor = newColor?.color;
             color = getLuma(bgColor);
           }
