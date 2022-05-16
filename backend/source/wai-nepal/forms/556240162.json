@@ -1,6 +1,6 @@
 {
   "form": "JMP Core Questions for Monitoring WASH in Households",
-  "id": 556240162,
+  "id": "556240162",
   "question_groups": [
     {
       "question_group": "Location Demographics",
@@ -786,7 +786,7 @@
       ]
     },
     {
-      "question_group": "Water",
+      "question_group": "Service Levels - Water, Sanitation, and Hygiene",
       "questions": [
         {
           "id": 569340077,
@@ -798,31 +798,36 @@
           "options": [
             {
               "name": "Safely Managed",
-              "color": null
+              "color": null,
+              "order": 1,
+              "score": 15
             },
             {
               "name": "Unimproved",
-              "color": null
+              "color": null,
+              "order": 4,
+              "score": -1
             },
             {
               "name": "Basic",
-              "color": null
+              "color": null,
+              "order": 2,
+              "score": 10
             },
             {
               "name": "Limited",
-              "color": null
+              "color": null,
+              "order": 3,
+              "score": 1
             },
             {
               "name": "Surface water",
-              "color": null
+              "color": null,
+              "order": 5,
+              "score": -2
             }
           ]
-        }
-      ]
-    },
-    {
-      "question_group": "Sanitation",
-      "questions": [
+        },
         {
           "id": 569340075,
           "question": "Sanitation Service Level",
@@ -833,31 +838,36 @@
           "options": [
             {
               "name": "Safely Managed",
-              "color": null
+              "color": null,
+              "order": 1,
+              "score": 15
             },
             {
               "name": "Basic",
-              "color": null
+              "color": null,
+              "order": 2,
+              "score": 10
             },
             {
               "name": "Limited",
-              "color": null
+              "color": null,
+              "order": 3,
+              "score": -1
             },
             {
               "name": "Unimproved",
-              "color": null
+              "color": null,
+              "order": 4,
+              "score": -2
             },
             {
               "name": "Open Defecation",
-              "color": null
+              "color": null,
+              "order": 5,
+              "score": -3
             }
           ]
-        }
-      ]
-    },
-    {
-      "question_group": "Hygiene",
-      "questions": [        
+        },
         {
           "id": 569340076,
           "question": "Hygiene Service Level",
@@ -868,15 +878,18 @@
           "options": [
             {
               "name": "Basic",
-              "color": null
+              "color": null,
+              "score": 10
             },
             {
               "name": "Limited",
-              "color": null
+              "color": null,
+              "score": -1
             },
             {
               "name": "No facility",
-              "color": null
+              "color": null,
+              "score": -2
             }
           ]
         }
