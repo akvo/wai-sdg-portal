@@ -89,16 +89,16 @@ var page_config = {
         key: "name",
       },
       {
-        title: "Sanitation Service Level",
+        title: "Water",
+        key: 569340077,
+      },
+      {
+        title: "Sanitation",
         key: 569340075,
       },
       {
-        title: "Hygiene Service Level",
+        title: "Hygiene",
         key: 569340076,
-      },
-      {
-        title: "Water Service Level",
-        key: 569340077,
       },
     ],
     maps: {
@@ -127,16 +127,16 @@ var page_config = {
         key: "name",
       },
       {
+        title: "Water",
+        key: 573300191,
+      },
+      {
         title: "Toilet",
         key: 567800083,
       },
       {
         title: "Handwashing",
         key: 578820194,
-      },
-      {
-        title: "Water",
-        key: 573300191,
       },
     ],
     maps: {
