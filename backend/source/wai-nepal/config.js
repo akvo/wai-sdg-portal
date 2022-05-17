@@ -320,11 +320,15 @@ var landing_config = {
   jumbotron: {
     // title, the text or list title
     title:
-      "This portal is used at the ##administration## level to see the relative WASH vulnerability of communities and institutions, and track the status of water and sanitation infrastructure",
+    "This portal is to support ##administration## authorities decision-making by tracking:", 
     // list_type, can be bullet/number or null if no list
-    list_type: null,
+    list_type: "number",
     // list, describe the list as an array of text or empty array [] if no list
-    list: [],
+    list: [
+      "WASH vulnerability of communities and institutions.",
+      "ODF status of communities.",
+      "Water infrastructure status.",
+    ],
   },
   datasetsInPortal: [
     {
