@@ -283,7 +283,7 @@ export const generateColors = (current) => {
       .includes(current.name.toLocaleLowerCase());
     return test;
   });
-
+  console.log(current);
   const columns = current?.columns.map((c) => {
     const colors = faculty.colors.find((clr) => {
       return clr.name.toLocaleLowerCase().includes(c.title.toLocaleLowerCase());

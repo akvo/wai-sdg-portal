@@ -43,8 +43,8 @@ var page_config = {
         key: 1093164024,
       },
       {
-        title: "Arsenic",
-        key: 1089314018,
+        title: "Hygiene",
+        key: 976484035,
       },
     ],
     maps: {
@@ -59,7 +59,7 @@ var page_config = {
         selected: true,
         chartList: [
           { question: 1093164024, name: "Water Salinity" },
-          { question: 1089314018, name: "Arsenic" },
+          { question: 976484035, name: "Hygiene" },
         ],
       },
     ],
