@@ -131,17 +131,17 @@ var page_config = {
         key: 573300191,
       },
       {
-        title: "Toilet",
-        key: 567800083,
+        title: "Sanitation",
+        key: 573300189,
       },
       {
-        title: "Handwashing",
-        key: 578820194,
+        title: "Hygiene",
+        key: 573300190,
       },
     ],
     maps: {
       shape: { id: 573300189, name: "Sanitation Service Levels" },
-      marker: { id: 567800083, title: "Toilet" },
+      marker: { id: 567800083, title: "Hygiene" },
     },
     formId: 554360198,
   },
@@ -159,6 +159,10 @@ var page_config = {
       {
         title: "Sanitation",
         key: 578820187,
+      },
+      {
+        title: "Hygiene",
+        key: 578820186,
       },
     ],
     maps: {
@@ -316,11 +320,15 @@ var landing_config = {
   jumbotron: {
     // title, the text or list title
     title:
-      "This portal is used at the ##administration## level to see the relative WASH vulnerability of communities and institutions, and track the status of water and sanitation infrastructure",
+    "This portal is to support ##administration## authorities decision-making by tracking:", 
     // list_type, can be bullet/number or null if no list
-    list_type: null,
+    list_type: "number",
     // list, describe the list as an array of text or empty array [] if no list
-    list: [],
+    list: [
+      "WASH vulnerability of communities and institutions.",
+      "ODF status of communities.",
+      "Water infrastructure status.",
+    ],
   },
   datasetsInPortal: [
     {
