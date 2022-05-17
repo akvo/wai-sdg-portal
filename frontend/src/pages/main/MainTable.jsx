@@ -106,7 +106,7 @@ const MainTable = ({
         ...col,
         render(text) {
           const textValue = text?.value;
-          const questionVal = generateColors(current.columns);
+          const questionVal = generateColors(current);
           const options = questionVal.find((opt) => opt.title === col.title);
           const newColor = options?.values.find((c) => {
             return c.name.toLowerCase().includes(text?.value.toLowerCase());

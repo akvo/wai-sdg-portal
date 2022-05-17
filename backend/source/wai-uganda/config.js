@@ -132,9 +132,9 @@ var page_config = {
         component: "JMP-CHARTS",
         selected: true,
         chartList: [
-          { question: 573020156, name: "Water" },
-          { question: 569090236, name: "Sanitation" },
-          { question: 573010267, name: "Hygiene" },
+          { question: 7, name: "Water" },
+          { question: 14, name: "Sanitation" },
+          { question: 20, name: "Hygiene" },
         ],
       },
     ],
