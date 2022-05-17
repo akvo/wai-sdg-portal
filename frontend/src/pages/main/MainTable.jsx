@@ -107,17 +107,15 @@ const MainTable = ({
         render(text) {
           const textValue = text?.value;
           const questionVal = generateColors(current);
-
-          console.log("questionVal", questionVal);
-          // const options = questionVal.find((opt) => opt.title === col.title);
-          // const newColor = options?.values.find((c) => {
-          //   return c.name.toLowerCase().includes(text?.value.toLowerCase());
-          // });
+          const options = questionVal.find((opt) => opt.title === col.title);
+          const newColor = options?.values.find((c) => {
+            return c.name.toLowerCase().includes(text?.value.toLowerCase());
+          });
           return {
             props: {
               style: {
-                background: text?.color || "",
-                color: getLuma(text?.color),
+                background: newColor?.color || "",
+                color: getLuma(newColor?.color),
               },
             },
             children: textValue,
