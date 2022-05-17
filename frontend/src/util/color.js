@@ -183,11 +183,11 @@ export const defaultColor = [
         options: [
           {
             name: "Yes",
-            color: "#4475B4",
+            color: null,
           },
           {
             name: "No",
-            color: "#73ADD1",
+            color: null,
           },
         ],
       },
@@ -196,11 +196,11 @@ export const defaultColor = [
         options: [
           {
             name: "Yes",
-            color: "#4475B4",
+            color: null,
           },
           {
             name: "No",
-            color: "#73ADD1",
+            color: null,
           },
         ],
       },
