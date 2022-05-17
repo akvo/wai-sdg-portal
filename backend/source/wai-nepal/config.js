@@ -131,17 +131,17 @@ var page_config = {
         key: 573300191,
       },
       {
-        title: "Toilet",
-        key: 567800083,
+        title: "Sanitation",
+        key: 573300189,
       },
       {
-        title: "Handwashing",
-        key: 578820194,
+        title: "Hygiene",
+        key: 573300190,
       },
     ],
     maps: {
       shape: { id: 573300189, name: "Sanitation Service Levels" },
-      marker: { id: 567800083, title: "Toilet" },
+      marker: { id: 567800083, title: "Hygiene" },
     },
     formId: 554360198,
   },
@@ -159,6 +159,10 @@ var page_config = {
       {
         title: "Sanitation",
         key: 578820187,
+      },
+      {
+        title: "Hygiene",
+        key: 578820186,
       },
     ],
     maps: {
