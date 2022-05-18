@@ -90,7 +90,7 @@ var page_config = {
       },
       {
         title: "Water",
-        key: 569340077,
+        key: 573340127,
       },
       {
         title: "Sanitation",
@@ -103,7 +103,7 @@ var page_config = {
     ],
     maps: {
       shape: { id: 573330121, name: "Household Size" },
-      marker: { id: 569340075, title: "Water Service Level" },
+      marker: { id: 573340127, title: "Water Service Level" },
     },
     formId: 556240162,
     tabs: [
@@ -120,7 +120,7 @@ var page_config = {
     ],
     selectableMarkerDropdown: [
       {
-        id: 569340077,
+        id: 573340127,
         name: "Water Service Level",
         hover: [
           { id: 573330119, name: "Name of respondent" },
@@ -131,19 +131,8 @@ var page_config = {
         ],
       },
       {
-        id: 569340075,
+        id: 557970124,
         name: "Sanitation Service Level",
-        hover: [
-          { id: 573330119, name: "Name of respondent" },
-          {
-            id: 573330121,
-            name: "Household Size",
-          },
-        ],
-      },
-      {
-        id: 569340076,
-        name: "Hygiene Service Level",
         hover: [
           { id: 573330119, name: "Name of respondent" },
           {
@@ -163,7 +152,7 @@ var page_config = {
       },
       {
         title: "Water",
-        key: 573300191,
+        key: 580800138,
       },
       {
         title: "Sanitation",
@@ -176,12 +165,12 @@ var page_config = {
     ],
     maps: {
       shape: { id: 573300191, name: "Sanitation Service Levels" },
-      marker: { id: 567800083, title: "Hygiene" },
+      marker: { id: 580800138, title: "Water" },
     },
     formId: 554360198,
     selectableMarkerDropdown: [
       {
-        id: 573300191,
+        id: 580800138,
         name: "Water Service Level",
         hover: [
           { id: 567820011, name: "School Name" },
@@ -192,19 +181,8 @@ var page_config = {
         ],
       },
       {
-        id: 573300189,
+        id: 567800082,
         name: "Sanitation Service Level",
-        hover: [
-          { id: 567820011, name: "School Name" },
-          {
-            id: 567820002,
-            name: "School Type",
-          },
-        ],
-      },
-      {
-        id: 573300190,
-        name: "Hygiene Service Level",
         hover: [
           { id: 567820011, name: "School Name" },
           {
@@ -224,11 +202,11 @@ var page_config = {
       },
       {
         title: "Water",
-        key: 578820188,
+        key: 552050126,
       },
       {
         title: "Sanitation",
-        key: 578820187,
+        key: 554400068,
       },
       {
         title: "Hygiene",
@@ -236,13 +214,13 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 578820188, name: "Water Service Levels" },
-      marker: { id: 578820186, name: "Hygiene Service Levels" },
+      shape: { id: 554400068, name: "Water Service Levels" },
+      marker: { id: 552050126, name: "Water Service Levels" },
     },
     formId: 557950127,
     selectableMarkerDropdown: [
       {
-        id: 578820188,
+        id: 552050126,
         name: "Water service level",
         hover: [
           {
@@ -256,7 +234,7 @@ var page_config = {
         ],
       },
       {
-        id: 578820187,
+        id: 554400068,
         name: "Sanitation service level",
         hover: [
           {
@@ -270,8 +248,8 @@ var page_config = {
         ],
       },
       {
-        id: 578820186,
-        name: "Hygiene service level",
+        id: 554350179,
+        name: "Core health care waste management",
         hover: [
           {
             id: 527940130,
@@ -284,7 +262,7 @@ var page_config = {
         ],
       },
       {
-        id: 578820190,
+        id: 557990015,
         name: "Environmental Cleaning service level",
         hover: [
           {
@@ -296,21 +274,7 @@ var page_config = {
             name: "Health Care Facility Type",
           },
         ],
-      },
-      {
-        id: 578820189,
-        name: "Waste service level",
-        hover: [
-          {
-            id: 527940130,
-            name: "Health Care Facility Name",
-          },
-          {
-            id: 527940131,
-            name: "Health Care Facility Type",
-          },
-        ],
-      },
+      }
     ],
   },
   project: {

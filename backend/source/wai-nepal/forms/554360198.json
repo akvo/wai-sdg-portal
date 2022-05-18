@@ -186,55 +186,55 @@
           "options": [
             {
               "name": "Pipeline connection",
-              "color": null
+              "color": "#70AD47"
             },
             {
               "name": "Protected well/spring",
-              "color": null
+              "color": "#00B050"
             },
             {
               "name": "Deep tubewell/borehole",
-              "color": null
+              "color": "#00B050"
             },
             {
               "name": "Shallow tubewell/borehole",
-              "color": null
+              "color": "#00B0F0"
             },
             {
               "name": "Rainwater collection",
-              "color": null
+              "color": "#2F5496"
             },
             {
               "name": "Packaged bottled water",
-              "color": null
+              "color": "#FFD966"
             },
             {
               "name": "Tanker-truck or cart",
-              "color": null
+              "color": "#FF83B7"
             },
             {
               "name": "Unprotected well/spring",
-              "color": null
+              "color": "#806000"
             },
             {
               "name": "Surface water (lake, river, stream)",
-              "color": null
+              "color": "#FFC000"
             },
             {
               "name": "Bottled water",
-              "color": null
+              "color": "#4472C4"
             },
             {
               "name": "Student bring their own water",
-              "color": null
+              "color": "#C45911"
             },
             {
               "name": "Public Water Point",
-              "color": null
+              "color": "#9CC2E5"
             },
             {
               "name": "No water source",
-              "color": null
+              "color": "#9CC2E5"
             }
           ]
         },
@@ -289,35 +289,35 @@
           "options": [
             {
               "name": "Toilet that flush/poor flush to piped sewer system",
-              "color": null
+              "color": "#70AD47"
             },
             {
               "name": "Toilet that flush/poor flush to septic tank",
-              "color": null
+              "color": "#C5E0B3"
             },
             {
               "name": "Toilet that flush/poor flush to elsewhere",
-              "color": null
+              "color": "#385623"
             },
             {
               "name": "Toilet that flush/poor flush but don't know where",
-              "color": null
+              "color": "#2F5496"
             },
             {
               "name": "Pit latrine with slab",
-              "color": null
+              "color": "#00B0F0"
             },
             {
               "name": "Ventilated Improved Pit latrine (VIP)",
-              "color": null
+              "color": "#00B050"
             },
             {
               "name": "Twinpit offset latrine",
-              "color": null
+              "color": "#BF8F00"
             },
             {
               "name": "Composting toilet",
-              "color": null
+              "color": "#FF0000"
             },
             {
               "name": "Pit latrine without slab/open pit",
