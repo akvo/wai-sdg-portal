@@ -437,7 +437,7 @@ var landing_config = {
   jumbotron: {
     // title, the text or list title
     title:
-    "This portal is to support ##administration## authorities decision-making by tracking:", 
+    "This portal is used at ##administration## level to see the relative WASH vulnerability of communities and institutions and track the status of drinking water supply systems", 
     // list_type, can be bullet/number or null if no list
     list_type: "number",
     // list, describe the list as an array of text or empty array [] if no list
