@@ -608,23 +608,23 @@
           "options": [
             {
               "name": "Fixed facility observed in dwelling",
-              "color": null
+              "color": "#FF83B7"
             },
             {
               "name": "Fixed facility observed in plot/yard",
-              "color": null
+              "color": "#70AD47"
             },
             {
               "name": "Mobile object observed (bucket, jug, kettle)",
-              "color": null
+              "color": "#A8D08D"
             },
             {
               "name": "No hand washing place available in dwelling/plot/yard",
-              "color": null
+              "color": "#FFC000"
             },
             {
               "name": "No permission to see",
-              "color": null
+              "color": "#FF0000"
             }
           ]
         },

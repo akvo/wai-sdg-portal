@@ -178,7 +178,7 @@
       "questions": [
         {
           "id": 580800138,
-          "question": "What is the main source of drinking water provided by the school? (select one - most frequently used)",
+          "question": "What is the main source of drinking water provided by the school? (most frequently used)",
           "order": 1,
           "meta": false,
           "type": "option",

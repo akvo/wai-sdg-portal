@@ -141,6 +141,17 @@ var page_config = {
           },
         ],
       },
+      {
+        id: 563480061,
+        name: "Hygiene Service Level",
+        hover: [
+          { id: 573330119, name: "Name of respondent" },
+          {
+            id: 573330121,
+            name: "Household Size",
+          },
+        ],
+      },
     ],
   },
   schools: {
@@ -164,7 +175,7 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 573300191, name: "Sanitation Service Levels" },
+      shape: { id: 573300191, name: "Water service level" },
       marker: { id: 580800138, title: "Water" },
     },
     formId: 554360198,
@@ -214,7 +225,7 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 554400068, name: "Water Service Levels" },
+      shape: { id: 554400068, name: "Sanitation Service Levels" },
       marker: { id: 552050126, name: "Water Service Levels" },
     },
     formId: 557950127,
