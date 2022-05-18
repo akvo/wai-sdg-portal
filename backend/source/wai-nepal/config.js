@@ -118,6 +118,41 @@ var page_config = {
         ],
       },
     ],
+    selectableMarkerDropdown: [
+      {
+        id: 569340077,
+        name: "Water Service Level",
+        hover: [
+          { id: 573330119, name: "Name of respondent" },
+          {
+            id: 573330121,
+            name: "Household Size",
+          },
+        ],
+      },
+      {
+        id: 569340075,
+        name: "Sanitation Service Level",
+        hover: [
+          { id: 573330119, name: "Name of respondent" },
+          {
+            id: 573330121,
+            name: "Household Size",
+          },
+        ],
+      },
+      {
+        id: 569340076,
+        name: "Hygiene Service Level",
+        hover: [
+          { id: 573330119, name: "Name of respondent" },
+          {
+            id: 573330121,
+            name: "Household Size",
+          },
+        ],
+      },
+    ],
   },
   schools: {
     title: "Schools Facility",
@@ -140,10 +175,45 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 573300189, name: "Sanitation Service Levels" },
+      shape: { id: 573300191, name: "Sanitation Service Levels" },
       marker: { id: 567800083, title: "Hygiene" },
     },
     formId: 554360198,
+    selectableMarkerDropdown: [
+      {
+        id: 573300191,
+        name: "Water Service Level",
+        hover: [
+          { id: 567820011, name: "School Name" },
+          {
+            id: 567820002,
+            name: "School Type",
+          },
+        ],
+      },
+      {
+        id: 573300189,
+        name: "Sanitation Service Level",
+        hover: [
+          { id: 567820011, name: "School Name" },
+          {
+            id: 567820002,
+            name: "School Type",
+          },
+        ],
+      },
+      {
+        id: 573300190,
+        name: "Hygiene Service Level",
+        hover: [
+          { id: 567820011, name: "School Name" },
+          {
+            id: 567820002,
+            name: "School Type",
+          },
+        ],
+      },
+    ],
   },
   health: {
     title: "Health Facility",
@@ -170,6 +240,78 @@ var page_config = {
       marker: { id: 578820186, name: "Hygiene Service Levels" },
     },
     formId: 557950127,
+    selectableMarkerDropdown: [
+      {
+        id: 578820188,
+        name: "Water service level",
+        hover: [
+          {
+            id: 527940130,
+            name: "Health Care Facility Name",
+          },
+          {
+            id: 527940131,
+            name: "Health Care Facility Type",
+          },
+        ],
+      },
+      {
+        id: 578820187,
+        name: "Sanitation service level",
+        hover: [
+          {
+            id: 527940130,
+            name: "Health Care Facility Name",
+          },
+          {
+            id: 527940131,
+            name: "Health Care Facility Type",
+          },
+        ],
+      },
+      {
+        id: 578820186,
+        name: "Hygiene service level",
+        hover: [
+          {
+            id: 527940130,
+            name: "Health Care Facility Name",
+          },
+          {
+            id: 527940131,
+            name: "Health Care Facility Type",
+          },
+        ],
+      },
+      {
+        id: 578820190,
+        name: "Environmental Cleaning service level",
+        hover: [
+          {
+            id: 527940130,
+            name: "Health Care Facility Name",
+          },
+          {
+            id: 527940131,
+            name: "Health Care Facility Type",
+          },
+        ],
+      },
+      {
+        id: 578820189,
+        name: "Waste service level",
+        hover: [
+          {
+            id: 527940130,
+            name: "Health Care Facility Name",
+          },
+          {
+            id: 527940131,
+            name: "Health Care Facility Type",
+          },
+        ],
+      },
+    ],
   },
   project: {
     title: "Projects Details",
