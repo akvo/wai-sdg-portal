@@ -137,19 +137,19 @@
           "options": [
             {
               "name": "Good",
-              "color": null
+              "color": "#70AD47"
             },
             {
               "name": "Minor Repair",
-              "color": null
+              "color": "#00B0F0"
             },
             {
               "name": "Major Repair",
-              "color": null
+              "color": "#ED7D31"
             },
             {
               "name": "Reconstruction",
-              "color": null
+              "color": "#FF83B7"
             }
           ]
         },
