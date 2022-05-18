@@ -105,7 +105,6 @@ const MainTable = ({
       return {
         ...col,
         render(text) {
-          console.log(text);
           const textValue = text?.value;
           return {
             props: {
