@@ -673,15 +673,15 @@
           "options": [
             {
               "name": "Basic",
-              "color": null
+              "color": "#67B769"
             },
             {
               "name": "Limited",
-              "color": null
+              "color": "#FDF177"
             },
             {
-              "name": "No service",
-              "color": null
+              "name": "No Service",
+              "color": "#F9CA29"
             }
           ]
         },
@@ -695,15 +695,23 @@
           "options": [
             {
               "name": "Basic",
-              "color": null
+              "color": "#67B769"
             },
             {
               "name": "Limited",
-              "color": null
+              "color": "#FDF177"
             },
             {
-              "name": "No service",
-              "color": null
+              "name": "Unimproved",
+              "color": "#FBD256"
+            },
+            {
+              "name": "Open Defecation",
+              "color": "#F1AC2A"
+            },
+            {
+              "name": "No Service",
+              "color": "#F9CA29"
             }
           ]
         },
@@ -717,15 +725,19 @@
           "options": [
             {
               "name": "Basic",
-              "color": null
+              "color": "#753780"
             },
             {
               "name": "Limited",
-              "color": null
+              "color": "#FDF177"
             },
             {
-              "name": "No service",
-              "color": null
+              "name": "No Facility",
+              "color": "#F1AC2A"
+            },
+            {
+              "name": "No Service",
+              "color": "#F9CA29"
             }
           ]
         },
@@ -739,15 +751,15 @@
           "options": [
             {
               "name": "Basic",
-              "color": null
+              "color": "#67B769"
             },
             {
               "name": "Limited",
-              "color": null
+              "color": "#FDF177"
             },
             {
-              "name": "No service",
-              "color": null
+              "name": "No Service",
+              "color": "#F9CA29"
             }
           ]
         },

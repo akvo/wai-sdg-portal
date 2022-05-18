@@ -90,7 +90,7 @@ var page_config = {
       },
       {
         title: "Water",
-        key: 573340127,
+        key: 569340077,
       },
       {
         title: "Sanitation",
@@ -152,7 +152,7 @@ var page_config = {
       },
       {
         title: "Water",
-        key: 580800138,
+        key: 573300191,
       },
       {
         title: "Sanitation",
@@ -202,11 +202,11 @@ var page_config = {
       },
       {
         title: "Water",
-        key: 552050126,
+        key: 578820188,
       },
       {
         title: "Sanitation",
-        key: 554400068,
+        key: 578820187,
       },
       {
         title: "Hygiene",
