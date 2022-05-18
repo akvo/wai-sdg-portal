@@ -48,7 +48,7 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 994964007, name: "Household Size" },
+      shape: { id: 573330121, name: "Household Size" },
       marker: { id: 962764019, title: "Laterine" },
     },
     formId: 962774003,
@@ -60,6 +60,41 @@ var page_config = {
         chartList: [
           { question: 1093164024, name: "Water Salinity" },
           { question: 976484035, name: "Hygiene" },
+        ],
+      },
+    ],
+    selectableMarkerDropdown: [
+      {
+        id: 573340127,
+        name: "Water Service Level",
+        hover: [
+          { id: 573330119, name: "Name of respondent" },
+          {
+            id: 573330121,
+            name: "Household Size",
+          },
+        ],
+      },
+      {
+        id: 557970124,
+        name: "Sanitation Service Level",
+        hover: [
+          { id: 573330119, name: "Name of respondent" },
+          {
+            id: 573330121,
+            name: "Household Size",
+          },
+        ],
+      },
+      {
+        id: 563480061,
+        name: "Hygiene Service Level",
+        hover: [
+          { id: 573330119, name: "Name of respondent" },
+          {
+            id: 573330121,
+            name: "Household Size",
+          },
         ],
       },
     ],

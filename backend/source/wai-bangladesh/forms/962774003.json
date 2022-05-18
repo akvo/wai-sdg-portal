@@ -90,11 +90,13 @@
           "options": [
             {
               "name": "Taste is saline",
-              "color": null
+              "color": null,
+              "score": 2
             },
             {
               "name": "Taste is not saline",
-              "color": null
+              "color": null,
+              "score": 1
             }
           ],
           "dependency": [
@@ -4226,39 +4228,48 @@
           "options": [
             {
               "name": "Never",
-              "color": null
+              "color": null,
+              "score": 2
             },
             {
               "name": "After toileting/defecation",
-              "color": null
+              "color": null,
+              "score": 4
             },
             {
               "name": "Before preparing or serving food",
-              "color": null
+              "color": null,
+              "score": 10
             },
             {
               "name": "Before eating",
-              "color": null
+              "color": null,
+              "score": 20
             },
             {
               "name": "Before feeding children",
-              "color": null
+              "color": null,
+              "score": 12
             },
             {
               "name": "After handling child's faeces",
-              "color": null
+              "color": null,
+              "score": 2
             },
             {
               "name": "After using sanitary pad/menstruation cloth/material",
-              "color": null
+              "color": null,
+              "score": 2
             },
             {
               "name": "After using dirt (working in field, handling cattle etc.)",
-              "color": null
+              "color": null,
+              "score": 20
             },
             {
               "name": "Other (specify)",
-              "color": null
+              "color": null,
+              "score": 2
             }
           ]
         },
