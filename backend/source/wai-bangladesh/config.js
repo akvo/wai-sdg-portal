@@ -39,12 +39,16 @@ var page_config = {
         key: "name",
       },
       {
-        title: "Water Salinity",
-        key: 1093164024,
+        title: "Water",
+        key: 987314051,
+      },
+      {
+        title: "Sanitation",
+        key: 950854035,
       },
       {
         title: "Hygiene",
-        key: 976484035,
+        key: 964704062,
       },
     ],
     maps: {
@@ -58,8 +62,9 @@ var page_config = {
         component: "JMP-CHARTS",
         selected: true,
         chartList: [
-          { question: 1093164024, name: "Water Salinity" },
-          { question: 976484035, name: "Hygiene" },
+          { question: 987314051, name: "Water" },
+          { question: 976484035, name: "Sanitation" },
+          { question: 964704062, name: "Hygiene" },
         ],
       },
     ],
@@ -107,12 +112,16 @@ var page_config = {
         key: "name",
       },
       {
-        title: "Handwashing",
-        key: 987364056,
+        title: "Water",
+        key: 996984059,
       },
       {
-        title: "Has Toilet",
-        key: 993004033,
+        title: "Sanitation",
+        key: 993004046,
+      },
+      {
+        title: "Hygiene",
+        key: 996974069,
       },
     ],
     maps: {
@@ -129,12 +138,16 @@ var page_config = {
         key: "name",
       },
       {
-        title: "Type",
-        key: 974754044,
+        title: "Water",
+        key: 994994027,
       },
       {
-        title: "Water Source",
-        key: 994994027,
+        title: "Sanitation",
+        key: 964754032,
+      },
+      {
+        title: "Hygiene",
+        key: 987364073,
       },
     ],
     maps: {
@@ -151,12 +164,9 @@ var landing_config = {
     title:
       "This portal is used at union and municipality level to see the relative WASH vulnerability of communities and institutions", // the text or list title
     // list_type, can be bullet/number or null if no list
-    list_type: "number",
+    list_type: null,
     // list, describe the list as an array of text or empty array [] if no list
-    list: [
-      "WASH vulnerability of communities and institutions.",
-      "ODF status of communities.",
-    ],
+    list: [],
   },
   datasetsInPortal: [
     {
