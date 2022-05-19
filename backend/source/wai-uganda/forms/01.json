@@ -62,22 +62,22 @@
           "options": [
             {
               "name": "basic",
-              "color": null,
+              "color": "#5EBADF",
               "score": 10
             },
             {
               "name": "limited",
-              "color": null,
+              "color": "#FDF177",
               "score": 1
             },
             {
               "name": "unimproved",
-              "color": null,
+              "color": "#FBD256",
               "score": -1
             },
             {
               "name": "surface water",
-              "color": null,
+              "color": "#F1AC2A",
               "score": -2
             }
           ]
@@ -178,27 +178,27 @@
           "options": [
             {
               "name": "basic",
-              "color": null,
+              "color": "#67B769",
               "score": 10
             },
             {
               "name": "limited",
-              "color": null,
+              "color": "#FDF177",
               "score": -1
             },
             {
               "name": "unimproved",
-              "color": null,
+              "color": "#FBD256",
               "score": -2
             },
             {
               "name": "open defecation",
-              "color": null,
+              "color": "#F1AC2A",
               "score": -3
             },
             {
               "name": "safely managed",
-              "color": null,
+              "color": "#368541",
               "score": 15
             }
           ]
@@ -333,22 +333,22 @@
           "options": [
             {
               "name": "basic",
-              "color": null,
+              "color": "#753780",
               "score": 10
             },
             {
               "name": "limited",
-              "color": null,
+              "color": "#FDF177",
               "score": -1
             },
             {
               "name": "no facility",
-              "color": null,
+              "color": "#F1AC2A",
               "score": -2
             },
             {
               "name": "no permission",
-              "color": null,
+              "color": "#F9CA29",
               "score": 1
             }
           ]

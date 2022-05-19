@@ -252,19 +252,19 @@
           "options": [
             {
               "name": "More than 50%",
-              "color": null
+              "color": "#70AD47"
             },
             {
               "name": "30%-50%",
-              "color": null
+              "color": "#00B0F0"
             },
             {
               "name": "10%-30%",
-              "color": null
+              "color": "#ED7D31"
             },
             {
               "name": "Less than 10%",
-              "color": null
+              "color": "#FF83B7"
             }
           ]
         }

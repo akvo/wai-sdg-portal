@@ -110,15 +110,15 @@
           "options": [
             {
               "name": "basic",
-              "color": null
+              "color": "#5EBADF"
             },
             {
               "name": "limited",
-              "color": null
+              "color": "#FDF177"
             },
             {
               "name": "no service",
-              "color": null
+              "color": "#F9CA29"
             }
           ]
         },
@@ -206,15 +206,15 @@
           "options": [
             {
               "name": "basic",
-              "color": null
+              "color": "#67B769"
             },
             {
               "name": "limited",
-              "color": null
+              "color": "#FDF177"
             },
             {
               "name": "no service",
-              "color": null
+              "color": "#F9CA29"
             }
           ]
         },
@@ -410,15 +410,15 @@
           "options": [
             {
               "name": "basic",
-              "color": null
+              "color": "#753780"
             },
             {
               "name": "no service",
-              "color": null
+              "color": "#F9CA29"
             },
             {
               "name": "limited",
-              "color": null
+              "color": "#FDF177"
             }
           ]
         },

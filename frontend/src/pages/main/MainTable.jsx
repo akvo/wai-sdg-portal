@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import MainTableChild from "./MainTableChild";
 import { UIState } from "../../state/ui";
 import api from "../../util/api";
-import { generateColors, getLuma } from "../../util/color";
+import { getLuma } from "../../util/color";
 import { DataUpdateMessage } from "./../../components/Notifications";
 import flatten from "lodash/flatten";
 import isEmpty from "lodash/isEmpty";
@@ -106,16 +106,11 @@ const MainTable = ({
         ...col,
         render(text) {
           const textValue = text?.value;
-          const questionVal = generateColors(current);
-          const options = questionVal.find((opt) => opt.title === col.title);
-          const newColor = options?.values.find((c) => {
-            return c.name.toLowerCase().includes(text?.value.toLowerCase());
-          });
           return {
             props: {
               style: {
-                background: newColor?.color || "",
-                color: getLuma(newColor?.color),
+                background: text?.color || "",
+                color: getLuma(text?.color),
               },
             },
             children: textValue,
