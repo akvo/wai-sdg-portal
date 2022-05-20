@@ -84,7 +84,7 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 31, name: "Average number of patients per day" },
+      shape: { id: 32, name: "Water" },
       marker: { id: 32, name: "Water Service Level" },
     },
     formId: 2,
@@ -148,7 +148,7 @@ var page_config = {
       },
       {
         title: "Water",
-        key: 63,
+        key: 12,
       },
       {
         title: "Sanitation",
@@ -160,8 +160,8 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 62, name: "Number of School Staff" },
-      marker: { id: 63, title: "Water Service Level" },
+      shape: { id: 12, name: "Water Service Level" },
+      marker: { id: 68, title: "Water Service Level" },
     },
     formId: 3,
   },
