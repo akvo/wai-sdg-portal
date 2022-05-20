@@ -425,8 +425,8 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 1260775111, name: "Project Type" },
-      marker: { id: 1336894024, name: "Project Code" },
+      shape: { id: 1336894024, name: "Project Code" },
+      marker: { id: 1260775111, name: "Project Type" },
     },
     formId: 1338414049,
     links: links,
