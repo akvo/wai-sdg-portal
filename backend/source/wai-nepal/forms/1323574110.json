@@ -100,47 +100,58 @@
           "options": [
             {
               "name": "No Data",
-              "color": null
+              "color": null,
+              "score": 5
             },
             {
               "name": "DWSS",
-              "color": null
+              "color": null,
+              "score": 2
             },
             {
               "name": "RWSSFDB",
-              "color": null
+              "color": null,
+              "score": 3
             },
             {
               "name": "RVWRMP",
-              "color": null
+              "color": null,
+              "score": 1
             },
             {
               "name": "RWSSP-WN",
-              "color": null
+              "color": null,
+              "score": 2
             },
             {
               "name": "RWSSP",
-              "color": null
+              "color": null,
+              "score": 4
             },
             {
               "name": "VDC",
-              "color": null
+              "color": null,
+              "score": 2
             },
             {
               "name": "Local",
-              "color": null
+              "color": null,
+              "score": 3
             },
             {
               "name": "Others",
-              "color": null
+              "color": null,
+              "score": 1
             },
             {
               "name": "Unknown",
-              "color": null
+              "color": null,
+              "score": 10
             },
             {
               "name": "CBWSSP",
-              "color": null
+              "color": null,
+              "score": 5
             }
           ]
         },
