@@ -187,9 +187,33 @@ var page_config = {
     ],
     maps: {
       shape: { id: 1000914052, name: "Cases of Diarhea" },
-      marker: { id: 987364073, name: "Hygiene Stations" },
+      marker: { id: 994994027, name: "Water Supply" },
     },
     formId: 952774024,
+    selectableMarkerDropdown: [
+      {
+        id: 994994027,
+        name: "Water Service Level",
+        hover: [
+          { id: 987364021, name: "Name of school" },
+          {
+            id: 974754044,
+            name: "Type of health center",
+          },
+        ],
+      },
+      {
+        id: 962804056,
+        name: "Sanitation Service Level",
+        hover: [
+          { id: 987364021, name: "Name of school" },
+          {
+            id: 974754044,
+            name: "Type of health center",
+          },
+        ],
+      }
+    ],
   },
 };
 

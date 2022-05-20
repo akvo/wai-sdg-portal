@@ -394,7 +394,7 @@
           "options": [
             {
               "name": "No water facilities",
-              "color": null
+              "color": "#FF0000"
             },
             {
               "name": "Piped water into dwelling (into the building)",
@@ -418,39 +418,39 @@
             },
             {
               "name": "PSF (pond sand filter)",
-              "color": null
+              "color": "#A5A5A5"
             },
             {
               "name": "AIRP (arsenic iron removable plant)",
-              "color": null
+              "color": "#C00000"
             },
             {
               "name": "Protected dug well",
-              "color": null
+              "color": "#4472C4"
             },
             {
               "name": "Unprotected dug well",
-              "color": null
+              "color": "#806000"
             },
             {
               "name": "Protected spring",
-              "color": null
+              "color": "#40FCFF"
             },
             {
               "name": "Unprotected spring",
-              "color": null
+              "color": "#C45911"
             },
             {
               "name": "Surface water (river, pond, canal)",
-              "color": null
+              "color": "#9CC2E5"
             },
             {
               "name": "Rainwater collection",
-              "color": null
+              "color": "#2F5496"
             },
             {
               "name": "Bottled water",
-              "color": null
+              "color": "#FFD966"
             },
             {
               "name": "Cart with small tank/drum",
@@ -458,7 +458,7 @@
             },
             {
               "name": "Tanker-truck",
-              "color": null
+              "color": "#FF83B7"
             }
           ]
         },
@@ -657,15 +657,15 @@
           "options": [
             {
               "name": "Pit latrine without slab/open pit",
-              "color": null
+              "color": "#FF83B7"
             },
             {
               "name": "Pit latrine with slab",
-              "color": null
+              "color": "#00B0F0"
             },
             {
               "name": "Hanging latrine",
-              "color": null
+              "color": "#FFC000"
             },
             {
               "name": "toilet that flush/poor flush but don't know where",
@@ -681,11 +681,11 @@
             },
             {
               "name": "Composting toilet",
-              "color": null
+              "color": "#ED7D31"
             },
             {
               "name": "Bucket",
-              "color": null
+              "color": "#385623"
             },
             {
               "name": "toilet that flush/poor flush to elsewhere",
@@ -693,11 +693,11 @@
             },
             {
               "name": "toilet that flush/poor flush to septic tank",
-              "color": null
+              "color": "#C5E0B3"
             },
             {
               "name": "toilet that flush/poor flush to piped sewer system",
-              "color": null
+              "color": "#70AD47"
             }
           ],
           "dependency": [
