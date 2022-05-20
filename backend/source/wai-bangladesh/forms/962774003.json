@@ -6728,7 +6728,7 @@
         },
         {
           "id": 964704063,
-          "question": "OH3. We would like to learn where members of this household wash their hands.",
+          "question": "OH3. We would like to learn where members of this household wash their hands. Can you please show me where members of your household most often wash their hands?",
           "order": 3,
           "meta": false,
           "type": "option",
