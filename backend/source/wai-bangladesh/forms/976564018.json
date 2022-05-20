@@ -569,19 +569,19 @@
             },
             {
               "name": "Deep tubewell/borehole",
-              "color": null
+              "color": "#00B050"
             },
             {
               "name": "Shallow tubewell/borehole",
-              "color": null
+              "color": "#00B0F0"
             },
             {
               "name": "PSF (pond sand filter)",
-              "color": null
+              "color": "#ED7D31"
             },
             {
               "name": "AIRP (arsenic iron removable plant)",
-              "color": null
+              "color": "#9C5CFF"
             },
             {
               "name": "Protected dug well",
@@ -589,7 +589,7 @@
             },
             {
               "name": "Unprotected dug well",
-              "color": null
+              "color": "#806000"
             },
             {
               "name": "Protected spring",
@@ -597,19 +597,19 @@
             },
             {
               "name": "Unprotected spring",
-              "color": null
+              "color": "#806000"
             },
             {
               "name": "Surface water (river, pond, canal)",
-              "color": null
+              "color": "#FFC000"
             },
             {
               "name": "Rainwater collection",
-              "color": null
+              "color": "#2F5496"
             },
             {
               "name": "Bottled water",
-              "color": null
+              "color": "#4472C4"
             },
             {
               "name": "Cart with small tank/drum",
@@ -617,11 +617,11 @@
             },
             {
               "name": "Tanker-truck",
-              "color": null
+              "color": "#FF83B7"
             },
             {
               "name": "Students bring their own water",
-              "color": null
+              "color": "#C45911"
             }
           ]
         },
@@ -704,47 +704,47 @@
           "options": [
             {
               "name": "Pit latrine without slab/open pit",
-              "color": null
+              "color": "#FF83B7"
             },
             {
               "name": "Pit latrine with slab",
-              "color": null
+              "color": "#00B0F0"
             },
             {
               "name": "Hanging latrine",
-              "color": null
+              "color": "#44546A"
             },
             {
               "name": "toilet that flush/poor flush but don't know where",
-              "color": null
+              "color": "#2F5496"
             },
             {
               "name": "Twinpit offset latrine",
-              "color": null
+              "color": "#BF8F00"
             },
             {
               "name": "Ventilated Improved Pit latrine (VIP)",
-              "color": null
+              "color": "#00B050"
             },
             {
               "name": "Composting toilet",
-              "color": null
+              "color": "#ED7D31"
             },
             {
               "name": "Bucket",
-              "color": null
+              "color": "#7030A0"
             },
             {
               "name": "toilet that flush/poor flush to elsewhere",
-              "color": null
+              "color": "#385623"
             },
             {
               "name": "toilet that flush/poor flush to septic tank",
-              "color": null
+              "color": "#C5E0B3"
             },
             {
               "name": "toilet that flush/poor flush to piped sewer system",
-              "color": null
+              "color": "#70AD47"
             }
           ],
           "dependency": [

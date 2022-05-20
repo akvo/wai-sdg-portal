@@ -73,7 +73,7 @@ var page_config = {
         id: 960314016,
         name: "Water Service Level",
         hover: [
-          { id: 573330119, name: "Name of respondent" },
+          { id: 987364021, name: "Name of respondent" },
           {
             id: 573330121,
             name: "Household Size",
@@ -126,9 +126,44 @@ var page_config = {
     ],
     maps: {
       shape: { id: 974754026, name: "Number of Student" },
-      marker: { id: 993004033, title: "Toilet" },
+      marker: { id: 974764034, title: "Toilet" },
     },
     formId: 976564018,
+    selectableMarkerDropdown: [
+      {
+        id: 996984034,
+        name: "Water Service Level",
+        hover: [
+          { id: 987364021, name: "Name of school" },
+          {
+            id: 974754026,
+            name: "School Size",
+          },
+        ],
+      },
+      {
+        id: 974764034,
+        name: "Sanitation Service Level",
+        hover: [
+          { id: 987364021, name: "Name of school" },
+          {
+            id: 974754026,
+            name: "School Size",
+          },
+        ],
+      },
+      {
+        id: 964704063,
+        name: "Hygiene Service Level",
+        hover: [
+          { id: 987364021, name: "Name of school" },
+          {
+            id: 974754026,
+            name: "School Size",
+          },
+        ],
+      },
+    ],
   },
   health: {
     title: "Health Facility",
