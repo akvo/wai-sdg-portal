@@ -425,8 +425,8 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 1260775111, name: "Project Type" },
-      marker: { id: 1336894024, name: "Project Code" },
+      shape: { id: 1336894024, name: "Project Code" },
+      marker: { id: 1260775111, name: "Project Type" },
     },
     formId: 1338414049,
     links: links,
@@ -437,7 +437,7 @@ var landing_config = {
   jumbotron: {
     // title, the text or list title
     title:
-    "This portal is used at ##administration## level to see the relative WASH vulnerability of communities and institutions and track the status of drinking water supply systems", 
+    "This portal is used at municipality level to see the relative WASH vulnerability of communities and institutions and track the status of drinking water supply systems", 
     // list_type, can be bullet/number or null if no list
     list_type: "number",
     // list, describe the list as an array of text or empty array [] if no list
