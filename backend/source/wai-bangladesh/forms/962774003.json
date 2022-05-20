@@ -1820,31 +1820,31 @@
           "options": [
             {
               "name": "Piped water into dwelling (household connection)",
-              "color": null
+              "color": "#70AD47"
             },
             {
               "name": "Piped water to yard/plot",
-              "color": null
+              "color": "#C5E0B3"
             },
             {
               "name": "Public tap/standpipe",
-              "color": null
+              "color": "#BF8F00"
             },
             {
               "name": "Deep tubewell/borehole",
-              "color": null
+              "color": "#00B050"
             },
             {
               "name": "Shallow tubewell/borehole",
-              "color": null
+              "color": "#00B0F0"
             },
             {
               "name": "Pond sand filter (PSF)",
-              "color": null
+              "color": "#40FCFF"
             },
             {
               "name": "Rainwater collection",
-              "color": null
+              "color": "#2F5496"
             },
             {
               "name": "Protected dug well",
@@ -1852,27 +1852,27 @@
             },
             {
               "name": "Unprotected dug well",
-              "color": null
+              "color": "#806000"
             },
             {
               "name": "Surface water (river, pond, canal)",
-              "color": null
+              "color": "#FF0000"
             },
             {
               "name": "Bottled water",
-              "color": null
+              "color": "#4472C4"
             },
             {
               "name": "Protected spring",
-              "color": null
+              "color": "#9C5CFF"
             },
             {
               "name": "Unprotected spring",
-              "color": null
+              "color": "#C45911"
             },
             {
               "name": "AIRP 9Arsenic iron removal plant)",
-              "color": null
+              "color": "#ED7D31"
             },
             {
               "name": "Cart with small tank/drum",
@@ -3147,27 +3147,27 @@
           "options": [
             {
               "name": "Pit latrine with slab",
-              "color": null
+              "color": "#00B0F0"
             },
             {
               "name": "Pit latrine without slab/open pit",
-              "color": null
+              "color": "#2F5496"
             },
             {
               "name": "Hanging toilet/hanging latrine",
-              "color": null
+              "color": "#F7CAAC"
             },
             {
               "name": "Toilet that flush/pour to don't know",
-              "color": null
+              "color": "#2F5496"
             },
             {
               "name": "Twinpit offset latrine",
-              "color": null
+              "color": "#BF8F00"
             },
             {
               "name": "Ventilated Improved Pit latrine (VIP)",
-              "color": null
+              "color": "#00B050"
             },
             {
               "name": "Composting toilet",
@@ -3175,7 +3175,7 @@
             },
             {
               "name": "Bucket",
-              "color": null
+              "color": "#F4B083"
             },
             {
               "name": "Toilet that flush/pour to elsewhere",
@@ -3183,19 +3183,19 @@
             },
             {
               "name": "Toilet that flush/pour to septic tank",
-              "color": null
+              "color": "#C5E0B3"
             },
             {
               "name": "Toilet that flush/pour to flush piped sewer system",
-              "color": null
+              "color": "#70AD47"
             },
             {
               "name": "Toilet that flush/pour to pit latrine",
-              "color": null
+              "color": "#385623"
             },
             {
               "name": "Other",
-              "color": null
+              "color": "#ED7D31"
             }
           ],
           "dependency": [
@@ -6728,7 +6728,7 @@
         },
         {
           "id": 964704063,
-          "question": "OH3. We would like to learn where members of this household wash their hands. Can you please show me where members of your household most often wash their hands?",
+          "question": "OH3. We would like to learn where members of this household wash their hands.",
           "order": 3,
           "meta": false,
           "type": "option",
@@ -6736,23 +6736,23 @@
           "options": [
             {
               "name": "Fixed facility observed in dwelling",
-              "color": null
+              "color": "#FF83B7"
             },
             {
               "name": "Fixed facility observed in plot/yard",
-              "color": null
+              "color": "#70AD47"
             },
             {
               "name": "Mobile object observed (bucket, jug, kettle)",
-              "color": null
+              "color": "#A8D08D"
             },
             {
               "name": "No handwashing place available in dwelling/plot/yard",
-              "color": null
+              "color": "#FFC000"
             },
             {
               "name": "No permission to see",
-              "color": null
+              "color": "#FF0000"
             },
             {
               "name": "Other",

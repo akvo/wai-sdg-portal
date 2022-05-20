@@ -53,7 +53,7 @@ var page_config = {
     ],
     maps: {
       shape: { id: 573330121, name: "Household Size" },
-      marker: { id: 962764019, title: "Laterine" },
+      marker: { id: 960314016, title: "Laterine" },
     },
     formId: 962774003,
     tabs: [
@@ -70,7 +70,7 @@ var page_config = {
     ],
     selectableMarkerDropdown: [
       {
-        id: 573340127,
+        id: 960314016,
         name: "Water Service Level",
         hover: [
           { id: 573330119, name: "Name of respondent" },
@@ -81,7 +81,7 @@ var page_config = {
         ],
       },
       {
-        id: 557970124,
+        id: 970604019,
         name: "Sanitation Service Level",
         hover: [
           { id: 573330119, name: "Name of respondent" },
@@ -92,7 +92,7 @@ var page_config = {
         ],
       },
       {
-        id: 563480061,
+        id: 964704063,
         name: "Hygiene Service Level",
         hover: [
           { id: 573330119, name: "Name of respondent" },
