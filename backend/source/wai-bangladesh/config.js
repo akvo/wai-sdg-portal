@@ -40,19 +40,19 @@ var page_config = {
       },
       {
         title: "Water",
-        key: 987314051,
+        key: 960314016,
       },
       {
         title: "Sanitation",
-        key: 950854035,
+        key: 970604019,
       },
       {
         title: "Hygiene",
-        key: 964704062,
+        key: 964704063,
       },
     ],
     maps: {
-      shape: { id: 573330121, name: "Household Size" },
+      shape: { id: 994964007, name: "Household Size" },
       marker: { id: 960314016, title: "Laterine" },
     },
     formId: 962774003,
@@ -63,8 +63,8 @@ var page_config = {
         selected: true,
         chartList: [
           { question: 987314051, name: "Water" },
-          { question: 976484035, name: "Sanitation" },
-          { question: 964704062, name: "Hygiene" },
+          { question: 1101254072, name: "Sanitation" },
+          { question: 987294043, name: "Hygiene" },
         ],
       },
     ],
@@ -125,7 +125,7 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 974754026, name: "Number of Student" },
+      shape: { id: 993004046, name: "Sanitation" },
       marker: { id: 974764034, title: "Toilet" },
     },
     formId: 976564018,
@@ -178,7 +178,7 @@ var page_config = {
       },
       {
         title: "Sanitation",
-        key: 964754032,
+        key: 962804056,
       },
       {
         title: "Hygiene",
@@ -186,7 +186,7 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 1000914052, name: "Cases of Diarhea" },
+      shape: { id: 994994027, name: "Water" },
       marker: { id: 994994027, name: "Water Supply" },
     },
     formId: 952774024,
