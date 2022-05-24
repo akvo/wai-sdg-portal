@@ -317,45 +317,15 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 1260775110, name: "Project Name" },
+      shape: { id: 1260775111, name: "Project Type" },
       marker: { id: 1260775111, name: "Protect Type" },
     },
     formId: 1323574110,
     links: links,
     selectableMarkerDropdown: [
       {
-        id: 1332184057,
-        name: "Water Source",
-        hover: [
-          { id: 1260775110, name: "Project Name" },
-          { id: 1260775116, name: "Project Code" },
-          { id: 1260775113, name: "Construction Year" },
-          { id: 1260775109, name: "Construction Agency" },
-        ],
-      },
-      {
-        id: 1361884006,
-        name: "Reservoir",
-        hover: [
-          { id: 1260775110, name: "Project Name" },
-          { id: 1260775116, name: "Project Code" },
-          { id: 1260775113, name: "Construction Year" },
-          { id: 1260775109, name: "Construction Agency" },
-        ],
-      },
-      {
-        id: 1361834041,
-        name: "Taps",
-        hover: [
-          { id: 1260775110, name: "Project Name" },
-          { id: 1260775116, name: "Project Code" },
-          { id: 1260775113, name: "Construction Year" },
-          { id: 1260775109, name: "Construction Agency" },
-        ],
-      },
-      {
-        id: 1336894024,
-        name: "WUSC",
+        id: 1260775111,
+        name: "Project Type",
         hover: [
           { id: 1260775110, name: "Project Name" },
           { id: 1260775116, name: "Project Code" },
@@ -519,7 +489,7 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 1323564078, name: "Tap" },
+      shape: { id: 1329264106, name: "Number of Household" },
       marker: { id: 1323564078, name: "Tap Type" },
     },
     formId: 1327205184,
@@ -580,7 +550,7 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 1336894024, name: "Project Code" },
+      shape: { id: 1260775111, name: "Project Type" },
       marker: { id: 1260775111, name: "Project Type" },
     },
     formId: 1338414049,
