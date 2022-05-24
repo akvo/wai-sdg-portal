@@ -317,11 +317,53 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 1260775116, name: "Project Code" },
-      marker: { id: 1260775109, name: "Construction Agency" },
+      shape: { id: 1260775110, name: "Project Name" },
+      marker: { id: 1260775111, name: "Protect Type" },
     },
     formId: 1323574110,
     links: links,
+    selectableMarkerDropdown: [
+      {
+        id: 1332184057,
+        name: "Water Source",
+        hover: [
+          { id: 1260775110, name: "Project Name" },
+          { id: 1260775116, name: "Project Code" },
+          { id: 1260775113, name: "Construction Year" },
+          { id: 1260775109, name: "Construction Agency" },
+        ],
+      },
+      {
+        id: 1361884006,
+        name: "Reservoir",
+        hover: [
+          { id: 1260775110, name: "Project Name" },
+          { id: 1260775116, name: "Project Code" },
+          { id: 1260775113, name: "Construction Year" },
+          { id: 1260775109, name: "Construction Agency" },
+        ],
+      },
+      {
+        id: 1361834041,
+        name: "Taps",
+        hover: [
+          { id: 1260775110, name: "Project Name" },
+          { id: 1260775116, name: "Project Code" },
+          { id: 1260775113, name: "Construction Year" },
+          { id: 1260775109, name: "Construction Agency" },
+        ],
+      },
+      {
+        id: 1336894024,
+        name: "WUSC",
+        hover: [
+          { id: 1260775110, name: "Project Name" },
+          { id: 1260775116, name: "Project Code" },
+          { id: 1260775113, name: "Construction Year" },
+          { id: 1260775109, name: "Construction Agency" },
+        ],
+      },
+    ],
   },
   waterSource: {
     title: "Water Source",
