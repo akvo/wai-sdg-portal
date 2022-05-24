@@ -395,6 +395,48 @@ var page_config = {
     },
     formId: 1322834054,
     links: links,
+    selectableMarkerDropdown: [
+      {
+        id: 1351624037,
+        name: "Registration",
+        hover: [
+          { id: 1322844011, name: "Intake Type" },
+          { id: 1351624037, name: "Source Registration" },
+          { id: 1322844012, name: "Type of Source" },
+          { id: 1322844007, name: "Water Quality" },
+        ],
+      },
+      {
+        id: 1322844012,
+        name: "Type",
+        hover: [
+          { id: 1322844011, name: "Intake Type" },
+          { id: 1351624037, name: "Source Registration" },
+          { id: 1322844012, name: "Type of Source" },
+          { id: 1322844007, name: "Water Quality" },
+        ],
+      },
+      {
+        id: 1351624035,
+        name: "Present",
+        hover: [
+          { id: 1322844011, name: "Intake Type" },
+          { id: 1351624037, name: "Source Registration" },
+          { id: 1322844012, name: "Type of Source" },
+          { id: 1322844007, name: "Water Quality" },
+        ],
+      },
+      {
+        id: 1322844007,
+        name: "Quality",
+        hover: [
+          { id: 1322844011, name: "Intake Type" },
+          { id: 1351624037, name: "Source Registration" },
+          { id: 1322844012, name: "Type of Source" },
+          { id: 1322844007, name: "Water Quality" },
+        ],
+      },
+    ],
   },
   reservoir: {
     title: "Reservoir",
@@ -422,6 +464,35 @@ var page_config = {
     },
     formId: 1260775092,
     links: links,
+    selectableMarkerDropdown: [
+      {
+        id: 1317494088,
+        name: "Type",
+        hover: [
+          { id: 1361884006, name: "Project Code" },
+          { id: 1317494088, name: "RVT Type" },
+          { id: 1284004080, name: "RVT Capacity Cum" },
+        ],
+      },
+      {
+        id: 1312455208,
+        name: "Adequacy",
+        hover: [
+          { id: 1361884006, name: "Project Code" },
+          { id: 1317494088, name: "RVT Type" },
+          { id: 1284004080, name: "RVT Capacity Cum" },
+        ],
+      },
+      {
+        id: 1325445108,
+        name: "Condition",
+        hover: [
+          { id: 1361884006, name: "Project Code" },
+          { id: 1317494088, name: "RVT Type" },
+          { id: 1284004080, name: "RVT Capacity Cum" },
+        ],
+      },
+    ],
   },
   taps: {
     title: "Taps",
@@ -436,7 +507,7 @@ var page_config = {
       },
       {
         title: "Metered Connection",
-        key: 1325524076,
+        key: 1323564078,
       },
       {
         title: "# of Household",
@@ -448,11 +519,53 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 1329264106, name: "Number of Household" },
+      shape: { id: 1323564078, name: "Tap" },
       marker: { id: 1323564078, name: "Tap Type" },
     },
     formId: 1327205184,
     links: links,
+    selectableMarkerDropdown: [
+      {
+        id: 1323564078,
+        name: "Type",
+        hover: [
+          { id: 1323564078, name: "Tap Type" },
+          { id: 1325524076, name: "Metered Connection" },
+          { id: 1304335205, name: "Type Water Quality" },
+          { id: 1306525134, name: "Natural Disaster Calamities Effect" },
+        ],
+      },
+      {
+        id: 1323564078,
+        name: "Metered Connection",
+        hover: [
+          { id: 1323564078, name: "Tap Type" },
+          { id: 1325524076, name: "Metered Connection" },
+          { id: 1304335205, name: "Type Water Quality" },
+          { id: 1306525134, name: "Natural Disaster Calamities Effect" },
+        ],
+      },
+      {
+        id: 1329264106,
+        name: "# of Household",
+        hover: [
+          { id: 1323564078, name: "Tap Type" },
+          { id: 1325524076, name: "Metered Connection" },
+          { id: 1304335205, name: "Type Water Quality" },
+          { id: 1306525134, name: "Natural Disaster Calamities Effect" },
+        ],
+      },
+      {
+        id: 1325534094,
+        name: "Tap Condition",
+        hover: [
+          { id: 1323564078, name: "Tap Type" },
+          { id: 1325524076, name: "Metered Connection" },
+          { id: 1304335205, name: "Type Water Quality" },
+          { id: 1306525134, name: "Natural Disaster Calamities Effect" },
+        ],
+      },
+    ],
   },
   wusc: {
     title: "WUSC",
@@ -472,6 +585,18 @@ var page_config = {
     },
     formId: 1338414049,
     links: links,
+    selectableMarkerDropdown: [
+      {
+        id: 1336894024,
+        name: "Project Code",
+        hover: [
+          { id: 1349554059, name: "WUSC Name" },
+          { id: 1344224019, name: "Standard Operating Procedure (SOP)" },
+          { id: 1344224022, name: "Book keeping or Auditing System" },
+          { id: 1349554056, name: "Provision of Remuneration for VMW" },
+        ],
+      },
+    ],
   },
 };
 
