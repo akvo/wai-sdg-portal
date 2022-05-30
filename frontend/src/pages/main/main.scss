@@ -352,6 +352,9 @@
     .marker-select {
       width: 100%;
     }
+    .ant-select-single.ant-select-show-arrow .ant-select-selection-item {
+      width: 237px;
+    }
   }
 
   .marker-legends {
@@ -522,6 +525,11 @@
     .marker-tooltip-value {
       font-size: 12px;
       font-weight: bold;
+      white-space: pre-wrap; /* CSS3 */
+      white-space: -moz-pre-wrap; /* Firefox */
+      white-space: -pre-wrap; /* Opera <7 */
+      white-space: -o-pre-wrap; /* Opera 7 */
+      word-wrap: break-word;
 
       &::before {
         content: "\25CF    ";

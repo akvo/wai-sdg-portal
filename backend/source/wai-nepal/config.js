@@ -551,14 +551,14 @@ var page_config = {
     ],
     maps: {
       shape: { id: 1260775111, name: "Project Type" },
-      marker: { id: 1260775111, name: "Project Type" },
+      marker: { id: 1344224020, name: "Use of Water in Income" },
     },
     formId: 1338414049,
     links: links,
     selectableMarkerDropdown: [
       {
-        id: 1336894024,
-        name: "Project Code",
+        id: 1344224020,
+        name: "Use of Water in Income",
         hover: [
           { id: 1349554059, name: "WUSC Name" },
           { id: 1344224019, name: "Standard Operating Procedure (SOP)" },
