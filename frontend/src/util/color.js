@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-computed-key */
 export const JMPColor = {
   sanitation: {
     basic: "#ddd",

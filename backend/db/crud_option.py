@@ -1,4 +1,5 @@
 from typing import List, Optional
+from sqlalchemy import func
 from sqlalchemy.orm import Session
 from models.option import Option, OptionDictWithId
 from models.question import Question
@@ -39,3 +40,13 @@ def update_option(session: Session,
     session.commit()
     session.refresh(option)
     return option
+
+
+def get_option_by_question_and_name(session: Session,
+                                    name: str,
+                                    question: int) -> Option:
+    if not question:
+        return None
+    return session.query(Option).filter(
+        Option.question == question,
+        func.lower(Option.name) == name.lower().strip()).first()

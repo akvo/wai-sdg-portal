@@ -78,6 +78,7 @@ const MainTable = ({
       }));
       return { dataId: k, values: values };
     });
+
     const promises = savedValues.map((saved) => {
       return api.put(`data/${saved.dataId}`, saved.values).then((res) => {
         notification.success({
@@ -99,11 +100,12 @@ const MainTable = ({
   };
 
   // Modify column config to add render function
-  const modifyColumnRender = current.columns.map((col) => {
+  const modifyColumnRender = current.columns.map((col, idx) => {
     if (current.values.includes(col.key)) {
       return {
         ...col,
         render(text) {
+          const textValue = text?.value;
           return {
             props: {
               style: {
@@ -111,13 +113,14 @@ const MainTable = ({
                 color: getLuma(text?.color),
               },
             },
-            children: text?.value,
+            children: textValue,
           };
         },
       };
     }
     return col;
   });
+
   if (!show) {
     return null;
   }
