@@ -62,9 +62,9 @@ var page_config = {
         component: "JMP-CHARTS",
         selected: true,
         chartList: [
-          { question: 987314051, name: "Water" },
-          { question: 1101254072, name: "Sanitation" },
-          { question: 987294043, name: "Hygiene" },
+          { question: 960314016, name: "Water" },
+          { question: 970604019, name: "Sanitation" },
+          { question: 964704063, name: "Hygiene" },
         ],
       },
     ],
@@ -113,15 +113,15 @@ var page_config = {
       },
       {
         title: "Water",
-        key: 996984059,
+        key: 996984034,
       },
       {
         title: "Sanitation",
-        key: 993004046,
+        key: 974764034,
       },
       {
         title: "Hygiene",
-        key: 996974069,
+        key: 964704063,
       },
     ],
     maps: {

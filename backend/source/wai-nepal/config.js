@@ -103,7 +103,10 @@ var page_config = {
     ],
     maps: {
       shape: { id: 573330121, name: "Household Size" },
-      marker: { id: 573340127, title: "Water Service Level" },
+      marker: {
+        id: 573340127,
+        title: "What is the main source of drinking water in the household?",
+      },
     },
     formId: 556240162,
     tabs: [
@@ -121,7 +124,7 @@ var page_config = {
     selectableMarkerDropdown: [
       {
         id: 573340127,
-        name: "Water Service Level",
+        name: "What is the main source of drinking water in the household?",
         hover: [
           { id: 573330119, name: "Name of respondent" },
           {
@@ -132,7 +135,7 @@ var page_config = {
       },
       {
         id: 557970124,
-        name: "Sanitation Service Level",
+        name: "What type of toilet do members of your household usually use?",
         hover: [
           { id: 573330119, name: "Name of respondent" },
           {
@@ -143,7 +146,7 @@ var page_config = {
       },
       {
         id: 563480061,
-        name: "Hygiene Service Level",
+        name: "What type of hand washing facility used by the household most often?",
         hover: [
           { id: 573330119, name: "Name of respondent" },
           {
@@ -176,13 +179,17 @@ var page_config = {
     ],
     maps: {
       shape: { id: 573300191, name: "Water service level" },
-      marker: { id: 580800138, title: "Water" },
+      marker: {
+        id: 580800138,
+        title:
+          "What is the main source of drinking water provided by the school?",
+      },
     },
     formId: 554360198,
     selectableMarkerDropdown: [
       {
         id: 580800138,
-        name: "Water Service Level",
+        name: "What is the main source of drinking water provided by the school?",
         hover: [
           { id: 567820011, name: "School Name" },
           {
@@ -193,7 +200,7 @@ var page_config = {
       },
       {
         id: 567800082,
-        name: "Sanitation Service Level",
+        name: "What type of student toilets are at the school?",
         hover: [
           { id: 567820011, name: "School Name" },
           {
@@ -226,13 +233,16 @@ var page_config = {
     ],
     maps: {
       shape: { id: 554400068, name: "Sanitation Service Levels" },
-      marker: { id: 552050126, name: "Water Service Levels" },
+      marker: {
+        id: 552050126,
+        name: "What is the main water supply for the facility?",
+      },
     },
     formId: 557950127,
     selectableMarkerDropdown: [
       {
         id: 552050126,
-        name: "Water service level",
+        name: "What is the main water supply for the facility?",
         hover: [
           {
             id: 527940130,
@@ -246,7 +256,7 @@ var page_config = {
       },
       {
         id: 554400068,
-        name: "Sanitation service level",
+        name: "What type of toilets are at the facility for patients?",
         hover: [
           {
             id: 527940130,
@@ -260,7 +270,7 @@ var page_config = {
       },
       {
         id: 554350179,
-        name: "Core health care waste management",
+        name: "Is waste correctly segregated into at least three labelled bins in the consultation area?",
         hover: [
           {
             id: 527940130,
@@ -274,7 +284,7 @@ var page_config = {
       },
       {
         id: 557990015,
-        name: "Environmental Cleaning service level",
+        name: "Have all staff responsible for cleaning received training?",
         hover: [
           {
             id: 527940130,
@@ -285,7 +295,7 @@ var page_config = {
             name: "Health Care Facility Type",
           },
         ],
-      }
+      },
     ],
   },
   project: {
@@ -317,11 +327,23 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 1260775116, name: "Project Code" },
-      marker: { id: 1260775109, name: "Construction Agency" },
+      shape: { id: 1260775111, name: "Project Type" },
+      marker: { id: 1260775111, name: "Protect Type" },
     },
     formId: 1323574110,
     links: links,
+    selectableMarkerDropdown: [
+      {
+        id: 1260775111,
+        name: "Project Type",
+        hover: [
+          { id: 1260775110, name: "Project Name" },
+          { id: 1260775116, name: "Project Code" },
+          { id: 1260775113, name: "Construction Year" },
+          { id: 1260775109, name: "Construction Agency" },
+        ],
+      },
+    ],
   },
   waterSource: {
     title: "Water Source",
@@ -349,10 +371,22 @@ var page_config = {
     ],
     maps: {
       shape: { id: 1322844012, name: "Water Source Type" },
-      marker: { id: 1322844007, name: "Quality" },
+      marker: { id: 1322844010, name: "Source Intake Condition" },
     },
     formId: 1322834054,
     links: links,
+    selectableMarkerDropdown: [
+      {
+        id: 1322844010,
+        name: "Source Intake Condition",
+        hover: [
+          { id: 1322844011, name: "Intake Type" },
+          { id: 1351624037, name: "Source Registration" },
+          { id: 1322844012, name: "Type of Source" },
+          { id: 1322844007, name: "Water Quality" },
+        ],
+      },
+    ],
   },
   reservoir: {
     title: "Reservoir",
@@ -376,10 +410,21 @@ var page_config = {
     ],
     maps: {
       shape: { id: 1284004080, name: "RVT Capacity" },
-      marker: { id: 1317494088, name: "RVT Type" },
+      marker: { id: 1325445108, name: "RVT Condition" },
     },
     formId: 1260775092,
     links: links,
+    selectableMarkerDropdown: [
+      {
+        id: 1325445108,
+        name: "RVT Condition",
+        hover: [
+          { id: 1361884006, name: "Project Code" },
+          { id: 1317494088, name: "RVT Type" },
+          { id: 1284004080, name: "RVT Capacity Cum" },
+        ],
+      },
+    ],
   },
   taps: {
     title: "Taps",
@@ -394,7 +439,7 @@ var page_config = {
       },
       {
         title: "Metered Connection",
-        key: 1325524076,
+        key: 1323564078,
       },
       {
         title: "# of Household",
@@ -407,10 +452,22 @@ var page_config = {
     ],
     maps: {
       shape: { id: 1329264106, name: "Number of Household" },
-      marker: { id: 1323564078, name: "Tap Type" },
+      marker: { id: 1325534094, name: "Tap Condition" },
     },
     formId: 1327205184,
     links: links,
+    selectableMarkerDropdown: [
+      {
+        id: 1325534094,
+        name: "Tap Condition",
+        hover: [
+          { id: 1323564078, name: "Tap Type" },
+          { id: 1325524076, name: "Metered Connection" },
+          { id: 1304335205, name: "Tap Water Quality" },
+          { id: 1306525134, name: "Natural Disaster Calamities Effect" },
+        ],
+      },
+    ],
   },
   wusc: {
     title: "WUSC",
@@ -425,11 +482,23 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 1336894024, name: "Project Code" },
-      marker: { id: 1260775111, name: "Project Type" },
+      shape: { id: 1260775111, name: "Project Type" },
+      marker: { id: 1344224020, name: "Use of Water in Income" },
     },
     formId: 1338414049,
     links: links,
+    selectableMarkerDropdown: [
+      {
+        id: 1344224020,
+        name: "Use of Water in Income",
+        hover: [
+          { id: 1349554059, name: "WUSC Name" },
+          { id: 1344224019, name: "Standard Operating Procedure (SOP)" },
+          { id: 1344224022, name: "Book keeping or Auditing System" },
+          { id: 1349554056, name: "Provision of Remuneration for VMW" },
+        ],
+      },
+    ],
   },
 };
 
@@ -437,7 +506,7 @@ var landing_config = {
   jumbotron: {
     // title, the text or list title
     title:
-    "This portal is used at ##administration## level to see the relative WASH vulnerability of communities and institutions and track the status of drinking water supply systems", 
+      "This portal is used at municipality level to see the relative WASH vulnerability of communities and institutions and track the status of drinking water supply systems",
     // list_type, can be bullet/number or null if no list
     list_type: "number",
     // list, describe the list as an array of text or empty array [] if no list

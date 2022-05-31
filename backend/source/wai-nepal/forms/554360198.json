@@ -84,10 +84,7 @@
           "dependency": [
             {
               "id": 578820191,
-              "options": [
-                "Boys Only",
-                "Co-education"
-              ]
+              "options": ["Boys Only", "Co-education"]
             }
           ]
         },
@@ -102,10 +99,7 @@
           "dependency": [
             {
               "id": 578820191,
-              "options": [
-                "Girls Only",
-                "Co-education"
-              ]
+              "options": ["Girls Only", "Co-education"]
             }
           ]
         },
@@ -165,9 +159,7 @@
           "dependency": [
             {
               "id": 567820004,
-              "options": [
-                "Yes"
-              ]
+              "options": ["Yes"]
             }
           ]
         }
@@ -321,7 +313,7 @@
             },
             {
               "name": "Pit latrine without slab/open pit",
-              "color": null
+              "color": "#ff83b7"
             }
           ]
         },
@@ -336,9 +328,7 @@
           "dependency": [
             {
               "id": 567800083,
-              "options": [
-                "Yes"
-              ]
+              "options": ["Yes"]
             }
           ]
         },
@@ -362,9 +352,7 @@
           "dependency": [
             {
               "id": 578820191,
-              "options": [
-                "Co-education"
-              ]
+              "options": ["Co-education"]
             }
           ]
         }
