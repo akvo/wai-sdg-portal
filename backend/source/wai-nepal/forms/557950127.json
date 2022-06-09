@@ -106,55 +106,55 @@
           "options": [
             {
               "name": "Piped supply inside the building",
-              "color": null
+              "color": "#385623"
             },
             {
               "name": "Piped supply outside the building",
-              "color": null
+              "color": "#00B050"
             },
             {
               "name": "Tube well / Borehole",
-              "color": null
+              "color": "#00B0F0"
             },
             {
               "name": "Protected dug well",
-              "color": null
+              "color": "#4472C4"
             },
             {
               "name": "Protected spring",
-              "color": null
+              "color": "#40FCFF"
             },
             {
               "name": "Unprotected dug well",
-              "color": null
+              "color": "#806000"
             },
             {
               "name": "Unprotected spring",
-              "color": null
+              "color": "#C45911"
             },
             {
               "name": "Rain water",
-              "color": null
+              "color": "#2F5496"
             },
             {
               "name": "Tanker truck",
-              "color": null
+              "color": "#FF83B7"
             },
             {
               "name": "Surface water (river/dam/lake/pond)",
-              "color": null
+              "color": "#9CC2E5"
             },
             {
               "name": "Bottled water",
-              "color": null
+              "color": "#4472C4"
             },
             {
               "name": "Don\u2019t know",
-              "color": null
+              "color": "#FFC000"
             },
             {
               "name": "No water source",
-              "color": null
+              "color": "#FF0000"
             }
           ]
         },
@@ -247,31 +247,31 @@
           "options": [
             {
               "name": "Flush/Pour-flush toilet to sewer connection",
-              "color": null
+              "color": "#70AD47"
             },
             {
               "name": "Flush/Pour-flush toilet to tank or pit",
-              "color": null
+              "color": "#C5E0B3"
             },
             {
               "name": "Pit latrine with slab",
-              "color": null
+              "color": "#00B0F0"
             },
             {
               "name": "Composting toilet",
-              "color": null
+              "color": "#ED7D31"
             },
             {
               "name": "Flush/Pour-flush toilet to open drain",
-              "color": null
+              "color": "#385623"
             },
             {
               "name": "Pit latrine without slab/open pit",
-              "color": null
+              "color": "#FF83B7"
             },
             {
               "name": "No toilet/latrine",
-              "color": null
+              "color": "#FF0000"
             }
           ]
         },
@@ -497,15 +497,15 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "color": "#70AD47"
             },
             {
               "name": "No, bins are present but do not meet all requirements or waste is not correctly segragated",
-              "color": null
+              "color": "#BF8F00"
             },
             {
               "name": "No, bins are not present",
-              "color": null
+              "color": "#FF0000"
             }
           ]
         },
@@ -642,19 +642,19 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "color": "#70AD47"
             },
             {
               "name": "No, some but not all have been trained",
-              "color": null
+              "color": "#FFFB00"
             },
             {
               "name": "No, none have been trained",
-              "color": null
+              "color": "#BF8F00"
             },
             {
               "name": "No, there are no staff responsible for cleaning",
-              "color": null
+              "color": "#FF0000"
             }
           ]
         }
@@ -673,15 +673,15 @@
           "options": [
             {
               "name": "Basic",
-              "color": null
+              "color": "#67B769"
             },
             {
               "name": "Limited",
-              "color": null
+              "color": "#FDF177"
             },
             {
-              "name": "No service",
-              "color": null
+              "name": "No Service",
+              "color": "#F9CA29"
             }
           ]
         },
@@ -695,15 +695,15 @@
           "options": [
             {
               "name": "Basic",
-              "color": null
+              "color": "#67B769"
             },
             {
               "name": "Limited",
-              "color": null
+              "color": "#FDF177"
             },
             {
-              "name": "No service",
-              "color": null
+              "name": "No Service",
+              "color": "#F9CA29"
             }
           ]
         },
@@ -715,18 +715,18 @@
           "type": "option",
           "required": true,
           "options": [
-            {
-              "name": "Basic",
-              "color": null
-            },
-            {
-              "name": "Limited",
-              "color": null
-            },
-            {
-              "name": "No service",
-              "color": null
-            }
+          {
+            "name": "Basic",
+            "color": "#753780"
+          },
+          {
+            "name": "Limited",
+            "color": "#FDF177"
+          },
+          {
+            "name": "No Service",
+            "color": "#F9CA29"
+          }
           ]
         },
         {
@@ -739,15 +739,15 @@
           "options": [
             {
               "name": "Basic",
-              "color": null
+              "color": "#67B769"
             },
             {
               "name": "Limited",
-              "color": null
+              "color": "#FDF177"
             },
             {
-              "name": "No service",
-              "color": null
+              "name": "No Service",
+              "color": "#F9CA29"
             }
           ]
         },
