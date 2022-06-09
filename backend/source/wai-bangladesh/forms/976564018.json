@@ -557,15 +557,15 @@
           "options": [
             {
               "name": "Piped water into dwelling (into the building)",
-              "color": null
+              "color": "#70AD47"
             },
             {
               "name": "Piped water to yard/plot",
-              "color": null
+              "color": "#C5E0B3"
             },
             {
               "name": "Public tap/standpipe",
-              "color": null
+              "color": "#BF8F00"
             },
             {
               "name": "Deep tubewell/borehole",
@@ -585,7 +585,7 @@
             },
             {
               "name": "Protected dug well",
-              "color": null
+              "color": "#4472C4"
             },
             {
               "name": "Unprotected dug well",
@@ -593,7 +593,7 @@
             },
             {
               "name": "Protected spring",
-              "color": null
+              "color": "#40FCFF"
             },
             {
               "name": "Unprotected spring",
@@ -613,7 +613,7 @@
             },
             {
               "name": "Cart with small tank/drum",
-              "color": null
+              "color": "#FFFB00"
             },
             {
               "name": "Tanker-truck",

@@ -1848,7 +1848,7 @@
             },
             {
               "name": "Protected dug well",
-              "color": null
+              "color": "#4472C4"
             },
             {
               "name": "Unprotected dug well",
@@ -1876,11 +1876,11 @@
             },
             {
               "name": "Cart with small tank/drum",
-              "color": null
+              "color": "#FFFB00"
             },
             {
               "name": "Tanker-truck",
-              "color": null
+              "color": "#FF83B7"
             }
           ]
         },
@@ -3171,7 +3171,7 @@
             },
             {
               "name": "Composting toilet",
-              "color": null
+              "color": "#ED7D31"
             },
             {
               "name": "Bucket",
@@ -3179,7 +3179,7 @@
             },
             {
               "name": "Toilet that flush/pour to elsewhere",
-              "color": null
+              "color": "#385623"
             },
             {
               "name": "Toilet that flush/pour to septic tank",
@@ -6756,7 +6756,7 @@
             },
             {
               "name": "Other",
-              "color": null
+              "color": "#FF0000"
             }
           ]
         },
