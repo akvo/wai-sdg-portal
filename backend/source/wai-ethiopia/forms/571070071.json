@@ -53,6 +53,14 @@
           "required": false,
           "options": [
             {
+              "name": "AMREF",
+              "color": null
+            },
+            {
+              "name": "BBBC",
+              "color": null
+            },
+            {
               "name": "CDA",
               "color": null
             },
@@ -62,6 +70,26 @@
             },
             {
               "name": "Kale Hiwot",
+              "color": null
+            },
+            {
+              "name": "Catholic",
+              "color": null
+            },
+            {
+              "name": "IRC",
+              "color": null
+            },
+            {
+              "name": "OneWASH",
+              "color": null
+            },
+            {
+              "name": "World Vision",
+              "color": null
+            },
+            {
+              "name": "Others",
               "color": null
             }
           ]
@@ -135,11 +163,23 @@
               "color": null
             },
             {
+              "name": "Gravity",
+              "color": null
+            },
+            {
               "name": "Indian Mark II",
               "color": null
             },
             {
+              "name": "Solar System",
+              "color": null
+            },
+            {
               "name": "Submersible pump",
+              "color": null
+            },
+            {
+              "name": "Surface Pump",
               "color": null
             },
             {
