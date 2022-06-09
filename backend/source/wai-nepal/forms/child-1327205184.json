@@ -175,23 +175,23 @@
           "options": [
             {
               "name": "No Data",
-              "color": "#FF0000"
+              "color": null
             },
             {
               "name": "Good",
-              "color": "#00B050"
+              "color": null
             },
             {
               "name": "Minor Repair",
-              "color": "#00B0F0"
+              "color": null
             },
             {
               "name": "Major Repair",
-              "color": "#ED7D31"
+              "color": null
             },
             {
               "name": "Reconstruction",
-              "color": "#FF83B7"
+              "color": null
             }
           ]
         },

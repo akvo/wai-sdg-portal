@@ -138,59 +138,59 @@
           "options": [
             {
               "name": "Piped water into dwelling (household connection)",
-              "color": "#70AD47"
+              "color": null
             },
             {
               "name": "Piped water to yard/plot",
-              "color": "#C5E0B3"
+              "color": null
             },
             {
               "name": "Piped to neighbour",
-              "color": "#385623"
+              "color": null
             },
             {
               "name": "Deep tubewell/borehole",
-              "color": "#00B050"
+              "color": null
             },
             {
               "name": "Shallow tubewell/borehole",
-              "color": "#00B0F0"
+              "color": null
             },
             {
               "name": "Public tap/standpipe",
-              "color": "#BF8F00"
+              "color": null
             },
             {
               "name": "Protected spring",
-              "color": "#9C5CFF"
+              "color": null
             },
             {
               "name": "Rainwater collection",
-              "color": "#2F5496"
+              "color": null
             },
             {
               "name": "Tanker-truck",
-              "color": "#FF83B7"
+              "color": null
             },
             {
               "name": "Cart with small tank/drum",
-              "color": "#FFFB00"
+              "color": null
             },
             {
               "name": "Bottled water",
-              "color": "#4472C4"
+              "color": null
             },
             {
               "name": "Unprotected dug well",
-              "color": "#806000"
+              "color": null
             },
             {
               "name": "Unprotected spring",
-              "color": "#C45911"
+              "color": null
             },
             {
               "name": "Surface water",
-              "color": "#FF0000"
+              "color": null
             }
           ]
         },
@@ -379,55 +379,55 @@
           "options": [
             {
               "name": "Flush/pour flush to piped sewer system",
-              "color": "#70AD47"
+              "color": null
             },
             {
               "name": "Flush/pour flush to septic tank",
-              "color": "#C5E0B3"
+              "color": null
             },
             {
               "name": "Flush/pour flush to pit latrine",
-              "color": "#385623"
+              "color": null
             },
             {
               "name": "Ventilated improved pit latrine (VIP) with slab",
-              "color": "#00B050"
+              "color": null
             },
             {
               "name": "Pit latrine with slab",
-              "color": "#00B0F0"
+              "color": null
             },
             {
               "name": "Twin pit offset latrine",
-              "color": "#BF8F00"
+              "color": null
             },
             {
               "name": "Twin pit with latrine slab",
-              "color": "#40FCFF"
+              "color": null
             },
             {
               "name": "Other composting latrine",
-              "color": "#ED7D31"
+              "color": null
             },
             {
               "name": "Flush/pour flush to open drain",
-              "color": "#9C5CFF"
+              "color": null
             },
             {
               "name": "Flush/pour flush to don't know where",
-              "color": "#2F5496"
+              "color": null
             },
             {
               "name": "Pit latrine without slab/open pit",
-              "color": "#FF83B7"
+              "color": null
             },
             {
               "name": "Twin pit without slab",
-              "color": "#FFFB00"
+              "color": null
             },
             {
               "name": "No facility",
-              "color": "#FF0000"
+              "color": null
             }
           ]
         },
@@ -608,23 +608,23 @@
           "options": [
             {
               "name": "Fixed facility observed in dwelling",
-              "color": "#FF83B7"
+              "color": null
             },
             {
               "name": "Fixed facility observed in plot/yard",
-              "color": "#70AD47"
+              "color": null
             },
             {
               "name": "Mobile object observed (bucket, jug, kettle)",
-              "color": "#A8D08D"
+              "color": null
             },
             {
               "name": "No hand washing place available in dwelling/plot/yard",
-              "color": "#FFC000"
+              "color": null
             },
             {
               "name": "No permission to see",
-              "color": "#FF0000"
+              "color": null
             }
           ]
         },
@@ -798,33 +798,23 @@
           "options": [
             {
               "name": "Safely Managed",
-              "color": "#297EB5",
-              "order": 1,
-              "score": 15
+              "color": null
             },
             {
               "name": "Unimproved",
-              "color": "#FBD256",
-              "order": 4,
-              "score": -1
+              "color": null
             },
             {
               "name": "Basic",
-              "color": "#5EBADF",
-              "order": 2,
-              "score": 10
+              "color": null
             },
             {
               "name": "Limited",
-              "color": "#FDF177",
-              "order": 3,
-              "score": 1
+              "color": null
             },
             {
               "name": "Surface water",
-              "color": "#F1AC2A",
-              "order": 5,
-              "score": -2
+              "color": null
             }
           ]
         },
@@ -838,33 +828,23 @@
           "options": [
             {
               "name": "Safely Managed",
-              "color": "#368541",
-              "order": 1,
-              "score": 15
+              "color": null
             },
             {
               "name": "Basic",
-              "color": "#79BE7D",
-              "order": 2,
-              "score": 10
+              "color": null
             },
             {
               "name": "Limited",
-              "color": "#FDF177",
-              "order": 3,
-              "score": -1
+              "color": null
             },
             {
               "name": "Unimproved",
-              "color": "#FBD256",
-              "order": 4,
-              "score": -2
+              "color": null
             },
             {
               "name": "Open Defecation",
-              "color": "#F1AC2A",
-              "order": 5,
-              "score": -3
+              "color": null
             }
           ]
         },
@@ -878,18 +858,15 @@
           "options": [
             {
               "name": "Basic",
-              "color": "#753780",
-              "score": 10
+              "color": null
             },
             {
               "name": "Limited",
-              "color": "#FDF177",
-              "score": -1
+              "color": null
             },
             {
               "name": "No facility",
-              "color": "#F1AC2A",
-              "score": -2
+              "color": null
             }
           ]
         }

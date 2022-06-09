@@ -10,7 +10,7 @@
           "order": 1,
           "required": true,
           "type": "administration",
-          "meta": false
+          "meta": true
         },
         {
           "id": 1260775110,
@@ -49,35 +49,35 @@
           "options": [
             {
               "name": "No Data",
-              "color": "#FF0000"
+              "color": null
             },
             {
               "name": "Gravity Pipe System",
-              "color": "#70AD47"
+              "color": null
             },
             {
               "name": "Lift Pumping",
-              "color": "#C5E0B3"
+              "color": null
             },
             {
               "name": "Rainwater",
-              "color": "#00B0F0"
+              "color": null
             },
             {
               "name": "Deep Tubewell",
-              "color": "#ED7D31"
+              "color": null
             },
             {
               "name": "Shallow Tubewell",
-              "color": "#2F5496"
+              "color": null
             },
             {
               "name": "Imp. Reservoir",
-              "color": "#FF83B7"
+              "color": null
             },
             {
               "name": "Mixed",
-              "color": "#FFE599"
+              "color": null
             }
           ]
         },

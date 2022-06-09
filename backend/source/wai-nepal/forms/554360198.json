@@ -84,7 +84,10 @@
           "dependency": [
             {
               "id": 578820191,
-              "options": ["Boys Only", "Co-education"]
+              "options": [
+                "Boys Only",
+                "Co-education"
+              ]
             }
           ]
         },
@@ -99,14 +102,26 @@
           "dependency": [
             {
               "id": 578820191,
-              "options": ["Girls Only", "Co-education"]
+              "options": [
+                "Girls Only",
+                "Co-education"
+              ]
             }
           ]
         },
         {
+          "id": 637730002,
+          "question": "Total number of students",
+          "order": 7,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null
+        },
+        {
           "id": 567820009,
           "question": "Number of teaching staffs",
-          "order": 7,
+          "order": 8,
           "meta": false,
           "type": "number",
           "required": true,
@@ -115,7 +130,7 @@
         {
           "id": 567820008,
           "question": "Are there any students or staff members with a disability?",
-          "order": 8,
+          "order": 9,
           "meta": false,
           "type": "option",
           "required": true,
@@ -133,7 +148,7 @@
         {
           "id": 567820004,
           "question": "Are you able to take GPS point of the school?",
-          "order": 9,
+          "order": 10,
           "meta": false,
           "type": "option",
           "required": true,
@@ -151,7 +166,7 @@
         {
           "id": 567820005,
           "question": "GPS point of school",
-          "order": 10,
+          "order": 11,
           "meta": true,
           "type": "geo",
           "required": true,
@@ -159,7 +174,9 @@
           "dependency": [
             {
               "id": 567820004,
-              "options": ["Yes"]
+              "options": [
+                "Yes"
+              ]
             }
           ]
         }
@@ -170,7 +187,7 @@
       "questions": [
         {
           "id": 580800138,
-          "question": "What is the main source of drinking water provided by the school? (most frequently used)",
+          "question": "What is the main source of drinking water provided by the school? (select one - most frequently used)",
           "order": 1,
           "meta": false,
           "type": "option",
@@ -178,55 +195,55 @@
           "options": [
             {
               "name": "Pipeline connection",
-              "color": "#70AD47"
+              "color": null
             },
             {
               "name": "Protected well/spring",
-              "color": "#00B050"
+              "color": null
             },
             {
               "name": "Deep tubewell/borehole",
-              "color": "#00B050"
+              "color": null
             },
             {
               "name": "Shallow tubewell/borehole",
-              "color": "#00B0F0"
+              "color": null
             },
             {
               "name": "Rainwater collection",
-              "color": "#2F5496"
+              "color": null
             },
             {
               "name": "Packaged bottled water",
-              "color": "#FFD966"
+              "color": null
             },
             {
               "name": "Tanker-truck or cart",
-              "color": "#FF83B7"
+              "color": null
             },
             {
               "name": "Unprotected well/spring",
-              "color": "#806000"
+              "color": null
             },
             {
               "name": "Surface water (lake, river, stream)",
-              "color": "#FFC000"
+              "color": null
             },
             {
               "name": "Bottled water",
-              "color": "#4472C4"
+              "color": null
             },
             {
               "name": "Student bring their own water",
-              "color": "#C45911"
+              "color": null
             },
             {
               "name": "Public Water Point",
-              "color": "#9CC2E5"
+              "color": null
             },
             {
               "name": "No water source",
-              "color": "#9CC2E5"
+              "color": null
             }
           ]
         },
@@ -281,39 +298,39 @@
           "options": [
             {
               "name": "Toilet that flush/poor flush to piped sewer system",
-              "color": "#70AD47"
+              "color": null
             },
             {
               "name": "Toilet that flush/poor flush to septic tank",
-              "color": "#C5E0B3"
+              "color": null
             },
             {
               "name": "Toilet that flush/poor flush to elsewhere",
-              "color": "#385623"
+              "color": null
             },
             {
               "name": "Toilet that flush/poor flush but don't know where",
-              "color": "#2F5496"
+              "color": null
             },
             {
               "name": "Pit latrine with slab",
-              "color": "#00B0F0"
+              "color": null
             },
             {
               "name": "Ventilated Improved Pit latrine (VIP)",
-              "color": "#00B050"
+              "color": null
             },
             {
               "name": "Twinpit offset latrine",
-              "color": "#BF8F00"
+              "color": null
             },
             {
               "name": "Composting toilet",
-              "color": "#FF0000"
+              "color": null
             },
             {
               "name": "Pit latrine without slab/open pit",
-              "color": "#ff83b7"
+              "color": null
             }
           ]
         },
@@ -328,7 +345,9 @@
           "dependency": [
             {
               "id": 567800083,
-              "options": ["Yes"]
+              "options": [
+                "Yes"
+              ]
             }
           ]
         },
@@ -352,7 +371,9 @@
           "dependency": [
             {
               "id": 578820191,
-              "options": ["Co-education"]
+              "options": [
+                "Co-education"
+              ]
             }
           ]
         }
@@ -420,15 +441,15 @@
           "options": [
             {
               "name": "Basic",
-              "color": "#753780"
+              "color": null
             },
             {
               "name": "Limited",
-              "color": "#FDF177"
+              "color": null
             },
             {
-              "name": "No Service",
-              "color": "#F9CA29"
+              "name": "No service",
+              "color": null
             }
           ]
         },
@@ -442,23 +463,15 @@
           "options": [
             {
               "name": "Basic",
-              "color": "#753780"
+              "color": null
             },
             {
               "name": "Limited",
-              "color": "#FDF177"
+              "color": null
             },
             {
-              "name": "Unimproved",
-              "color": "#FBD256"
-            },
-            {
-              "name": "Open Defecation",
-              "color": "#F1AC2A"
-            },
-            {
-              "name": "No Service",
-              "color": "#F9CA29"
+              "name": "No service",
+              "color": null
             }
           ]
         },
@@ -472,19 +485,15 @@
           "options": [
             {
               "name": "Basic",
-              "color": "#753780"
+              "color": null
             },
             {
               "name": "Limited",
-              "color": "#FDF177"
+              "color": null
             },
             {
-              "name": "No Facility",
-              "color": "#F1AC2A"
-            },
-            {
-              "name": "No Service",
-              "color": "#F9CA29"
+              "name": "No service",
+              "color": null
             }
           ]
         }
