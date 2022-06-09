@@ -54,7 +54,7 @@ var navigation_config = [
   },
   {
     link: "projects",
-    name: "Projects",
+    name: "WCC Projects",
     childrens: [
       {
         link: "project",
