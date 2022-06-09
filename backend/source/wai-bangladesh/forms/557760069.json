@@ -1,0 +1,808 @@
+{
+  "form": "JMP Core Questions for Monitoring WASH in Healthcare Facilities",
+  "id": "557760069",
+  "question_groups": [
+    {
+      "question_group": "Location details",
+      "questions": [
+        {
+          "question": "location",
+          "order": 1,
+          "required": true,
+          "type": "administration",
+          "meta": true
+        },
+        {
+          "id": 556270052,
+          "question": "Ward Number",
+          "order": 2,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "rule": {
+            "max": "9.0",
+            "min": "1.0"
+          }
+        },
+        {
+          "id": 573100087,
+          "question": "Are you able to take GPS point of the health care facility?",
+          "order": 3,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 573100085,
+          "question": "Take GPS point of health care facility",
+          "order": 4,
+          "meta": true,
+          "type": "geo",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 573100087,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Health Care Facility Information",
+      "questions": [
+        {
+          "id": 573100084,
+          "question": "Health Care Facility Name",
+          "order": 1,
+          "meta": false,
+          "type": "text",
+          "required": true,
+          "options": null
+        },
+        {
+          "id": 573100086,
+          "question": "Health Care Facility Type",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Community clinic",
+              "color": null
+            },
+            {
+              "name": "Union health complex",
+              "color": null
+            },
+            {
+              "name": "Upazila health complex",
+              "color": null
+            },
+            {
+              "name": "Big/Private hospital",
+              "color": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Core water questions",
+      "questions": [
+        {
+          "id": 571110060,
+          "question": "What is the main water supply for the facility? (select one - the one most frequently used)",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Piped supply inside the building",
+              "color": null
+            },
+            {
+              "name": "Piped supply outside the building",
+              "color": null
+            },
+            {
+              "name": "Tube well / Borehole",
+              "color": null
+            },
+            {
+              "name": "Protected dug well",
+              "color": null
+            },
+            {
+              "name": "Protected spring",
+              "color": null
+            },
+            {
+              "name": "PSF (pond sand filter)",
+              "color": null
+            },
+            {
+              "name": "AIRP (arsenic iron removable plant)",
+              "color": null
+            },
+            {
+              "name": "Unprotected dug well",
+              "color": null
+            },
+            {
+              "name": "Unprotected spring",
+              "color": null
+            },
+            {
+              "name": "Rain water",
+              "color": null
+            },
+            {
+              "name": "Tanker truck",
+              "color": null
+            },
+            {
+              "name": "Surface water (river/dam/lake/pond)",
+              "color": null
+            },
+            {
+              "name": "Bottled water",
+              "color": null
+            },
+            {
+              "name": "Don\u2019t know",
+              "color": null
+            },
+            {
+              "name": "No water source",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 571110058,
+          "question": "Where is the main water supply for the facility located?",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "On premises",
+              "color": null
+            },
+            {
+              "name": "Up to 500 m",
+              "color": null
+            },
+            {
+              "name": "500 m or further",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 571110060,
+              "options": [
+                "Piped supply outside the building",
+                "Tube well / Borehole",
+                "Protected dug well",
+                "Protected spring",
+                "PSF (pond sand filter)",
+                "AIRP (arsenic iron removable plant)",
+                "Unprotected dug well",
+                "Unprotected spring",
+                "Rain water",
+                "Tanker truck",
+                "Surface water (river/dam/lake/pond)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 571110059,
+          "question": "Is water available from the main water point at time of the survey?",
+          "order": 3,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 571110060,
+              "options": [
+                "Piped supply inside the building",
+                "Piped supply outside the building",
+                "Tube well / Borehole",
+                "Protected dug well",
+                "Protected spring",
+                "PSF (pond sand filter)",
+                "AIRP (arsenic iron removable plant)",
+                "Unprotected dug well",
+                "Unprotected spring",
+                "Rain water",
+                "Tanker truck",
+                "Surface water (river/dam/lake/pond)",
+                "Bottled water"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Core sanitation questions",
+      "questions": [
+        {
+          "id": 567530047,
+          "question": "What type of toilets are at the facility for patients?",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Flush/Pour-flush toilet to sewer connection",
+              "color": null
+            },
+            {
+              "name": "Flush/Pour-flush toilet to tank or pit",
+              "color": null
+            },
+            {
+              "name": "Pit latrine with slab",
+              "color": null
+            },
+            {
+              "name": "Composting toilet",
+              "color": null
+            },
+            {
+              "name": "Flush/Pour-flush toilet to open drain",
+              "color": null
+            },
+            {
+              "name": "Pit latrine without slab/open pit",
+              "color": null
+            },
+            {
+              "name": "Bucket toilet",
+              "color": null
+            },
+            {
+              "name": "Hanging toilet",
+              "color": null
+            },
+            {
+              "name": "No toilet/latrine",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 567530051,
+          "question": "Is at least one toilet usable? (Available, functional, private)",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 567530047,
+              "options": [
+                "Flush/Pour-flush toilet to sewer connection",
+                "Flush/Pour-flush toilet to tank or pit",
+                "Pit latrine with slab",
+                "Composting toilet",
+                "Pit latrine without slab/open pit"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 567530048,
+          "question": "Are there toilets that are dedicated for staffs?",
+          "order": 3,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 567530047,
+              "options": [
+                "Flush/Pour-flush toilet to sewer connection",
+                "Flush/Pour-flush toilet to tank or pit",
+                "Pit latrine with slab",
+                "Composting toilet",
+                "Flush/Pour-flush toilet to open drain",
+                "Pit latrine without slab/open pit"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 567530050,
+          "question": "Are there toilets that are sex-separated?",
+          "order": 4,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 567530047,
+              "options": [
+                "Flush/Pour-flush toilet to sewer connection",
+                "Flush/Pour-flush toilet to tank or pit",
+                "Pit latrine with slab",
+                "Composting toilet",
+                "Flush/Pour-flush toilet to open drain",
+                "Pit latrine without slab/open pit"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 567530045,
+          "question": "Are there toilets that have menstrual hygiene facilities?",
+          "order": 5,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 567530047,
+              "options": [
+                "Flush/Pour-flush toilet to sewer connection",
+                "Flush/Pour-flush toilet to tank or pit",
+                "Pit latrine with slab",
+                "Composting toilet",
+                "Flush/Pour-flush toilet to open drain",
+                "Pit latrine without slab/open pit"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 567530046,
+          "question": "Are there toilets that are accessible for people with limited mobility?",
+          "order": 6,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 567530047,
+              "options": [
+                "Flush/Pour-flush toilet to sewer connection",
+                "Flush/Pour-flush toilet to tank or pit",
+                "Pit latrine with slab",
+                "Composting toilet",
+                "Flush/Pour-flush toilet to open drain",
+                "Pit latrine without slab/open pit"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Core hygiene questions",
+      "questions": [
+        {
+          "id": 544120053,
+          "question": "Is there a functional hand hygiene hygiene facility at points of care on the day of the survey?",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No, there are hand hygienes facilities present at points of care but not functional or lack soap and water or ABHR",
+              "color": null
+            },
+            {
+              "name": "No hand hygiene facilities at points of care",
+              "color": null
+            },
+            {
+              "name": "No hand hygiene facilities at the health facility",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 563460104,
+          "question": "Is there a functional handwashing facility at one or more toilets on the day of the survey?",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No, there are handwashing facilities near the toilet but lack soap and/or water",
+              "color": null
+            },
+            {
+              "name": "No, no handwashing facilities near toilets (within 5 meters)",
+              "color": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Core health care waste management questions",
+      "questions": [
+        {
+          "id": 559910085,
+          "question": "Is waste correctly segregated into at least three labelled bins in the consultation area?",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No, bins are present but do not meet all requirements or waste is not correctly segragated",
+              "color": null
+            },
+            {
+              "name": "No, bins are not present",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 559910083,
+          "question": "How does this facility usually treat/dispose of infectious waste?",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Autoclaved",
+              "color": null
+            },
+            {
+              "name": "Incinerated (two chamber, 850-1000 \u00b0C incinerator)",
+              "color": null
+            },
+            {
+              "name": "Incinerated (other)",
+              "color": null
+            },
+            {
+              "name": "Burning in a protected pit",
+              "color": null
+            },
+            {
+              "name": "Not treated, but buried in lined, protected pit",
+              "color": null
+            },
+            {
+              "name": "Not treated, but collected for medical waste disposal off-site",
+              "color": null
+            },
+            {
+              "name": "Open dumping without treatment",
+              "color": null
+            },
+            {
+              "name": "Open burning",
+              "color": null
+            },
+            {
+              "name": "Not treated and added to general waste",
+              "color": null
+            },
+            {
+              "name": "Other",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 559910084,
+          "question": "How does this facility usually treat/dispose of sharps waste?",
+          "order": 3,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Autoclaved",
+              "color": null
+            },
+            {
+              "name": "Incinerated (two chamber, 850-1000 \u00b0C incinerator)",
+              "color": null
+            },
+            {
+              "name": "Incinerated (other)",
+              "color": null
+            },
+            {
+              "name": "Burning in a protected pit",
+              "color": null
+            },
+            {
+              "name": "Not treated, but buried in lined, protected pit",
+              "color": null
+            },
+            {
+              "name": "Not treated, but collected for medical waste disposal off-site",
+              "color": null
+            },
+            {
+              "name": "Open dumping without treatment",
+              "color": null
+            },
+            {
+              "name": "Open burning",
+              "color": null
+            },
+            {
+              "name": "Not treated and added to general waste",
+              "color": null
+            },
+            {
+              "name": "Other",
+              "color": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Core environmental cleaning questions",
+      "questions": [
+        {
+          "id": 557750068,
+          "question": "Are cleaning protocols available?",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 557750067,
+          "question": "Have all staff responsible for cleaning received training?",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No, some but not all have been trained",
+              "color": null
+            },
+            {
+              "name": "No, none have been trained",
+              "color": null
+            },
+            {
+              "name": "No, there are no staff responsible for cleaning",
+              "color": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Service levels for Water, Sanitation, Hygiene, Waste, and Environmental Cleaning",
+      "questions": [
+        {
+          "id": 559910088,
+          "question": "Water service level",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Basic",
+              "color": null
+            },
+            {
+              "name": "Limited",
+              "color": null
+            },
+            {
+              "name": "No service",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 559910089,
+          "question": "Sanitation service level",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Basic",
+              "color": null
+            },
+            {
+              "name": "Limited",
+              "color": null
+            },
+            {
+              "name": "No service",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 559910090,
+          "question": "Hygiene service level",
+          "order": 3,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Basic",
+              "color": null
+            },
+            {
+              "name": "Limited",
+              "color": null
+            },
+            {
+              "name": "No service",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 559910087,
+          "question": "Waste service level",
+          "order": 4,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Basic",
+              "color": null
+            },
+            {
+              "name": "Limited",
+              "color": null
+            },
+            {
+              "name": "No service",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 559910086,
+          "question": "Environmental Cleaning service level",
+          "order": 5,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Basic",
+              "color": null
+            },
+            {
+              "name": "Limited",
+              "color": null
+            },
+            {
+              "name": "No service",
+              "color": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,524 @@
+{
+  "form": "JMP Core Questions for Monitoring WASH in Schools",
+  "id": "563280066",
+  "question_groups": [
+    {
+      "question_group": "Location Demographics",
+      "questions": [
+        {
+          "question": "location",
+          "order": 1,
+          "required": true,
+          "type": "administration",
+          "meta": true
+        },
+        {
+          "id": 569320067,
+          "question": "Ward Number",
+          "order": 2,
+          "meta": true,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "rule": {
+            "max": "9.0",
+            "min": "1.0"
+          }
+        },
+        {
+          "id": 569130080,
+          "question": "School name",
+          "order": 3,
+          "meta": true,
+          "type": "text",
+          "required": true,
+          "options": null
+        },
+        {
+          "id": 569130076,
+          "question": "School type",
+          "order": 4,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Primary",
+              "color": null
+            },
+            {
+              "name": "Secondary",
+              "color": null
+            },
+            {
+              "name": "Madarsa",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 574900057,
+          "question": "Is this school Girls Only/Boys Only/Co-Education?",
+          "order": 5,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Girls Only",
+              "color": null
+            },
+            {
+              "name": "Boys Only",
+              "color": null
+            },
+            {
+              "name": "Co-education",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 569130077,
+          "question": "Number of male pupils",
+          "order": 6,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 574900057,
+              "options": [
+                "Boys Only",
+                "Co-education"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 569130073,
+          "question": "Number of female pupils",
+          "order": 7,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 574900057,
+              "options": [
+                "Girls Only",
+                "Co-education"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 629850003,
+          "question": "Total number of students",
+          "order": 8,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null
+        },
+        {
+          "id": 578820057,
+          "question": "Number of teaching staffs",
+          "order": 9,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null
+        },
+        {
+          "id": 571300074,
+          "question": "Are there any students or staff members with a disability?",
+          "order": 10,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 569130078,
+          "question": "Are you able to take GPS point of the school?",
+          "order": 11,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 569130079,
+          "question": "GPS point of school",
+          "order": 12,
+          "meta": true,
+          "type": "geo",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 569130078,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Core Drinking Water Questions",
+      "questions": [
+        {
+          "id": 563280069,
+          "question": "What is the main source of drinking water provided by the school? (select one - most frequently used)",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Pipeline connection",
+              "color": null
+            },
+            {
+              "name": "Protected well/spring",
+              "color": null
+            },
+            {
+              "name": "Deep tubewell/borehole",
+              "color": null
+            },
+            {
+              "name": "Shallow tubewell/borehole",
+              "color": null
+            },
+            {
+              "name": "PSF (Pond Sand Filter)",
+              "color": null
+            },
+            {
+              "name": "AIRP (Arsenic Iron Removable Plant)",
+              "color": null
+            },
+            {
+              "name": "Rainwater collection",
+              "color": null
+            },
+            {
+              "name": "Packaged bottled water",
+              "color": null
+            },
+            {
+              "name": "Tanker-truck or cart",
+              "color": null
+            },
+            {
+              "name": "Unprotected well/spring",
+              "color": null
+            },
+            {
+              "name": "Surface water (lake, river, stream)",
+              "color": null
+            },
+            {
+              "name": "Bottled water",
+              "color": null
+            },
+            {
+              "name": "Student bring their own water",
+              "color": null
+            },
+            {
+              "name": "Public Water Point",
+              "color": null
+            },
+            {
+              "name": "No water source",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 563280071,
+          "question": "Is drinking water from the main source currently available at the school at the time of the survey?",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Core Sanitation Questions",
+      "questions": [
+        {
+          "id": 557970060,
+          "question": "Does your school have toilet for students?",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 578820058,
+          "question": "What type of student toilets are at the school? (Select the one that is most commonly used)",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Toilet that flush/poor flush to piped sewer system",
+              "color": null
+            },
+            {
+              "name": "Toilet that flush/poor flush to septic tank",
+              "color": null
+            },
+            {
+              "name": "Toilet that flush/poor flush to elsewhere",
+              "color": null
+            },
+            {
+              "name": "Toilet that flush/poor flush but don't know where",
+              "color": null
+            },
+            {
+              "name": "Pit latrine with slab",
+              "color": null
+            },
+            {
+              "name": "Ventilated Improved Pit latrine (VIP)",
+              "color": null
+            },
+            {
+              "name": "Twinpit offset latrine",
+              "color": null
+            },
+            {
+              "name": "Composting toilet",
+              "color": null
+            },
+            {
+              "name": "Pit latrine without slab/open pit",
+              "color": null
+            },
+            {
+              "name": "Hanging latrine",
+              "color": null
+            },
+            {
+              "name": "Bucket latrine",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 552050054,
+          "question": "How many student toilets are currently usable (accessible and functional and private)?",
+          "order": 3,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "dependency": [
+            {
+              "id": 557970060,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 561220066,
+          "question": "Are the toilets/latrines separate for girls and boys?",
+          "order": 4,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 574900057,
+              "options": [
+                "Co-education"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Core Hygiene Questions",
+      "questions": [
+        {
+          "id": 556040071,
+          "question": "Are there handwashing facilities at the school?",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 556040070,
+          "question": "Are both soap and water currently available at the handwashing facilities?",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, water and soap",
+              "color": null
+            },
+            {
+              "name": "Water only",
+              "color": null
+            },
+            {
+              "name": "Soap only",
+              "color": null
+            },
+            {
+              "name": "Neither water or soap",
+              "color": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Service levels for Water, Sanitation, and Hygiene",
+      "questions": [
+        {
+          "id": 563280073,
+          "question": "Water service levels",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Basic",
+              "color": null
+            },
+            {
+              "name": "Limited",
+              "color": null
+            },
+            {
+              "name": "No service",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 563280074,
+          "question": "Sanitation service levels",
+          "order": 2,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Basic",
+              "color": null
+            },
+            {
+              "name": "Limited",
+              "color": null
+            },
+            {
+              "name": "No service",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 563280072,
+          "question": "Hygiene service levels",
+          "order": 3,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Basic",
+              "color": null
+            },
+            {
+              "name": "Limited",
+              "color": null
+            },
+            {
+              "name": "No service",
+              "color": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
