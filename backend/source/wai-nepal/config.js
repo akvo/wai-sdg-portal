@@ -54,7 +54,7 @@ var navigation_config = [
   },
   {
     link: "projects",
-    name: "WCC Projects",
+    name: "WSS Projects",
     childrens: [
       {
         link: "project",
@@ -477,12 +477,12 @@ var page_config = {
         key: "name",
       },
       {
-        title: "Project Code",
-        key: 1336894024,
+        title: "Water",
+        key: 1344224020,
       },
     ],
     maps: {
-      shape: { id: 1260775111, name: "Project Type" },
+      shape: { id: 1344224020, name: "Project Type" },
       marker: { id: 1344224020, name: "Use of Water in Income" },
     },
     formId: 1338414049,
