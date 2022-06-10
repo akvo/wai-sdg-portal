@@ -1,4 +1,11 @@
+/* eslint-disable */
 var site_name = "WAI Bangladesh";
+
+/*
+ * position for landing page
+ * optional:
+ */
+var landing_map_pos = 1.2;
 
 var features = {
   chartFeature: {
@@ -223,7 +230,7 @@ var page_config = {
             name: "Type of health center",
           },
         ],
-      }
+      },
     ],
   },
 };
