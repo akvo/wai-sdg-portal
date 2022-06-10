@@ -35,6 +35,7 @@ const MainTable = ({
   current,
   loading,
   data,
+  dataSource,
   questionGroup,
   total,
   changePage,
@@ -164,11 +165,8 @@ const MainTable = ({
             expandable={{
               rowExpandable: (record) => {
                 // Enable expand by Access
-                const administrationAnswers = record.detail
-                  .filter((det) =>
-                    administrationQuestionIds.includes(det.question)
-                  )
-                  .map((det) => det.value);
+                const administrationAnswers =
+                  [record?.name?.props?.record?.administration] || [];
                 const isExpandable = !isEmpty(
                   intersection(
                     administrationIdsByUserAccess,
