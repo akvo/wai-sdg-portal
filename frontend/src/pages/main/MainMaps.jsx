@@ -18,12 +18,7 @@ import { scaleQuantize } from "d3-scale";
 import { UIState } from "../../state/ui";
 import _ from "lodash";
 import { generateAdvanceFilterURL } from "../../util/utils";
-import {
-  getBounds,
-  geojson,
-  tileDelorme,
-  defaultPos,
-} from "../../util/geo-util";
+import { getBounds, geojson, tileOSM, defaultPos } from "../../util/geo-util";
 import { Color } from "../../chart/chart-style";
 
 const { shapeLevels } = window.map_config;
@@ -402,9 +397,8 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
 
   // support selectable marker question
   const { selectableMarkerDropdown } = current;
-  const [selectableMarkerQuestion, setSelectableMarkerQuestion] = useState(
-    null
-  );
+  const [selectableMarkerQuestion, setSelectableMarkerQuestion] =
+    useState(null);
 
   // support selectable marker question & custom color coded
   const defaultMarkerColor = _.sortBy(selectableMarkerQuestion?.option)?.map(
@@ -828,7 +822,7 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
             width: "100%",
           }}
         >
-          <TileLayer {...tileDelorme} />
+          <TileLayer {...tileOSM} />
           <GeoJSON
             key="geodata"
             style={geoStyle}
