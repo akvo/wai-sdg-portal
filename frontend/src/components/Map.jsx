@@ -1,16 +1,17 @@
 import React, { useEffect } from "react";
 import { MapContainer, GeoJSON, TileLayer } from "react-leaflet";
-import { defaultPos, geojson, tileStadia } from "../util/geo-util";
+import { defaultPos, geojson, tileOSM } from "../util/geo-util";
 import { UIState } from "../state/ui";
 
 const defPos = defaultPos();
+const landingPos = window?.landing_map_pos || 0.6;
 
 const Map = () => {
   const { boundsAlignToRight } = UIState.useState((s) => s);
   const newBbox = boundsAlignToRight
     ? boundsAlignToRight
     : defPos.bbox.map((x) => {
-        x[1] = x[1] - 0.6;
+        x[1] = x[1] - landingPos;
         return x;
       });
 
@@ -33,7 +34,7 @@ const Map = () => {
           width: "100%",
         }}
       >
-        <TileLayer {...tileStadia} />
+        <TileLayer {...tileOSM} />
         <GeoJSON
           key="geodata"
           style={{
