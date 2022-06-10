@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { MapContainer, GeoJSON, TileLayer } from "react-leaflet";
-import { defaultPos, geojson, tileStadia } from "../util/geo-util";
+import { defaultPos, geojson, tileOSM } from "../util/geo-util";
 import { UIState } from "../state/ui";
 
 const defPos = defaultPos();
@@ -34,7 +34,7 @@ const Map = () => {
           width: "100%",
         }}
       >
-        <TileLayer {...tileStadia} />
+        <TileLayer {...tileOSM} />
         <GeoJSON
           key="geodata"
           style={{
