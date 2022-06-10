@@ -39,19 +39,70 @@ var page_config = {
         key: "name",
       },
       {
-        title: "Water Salinity",
-        key: 1093164024,
+        title: "Water",
+        key: 551910082,
       },
       {
-        title: "Arsenic",
-        key: 1089314018,
+        title: "Sanitation",
+        key: 551910081,
+      },
+      {
+        title: "Hygiene",
+        key: 551910083,
       },
     ],
     maps: {
-      shape: { id: 994964007, name: "Household Size" },
-      marker: { id: 962764019, title: "Laterine" },
+      shape: { id: 554190060, name: "Household Size" },
+      marker: { id: 527870065, title: "Laterine" },
     },
-    formId: 962774003,
+    formId: 574850091,
+    tabs: [
+      {
+        name: "JMP",
+        component: "JMP-CHARTS",
+        selected: true,
+        chartList: [
+          { question: 551910082, name: "Water" },
+          { question: 551910081, name: "Sanitation" },
+          { question: 551910083, name: "Hygiene" },
+        ],
+      },
+    ],
+    selectableMarkerDropdown: [
+      {
+        id: 527870065,
+        name: "Water Service Level",
+        hover: [
+          { id: 554190059, name: "Name of respondent" },
+          {
+            id: 554190060,
+            name: "Household Size",
+          },
+        ],
+      },
+      {
+        id: 544110058,
+        name: "Sanitation Service Level",
+        hover: [
+          { id: 554190059, name: "Name of respondent" },
+          {
+            id: 554190060,
+            name: "Household Size",
+          },
+        ],
+      },
+      {
+        id: 569140059,
+        name: "Hygiene Service Level",
+        hover: [
+          { id: 554190059, name: "Name of respondent" },
+          {
+            id: 554190060,
+            name: "Household Size",
+          },
+        ],
+      },
+    ],
   },
   schools: {
     title: "Schools Facility",
@@ -61,19 +112,47 @@ var page_config = {
         key: "name",
       },
       {
-        title: "Handwashing",
-        key: 987364056,
+        title: "Water",
+        key: 563280073,
       },
       {
-        title: "Has Toilet",
-        key: 993004033,
+        title: "Sanitation",
+        key: 563280074,
+      },
+      {
+        title: "Hygiene",
+        key: 563280072,
       },
     ],
     maps: {
-      shape: { id: 974754026, name: "Number of Student" },
-      marker: { id: 993004033, title: "Toilet" },
+      shape: { id: 563280074, name: "Sanitation" },
+      marker: { id: 563280069, title: "Toilet" },
     },
-    formId: 976564018,
+    formId: 563280066,
+    selectableMarkerDropdown: [
+      {
+        id: 563280069,
+        name: "Water Service Level",
+        hover: [
+          { id: 569130080, name: "Name of school" },
+          {
+            id: 629850003,
+            name: "School Size",
+          },
+        ],
+      },
+      {
+        id: 578820058,
+        name: "Sanitation Service Level",
+        hover: [
+          { id: 569130080, name: "Name of school" },
+          {
+            id: 629850003,
+            name: "School Size",
+          },
+        ],
+      },
+    ],
   },
   health: {
     title: "Health Facility",
@@ -83,19 +162,69 @@ var page_config = {
         key: "name",
       },
       {
-        title: "Type",
-        key: 974754044,
+        title: "Water",
+        key: 559910088,
       },
       {
-        title: "Water Source",
-        key: 994994027,
+        title: "Sanitation",
+        key: 559910089,
+      },
+      {
+        title: "Hygiene",
+        key: 559910090,
       },
     ],
     maps: {
-      shape: { id: 1000914052, name: "Cases of Diarhea" },
-      marker: { id: 987364073, name: "Hygiene Stations" },
+      shape: { id: 559910088, name: "Water" },
+      marker: { id: 567530047, name: "Toilet" },
     },
-    formId: 952774024,
+    formId: 557760069,
+    selectableMarkerDropdown: [
+      {
+        id: 571110060,
+        name: "Water Service Level",
+        hover: [
+          { id: 573100084, name: "Healthcare name" },
+          {
+            id: 573100086,
+            name: "Type of health center",
+          },
+        ],
+      },
+      {
+        id: 567530047,
+        name: "Sanitation Service Level",
+        hover: [
+          { id: 573100084, name: "Healthcare name" },
+          {
+            id: 573100086,
+            name: "Type of health center",
+          },
+        ],
+      },
+      {
+        id: 559910085,
+        name: "Waste",
+        hover: [
+          { id: 573100084, name: "Healthcare name" },
+          {
+            id: 573100086,
+            name: "Type of health center",
+          },
+        ],
+      },
+      {
+        id: 557750067,
+        name: "Waste",
+        hover: [
+          { id: 573100084, name: "Healthcare name" },
+          {
+            id: 573100086,
+            name: "Type of health center",
+          },
+        ],
+      }
+    ],
   },
 };
 
@@ -103,7 +232,7 @@ var landing_config = {
   jumbotron: {
     // title, the text or list title
     title:
-      "This portal is used at the ##administration## level to see the relative WASH vulnerability of communities and institutions, and track the status of water and sanitation infrastructure",
+      "This portal is used at union and municipality level to see the relative WASH vulnerability of communities and institutions",
     // list_type, can be bullet/number or null if no list
     list_type: null,
     // list, describe the list as an array of text or empty array [] if no list

@@ -200,63 +200,63 @@
           "options": [
             {
               "name": "Pipeline connection",
-              "color": null
+              "color": "#70AD47"
             },
             {
               "name": "Protected well/spring",
-              "color": null
+              "color": "#4472C4"
             },
             {
               "name": "Deep tubewell/borehole",
-              "color": null
+              "color": "#70AD47"
             },
             {
               "name": "Shallow tubewell/borehole",
-              "color": null
+              "color": "#00B0F0"
             },
             {
               "name": "PSF (Pond Sand Filter)",
-              "color": null
+              "color": "#ED7D31"
             },
             {
               "name": "AIRP (Arsenic Iron Removable Plant)",
-              "color": null
+              "color": "#9C5CFF"
             },
             {
               "name": "Rainwater collection",
-              "color": null
+              "color": "#2F5496"
             },
             {
               "name": "Packaged bottled water",
-              "color": null
+              "color": "#FFD966"
             },
             {
               "name": "Tanker-truck or cart",
-              "color": null
+              "color": "#FF83B7"
             },
             {
               "name": "Unprotected well/spring",
-              "color": null
+              "color": "#806000"
             },
             {
               "name": "Surface water (lake, river, stream)",
-              "color": null
+              "color": "#FFC000"
             },
             {
               "name": "Bottled water",
-              "color": null
+              "color": "#4472C4"
             },
             {
               "name": "Student bring their own water",
-              "color": null
+              "color": "#C45911"
             },
             {
               "name": "Public Water Point",
-              "color": null
+              "color": "#9CC2E5"
             },
             {
               "name": "No water source",
-              "color": null
+              "color": "#FF0000"
             }
           ]
         },
@@ -311,47 +311,47 @@
           "options": [
             {
               "name": "Toilet that flush/poor flush to piped sewer system",
-              "color": null
+              "color": "#70AD47"
             },
             {
               "name": "Toilet that flush/poor flush to septic tank",
-              "color": null
+              "color": "#C5E0B3"
             },
             {
               "name": "Toilet that flush/poor flush to elsewhere",
-              "color": null
+              "color": "#385623"
             },
             {
               "name": "Toilet that flush/poor flush but don't know where",
-              "color": null
+              "color": "#2F5496"
             },
             {
               "name": "Pit latrine with slab",
-              "color": null
+              "color": "#00B0F0"
             },
             {
               "name": "Ventilated Improved Pit latrine (VIP)",
-              "color": null
+              "color": "#00B050"
             },
             {
               "name": "Twinpit offset latrine",
-              "color": null
+              "color": "#BF8F00"
             },
             {
               "name": "Composting toilet",
-              "color": null
+              "color": "#ED7D31"
             },
             {
               "name": "Pit latrine without slab/open pit",
-              "color": null
+              "color": "#FF83B7"
             },
             {
               "name": "Hanging latrine",
-              "color": null
+              "color": "#44546A"
             },
             {
               "name": "Bucket latrine",
-              "color": null
+              "color": "#7030A0"
             }
           ]
         },
@@ -462,15 +462,21 @@
           "options": [
             {
               "name": "Basic",
-              "color": null
+              "color": "#5EBADF",
+              "order": 2,
+              "score": 10
             },
             {
               "name": "Limited",
-              "color": null
+              "color": "#FDF177",
+              "order": 3,
+              "score": 1
             },
             {
-              "name": "No service",
-              "color": null
+              "name": "Surface water",
+              "color": "#F1AC2A",
+              "order": 5,
+              "score": -2
             }
           ]
         },
@@ -484,15 +490,19 @@
           "options": [
             {
               "name": "Basic",
-              "color": null
+              "color": "#79BE7D",
+              "order": 2,
+              "score": 10
             },
             {
               "name": "Limited",
-              "color": null
+              "color": "#FDF177",
+              "order": 3,
+              "score": -1
             },
             {
               "name": "No service",
-              "color": null
+              "color": "#F1AC2A"
             }
           ]
         },
@@ -506,15 +516,17 @@
           "options": [
             {
               "name": "Basic",
-              "color": null
+              "color": "#753780",
+              "score": 10
             },
             {
               "name": "Limited",
-              "color": null
+              "color": "#FDF177",
+              "score": -1
             },
             {
               "name": "No service",
-              "color": null
+              "color": "#F1AC2A"
             }
           ]
         }
