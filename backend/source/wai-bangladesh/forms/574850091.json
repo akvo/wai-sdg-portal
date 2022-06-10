@@ -827,33 +827,24 @@
           "options": [
             {
               "name": "Safely Managed",
-              "color": "#297EB5",
-              "order": 1,
-              "score": 15
+              "color": "#297EB5"
             },
             {
               "name": "Unimproved",
-              "color": "#FBD256",
-              "order": 4,
-              "score": -1
+              "color": "#FBD256"
+
             },
             {
               "name": "Basic",
-              "color": "#5EBADF",
-              "order": 2,
-              "score": 10
+              "color": "#5EBADF"
             },
             {
               "name": "Limited",
-              "color": "#FDF177",
-              "order": 3,
-              "score": 1
+              "color": "#FDF177"
             },
             {
               "name": "Surface water",
-              "color": "#F1AC2A",
-              "order": 5,
-              "score": -2
+              "color": "#F1AC2A"
             }
           ]
         },
@@ -867,33 +858,23 @@
           "options": [
             {
               "name": "Safely Managed",
-              "color": "#368541",
-              "order": 1,
-              "score": 15
+              "color": "#368541"
             },
             {
               "name": "Basic",
-              "color": "#79BE7D",
-              "order": 2,
-              "score": 10
+              "color": "#79BE7D"
             },
             {
               "name": "Limited",
-              "color": "#FDF177",
-              "order": 3,
-              "score": -1
+              "color": "#FDF177"
             },
             {
               "name": "Unimproved",
-              "color": "#FBD256",
-              "order": 4,
-              "score": -2
+              "color": "#FBD256"
             },
             {
               "name": "Open Defecation",
-              "color": "#F1AC2A",
-              "order": 5,
-              "score": -3
+              "color": "#F1AC2A"
             }
           ]
         },
@@ -907,18 +888,15 @@
           "options": [
             {
               "name": "Basic",
-              "color": "#753780",
-              "score": 10
+              "color": "#753780"
             },
             {
               "name": "Limited",
-              "color": "#FDF177",
-              "score": -1
+              "color": "#FDF177"
             },
             {
               "name": "No facility",
-              "color": "#F1AC2A",
-              "score": -2
+              "color": "#F1AC2A"
             }
           ]
         }
