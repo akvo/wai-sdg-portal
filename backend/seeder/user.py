@@ -1,48 +1,75 @@
 import os
 import sys
-from db.connection import SessionLocal, Base, engine
-from db import crud_user, crud_administration
+from db.connection import Base, SessionLocal, engine
+import db.crud_user as crud
 import db.crud_organisation as crud_organisation
-from faker import Faker
-from models.access import Access
 
-if len(sys.argv) < 3:
-    print("You should provide number of fake user and organisation name")
+inputs = [{
+    "value": "name",
+    "question": "Full Name"
+}, {
+    "value": "email",
+    "question": "Email Address"
+}, {
+    "value": "organisation",
+    "question": "Organisation Name"
+}, {
+    "value": "role",
+    "question": "Role",
+    "options": ["admin", "editor"]
+}]
 
-if len(sys.argv) == 3:
-    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    sys.path.append(BASE_DIR)
+payload = {}
+for i in inputs:
+    v = i.get("value")
+    q = i.get("question") or i.get("value")
+    opt = i.get("options")
+    if opt:
+        q += " ["
+        for oi, o in enumerate(opt):
+            q += f"{o}"
+            if (oi + 1) < len(opt):
+                q += ", "
+        q += "]"
+    a = input(f"{q}: ")
+    if opt:
+        a = a.lower()
+        if a not in opt:
+            print("Invalid input")
+            exit()
+    if not len(a):
+        print("Required")
+        exit()
+    payload.update({v: a})
 
-    Base.metadata.create_all(bind=engine)
-    session = SessionLocal()
-    crud_user.delete_non_admin_user(session=session)
-    fake = Faker()
-    administration = crud_administration.get_parent_administration(
-        session=session)
-    administration = [a.id for a in administration]
-    org = crud_organisation.get_organisation_by_name(session=session,
-                                                     name=sys.argv[2])
-    if not org:
-        org = crud_organisation.add_organisation(session=session,
-                                                 name=sys.argv[2],
-                                                 type="iNGO")
-        print("Organisation named {} created".format(sys.argv[2]))
-    for i in range(int(sys.argv[1])):
-        active = fake.pybool()
-        user = crud_user.add_user(session=session,
-                                  name=fake.name(),
-                                  email=fake.unique.email(),
-                                  role="user",
-                                  active=active,
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(BASE_DIR)
+
+Base.metadata.create_all(bind=engine)
+session = SessionLocal()
+org = crud_organisation.get_organisation_by_name(session=session,
+                                                 name=payload["organisation"])
+if not org:
+    org = crud_organisation.add_organisation(session=session,
+                                             name=payload["organisation"],
+                                             type="iNGO")
+    print("Organisation named {} created".format(payload["organisation"]))
+user = crud.get_user_by_email(session=session, email=payload["email"])
+if user:
+    user = crud.update_user_by_id(session=session,
+                                  id=user.id,
+                                  name=payload["name"],
+                                  role=payload["role"],
+                                  active=1,
                                   organisation=org.id)
-        if active:
-            access = []
-            admin_access = set(
-                fake.random_int(min=1, max=3) for i in administration)
-            admin_access = list(admin_access)
-            for a in admin_access:
-                access.append(Access(user=user.id, administration=a))
-            session.add_all(access)
-            session.commit()
-        print(f"{user.email} added | active: {active}")
+    print(f"{user.email} of {org.name} updated")
     session.close()
+    sys.exit()
+user = crud.add_user(session=session,
+                     email=payload["email"],
+                     name=payload["name"],
+                     role=payload["role"],
+                     active=True,
+                     organisation=org.id)
+print(f"{user.email} of {org.name} added")
+session.close()

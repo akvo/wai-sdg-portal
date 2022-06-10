@@ -7,7 +7,7 @@ fi
 if [[ $# -eq 3 ]] ; then
     python -m seeder.administration
     python -m seeder.admin "$@"
-    python -m seeder.user 30 "$3"
+    # python -m seeder.fake_user 30 "$3"
     python -m seeder.form
     # python -m seeder.datapoint "$1"
 else
