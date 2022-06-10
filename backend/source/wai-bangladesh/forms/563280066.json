@@ -1,6 +1,6 @@
 {
   "form": "JMP Core Questions for Monitoring WASH in Schools",
-  "id": "554360198",
+  "id": "563280066",
   "question_groups": [
     {
       "question_group": "Location Demographics",
@@ -13,26 +13,35 @@
           "meta": true
         },
         {
-          "id": 567820011,
-          "question": "School name",
+          "id": 569320067,
+          "question": "Ward Number",
           "order": 2,
+          "meta": true,
+          "type": "number",
+          "required": true,
+          "options": null,
+          "rule": {
+            "max": "9.0",
+            "min": "1.0"
+          }
+        },
+        {
+          "id": 569130080,
+          "question": "School name",
+          "order": 3,
           "meta": true,
           "type": "text",
           "required": true,
           "options": null
         },
         {
-          "id": 567820002,
+          "id": 569130076,
           "question": "School type",
-          "order": 3,
+          "order": 4,
           "meta": false,
           "type": "option",
           "required": true,
           "options": [
-            {
-              "name": "Kindergarten/Child Care Centre",
-              "color": null
-            },
             {
               "name": "Primary",
               "color": null
@@ -42,19 +51,15 @@
               "color": null
             },
             {
-              "name": "Higher Secondary/10+2",
-              "color": null
-            },
-            {
-              "name": "Other",
+              "name": "Madarsa",
               "color": null
             }
           ]
         },
         {
-          "id": 578820191,
+          "id": 574900057,
           "question": "Is this school Girls Only/Boys Only/Co-Education?",
-          "order": 4,
+          "order": 5,
           "meta": false,
           "type": "option",
           "required": true,
@@ -74,16 +79,16 @@
           ]
         },
         {
-          "id": 567820003,
+          "id": 569130077,
           "question": "Number of male pupils",
-          "order": 5,
+          "order": 6,
           "meta": false,
           "type": "number",
           "required": true,
           "options": null,
           "dependency": [
             {
-              "id": 578820191,
+              "id": 574900057,
               "options": [
                 "Boys Only",
                 "Co-education"
@@ -92,16 +97,16 @@
           ]
         },
         {
-          "id": 567820006,
+          "id": 569130073,
           "question": "Number of female pupils",
-          "order": 6,
+          "order": 7,
           "meta": false,
           "type": "number",
           "required": true,
           "options": null,
           "dependency": [
             {
-              "id": 578820191,
+              "id": 574900057,
               "options": [
                 "Girls Only",
                 "Co-education"
@@ -110,17 +115,8 @@
           ]
         },
         {
-          "id": 637730002,
+          "id": 629850003,
           "question": "Total number of students",
-          "order": 7,
-          "meta": false,
-          "type": "number",
-          "required": true,
-          "options": null
-        },
-        {
-          "id": 567820009,
-          "question": "Number of teaching staffs",
           "order": 8,
           "meta": false,
           "type": "number",
@@ -128,26 +124,17 @@
           "options": null
         },
         {
-          "id": 567820008,
-          "question": "Are there any students or staff members with a disability?",
+          "id": 578820057,
+          "question": "Number of teaching staffs",
           "order": 9,
           "meta": false,
-          "type": "option",
+          "type": "number",
           "required": true,
-          "options": [
-            {
-              "name": "Yes",
-              "color": null
-            },
-            {
-              "name": "No",
-              "color": null
-            }
-          ]
+          "options": null
         },
         {
-          "id": 567820004,
-          "question": "Are you able to take GPS point of the school?",
+          "id": 571300074,
+          "question": "Are there any students or staff members with a disability?",
           "order": 10,
           "meta": false,
           "type": "option",
@@ -164,16 +151,34 @@
           ]
         },
         {
-          "id": 567820005,
-          "question": "GPS point of school",
+          "id": 569130078,
+          "question": "Are you able to take GPS point of the school?",
           "order": 11,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null
+            },
+            {
+              "name": "No",
+              "color": null
+            }
+          ]
+        },
+        {
+          "id": 569130079,
+          "question": "GPS point of school",
+          "order": 12,
           "meta": true,
           "type": "geo",
           "required": true,
           "options": null,
           "dependency": [
             {
-              "id": 567820004,
+              "id": 569130078,
               "options": [
                 "Yes"
               ]
@@ -186,7 +191,7 @@
       "question_group": "Core Drinking Water Questions",
       "questions": [
         {
-          "id": 580800138,
+          "id": 563280069,
           "question": "What is the main source of drinking water provided by the school? (select one - most frequently used)",
           "order": 1,
           "meta": false,
@@ -199,15 +204,23 @@
             },
             {
               "name": "Protected well/spring",
-              "color": "#00B050"
+              "color": "#4472C4"
             },
             {
               "name": "Deep tubewell/borehole",
-              "color": "#00B050"
+              "color": "#70AD47"
             },
             {
               "name": "Shallow tubewell/borehole",
               "color": "#00B0F0"
+            },
+            {
+              "name": "PSF (Pond Sand Filter)",
+              "color": "#ED7D31"
+            },
+            {
+              "name": "AIRP (Arsenic Iron Removable Plant)",
+              "color": "#9C5CFF"
             },
             {
               "name": "Rainwater collection",
@@ -243,12 +256,12 @@
             },
             {
               "name": "No water source",
-              "color": "#9CC2E5"
+              "color": "#FF0000"
             }
           ]
         },
         {
-          "id": 580800137,
+          "id": 563280071,
           "question": "Is drinking water from the main source currently available at the school at the time of the survey?",
           "order": 2,
           "meta": false,
@@ -271,7 +284,7 @@
       "question_group": "Core Sanitation Questions",
       "questions": [
         {
-          "id": 567800083,
+          "id": 557970060,
           "question": "Does your school have toilet for students?",
           "order": 1,
           "meta": false,
@@ -289,7 +302,7 @@
           ]
         },
         {
-          "id": 567800082,
+          "id": 578820058,
           "question": "What type of student toilets are at the school? (Select the one that is most commonly used)",
           "order": 2,
           "meta": false,
@@ -326,16 +339,24 @@
             },
             {
               "name": "Composting toilet",
-              "color": "#FF0000"
+              "color": "#ED7D31"
             },
             {
               "name": "Pit latrine without slab/open pit",
-              "color": "#ff83b7"
+              "color": "#FF83B7"
+            },
+            {
+              "name": "Hanging latrine",
+              "color": "#44546A"
+            },
+            {
+              "name": "Bucket latrine",
+              "color": "#7030A0"
             }
           ]
         },
         {
-          "id": 567800080,
+          "id": 552050054,
           "question": "How many student toilets are currently usable (accessible and functional and private)?",
           "order": 3,
           "meta": false,
@@ -344,7 +365,7 @@
           "options": null,
           "dependency": [
             {
-              "id": 567800083,
+              "id": 557970060,
               "options": [
                 "Yes"
               ]
@@ -352,7 +373,7 @@
           ]
         },
         {
-          "id": 567800081,
+          "id": 561220066,
           "question": "Are the toilets/latrines separate for girls and boys?",
           "order": 4,
           "meta": false,
@@ -370,7 +391,7 @@
           ],
           "dependency": [
             {
-              "id": 578820191,
+              "id": 574900057,
               "options": [
                 "Co-education"
               ]
@@ -383,7 +404,7 @@
       "question_group": "Core Hygiene Questions",
       "questions": [
         {
-          "id": 578820194,
+          "id": 556040071,
           "question": "Are there handwashing facilities at the school?",
           "order": 1,
           "meta": false,
@@ -401,7 +422,7 @@
           ]
         },
         {
-          "id": 578820193,
+          "id": 556040070,
           "question": "Are both soap and water currently available at the handwashing facilities?",
           "order": 2,
           "meta": false,
@@ -432,7 +453,7 @@
       "question_group": "Service levels for Water, Sanitation, and Hygiene",
       "questions": [
         {
-          "id": 573300191,
+          "id": 563280073,
           "question": "Water service levels",
           "order": 1,
           "meta": false,
@@ -441,20 +462,26 @@
           "options": [
             {
               "name": "Basic",
-              "color": "#753780"
+              "color": "#5EBADF",
+              "order": 2,
+              "score": 10
             },
             {
               "name": "Limited",
-              "color": "#FDF177"
+              "color": "#FDF177",
+              "order": 3,
+              "score": 1
             },
             {
-              "name": "No Service",
-              "color": "#F9CA29"
+              "name": "Surface water",
+              "color": "#F1AC2A",
+              "order": 5,
+              "score": -2
             }
           ]
         },
         {
-          "id": 573300189,
+          "id": 563280074,
           "question": "Sanitation service levels",
           "order": 2,
           "meta": false,
@@ -463,20 +490,24 @@
           "options": [
             {
               "name": "Basic",
-              "color": "#753780"
+              "color": "#79BE7D",
+              "order": 2,
+              "score": 10
             },
             {
               "name": "Limited",
-              "color": "#FDF177"
+              "color": "#FDF177",
+              "order": 3,
+              "score": -1
             },
             {
-              "name": "No Service",
-              "color": "#F9CA29"
+              "name": "No service",
+              "color": "#F1AC2A"
             }
           ]
         },
         {
-          "id": 573300190,
+          "id": 563280072,
           "question": "Hygiene service levels",
           "order": 3,
           "meta": false,
@@ -485,15 +516,17 @@
           "options": [
             {
               "name": "Basic",
-              "color": "#753780"
+              "color": "#753780",
+              "score": 10
             },
             {
               "name": "Limited",
-              "color": "#FDF177"
+              "color": "#FDF177",
+              "score": -1
             },
             {
-              "name": "No Service",
-              "color": "#F9CA29"
+              "name": "No service",
+              "color": "#F1AC2A"
             }
           ]
         }

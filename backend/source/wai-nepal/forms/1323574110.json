@@ -10,7 +10,7 @@
           "order": 1,
           "required": true,
           "type": "administration",
-          "meta": false
+          "meta": true
         },
         {
           "id": 1260775110,

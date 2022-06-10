@@ -36,11 +36,7 @@ class GeoLevels(enum.Enum):
     }, {
         "level": 1,
         "name": "ADM4_EN",
-        "alias": "Municipality"
-    }, {
-        "level": 2,
-        "name": "WARD",
-        "alias": "Ward"
+        "alias": "Union / Municipality"
     }]
     wai_nepal = [{
         "level": 0,
@@ -53,6 +49,7 @@ class GeoLevels(enum.Enum):
     }]
 
 
+# Landing Page
 class GeoCenter(enum.Enum):
     notset = [106.3715, -8.84902]
     wai_ethiopia = [38.6682, 7.3942]
