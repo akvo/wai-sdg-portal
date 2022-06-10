@@ -397,8 +397,9 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
 
   // support selectable marker question
   const { selectableMarkerDropdown } = current;
-  const [selectableMarkerQuestion, setSelectableMarkerQuestion] =
-    useState(null);
+  const [selectableMarkerQuestion, setSelectableMarkerQuestion] = useState(
+    null
+  );
 
   // support selectable marker question & custom color coded
   const defaultMarkerColor = _.sortBy(selectableMarkerQuestion?.option)?.map(
