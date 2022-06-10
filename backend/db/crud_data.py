@@ -122,6 +122,10 @@ def get_data_by_id(session: Session, id: int) -> DataDict:
     return session.query(Data).filter(Data.id == id).first()
 
 
+def get_data_by_name(session: Session, name: str) -> DataDict:
+    return session.query(Data).filter(Data.name == name).first()
+
+
 def get_data_name_by_id(session: Session, id: int) -> str:
     return session.query(Data).filter(Data.id == id).first().name
 
