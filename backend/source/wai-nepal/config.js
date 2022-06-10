@@ -477,12 +477,20 @@ var page_config = {
         key: "name",
       },
       {
-        title: "Water",
-        key: 1344224020,
+        title: "WUSC Name",
+        key: 1349554059,
+      },
+      {
+        title: "Annual General Meeting",
+        key: 1349554058,
+      },
+      {
+        title: "Provision of Water Supply System Insurance",
+        key: 1349554057,
       },
     ],
     maps: {
-      shape: { id: 1344224020, name: "Project Type" },
+      shape: { id: 1344224020, name: "Use of water" },
       marker: { id: 1344224020, name: "Use of Water in Income" },
     },
     formId: 1338414049,
