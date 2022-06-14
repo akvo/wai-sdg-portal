@@ -77,7 +77,7 @@ def save(session: Session, user: int, form: int, dp: dict, qs: dict):
                                                     name=aw)
                 parent_code = parent.name.split(" - ")[-1]
                 administration = parent.administration
-                answer.options = [aw]
+                answer.value = int(parent_code)
             if valid:
                 answerlist.append(answer)
     name = " - ".join([str(n) for n in names])
