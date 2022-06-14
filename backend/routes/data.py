@@ -167,6 +167,7 @@ def add(req: Request,
             parent = crud.get_data_by_name(session=session, name=a["value"])
             parent_code = parent.name.split(" - ")[-1]
             administration = parent.administration
+            answer.value = int(parent_code)
         answerlist.append(answer)
     name = " - ".join([str(n) for n in names])
     if parent_code:
