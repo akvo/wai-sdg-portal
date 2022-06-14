@@ -166,7 +166,6 @@ def add(req: Request,
         if q.type == QuestionType.answer_list:
             parent = crud.get_data_by_name(session=session, name=a["value"])
             parent_code = parent.name.split(" - ")[-1]
-            print(parent_code)
             administration = parent.administration
         answerlist.append(answer)
     name = " - ".join([str(n) for n in names])

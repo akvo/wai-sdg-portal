@@ -15,6 +15,7 @@ def save(session: Session, user: int, form: int, dp: dict, qs: dict):
     geo = None
     answerlist = []
     names = []
+    parent_code = None
     for a in dp:
         aw = dp[a]
         if aw == aw:
@@ -71,9 +72,17 @@ def save(session: Session, user: int, form: int, dp: dict, qs: dict):
                 answer.options = [aw]
             if q.type == QuestionType.multiple_option:
                 answer.options = aw
+            if q.type == QuestionType.answer_list:
+                parent = crud_data.get_data_by_name(session=session,
+                                                    name=aw)
+                parent_code = parent.name.split(" - ")[-1]
+                administration = parent.administration
+                answer.options = [aw]
             if valid:
                 answerlist.append(answer)
     name = " - ".join([str(n) for n in names])
+    if parent_code:
+        name = f"{parent_code} - {name}"
     data = crud_data.add_data(session=session,
                               form=form,
                               name=name,

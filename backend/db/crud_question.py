@@ -1,6 +1,8 @@
 from typing import List, Optional
 from sqlalchemy import and_
 from sqlalchemy.orm import Session
+from models.data import Data
+from models.data import Answer
 from models.question import Question, QuestionIds
 from models.question import QuestionDict, QuestionBase, QuestionType
 from models.question import DependencyDict
@@ -109,13 +111,28 @@ def get_definition(session: Session, form: int):
                 dtext = f"{did}: " + options
                 dependency.append(dtext)
             dependency = "\n".join(dependency)
-        if q["options"]:
+        if q["options"] and q["type"] != QuestionType.answer_list:
             for o in q["options"]:
                 framed.append({
                     "id": q["id"],
                     "question": q["name"],
                     "type": q["type"],
                     "option": o,
+                    "required": "YES" if q["required"] else "NO",
+                    "rule": rule,
+                    "dependency": dependency
+                })
+        if q["type"] == QuestionType.answer_list:
+            answer_data = session.query(Answer).filter(
+                Answer.question == int(q["options"][0])).all()
+            parent_data = session.query(Data).filter(
+                Data.id.in_([a.data for a in answer_data])).all()
+            for parent in parent_data:
+                framed.append({
+                    "id": q["id"],
+                    "question": q["name"],
+                    "type": q["type"],
+                    "option": parent.name,
                     "required": "YES" if q["required"] else "NO",
                     "rule": rule,
                     "dependency": dependency
