@@ -35,7 +35,11 @@ class Organisation(Base):
                         passive_deletes=True,
                         backref="user")
 
-    def __init__(self, name: str, type: OrganisationType):
+    def __init__(self,
+                 name: str,
+                 type: OrganisationType,
+                 id: Optional[int] = None):
+        self.id = id
         self.name = name
         self.type = type
 

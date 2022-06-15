@@ -1,12 +1,12 @@
-from typing import List
+from typing import List, Optional
 from sqlalchemy.orm import Session
 from models.organisation import Organisation
 from models.organisation import OrganisationDict, OrganisationType
 
 
-def add_organisation(session, name: str,
-                     type: OrganisationType) -> OrganisationDict:
-    organisation = Organisation(name=name, type=type)
+def add_organisation(session, name: str, type: OrganisationType,
+                     id: Optional[int] = None) -> OrganisationDict:
+    organisation = Organisation(id=id, name=name, type=type)
     session.add(organisation)
     session.commit()
     session.flush()
