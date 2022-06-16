@@ -253,13 +253,6 @@ var landing_config = {
       readmore: "#",
       explore: "#",
     },
-    {
-      title: "Water Infrastructure",
-      description:
-        "This section contains technical and management data, and tracks the functionality of community water points. This is useful for month to month planning of maintenance and rehabilitation activities.",
-      readmore: "#",
-      explore: "#",
-    },
   ],
   overviews: [
     {
