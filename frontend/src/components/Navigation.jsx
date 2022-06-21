@@ -61,13 +61,19 @@ const Navigation = () => {
                 return item.childrens ? (
                   <Menu.ItemGroup title={item.name} key={`${item.link}`}>
                     {item?.childrens?.map((child) => (
-                      <Menu.Item key={`${child.link}`}>
+                      <Menu.Item
+                        key={`${child.link}`}
+                        className={child.name.split(" ")[0]}
+                      >
                         <Link to={`/data/${child.link}`}>{child.name}</Link>
                       </Menu.Item>
                     ))}
                   </Menu.ItemGroup>
                 ) : (
-                  <Menu.Item key={`${item.link}`}>
+                  <Menu.Item
+                    key={`${item.link}`}
+                    className={item.name.split(" ")[0]}
+                  >
                     <Link to={`/data/${item.link}`}>{item.name}</Link>
                   </Menu.Item>
                 );

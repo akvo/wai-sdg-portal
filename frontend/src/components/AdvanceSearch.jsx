@@ -99,7 +99,11 @@ const AdvanceSearch = ({
         <Panel
           className="advance-search-panel"
           header={
-            <Button style={{ float: buttonPos }} icon={<FilterOutlined />}>
+            <Button
+              className="advance-search-btn"
+              style={{ float: buttonPos }}
+              icon={<FilterOutlined />}
+            >
               {buttonText?.btnAdvancedFilter}
             </Button>
           }

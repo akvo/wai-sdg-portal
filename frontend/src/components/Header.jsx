@@ -77,7 +77,7 @@ const ActivityLog = () => {
   return <Card>{noActivityText}</Card>;
 };
 
-const Header = ({ logout, loginWithPopup, isAuthenticated }) => {
+const Header = ({ logout, loginWithPopup, isAuthenticated, openTour }) => {
   const { user, activityLog } = UIState.useState((c) => c);
   const onOpen = () => {
     UIState.update((s) => {
@@ -96,6 +96,7 @@ const Header = ({ logout, loginWithPopup, isAuthenticated }) => {
       </Col>
       <Col span={8} className="header-menu">
         <Space size={20}>
+          <Button onClick={openTour}>Page Tour</Button>
           {/* Activity Log  */}
           {user && (
             <Popover
@@ -105,13 +106,19 @@ const Header = ({ logout, loginWithPopup, isAuthenticated }) => {
               trigger="click"
             >
               <Badge count={activityLog.length}>
-                <Button icon={<FieldTimeOutlined />}>{activityLogText}</Button>
+                <Button icon={<FieldTimeOutlined />} className="activity-log">
+                  {activityLogText}
+                </Button>
               </Badge>
             </Popover>
           )}
           {/* Login, Sign-up - Logout button */}
           {!isAuthenticated ? (
-            <Button icon={<UserOutlined />} onClick={loginWithPopup}>
+            <Button
+              icon={<UserOutlined />}
+              onClick={loginWithPopup}
+              className="log-in"
+            >
               {loginText}
             </Button>
           ) : (
