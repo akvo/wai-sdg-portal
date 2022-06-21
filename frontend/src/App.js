@@ -278,7 +278,6 @@ function App() {
         </div>
       ),
       action: (node) => {
-        console.log(node.click());
         node.click();
       },
     },
@@ -361,6 +360,148 @@ function App() {
             points, all is pretty simmilar. Now, let's take to <b>Household</b>{" "}
             for more features.
           </p>
+        </div>
+      ),
+    },
+    {
+      selector: `.App `,
+      content: () => (
+        <div>
+          <h2>Next</h2>
+          <p>
+            You have seen most of the features. If you go to another data
+            points, all is pretty simmilar. Now, let's take to <b>Household</b>{" "}
+            for more features.
+          </p>
+        </div>
+      ),
+    },
+    {
+      selector: `.menu-outlined`,
+      content: () => (
+        <div>
+          <p>Once you click, a sidebar is open.</p>
+        </div>
+      ),
+      action: (node) => {
+        node.click();
+      },
+    },
+    {
+      selector: `.ant-drawer-wrapper-body`,
+      content: () => (
+        <div>
+          <h2>See all data</h2>
+          <p>
+            Then click the <b>Water Points</b>.
+          </p>
+        </div>
+      ),
+    },
+    {
+      selector: `.CLTS`,
+      content: () => (
+        <div>
+          <h2>CLTS</h2>
+          <p>You can click it</p>
+        </div>
+      ),
+    },
+    {
+      selector: `.Households`,
+      content: () => (
+        <div>
+          <h2>Households</h2>
+          <p>You can click it</p>
+        </div>
+      ),
+    },
+    {
+      selector: `.Households`,
+      content: () => (
+        <div>
+          <h2>Households</h2>
+          <p>You can click it</p>
+        </div>
+      ),
+      action: (node) => {
+        node.click();
+        history.push("/data/households");
+      },
+    },
+    {
+      selector: `.App`,
+      content: () => (
+        <div>
+          <h2>Households</h2>
+          <p>Now, go to the tabs to more details.</p>
+        </div>
+      ),
+    },
+    {
+      selector: `.data-tabs`,
+      content: () => (
+        <div>
+          <h2>Tabs</h2>
+          <p>Before clicking on one of the buttons, select a district.</p>
+        </div>
+      ),
+    },
+    {
+      selector: `.JMP`,
+      content: () => (
+        <div>
+          <h2>JMP</h2>
+          <p>Click on the JMP tab</p>
+        </div>
+      ),
+    },
+    {
+      selector: `.JMP`,
+      content: () => (
+        <div>
+          <h2>JMP</h2>
+          <p>Click now</p>
+        </div>
+      ),
+      action: (node) => {
+        node.click();
+      },
+    },
+    {
+      selector: `.chart-container`,
+      content: () => (
+        <div>
+          <h2>JMP chart</h2>
+          <p>You need to select a district to see the JMP charts</p>
+        </div>
+      ),
+    },
+    {
+      selector: `.data`,
+      content: () => (
+        <div>
+          <h2>Data</h2>
+          <p>Click on it</p>
+        </div>
+      ),
+      action: (node) => {
+        node.click();
+      },
+    },
+    {
+      selector: `.main-table-container`,
+      content: () => (
+        <div>
+          <h2>Table container</h2>
+        </div>
+      ),
+    },
+    {
+      selector: `#root`,
+      content: () => (
+        <div>
+          <h2>That's the end of your tour. Enjoy your journey</h2>
         </div>
       ),
     },
