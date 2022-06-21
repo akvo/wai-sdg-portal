@@ -109,15 +109,13 @@ function App() {
     setIsShowingMore(!isShowingMore);
   };
 
-  const tourConfig = [
+  const tourConfigBeforeLogin = [
     {
       selector: `#root`,
       content: () => (
         <div>
           <h2>Welcome to this portal.</h2>
-          <p>
-            Now look around before <b>logging in.</b>
-          </p>
+          <p>Please log in before you look around before.</p>
         </div>
       ),
     },
@@ -138,7 +136,7 @@ function App() {
         <div>
           <h2>Caraouser</h2>
           <p>
-            <b>Next:</b> see Caraousel Overview.
+            <b>Next:</b> see the Activity logs.
           </p>
         </div>
       ),
@@ -149,19 +147,20 @@ function App() {
         <div>
           <h2>Log in to see more features</h2>
           <p>
-            <b>Next:</b> Click the button to log in.
+            Please log in and click the button called<b> Page Tour</b> again.
           </p>
         </div>
       ),
     },
+  ];
+
+  const tourConfig = [
     {
-      selector: `.App`,
+      selector: `#root`,
       content: () => (
         <div>
-          <h2>You are logged in.</h2>
-          <p>
-            <b>Next:</b> Go to activity log button.
-          </p>
+          <h2>Welcome.</h2>
+          <p>You are already logged in. Go to Activity logs.</p>
         </div>
       ),
     },
@@ -175,9 +174,6 @@ function App() {
           </p>
         </div>
       ),
-      action: (node) => {
-        node.click();
-      },
     },
     {
       selector: `.menu-outlined`,
@@ -304,7 +300,7 @@ function App() {
       ),
     },
     {
-      selector: `.data-container .marker-dropdown-container`,
+      selector: `.data-container .marker-dropdown-container .ant-select-single.ant-select-show-arrow .ant-select-selector`,
       content: () => (
         <div>
           <h2>Select a marker</h2>
@@ -346,19 +342,6 @@ function App() {
           <h2>Chart</h2>
           <p>
             Now, let see <b>Household</b>
-          </p>
-        </div>
-      ),
-    },
-    {
-      selector: `.App `,
-      content: () => (
-        <div>
-          <h2>Next</h2>
-          <p>
-            You have seen most of the features. If you go to another data
-            points, all is pretty simmilar. Now, let's take to <b>Household</b>{" "}
-            for more features.
           </p>
         </div>
       ),
@@ -478,18 +461,6 @@ function App() {
       ),
     },
     {
-      selector: `.data`,
-      content: () => (
-        <div>
-          <h2>Data</h2>
-          <p>Click on it</p>
-        </div>
-      ),
-      action: (node) => {
-        node.click();
-      },
-    },
-    {
       selector: `.main-table-container`,
       content: () => (
         <div>
@@ -502,6 +473,15 @@ function App() {
       content: () => (
         <div>
           <h2>That's the end of your tour. Enjoy your journey</h2>
+          <p>Now you can log out</p>
+        </div>
+      ),
+    },
+    {
+      selector: `logout-btn`,
+      content: () => (
+        <div>
+          <h2>Please, click out to log out if you would like.</h2>
         </div>
       ),
     },
@@ -540,7 +520,7 @@ function App() {
       <Tour
         isOpen={isTourOpen}
         onRequestClose={closeTour}
-        steps={tourConfig}
+        steps={isAuthenticated ? tourConfig : tourConfigBeforeLogin}
         rounded={5}
         maskClassName="mask"
         accentColor={"#5cb7b7"}

@@ -125,6 +125,7 @@ const Header = ({ logout, loginWithPopup, isAuthenticated, openTour }) => {
             <Button
               icon={<UserOutlined />}
               onClick={() => logout({ returnTo: window.location.origin })}
+              className="logout-btn"
             >
               {logoutText}
             </Button>
