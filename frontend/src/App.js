@@ -28,6 +28,7 @@ function App() {
   const { registrationPopup } = UIState.useState((s) => s);
   const [isTourOpen, setIsTourOpen] = useState(false);
   const [isShowingMore, setIsShowingMore] = useState(false);
+  const [tourStep, setTourStep] = useState(0);
 
   useEffect(() => {
     (async function () {
@@ -111,10 +112,11 @@ function App() {
 
   const tourConfigBeforeLogin = [
     {
-      selector: `#root`,
+      selector: `.header-logo`,
       content: () => (
         <div>
           <h2>Welcome to this portal.</h2>
+          <h4>This is the Logo</h4>
           <p>Please log in before you look around before.</p>
         </div>
       ),
@@ -147,7 +149,8 @@ function App() {
         <div>
           <h2>Log in to see more features</h2>
           <p>
-            Please log in and click the button called<b> Page Tour</b> again.
+            Please close the tour, then log in and click the button called
+            <b> Page Tour</b> again.
           </p>
         </div>
       ),
@@ -156,11 +159,12 @@ function App() {
 
   const tourConfig = [
     {
-      selector: `#root`,
+      selector: `.header-logo`,
       content: () => (
         <div>
-          <h2>Welcome.</h2>
-          <p>You are already logged in. Go to Activity logs.</p>
+          <h2>Welcome to this portal.</h2>
+          <h4>This is the Logo.</h4>
+          <p>You look around.</p>
         </div>
       ),
     },
@@ -179,9 +183,9 @@ function App() {
       selector: `.menu-outlined`,
       content: () => (
         <div>
-          <h2>Click to see all data</h2>
+          <h2>Click to see all data all data points</h2>
           <p>
-            Then click the <b>Household</b>.
+            Then click the <b>Water points</b>.
           </p>
         </div>
       ),
@@ -201,7 +205,7 @@ function App() {
       selector: `.ant-drawer-wrapper-body`,
       content: () => (
         <div>
-          <h2>See all data</h2>
+          <h2>See all data points</h2>
           <p>
             Then click the <b>Water Points</b>.
           </p>
@@ -212,27 +216,14 @@ function App() {
       selector: `.Water`,
       content: () => (
         <div>
-          <h2>See the Water points</h2>
-          <p>
-            Then click the <b>Water Points</b>.
-          </p>
+          <h2>Water points</h2>
+          <p>Now see the select dropdown to see other data points.</p>
         </div>
       ),
       action: (node) => {
         node.click();
         history.push("/data/water");
       },
-    },
-    {
-      selector: `.App`,
-      content: () => (
-        <div>
-          <h2>Water points</h2>
-          <p>
-            Then click the <b>Water Points</b>.
-          </p>
-        </div>
-      ),
     },
     {
       selector: `.ant-space-item:nth-of-type(1) .ant-select-selector`,
@@ -242,9 +233,6 @@ function App() {
           <p>You can select on of the data entry bellow.</p>
         </div>
       ),
-      action: (node) => {
-        node.click();
-      },
     },
     {
       selector: `.ant-space-item:nth-of-type(2) .ant-select-selector`,
@@ -300,7 +288,7 @@ function App() {
       ),
     },
     {
-      selector: `.data-container .marker-dropdown-container .ant-select-single.ant-select-show-arrow .ant-select-selector`,
+      selector: `.marker-select .ant-select-selector`,
       content: () => (
         <div>
           <h2>Select a marker</h2>
@@ -342,19 +330,6 @@ function App() {
           <h2>Chart</h2>
           <p>
             Now, let see <b>Household</b>
-          </p>
-        </div>
-      ),
-    },
-    {
-      selector: `.App `,
-      content: () => (
-        <div>
-          <h2>Next</h2>
-          <p>
-            You have seen most of the features. If you go to another data
-            points, all is pretty simmilar. Now, let's take to <b>Household</b>{" "}
-            for more features.
           </p>
         </div>
       ),
@@ -413,15 +388,6 @@ function App() {
       },
     },
     {
-      selector: `.App`,
-      content: () => (
-        <div>
-          <h2>Households</h2>
-          <p>Now, go to the tabs to more details.</p>
-        </div>
-      ),
-    },
-    {
       selector: `.data-tabs`,
       content: () => (
         <div>
@@ -444,7 +410,7 @@ function App() {
       content: () => (
         <div>
           <h2>JMP</h2>
-          <p>Click now</p>
+          <p>You have to select a district to the JMP charts bellow.</p>
         </div>
       ),
       action: (node) => {
@@ -465,15 +431,7 @@ function App() {
       content: () => (
         <div>
           <h2>Table container</h2>
-        </div>
-      ),
-    },
-    {
-      selector: `#root`,
-      content: () => (
-        <div>
-          <h2>That's the end of your tour. Enjoy your journey</h2>
-          <p>Now you can log out</p>
+          <p>Now you can log out if you want to.</p>
         </div>
       ),
     },
@@ -481,11 +439,21 @@ function App() {
       selector: `logout-btn`,
       content: () => (
         <div>
-          <h2>Please, click out to log out if you would like.</h2>
+          <h2>
+            Please, click out to log out if you would like. Then, close the
+            Tour.
+          </h2>
+          <p>Thank you!</p>
         </div>
       ),
     },
   ];
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      setTourStep(1);
+    }
+  }, [tourStep, isAuthenticated]);
 
   return (
     <Router history={history}>
@@ -520,10 +488,11 @@ function App() {
       <Tour
         isOpen={isTourOpen}
         onRequestClose={closeTour}
-        steps={isAuthenticated ? tourConfig : tourConfigBeforeLogin}
+        steps={!isAuthenticated ? tourConfigBeforeLogin : tourConfig}
         rounded={5}
         maskClassName="mask"
         accentColor={"#5cb7b7"}
+        getCurrentStep={setTourStep}
       />
     </Router>
   );
