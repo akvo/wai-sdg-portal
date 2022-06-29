@@ -29,8 +29,6 @@ function App() {
   const [isTourOpen, setIsTourOpen] = useState(false);
   const [isShowingMore, setIsShowingMore] = useState(false);
   const [tourStep, setTourStep] = useState(0);
-  const { location } = history;
-  console.log(location.pathname);
 
   useEffect(() => {
     (async function () {
@@ -231,6 +229,17 @@ function App() {
       },
     },
     {
+      selector: `.App`,
+      content: () => (
+        <div>
+          <h3>
+            After seeing the water points, go to the select dropdown to see
+            other data points.
+          </h3>
+        </div>
+      ),
+    },
+    {
       selector: `.ant-space-item:nth-of-type(1) .ant-select-selector`,
       content: () => (
         <div>
@@ -342,15 +351,6 @@ function App() {
           <p>
             Then click the <b>Water Points</b>.
           </p>
-        </div>
-      ),
-    },
-    {
-      selector: `.CLTS`,
-      content: () => (
-        <div>
-          <h2>CLTS</h2>
-          <p>You can click it</p>
         </div>
       ),
     },

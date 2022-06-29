@@ -69,7 +69,7 @@ var navigation_config = [
         name: "Taps",
       },
       {
-        link: "waterSource",
+        link: "water",
         name: "Water Source",
       },
       {
@@ -345,7 +345,7 @@ var page_config = {
       },
     ],
   },
-  waterSource: {
+  water: {
     title: "Water Source",
     columns: [
       {
