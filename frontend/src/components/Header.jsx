@@ -96,6 +96,7 @@ const Header = ({ logout, loginWithPopup, isAuthenticated, openTour }) => {
       </Col>
       <Col span={8} className="header-menu">
         <Space size={20}>
+          {/* Page Tour */}
           <Button onClick={openTour}>Page Tour</Button>
           {/* Activity Log  */}
           {user && (

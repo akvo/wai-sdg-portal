@@ -29,6 +29,8 @@ function App() {
   const [isTourOpen, setIsTourOpen] = useState(false);
   const [isShowingMore, setIsShowingMore] = useState(false);
   const [tourStep, setTourStep] = useState(0);
+  const { location } = history;
+  console.log(location.pathname);
 
   useEffect(() => {
     (async function () {
@@ -159,16 +161,6 @@ function App() {
 
   const tourConfig = [
     {
-      selector: `.header-logo`,
-      content: () => (
-        <div>
-          <h2>Welcome to this portal.</h2>
-          <h4>This is the Logo.</h4>
-          <p>You look around.</p>
-        </div>
-      ),
-    },
-    {
       selector: `.activity-log`,
       content: () => (
         <div>
@@ -195,6 +187,7 @@ function App() {
       content: () => (
         <div>
           <p>Once you click, a sidebar is open.</p>
+          <h3>Now, take a look at the sidebar.</h3>
         </div>
       ),
       action: (node) => {
@@ -202,7 +195,7 @@ function App() {
       },
     },
     {
-      selector: `.ant-drawer-wrapper-body`,
+      selector: `.ant-drawer-content`,
       content: () => (
         <div>
           <h2>See all data points</h2>
@@ -217,7 +210,19 @@ function App() {
       content: () => (
         <div>
           <h2>Water points</h2>
-          <p>Now see the select dropdown to see other data points.</p>
+          <p>Have a look at the water points</p>
+        </div>
+      ),
+    },
+    {
+      selector: `.Water`,
+      content: () => (
+        <div>
+          <h2>Water points</h2>
+          <p>
+            After seeing the water points, go to the select dropdown to see
+            other data points.
+          </p>
         </div>
       ),
       action: (node) => {
@@ -257,21 +262,7 @@ function App() {
         <div>
           <h2>Click this to open advance search</h2>
           <p>
-            Now, you need to <b>click</b> the button
-          </p>
-        </div>
-      ),
-      action: (node) => {
-        node.click();
-      },
-    },
-    {
-      selector: `.ant-collapse-content-box .ant-select-show-search`,
-      content: () => (
-        <div>
-          <h2>Search by organisation</h2>
-          <p>
-            Now, <b>you can select an organisation</b>
+            You need to <b>click</b> this button to see an input
           </p>
         </div>
       ),
@@ -283,17 +274,6 @@ function App() {
           <h2>Leaflet container for the map</h2>
           <p>
             <b>Next</b> Select a marker
-          </p>
-        </div>
-      ),
-    },
-    {
-      selector: `.marker-select .ant-select-selector`,
-      content: () => (
-        <div>
-          <h2>Select a marker</h2>
-          <p>
-            <b>Next</b> See the existing data
           </p>
         </div>
       ),
@@ -331,6 +311,15 @@ function App() {
           <p>
             Now, let see <b>Household</b>
           </p>
+        </div>
+      ),
+    },
+    {
+      selector: `.menu-outlined`,
+      content: () => (
+        <div>
+          <h2>Click this menu again</h2>
+          <p>Once you click, a sidebar is open.</p>
         </div>
       ),
     },
@@ -430,17 +419,17 @@ function App() {
       selector: `.main-table-container`,
       content: () => (
         <div>
-          <h2>Table container</h2>
+          <h2>That is yet</h2>
           <p>Now you can log out if you want to.</p>
         </div>
       ),
     },
     {
-      selector: `logout-btn`,
+      selector: `.logout-btn`,
       content: () => (
         <div>
           <h2>
-            Please, click out to log out if you would like. Then, close the
+            Please, click this to log out if you would like. Then, close the
             Tour.
           </h2>
           <p>Thank you!</p>
