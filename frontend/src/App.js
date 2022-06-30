@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Layout, notification } from "antd";
+import { Layout, notification, Image } from "antd";
 import { NonActiveUserMessage } from "./components/Notifications";
 import Navigation from "./components/Navigation";
 import RegistrationPopup from "./components/RegistrationPopup";
@@ -110,14 +110,27 @@ function App() {
     setIsShowingMore(!isShowingMore);
   };
 
-  const tourConfigBeforeLogin = [
+  const tourConfig = [
+    {
+      selector: `#root`,
+      content: ({ goTo }) => (
+        <div>
+          <h2>Welcome to this portal.</h2>
+          <p>
+            <b>Next:</b> Take a look at the Logo. If you are logged in,
+            <button type="primary" onClick={() => goTo(6)}>
+              Go to Step 6
+            </button>
+          </p>
+        </div>
+      ),
+    },
     {
       selector: `.header-logo`,
       content: () => (
         <div>
-          <h2>Welcome to this portal.</h2>
-          <h4>This is the Logo</h4>
-          <p>Please log in before you look around before.</p>
+          <h2>Logo</h2>
+          <p>Now, you look around before you log in please.</p>
         </div>
       ),
     },
@@ -148,16 +161,21 @@ function App() {
       content: () => (
         <div>
           <h2>Log in to see more features</h2>
+          <p>Please, click ths button to Log in.</p>
+        </div>
+      ),
+    },
+    {
+      selector: `#root`,
+      content: () => (
+        <div>
+          <h2>You are logged in.</h2>
           <p>
-            Please close the tour, then log in and click the button called
-            <b> Page Tour</b> again.
+            <b>Next:</b> "Activities log".
           </p>
         </div>
       ),
     },
-  ];
-
-  const tourConfig = [
     {
       selector: `.activity-log`,
       content: () => (
@@ -204,40 +222,26 @@ function App() {
       ),
     },
     {
-      selector: `.Water`,
+      selector: `.Households`,
       content: () => (
         <div>
-          <h2>Water points</h2>
-          <p>Have a look at the water points</p>
+          <h2>Households</h2>
+          <p>You can click it</p>
         </div>
       ),
     },
     {
-      selector: `.Water`,
+      selector: `.Households`,
       content: () => (
         <div>
-          <h2>Water points</h2>
-          <p>
-            After seeing the water points, go to the select dropdown to see
-            other data points.
-          </p>
+          <h2>Households</h2>
+          <p>You can click it</p>
         </div>
       ),
       action: (node) => {
         node.click();
-        history.push("/data/water");
+        history.push("/data/households");
       },
-    },
-    {
-      selector: `.App`,
-      content: () => (
-        <div>
-          <h3>
-            After seeing the water points, go to the select dropdown to see
-            other data points.
-          </h3>
-        </div>
-      ),
     },
     {
       selector: `.ant-space-item:nth-of-type(1) .ant-select-selector`,
@@ -288,14 +292,6 @@ function App() {
       ),
     },
     {
-      selector: `.data-container .ant-table`,
-      content: () => (
-        <div>
-          <h2>The data on a table</h2>
-        </div>
-      ),
-    },
-    {
       selector: `.visual-card-wrapper .ant-card-head`,
       content: () => (
         <div>
@@ -311,70 +307,6 @@ function App() {
           <p>You need to select a type if you to see another chart.</p>
         </div>
       ),
-    },
-    {
-      selector: `.echarts-for-react `,
-      content: () => (
-        <div>
-          <h2>Chart</h2>
-          <p>
-            Now, let see <b>Household</b>
-          </p>
-        </div>
-      ),
-    },
-    {
-      selector: `.menu-outlined`,
-      content: () => (
-        <div>
-          <h2>Click this menu again</h2>
-          <p>Once you click, a sidebar is open.</p>
-        </div>
-      ),
-    },
-    {
-      selector: `.menu-outlined`,
-      content: () => (
-        <div>
-          <p>Once you click, a sidebar is open.</p>
-        </div>
-      ),
-      action: (node) => {
-        node.click();
-      },
-    },
-    {
-      selector: `.ant-drawer-wrapper-body`,
-      content: () => (
-        <div>
-          <h2>See all data</h2>
-          <p>
-            Then click the <b>Water Points</b>.
-          </p>
-        </div>
-      ),
-    },
-    {
-      selector: `.Households`,
-      content: () => (
-        <div>
-          <h2>Households</h2>
-          <p>You can click it</p>
-        </div>
-      ),
-    },
-    {
-      selector: `.Households`,
-      content: () => (
-        <div>
-          <h2>Households</h2>
-          <p>You can click it</p>
-        </div>
-      ),
-      action: (node) => {
-        node.click();
-        history.push("/data/households");
-      },
     },
     {
       selector: `.data-tabs`,
@@ -407,16 +339,57 @@ function App() {
       },
     },
     {
-      selector: `.chart-container`,
+      selector: `.ant-space-item:nth-of-type(2) .ant-select-selector`,
       content: () => (
         <div>
-          <h2>JMP chart</h2>
+          <h2>Select a district</h2>
           <p>You need to select a district to see the JMP charts</p>
         </div>
       ),
     },
     {
+      selector: `.chart-container`,
+      content: () => (
+        <div>
+          <h2>JMP chart</h2>
+          <p>You will see something like this here.</p>
+          <Image src="/assets/jmp.png" preview={false} />
+        </div>
+      ),
+    },
+    {
+      selector: `.data`,
+      content: () => (
+        <div>
+          <h2>Data table</h2>
+          <p>Click on the Data tab</p>
+        </div>
+      ),
+    },
+    {
+      selector: `.data`,
+      content: () => (
+        <div>
+          <h2>Data table</h2>
+          <p>After you select a district, you will see a table.</p>
+        </div>
+      ),
+      action: (node) => {
+        node.click();
+      },
+    },
+    {
       selector: `.main-table-container`,
+      content: () => (
+        <div>
+          <h2>View the Data Table</h2>
+          <p>This is what you will see once you select the data tab</p>
+          <Image src="/assets/data.png" preview={false} />
+        </div>
+      ),
+    },
+    {
+      selector: `.data-info .main-table-container .ant-table`,
       content: () => (
         <div>
           <h2>That is yet</h2>
@@ -429,8 +402,7 @@ function App() {
       content: () => (
         <div>
           <h2>
-            Please, click this to log out if you would like. Then, close the
-            Tour.
+            Please, close the Tour and click this to log out if you would like.
           </h2>
           <p>Thank you!</p>
         </div>
@@ -439,10 +411,10 @@ function App() {
   ];
 
   useEffect(() => {
-    if (isAuthenticated) {
-      setTourStep(1);
+    if (isAuthenticated && user) {
+      setTourStep(6);
     }
-  }, [tourStep, isAuthenticated]);
+  }, [tourStep, isAuthenticated, user]);
 
   return (
     <Router history={history}>
@@ -477,7 +449,7 @@ function App() {
       <Tour
         isOpen={isTourOpen}
         onRequestClose={closeTour}
-        steps={!isAuthenticated ? tourConfigBeforeLogin : tourConfig}
+        steps={tourConfig}
         rounded={5}
         maskClassName="mask"
         accentColor={"#5cb7b7"}
