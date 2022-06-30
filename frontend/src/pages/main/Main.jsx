@@ -353,11 +353,12 @@ const Main = ({ match }) => {
                 align="middle"
                 justify="center"
               >
-                <Col span={24}>
+                <Col span={24} className="data-tabs">
                   <Button
                     onClick={() => setActiveTab("data")}
                     type={activeTab === "data" ? "primary" : "secondary"}
                     icon={<DatabaseOutlined />}
+                    className="data"
                   >
                     Data
                   </Button>
@@ -367,6 +368,7 @@ const Main = ({ match }) => {
                       onClick={() => setActiveTab(tab.name)}
                       type={activeTab === tab.name ? "primary" : "secondary"}
                       icon={<LineChartOutlined />}
+                      className={tab.name.split(" ")[0]}
                     >
                       {tab.name}
                     </Button>

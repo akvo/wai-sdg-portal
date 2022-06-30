@@ -121,7 +121,6 @@ const TabJMP = ({ formId, chartList, question, show }) => {
     return null;
   }
 
-  console.log(chartData);
   return (
     <div className="container chart-container">
       {pageLoading ? (
