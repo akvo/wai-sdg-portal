@@ -41,6 +41,7 @@ def update(session: Session,
     if payload:
         jobs.payload = payload
     if status:
+        print(status)
         jobs.status = status
     if status == JobStatus.pending:
         jobs.attempt = jobs.attempt + 1
@@ -50,8 +51,8 @@ def update(session: Session,
         jobs.info = info
     if type:
         jobs.type = type
-    session.flush()
     session.commit()
+    session.flush()
     session.refresh(jobs)
     return jobs.serialize
 
