@@ -128,17 +128,23 @@ def run_download(session: Session, jobs: dict):
         print_log_done(f"FAILED TO CREATED {file}", start_time)
 
 
-def force_remove_task(session: Session, jobs):
+def force_remove_task(session: Session, jobs: dict):
     user = get_user_by_id(session=session, id=jobs["created_by"])
-    email = Email(recipients=[user.recipient],
-                  type=MailTypeEnum.data_submission_failed,
-                  attachment=storage.download(jobs["payload"]))
-    sent = email.send
-    if sent:
-        crud.update(session=session, id=jobs["id"], status=JobStatus.failed)
-    else:
-        print("Force removed jobs_id {} by {}".format(jobs["id"],
-                                                      user["email"]))
+    try:
+        attachment = jobs.get("payload")
+        if jobs["type"] == JobType.download:
+            attachment = storage.download(attachment)
+        email = Email(recipients=[user.recipient],
+                      type=MailTypeEnum.data_submission_failed,
+                      attachment=attachment)
+        email.send
+    except Exception as e:
+        print(e)
+        email = Email(recipients=[user.recipient],
+                      type=MailTypeEnum.data_submission_failed)
+        email.send
+    crud.update(session=session, id=jobs["id"], status=JobStatus.failed)
+    print("Force removed jobs_id {} by {}".format(jobs["id"], user["email"]))
 
 
 def do_task(session: Session, jobs):
