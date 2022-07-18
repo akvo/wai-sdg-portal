@@ -76,6 +76,9 @@ def validate_number(answer, question):
 
 def validate_geo(answer):
     answer = str(answer)
+    answer = answer.replace("(", "")
+    answer = answer.replace(")", "")
+    answer = answer.strip()
     try:
         for a in answer.split(","):
             float(a.strip())
