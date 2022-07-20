@@ -96,6 +96,8 @@ def save(session: Session, user: int, form: int, dp: dict, qs: dict):
                               administration=administration,
                               created_by=user,
                               answers=answerlist)
+    del names
+    del answerlist
     return data
 
 
@@ -118,5 +120,9 @@ def seed(session: Session, file: str, user: int, form: int):
                     dp=datapoint,
                     qs=questions)
         records.append(data)
+    total_data = len(records)
+    del records
+    del questions
+    del columns
     os.remove(file)
-    return records
+    return total_data

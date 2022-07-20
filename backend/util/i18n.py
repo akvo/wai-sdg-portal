@@ -26,7 +26,10 @@ class ValidationText(enum.Enum):
 
 class EmailText(enum.Enum):
     data_upload_body = '''
-        Thank you for uploading data file --filename-- to the portal.'''
+        Thank you for uploading data to the portal.<br>
+        File name: <b>--filename--</b><br>
+        Total records: <b>--total_records--</b>
+        '''
     data_validation_success = {
         "title": "Data Validation Success",
         "subject": "Data Validation",
