@@ -29,16 +29,17 @@ def run_seed(session: Session, jobs: dict):
     original_filename = jobs["info"]["original_filename"]
     user = get_user_by_id(session=session, id=jobs["created_by"])
     info = jobs["info"]
-    data = seed.seed(session=session,
-                     file=storage.download(jobs["payload"]),
-                     user=jobs["created_by"],
-                     form=info["form_id"])
-    status = JobStatus.done if len(data) else JobStatus.failed
-    if (data):
-        info.update({"records": len(data)})
+    total_data = seed.seed(session=session,
+                           file=storage.download(jobs["payload"]),
+                           user=jobs["created_by"],
+                           form=info["form_id"])
+    status = JobStatus.done if total_data else JobStatus.failed
+    if total_data:
+        info.update({"records": total_data})
         # success email
         body = EmailText.data_upload_body.value.replace(
-            "--filename--", str(original_filename))
+            "--filename--", str(original_filename)).replace(
+            "--total_records--", str(total_data))
         email = Email(recipients=[user.recipient],
                       type=MailTypeEnum.data_submission_success,
                       body=body)
@@ -143,10 +144,9 @@ def force_remove_task(session: Session, jobs: dict):
         email = Email(recipients=[user.recipient],
                       type=MailTypeEnum.data_submission_failed)
         email.send
-    if jobs["type"] in [JobType.download, JobType.validate_data]:
-        crud.update(session=session, id=jobs["id"], status=JobStatus.failed)
-        print("Force removed jobs_id {} by {}".format(jobs["id"],
-                                                      user["email"]))
+    crud.update(session=session, id=jobs["id"], status=JobStatus.failed)
+    print("Force removed jobs_id {} by {}".format(jobs["id"],
+                                                  user["email"]))
 
 
 def do_task(session: Session, jobs):
