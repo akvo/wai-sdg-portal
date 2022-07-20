@@ -143,8 +143,10 @@ def force_remove_task(session: Session, jobs: dict):
         email = Email(recipients=[user.recipient],
                       type=MailTypeEnum.data_submission_failed)
         email.send
-    crud.update(session=session, id=jobs["id"], status=JobStatus.failed)
-    print("Force removed jobs_id {} by {}".format(jobs["id"], user["email"]))
+    if jobs["type"] in [JobType.download, JobType.validate_data]:
+        crud.update(session=session, id=jobs["id"], status=JobStatus.failed)
+        print("Force removed jobs_id {} by {}".format(jobs["id"],
+                                                      user["email"]))
 
 
 def do_task(session: Session, jobs):

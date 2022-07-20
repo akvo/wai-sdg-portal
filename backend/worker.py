@@ -30,7 +30,7 @@ worker.include_router(jobs_route)
 worker.include_router(template_route)
 Base.metadata.create_all(bind=engine)
 sessionmaker = FastAPISessionMaker(get_db_url())
-timeout = 10
+timeout = 30
 
 
 @worker.get("/", tags=["Dev"])
