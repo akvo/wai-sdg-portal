@@ -51,7 +51,7 @@ def validate_header_names(header, col, header_names):
 
 def validate_number(answer, question):
     try:
-        answer = int(answer)
+        answer = float(answer)
     except ValueError:
         return {"error_message": ValidationText.numeric_validation.value}
     try:
@@ -59,19 +59,19 @@ def validate_number(answer, question):
             rule = question.rule
             qname = question.name
             for r in rule:
-                if r == "max" and int(rule[r]) < answer:
+                if r == "max" and float(rule[r]) < float(answer):
                     return {
                         "error_message":
                         ValidationText.numeric_max_rule.value.replace(
-                            "--question--", qname).replace("--rule--",
-                                                           str(rule[r]))
+                            "--question--",
+                            qname).replace("--rule--", str(rule[r]))
                     }
-                if r == "min" and int(rule[r]) > answer:
+                if r == "min" and float(rule[r]) > float(answer):
                     return {
                         "error_message":
                         ValidationText.numeric_min_rule.value.replace(
-                            "--question--", qname).replace("--rule--",
-                                                           str(rule[r]))
+                            "--question--",
+                            qname).replace("--rule--", str(rule[r]))
                     }
     except Exception as e:
         write_log("ERROR", e)
