@@ -88,14 +88,20 @@ def get_question_name(session: Session, id: int) -> str:
     return ""
 
 
+def get_excel_headers(session: Session, form: int) -> List[str]:
+    questions = session.query(Question).join(QuestionGroup).filter(
+        Question.form == form).order_by(QuestionGroup.order, Question.order)
+    return [q.to_excel_header for q in questions]
+
+
 def get_excel_question(session: Session, form: int) -> List[QuestionDict]:
-    return session.query(Question).filter(Question.form == form)
+    return session.query(Question).join(QuestionGroup).filter(
+        Question.form == form).order_by(QuestionGroup.order, Question.order)
 
 
 def get_definition(session: Session, form: int):
     questions = session.query(Question).join(QuestionGroup).filter(
-        Question.form == form).order_by(QuestionGroup.order,
-                                        Question.order)
+        Question.form == form).order_by(QuestionGroup.order, Question.order)
     framed = []
     for q in [qs.to_definition for qs in questions]:
         rule = ""

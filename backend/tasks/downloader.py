@@ -2,6 +2,7 @@ import os
 import pandas as pd
 from db import crud_administration
 from db import crud_data
+from db import crud_question
 from sqlalchemy.orm import Session
 from util.helper import HText
 
@@ -31,7 +32,13 @@ def download(session: Session, jobs: dict, file: str):
                               administration=administration_ids,
                               options=info["options"])
     df = pd.DataFrame(data)
-    col_names = rearange_columns(list(df))
+    questions = crud_question.get_excel_headers(
+            session=session,
+            form=info["form_id"])
+    for q in questions:
+        if q not in list(df):
+            df[q] = ""
+    col_names = rearange_columns(questions)
     df = df[col_names]
     writer = pd.ExcelWriter(file, engine='xlsxwriter')
     df.to_excel(writer, sheet_name='data', index=False)

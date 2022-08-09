@@ -206,6 +206,10 @@ class Answer(Base):
     def to_project(self) -> dict:
         return {"id": self.data, "name": int(self.value)}
 
+    @property
+    def to_header(self) -> str:
+        return f"{self.question_detail.id}|{self.question_detail.name}"
+
 
 class AnswerBase(BaseModel):
     id: int

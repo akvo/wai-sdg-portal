@@ -10,6 +10,7 @@ from sqlalchemy.orm import Session
 from string import ascii_uppercase
 from util.helper import HText
 from util.i18n import ValidationText
+from util.log import write_log
 
 
 class ExcelError(enum.Enum):
@@ -53,24 +54,27 @@ def validate_number(answer, question):
         answer = int(answer)
     except ValueError:
         return {"error_message": ValidationText.numeric_validation.value}
-    if question.rule:
-        rule = question.rule
-        qname = question.name
-        for r in rule:
-            if r == "max" and rule[r] < answer:
-                return {
-                    "error_message":
-                    ValidationText.numeric_max_rule.value.replace(
-                        "--question--", qname).replace("--rule--",
-                                                       str(rule[r]))
-                }
-            if r == "min" and rule[r] > answer:
-                return {
-                    "error_message":
-                    ValidationText.numeric_min_rule.value.replace(
-                        "--question--", qname).replace("--rule--",
-                                                       str(rule[r]))
-                }
+    try:
+        if question.rule:
+            rule = question.rule
+            qname = question.name
+            for r in rule:
+                if r == "max" and int(rule[r]) < answer:
+                    return {
+                        "error_message":
+                        ValidationText.numeric_max_rule.value.replace(
+                            "--question--", qname).replace("--rule--",
+                                                           str(rule[r]))
+                    }
+                if r == "min" and int(rule[r]) > answer:
+                    return {
+                        "error_message":
+                        ValidationText.numeric_min_rule.value.replace(
+                            "--question--", qname).replace("--rule--",
+                                                           str(rule[r]))
+                    }
+    except Exception as e:
+        write_log("ERROR", e)
     return False
 
 

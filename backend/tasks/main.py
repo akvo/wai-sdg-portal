@@ -10,6 +10,7 @@ from models.jobs import JobType, JobStatus
 import util.storage as storage
 from db.crud_user import get_user_by_id
 from util.mailer import Email, MailTypeEnum
+from util.log import write_log
 from util.i18n import ValidationText, EmailText
 
 
@@ -38,8 +39,9 @@ def run_seed(session: Session, jobs: dict):
         info.update({"records": total_data})
         # success email
         body = EmailText.data_upload_body.value.replace(
-            "--filename--", str(original_filename)).replace(
-            "--total_records--", str(total_data))
+            "--filename--",
+            str(original_filename)).replace("--total_records--",
+                                            str(total_data))
         email = Email(recipients=[user.recipient],
                       type=MailTypeEnum.data_submission_success,
                       body=body)
@@ -140,20 +142,22 @@ def force_remove_task(session: Session, jobs: dict):
                       attachment=attachment)
         email.send
     except Exception as e:
-        print(e)
+        write_log("ERROR", str(e))
         email = Email(recipients=[user.recipient],
                       type=MailTypeEnum.data_submission_failed)
         email.send
     crud.update(session=session, id=jobs["id"], status=JobStatus.failed)
-    print("Force removed jobs_id {} by {}".format(jobs["id"],
-                                                  user["email"]))
+    print("Force removed jobs_id {} by {}".format(jobs["id"], user["email"]))
 
 
 def do_task(session: Session, jobs):
-    if jobs["type"] == JobType.validate_data:
-        run_validate(session=session, jobs=jobs)
-    if jobs["type"] == JobType.seed_data:
-        run_seed(session=session, jobs=jobs)
-    if jobs["type"] == JobType.download:
-        run_download(session=session, jobs=jobs)
+    try:
+        if jobs["type"] == JobType.validate_data:
+            run_validate(session=session, jobs=jobs)
+        if jobs["type"] == JobType.seed_data:
+            run_seed(session=session, jobs=jobs)
+        if jobs["type"] == JobType.download:
+            run_download(session=session, jobs=jobs)
+    except Exception as e:
+        write_log("ERROR", str(e))
     return True
