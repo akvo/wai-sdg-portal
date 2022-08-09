@@ -61,6 +61,7 @@ async def upload(req: Request,
     if file.content_type != ftype:
         raise HTTPException(status_code=404, detail="Not Valid Excel File")
     form_name = get_form_name(session=session, id=form_id)
+    form_name = form_name.replace(" ", "_").lower()
     today = datetime.today().strftime("%y%m%d")
     out_file = UUID(f"{form_name}-{today}").str
     out_file = f"{out_file_path}U{out_file}.xlsx"

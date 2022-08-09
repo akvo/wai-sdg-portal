@@ -65,14 +65,14 @@ def save(session: Session, user: int, form: int, dp: dict, qs: dict):
                     valid = False
             if q.type == QuestionType.number:
                 try:
-                    float(aw)
+                    aw = float(aw)
                     valid = True
                 except ValueError:
                     valid = False
                 if valid:
-                    answer.value = aw
+                    answer.value = float(aw)
                     if q.meta:
-                        names.append(str(aw))
+                        names.append(str(int(aw)))
             if q.type == QuestionType.option:
                 answer.options = [aw]
             if q.type == QuestionType.multiple_option:

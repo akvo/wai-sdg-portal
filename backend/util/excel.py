@@ -34,8 +34,11 @@ def generate_definition_sheet(session: Session, form: int):
     definitions = crud_question.get_definition(session=session, form=form.id)
     df = pd.DataFrame(definitions)
     df["type"] = df["type"].apply(lambda x: str(x).split(".")[1])
-    return df.groupby(["id", "question", "type", "option", "required",
-                       "rule", "dependency"]).first()
+    group = df.groupby([
+        "id", "question", "type", "option", "required", "rule",
+        "dependency"
+    ], sort=False).first()
+    return group
 
 
 def generate_excel_template(session: Session, form: int):
@@ -65,9 +68,7 @@ def generate_excel_template(session: Session, form: int):
     for col_num, value in enumerate(data.columns.values):
         worksheet.write(0, col_num, value, header_format)
     definitions = generate_definition_sheet(session=session, form=form)
-    definitions.to_excel(writer,
-                         sheet_name='definitions',
-                         startrow=-1)
+    definitions.to_excel(writer, sheet_name='definitions', startrow=-1)
 
     source_path = os.environ["INSTANCE_NAME"]
     TESTING = os.environ.get("TESTING")
