@@ -17,6 +17,7 @@ from routes.chart import chart_route
 from routes.file import file_route
 from routes.log import log_route
 from routes.option import option_route
+from routes.hint import hint_route
 from source.geoconfig import GeoLevels
 
 INSTANCE_NAME = os.environ["INSTANCE_NAME"]
@@ -77,6 +78,7 @@ app.include_router(chart_route)
 app.include_router(file_route)
 app.include_router(project_route)
 app.include_router(log_route)
+app.include_router(hint_route)
 
 
 @lru_cache()
