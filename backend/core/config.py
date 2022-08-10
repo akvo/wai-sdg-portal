@@ -5,6 +5,7 @@ from functools import lru_cache
 from pydantic import BaseSettings
 from fastapi import FastAPI, Request, Response
 from fastapi.responses import FileResponse
+from fastapi.middleware.cors import CORSMiddleware
 from routes.administration import administration_route
 from routes.organisation import organisation_route
 from routes.user import user_route
@@ -64,6 +65,16 @@ app = FastAPI(
         "name": "AGPL3",
         "url": "https://www.gnu.org/licenses/agpl-3.0.en.html",
     },
+)
+
+origins = ["http://localhost:3000"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["GET"],
+    allow_headers=["*"],
 )
 
 app.include_router(administration_route)
