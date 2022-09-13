@@ -43,20 +43,21 @@ def check_project(session: Session, data: List[DataDictWithHistory],
     if len(external):
         question = crud_question.get_question_by_id(session=session,
                                                     id=external[0])
-        question = int(question.option[0].name)
-        for d in data:
-            project_id = list(
-                filter(lambda x: x["question"] == question, d["answer"]))
-            project_id = project_id[0]["value"]
-            for ex in external:
-                total_projects = crud_answer.get_project_count(
-                    session=session, question=ex, value=project_id)
-                total_projects = {
-                    "question": ex,
-                    "value": total_projects,
-                    "history": False
-                }
-                d["answer"].append(total_projects)
+        if len(question.option):
+            question = int(question.option[0].name)
+            for d in data:
+                project_id = list(
+                    filter(lambda x: x["question"] == question, d["answer"]))
+                project_id = project_id[0]["value"]
+                for ex in external:
+                    total_projects = crud_answer.get_project_count(
+                        session=session, question=ex, value=project_id)
+                    total_projects = {
+                        "question": ex,
+                        "value": total_projects,
+                        "history": False
+                    }
+                    d["answer"].append(total_projects)
     return data
 
 
@@ -109,6 +110,7 @@ def get(req: Request,
                              data=data,
                              question=question,
                              form=form_id)
+    print(data)
     return {
         'current': page,
         'data': data,
