@@ -7,11 +7,3 @@ Before, you start looking around and going into deep, please logging in by click
 
 .. image:: ../../assets/ethiopia/login.png
     :alt: Logging in
-
-Datasets overview
------------------
-
-Take a quick look at the datasets.
-
-.. image:: ../../assets/ethiopia/dataset-overview.png
-    :alt: Datasets overview
