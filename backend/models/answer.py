@@ -22,8 +22,8 @@ class AnswerDict(TypedDict):
 class AnswerDictWithHistory(TypedDict):
     history: bool
     question: int
-    value: Union[int, str, float, bool, dict, List[str], List[int],
-                 List[float], None]
+    value: Union[int, str, bool, dict, List[str], List[int],
+                 List[float], float, None]
 
 
 class Answer(Base):

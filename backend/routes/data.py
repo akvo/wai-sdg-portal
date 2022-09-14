@@ -110,7 +110,6 @@ def get(req: Request,
                              data=data,
                              question=question,
                              form=form_id)
-    print(data)
     return {
         'current': page,
         'data': data,
