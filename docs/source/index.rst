@@ -26,6 +26,12 @@ Welcome to SDG Portal documentation!
 
    ethiopia/datasets
 
+.. toctree::
+   :maxdepth: 2
+   :caption: Data
+
+   ethiopia/data
+
 .. |Build Status| image:: https://akvo.semaphoreci.com/badges/wai-sdg-portal/branches/main.svg?style=shields
    :target: https://akvo.semaphoreci.com/projects/wai-sdg-portal
 .. |Repo Size| image:: https://img.shields.io/github/repo-size/akvo/wai-sdg-portal
