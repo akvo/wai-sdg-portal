@@ -2,7 +2,7 @@ Overview
 ---------
 - Each data has multiplr questions and question groups.
 
-.. image:: ../../assets/ethiopia/dataset-overview.png
+.. image:: ../../assets/ethiopia/example-overview.png
     :alt: Datasets overview
 
 Search
