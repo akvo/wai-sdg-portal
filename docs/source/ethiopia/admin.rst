@@ -80,3 +80,15 @@ You can also upload a new data entry from your **file maangaer** or download exi
 
 .. image:: ../../assets/ethiopia/data-entry-upload.png
     :alt: data upload
+
+Manage users
+------------
+
+A list of users is displayed on the page with their: 
+- Name
+- Email
+- Organisation
+- Role
+
+.. image:: ../../assets/ethiopia/manage-users.png
+    :alt: Manage users
