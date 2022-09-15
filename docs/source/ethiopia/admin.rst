@@ -64,3 +64,19 @@ You also can add a new data entry.
 
 .. image:: ../../assets/ethiopia/add-data-entry.png
     :alt: Add
+
+Exports
+-------
+
+You can see a list of exported data entries that you can download.
+
+.. image:: ../../assets/ethiopia/list-of-exported-data-entry.png
+    :alt: Exported data
+
+Data Upload
+-----------
+
+You can also upload a new data entry from your **file maangaer** or download existing data by clicking on the **Download** button.
+
+.. image:: ../../assets/ethiopia/data-entry-upload.png
+    :alt: data upload
