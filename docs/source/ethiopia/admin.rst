@@ -76,7 +76,7 @@ You can see a list of exported data entries that you can download.
 Data Upload
 -----------
 
-You can also upload a new data entry from your **file maangaer** or download existing data by clicking on the **Download** button.
+You can also upload a new data entry from your **file manager** or download existing data by clicking on the **Download** button.
 
 .. image:: ../../assets/ethiopia/data-entry-upload.png
     :alt: data upload
