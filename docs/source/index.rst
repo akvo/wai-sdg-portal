@@ -8,6 +8,35 @@ Welcome to SDG Portal documentation!
 
 |Build Status| |Repo Size| |Languages| |Issues| |Last Commit| |Documentation Status|
 
+.. toctree::
+   :maxdepth: 2
+   :caption: Install
+
+   install
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Getting Started
+
+   ethiopia/gettingStarted
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Datasets
+
+   ethiopia/datasets
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Data
+
+   ethiopia/data
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Admin
+
+   ethiopia/admin
 
 .. |Build Status| image:: https://akvo.semaphoreci.com/badges/wai-sdg-portal/branches/main.svg?style=shields
    :target: https://akvo.semaphoreci.com/projects/wai-sdg-portal
