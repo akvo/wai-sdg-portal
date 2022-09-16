@@ -5,7 +5,7 @@
 ) [![Issues](https://img.shields.io/github/issues/akvo/wai-sdg-portal
 )](https://img.shields.io/github/issues/akvo/wai-sdg-portal
 ) [![Last Commit](https://img.shields.io/github/last-commit/akvo/wai-sdg-portal/main
-)](https://img.shields.io/github/last-commit/akvo/wai-sdg-portal/main)
+)](https://img.shields.io/github/last-commit/akvo/wai-sdg-portal/main) [![Documentation Status](https://readthedocs.org/projects/wai-sdg-portal/badge/?version=latest)](https://wai-sdg-portal.readthedocs.io/en/latest/?badge=latest) [![GitHub license](https://img.shields.io/github/license/akvo/wai-sdg-portal.svg)](https://github.com/akvo/wai-sdg-portal/blob/main/LICENSE)
 
 ## Development
 
