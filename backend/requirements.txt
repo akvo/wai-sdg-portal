@@ -28,3 +28,4 @@ Jinja2==3.0.3
 bs4==0.0.1
 lxml==4.6.4
 jsmin==3.0.0
+coveralls==3.3.1

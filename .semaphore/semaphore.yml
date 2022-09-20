@@ -11,6 +11,7 @@ blocks:
         - name: GCP
         - name: docker-hub-credentials
         - name: wai-sdg-portal
+        - name: coveralls
       prologue:
         commands:
           - 'echo "${DOCKER_PASSWORD}" | docker login --username "${DOCKER_USERNAME}" --password-stdin'
@@ -20,6 +21,7 @@ blocks:
           - 'export CI_PULL_REQUEST="${SEMAPHORE_GIT_REF_TYPE/pull-request/true}"'
           - export CLOUDSDK_CORE_DISABLE_PROMPTS=1
           - export COMPOSE_INTERACTIVE_NO_CLI=1
+          - export COVERALLS_REPO_TOKEN="${COVERALLS_WAI_TOKEN}"
           - checkout
       jobs:
         - name: Build & Test
