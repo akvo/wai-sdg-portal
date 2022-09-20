@@ -58,8 +58,7 @@ with open(source_file, 'r') as geo:
     res["id"] = res.index + 1
     res["parent"] = res.apply(lambda x: get_parent_id(res, x), axis=1)
     res = res[["id", "name", "parent"]]
-    for adm in res.to_dict():
-        add_administration(
-            Administration(id=adm["id"],
-                           parent=adm["parent"],
-                           name=adm["name"]))
+    for adm in res.to_dict("records"):
+        parent = adm["parent"] if adm["parent"] == adm["parent"] else None
+        add_administration(session=session, data=Administration(
+            id=int(adm["id"]), parent=parent, name=adm["name"]))
