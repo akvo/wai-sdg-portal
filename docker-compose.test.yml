@@ -16,7 +16,7 @@ services:
   backend:
     image: eu.gcr.io/akvo-lumen/wai-sdg-portal/backend:latest
     working_dir: /app
-    command: "pytest -rP"
+    command: tail -f /dev/null
     volumes:
       - ./backend:/app:delegated
     environment:
