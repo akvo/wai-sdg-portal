@@ -16,7 +16,8 @@ dc () {
 
 # Docker compose using CI env
 dci () {
-    dc -f docker-compose.ci.yml "$@"
+    dc -f docker-compose.yml \
+       -f docker-compose.ci.yml "$@"
 }
 
 frontend_build () {
