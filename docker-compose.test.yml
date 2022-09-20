@@ -11,17 +11,15 @@ services:
       - pg-data:/var/lib/postgresql/data
       - ./db/script:/script:ro
     restart: always
-    ports:
-      - 5432:5432
   backend:
     image: eu.gcr.io/akvo-lumen/wai-sdg-portal/backend:latest
-    working_dir: /app
-    command: "pytest -rP"
+    working_dir: /app/backend
+    command: tail -f /dev/null
     volumes:
-      - ./backend:/app:delegated
+      - ./:/app:delegated
     environment:
       - DATABASE_URL=postgresql://wai:password@db:5432/wai_ci
-      - SKIP_MIGRATION=yes
+      - COVERALLS_REPO_TOKEN=${COVERALLS_REPO_TOKEN:-}
       - MAILJET_SECRET=notset
       - MAILJET_APIKEY=notset
       - WEBDOMAIN=notset

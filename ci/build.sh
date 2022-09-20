@@ -16,7 +16,8 @@ dc () {
 
 # Docker compose using CI env
 dci () {
-    dc -f docker-compose.ci.yml "$@"
+    dc -f docker-compose.yml \
+       -f docker-compose.ci.yml "$@"
 }
 
 frontend_build () {
@@ -39,6 +40,12 @@ backend_build () {
     docker build \
         --tag "${image_prefix}/backend:latest" \
         --tag "${image_prefix}/backend:${CI_COMMIT}" backend
+
+    # Test and Code Quality
+    dc -f docker-compose.test.yml \
+        -p backend-test \
+        run --rm -T backend ./test.sh
+
 }
 
 worker_build () {
@@ -52,11 +59,6 @@ worker_build () {
 
 worker_build
 backend_build
-
-# Pytest
-docker-compose -f docker-compose.test.yml run -T backend pytest -rP -vvv
-# Code Quality
-docker-compose -f docker-compose.test.yml run -T backend python -m flake8
 
 frontend_build
 
