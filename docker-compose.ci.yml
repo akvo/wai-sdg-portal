@@ -3,8 +3,6 @@ version: '3.9'
 services:
   backend:
     command: ["sh", "run.sh"]
-    depends_on:
-      - db
     environment:
       - DATABASE_URL=postgresql://wai:password@db:5432/wai_ci
       - SKIP_MIGRATION=yes
@@ -25,7 +23,6 @@ services:
   worker:
     command: ["sh", "run-worker.sh"]
     depends_on:
-      - db
       - backend
     environment:
       - DATABASE_URL=postgresql://wai:password@db:5432/wai_ci
@@ -48,7 +45,6 @@ services:
     depends_on:
       - backend
       - worker
-      - db
       - frontend
     entrypoint: ./entrypoint.sh
     image: alpine:3.14
@@ -56,26 +52,11 @@ services:
     volumes:
       - ./ci/test:/test:ro
     working_dir: /test
-  db:
-    command: postgres -c 'shared_buffers=128MB' -c 'fsync=off' -c 'synchronous_commit=off'
-      -c 'full_page_writes=off' -c 'max_connections=100' -c 'bgwriter_lru_maxpages=0'
-      -c 'client_min_messages=warning'
-    environment:
-      - POSTGRES_PASSWORD=password
-    image: postgres:12-alpine
-    ports:
-      - 5432:5432
-    restart: always
-    volumes:
-      - ./db/docker-entrypoint-initdb.d.ci:/docker-entrypoint-initdb.d
-      - pg-data:/var/lib/postgresql/data
-      - ./db/script:/script:ro
   frontend:
     command: ["nginx", "-g", "daemon off;"]
     depends_on:
       - backend
       - worker
-      - db
     image: eu.gcr.io/akvo-lumen/wai-sdg-portal/frontend:latest
     network_mode: service:mainnetwork
     volumes:
