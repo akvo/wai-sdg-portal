@@ -4,7 +4,7 @@ from sqlalchemy import and_
 from models.administration import Administration, AdministrationDict
 
 
-def add_administration(session, data) -> AdministrationDict:
+def add_administration(session, data: Administration) -> AdministrationDict:
     session.add(data)
     session.commit()
     session.flush()
