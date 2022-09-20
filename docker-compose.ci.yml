@@ -61,6 +61,10 @@ services:
       -c 'full_page_writes=off' -c 'max_connections=100' -c 'bgwriter_lru_maxpages=0'
       -c 'client_min_messages=warning'
     restart: always
+    volumes:
+      - ./db/docker-entrypoint-initdb.d.ci:/docker-entrypoint-initdb.d
+      - pg-data:/var/lib/postgresql/data
+      - ./db/script:/script:ro
   frontend:
     command: ["nginx", "-g", "daemon off;"]
     depends_on:
