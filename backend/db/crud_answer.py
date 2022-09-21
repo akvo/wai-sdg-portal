@@ -95,3 +95,8 @@ def get_project_count(session: Session, question: int, value: int) -> int:
     return session.query(Answer).filter(
         and_(Answer.question == question,
              cast(Answer.value, Integer) == value)).count()
+
+
+def count_answer_by_question(session: Session, question: int) -> int:
+    return session.query(Answer).filter(
+        Answer.question == question).count()

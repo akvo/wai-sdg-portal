@@ -91,11 +91,12 @@ def get_by_id(req: Request, id: int, session: Session = Depends(get_session)):
 
 @form_route.get("/webform/{id:path}",
                 summary="get form by id",
-                name="form:get_by_id",
+                name="webform:get_by_id",
                 tags=["Form"])
 def get_webform_by_id(req: Request,
                       id: int,
-                      session: Session = Depends(get_session)):
+                      session: Session = Depends(get_session),
+                      credentials: credentials = Depends(security)):
     user = verify_editor(req.state.authenticated, session)
     access = [a.administration for a in user.access]
     form = crud.get_form_by_id(session=session, id=id)
@@ -150,3 +151,60 @@ def add(req: Request,
     verify_admin(req.state.authenticated, session)
     form = crud.add_form(session=session, name=name)
     return form.serialize
+
+
+@form_route.get("/webform_editor/{id:path}",
+                summary="get form by id with answer check",
+                name="webform_editor:get_by_id",
+                tags=["Form"])
+def get_webform_editor_by_id(
+    req: Request,
+    id: int,
+    session: Session = Depends(get_session),
+    credentials: credentials = Depends(security)
+):
+    user = verify_editor(req.state.authenticated, session)
+    access = [a.administration for a in user.access]
+    form = crud.get_form_by_id(session=session, id=id)
+    project = crud_question.get_project_question(session=session, form=id)
+    form = form.serialize
+    form["question_group"] = [qg.serialize for qg in form["question_group"]]
+    for qg in form["question_group"]:
+        qg["question"] = [q.serialize for q in qg["question"]]
+        for q in qg["question"]:
+            # check if has answer here
+            answer = crud_answer.count_answer_by_question(
+                session=session, question=q.get('id'))
+            if answer:
+                q.update({"disableDelete": True})
+            if q["type"] == QuestionType.administration:
+                q.update({"option": "administration"})
+                q.update({"type": "cascade"})
+            if q["type"] == QuestionType.geo:
+                q.update({"center": geo_center})
+            if q["type"] == QuestionType.answer_list:
+                if q["id"] == project.id:
+                    administration_ids = crud_administration.get_all_childs(
+                        session=session,
+                        parents=[a.administration for a in user.access],
+                        current=[])
+                    projects = crud_answer.get_answer_by_question(
+                        session=session,
+                        question=project.option[0].name,
+                        administrations=administration_ids)
+                    option = [p.to_project for p in projects]
+                    option.reverse()
+                    for o in option:
+                        data_id = o["id"]
+                        data_name = crud_data.get_data_name_by_id(
+                            session=session, id=data_id)
+                        o.update({"id": data_id, "name": data_name})
+                q.update({"option": option, "type": "option"})
+    administration = crud_administration.get_parent_administration(
+        session=session,
+        access=None if user.role == UserRole.admin else access)
+    form.update(
+        {"cascade": {
+            "administration": [a.cascade for a in administration]
+        }})
+    return form
