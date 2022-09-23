@@ -2,6 +2,7 @@ from typing import List, Optional
 from sqlalchemy.orm import Session
 from models.question_group import QuestionGroup, QuestionGroupDict
 from models.question_group import QuestionGroupBase
+from sqlalchemy import and_
 
 
 def get_last_question_group(session: Session, form: int):
@@ -45,8 +46,9 @@ def update_question_group(
 ) -> QuestionGroupDict:
     last_question_group = get_last_question_group(
         session=session, form=form)
-    question_group = session.query(
-        QuestionGroup).filter(QuestionGroup.id == id).first()
+    question_group = session.query(QuestionGroup).filter(and_(
+        QuestionGroup.form == form,
+        QuestionGroup.id == id)).first()
     question_group.name = name,
     question_group.order = order if order else last_question_group
     session.commit()
