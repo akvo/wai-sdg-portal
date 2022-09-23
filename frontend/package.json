@@ -5,18 +5,15 @@
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
     "@auth0/auth0-react": "^1.6.0",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
     "akvo-react-form": "^2.0.1",
     "akvo-react-form-editor": "^1.0.3",
-    "antd": "^4.16.9",
-    "axios": "^0.21.1",
+    "antd": "^4.23.2",
+    "axios": "^0.27.2",
     "currency-formatter": "^1.5.8",
     "d3-geo": "^3.0.1",
     "d3-scale": "^4.0.0",
-    "echarts": "^5.1.2",
-    "echarts-for-react": "^3.0.1",
+    "echarts": "^5.3.3",
+    "echarts-for-react": "^3.0.2",
     "html-to-image": "^1.8.5",
     "leaflet": "^1.8.0",
     "lodash": "^4.17.21",
@@ -33,14 +30,22 @@
     "swagger-ui-react": "^4.0.0-beta.2",
     "title-case": "^3.0.3",
     "topojson-client": "^3.1.0",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^2.1.3"
   },
   "devDependencies": {
+    "@babel/core": "^7.18.13",
+    "@babel/eslint-parser": "^7.18.9",
+    "@babel/preset-react": "^7.16.7",
     "@babel/plugin-syntax-object-rest-spread": "^7.8.3",
+    "@testing-library/dom": "^8.11.3",
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^13.5.0",
+    "buffer": "^6.0.3",
     "eslint-config-prettier": "8.5.0",
     "http-proxy-middleware": "^1.0.6",
-    "node-sass": "^4.0.0",
-    "prettier": "2.7.1"
+    "node-sass": "^7.0.1",
+    "prettier": "^2.7.1"
   },
   "scripts": {
     "start": "react-scripts start",
