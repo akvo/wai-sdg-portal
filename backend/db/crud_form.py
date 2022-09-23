@@ -43,3 +43,16 @@ def get_form_list():
     session = Session(engine)
     form = session.query(Form).all()
     return [f"{f.id} - {f.name}" for f in form]
+
+
+def update_form(
+    session: Session,
+    name: str,
+    id: int
+) -> FormDict:
+    form = session.query(Form).filter(Form.id == id).first()
+    form.name = name
+    session.commit()
+    session.flush()
+    session.refresh(form)
+    return form
