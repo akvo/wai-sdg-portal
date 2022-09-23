@@ -11,8 +11,10 @@ sys.path.append("..")
 
 account = Acc(True)
 
+form_id = random.randint(1, 10000)
+
 form_definition = {
-    "id": random.randint(1, 10000),
+    "id": form_id,
     "name": "New Form",
     "description": "New Form Description",
     "question_group": [{
@@ -49,6 +51,15 @@ class TestWebformEditorRoutes():
             self, app: FastAPI, session: Session, client: AsyncClient) -> None:
         res = await client.post(
             app.url_path_for("webform:create"),
+            headers={"Authorization": f"Bearer {account.token}"},
+            json=form_definition)
+        assert res.status_code == 200
+
+    @pytest.mark.asyncio
+    async def test_update_webform(
+            self, app: FastAPI, session: Session, client: AsyncClient) -> None:
+        res = await client.put(
+            app.url_path_for("webform:update", id=form_id),
             headers={"Authorization": f"Bearer {account.token}"},
             json=form_definition)
         assert res.status_code == 200

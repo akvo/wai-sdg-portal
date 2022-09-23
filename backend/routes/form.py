@@ -27,8 +27,9 @@ geo_center = {"lat": geo_center[1], "lng": geo_center[0]}
 
 
 # PROJECT BASE
-def get_project_form(session: Session, form: FormBase, project: QuestionDict,
-                     administrations: List[int]) -> FormBase:
+def get_project_form(
+        session: Session, form: FormBase, project: QuestionDict,
+        administrations: List[int]) -> FormBase:
     question_group = []
     for qg in form["question_group"]:
         qg = qg.serialize
@@ -44,8 +45,8 @@ def get_project_form(session: Session, form: FormBase, project: QuestionDict,
                 option.reverse()
                 for o in option:
                     data_id = o["id"]
-                    data_name = crud_data.get_data_name_by_id(session=session,
-                                                              id=data_id)
+                    data_name = crud_data.get_data_name_by_id(
+                        session=session, id=data_id)
                     o.update({"id": data_id, "name": data_name})
                 q.update({"option": option})
             questions.append(q)
@@ -111,31 +112,62 @@ def save_webform(json_form: dict, form_id: int = None):
     # if form_id ==> update
     session = next(get_session())
     # add form
-    form = crud.add_form(
-        session=session, id=json_form.get('id'), name=json_form.get('name'))
+    if not form_id:
+        form = crud.add_form(
+            session=session,
+            id=json_form.get('id'),
+            name=json_form.get('name'))
+    if form_id:
+        form = crud.update_form(
+            session=session,
+            name=json_form.get('name'),
+            id=form_id)
     for qg in json_form.get('question_group'):
         # add group, repeatable? translations?
-        question_group = crud_question_group.add_question_group(
-            session=session,
-            id=qg.get('id'),
-            form=form.id,
-            name=qg.get('name'),
-            order=qg.get('order'))
+        if not form_id:
+            question_group = crud_question_group.add_question_group(
+                session=session,
+                id=qg.get('id'),
+                form=form.id,
+                name=qg.get('name'),
+                order=qg.get('order'))
+        if form_id:
+            question_group = crud_question_group.update_question_group(
+                session=session,
+                form=form_id,
+                name=qg.get('name'),
+                id=qg.get('id'))
         for q in qg.get('question'):
             # add question, meta?
-            crud_question.add_question(
-                session=session,
-                id=q.get('id'),
-                name=q.get('name'),
-                form=form.id,
-                question_group=question_group.id,
-                type=q.get('type'),
-                meta=False,
-                order=q.get('order'),
-                required=q.get('required'),
-                rule=q.get('rule') if "rule" in q else None,
-                dependency=q.get('dependency') if "dependency" in q else None,
-                option=q.get('option') if "option" in q else [])
+            dependency = q.get('dependency') if "dependency" in q else None
+            if not form_id:
+                crud_question.add_question(
+                    session=session,
+                    id=q.get('id'),
+                    name=q.get('name'),
+                    form=form.id,
+                    question_group=question_group.id,
+                    type=q.get('type'),
+                    meta=False,
+                    order=q.get('order'),
+                    required=q.get('required'),
+                    rule=q.get('rule') if "rule" in q else None,
+                    dependency=dependency,
+                    option=q.get('option') if "option" in q else [])
+            if form_id:
+                crud_question.update_question(
+                    session=session,
+                    id=q.get('id'),
+                    name=q.get('name'),
+                    form=form_id,
+                    question_group=qg.get('id'),
+                    type=q.get('type'),
+                    meta=False,
+                    order=q.get('order'),
+                    required=q.get('required'),
+                    rule=q.get('rule') if "rule" in q else None,
+                    dependency=dependency,
+                    option=q.get('option') if "option" in q else [])
 
 
 @form_route.get("/form/",
@@ -198,15 +230,34 @@ def add(req: Request,
     return form.serialize
 
 
-@form_route.post("/webform/",
-                 summary="post webform editor JSON value",
-                 name="webform:post",
-                 tags=["Form"])
-async def add_webform(req: Request,
-                      payload: dict,
-                      background_tasks: BackgroundTasks,
-                      session: Session = Depends(get_session),
-                      # credentials: credentials = Depends(security)
-                      ):
+@form_route.post(
+    "/webform/",
+    summary="post webform editor JSON value",
+    name="webform:create",
+    tags=["Form"])
+async def add_webform(
+    req: Request,
+    payload: dict,
+    background_tasks: BackgroundTasks,
+    session: Session = Depends(get_session),
+    credentials: credentials = Depends(security)
+):
     background_tasks.add_task(save_webform, json_form=payload)
+    return payload
+
+
+@form_route.put(
+    "/webform/{id:path}",
+    summary="update webform editor definition",
+    name="webform:update",
+    tags=["Form"])
+async def update_webform(
+    req: Request,
+    id: int,
+    payload: dict,
+    background_tasks: BackgroundTasks,
+    session: Session = Depends(get_session),
+    credentials: credentials = Depends(security)
+):
+    background_tasks.add_task(save_webform, json_form=payload, form_id=id)
     return payload
