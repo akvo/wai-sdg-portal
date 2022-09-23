@@ -202,3 +202,20 @@ class TestSubmissionRoutes():
             "order": 1,
             "score": None,
         }
+
+    @pytest.mark.asyncio
+    async def test_get_webform_editor(
+        self, app: FastAPI,
+        session: Session,
+        client: AsyncClient
+    ) -> None:
+        res = await client.get(
+            app.url_path_for("webform:get_by_id", id=1),
+            params={'edit': True},
+            headers={"Authorization": f"Bearer {account.token}"})
+        assert res.status_code == 200
+        res = res.json()
+        for qg in res.get('question_group'):
+            for q in qg.get('question'):
+                assert 'disableDelete' in q
+                assert q.get('disableDelete') is True
