@@ -143,10 +143,11 @@ def get_by_id(req: Request, id: int, session: Session = Depends(get_session)):
                 tags=["Form"])
 def get_webform_by_id(req: Request,
                       id: int,
+                      edit: bool = False,
                       session: Session = Depends(get_session),
                       credentials: credentials = Depends(security)):
     res = get_form_definition(req=req, id=id, session=session,
-                              credentials=credentials)
+                              credentials=credentials, answer_check=edit)
     return res
 
 
@@ -162,18 +163,3 @@ def add(req: Request,
     verify_admin(req.state.authenticated, session)
     form = crud.add_form(session=session, name=name)
     return form.serialize
-
-
-@form_route.get("/webform_editor/{id:path}",
-                summary="get form by id with answer check",
-                name="webform_editor:get_by_id",
-                tags=["Form"])
-def get_webform_editor_by_id(
-    req: Request,
-    id: int,
-    session: Session = Depends(get_session),
-    credentials: credentials = Depends(security)
-):
-    res = get_form_definition(req=req, id=id, session=session,
-                              credentials=credentials, answer_check=True)
-    return res

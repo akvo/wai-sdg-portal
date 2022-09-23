@@ -210,7 +210,8 @@ class TestSubmissionRoutes():
         client: AsyncClient
     ) -> None:
         res = await client.get(
-            app.url_path_for("webform_editor:get_by_id", id=1),
+            app.url_path_for("webform:get_by_id", id=1),
+            params={'edit': True},
             headers={"Authorization": f"Bearer {account.token}"})
         assert res.status_code == 200
         res = res.json()
