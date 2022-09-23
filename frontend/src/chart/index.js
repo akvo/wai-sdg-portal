@@ -1,26 +1,26 @@
-import React from "react";
-import { Col, Card } from "antd";
-import ReactECharts from "echarts-for-react";
-import Bar from "./Bar";
-import Line from "./Line";
-import BarStack from "./BarStack";
-import Pie from "./Pie";
-import JMPBarStack from "./custom/JMPBarStack";
-import ODFLine from "./custom/ODFLine";
+import React from 'react';
+import { Col, Card } from 'antd';
+import ReactECharts from 'echarts-for-react';
+import Bar from './Bar';
+import Line from './Line';
+import BarStack from './BarStack';
+import Pie from './Pie';
+import JMPBarStack from './custom/JMPBarStack';
+import ODFLine from './custom/ODFLine';
 
 export const generateOptions = ({ type, data, chartTitle }, extra) => {
   switch (type) {
-    case "LINE":
+    case 'LINE':
       return Line(data, chartTitle, extra);
-    case "BARSTACK":
+    case 'BARSTACK':
       return BarStack(data, chartTitle, extra);
-    case "PIE":
+    case 'PIE':
       return Pie(data, chartTitle, extra);
-    case "DOUGHNUT":
+    case 'DOUGHNUT':
       return Pie(data, chartTitle, extra, true);
-    case "JMP-BARSTACK":
+    case 'JMP-BARSTACK':
       return JMPBarStack(data, chartTitle, extra);
-    case "ODF-LINE":
+    case 'ODF-LINE':
       return ODFLine(data, chartTitle, extra);
     default:
       return Bar(data, chartTitle, extra);
@@ -29,8 +29,8 @@ export const generateOptions = ({ type, data, chartTitle }, extra) => {
 
 const Chart = ({
   type,
-  title = "",
-  subTitle = "",
+  title = '',
+  subTitle = '',
   height = 450,
   span = 12,
   data,
@@ -64,7 +64,7 @@ const Chart = ({
         <Card title={title}>
           <ReactECharts
             option={option}
-            style={{ height: height - 50, width: "100%" }}
+            style={{ height: height - 50, width: '100%' }}
           />
         </Card>
       </Col>
@@ -73,7 +73,7 @@ const Chart = ({
   return (
     <ReactECharts
       option={option}
-      style={{ height: height - 50, width: "100%" }}
+      style={{ height: height - 50, width: '100%' }}
     />
   );
 };

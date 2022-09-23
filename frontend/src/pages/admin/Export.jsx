@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { Row, Col, List, Space, Button, Tag, Popover } from "antd";
+import React, { useState, useEffect } from 'react';
+import { Row, Col, List, Space, Button, Tag, Popover } from 'antd';
 import {
   FileExcelFilled,
   InfoCircleOutlined,
   DownloadOutlined,
-} from "@ant-design/icons";
-import api from "../../util/api";
-import { UIState } from "../../state/ui";
-import upperFirst from "lodash/upperFirst";
-import { getLocationName } from "../../util/utils";
+} from '@ant-design/icons';
+import api from '../../util/api';
+import { UIState } from '../../state/ui';
+import upperFirst from 'lodash/upperFirst';
+import { getLocationName } from '../../util/utils';
 
 const { adminText, buttonText } = window?.i18n;
 
@@ -19,7 +19,7 @@ const ItemDescription = ({ created, tags, adminid }) => {
     <Space direction="vertical">
       <div>{created}</div>
       <div>
-        {adminText?.exportFilterListText}:{" "}
+        {adminText?.exportFilterListText}:{' '}
         {admin_name && (
           <Tag
             key="admin-level"
@@ -40,7 +40,10 @@ const ItemDescription = ({ created, tags, adminid }) => {
             <Tag
               key={i}
               icon={
-                <Popover title={upperFirst(t.q)} placement="topRight">
+                <Popover
+                  title={upperFirst(t.q)}
+                  placement="topRight"
+                >
                   <InfoCircleOutlined />
                 </Popover>
               }
@@ -68,7 +71,7 @@ const Export = () => {
   useEffect(() => {
     if (user) {
       api
-        .get("download/list")
+        .get('download/list')
         .then((res) => {
           setLoading(false);
           setFileList(res.data);
@@ -80,13 +83,13 @@ const Export = () => {
     }
   }, [user]);
 
-  const pending = fileList.filter((item) => item.status !== "done");
+  const pending = fileList.filter((item) => item.status !== 'done');
 
   useEffect(() => {
     if (pending.length && !pendingFile) {
       setTimeout(() => {
         api.get(`download/status?id=${pending?.[0]?.id}`).then((res) => {
-          if (res?.data?.status === "done") {
+          if (res?.data?.status === 'done') {
             setPendingFile(res.data);
           }
         });
@@ -110,12 +113,12 @@ const Export = () => {
   const handleDownload = (payload) => {
     setDownloading(payload);
     api
-      .get(`download/file/${payload}`, { responseType: "blob" })
+      .get(`download/file/${payload}`, { responseType: 'blob' })
       .then((res) => {
         const url = window.URL.createObjectURL(new Blob([res.data]));
-        const link = document.createElement("a");
+        const link = document.createElement('a');
         link.href = url;
-        link.setAttribute("download", payload);
+        link.setAttribute('download', payload);
         document.body.appendChild(link);
         link.click();
         setDownloading(null);
@@ -138,11 +141,11 @@ const Export = () => {
     !loading && fileList.length > 2 ? (
       <div
         style={{
-          textAlign: "center",
+          textAlign: 'center',
           marginTop: 12,
           marginBottom: 12,
           height: 32,
-          lineHeight: "32px",
+          lineHeight: '32px',
         }}
       >
         {loadMoreButton ? (
@@ -154,7 +157,11 @@ const Export = () => {
     ) : null;
 
   return (
-    <Row className="filter-wrapper" align="middle" justify="space-between">
+    <Row
+      className="filter-wrapper"
+      align="middle"
+      justify="space-between"
+    >
       <Col span={24}>
         <List
           loading={loading}
@@ -163,8 +170,8 @@ const Export = () => {
           loadMore={loadMore}
           dataSource={fileList}
           renderItem={(item) => {
-            const filename = item?.payload?.replace("download/", "");
-            const done = item?.status === "done";
+            const filename = item?.payload?.replace('download/', '');
+            const done = item?.status === 'done';
             const isDownloading = item?.payload === downloading;
             return (
               <List.Item key={item.id}>
@@ -172,9 +179,9 @@ const Export = () => {
                   avatar={
                     <FileExcelFilled
                       style={{
-                        marginTop: "7.5px",
-                        color: done ? "#52c41a" : "#dddddd",
-                        fontSize: "65px",
+                        marginTop: '7.5px',
+                        color: done ? '#52c41a' : '#dddddd',
+                        fontSize: '65px',
                       }}
                     />
                   }

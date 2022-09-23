@@ -1,8 +1,8 @@
-import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import React from 'react';
+import { Route, Redirect } from 'react-router-dom';
 
-import { UIState } from "../state/ui";
-import { isAuthCookie } from "../util/auth";
+import { UIState } from '../state/ui';
+import { isAuthCookie } from '../util/auth';
 
 const ProtectedContent = ({ component: Component, ...rest }) => {
   const { user } = UIState.useState((s) => s);
@@ -12,12 +12,17 @@ const ProtectedContent = ({ component: Component, ...rest }) => {
       {...rest}
       render={(props) => {
         if (user || isAuthCookie()) {
-          return <Component {...rest} {...props} />;
+          return (
+            <Component
+              {...rest}
+              {...props}
+            />
+          );
         } else {
           return (
             <Redirect
               to={{
-                pathname: "/not-authorized",
+                pathname: '/not-authorized',
                 state: {
                   from: props.location,
                 },

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   Collapse,
   Button,
@@ -8,13 +8,13 @@ import {
   Radio,
   Popover,
   Checkbox,
-} from "antd";
-import { FilterOutlined, InfoCircleOutlined } from "@ant-design/icons";
+} from 'antd';
+import { FilterOutlined, InfoCircleOutlined } from '@ant-design/icons';
 
-import { UIState } from "../state/ui";
-import isEmpty from "lodash/isEmpty";
-import sortBy from "lodash/sortBy";
-import flatten from "lodash/flatten";
+import { UIState } from '../state/ui';
+import isEmpty from 'lodash/isEmpty';
+import sortBy from 'lodash/sortBy';
+import flatten from 'lodash/flatten';
 
 const { Panel } = Collapse;
 const { mainText, buttonText } = window?.i18n;
@@ -25,14 +25,14 @@ const AdvanceSearch = ({
   questionGroup,
   setPage,
   setSelectedRow,
-  buttonPos = "left",
+  buttonPos = 'left',
   customStyle = {},
 }) => {
   // Get question option only
   const question = flatten(
     questionGroup.map((qg) =>
       qg.question.filter((q) =>
-        ["option", "multiple_option", "answer_list"].includes(q.type)
+        ['option', 'multiple_option', 'answer_list'].includes(q.type)
       )
     )
   );
@@ -87,7 +87,10 @@ const AdvanceSearch = ({
   }, [user, formId]);
 
   return (
-    <div className="advance-search-container" style={customStyle}>
+    <div
+      className="advance-search-container"
+      style={customStyle}
+    >
       {/* Question filter */}
       <Collapse
         ghost
@@ -99,7 +102,10 @@ const AdvanceSearch = ({
         <Panel
           className="advance-search-panel"
           header={
-            <Button style={{ float: buttonPos }} icon={<FilterOutlined />}>
+            <Button
+              style={{ float: buttonPos }}
+              icon={<FilterOutlined />}
+            >
               {buttonText?.btnAdvancedFilter}
             </Button>
           }
@@ -133,7 +139,10 @@ const AdvanceSearch = ({
                   handleOnChangeQuestionOption={handleOnChangeQuestionOption}
                 />
                 {advancedFilterFeature?.isMultiSelect && (
-                  <Button block={true} onClick={() => setSelectedPanel([])}>
+                  <Button
+                    block={true}
+                    onClick={() => setSelectedPanel([])}
+                  >
                     {buttonText?.btnClose}
                   </Button>
                 )}
@@ -144,7 +153,10 @@ const AdvanceSearch = ({
       </Collapse>
       {/* Tags of selected filter */}
       {!isEmpty(advanceSearchValue) && (
-        <RenderFilterTag setPage={setPage} setSelectedRow={setSelectedRow} />
+        <RenderFilterTag
+          setPage={setPage}
+          setSelectedRow={setSelectedRow}
+        />
       )}
     </div>
   );
@@ -160,15 +172,18 @@ const RenderQuestionOption = ({
   );
 
   const OptionToRender = ({ questionId, option }) => {
-    return sortBy(option, "order").map((opt) => (
-      <Radio key={`${opt.id}-${opt.name}`} value={`${questionId}|${opt.name}`}>
+    return sortBy(option, 'order').map((opt) => (
+      <Radio
+        key={`${opt.id}-${opt.name}`}
+        value={`${questionId}|${opt.name}`}
+      >
         {opt.name}
       </Radio>
     ));
   };
 
   const MultipleOptionToRender = ({ questionId, option }) => {
-    return sortBy(option, "order").map((opt) => (
+    return sortBy(option, 'order').map((opt) => (
       <Checkbox
         key={`${opt.id}-${opt.name}`}
         value={`${questionId}|${opt.name}`}
@@ -180,7 +195,7 @@ const RenderQuestionOption = ({
 
   if (
     advancedFilterFeature?.isMultiSelect ||
-    selectedQuestion?.type === "multiple_option"
+    selectedQuestion?.type === 'multiple_option'
   ) {
     return (
       <Checkbox.Group
@@ -227,7 +242,7 @@ const RenderFilterTag = ({ setPage, setSelectedRow }) => {
       setSelectedRow([]);
     }
     let deleteFilter = [];
-    if (type === "multiselect") {
+    if (type === 'multiselect') {
       deleteFilter = advanceSearchValue
         .map((x) => {
           if (x.option.includes(option)) {
@@ -257,14 +272,17 @@ const RenderFilterTag = ({ setPage, setSelectedRow }) => {
           <Tag
             key={`tag-${opt}`}
             icon={
-              <Popover title={val.question} placement="topRight">
+              <Popover
+                title={val.question}
+                placement="topRight"
+              >
                 <InfoCircleOutlined />
               </Popover>
             }
             closable
-            onClose={() => handleOnCloseTag("multiselect", opt)}
+            onClose={() => handleOnCloseTag('multiselect', opt)}
           >
-            {opt.split("|")[1]}
+            {opt.split('|')[1]}
           </Tag>
         ));
       }
@@ -272,21 +290,28 @@ const RenderFilterTag = ({ setPage, setSelectedRow }) => {
         <Tag
           key={`tag-${val.option}`}
           icon={
-            <Popover title={val.question} placement="topRight">
+            <Popover
+              title={val.question}
+              placement="topRight"
+            >
               <InfoCircleOutlined />
             </Popover>
           }
           closable
-          onClose={() => handleOnCloseTag("radio", val.option)}
+          onClose={() => handleOnCloseTag('radio', val.option)}
         >
-          {val.option.split("|")[1]}
+          {val.option.split('|')[1]}
         </Tag>
       );
     });
   };
 
   return (
-    <Space size="middle" align="center" wrap>
+    <Space
+      size="middle"
+      align="center"
+      wrap
+    >
       <TagToRender />
     </Space>
   );

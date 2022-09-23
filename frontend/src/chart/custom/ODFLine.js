@@ -5,8 +5,8 @@ import {
   Title,
   AxisLabelFormatter,
   NoData,
-} from "../chart-style.js";
-import moment from "moment";
+} from '../chart-style.js';
+import moment from 'moment';
 
 const ODFLine = (data, chartTitle, extra) => {
   if (!data?.yAxis?.length) {
@@ -20,57 +20,57 @@ const ODFLine = (data, chartTitle, extra) => {
       subtext: chartTitle?.subTitle,
     },
     tooltip: {
-      trigger: "axis",
+      trigger: 'axis',
       formatter: (p) => {
         const start = p[0].dataIndex === 0;
         const sentences = p.reverse().map((d) => {
           const v = d.data.data;
           let title = start
-            ? "Trigered ODF"
+            ? 'Trigered ODF'
             : v.endValue
-            ? "Verified ODF"
-            : "On Going";
+            ? 'Verified ODF'
+            : 'On Going';
           let date = start ? v.startDate : v.endDate;
-          date = moment(date._d).format("DD MMM, YY");
+          date = moment(date._d).format('DD MMM, YY');
           let value = start ? v.startValue : v.endValue;
           return [
             "<div class='tooltip-odf'><span class='odf-badge ",
             title.toLowerCase(),
             "'>",
             title,
-            " @ ",
+            ' @ ',
             date,
-            "</span> ",
+            '</span> ',
             v.name,
-            " (",
+            ' (',
             value || v.startValue,
-            ")</div>",
+            ')</div>',
           ]
             .filter((x) => x)
-            .join("");
+            .join('');
         });
-        return sentences.join("");
+        return sentences.join('');
       },
     },
     grid: {
-      top: "20px",
-      left: "20px",
-      bottom: "20px",
+      top: '20px',
+      left: '20px',
+      bottom: '20px',
       containLabel: true,
       label: {
-        color: "#000",
+        color: '#000',
         ...TextStyle,
       },
     },
     xAxis: {
-      type: "category",
+      type: 'category',
       boundaryGap: false,
       data: data.xAxis,
       axisLabel: {
         ...AxisLabelFormatter,
-        color: "rgba(0, 0, 0, 0.85)",
-        fontWeight: "normal",
-        fontSize: "12px",
+        color: 'rgba(0, 0, 0, 0.85)',
+        fontWeight: 'normal',
+        fontSize: '12px',
         padding: [10, 0, 0, 0],
       },
       axisTick: {
@@ -78,7 +78,7 @@ const ODFLine = (data, chartTitle, extra) => {
       },
     },
     yAxis: {
-      type: "category",
+      type: 'category',
       data: data.yAxis,
       axisLine: {
         show: false,
@@ -88,9 +88,9 @@ const ODFLine = (data, chartTitle, extra) => {
       },
       axisLabel: {
         ...AxisLabelFormatter,
-        color: "rgba(0, 0, 0, 0.85)",
-        fontWeight: "normal",
-        fontSize: "12px",
+        color: 'rgba(0, 0, 0, 0.85)',
+        fontWeight: 'normal',
+        fontSize: '12px',
       },
       axisTick: {
         show: false,
@@ -98,33 +98,33 @@ const ODFLine = (data, chartTitle, extra) => {
     },
     series: data.series.map((x) => {
       return {
-        type: "line",
+        type: 'line',
         data: x.data.map((g, gi) => ({
           value: g,
           data: x,
           label: {
-            position: gi === 0 ? "left" : "right",
-            color: gi === 0 ? "#1890ff" : "#00989f",
+            position: gi === 0 ? 'left' : 'right',
+            color: gi === 0 ? '#1890ff' : '#00989f',
           },
         })),
         itemStyle: {
           color: (p) => {
             const start = p.dataIndex === 0;
             return start
-              ? "#1890ff"
+              ? '#1890ff'
               : p.data.data.endValue
-              ? "#00989f"
-              : "#a4a4a4";
+              ? '#00989f'
+              : '#a4a4a4';
           },
         },
         lineStyle: {
           width: 2,
-          color: "#a4a4a4",
+          color: '#a4a4a4',
         },
         label: {
           show: false,
         },
-        symbol: "circle",
+        symbol: 'circle',
         symbolSize: 7,
       };
     }),

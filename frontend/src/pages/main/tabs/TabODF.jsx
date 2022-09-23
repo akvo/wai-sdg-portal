@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from "react";
-import moment from "moment";
-import { Row, Col, Spin, Divider, Space, Pagination } from "antd";
-import { UIState } from "../../../state/ui";
-import Chart from "../../../chart";
-import { getDateRange } from "../../../util/date.js";
+import React, { useState, useEffect } from 'react';
+import moment from 'moment';
+import { Row, Col, Spin, Divider, Space, Pagination } from 'antd';
+import { UIState } from '../../../state/ui';
+import Chart from '../../../chart';
+import { getDateRange } from '../../../util/date.js';
 
-const dateFormat = "MMM YYYY";
-const serverDateFormat = "YYYY-MM-DD";
+const dateFormat = 'MMM YYYY';
+const serverDateFormat = 'YYYY-MM-DD';
 
 const abrvAdministration = (str) => {
   if (!str) {
-    return "";
+    return '';
   }
   return str
-    .split(" ")
+    .split(' ')
     .map((s) => s[0])
-    .join("");
+    .join('');
 };
 
 const TabODF = ({
@@ -56,16 +56,19 @@ const TabODF = ({
           let name = x.detail.find((v) => v.question === setting.name)?.value;
           const adm = abrvAdministration(x?.name?.props?.record?.name);
 
-          let startDate = x.detail.find((v) => v.question === setting.startDate)
-            ?.value;
-          let endDate = x.detail.find((v) => v.question === setting.endDate)
-            ?.value;
+          let startDate = x.detail.find(
+            (v) => v.question === setting.startDate
+          )?.value;
+          let endDate = x.detail.find(
+            (v) => v.question === setting.endDate
+          )?.value;
 
           const startValue = x.detail.find(
             (v) => v.question === setting.startValue
           )?.value;
-          const endValue = x.detail.find((v) => v.question === setting.endValue)
-            ?.value;
+          const endValue = x.detail.find(
+            (v) => v.question === setting.endValue
+          )?.value;
 
           return {
             name: `${name}, ${adm}`,
@@ -92,8 +95,8 @@ const TabODF = ({
         .filter((v) => v.name && v.startDate);
       const minDate = moment.min(values.map((v) => v.startDate));
       const xAxis = getDateRange({
-        startDate: minDate.add(-2, "months"),
-        endDate: moment().add(2, "months"),
+        startDate: minDate.add(-2, 'months'),
+        endDate: moment().add(2, 'months'),
         dateFormat: dateFormat,
       });
       const yAxis = values.map((v) => v.name);
@@ -111,7 +114,7 @@ const TabODF = ({
   ]);
 
   if (!setting) {
-    return "";
+    return '';
   }
 
   if (!show) {
@@ -142,7 +145,7 @@ const TabODF = ({
                 <Chart
                   title=""
                   subTitle=""
-                  type={"ODF-LINE"}
+                  type={'ODF-LINE'}
                   data={chartData}
                   transform={false}
                   wrapper={false}
@@ -168,7 +171,7 @@ const TabODF = ({
             onChange={changePage}
           />
         ) : (
-          ""
+          ''
         )}
       </Col>
     </Row>

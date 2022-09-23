@@ -1,4 +1,4 @@
-import { Store } from "pullstate";
+import { Store } from 'pullstate';
 
 const defaultUIState = {
   showNav: false,
@@ -6,7 +6,7 @@ const defaultUIState = {
   registrationPopup: false,
   user: null,
   loading: true,
-  page: "home",
+  page: 'home',
   organisations: [],
   administration: [],
   selectedAdministration: [null],

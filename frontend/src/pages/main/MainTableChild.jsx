@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { Table, Space } from "antd";
-import { LineChartOutlined, HistoryOutlined } from "@ant-design/icons";
-import MainEditor from "./MainEditor";
-import { UIState } from "../../state/ui";
-import api from "../../util/api";
-import { getLocationName } from "../../util/utils";
-import { titleCase } from "../../util/utils.js";
+import React, { useState, useEffect } from 'react';
+import { Table, Space } from 'antd';
+import { LineChartOutlined, HistoryOutlined } from '@ant-design/icons';
+import MainEditor from './MainEditor';
+import { UIState } from '../../state/ui';
+import api from '../../util/api';
+import { getLocationName } from '../../util/utils';
+import { titleCase } from '../../util/utils.js';
 
 const { mainTableChildText } = window?.i18n?.tableText;
 
@@ -13,7 +13,7 @@ const changeColBackground = (dt, edited) => {
   if (edited?.[dt.props.question.id]) {
     return {
       props: {
-        style: { background: "#fefebe" },
+        style: { background: '#fefebe' },
       },
       children: dt,
     };
@@ -34,10 +34,10 @@ const HistoryTable = ({ record, data }) => {
       let url = `history/${data.key}/${record.name.props.question.id}`;
       api.get(url).then((res) => {
         const data = res.data.map((x, i) => {
-          if (record.name.props.question.type !== "multiple_option") {
+          if (record.name.props.question.type !== 'multiple_option') {
             return { ...x, key: `history-${i}` };
           }
-          return { ...x, value: x.value.join(", "), key: `history-${i}` };
+          return { ...x, value: x.value.join(', '), key: `history-${i}` };
         });
         setHistoryData(data);
       });
@@ -49,20 +49,20 @@ const HistoryTable = ({ record, data }) => {
       columns={[
         {
           title: mainTableChildText?.colValue,
-          dataIndex: "value",
-          key: "value",
+          dataIndex: 'value',
+          key: 'value',
         },
         {
           title: mainTableChildText?.colDate,
-          dataIndex: "date",
-          key: "date",
-          align: "center",
+          dataIndex: 'date',
+          key: 'date',
+          align: 'center',
         },
         {
           title: mainTableChildText?.colUser,
-          dataIndex: "user",
-          key: "user",
-          align: "center",
+          dataIndex: 'user',
+          key: 'user',
+          align: 'center',
         },
       ]}
       loading={historyData === null}
@@ -75,7 +75,7 @@ const HistoryTable = ({ record, data }) => {
 const MainTableChild = ({
   questionGroup,
   data,
-  size = "small",
+  size = 'small',
   scroll,
   showHistoryChartBtn = false,
 }) => {
@@ -84,14 +84,14 @@ const MainTableChild = ({
   const edited = editedRow?.[data.key];
   const childcolumns = [
     {
-      dataIndex: "name",
-      key: "name",
-      width: "30%",
+      dataIndex: 'name',
+      key: 'name',
+      width: '30%',
       render: (dt) => changeColBackground(dt, edited),
     },
     {
-      dataIndex: "value",
-      key: "value",
+      dataIndex: 'value',
+      key: 'value',
       render: (dt) => changeColBackground(dt, edited),
     },
   ];
@@ -101,9 +101,9 @@ const MainTableChild = ({
     const source = g.question.map((q, qi) => {
       const answer = data.detail.find((d) => d.question === q.id);
       const nonEditable =
-        (user?.role === "user") |
-        (q.type === "administration") |
-        (q.type === "geo");
+        (user?.role === 'user') |
+        (q.type === 'administration') |
+        (q.type === 'geo');
       return {
         name: (
           <NormalCol
@@ -116,21 +116,21 @@ const MainTableChild = ({
           <NormalCol
             value={
               <div>
-                {q.type === "geo" && answer?.value ? (
+                {q.type === 'geo' && answer?.value ? (
                   <Space direction="vertical">
-                    {answer.value.split("|").map((a, ai) => (
+                    {answer.value.split('|').map((a, ai) => (
                       <b key={ai}>
-                        {ai ? "Long" : "Lat"}: {a}
+                        {ai ? 'Long' : 'Lat'}: {a}
                       </b>
                     ))}
                   </Space>
-                ) : q.type === "administration" && answer?.value ? (
+                ) : q.type === 'administration' && answer?.value ? (
                   getLocationName(answer?.value, administration)
                 ) : (
-                  ""
+                  ''
                 )}
-                {(q.type !== "geo" && answer?.value) ||
-                  (q.type !== "administration" &&
+                {(q.type !== 'geo' && answer?.value) ||
+                  (q.type !== 'administration' &&
                     answer?.value &&
                     answer.value)}
               </div>
@@ -152,8 +152,8 @@ const MainTableChild = ({
     });
     return (
       <Table
-        title={() => <b>{g?.name || ""}</b>}
-        className={"main-child-table"}
+        title={() => <b>{g?.name || ''}</b>}
+        className={'main-child-table'}
         size={size}
         scroll={scroll ? { y: scroll } : false}
         key={gi}
@@ -170,10 +170,10 @@ const MainTableChild = ({
           expandIconColumnIndex: 3,
           expandIcon: ({ onExpand, record }) => {
             const { dataPointId, question } = record.value.props;
-            let showChartButton = "";
+            let showChartButton = '';
             if (
               showHistoryChartBtn &&
-              ["number", "option"].includes(question.type)
+              ['number', 'option'].includes(question.type)
             ) {
               showChartButton = (
                 <LineChartOutlined
@@ -181,7 +181,7 @@ const MainTableChild = ({
                     window.scrollTo({
                       top: 640,
                       left: 0,
-                      behavior: "smooth",
+                      behavior: 'smooth',
                     });
                     UIState.update((s) => {
                       s.historyChart = {
@@ -202,10 +202,13 @@ const MainTableChild = ({
                 </Space>
               );
             }
-            return "";
+            return '';
           },
           expandedRowRender: (record) => (
-            <HistoryTable record={record} data={data} />
+            <HistoryTable
+              record={record}
+              data={data}
+            />
           ),
           rowExpandable: (record) => {
             return record.value.props.history;

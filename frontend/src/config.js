@@ -1,16 +1,16 @@
-import { keyBy } from "lodash";
+import { keyBy } from 'lodash';
 
 const mapColumns = (values) => {
   return values?.columns?.map((col, index) => {
     if (index === 0) {
       col = {
         ...col,
-        width: col?.width || "35%",
+        width: col?.width || '35%',
       };
     }
     return {
       ...col,
-      align: col?.align || (index === 0 ? "left" : "center"),
+      align: col?.align || (index === 0 ? 'left' : 'center'),
       dataIndex: col.key,
       ellipsis: true,
     };
@@ -43,6 +43,6 @@ const mapper = Object.keys(window.page_config).map((v, k) => {
   };
 });
 
-const config = keyBy(mapper, "name");
+const config = keyBy(mapper, 'name');
 
 export default config;

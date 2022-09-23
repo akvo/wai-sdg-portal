@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   Row,
   Col,
@@ -8,20 +8,20 @@ import {
   Select,
   message,
   notification,
-} from "antd";
-import { FileExcelOutlined, FileExcelTwoTone } from "@ant-design/icons";
-import snakeCase from "lodash/snakeCase";
-import moment from "moment";
-import { UIState } from "../../state/ui";
-import { DropdownNavigation } from "../../components/common";
-import api from "../../util/api";
-import axios from "axios";
-import config from "../../config";
+} from 'antd';
+import { FileExcelOutlined, FileExcelTwoTone } from '@ant-design/icons';
+import snakeCase from 'lodash/snakeCase';
+import moment from 'moment';
+import { UIState } from '../../state/ui';
+import { DropdownNavigation } from '../../components/common';
+import api from '../../util/api';
+import axios from 'axios';
+import config from '../../config';
 
 const { Dragger } = Upload;
 const allowedFiles = [
-  "application/vnd.ms-excel",
-  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  'application/vnd.ms-excel',
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
 ];
 const regExpFilename = /filename="(?<filename>.*)"/;
 const { notificationText, adminText, buttonText, formText } = window?.i18n;
@@ -29,14 +29,14 @@ const { notificationText, adminText, buttonText, formText } = window?.i18n;
 const checkJobs = (id, filename) => {
   axios.get(`/worker/jobs/status/${id}`).then(function (res) {
     const status = res.data.status;
-    if (status === "on_progress" || status === "pending") {
+    if (status === 'on_progress' || status === 'pending') {
       UIState.update((e) => {
         e.activityLog = [
           {
             id: id,
             file: filename,
             status: notificationText?.statusWaitingValidationText,
-            icon: "warning",
+            icon: 'warning',
           },
           ...e.activityLog.filter((x) => x.id !== id),
         ];
@@ -44,14 +44,14 @@ const checkJobs = (id, filename) => {
       setTimeout(() => {
         checkJobs(id, filename);
       }, 10000);
-    } else if (status === "failed") {
+    } else if (status === 'failed') {
       UIState.update((e) => {
         e.activityLog = [
           {
             id: id,
             file: filename,
             status: notificationText?.statusFailedValidationText,
-            icon: "danger",
+            icon: 'danger',
             attachment: res.data.attachment,
           },
           ...e.activityLog,
@@ -64,7 +64,7 @@ const checkJobs = (id, filename) => {
             id: id,
             file: filename,
             status: notificationText?.statusSuccessValidationText,
-            icon: "success",
+            icon: 'success',
           },
           ...e.activityLog,
         ];
@@ -74,12 +74,8 @@ const checkJobs = (id, filename) => {
 };
 
 const ManageUpload = () => {
-  const {
-    user,
-    administration,
-    activityLog,
-    administrationByAccess,
-  } = UIState.useState((s) => s);
+  const { user, administration, activityLog, administrationByAccess } =
+    UIState.useState((s) => s);
   const [form, setForm] = useState(Object.keys(window.page_config)[0]);
   const [fileName, setFileName] = useState(null);
   const { formId } = config[form];
@@ -87,17 +83,17 @@ const ManageUpload = () => {
   const [uploadState, setUploadState] = useState(null);
   const [jobState, setJobState] = useState(null);
 
-  const key = "updatable";
+  const key = 'updatable';
 
   const onChange = (info) => {
     const nextState = {};
     switch (info.file.status) {
-      case "uploading":
+      case 'uploading':
         message.loading({ content: notificationText?.loadingText, key });
         nextState.selectedFile = info.file;
         nextState.selectedFileList = [info.file];
         break;
-      case "done":
+      case 'done':
         message.success({
           content: notificationText?.doneText,
           key,
@@ -115,7 +111,7 @@ const ManageUpload = () => {
 
   const onUpload = ({ file, onSuccess }) => {
     let formData = new FormData();
-    formData.append("file", file);
+    formData.append('file', file);
     api
       .post(`excel-template/${formId}/${selectedAdm}`, formData)
       .then((res) => {
@@ -133,13 +129,13 @@ const ManageUpload = () => {
 
   useEffect(() => {
     if (user && selectedAdm) {
-      const date = moment().format("YYYYMMDD");
-      setFileName([date, formId, snakeCase(user.name)].join("-"));
+      const date = moment().format('YYYYMMDD');
+      setFileName([date, formId, snakeCase(user.name)].join('-'));
     }
   }, [user, selectedAdm, formId]);
 
   useEffect(() => {
-    if (jobState && uploadState?.selectedFile?.status === "done") {
+    if (jobState && uploadState?.selectedFile?.status === 'done') {
       const op = activityLog.find((x) => x.id === jobState.id);
       if (!op) {
         checkJobs(jobState.id, uploadState.selectedFile.name);
@@ -157,7 +153,7 @@ const ManageUpload = () => {
     name: fileName,
     multiple: false,
     customRequest: onUpload,
-    accept: allowedFiles.join(","),
+    accept: allowedFiles.join(','),
     onChange: onChange,
     maxCount: 1,
     disabled: fileName ? false : true,
@@ -166,16 +162,16 @@ const ManageUpload = () => {
 
   const downloadTemplate = () => {
     api
-      .get(`excel-template/${formId}`, { responseType: "blob" })
+      .get(`excel-template/${formId}`, { responseType: 'blob' })
       .then((res) => {
-        const contentDispositionHeader = res.headers["content-disposition"];
+        const contentDispositionHeader = res.headers['content-disposition'];
         const filename = regExpFilename.exec(contentDispositionHeader)?.groups
           ?.filename;
         if (filename) {
           const url = window.URL.createObjectURL(new Blob([res.data]));
-          const link = document.createElement("a");
+          const link = document.createElement('a');
           link.href = url;
-          link.setAttribute("download", filename);
+          link.setAttribute('download', filename);
           document.body.appendChild(link);
           link.click();
         } else {
@@ -194,11 +190,25 @@ const ManageUpload = () => {
   return (
     <div className="main-wrapper">
       <div className="upload-wrapper">
-        <Row className="filter-wrapper" align="middle" justify="space-between">
-          <Col span={24} align="center">
-            <Space size={20} align="center" wrap={true}>
+        <Row
+          className="filter-wrapper"
+          align="middle"
+          justify="space-between"
+        >
+          <Col
+            span={24}
+            align="center"
+          >
+            <Space
+              size={20}
+              align="center"
+              wrap={true}
+            >
               <h3>{adminText?.dataUploadTemplateDownloadSectionText}</h3>
-              <DropdownNavigation value={form} onChange={setForm} />
+              <DropdownNavigation
+                value={form}
+                onChange={setForm}
+              />
               <Button onClick={downloadTemplate}>
                 {buttonText?.btnDownload}
               </Button>
@@ -207,16 +217,36 @@ const ManageUpload = () => {
         </Row>
       </div>
       <div className="upload-wrapper">
-        <Row className="filter-wrapper" align="middle" justify="space-between">
-          <Col span={24} align="center">
-            <Space size={20} align="center" wrap={true}>
+        <Row
+          className="filter-wrapper"
+          align="middle"
+          justify="space-between"
+        >
+          <Col
+            span={24}
+            align="center"
+          >
+            <Space
+              size={20}
+              align="center"
+              wrap={true}
+            >
               <h3>{adminText?.dataUploadSectionText}</h3>
-              <DropdownNavigation value={form} onChange={setForm} />
-              <Select onChange={setSelectedAdm} value={selectedAdm}>
+              <DropdownNavigation
+                value={form}
+                onChange={setForm}
+              />
+              <Select
+                onChange={setSelectedAdm}
+                value={selectedAdm}
+              >
                 {administrationByAccess
                   .filter((a) => a.parent === null)
                   .map((a, ai) => (
-                    <Select.Option key={ai} value={a.id}>
+                    <Select.Option
+                      key={ai}
+                      value={a.id}
+                    >
                       {a.name}
                     </Select.Option>
                   ))}
@@ -234,7 +264,7 @@ const ManageUpload = () => {
             <div className="dragger-wrapper">
               <Dragger {...uploadProps}>
                 <p className="ant-upload-drag-icon">
-                  {uploadState?.selectedFile?.status === "done" ? (
+                  {uploadState?.selectedFile?.status === 'done' ? (
                     <FileExcelTwoTone twoToneColor="#52c41a" />
                   ) : (
                     <FileExcelOutlined />
@@ -243,7 +273,7 @@ const ManageUpload = () => {
                 <p className="ant-upload-text">
                   {uploadState?.selectedFile?.status ? (
                     <div className={`${uploadState?.selectedFile?.status}`}>
-                      {uploadState.selectedFile.name} -{" "}
+                      {uploadState.selectedFile.name} -{' '}
                       {uploadState.selectedFile.status}
                     </div>
                   ) : (

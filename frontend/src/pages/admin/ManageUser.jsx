@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Row,
   Col,
@@ -12,21 +12,16 @@ import {
   Modal,
   Select,
   Input,
-} from "antd";
-import { EditOutlined, CheckOutlined, DeleteOutlined } from "@ant-design/icons";
-import api from "../../util/api";
-import capitalize from "lodash/capitalize";
-import isEmpty from "lodash/isEmpty";
-import { UIState } from "../../state/ui";
-import ConfirmationModal from "../../components/ConfirmationModal";
+} from 'antd';
+import { EditOutlined, CheckOutlined, DeleteOutlined } from '@ant-design/icons';
+import api from '../../util/api';
+import capitalize from 'lodash/capitalize';
+import isEmpty from 'lodash/isEmpty';
+import { UIState } from '../../state/ui';
+import ConfirmationModal from '../../components/ConfirmationModal';
 
-const {
-  notificationText,
-  buttonText,
-  adminText,
-  formText,
-  tableText,
-} = window?.i18n;
+const { notificationText, buttonText, adminText, formText, tableText } =
+  window?.i18n;
 
 const ManageUser = () => {
   const { manageUserTableText } = tableText;
@@ -49,7 +44,7 @@ const ManageUser = () => {
   const [confirmationModal, setConfirmationModal] = useState({
     visible: false,
     handleOk: null,
-    type: "default",
+    type: 'default',
   });
 
   const active = showPendingUser ? 0 : 1;
@@ -127,19 +122,19 @@ const ManageUser = () => {
   const userColumns = [
     {
       title: manageUserTableText?.colName,
-      dataIndex: "name",
-      key: "name",
+      dataIndex: 'name',
+      key: 'name',
     },
     {
       title: manageUserTableText?.colEmail,
-      dataIndex: "email",
-      key: "email",
+      dataIndex: 'email',
+      key: 'email',
       render: (val, prop) => {
         return !active ? (
           <Space size="small">
-            {val}{" "}
-            <Tag color={prop.email_verified ? "green" : "red"}>
-              {prop.email_verified ? "verified" : "not verified"}
+            {val}{' '}
+            <Tag color={prop.email_verified ? 'green' : 'red'}>
+              {prop.email_verified ? 'verified' : 'not verified'}
             </Tag>
           </Space>
         ) : (
@@ -149,22 +144,26 @@ const ManageUser = () => {
     },
     {
       title: manageUserTableText?.colOrg,
-      dataIndex: "organisation",
-      key: "organisation",
+      dataIndex: 'organisation',
+      key: 'organisation',
       render: (val, prop) => organisations?.find((org) => org.id === val)?.name,
     },
     {
       title: manageUserTableText?.colRole,
-      dataIndex: "role",
-      key: "role",
+      dataIndex: 'role',
+      key: 'role',
       render: (val, prop) => capitalize(val),
     },
     {
-      title: "",
-      dataIndex: "id",
-      key: "id",
+      title: '',
+      dataIndex: 'id',
+      key: 'id',
       render: (id, prop) => (
-        <Space size="small" align="center" wrap={true}>
+        <Space
+          size="small"
+          align="center"
+          wrap={true}
+        >
           {active ? (
             <>
               <Button
@@ -181,11 +180,11 @@ const ManageUser = () => {
                   setConfirmationModal({
                     visible: true,
                     handleOk: () => handleDeleteUser(prop),
-                    type: "delete-user",
+                    type: 'delete-user',
                   })
                 }
                 loading={loading === id}
-                disabled={prop?.role === "admin"}
+                disabled={prop?.role === 'admin'}
               >
                 {buttonText?.btnDelete}
               </Button>
@@ -251,8 +250,14 @@ const ManageUser = () => {
 
   return (
     <>
-      <Row align="middle" className="checkbox-wrapper">
-        <Col span={24} align="end">
+      <Row
+        align="middle"
+        className="checkbox-wrapper"
+      >
+        <Col
+          span={24}
+          align="end"
+        >
           <Space align="center">
             <Button
               className="checkbox-label"
@@ -311,7 +316,7 @@ const ManageUser = () => {
               {buttonText?.btnInformUser}
             </Button>
           ) : (
-            ""
+            ''
           ),
           <Button
             key="button-submit"
@@ -342,7 +347,11 @@ const ManageUser = () => {
             name="name"
             valuePropName="name"
           >
-            <Input value={selectedValue?.name} disabled bordered={false} />
+            <Input
+              value={selectedValue?.name}
+              disabled
+              bordered={false}
+            />
           </Form.Item>
 
           <Form.Item
@@ -351,7 +360,11 @@ const ManageUser = () => {
             name="email"
             valuePropName="email"
           >
-            <Input value={selectedValue?.email} disabled bordered={false} />
+            <Input
+              value={selectedValue?.email}
+              disabled
+              bordered={false}
+            />
           </Form.Item>
 
           <Form.Item
@@ -360,14 +373,26 @@ const ManageUser = () => {
             name="role"
             valuePropName="role"
           >
-            <Select onChange={onRoleChange} value={selectedValue?.role}>
-              <Select.Option key="opt-admin" value="admin">
+            <Select
+              onChange={onRoleChange}
+              value={selectedValue?.role}
+            >
+              <Select.Option
+                key="opt-admin"
+                value="admin"
+              >
                 {formText?.optionRoleAdmin}
               </Select.Option>
-              <Select.Option key="opt-editor" value="editor">
+              <Select.Option
+                key="opt-editor"
+                value="editor"
+              >
                 {formText?.optionRoleEditor}
               </Select.Option>
-              <Select.Option key="opt-user" value="user">
+              <Select.Option
+                key="opt-user"
+                value="user"
+              >
                 {formText?.optionRoleUser}
               </Select.Option>
             </Select>
@@ -380,7 +405,7 @@ const ManageUser = () => {
             }
           >
             {({ getFieldValue }) =>
-              getFieldValue("role") !== "admin" ? (
+              getFieldValue('role') !== 'admin' ? (
                 <Form.Item
                   key="access"
                   label={formText?.labelAccess}
@@ -404,7 +429,10 @@ const ManageUser = () => {
                     {administration
                       .filter((a) => a.parent === null)
                       .map((a, ai) => (
-                        <Select.Option key={ai} value={a.id}>
+                        <Select.Option
+                          key={ai}
+                          value={a.id}
+                        >
                           {a.name}
                         </Select.Option>
                       ))}

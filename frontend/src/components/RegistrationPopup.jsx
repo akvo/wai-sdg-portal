@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { UIState } from "../state/ui";
+import React, { useEffect, useState } from 'react';
+import { UIState } from '../state/ui';
 import {
   Row,
   Col,
@@ -10,13 +10,13 @@ import {
   Select,
   Button,
   notification,
-} from "antd";
-import { UserOutlined } from "@ant-design/icons";
-import { NonActiveUserMessage } from "./Notifications";
-import api from "../util/api";
+} from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import { NonActiveUserMessage } from './Notifications';
+import api from '../util/api';
 
 const { notificationText, formText, buttonText, mainText } = window?.i18n;
-const fieldValues = ["email", "first_name", "last_name", "organisation"];
+const fieldValues = ['email', 'first_name', 'last_name', 'organisation'];
 const { Option } = Select;
 
 const RegistrationPopup = ({ user, logout, loginWithPopup }) => {
@@ -31,7 +31,7 @@ const RegistrationPopup = ({ user, logout, loginWithPopup }) => {
     setConfirmAwait(true);
     const data = form.getFieldsValue(fieldValues);
     api
-      .post("user", null, { params: data })
+      .post('user', null, { params: data })
       .then(() => {
         setTimeout(() => {
           UIState.update((s) => {
@@ -57,13 +57,13 @@ const RegistrationPopup = ({ user, logout, loginWithPopup }) => {
   useEffect(() => {
     if (!organisationLoaded) {
       api
-        .get("organisation")
+        .get('organisation')
         .then((e) => {
           setOrganisation(e.data);
           form.setFieldsValue({
             email: user?.email,
-            first_name: user?.family_name || "",
-            last_name: user?.given_name || "",
+            first_name: user?.family_name || '',
+            last_name: user?.given_name || '',
           });
           setFormLoading(false);
           setOrganisationLoaded(true);
@@ -75,7 +75,7 @@ const RegistrationPopup = ({ user, logout, loginWithPopup }) => {
   }, [form, user, organisationLoaded]);
 
   if (formLoading) {
-    return "";
+    return '';
   }
 
   return (
@@ -85,8 +85,11 @@ const RegistrationPopup = ({ user, logout, loginWithPopup }) => {
       visible={visible}
       footer={null}
     >
-      <Row style={{ paddingBottom: "20px" }}>
-        <Col span={24} align="center">
+      <Row style={{ paddingBottom: '20px' }}>
+        <Col
+          span={24}
+          align="center"
+        >
           {user?.picture ? (
             <Avatar
               size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
@@ -113,16 +116,23 @@ const RegistrationPopup = ({ user, logout, loginWithPopup }) => {
           label={formText?.labelEmail}
           tooltip={{
             title: (
-              <Button icon={<UserOutlined />} onClick={cancel} type="link">
+              <Button
+                icon={<UserOutlined />}
+                onClick={cancel}
+                type="link"
+              >
                 {buttonText?.btnUseAnotherEmail}
               </Button>
             ),
-            color: "#FFF",
+            color: '#FFF',
           }}
         >
           <Input disabled />
         </Form.Item>
-        <Row justify="space-between" wrap={true}>
+        <Row
+          justify="space-between"
+          wrap={true}
+        >
           <Col span={11}>
             <Form.Item
               name="first_name"
@@ -138,7 +148,10 @@ const RegistrationPopup = ({ user, logout, loginWithPopup }) => {
             </Form.Item>
           </Col>
           <Col span={11}>
-            <Form.Item name="last_name" label={formText?.labelLastName}>
+            <Form.Item
+              name="last_name"
+              label={formText?.labelLastName}
+            >
               <Input />
             </Form.Item>
           </Col>
@@ -150,14 +163,23 @@ const RegistrationPopup = ({ user, logout, loginWithPopup }) => {
         >
           <Select>
             {organisation.map((x) => (
-              <Option key={x.id} value={x.id}>
+              <Option
+                key={x.id}
+                value={x.id}
+              >
                 {x.name}
               </Option>
             ))}
           </Select>
         </Form.Item>
-        <Row style={{ paddingTop: "20px" }} justify="center">
-          <Col span={6} align="center">
+        <Row
+          style={{ paddingTop: '20px' }}
+          justify="center"
+        >
+          <Col
+            span={6}
+            align="center"
+          >
             <Form.Item>
               <Button
                 type="primary"

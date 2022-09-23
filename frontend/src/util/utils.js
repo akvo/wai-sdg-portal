@@ -1,6 +1,6 @@
-import { reverse, isEmpty, startCase, toLower, takeRight } from "lodash";
+import { reverse, isEmpty, startCase, toLower, takeRight } from 'lodash';
 
-const currencyFormatter = require("currency-formatter");
+const currencyFormatter = require('currency-formatter');
 
 export const getLocationName = (id, locations, result = []) => {
   const loc = locations.find((l) => l.id === id);
@@ -8,18 +8,18 @@ export const getLocationName = (id, locations, result = []) => {
   if (loc?.parent) {
     return getLocationName(loc?.parent, locations, result);
   }
-  return reverse(result).join(" - ");
+  return reverse(result).join(' - ');
 };
 
 export const generateAdvanceFilterURL = (advanceSearchValue, url) => {
   // advance search
   if (!isEmpty(advanceSearchValue)) {
-    const queryUrlPrefix = url.includes("?") ? "&" : "?";
+    const queryUrlPrefix = url.includes('?') ? '&' : '?';
     advanceSearchValue = advanceSearchValue.map((x) => {
-      if (x.type === "answer_list") {
+      if (x.type === 'answer_list') {
         const option = x.option.map((o) => {
-          const oSplit = o.split(" ");
-          const qId = o.split("|")[0];
+          const oSplit = o.split(' ');
+          const qId = o.split('|')[0];
           const oVal = takeRight(oSplit)[0];
           return `${qId}|${oVal}`;
         });
@@ -30,7 +30,7 @@ export const generateAdvanceFilterURL = (advanceSearchValue, url) => {
     const advanceFilter = advanceSearchValue
       .flatMap((x) => x.option)
       .map((x) => encodeURIComponent(x))
-      .join("&q=");
+      .join('&q=');
     url += `${queryUrlPrefix}q=${advanceFilter?.toLowerCase()}`;
   }
   return url;
@@ -38,10 +38,10 @@ export const generateAdvanceFilterURL = (advanceSearchValue, url) => {
 
 export const formatNumber = (x) => {
   return currencyFormatter.format(x, {
-    decimal: ".",
-    thousand: ",",
+    decimal: '.',
+    thousand: ',',
     precision: 0,
-    format: "%v",
+    format: '%v',
   });
 };
 

@@ -5,8 +5,8 @@ import {
   TextStyle,
   backgroundColor,
   Title,
-} from "./chart-style.js";
-import isEmpty from "lodash/isEmpty";
+} from './chart-style.js';
+import isEmpty from 'lodash/isEmpty';
 
 const Pie = (data, chartTitle, extra, Doughnut = false) => {
   data = !data ? [] : data;
@@ -27,10 +27,10 @@ const Pie = (data, chartTitle, extra, Doughnut = false) => {
     },
     tooltip: {
       show: true,
-      trigger: "item",
-      formatter: "{b}",
+      trigger: 'item',
+      formatter: '{b}',
       padding: 5,
-      backgroundColor: "#f2f2f2",
+      backgroundColor: '#f2f2f2',
       textStyle: {
         ...textStyle,
         fontSize: 12,
@@ -38,25 +38,25 @@ const Pie = (data, chartTitle, extra, Doughnut = false) => {
     },
     series: [
       {
-        name: "main",
-        type: "pie",
-        left: "center",
-        radius: !Doughnut ? ["0%", "100%"] : ["50%", "100%"],
-        top: "30px",
+        name: 'main',
+        type: 'pie',
+        left: 'center',
+        radius: !Doughnut ? ['0%', '100%'] : ['50%', '100%'],
+        top: '30px',
         label: {
           formatter: function (params) {
             if (params.value >= 0) {
-              return Math.round(params.value) + "%";
+              return Math.round(params.value) + '%';
             }
-            return "";
+            return '';
           },
           show: true,
-          position: !Doughnut ? "inner" : "outside",
+          position: !Doughnut ? 'inner' : 'outside',
           padding: 5,
           borderRadius: 100,
-          backgroundColor: !Doughnut ? "rgba(0,0,0,.5)" : "rgba(0,0,0,.3)",
+          backgroundColor: !Doughnut ? 'rgba(0,0,0,.5)' : 'rgba(0,0,0,.3)',
           ...textStyle,
-          color: "#fff",
+          color: '#fff',
         },
         labelLine: {
           show: true,
@@ -68,8 +68,8 @@ const Pie = (data, chartTitle, extra, Doughnut = false) => {
     legend: {
       data: labels,
       ...Legend,
-      top: "top",
-      left: "center",
+      top: 'top',
+      left: 'center',
     },
     ...Color,
     ...backgroundColor,

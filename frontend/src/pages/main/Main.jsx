@@ -1,33 +1,33 @@
-import React, { useState, useEffect } from "react";
-import { Row, Col, Space, Popover, List, Button, Affix } from "antd";
+import React, { useState, useEffect } from 'react';
+import { Row, Col, Space, Popover, List, Button, Affix } from 'antd';
 import {
   InfoCircleOutlined,
   LineChartOutlined,
   DatabaseOutlined,
   ProjectOutlined,
   UnorderedListOutlined,
-} from "@ant-design/icons";
-import api from "../../util/api";
-import { useHistory, Link } from "react-router-dom";
+} from '@ant-design/icons';
+import api from '../../util/api';
+import { useHistory, Link } from 'react-router-dom';
 
-import "./main.scss";
-import { SelectLevel, DropdownNavigation } from "../../components/common";
-import ErrorPage from "../../components/ErrorPage";
-import { UIState } from "../../state/ui";
-import takeRight from "lodash/takeRight";
-import MainTable from "./MainTable";
-import MainMaps from "./MainMaps";
-import AdvanceSearch from "../../components/AdvanceSearch";
-import MainChart from "./MainChart";
-import MainHistoryChart from "./MainHistoryChart";
-import { generateAdvanceFilterURL } from "../../util/utils";
-import TabContent from "./tabs";
-import RowContent from "./rows";
-import startCase from "lodash/startCase";
-import flatten from "lodash/flatten";
-import isEmpty from "lodash/isEmpty";
-import config from "../../config";
-import moment from "moment";
+import './main.scss';
+import { SelectLevel, DropdownNavigation } from '../../components/common';
+import ErrorPage from '../../components/ErrorPage';
+import { UIState } from '../../state/ui';
+import takeRight from 'lodash/takeRight';
+import MainTable from './MainTable';
+import MainMaps from './MainMaps';
+import AdvanceSearch from '../../components/AdvanceSearch';
+import MainChart from './MainChart';
+import MainHistoryChart from './MainHistoryChart';
+import { generateAdvanceFilterURL } from '../../util/utils';
+import TabContent from './tabs';
+import RowContent from './rows';
+import startCase from 'lodash/startCase';
+import flatten from 'lodash/flatten';
+import isEmpty from 'lodash/isEmpty';
+import config from '../../config';
+import moment from 'moment';
 
 const { mainText } = window?.i18n;
 
@@ -35,9 +35,9 @@ const NameWithInfo = ({ record, current, question }) => {
   const { id, name, created_by, created, updated, updated_by, answer } = record;
   let tmpName = name;
   if (tmpName) {
-    tmpName = tmpName.split(" - ");
+    tmpName = tmpName.split(' - ');
     tmpName = tmpName.map((n) => startCase(n));
-    tmpName = tmpName.join(" - ");
+    tmpName = tmpName.join(' - ');
   }
   let data = [{ text: mainText?.createdText, date: created, by: created_by }];
   if (updated) {
@@ -80,7 +80,7 @@ const NameWithInfo = ({ record, current, question }) => {
             window.scrollTo({
               top: 640,
               left: 0,
-              behavior: "smooth",
+              behavior: 'smooth',
             });
             UIState.update((s) => {
               s.historyChart = {
@@ -97,7 +97,7 @@ const NameWithInfo = ({ record, current, question }) => {
           }}
         />
       ) : (
-        ""
+        ''
       )}
       {tmpName}
     </Space>
@@ -121,7 +121,7 @@ const Main = ({ match }) => {
   const [total, setTotal] = useState(0);
   const [perPage, setPerPage] = useState(10);
   const [loading, setLoading] = useState(true);
-  const [lastSubmitted, setLastSubmitted] = useState({ by: "", at: "" });
+  const [lastSubmitted, setLastSubmitted] = useState({ by: '', at: '' });
   const [activeTab, setActiveTab] = useState(null);
 
   const current = config?.[match.params.page];
@@ -176,7 +176,7 @@ const Main = ({ match }) => {
       url = generateAdvanceFilterURL(advanceSearchValue, url);
       // send question id to get the data score
       if (current?.values?.length) {
-        const urlScore = current?.values?.map((v) => `question=${v}`).join("&");
+        const urlScore = current?.values?.map((v) => `question=${v}`).join('&');
         url += `&${urlScore}`;
       }
       api
@@ -193,9 +193,9 @@ const Main = ({ match }) => {
               }
               if (!q?.fn && value) {
                 value =
-                  qtype !== "date"
+                  qtype !== 'date'
                     ? startCase(value)
-                    : moment(value)?.format("DD MMM, Y");
+                    : moment(value)?.format('DD MMM, Y');
               }
               const option = question.find((qs) => qs.id === key)?.option;
               let color = null;
@@ -259,7 +259,7 @@ const Main = ({ match }) => {
           setLastSubmitted(res.data);
         })
         .catch(() => {
-          setLastSubmitted({ by: "", at: "" });
+          setLastSubmitted({ by: '', at: '' });
         });
     }
   }, [
@@ -273,9 +273,9 @@ const Main = ({ match }) => {
   useEffect(() => {
     if (current?.tabs && questionLoaded) {
       const defaultTabSelected = current?.tabs?.find((tab) => tab?.selected);
-      setActiveTab(defaultTabSelected?.name || "data");
+      setActiveTab(defaultTabSelected?.name || 'data');
     } else {
-      setActiveTab("data");
+      setActiveTab('data');
     }
   }, [user, current, questionLoaded]);
 
@@ -286,11 +286,21 @@ const Main = ({ match }) => {
   return (
     <Row className="main-container">
       {/* Filter */}
-      <Affix style={{ width: "100%", zIndex: 2 }}>
+      <Affix style={{ width: '100%', zIndex: 2 }}>
         <Col span={24}>
-          <Row align="middle" className="filter-wrapper">
-            <Col span={24} className="container">
-              <Space size={20} align="center" wrap={true}>
+          <Row
+            align="middle"
+            className="filter-wrapper"
+          >
+            <Col
+              span={24}
+              className="container"
+            >
+              <Space
+                size={20}
+                align="center"
+                wrap={true}
+              >
                 <DropdownNavigation
                   value={match?.params?.page}
                   onChange={(val) => history.push(`/data/${val}`)}
@@ -299,7 +309,7 @@ const Main = ({ match }) => {
               </Space>
               <AdvanceSearch
                 buttonPos="right"
-                customStyle={{ marginTop: "-33px", marginBottom: 0 }}
+                customStyle={{ marginTop: '-33px', marginBottom: 0 }}
                 formId={current?.formId}
                 questionGroup={questionGroup}
                 setPage={setPage}
@@ -310,27 +320,46 @@ const Main = ({ match }) => {
       </Affix>
       {/* Data View */}
       <Col span={24}>
-        <Row align="top" className="data-container" wrap={true}>
-          <Col span={12} xxl={10} className="map-wrapper">
+        <Row
+          align="top"
+          className="data-container"
+          wrap={true}
+        >
+          <Col
+            span={12}
+            xxl={10}
+            className="map-wrapper"
+          >
             <div className="container">
-              <MainMaps mapHeight={670} question={question} current={current} />
+              <MainMaps
+                mapHeight={670}
+                question={question}
+                current={current}
+              />
             </div>
           </Col>
-          <Col span={12} xxl={14} className="table-wrapper">
+          <Col
+            span={12}
+            xxl={14}
+            className="table-wrapper"
+          >
             {current?.links && (
               <Row
-                style={{ margin: "20px 40px 0px" }}
+                style={{ margin: '20px 40px 0px' }}
                 align="middle"
                 justify="left"
               >
                 <Col span={24}>
                   {current.links.map((link, linkIndex) => (
-                    <Link key={`link-${linkIndex}`} to={`/data/${link.to}`}>
+                    <Link
+                      key={`link-${linkIndex}`}
+                      to={`/data/${link.to}`}
+                    >
                       <Button
                         type={
                           match.params.page === link.to
-                            ? "primary"
-                            : "secondary"
+                            ? 'primary'
+                            : 'secondary'
                         }
                         icon={
                           !linkIndex ? (
@@ -349,14 +378,14 @@ const Main = ({ match }) => {
             )}
             {current?.tabs && (
               <Row
-                style={{ margin: "20px 40px 0px" }}
+                style={{ margin: '20px 40px 0px' }}
                 align="middle"
                 justify="center"
               >
                 <Col span={24}>
                   <Button
-                    onClick={() => setActiveTab("data")}
-                    type={activeTab === "data" ? "primary" : "secondary"}
+                    onClick={() => setActiveTab('data')}
+                    type={activeTab === 'data' ? 'primary' : 'secondary'}
                     icon={<DatabaseOutlined />}
                   >
                     Data
@@ -365,7 +394,7 @@ const Main = ({ match }) => {
                     <Button
                       key={`tab-${tabIndex}`}
                       onClick={() => setActiveTab(tab.name)}
-                      type={activeTab === tab.name ? "primary" : "secondary"}
+                      type={activeTab === tab.name ? 'primary' : 'secondary'}
                       icon={<LineChartOutlined />}
                     >
                       {tab.name}
@@ -392,7 +421,7 @@ const Main = ({ match }) => {
               />
             ))}
             <MainTable
-              show={activeTab === "data"}
+              show={activeTab === 'data'}
               span={24}
               scroll={current?.tabs ? 275 : 320}
               current={current}
@@ -412,17 +441,30 @@ const Main = ({ match }) => {
       {/* History Chart */}
       {!isEmpty(historyChart) && (
         <Col span={24}>
-          <MainHistoryChart current={current} data={data} question={question} />
+          <MainHistoryChart
+            current={current}
+            data={data}
+            question={question}
+          />
         </Col>
       )}
       {current?.rows?.map((row, rowIndex) => (
-        <Col span={24} key={rowIndex}>
-          <RowContent current={current} self={row} />
+        <Col
+          span={24}
+          key={rowIndex}
+        >
+          <RowContent
+            current={current}
+            self={row}
+          />
         </Col>
       ))}
       {/* Main Chart */}
       <Col span={24}>
-        <MainChart current={current} question={question} />
+        <MainChart
+          current={current}
+          question={question}
+        />
       </Col>
     </Row>
   );

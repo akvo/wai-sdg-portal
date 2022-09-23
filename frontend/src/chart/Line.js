@@ -6,14 +6,14 @@ import {
   Title,
   AxisLabelFormatter,
   NoData,
-} from "./chart-style.js";
-import { getDateRange } from "../util/date";
-import sortBy from "lodash/sortBy";
-import uniq from "lodash/uniq";
-import isEmpty from "lodash/isEmpty";
-import moment from "moment";
+} from './chart-style.js';
+import { getDateRange } from '../util/date';
+import sortBy from 'lodash/sortBy';
+import uniq from 'lodash/uniq';
+import isEmpty from 'lodash/isEmpty';
+import moment from 'moment';
 
-const dateFormat = "MMMM DD, YYYY";
+const dateFormat = 'MMMM DD, YYYY';
 
 const Line = (data, chartTitle, extra) => {
   if (isEmpty(data)) {
@@ -28,16 +28,16 @@ const Line = (data, chartTitle, extra) => {
     moment: x?.date ? moment(x.date, dateFormat).toDate() : false,
   }));
   let yAxis = {
-    type: "value",
+    type: 'value',
   };
   if (data.length > 0) {
     yAxisVal = data?.map((x) => x.value || x.name);
     yAxisVal = uniq(sortBy(yAxisVal).filter((x) => x));
-    data = sortBy(data, "moment").filter((d) => d?.moment);
+    data = sortBy(data, 'moment').filter((d) => d?.moment);
     const hasNaN = data.map((x) => x.value || x.name).filter((x) => isNaN(x));
     if (hasNaN.length) {
       yAxis = {
-        type: "category",
+        type: 'category',
         data: yAxisVal,
       };
     }
@@ -48,10 +48,10 @@ const Line = (data, chartTitle, extra) => {
     labels = uniq(data.map((x) => x.date));
     const minDate = moment.min(labels.map((x) => moment(x, dateFormat)));
     labels = getDateRange({
-      startDate: minDate.add(-1, "days"),
-      endDate: moment().add(1, "days"),
+      startDate: minDate.add(-1, 'days'),
+      endDate: moment().add(1, 'days'),
       dateFormat: dateFormat,
-      type: "days",
+      type: 'days',
     });
   }
   let option = {
@@ -62,20 +62,20 @@ const Line = (data, chartTitle, extra) => {
       subtext: chartTitle?.subTitle,
     },
     tooltip: {
-      trigger: "axis",
+      trigger: 'axis',
     },
     grid: {
-      left: "20px",
-      right: "20px",
-      bottom: "20px",
+      left: '20px',
+      right: '20px',
+      bottom: '20px',
       containLabel: true,
       label: {
-        color: "#000",
+        color: '#000',
         ...TextStyle,
       },
     },
     xAxis: {
-      type: "category",
+      type: 'category',
       boundaryGap: false,
       data: labels,
       axisTick: {
@@ -87,9 +87,9 @@ const Line = (data, chartTitle, extra) => {
       axisLabel: {
         ...AxisLabelFormatter,
         inside: true,
-        color: "rgba(0, 0, 0, 0.85)",
-        fontWeight: "normal",
-        fontSize: "12px",
+        color: 'rgba(0, 0, 0, 0.85)',
+        fontWeight: 'normal',
+        fontSize: '12px',
       },
       splitLine: {
         show: true,
@@ -104,7 +104,7 @@ const Line = (data, chartTitle, extra) => {
     series: [
       {
         data: seriesData,
-        type: "line",
+        type: 'line',
       },
     ],
     ...Color,

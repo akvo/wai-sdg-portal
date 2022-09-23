@@ -1,10 +1,10 @@
-import moment from "moment";
+import moment from 'moment';
 
 export const getDateRange = ({
   startDate,
   endDate,
-  type = "months",
-  dateFormat = "MMMM DD, YYYY",
+  type = 'months',
+  dateFormat = 'MMMM DD, YYYY',
 }) => {
   let fromDate = moment(startDate);
   let toDate = moment(endDate);

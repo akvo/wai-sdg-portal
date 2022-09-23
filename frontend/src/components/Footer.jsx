@@ -1,8 +1,8 @@
-import React from "react";
-import { Row, Col } from "antd";
-import { FacebookFilled, TwitterOutlined } from "@ant-design/icons";
-import { UIState } from "../state/ui";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Row, Col } from 'antd';
+import { FacebookFilled, TwitterOutlined } from '@ant-design/icons';
+import { UIState } from '../state/ui';
+import { Link } from 'react-router-dom';
 
 const { footer } = window?.i18n;
 
@@ -25,8 +25,14 @@ const FooterEnd = () => {
     });
   };
   return (
-    <Row className="footer-end" align="space-between">
-      <Col span={8} className="start">
+    <Row
+      className="footer-end"
+      align="space-between"
+    >
+      <Col
+        span={8}
+        className="start"
+      >
         <Link to="/facebook">
           <FacebookFilled />
         </Link>
@@ -34,14 +40,23 @@ const FooterEnd = () => {
           <TwitterOutlined />
         </Link>
       </Col>
-      <Col span={8} className="middle">
+      <Col
+        span={8}
+        className="middle"
+      >
         © 2021
       </Col>
-      <Col span={8} className="end">
+      <Col
+        span={8}
+        className="end"
+      >
         {/* <Link to="/privacy-policy">{footer?.privacyPolicy}</Link> */}
         {/* <Link to="/tos">{footer?.termsOfService}</Link> */}
         {user && (
-          <Link to="/documentation" onClick={() => changePage("documentation")}>
+          <Link
+            to="/documentation"
+            onClick={() => changePage('documentation')}
+          >
             {footer?.developer}
           </Link>
         )}

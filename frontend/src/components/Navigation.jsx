@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
-import { Drawer, Space, Avatar, Menu } from "antd";
-import { UIState } from "../state/ui";
-import { Link } from "react-router-dom";
-import { startCase } from "lodash";
+import React, { useEffect } from 'react';
+import { Drawer, Space, Avatar, Menu } from 'antd';
+import { UIState } from '../state/ui';
+import { Link } from 'react-router-dom';
+import { startCase } from 'lodash';
 
 const navigationOptions = window.navigation_config;
 const sitename = window.site_name;
@@ -26,8 +26,8 @@ const Navigation = () => {
 
   useEffect(() => {
     document.title =
-      startCase(page !== "" ? page : "Home", "-") +
-      " | " +
+      startCase(page !== '' ? page : 'Home', '-') +
+      ' | ' +
       window.site_name.toUpperCase();
   }, [page]);
 
@@ -38,7 +38,10 @@ const Navigation = () => {
           <div className="header-logo">
             <Link to="/">
               <Space size={20}>
-                <Avatar src="/wai-logo.png" alt="wai-logo" />
+                <Avatar
+                  src="/wai-logo.png"
+                  alt="wai-logo"
+                />
                 <div className="web-title">{sitename}</div>
               </Space>
             </Link>
@@ -59,7 +62,10 @@ const Navigation = () => {
             <>
               {navigationOptions.map((item) => {
                 return item.childrens ? (
-                  <Menu.ItemGroup title={item.name} key={`${item.link}`}>
+                  <Menu.ItemGroup
+                    title={item.name}
+                    key={`${item.link}`}
+                  >
                     {item?.childrens?.map((child) => (
                       <Menu.Item key={`${child.link}`}>
                         <Link to={`/data/${child.link}`}>{child.name}</Link>
@@ -74,7 +80,7 @@ const Navigation = () => {
               })}
             </>
           )}
-          {(user?.role === "admin" || user?.role === "editor") && (
+          {(user?.role === 'admin' || user?.role === 'editor') && (
             <Menu.Item key="admin">
               <Link to="/admin/manage-data">{adminText}</Link>
             </Menu.Item>

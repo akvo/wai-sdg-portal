@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Webform } from "akvo-react-form";
-import "akvo-react-form/dist/index.css";
-import { Row, Col, Affix, notification, Progress } from "antd";
-import api from "../util/api";
-import { useHistory } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { Webform } from 'akvo-react-form';
+import 'akvo-react-form/dist/index.css';
+import { Row, Col, Affix, notification, Progress } from 'antd';
+import api from '../util/api';
+import { useHistory } from 'react-router-dom';
 
 const { notificationText } = window?.i18n;
 
@@ -28,7 +28,7 @@ const Forms = ({ match }) => {
         setLoading(true);
         notification.success({
           message: notificationText?.formPostDataSuccessText.replace(
-            "##content##",
+            '##content##',
             `${res.data.id} - ${res.data.name}`
           ),
         });
@@ -65,26 +65,32 @@ const Forms = ({ match }) => {
   }, []);
 
   if (loading) {
-    return "";
+    return '';
   }
   if (!match?.params?.title || !match?.params?.id) {
-    return "";
+    return '';
   }
 
   return (
     <Row>
-      <Affix style={{ width: "100%", zIndex: 1002 }}>
+      <Affix style={{ width: '100%', zIndex: 1002 }}>
         <div className="webform-progress-bar">
           <Progress percent={percentage} />
         </div>
       </Affix>
-      <Col span={24} className="webform">
+      <Col
+        span={24}
+        className="webform"
+      >
         <Col
           span={24}
-          className={offset > 66 ? "blue-header to-white" : "blue-header"}
+          className={offset > 66 ? 'blue-header to-white' : 'blue-header'}
         ></Col>
         <Row justify="center">
-          <Col span={22} className="form-container">
+          <Col
+            span={22}
+            className="form-container"
+          >
             <Webform
               forms={forms}
               onFinish={onFinish}

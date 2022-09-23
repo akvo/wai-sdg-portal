@@ -6,10 +6,10 @@ import {
   Legend,
   Title,
   NoData,
-} from "../chart-style.js";
-import uniq from "lodash/uniq";
-import isEmpty from "lodash/isEmpty";
-import sortBy from "lodash/sortBy";
+} from '../chart-style.js';
+import uniq from 'lodash/uniq';
+import isEmpty from 'lodash/isEmpty';
+import sortBy from 'lodash/sortBy';
 
 const JMPBarStack = (data, chartTitle, extra) => {
   if (isEmpty(data) || !data) {
@@ -20,7 +20,7 @@ const JMPBarStack = (data, chartTitle, extra) => {
   // filter only data with stack
   data = sortBy(
     data.filter((d) => d?.stack?.length),
-    ["score"]
+    ['score']
   );
 
   let stacked = data.find((d) => d?.stack?.length);
@@ -48,11 +48,11 @@ const JMPBarStack = (data, chartTitle, extra) => {
     });
     return {
       name: s.name,
-      type: "bar",
-      stack: "percent",
+      type: 'bar',
+      stack: 'percent',
       barWidth: 25,
       emphasis: {
-        focus: "series",
+        focus: 'series',
       },
       data: temp,
     };
@@ -68,30 +68,30 @@ const JMPBarStack = (data, chartTitle, extra) => {
     legend: {
       ...Legend,
       data: legends,
-      top: "top",
-      left: "center",
+      top: 'top',
+      left: 'center',
     },
     grid: {
-      top: "50px",
-      left: "120px",
+      top: '50px',
+      left: '120px',
       show: true,
       label: {
-        color: "#222",
+        color: '#222',
         ...TextStyle,
       },
     },
     tooltip: {
-      trigger: "axis",
+      trigger: 'axis',
       axisPointer: {
-        type: "shadow",
+        type: 'shadow',
       },
-      backgroundColor: "#ffffff",
+      backgroundColor: '#ffffff',
       ...TextStyle,
     },
     xAxis: {
-      type: "value",
+      type: 'value',
       axisLabel: {
-        color: "#222",
+        color: '#222',
         ...TextStyle,
         ...AxisLabelFormatter,
         formatter: (x) => {
@@ -107,7 +107,7 @@ const JMPBarStack = (data, chartTitle, extra) => {
     },
     yAxis: {
       data: xAxis,
-      type: "category",
+      type: 'category',
     },
     series: series,
     animation: false,

@@ -1,7 +1,7 @@
-import React from "react";
-import { Select, Button, Result, Space } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
-import { UIState } from "../state/ui";
+import React from 'react';
+import { Select, Button, Result, Space } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
+import { UIState } from '../state/ui';
 
 const navigationOptions = window.navigation_config;
 const levels = window.levels;
@@ -10,11 +10,8 @@ const { Option, OptGroup } = Select;
 const { buttonText, mainText, notificationText } = window?.i18n;
 
 export const SelectLevel = ({ setPage, setSelectedRow }) => {
-  const {
-    selectedAdministration,
-    administrationByAccess,
-    user,
-  } = UIState.useState((s) => s);
+  const { selectedAdministration, administrationByAccess, user } =
+    UIState.useState((s) => s);
   return (
     <Space>
       {selectedAdministration.map((s, si) => {
@@ -56,7 +53,7 @@ export const SelectLevel = ({ setPage, setSelectedRow }) => {
             />
           );
         }
-        return "";
+        return '';
       })}
       <Button
         className="remove-filter-button"
@@ -66,7 +63,7 @@ export const SelectLevel = ({ setPage, setSelectedRow }) => {
             setSelectedRow([]);
           }
           const selectedAdministration =
-            user?.role === "admin" || user?.access?.length > 1
+            user?.role === 'admin' || user?.access?.length > 1
               ? [null]
               : [null, user?.access?.[0]];
           UIState.update((u) => {
@@ -82,18 +79,31 @@ export const SelectLevel = ({ setPage, setSelectedRow }) => {
 
 export const DropdownNavigation = ({ value, onChange }) => {
   return (
-    <Select value={[value]} onChange={onChange} className="filter-select">
+    <Select
+      value={[value]}
+      onChange={onChange}
+      className="filter-select"
+    >
       {navigationOptions.map((item, i) => {
         return item.childrens ? (
-          <OptGroup label={item.name} key={`${item.link}-${i}`}>
+          <OptGroup
+            label={item.name}
+            key={`${item.link}-${i}`}
+          >
             {item?.childrens?.map((child) => (
-              <Option value={child.link} key={`${child.link}-${i}`}>
+              <Option
+                value={child.link}
+                key={`${child.link}-${i}`}
+              >
                 {child.name}
               </Option>
             ))}
           </OptGroup>
         ) : (
-          <Option value={item.link} key={`${item.link}-${i}`}>
+          <Option
+            value={item.link}
+            key={`${item.link}-${i}`}
+          >
             {item.name}
           </Option>
         );
