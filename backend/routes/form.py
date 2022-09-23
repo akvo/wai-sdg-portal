@@ -107,13 +107,16 @@ def get_form_definition(req: Request, id: int, session: Session,
 
 
 def save_webform(session: Session, json_form: dict, form_id: int = None):
+    # NOTE: id must be max 10 digit, need to generate form_id on FE
     # if form_id ==> update
     # add form
-    form = crud.add_form(session=session, name=json_form.get('name'))
+    form = crud.add_form(
+        session=session, id=json_form.get('id'), name=json_form.get('name'))
     for qg in json_form.get('question_group'):
         # add group, repeatable? translations?
         question_group = crud_question_group.add_question_group(
             session=session,
+            id=qg.get('id'),
             form=form.id,
             name=qg.get('name'),
             order=qg.get('order'))
@@ -121,6 +124,7 @@ def save_webform(session: Session, json_form: dict, form_id: int = None):
             # add question, meta?
             crud_question.add_question(
                 session=session,
+                id=q.get('id'),
                 name=q.get('name'),
                 form=form.id,
                 question_group=question_group.id,
@@ -131,7 +135,6 @@ def save_webform(session: Session, json_form: dict, form_id: int = None):
                 rule=q.get('rule') if "rule" in q else None,
                 dependency=q.get('dependency') if "dependency" in q else None,
                 option=q.get('option') if "option" in q else [])
-    return json_form
 
 
 @form_route.get("/form/",

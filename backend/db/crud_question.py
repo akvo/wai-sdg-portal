@@ -17,7 +17,7 @@ def add_question(
         question_group: int,
         type: QuestionType,
         meta: bool,
-        id: Optional[id] = None,
+        id: Optional[int] = None,
         order: Optional[int] = None,
         option: Optional[List[OptionDict]] = None,
         required: Optional[bool] = True,
@@ -44,6 +44,8 @@ def add_question(
     if option:
         for o in option:
             opt = Option(name=o["name"])
+            if "id" in o:
+                opt.id = o["id"]
             if "order" in o:
                 opt.order = o["order"]
             if "color" in o:

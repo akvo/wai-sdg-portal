@@ -7,6 +7,7 @@ from models.question_group import QuestionGroupBase
 def add_question_group(session: Session,
                        form: int,
                        name: str,
+                       id: Optional[int] = None,
                        order: Optional[int] = None) -> QuestionGroupDict:
     last_question_group = session.query(QuestionGroup).filter(
         QuestionGroup.form == form).order_by(
@@ -15,7 +16,8 @@ def add_question_group(session: Session,
         last_question_group = last_question_group.order + 1
     else:
         last_question_group = 1
-    question_group = QuestionGroup(name=name,
+    question_group = QuestionGroup(id=id,
+                                   name=name,
                                    form=form,
                                    order=last_question_group)
     session.add(question_group)

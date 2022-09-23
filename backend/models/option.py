@@ -35,9 +35,11 @@ class Option(Base):
 
     def __init__(self,
                  name: str,
+                 id: Optional[int] = None,
                  order: Optional[int] = None,
                  color: Optional[str] = None,
                  score: Optional[int] = None):
+        self.id = id
         self.name = name
         self.order = order
         self.color = color

@@ -12,6 +12,7 @@ def get_option(session: Session) -> List[OptionDictWithId]:
 def add_option(session: Session,
                question=int,
                name=str,
+               id=Optional[int],
                order=Optional[str],
                score=Optional[str],
                color=Optional[str]) -> OptionDictWithId:

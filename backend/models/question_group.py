@@ -28,7 +28,8 @@ class QuestionGroup(Base):
                             passive_deletes=True,
                             backref="question")
 
-    def __init__(self, name: str, form: form, order: order):
+    def __init__(self, id: Optional[int], name: str, form: form, order: order):
+        self.id = id
         self.name = name
         self.form = form
         self.order = order
