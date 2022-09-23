@@ -1,5 +1,5 @@
 import os
-from fastapi import Depends, Request, APIRouter
+from fastapi import Depends, Request, APIRouter, BackgroundTasks
 from fastapi.security import HTTPBearer
 from fastapi.security import HTTPBasicCredentials as credentials
 from typing import List
@@ -9,6 +9,7 @@ import db.crud_data as crud_data
 import db.crud_question as crud_question
 import db.crud_answer as crud_answer
 import db.crud_administration as crud_administration
+import db.crud_question_group as crud_question_group
 from db.connection import get_session
 from models.form import FormDict, FormBase
 from models.user import UserRole
@@ -105,6 +106,34 @@ def get_form_definition(req: Request, id: int, session: Session,
     return form
 
 
+def save_webform(session: Session, json_form: dict, form_id: int = None):
+    # if form_id ==> update
+    # add form
+    form = crud.add_form(session=session, name=json_form.get('name'))
+    for qg in json_form.get('question_group'):
+        # add group, repeatable? translations?
+        question_group = crud_question_group.add_question_group(
+            session=session,
+            form=form.id,
+            name=qg.get('name'),
+            order=qg.get('order'))
+        for q in qg.get('question'):
+            # add question, meta?
+            crud_question.add_question(
+                session=session,
+                name=q.get('name'),
+                form=form.id,
+                question_group=question_group.id,
+                type=q.get('type'),
+                meta=False,
+                order=q.get('order'),
+                required=q.get('required'),
+                rule=q.get('rule') if "rule" in q else None,
+                dependency=q.get('dependency') if "dependency" in q else None,
+                option=q.get('option') if "option" in q else [])
+    return json_form
+
+
 @form_route.get("/form/",
                 response_model=List[FormDict],
                 summary="get all forms",
@@ -163,3 +192,17 @@ def add(req: Request,
     verify_admin(req.state.authenticated, session)
     form = crud.add_form(session=session, name=name)
     return form.serialize
+
+
+@form_route.post("/webform/",
+                 summary="post webform editor JSON value",
+                 name="webform:post",
+                 tags=["Form"])
+async def add_webform(req: Request,
+                      payload: dict,
+                      background_tasks: BackgroundTasks,
+                      session: Session = Depends(get_session),
+                      # credentials: credentials = Depends(security)
+                      ):
+    background_tasks.add_task(save_webform, session=session, json_form=payload)
+    return payload
