@@ -106,9 +106,10 @@ def get_form_definition(req: Request, id: int, session: Session,
     return form
 
 
-def save_webform(session: Session, json_form: dict, form_id: int = None):
+def save_webform(json_form: dict, form_id: int = None):
     # NOTE: id must be max 10 digit, need to generate form_id on FE
     # if form_id ==> update
+    session = next(get_session())
     # add form
     form = crud.add_form(
         session=session, id=json_form.get('id'), name=json_form.get('name'))
@@ -207,5 +208,5 @@ async def add_webform(req: Request,
                       session: Session = Depends(get_session),
                       # credentials: credentials = Depends(security)
                       ):
-    background_tasks.add_task(save_webform, session=session, json_form=payload)
+    background_tasks.add_task(save_webform, json_form=payload)
     return payload
