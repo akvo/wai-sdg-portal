@@ -12,31 +12,62 @@ account = Acc(True)
 
 form_definition = {
     "id": 903430001,
-    "name": "New Form",
-    "description": "New Form Description",
+    "name": "Test Form",
+    "description": "This is a test form definition for webform editor",
     "question_group": [{
         "id": 903430556,
-        "name": "Consequat porta lorem",
+        "name": "Group 1",
         "order": 1,
         "repeatable": False,
         "question": [{
-            "id": 903430557,
+            "id": 903430547,
             "order": 1,
             "questionGroupId": 903430556,
-            "name": "Donec amet tincidunt dapibus ipsum aliquet",
+            "name": "Name",
+            "type": "text",
+            "required": True
+        }, {
+            "id": 903430557,
+            "order": 2,
+            "questionGroupId": 903430556,
+            "name": "Gender",
             "type": "option",
-            "required": False,
+            "required": True,
             "option": [{
-                "code": None,
-                "name": "New Option 1",
+                "code": "M",
+                "name": "Male",
                 "order": 1,
                 "id": 904875904
             }, {
-                "code": None,
-                "name": "New Option 2",
+                "code": "F",
+                "name": "Female",
                 "order": 2,
                 "id": 904875905
             }]
+        }, {
+            "id": 903430558,
+            "order": 3,
+            "questionGroupId": 903430556,
+            "name": "Address",
+            "type": "text",
+            "required": True
+        }]
+    }, {
+        "id": 903430546,
+        "name": "Group 2",
+        "order": 2,
+        "repeatable": False,
+        "question": [{
+            "id": 903430559,
+            "order": 1,
+            "questionGroupId": 903430546,
+            "name": "Dependent to Gender Male",
+            "type": "text",
+            "required": False,
+            "dependency": {
+                "id": 903430557,
+                "options": ["Male"]
+            }
         }]
     }]
 }
