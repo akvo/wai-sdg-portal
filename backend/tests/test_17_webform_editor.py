@@ -1,6 +1,5 @@
 import sys
 import pytest
-import random
 from fastapi import FastAPI
 from httpx import AsyncClient
 from tests.test_01_auth import Acc
@@ -11,21 +10,19 @@ sys.path.append("..")
 
 account = Acc(True)
 
-form_id = random.randint(1, 10000)
-
 form_definition = {
-    "id": form_id,
+    "id": 903430001,
     "name": "New Form",
     "description": "New Form Description",
     "question_group": [{
-        "id": random.randint(1, 10000),
+        "id": 903430556,
         "name": "Consequat porta lorem",
         "order": 1,
         "repeatable": False,
         "question": [{
-            "id": random.randint(1, 10000),
+            "id": 903430557,
             "order": 1,
-            "questionGroupId": random.randint(1, 10000),
+            "questionGroupId": 903430556,
             "name": "Donec amet tincidunt dapibus ipsum aliquet",
             "type": "option",
             "required": False,
@@ -33,12 +30,12 @@ form_definition = {
                 "code": None,
                 "name": "New Option 1",
                 "order": 1,
-                "id": random.randint(1, 10000)
+                "id": 904875904
             }, {
                 "code": None,
                 "name": "New Option 2",
                 "order": 2,
-                "id": random.randint(1, 10000)
+                "id": 904875905
             }]
         }]
     }]
@@ -59,7 +56,7 @@ class TestWebformEditorRoutes():
     async def test_update_webform(
             self, app: FastAPI, session: Session, client: AsyncClient) -> None:
         res = await client.put(
-            app.url_path_for("webform:update", id=form_id),
+            app.url_path_for("webform:update", id=form_definition['id']),
             headers={"Authorization": f"Bearer {account.token}"},
             json=form_definition)
         assert res.status_code == 200

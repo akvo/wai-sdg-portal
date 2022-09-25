@@ -107,33 +107,36 @@ def get_form_definition(req: Request, id: int, session: Session,
     return form
 
 
-def save_webform(json_form: dict, form_id: int = None):
+def save_webform(session: Session, json_form: dict, form_id: int = None):
     # NOTE: id must be max 10 digit, need to generate form_id on FE
     # if form_id ==> update
-    session = next(get_session())
+    if os.environ.get('TESTING'):
+        sessionUsed = session
+    else:
+        sessionUsed = next(get_session())
     # add form
     if not form_id:
         form = crud.add_form(
-            session=session,
+            session=sessionUsed,
             id=json_form.get('id'),
             name=json_form.get('name'))
     if form_id:
         form = crud.update_form(
-            session=session,
+            session=sessionUsed,
             name=json_form.get('name'),
             id=form_id)
     for qg in json_form.get('question_group'):
         # add group, repeatable? translations?
         if not form_id:
             question_group = crud_question_group.add_question_group(
-                session=session,
+                session=sessionUsed,
                 id=qg.get('id'),
                 form=form.id,
                 name=qg.get('name'),
                 order=qg.get('order'))
         if form_id:
             question_group = crud_question_group.update_question_group(
-                session=session,
+                session=sessionUsed,
                 form=form_id,
                 name=qg.get('name'),
                 id=qg.get('id'))
@@ -142,7 +145,7 @@ def save_webform(json_form: dict, form_id: int = None):
             dependency = q.get('dependency') if "dependency" in q else None
             if not form_id:
                 crud_question.add_question(
-                    session=session,
+                    session=sessionUsed,
                     id=q.get('id'),
                     name=q.get('name'),
                     form=form.id,
@@ -156,7 +159,7 @@ def save_webform(json_form: dict, form_id: int = None):
                     option=q.get('option') if "option" in q else [])
             if form_id:
                 crud_question.update_question(
-                    session=session,
+                    session=sessionUsed,
                     id=q.get('id'),
                     name=q.get('name'),
                     form=form_id,
@@ -242,7 +245,8 @@ async def add_webform(
     session: Session = Depends(get_session),
     credentials: credentials = Depends(security)
 ):
-    background_tasks.add_task(save_webform, json_form=payload)
+    background_tasks.add_task(
+        save_webform, session=session, json_form=payload)
     return payload
 
 
@@ -259,5 +263,6 @@ async def update_webform(
     session: Session = Depends(get_session),
     credentials: credentials = Depends(security)
 ):
-    background_tasks.add_task(save_webform, json_form=payload, form_id=id)
+    background_tasks.add_task(
+        save_webform, session=session, json_form=payload, form_id=id)
     return payload
