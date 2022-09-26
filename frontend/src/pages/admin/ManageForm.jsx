@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Row, Col, Button, Space, Pagination } from 'antd';
+import { Row, Col, Button, Space } from 'antd';
+import WebformEditor from 'akvo-react-form-editor';
+import 'akvo-react-form-editor/dist/index.css';
 import { DropdownNavigation } from '../../components/common';
 
 const { buttonText } = window?.i18n;
@@ -33,6 +35,9 @@ const ManageForm = () => {
             </Space>
           </Col>
         </Row>
+      </div>
+      <div className="upload-wrapper">
+        <WebformEditor />
       </div>
     </div>
   );
