@@ -192,13 +192,21 @@ def save_webform(session: Session, json_form: dict, form_id: int = None):
                 id=qg.get('id'),
                 form=form.id,
                 name=qg.get('name'),
-                order=qg.get('order'))
+                order=qg.get('order'),
+                description=qg.get('description'),
+                repeatable=qg.get('repeatable'),
+                repeat_text=qg.get('repeatText'),
+                translations=qg.get('translations'))
         if form_id:
             question_group = crud_question_group.update_question_group(
                 session=sessionUsed,
+                id=qg.get('id'),
                 form=form_id,
                 name=qg.get('name'),
-                id=qg.get('id'))
+                description=qg.get('description'),
+                repeatable=qg.get('repeatable'),
+                repeat_text=qg.get('repeatText'),
+                translations=qg.get('translations'))
         for q in qg.get('question'):
             # add question, meta?
             dependency = q.get('dependency') if "dependency" in q else None
