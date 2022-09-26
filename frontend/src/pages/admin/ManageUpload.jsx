@@ -7,6 +7,7 @@ import {
   Button,
   Select,
   message,
+  Divider,
   notification,
 } from 'antd';
 import { FileExcelOutlined, FileExcelTwoTone } from '@ant-design/icons';
@@ -216,6 +217,7 @@ const ManageUpload = () => {
           </Col>
         </Row>
       </div>
+      <Divider />
       <div className="upload-wrapper">
         <Row
           className="filter-wrapper"

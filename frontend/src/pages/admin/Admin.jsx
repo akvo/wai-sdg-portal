@@ -5,6 +5,7 @@ import api from '../../util/api';
 import ManageData from './ManageData';
 import ManageUser from './ManageUser';
 import ManageUpload from './ManageUpload';
+import ManageForm from './ManageForm';
 import Export from './Export';
 import { useHistory } from 'react-router-dom';
 import './admin.scss';
@@ -30,6 +31,7 @@ const Admin = ({ match }) => {
     tabExportText,
     tabDataUploadText,
     tabManageUserText,
+    tabManageFormText,
   } = adminText;
   const [page, setPage] = useState(match?.params?.page);
   const history = useHistory();
@@ -103,6 +105,14 @@ const Admin = ({ match }) => {
                 key="manage-users"
               >
                 {page === 'manage-users' && <ManageUser />}
+              </TabPane>
+            )}
+            {user?.role === 'admin' && (
+              <TabPane
+                tab={tabManageFormText}
+                key="manage-form"
+              >
+                {page === 'manage-form' && <ManageForm />}
               </TabPane>
             )}
           </Tabs>
