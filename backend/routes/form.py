@@ -3,7 +3,7 @@ import random
 from fastapi import Depends, Request, APIRouter, BackgroundTasks
 from fastapi.security import HTTPBearer
 from fastapi.security import HTTPBasicCredentials as credentials
-from typing import List
+from typing import List, Optional
 from sqlalchemy.orm import Session
 import db.crud_form as crud
 import db.crud_data as crud_data
@@ -170,12 +170,20 @@ def save_webform(session: Session, json_form: dict, form_id: int = None):
         form = crud.add_form(
             session=sessionUsed,
             id=json_form.get('id'),
-            name=json_form.get('name'))
+            name=json_form.get('name'),
+            description=json_form.get('description'),
+            default_language=json_form.get('defaultLanguage'),
+            languages=json_form.get('languages'),
+            translations=json_form.get('translations'))
     if form_id:
         form = crud.update_form(
             session=sessionUsed,
+            id=form_id,
             name=json_form.get('name'),
-            id=form_id)
+            description=json_form.get('description'),
+            default_language=json_form.get('defaultLanguage'),
+            languages=json_form.get('languages'),
+            translations=json_form.get('translations'))
     for qg in json_form.get('question_group'):
         # add group, repeatable? translations?
         if not form_id:
@@ -277,10 +285,20 @@ def get_webform_by_id(req: Request,
                  tags=["Form"])
 def add(req: Request,
         name: str,
+        description: Optional[str] = None,
+        default_language: Optional[str] = None,
+        languages: Optional[List[str]] = None,
+        translations: Optional[List[dict]] = None,
         session: Session = Depends(get_session),
         credentials: credentials = Depends(security)):
     verify_admin(req.state.authenticated, session)
-    form = crud.add_form(session=session, name=name)
+    form = crud.add_form(
+        session=session,
+        name=name,
+        description=description,
+        default_language=default_language,
+        languages=languages,
+        translations=translations)
     return form.serialize
 
 

@@ -17,11 +17,34 @@ class TestFormRoutes():
                             client: AsyncClient) -> None:
         res = await client.post(
             app.url_path_for("form:create"),
-            params={"name": "test"},
+            params={
+                "name": "test",
+                "description": "test description",
+                "default_language": "en"
+            },
+            json={
+                "languages": ["en", "id"],
+                "translations": [{
+                    "language": "id",
+                    "name": "uji coba",
+                    "description": "deskripsi uji coba"
+                }]
+            },
             headers={"Authorization": f"Bearer {account.token}"})
         assert res.status_code == 200
         res = res.json()
-        assert res == {"id": 1, "name": "test"}
+        assert res == {
+            "id": 1,
+            "name": "test",
+            "description": "test description",
+            "default_language": "en",
+            "languages": ["en", "id"],
+            "translations": [{
+                "language": "id",
+                "name": "uji coba",
+                "description": "deskripsi uji coba"
+            }]
+        }
 
     @pytest.mark.asyncio
     async def test_add_option_question(self, app: FastAPI, session: Session,

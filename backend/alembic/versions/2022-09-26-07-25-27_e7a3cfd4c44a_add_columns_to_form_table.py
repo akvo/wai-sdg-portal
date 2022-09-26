@@ -18,6 +18,11 @@ branch_labels = None
 depends_on = None
 
 
+class CastingArray(pg.ARRAY):
+    def bind_expression(self, bindvalue):
+        return sa.cast(bindvalue, self)
+
+
 def upgrade():
     op.add_column(
         'form',
@@ -27,10 +32,10 @@ def upgrade():
         sa.Column('default_language', sa.String(), nullable=True))
     op.add_column(
         'form',
-        sa.Column('languages', pg.JSONB(), nullable=True))
+        sa.Column('languages', pg.ARRAY(sa.String()), nullable=True))
     op.add_column(
         'form',
-        sa.Column('translations', pg.JSONB(), nullable=True))
+        sa.Column('translations', CastingArray(pg.JSONB()), nullable=True))
 
 
 def downgrade():

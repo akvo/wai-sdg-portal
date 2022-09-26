@@ -22,6 +22,14 @@ class TestSubmissionRoutes():
         assert res == {
             "id": 1,
             "name": "test",
+            "description": "test description",
+            "default_language": "en",
+            "languages": ["en", "id"],
+            "translations": [{
+                "language": "id",
+                "name": "uji coba",
+                "description": "deskripsi uji coba"
+            }],
             "question_group": [{
                 "form": 1,
                 "id": 1,

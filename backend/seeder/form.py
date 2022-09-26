@@ -25,9 +25,14 @@ for table in ["form", "question_group", "question", "option"]:
 for file in sorted(files):
     with open(f'{file_path}{file}') as json_file:
         json_form = json.load(json_file)
-    form = crud_form.add_form(session=session,
-                              name=json_form["form"],
-                              id=json_form["id"])
+    form = crud_form.add_form(
+        session=session,
+        name=json_form["form"],
+        id=json_form["id"],
+        description=json_form.get('description'),
+        default_language=json_form.get('defaultLanguage'),
+        languages=json_form.get('languages'),
+        translations=json_form.get('translations'))
     print(f"Form: {form.name}")
     for qg in json_form["question_groups"]:
         question_group = crud_question_group.add_question_group(
