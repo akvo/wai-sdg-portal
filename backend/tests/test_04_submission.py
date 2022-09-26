@@ -35,6 +35,10 @@ class TestSubmissionRoutes():
                 "id": 1,
                 "name": "Test Question Group",
                 "order": 1,
+                "description": None,
+                "repeatable": False,
+                "repeat_text": None,
+                "translations": None,
                 "question": [{
                     "form": 1,
                     "id": 1,

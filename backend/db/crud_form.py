@@ -65,14 +65,10 @@ def update_form(
 ) -> FormDict:
     form = session.query(Form).filter(Form.id == id).first()
     form.name = name
-    if description:
-        form.description = description
-    if default_language:
-        form.default_language = default_language
-    if languages:
-        form.languages = languages
-    if translations:
-        form.translations = translations
+    form.description = description
+    form.default_language = default_language
+    form.languages = languages
+    form.translations = translations
     session.commit()
     session.flush()
     session.refresh(form)

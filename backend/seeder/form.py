@@ -36,7 +36,13 @@ for file in sorted(files):
     print(f"Form: {form.name}")
     for qg in json_form["question_groups"]:
         question_group = crud_question_group.add_question_group(
-            session=session, name=qg["question_group"], form=form.id)
+            session=session,
+            name=qg["question_group"],
+            form=form.id,
+            description=qg.get('description'),
+            repeatable=qg.get('repeatable'),
+            repeat_text=qg.get('repeatText'),
+            translations=qg.get('translations'))
         print(f"Question Group: {question_group.name}")
         for i, q in enumerate(qg["questions"]):
             question = crud_question.add_question(
