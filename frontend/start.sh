@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
-echo PUBLIC_URL="/" > .env
-yarn install --no-progress --frozen-lock
-yarn start
+# echo PUBLIC_URL="/" > .env
+# yarn install --no-progress --frozen-lock
+# yarn start
+tail -f > /dev/null
