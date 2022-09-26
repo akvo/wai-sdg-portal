@@ -53,7 +53,11 @@ def add_question(
     option: Optional[List[OptionDict]] = None,
     required: Optional[bool] = True,
     rule: Optional[dict] = None,
-    dependency: Optional[List[DependencyDict]] = None
+    dependency: Optional[List[DependencyDict]] = None,
+    tooltip: Optional[dict] = None,
+    translations: Optional[List[dict]] = None,
+    api: Optional[dict] = None,
+    addons: Optional[dict] = None
 ) -> QuestionBase:
     last_question = get_last_question(
         session=session, form=form, question_group=question_group)
@@ -66,7 +70,11 @@ def add_question(
                         type=type,
                         required=required,
                         rule=rule,
-                        dependency=dependency)
+                        dependency=dependency,
+                        tooltip=tooltip,
+                        translations=translations,
+                        api=api,
+                        addons=addons)
     if option:
         for o in option:
             opt = generateOptionObj(obj=o)
@@ -90,7 +98,11 @@ def update_question(
     option: Optional[List[OptionDict]] = None,
     required: Optional[bool] = True,
     rule: Optional[dict] = None,
-    dependency: Optional[List[DependencyDict]] = None
+    dependency: Optional[List[DependencyDict]] = None,
+    tooltip: Optional[dict] = None,
+    translations: Optional[List[dict]] = None,
+    api: Optional[dict] = None,
+    addons: Optional[dict] = None
 ) -> QuestionBase:
     last_question = get_last_question(
         session=session, form=form, question_group=question_group)
@@ -105,6 +117,10 @@ def update_question(
     question.required = required
     question.rule = rule
     question.dependency = dependency
+    question.tooltip = tooltip
+    question.translations = translations
+    question.api = api
+    question.addons = addons
     if option:
         for o in option:
             find_option = session.query(Option).filter(

@@ -1,4 +1,4 @@
-"""add columns tooltip translations api and add_on
+"""add columns tooltip translations api and addons
 to question table
 
 Revision ID: df0afb661d60
@@ -35,11 +35,11 @@ def upgrade():
         sa.Column('api', pg.JSONB(), nullable=True))
     op.add_column(
         'question',
-        sa.Column('add_on', pg.JSONB(), nullable=True))
+        sa.Column('addons', pg.JSONB(), nullable=True))
 
 
 def downgrade():
     op.drop_column('question', 'tooltip')
     op.drop_column('question', 'translations')
     op.drop_column('question', 'api')
-    op.drop_column('question', 'add_on')
+    op.drop_column('question', 'addons')
