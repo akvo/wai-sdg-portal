@@ -24,6 +24,23 @@ def get_last_question(session: Session, form: int, question_group: int):
     return last_question
 
 
+def generateOptionObj(obj: dict):
+    opt = Option(name=obj["name"])
+    if "id" in obj:
+        opt.id = obj["id"]
+    if "order" in obj:
+        opt.order = obj["order"]
+    if "color" in obj:
+        opt.color = obj["color"]
+    if "score" in obj:
+        opt.score = obj["score"]
+    if "code" in obj:
+        opt.code = obj["code"]
+    if "translations" in obj:
+        opt.translations = obj["translations"]
+    return opt
+
+
 def add_question(
     session: Session,
     name: str,
@@ -52,15 +69,7 @@ def add_question(
                         dependency=dependency)
     if option:
         for o in option:
-            opt = Option(name=o["name"])
-            if "id" in o:
-                opt.id = o["id"]
-            if "order" in o:
-                opt.order = o["order"]
-            if "color" in o:
-                opt.color = o["color"]
-            if "score" in o:
-                opt.score = o["score"]
+            opt = generateOptionObj(obj=o)
             question.option.append(opt)
     session.add(question)
     session.commit()
@@ -101,15 +110,7 @@ def update_question(
             find_option = session.query(Option).filter(
                 Option.id == o['id']).first()
             if not find_option:
-                opt = Option(name=o["name"])
-                if "id" in o:
-                    opt.id = o["id"]
-                if "order" in o:
-                    opt.order = o["order"]
-                if "color" in o:
-                    opt.color = o["color"]
-                if "score" in o:
-                    opt.score = o["score"]
+                opt = opt = generateOptionObj(obj=o)
                 question.option.append(opt)
             if find_option:
                 crud_option.update_option(
@@ -118,7 +119,9 @@ def update_question(
                     name=o.get('name'),
                     order=o.get('order'),
                     color=o.get('color'),
-                    score=o.get('score'))
+                    score=o.get('score'),
+                    code=o.get('code'),
+                    translations=o.get('translations'))
     session.commit()
     session.flush()
     session.refresh(question)

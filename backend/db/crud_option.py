@@ -15,9 +15,17 @@ def add_option(session: Session,
                id=Optional[int],
                order=Optional[str],
                score=Optional[str],
-               color=Optional[str]) -> OptionDictWithId:
+               color=Optional[str],
+               code: Optional[str] = None,
+               translations: Optional[List[dict]] = None) -> OptionDictWithId:
     question = session.query(Question).filter(Question.id == question).first()
-    option = Option(name=name, order=order, color=color, score=score)
+    option = Option(
+        name=name,
+        order=order,
+        color=color,
+        score=score,
+        code=code,
+        translations=translations)
     question.option.append(option)
     session.flush()
     session.commit()
@@ -30,11 +38,16 @@ def update_option(session: Session,
                   name: Optional[str] = None,
                   order: Optional[str] = None,
                   color: Optional[str] = None,
-                  score: Optional[str] = None) -> OptionDictWithId:
+                  score: Optional[str] = None,
+                  code: Optional[str] = None,
+                  translations: Optional[List[dict]] = None
+                  ) -> OptionDictWithId:
     option = session.query(Option).filter(Option.id == id).first()
     option.order = order
     option.color = color
     option.score = score
+    option.code = code
+    option.translations = translations
     if name:
         option.name = name
     session.flush()

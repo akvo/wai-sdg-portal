@@ -55,18 +55,33 @@ class TestSubmissionRoutes():
                         "name": "Option 1",
                         "order": 1,
                         "score": None,
+                        "code": "OP1",
+                        "translations": [{
+                            "language": "id",
+                            "name": "Pilihan 1"
+                        }]
                     }, {
                         "color": "#333",
                         "id": 2,
                         "name": "Option 2",
                         "order": 2,
                         "score": 5,
+                        "code": "OP2",
+                        "translations": [{
+                            "language": "id",
+                            "name": "Pilihan 2"
+                        }]
                     }, {
                         "color": None,
                         "id": 3,
                         "name": "Option 3",
                         "order": None,
                         "score": 10,
+                        "code": "OP3",
+                        "translations": [{
+                            "language": "id",
+                            "name": "Pilihan 3"
+                        }]
                     }],
                     "dependency": None,
                 }, {
@@ -178,19 +193,34 @@ class TestSubmissionRoutes():
             "name": "Option 1",
             "color": "#333",
             "order": 1,
-            "score": None
+            "score": None,
+            "code": "OP1",
+            "translations": [{
+                "language": "id",
+                "name": "Pilihan 1"
+            }]
         }, {
             "id": 2,
             "name": "Option 2",
             "color": "#333",
             "order": 2,
             "score": 5,
+            "code": "OP2",
+            "translations": [{
+                "language": "id",
+                "name": "Pilihan 2"
+            }]
         }, {
             "id": 3,
             "name": "Option 3",
             "color": None,
             "order": None,
             "score": 10,
+            "code": "OP3",
+            "translations": [{
+                "language": "id",
+                "name": "Pilihan 3"
+            }]
         }]
 
     @pytest.mark.asyncio
@@ -202,7 +232,12 @@ class TestSubmissionRoutes():
                 "name": "Option 1",
                 "color": "#333",
                 "order": 1,
+                "code": "OP1"
             },
+            json=[{
+                "language": "id",
+                "name": "Pilihan 1"
+            }],
             headers={"Authorization": f"Bearer {account.token}"},
         )
         assert res.status_code == 200
@@ -213,6 +248,11 @@ class TestSubmissionRoutes():
             "name": "Option 1",
             "order": 1,
             "score": None,
+            "code": "OP1",
+            "translations": [{
+                "language": "id",
+                "name": "Pilihan 1"
+            }]
         }
 
     @pytest.mark.asyncio
