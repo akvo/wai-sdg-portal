@@ -1,5 +1,4 @@
 import os
-import random
 from fastapi import Depends, Request, APIRouter, BackgroundTasks
 from fastapi.security import HTTPBearer
 from fastapi.security import HTTPBasicCredentials as credentials
@@ -110,8 +109,8 @@ def get_form_definition(req: Request, id: int, session: Session,
 
 
 def generateId(index: int = 0):
-    now = datetime.now().timestamp()
-    return str(round(now) + index)[1:]
+    now = datetime.now().timestamp() * 1000000
+    return str(round(now) + index)[-9:]
 
 
 def transformJsonForm(json_form: dict):
@@ -120,15 +119,13 @@ def transformJsonForm(json_form: dict):
     # question group
     question_group = []
     for qg in json_form.get('question_group'):
-        qg_index = qg.get('order')
-        qg_id = generateId(index=qg_index)
+        qg_id = generateId()
         qg.update({'id': qg_id})
         # question
         question = []
         for q in qg.get('question'):
-            q_index = qg_index + q.get('order')
             curr_qid = q.get('id')
-            qid = generateId(index=q_index)
+            qid = generateId()
             qid_mapping.update({curr_qid: qid})
             q.update({'id': qid})
             q.update({'questionGroupId': qg_id})
@@ -144,9 +141,7 @@ def transformJsonForm(json_form: dict):
             if 'option' in q:
                 option = []
                 for o in q.get('option'):
-                    o_index = q_index + o.get('order')
-                    random_int = random.randint(o_index, 99)
-                    oid = generateId(index=o_index + random_int)
+                    oid = generateId()
                     o.update({'id': oid})
                     option.append(o)
                 q.update({'option': option})
