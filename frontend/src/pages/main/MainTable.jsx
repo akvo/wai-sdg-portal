@@ -15,7 +15,6 @@ import { UIState } from '../../state/ui';
 import api from '../../util/api';
 import { getLuma } from '../../util/color';
 import { DataUpdateMessage } from './../../components/Notifications';
-import flatten from 'lodash/flatten';
 import isEmpty from 'lodash/isEmpty';
 import intersection from 'lodash/intersection';
 
@@ -48,13 +47,6 @@ const MainTable = ({
   const [saving, setSaving] = useState(false);
   const [expanded, setExpanded] = useState([]);
   const { editedRow, administration, user } = UIState.useState((e) => e);
-
-  // Filter administration question
-  const administrationQuestionIds = flatten(
-    questionGroup.map((qg) =>
-      qg.question.filter((q) => q.type === 'administration')
-    )
-  )?.map((x) => x.id);
 
   // Filter by Access
   const administrationIdsByUserAccess =
