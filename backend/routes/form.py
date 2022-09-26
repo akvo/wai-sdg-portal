@@ -1,4 +1,5 @@
 import os
+import random
 from fastapi import Depends, Request, APIRouter, BackgroundTasks
 from fastapi.security import HTTPBearer
 from fastapi.security import HTTPBasicCredentials as credentials
@@ -16,6 +17,7 @@ from models.user import UserRole
 from models.question import QuestionType, QuestionDict
 from middleware import verify_user, verify_admin, verify_editor
 from source.geoconfig import GeoCenter
+from datetime import datetime
 
 INSTANCE_NAME = os.environ["INSTANCE_NAME"]
 class_path = INSTANCE_NAME.replace("-", "_")
@@ -105,6 +107,55 @@ def get_form_definition(req: Request, id: int, session: Session,
             "administration": [a.cascade for a in administration]
         }})
     return form
+
+
+def generateId(index: int = 0):
+    now = datetime.now().timestamp()
+    return str(round(now) + index)[1:]
+
+
+def transformJsonForm(json_form: dict):
+    qid_mapping = {}
+    form_id = generateId()
+    # question group
+    question_group = []
+    for qg in json_form.get('question_group'):
+        qg_index = qg.get('order')
+        qg_id = generateId(index=qg_index)
+        qg.update({'id': qg_id})
+        # question
+        question = []
+        for q in qg.get('question'):
+            q_index = qg_index + q.get('order')
+            curr_qid = q.get('id')
+            qid = generateId(index=q_index)
+            qid_mapping.update({curr_qid: qid})
+            q.update({'id': qid})
+            q.update({'questionGroupId': qg_id})
+            # dependency
+            if 'dependency' in q:
+                dependency = []
+                for d in q.get('dependency'):
+                    depend_to = d.get('id')
+                    d.update({'id': qid_mapping.get(depend_to)})
+                    dependency.append(d)
+                q.update({'dependency': dependency})
+            # option
+            if 'option' in q:
+                option = []
+                for o in q.get('option'):
+                    o_index = q_index + o.get('order')
+                    random_int = random.randint(o_index, 99)
+                    oid = generateId(index=o_index + random_int)
+                    o.update({'id': oid})
+                    option.append(o)
+                q.update({'option': option})
+            question.append(q)
+        qg.update({'question': question})
+        question_group.append(qg)
+    json_form.update({'id': form_id})
+    json_form.update({'question_group': question_group})
+    return json_form
 
 
 def save_webform(session: Session, json_form: dict, form_id: int = None):
@@ -245,9 +296,13 @@ async def add_webform(
     session: Session = Depends(get_session),
     credentials: credentials = Depends(security)
 ):
+    if os.environ.get('TESTING'):
+        json_form = payload
+    else:
+        json_form = transformJsonForm(json_form=payload)
     background_tasks.add_task(
-        save_webform, session=session, json_form=payload)
-    return payload
+        save_webform, session=session, json_form=json_form)
+    return json_form
 
 
 @form_route.put(
