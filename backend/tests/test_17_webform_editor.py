@@ -33,6 +33,8 @@ form_definition = {
             "name": "Gender",
             "type": "option",
             "required": True,
+            "allowOther": True,
+            "allowOtherText": "Other gender",
             "option": [{
                 "code": "M",
                 "name": "Male",
@@ -64,6 +66,13 @@ form_definition = {
             "name": "Dependent to Gender Male",
             "type": "text",
             "required": False,
+            "tooltip": {
+                "text": "This question is for male",
+                "translations": {
+                    "language": "id",
+                    "text": "Pertanyaan ini akan untuk laki-laki"
+                }
+            },
             "dependency": [{
                 "id": 903430557,
                 "options": ["Male"]
