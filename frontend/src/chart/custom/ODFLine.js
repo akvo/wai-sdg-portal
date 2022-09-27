@@ -12,7 +12,7 @@ const ODFLine = (data, chartTitle, extra) => {
   if (!data?.yAxis?.length) {
     return NoData;
   }
-  let option = {
+  const option = {
     title: {
       ...Title,
       show: chartTitle ? true : false,
@@ -25,14 +25,14 @@ const ODFLine = (data, chartTitle, extra) => {
         const start = p[0].dataIndex === 0;
         const sentences = p.reverse().map((d) => {
           const v = d.data.data;
-          let title = start
+          const title = start
             ? 'Trigered ODF'
             : v.endValue
             ? 'Verified ODF'
             : 'On Going';
           let date = start ? v.startDate : v.endDate;
           date = moment(date._d).format('DD MMM, YY');
-          let value = start ? v.startValue : v.endValue;
+          const value = start ? v.startValue : v.endValue;
           return [
             "<div class='tooltip-odf'><span class='odf-badge ",
             title.toLowerCase(),

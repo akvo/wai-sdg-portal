@@ -56,7 +56,7 @@ const ManageUser = () => {
         `/user/${selectedValue.id}?active=1&role=${values.role}&organisation=${values.organisation}`,
         values.access
       )
-      .then((res) => {
+      .then(() => {
         notification.success({
           message: active
             ? isInformUser
@@ -66,7 +66,7 @@ const ManageUser = () => {
         });
         getUsers(active, paginate.current);
       })
-      .catch((err) => {
+      .catch(() => {
         setUsers([]);
         notification.error({
           message: notificationText?.errorText,
@@ -102,13 +102,13 @@ const ManageUser = () => {
     setLoading(id);
     api
       .delete(`/user/${id}`)
-      .then((res) => {
+      .then(() => {
         notification.success({
           message: `${email} ${notificationText?.isDeletedText}`,
         });
         getUsers(active);
       })
-      .catch((err) => {
+      .catch(() => {
         notification.error({
           message: notificationText?.errorText,
         });
@@ -146,13 +146,13 @@ const ManageUser = () => {
       title: manageUserTableText?.colOrg,
       dataIndex: 'organisation',
       key: 'organisation',
-      render: (val, prop) => organisations?.find((org) => org.id === val)?.name,
+      render: (val) => organisations?.find((org) => org.id === val)?.name,
     },
     {
       title: manageUserTableText?.colRole,
       dataIndex: 'role',
       key: 'role',
-      render: (val, prop) => capitalize(val),
+      render: (val) => capitalize(val),
     },
     {
       title: '',
@@ -216,7 +216,7 @@ const ManageUser = () => {
           pageSize: pageSize,
         });
       })
-      .catch((err) => {
+      .catch(() => {
         setUsers([]);
       })
       .finally(() => {

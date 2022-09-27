@@ -17,7 +17,7 @@ export const getBounds = (selected, administration) => {
     };
   });
   const geoFilter = geo.geometries.filter((x) => {
-    let filters = [];
+    const filters = [];
     selected.forEach((s) => {
       if (x?.properties?.[s.prop] === s.value) {
         filters.push(true);

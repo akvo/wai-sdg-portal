@@ -53,13 +53,13 @@ const TabODF = ({
     ) {
       const values = data
         .map((x) => {
-          let name = x.detail.find((v) => v.question === setting.name)?.value;
+          const name = x.detail.find((v) => v.question === setting.name)?.value;
           const adm = abrvAdministration(x?.name?.props?.record?.name);
 
-          let startDate = x.detail.find(
+          const startDate = x.detail.find(
             (v) => v.question === setting.startDate
           )?.value;
-          let endDate = x.detail.find(
+          const endDate = x.detail.find(
             (v) => v.question === setting.endDate
           )?.value;
 

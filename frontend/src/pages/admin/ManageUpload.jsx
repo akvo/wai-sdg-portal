@@ -111,7 +111,7 @@ const ManageUpload = () => {
   };
 
   const onUpload = ({ file, onSuccess }) => {
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append('file', file);
     api
       .post(`excel-template/${formId}/${selectedAdm}`, formData)
@@ -119,7 +119,7 @@ const ManageUpload = () => {
         onSuccess(res.data);
         setJobState(res.data);
       })
-      .catch((err) => {
+      .catch(() => {
         message.error({
           content: notificationText?.failedText,
           key,

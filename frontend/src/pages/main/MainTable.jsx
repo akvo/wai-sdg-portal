@@ -63,8 +63,8 @@ const MainTable = ({
     UIState.update((e) => {
       e.reloadData = false;
     });
-    const savedValues = Object.keys(editedRow).map((k, _) => {
-      const values = Object.keys(editedRow[k]).map((o, _) => ({
+    const savedValues = Object.keys(editedRow).map((k) => {
+      const values = Object.keys(editedRow[k]).map((o) => ({
         question: o,
         value: editedRow[k][o],
       }));
@@ -92,7 +92,7 @@ const MainTable = ({
   };
 
   // Modify column config to add render function
-  const modifyColumnRender = current.columns.map((col, idx) => {
+  const modifyColumnRender = current.columns.map((col) => {
     if (current.values.includes(col.key)) {
       return {
         ...col,

@@ -36,7 +36,7 @@ const mapAll = (properties) => {
   };
 };
 
-const mapper = Object.keys(window.page_config).map((v, k) => {
+const mapper = Object.keys(window.page_config).map((v) => {
   return {
     name: v,
     ...mapAll(window.page_config[v]),

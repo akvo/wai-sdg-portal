@@ -25,14 +25,14 @@ const BarStack = (data, chartTitle, extra) => {
   // Custom Axis Title
   const { xAxisTitle, yAxisTitle } = axisTitle(extra);
 
-  let stacked = data[0].stack.map((x) => ({ name: x.name, color: x.color }));
-  let legends = stacked.map((s, si) => ({
+  const stacked = data[0].stack.map((x) => ({ name: x.name, color: x.color }));
+  const legends = stacked.map((s, si) => ({
     name: s.name,
     itemStyle: { color: s.color || Color.color[si] },
   }));
-  let xAxis = uniq(data.map((x) => x.name));
-  let series = stacked.map((s, si) => {
-    const temp = data.map((d, di) => {
+  const xAxis = uniq(data.map((x) => x.name));
+  const series = stacked.map((s, si) => {
+    const temp = data.map((d) => {
       const val = d.stack.find((c) => c.name === s.name);
       return {
         name: val?.name || null,
@@ -60,7 +60,7 @@ const BarStack = (data, chartTitle, extra) => {
       data: temp,
     };
   });
-  let option = {
+  const option = {
     ...Color,
     title: {
       ...Title,

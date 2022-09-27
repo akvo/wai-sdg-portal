@@ -28,12 +28,12 @@ const JMPBarStack = (data, chartTitle, extra) => {
     return NoData;
   }
   stacked = stacked.stack.map((x) => ({ name: x.name, color: x.color }));
-  let legends = stacked.map((s, si) => ({
+  const legends = stacked.map((s, si) => ({
     name: s.name,
     itemStyle: { color: s.color || Color.color[si] },
   }));
-  let xAxis = uniq(data.map((x) => x.name));
-  let series = stacked.map((s) => {
+  const xAxis = uniq(data.map((x) => x.name));
+  const series = stacked.map((s) => {
     const temp = data.map((d) => {
       const val = d.stack.find((c) => c.name === s.name);
       const opacity = selectedAdministration === d.id ? 1 : 0.5;
@@ -57,7 +57,7 @@ const JMPBarStack = (data, chartTitle, extra) => {
       data: temp,
     };
   });
-  let option = {
+  const option = {
     ...Color,
     title: {
       ...Title,

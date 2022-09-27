@@ -61,7 +61,7 @@ const MainHistoryChart = ({ data, question }) => {
           }
           setHistoryChartData(data);
         })
-        .catch((err) => {
+        .catch(() => {
           setHistoryChartData([]);
         })
         .finally(() => {

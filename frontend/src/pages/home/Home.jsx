@@ -161,7 +161,7 @@ const Home = () => {
   useEffect(() => {
     if (!isEmpty(overviews) && isEmpty(overviewData)) {
       const apiCall = overviews?.map(({ form_id, question, option }) => {
-        let url = `chart/overviews/${form_id}/${question}/${option}`;
+        const url = `chart/overviews/${form_id}/${question}/${option}`;
         return api.get(url);
       });
       Promise.all(apiCall)
@@ -244,21 +244,19 @@ const Home = () => {
               justify="space-around"
               wrap={true}
             >
-              {datasetsInPortal.map(
-                ({ title, description, readmore, explore }) => (
-                  <Col
-                    key={title}
-                    sm={24}
-                    md={18}
-                    lg={7}
-                  >
-                    <Card className="dataset-item">
-                      <h2>{title}</h2>
-                      <p>{description}</p>
-                    </Card>
-                  </Col>
-                )
-              )}
+              {datasetsInPortal.map(({ title, description }) => (
+                <Col
+                  key={title}
+                  sm={24}
+                  md={18}
+                  lg={7}
+                >
+                  <Card className="dataset-item">
+                    <h2>{title}</h2>
+                    <p>{description}</p>
+                  </Card>
+                </Col>
+              ))}
             </Row>
           </Col>
         </Row>

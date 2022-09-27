@@ -18,18 +18,17 @@ const ProtectedContent = ({ component: Component, ...rest }) => {
               {...props}
             />
           );
-        } else {
-          return (
-            <Redirect
-              to={{
-                pathname: '/not-authorized',
-                state: {
-                  from: props.location,
-                },
-              }}
-            />
-          );
         }
+        return (
+          <Redirect
+            to={{
+              pathname: '/not-authorized',
+              state: {
+                from: props.location,
+              },
+            }}
+          />
+        );
       }}
     />
   );

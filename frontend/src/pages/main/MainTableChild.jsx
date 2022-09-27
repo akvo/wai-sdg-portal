@@ -31,7 +31,7 @@ const HistoryTable = ({ record, data }) => {
   const [historyData, setHistoryData] = useState(null);
   useEffect(() => {
     if (historyData === null) {
-      let url = `history/${data.key}/${record.name.props.question.id}`;
+      const url = `history/${data.key}/${record.name.props.question.id}`;
       api.get(url).then((res) => {
         const data = res.data.map((x, i) => {
           if (record.name.props.question.type !== 'multiple_option') {

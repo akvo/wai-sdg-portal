@@ -105,8 +105,8 @@ const ManageData = ({ handleTabClick }) => {
     UIState.update((e) => {
       e.reloadData = false;
     });
-    const savedValues = Object.keys(editedRow).map((k, v) => {
-      const values = Object.keys(editedRow[k]).map((o, v) => ({
+    const savedValues = Object.keys(editedRow).map((k) => {
+      const values = Object.keys(editedRow[k]).map((o) => ({
         question: o,
         value: editedRow[k][o],
       }));
@@ -151,7 +151,7 @@ const ManageData = ({ handleTabClick }) => {
         });
         return res;
       })
-      .catch((err) => {
+      .catch(() => {
         notification.error({ message: notificationText?.errorText });
       })
       .finally(() => {
@@ -177,7 +177,7 @@ const ManageData = ({ handleTabClick }) => {
         });
         return res;
       })
-      .catch((err) => {
+      .catch(() => {
         notification.error({ message: notificationText?.errorText });
       })
       .finally(() => {
@@ -196,14 +196,14 @@ const ManageData = ({ handleTabClick }) => {
     url = generateAdvanceFilterURL(advanceSearchValue, url);
     api
       .get(url)
-      .then((d) => {
+      .then(() => {
         notification.success({
           message: notificationText?.dataExportCreatedText,
         });
         setExportLoading(false);
         handleTabClick('exports');
       })
-      .catch((error) => {
+      .catch(() => {
         setExportLoading(false);
       });
   };

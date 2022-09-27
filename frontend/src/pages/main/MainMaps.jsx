@@ -29,7 +29,7 @@ const higlightColor = '#84b4cc';
 const noDataColor = '#d3d3d3';
 
 const fetchCustomColor = (question, selectableMarkerDropdown, qid) => {
-  let findQuestion = question.find((q) => q.id === qid);
+  const findQuestion = question.find((q) => q.id === qid);
   // map color coded option from selectable marker option setting
   if (selectableMarkerDropdown && findQuestion?.option) {
     const findFromSetting = selectableMarkerDropdown?.find((x) => x.id === qid);
@@ -114,8 +114,8 @@ const Markers = ({
   return data.map(({ id, geo, marker, name, marker_hover }) => {
     let hovered = id === rowHovered;
     let fill = '#F00';
-    let r = 3;
-    let stroke = '#fff';
+    const r = 3;
+    const stroke = '#fff';
     if (colors) {
       const option = colors.find(
         (c) => c.name?.toLowerCase() === marker?.toLowerCase()
@@ -266,7 +266,7 @@ const ShapeLegend = ({
             ? ' legend-selected'
             : '')
         }
-        onClick={(e) => {
+        onClick={() => {
           filterColor === null
             ? setFilterColor(updatedColorRange[i])
             : filterColor === updatedColorRange[i]
@@ -316,7 +316,7 @@ const ShapeLegend = ({
                     ? higlightColor
                     : updatedColorRange[range.length],
               }}
-              onClick={(e) => {
+              onClick={() => {
                 filterColor === null
                   ? setFilterColor(updatedColorRange[range.length])
                   : filterColor === updatedColorRange[range.length]
@@ -390,7 +390,7 @@ const MarkerLegend = ({
   );
 };
 
-const MainMaps = ({ question, current, mapHeight = 350 }) => {
+const MainMaps = ({ question, current }) => {
   const {
     user,
     administration,
@@ -485,7 +485,7 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
           let data = res.data;
           if (shapeQuestion?.type === 'option' && calculatedBy) {
             // fetch option value to calculated from question options
-            let optionToCalculated =
+            const optionToCalculated =
               calculatedBy === 'all' || !calculatedBy.length
                 ? option
                 : option.filter((opt) =>

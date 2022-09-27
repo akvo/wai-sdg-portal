@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 const { notificationText } = window.i18n;
 
 const Forms = ({ match }) => {
-  let history = useHistory();
+  const history = useHistory();
   const [loading, setLoading] = useState(true);
   const [forms, setForms] = useState([]);
   const [offset, setOffset] = useState(0);
