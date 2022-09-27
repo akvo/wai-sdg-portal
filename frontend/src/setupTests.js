@@ -5,6 +5,9 @@
 import '@testing-library/jest-dom';
 import 'jest-canvas-mock';
 
+jest.mock('leaflet');
+// jest.mock('axios');
+
 global.matchMedia =
   global.matchMedia ||
   function () {

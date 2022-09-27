@@ -1,8 +1,11 @@
 import { render, screen } from '@testing-library/react';
-import App from './App';
+import TestApp from './TestApp';
+import '@testing-library/jest-dom';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/login or signup/i);
-  expect(linkElement).toBeInTheDocument();
+describe('App', () => {
+  test('test if the login button exists', () => {
+    render(<TestApp />);
+    const linkElement = screen.getByText(/Login or Signup/i);
+    expect(linkElement).toBeInTheDocument();
+  });
 });
