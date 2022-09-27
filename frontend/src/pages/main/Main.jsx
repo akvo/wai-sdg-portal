@@ -29,7 +29,7 @@ import isEmpty from 'lodash/isEmpty';
 import config from '../../config';
 import moment from 'moment';
 
-const { mainText } = window?.i18n;
+const { mainText } = window.i18n;
 
 const NameWithInfo = ({ record, current, question }) => {
   const { id, name, created_by, created, updated, updated_by, answer } = record;

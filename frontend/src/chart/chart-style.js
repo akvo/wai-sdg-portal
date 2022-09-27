@@ -1,6 +1,6 @@
 import upperFirst from 'lodash/upperFirst';
 
-const { chartText } = window?.i18n;
+const chartText = window?.i18n?.chartText;
 
 export const popupFormatter = (params) => {
   var value = (params.value + '').split('.');
@@ -146,7 +146,7 @@ export const Title = {
 
 export const axisTitle = (extra) => {
   // Custom Axis Title
-  const { x, y } = extra?.axisTitle;
+  const { x, y } = extra.axisTitle;
   let xAxisTitle = Array.isArray(x)
     ? x
         ?.filter((it) => it)

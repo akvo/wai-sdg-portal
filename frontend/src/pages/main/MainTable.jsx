@@ -18,7 +18,7 @@ import { DataUpdateMessage } from './../../components/Notifications';
 import isEmpty from 'lodash/isEmpty';
 import intersection from 'lodash/intersection';
 
-const { buttonText, adminText } = window?.i18n;
+const { buttonText, adminText } = window.i18n;
 
 const getRowClassName = (record, editedRow) => {
   const edited = editedRow?.[record.key];
@@ -34,7 +34,6 @@ const MainTable = ({
   current,
   loading,
   data,
-  dataSource,
   questionGroup,
   total,
   changePage,

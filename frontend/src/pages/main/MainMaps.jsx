@@ -481,7 +481,7 @@ const MainMaps = ({ question, current, mapHeight = 350 }) => {
         .get(url)
         .then((res) => {
           const { option } = shapeQuestion;
-          const { calculatedBy } = current.maps?.shape;
+          const { calculatedBy } = current.maps.shape;
           let data = res.data;
           if (shapeQuestion?.type === 'option' && calculatedBy) {
             // fetch option value to calculated from question options

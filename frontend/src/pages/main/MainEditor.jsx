@@ -17,7 +17,7 @@ import { UIState } from '../../state/ui';
 
 const { Option } = Select;
 const { Text } = Typography;
-const { buttonText } = window?.i18n;
+const { buttonText } = window.i18n;
 const defInputNumberPopoverState = { visible: [], content: '' };
 
 const MainEditor = ({ value, question, edited, dataPointId }) => {

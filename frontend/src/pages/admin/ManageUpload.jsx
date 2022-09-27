@@ -25,10 +25,10 @@ const allowedFiles = [
   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
 ];
 const regExpFilename = /filename="(?<filename>.*)"/;
-const { notificationText, adminText, buttonText, formText } = window?.i18n;
+const { notificationText, adminText, buttonText, formText } = window.i18n;
 
 const checkJobs = (id, filename) => {
-  axios.get(`/worker/jobs/status/${id}`).then(function (res) {
+  axios.get(`/worker/jobs/status/${id}`).then((res) => {
     const status = res.data.status;
     if (status === 'on_progress' || status === 'pending') {
       UIState.update((e) => {

@@ -38,7 +38,7 @@ import union from 'lodash/union';
 import xor from 'lodash/xor';
 import config from '../../config';
 
-const { notificationText, buttonText, adminText } = window?.i18n;
+const { notificationText, buttonText, adminText } = window.i18n;
 
 const getRowClassName = (record, editedRow) => {
   const edited = editedRow?.[record.key];

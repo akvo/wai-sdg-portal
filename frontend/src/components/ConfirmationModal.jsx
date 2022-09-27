@@ -7,7 +7,7 @@ import {
 } from '@ant-design/icons';
 
 const { submitText, deleteText, saveText, deleteUserText } =
-  window?.i18n?.confirmationModalText;
+  window.i18n.confirmationModalText;
 
 const modalProps = (type, secureDelete, setSecureDelete) => {
   switch (type) {

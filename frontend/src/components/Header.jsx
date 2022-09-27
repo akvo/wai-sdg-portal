@@ -27,9 +27,9 @@ const {
   activityLogText,
   recentActivityLogText,
   attachmentText,
-} = window?.i18n?.header;
+} = window.i18n.header;
 
-const { loginText, logoutText } = window?.i18n?.navigation;
+const { loginText, logoutText } = window.i18n.navigation;
 
 const IconList = ({ type }) => {
   if (type === 'warning') {

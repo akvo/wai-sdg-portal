@@ -11,7 +11,7 @@ import { useHistory } from 'react-router-dom';
 import './admin.scss';
 
 const { TabPane } = Tabs;
-const { adminText } = window?.i18n;
+const { adminText } = window.i18n;
 
 api
   .get('/organisation')

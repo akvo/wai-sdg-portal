@@ -17,7 +17,7 @@ import sortBy from 'lodash/sortBy';
 import flatten from 'lodash/flatten';
 
 const { Panel } = Collapse;
-const { mainText, buttonText } = window?.i18n;
+const { mainText, buttonText } = window.i18n;
 const { advancedFilterFeature } = window.features;
 
 const AdvanceSearch = ({

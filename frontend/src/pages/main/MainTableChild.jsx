@@ -7,7 +7,7 @@ import api from '../../util/api';
 import { getLocationName } from '../../util/utils';
 import { titleCase } from '../../util/utils.js';
 
-const { mainTableChildText } = window?.i18n?.tableText;
+const { mainTableChildText } = window.i18n.tableText;
 
 const changeColBackground = (dt, edited) => {
   if (edited?.[dt.props.question.id]) {

@@ -11,7 +11,7 @@ import upperFirst from 'lodash/upperFirst';
 
 const level2 = window.levels[0];
 const { jumbotron, datasetsInPortal, overviews } = window.landing_config;
-const { overviewSectionTitle, datasetSectionTitle } = window?.i18n?.home;
+const { overviewSectionTitle, datasetSectionTitle } = window.i18n.home;
 
 const OverviewInfo = ({ item, order }) => {
   const { type, category, data } = item;
@@ -167,7 +167,7 @@ const Home = () => {
       Promise.all(apiCall)
         .then((res) => {
           const allData = res?.map((r) => {
-            const { form, question, question_name, data } = r?.data;
+            const { form, question, question_name, data } = r.data;
             // find overview config
             const overview = overviews?.find(
               (x) => x.form_id === form && x.question === question
@@ -218,10 +218,7 @@ const Home = () => {
           justify="space-between"
           wrap={true}
         >
-          <div
-            lg={24}
-            className="jumbotron-overlay-container"
-          >
+          <div className="jumbotron-overlay-container">
             <JumbotronInfo jumbotron={jumbotron} />
           </div>
           <Col lg={24}>

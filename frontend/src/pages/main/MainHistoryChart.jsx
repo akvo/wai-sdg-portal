@@ -8,10 +8,10 @@ import api from '../../util/api';
 import Chart from '../../chart';
 import isEmpty from 'lodash/isEmpty';
 
-const { mainText } = window?.i18n;
+const { mainText } = window.i18n;
 const { Option } = Select;
 
-const MainHistoryChart = ({ current, data, question }) => {
+const MainHistoryChart = ({ data, question }) => {
   const { historyChart } = UIState.useState((s) => s);
   const { disabled } = historyChart;
   const [historyChartData, setHistoryChartData] = useState([]);

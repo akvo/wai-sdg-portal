@@ -5,7 +5,7 @@ import { Row, Col, Affix, notification, Progress } from 'antd';
 import api from '../util/api';
 import { useHistory } from 'react-router-dom';
 
-const { notificationText } = window?.i18n;
+const { notificationText } = window.i18n;
 
 const Forms = ({ match }) => {
   let history = useHistory();
@@ -36,7 +36,7 @@ const Forms = ({ match }) => {
           history.goBack();
         }, 3000);
       })
-      .catch((err) => {
+      .catch(() => {
         notification.error({
           message: notificationText?.errorText,
         });

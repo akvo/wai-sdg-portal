@@ -21,7 +21,7 @@ import { UIState } from '../../state/ui';
 import ConfirmationModal from '../../components/ConfirmationModal';
 
 const { notificationText, buttonText, adminText, formText, tableText } =
-  window?.i18n;
+  window.i18n;
 
 const ManageUser = () => {
   const { manageUserTableText } = tableText;

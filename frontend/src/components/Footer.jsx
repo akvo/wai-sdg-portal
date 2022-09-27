@@ -4,7 +4,7 @@ import { FacebookFilled, TwitterOutlined } from '@ant-design/icons';
 import { UIState } from '../state/ui';
 import { Link } from 'react-router-dom';
 
-const { footer } = window?.i18n;
+const { footer } = window.i18n;
 
 /* ## FIXME: Enable once footer text is ready
 const FooterContent = ({ title, text }) => {

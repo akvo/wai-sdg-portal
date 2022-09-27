@@ -6,7 +6,7 @@ import { startCase } from 'lodash';
 
 const navigationOptions = window.navigation_config;
 const sitename = window.site_name;
-const { adminText, aboutText } = window?.i18n?.navigation;
+const { adminText, aboutText } = window.i18n.navigation;
 
 const Navigation = () => {
   const { page, user } = UIState.useState((c) => c);

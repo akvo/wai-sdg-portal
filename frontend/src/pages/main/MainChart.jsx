@@ -13,7 +13,7 @@ import reverse from 'lodash/reverse';
 
 const { chartFeature } = window.features;
 const levels = window.map_config?.shapeLevels?.length;
-const { mainText, chartText } = window?.i18n;
+const { mainText, chartText } = window.i18n;
 
 const MainChart = ({ current, question }) => {
   const { user, selectedAdministration, advanceSearchValue, administration } =

@@ -15,7 +15,7 @@ import isEmpty from 'lodash/isEmpty';
 import upperFirst from 'lodash/upperFirst';
 import sumBy from 'lodash/sumBy';
 
-const { chartText } = window?.i18n;
+const chartText = window?.i18n?.chartText;
 
 const Bar = (data, chartTitle, extra) => {
   if (isEmpty(data) || !data) {

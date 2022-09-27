@@ -15,11 +15,11 @@ import { UserOutlined } from '@ant-design/icons';
 import { NonActiveUserMessage } from './Notifications';
 import api from '../util/api';
 
-const { notificationText, formText, buttonText, mainText } = window?.i18n;
+const { notificationText, formText, buttonText, mainText } = window.i18n;
 const fieldValues = ['email', 'first_name', 'last_name', 'organisation'];
 const { Option } = Select;
 
-const RegistrationPopup = ({ user, logout, loginWithPopup }) => {
+const RegistrationPopup = ({ user, logout }) => {
   const [form] = Form.useForm();
   const [formLoading, setFormLoading] = useState(true);
   const [confirmAwait, setConfirmAwait] = useState(false);

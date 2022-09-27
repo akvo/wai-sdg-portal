@@ -1,4 +1,4 @@
-const { notificationText } = window?.i18n;
+const { notificationText } = window.i18n;
 
 export const NonActiveUserMessage = ({ user }) => {
   return (

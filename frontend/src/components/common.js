@@ -7,7 +7,7 @@ const navigationOptions = window.navigation_config;
 const levels = window.levels;
 const { Option, OptGroup } = Select;
 
-const { buttonText, mainText, notificationText } = window?.i18n;
+const { buttonText, mainText, notificationText } = window.i18n;
 
 export const SelectLevel = ({ setPage, setSelectedRow }) => {
   const { selectedAdministration, administrationByAccess, user } =

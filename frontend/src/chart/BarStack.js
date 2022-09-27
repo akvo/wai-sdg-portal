@@ -15,7 +15,7 @@ import uniq from 'lodash/uniq';
 import isEmpty from 'lodash/isEmpty';
 import upperFirst from 'lodash/upperFirst';
 
-const { chartText } = window?.i18n;
+const chartText = window?.i18n?.chartText;
 
 const BarStack = (data, chartTitle, extra) => {
   if (isEmpty(data) || !data) {

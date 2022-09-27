@@ -2,7 +2,7 @@ import React from 'react';
 import { Result, Button } from 'antd';
 import { InfoCircleFilled } from '@ant-design/icons';
 
-const { buttonText, errorPageText } = window?.i18n;
+const { buttonText, errorPageText } = window.i18n;
 
 const ErrorIcon = () => <InfoCircleFilled style={{ color: '#ff4d4f' }} />;
 

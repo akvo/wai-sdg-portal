@@ -10,7 +10,7 @@ import { UIState } from '../../state/ui';
 import upperFirst from 'lodash/upperFirst';
 import { getLocationName } from '../../util/utils';
 
-const { adminText, buttonText } = window?.i18n;
+const { adminText, buttonText } = window.i18n;
 
 const ItemDescription = ({ created, tags, adminid }) => {
   const { administration } = UIState.useState((e) => e);
