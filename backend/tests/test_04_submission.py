@@ -84,6 +84,10 @@ class TestSubmissionRoutes():
                         }]
                     }],
                     "dependency": None,
+                    "tooltip": None,
+                    "translations": None,
+                    "api": None,
+                    "addons": None
                 }, {
                     "form": 1,
                     "id": 2,
@@ -96,6 +100,10 @@ class TestSubmissionRoutes():
                     "rule": None,
                     "option": [],
                     "dependency": None,
+                    "tooltip": None,
+                    "translations": None,
+                    "api": None,
+                    "addons": None
                 }, {
                     "form": 1,
                     "id": 3,
@@ -108,6 +116,10 @@ class TestSubmissionRoutes():
                     "rule": None,
                     "option": [],
                     "dependency": None,
+                    "tooltip": None,
+                    "translations": None,
+                    "api": None,
+                    "addons": None
                 }, {
                     "form": 1,
                     "id": 4,
@@ -123,6 +135,10 @@ class TestSubmissionRoutes():
                         "id": 1,
                         "options": ["Option 1"]
                     }],
+                    "tooltip": None,
+                    "translations": None,
+                    "api": None,
+                    "addons": None
                 }]
             }]
         }

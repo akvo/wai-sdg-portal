@@ -205,6 +205,12 @@ def save_webform(session: Session, json_form: dict, form_id: int = None):
         for q in qg.get('question'):
             # add question, meta?
             dependency = q.get('dependency') if "dependency" in q else None
+            # get addons
+            addons = {}
+            if "allowOther" in q:
+                addons.update({'allowOther': q.get('allowOther')})
+            if "allowOtherText" in q:
+                addons.update({'allowOtherText': q.get('allowOtherText')})
             if not form_id:
                 crud_question.add_question(
                     session=sessionUsed,
@@ -218,6 +224,10 @@ def save_webform(session: Session, json_form: dict, form_id: int = None):
                     required=q.get('required'),
                     rule=q.get('rule') if "rule" in q else None,
                     dependency=dependency,
+                    tooltip=q.get('tooltip'),
+                    translations=q.get('translations'),
+                    api=q.get('api'),
+                    addons=addons if addons else None,
                     option=q.get('option') if "option" in q else [])
             if form_id:
                 crud_question.update_question(
@@ -232,6 +242,10 @@ def save_webform(session: Session, json_form: dict, form_id: int = None):
                     required=q.get('required'),
                     rule=q.get('rule') if "rule" in q else None,
                     dependency=dependency,
+                    tooltip=q.get('tooltip'),
+                    translations=q.get('translations'),
+                    api=q.get('api'),
+                    addons=addons if addons else None,
                     option=q.get('option') if "option" in q else [])
 
 

@@ -45,6 +45,12 @@ for file in sorted(files):
             translations=qg.get('translations'))
         print(f"Question Group: {question_group.name}")
         for i, q in enumerate(qg["questions"]):
+            # get addons
+            addons = {}
+            if "allowOther" in q:
+                addons.update({'allowOther': q.get('allowOther')})
+            if "allowOtherText" in q:
+                addons.update({'allowOtherText': q.get('allowOtherText')})
             question = crud_question.add_question(
                 session=session,
                 name=q["question"],
@@ -57,6 +63,10 @@ for file in sorted(files):
                 required=q["required"] if "required" in q else False,
                 rule=q["rule"] if "rule" in q else None,
                 dependency=q["dependency"] if "dependency" in q else None,
+                tooltip=q.get('tooltip'),
+                translations=q.get('translations'),
+                api=q.get('api'),
+                addons=addons if addons else None,
                 option=q["options"] if "options" in q else [])
             print(f"{i}.{question.name}")
     print("------------------------------------------")
