@@ -7,6 +7,12 @@ import api from '../../util/api';
 
 const { buttonText } = window.i18n;
 
+const defaultQuestion = {
+  type: 'text',
+  name: 'New Question',
+  required: true,
+};
+
 const ManageForm = () => {
   const [form, setForm] = useState(null);
   const [initialValue, setInitialValue] = useState({});
@@ -52,6 +58,16 @@ const ManageForm = () => {
       <Divider />
       <WebformEditor
         initialValue={initialValue}
+        defaultQuestion={defaultQuestion}
+        limitQuestionType={[
+          'text',
+          'number',
+          'option',
+          'multiple_option',
+          'date',
+          'geo',
+          'cascade',
+        ]}
         settingCascadeURL={[
           {
             id: 1,
