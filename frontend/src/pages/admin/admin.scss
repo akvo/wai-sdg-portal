@@ -37,6 +37,15 @@
       }
     }
 
+    .arfe-container {
+      margin-left: -20px;
+      margin-right: -20px;
+
+      .ant-card-bordered {
+        border: none !important;
+      }
+    }
+
     .card-content-container {
       padding: 16px 24px 24px 24px;
       background: #fafafa;

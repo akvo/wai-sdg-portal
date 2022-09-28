@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Row, Col, Button, Space } from 'antd';
+import { Row, Col, Button, Space, Divider } from 'antd';
 import WebformEditor from 'akvo-react-form-editor';
 import 'akvo-react-form-editor/dist/index.css';
 import { DropdownNavigation } from '../../components/common';
@@ -49,9 +49,17 @@ const ManageForm = () => {
           </Col>
         </Row>
       </div>
-      <div className="upload-wrapper">
-        <WebformEditor initialValue={initialValue} />
-      </div>
+      <Divider />
+      <WebformEditor
+        initialValue={initialValue}
+        settingCascadeURL={[
+          {
+            id: 1,
+            name: 'administration',
+            endpoint: '/api/administration',
+          },
+        ]}
+      />
     </div>
   );
 };
