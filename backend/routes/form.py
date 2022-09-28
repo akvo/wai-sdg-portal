@@ -65,8 +65,16 @@ def get_form_definition(req: Request, id: int, session: Session,
     form = crud.get_form_by_id(session=session, id=id)
     project = crud_question.get_project_question(session=session, form=id)
     form = form.serialize
+    # transform default language
+    if "default_language" in form:
+        form.update({"defaultLanguage": form["default_language"]})
+        del form["default_language"]
     form["question_group"] = [qg.serialize for qg in form["question_group"]]
     for qg in form["question_group"]:
+        # transform repeat text
+        if "repeat_text" in qg:
+            qg.update({"repeatText": qg["repeat_text"]})
+            del qg["repeat_text"]
         qg["question"] = [q.serialize for q in qg["question"]]
         for q in qg["question"]:
             # check if has answer here
@@ -75,6 +83,11 @@ def get_form_definition(req: Request, id: int, session: Session,
                     session=session, question=q.get('id'))
                 if answer:
                     q.update({"disableDelete": True})
+            # extract addons value
+            if q.get('addons'):
+                q.update(q["addons"])
+            if "addons" in q:
+                del q["addons"]
             if q["type"] == QuestionType.administration:
                 q.update({"option": "administration"})
                 q.update({"type": "cascade"})
@@ -98,6 +111,11 @@ def get_form_definition(req: Request, id: int, session: Session,
                             session=session, id=data_id)
                         o.update({"id": data_id, "name": data_name})
                 q.update({"option": option, "type": "option"})
+        # order question by question order
+        qg["question"] = sorted(qg["question"], key=lambda x: x["order"])
+    # order question group by question group order
+    form["question_group"] = sorted(
+        form["question_group"], key=lambda x: x["order"])
     administration = crud_administration.get_parent_administration(
         session=session,
         access=None if user.role == UserRole.admin else access)
