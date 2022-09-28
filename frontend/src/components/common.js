@@ -83,6 +83,7 @@ export const DropdownNavigation = ({ value, onChange }) => {
       value={[value]}
       onChange={onChange}
       className="filter-select"
+      placeholder="Select Form"
     >
       {navigationOptions.map((item, i) => {
         return item.childrens ? (
