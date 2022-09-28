@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Row, Col, Button, Space, Divider } from 'antd';
+import { Row, Col, Button, Space, Divider, notification } from 'antd';
 import WebformEditor from 'akvo-react-form-editor';
 import 'akvo-react-form-editor/dist/index.css';
 import { DropdownNavigation } from '../../components/common';
@@ -22,6 +22,24 @@ const ManageForm = () => {
     api.get(`/webform/${formId}?edit=true`).then((res) => {
       setInitialValue(res.data);
     });
+  };
+
+  const onSaveForm = (values) => {
+    // if initialValue defined => edit
+    if (formId && Object.keys(initialValue).length) {
+      api
+        .put(`/webform/${formId}`, values)
+        .then(() =>
+          notification.success({
+            message: 'Form updated successfully',
+          })
+        )
+        .catch(() =>
+          notification.success({
+            message: 'Oops, something went wrong',
+          })
+        );
+    }
   };
 
   return (
@@ -57,6 +75,7 @@ const ManageForm = () => {
       </div>
       <Divider />
       <WebformEditor
+        onSave={onSaveForm}
         initialValue={initialValue}
         defaultQuestion={defaultQuestion}
         limitQuestionType={[

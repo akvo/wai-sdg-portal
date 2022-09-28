@@ -198,6 +198,7 @@ def save_webform(session: Session, json_form: dict, form_id: int = None):
                 id=qg.get('id'),
                 form=form_id,
                 name=qg.get('name'),
+                order=qg.get('order'),
                 description=qg.get('description'),
                 repeatable=qg.get('repeatable'),
                 repeat_text=qg.get('repeatText'),
