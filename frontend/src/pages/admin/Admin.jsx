@@ -75,47 +75,45 @@ const Admin = ({ match }) => {
             tabBarGutter={0}
             activeKey={page}
             onTabClick={handleTabClick}
+            className="admin-tabs-wrapper"
           >
             <TabPane
-              tab={tabManageDataText}
+              tab={<div className="tab-pane-text">{tabManageDataText}</div>}
               key="manage-data"
-            >
-              {page === 'manage-data' && (
-                <ManageData
-                  handleTabClick={handleTabClick}
-                  currentTab={page}
-                />
-              )}
-            </TabPane>
+            />
             <TabPane
-              tab={tabExportText}
+              tab={<div className="tab-pane-text">{tabExportText}</div>}
               key="exports"
-            >
-              {page === 'exports' && <Export />}
-            </TabPane>
+            />
             <TabPane
-              tab={tabDataUploadText}
+              tab={<div className="tab-pane-text">{tabDataUploadText}</div>}
               key="data-upload"
-            >
-              {page === 'data-upload' && <ManageUpload />}
-            </TabPane>
+            />
             {user?.role === 'admin' && (
               <TabPane
-                tab={tabManageUserText}
+                tab={<div className="tab-pane-text">{tabManageUserText}</div>}
                 key="manage-users"
-              >
-                {page === 'manage-users' && <ManageUser />}
-              </TabPane>
+              />
             )}
             {user?.role === 'admin' && (
               <TabPane
-                tab={tabManageFormText}
+                tab={<div className="tab-pane-text">{tabManageFormText}</div>}
                 key="manage-form"
-              >
-                {page === 'manage-form' && <ManageForm />}
-              </TabPane>
+              />
             )}
           </Tabs>
+        </div>
+        <div className="card-content-container">
+          {page === 'manage-data' && (
+            <ManageData
+              handleTabClick={handleTabClick}
+              currentTab={<div className="tab-pane-text">{page}</div>}
+            />
+          )}
+          {page === 'exports' && <Export />}
+          {page === 'data-upload' && <ManageUpload />}
+          {user?.role === 'admin' && page === 'manage-users' && <ManageUser />}
+          {user?.role === 'admin' && page === 'manage-form' && <ManageForm />}
         </div>
       </Col>
     </Row>

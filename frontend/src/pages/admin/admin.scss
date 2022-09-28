@@ -23,10 +23,10 @@
 
     .card-container {
       .ant-tabs-nav-list {
-        .ant-tabs-tab {
-          font-size: 20px;
+        .tab-pane-text {
+          font-size: 18px;
           font-weight: 500;
-          padding: 10px 40px;
+          padding: 6px 10px;
         }
 
         .ant-tabs-tab.ant-tabs-tab-active {
@@ -37,13 +37,18 @@
       }
     }
 
+    .card-content-container {
+      padding: 16px 24px 24px 24px;
+      background: #fafafa;
+    }
+
     .card-container > .ant-tabs-card .ant-tabs-content {
-      min-height: 200px;
+      // min-height: 200px;
       margin-top: -16px;
     }
 
     .card-container > .ant-tabs-card .ant-tabs-content > .ant-tabs-tabpane {
-      padding: 24px;
+      padding: 8px;
       background: #fafafa;
     }
 
