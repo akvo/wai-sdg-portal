@@ -5,18 +5,6 @@
 import '@testing-library/jest-dom';
 import 'jest-canvas-mock';
 
-jest.mock('leaflet');
-// jest.mock('axios');
-
-global.matchMedia =
-  global.matchMedia ||
-  function () {
-    return {
-      addListener: jest.fn(),
-      removeListener: jest.fn(),
-    };
-  };
-
 window.site_name = 'WAI Ethiopia';
 
 window.levels = ['Woreda', 'Kebele'];
