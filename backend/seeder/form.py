@@ -25,15 +25,32 @@ for table in ["form", "question_group", "question", "option"]:
 for file in sorted(files):
     with open(f'{file_path}{file}') as json_file:
         json_form = json.load(json_file)
-    form = crud_form.add_form(session=session,
-                              name=json_form["form"],
-                              id=json_form["id"])
+    form = crud_form.add_form(
+        session=session,
+        name=json_form["form"],
+        id=json_form["id"],
+        description=json_form.get('description'),
+        default_language=json_form.get('defaultLanguage'),
+        languages=json_form.get('languages'),
+        translations=json_form.get('translations'))
     print(f"Form: {form.name}")
     for qg in json_form["question_groups"]:
         question_group = crud_question_group.add_question_group(
-            session=session, name=qg["question_group"], form=form.id)
+            session=session,
+            name=qg["question_group"],
+            form=form.id,
+            description=qg.get('description'),
+            repeatable=qg.get('repeatable'),
+            repeat_text=qg.get('repeatText'),
+            translations=qg.get('translations'))
         print(f"Question Group: {question_group.name}")
         for i, q in enumerate(qg["questions"]):
+            # get addons
+            addons = {}
+            if "allowOther" in q:
+                addons.update({'allowOther': q.get('allowOther')})
+            if "allowOtherText" in q:
+                addons.update({'allowOtherText': q.get('allowOtherText')})
             question = crud_question.add_question(
                 session=session,
                 name=q["question"],
@@ -46,6 +63,10 @@ for file in sorted(files):
                 required=q["required"] if "required" in q else False,
                 rule=q["rule"] if "rule" in q else None,
                 dependency=q["dependency"] if "dependency" in q else None,
+                tooltip=q.get('tooltip'),
+                translations=q.get('translations'),
+                api=q.get('api'),
+                addons=addons if addons else None,
                 option=q["options"] if "options" in q else [])
             print(f"{i}.{question.name}")
     print("------------------------------------------")

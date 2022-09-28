@@ -34,6 +34,8 @@ def post(req: Request,
          order: Optional[str] = None,
          color: Optional[str] = None,
          score: Optional[str] = None,
+         code: Optional[str] = None,
+         translations: Optional[List[dict]] = None,
          session: Session = Depends(get_session),
          credentials: credentials = Depends(security)):
     verify_admin(req.state.authenticated, session)
@@ -47,7 +49,9 @@ def post(req: Request,
                              name=name,
                              order=order,
                              color=color,
-                             score=score)
+                             score=score,
+                             code=code,
+                             translations=translations)
     return option.serializeWithId
 
 
@@ -62,6 +66,8 @@ def update_by_id(req: Request,
                  order: Optional[str] = None,
                  color: Optional[str] = None,
                  score: Optional[str] = None,
+                 code: Optional[str] = None,
+                 translations: Optional[List[dict]] = None,
                  session: Session = Depends(get_session),
                  credentials: credentials = Depends(security)):
     verify_admin(req.state.authenticated, session)
@@ -70,5 +76,7 @@ def update_by_id(req: Request,
                                 name=name,
                                 order=order,
                                 color=color,
-                                score=score)
+                                score=score,
+                                code=code,
+                                translations=translations)
     return option.serializeWithId

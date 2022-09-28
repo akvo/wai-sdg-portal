@@ -1,12 +1,13 @@
 # Please don't use **kwargs
 # Keep the code clean and CLEAR
 
-from typing import Optional
+from typing import Optional, List
 from typing_extensions import TypedDict
 from pydantic import BaseModel
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy import Integer, String
 from db.connection import Base
+import sqlalchemy.dialects.postgresql as pg
 
 
 class OptionDict(TypedDict):
@@ -14,6 +15,8 @@ class OptionDict(TypedDict):
     order: Optional[int] = None
     color: Optional[str] = None
     score: Optional[int] = None
+    code: Optional[str] = None
+    translations: Optional[List[dict]] = None
 
 
 class OptionDictWithId(TypedDict):
@@ -22,6 +25,8 @@ class OptionDictWithId(TypedDict):
     order: Optional[int] = None
     color: Optional[str] = None
     score: Optional[int] = None
+    code: Optional[str] = None
+    translations: Optional[List[dict]] = None
 
 
 class Option(Base):
@@ -32,16 +37,24 @@ class Option(Base):
     order = Column(Integer, nullable=True)
     color = Column(String, nullable=True)
     score = Column(Integer, nullable=True)
+    code = Column(String, nullable=True)
+    translations = Column(pg.ARRAY(pg.JSONB), nullable=True)
 
     def __init__(self,
                  name: str,
+                 id: Optional[int] = None,
                  order: Optional[int] = None,
                  color: Optional[str] = None,
-                 score: Optional[int] = None):
+                 score: Optional[int] = None,
+                 code: Optional[str] = None,
+                 translations: Optional[List[dict]] = None):
+        self.id = id
         self.name = name
         self.order = order
         self.color = color
         self.score = score
+        self.code = code
+        self.translations = translations
 
     def __repr__(self) -> int:
         return f"<Option {self.id}>"
@@ -52,7 +65,9 @@ class Option(Base):
             "name": self.name,
             "order": self.order,
             "color": self.color,
-            "score": self.score
+            "score": self.score,
+            "code": self.code,
+            "translations": self.translations
         }
 
     @property
@@ -62,7 +77,9 @@ class Option(Base):
             "name": self.name,
             "order": self.order,
             "color": self.color,
-            "score": self.score
+            "score": self.score,
+            "code": self.code,
+            "translations": self.translations
         }
 
     @property
@@ -75,6 +92,8 @@ class OptionBase(BaseModel):
     order: Optional[int] = None
     color: Optional[str] = None
     score: Optional[int] = None
+    code: Optional[str] = None
+    translations: Optional[List[dict]] = None
 
     class Config:
         orm_mode = True
@@ -86,6 +105,8 @@ class OptionBaseWithId(BaseModel):
     order: Optional[int] = None
     color: Optional[str] = None
     score: Optional[int] = None
+    code: Optional[str] = None
+    translations: Optional[List[dict]] = None
 
     class Config:
         orm_mode = True
