@@ -65,7 +65,7 @@ class GeoLevels(enum.Enum):
 # Landing Page
 class GeoCenter(enum.Enum):
     notset = [106.3715, -8.84902]
-    wai_demo = [85.622, 25.664]
+    wai_demo = [70.622, 25.664]
     wai_ethiopia = [38.6682, 7.3942]
     wai_uganda = [33.3486, 2.9251]
     wai_bangladesh = [89.02973, 22.75877]

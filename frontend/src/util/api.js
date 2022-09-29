@@ -9,7 +9,7 @@ export const config = {
 
 const API = () => {
   const getConfig = () => {
-    return api.token !== null
+    return api?.token
       ? {
           ...config,
           headers: { ...config.headers, Authorization: `Bearer ${api.token}` },
