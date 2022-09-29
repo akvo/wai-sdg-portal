@@ -174,7 +174,8 @@ def transformJsonForm(json_form: dict):
 
 def save_webform(session: Session, json_form: dict, form_id: int = None):
     # if form_id ==> update
-    if os.environ.get('TESTING'):
+    is_test = os.environ.get('TESTING')
+    if is_test:
         sessionUsed = session
     else:
         sessionUsed = next(get_session())
@@ -227,9 +228,11 @@ def save_webform(session: Session, json_form: dict, form_id: int = None):
             else:
                 is_new_group = True
         if not form_id or is_new_group:
+            qgid = qg.get('id') if is_test or not is_new_group \
+                else generateId()
             question_group = crud_question_group.add_question_group(
                 session=sessionUsed,
-                id=qg.get('id'),
+                id=qgid,
                 form=form.id,
                 name=qg.get('name'),
                 order=qg.get('order'),
@@ -246,6 +249,9 @@ def save_webform(session: Session, json_form: dict, form_id: int = None):
                 addons.update({'allowOther': q.get('allowOther')})
             if "allowOtherText" in q:
                 addons.update({'allowOtherText': q.get('allowOtherText')})
+            # transform cascade type to administration
+            if q.get('type') == "cascade":
+                q["type"] = QuestionType.administration
             if form_id:
                 find_q = session.query(Question).filter(
                     Question.id == q.get('id')).first()
@@ -271,9 +277,11 @@ def save_webform(session: Session, json_form: dict, form_id: int = None):
                 else:
                     is_new_question = True
             if not form_id or is_new_question:
+                qid = q.get('id') if is_test or not is_new_question \
+                    else generateId()
                 crud_question.add_question(
                     session=sessionUsed,
-                    id=q.get('id'),
+                    id=qid,
                     name=q.get('name'),
                     form=form.id,
                     question_group=question_group.id,
