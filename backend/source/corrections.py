@@ -2,6 +2,7 @@ import enum
 
 
 class Corrections(enum.Enum):
+    wai_demo = {}
     wai_ethiopia = {
         "Negele Arsi": "Negelle Arsi",
         "Shahamene": "Shahemene",
@@ -50,5 +51,6 @@ class Corrections(enum.Enum):
         "Wotara Shagule": "Wetera Shegule",
         "Xaxesa dadesa": "Tatesa Dedesa"
     }
+    wai_nepal = {}
     wai_bangladesh = {}
     wai_uganda = {}
