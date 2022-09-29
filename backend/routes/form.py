@@ -13,7 +13,8 @@ import db.crud_question_group as crud_question_group
 from db.connection import get_session
 from models.form import FormDict, FormBase
 from models.user import UserRole
-from models.question import QuestionType, QuestionDict
+from models.question_group import QuestionGroup
+from models.question import QuestionType, QuestionDict, Question
 from middleware import verify_user, verify_admin, verify_editor
 from source.geoconfig import GeoCenter
 from datetime import datetime
@@ -172,12 +173,19 @@ def transformJsonForm(json_form: dict):
 
 
 def save_webform(session: Session, json_form: dict, form_id: int = None):
-    # NOTE: id must be max 10 digit, need to generate form_id on FE
     # if form_id ==> update
     if os.environ.get('TESTING'):
         sessionUsed = session
     else:
         sessionUsed = next(get_session())
+    if form_id:
+        # fetch group and question ids from db to detect which deleted
+        question_groups = session.query(QuestionGroup).filter(
+            QuestionGroup.form == form_id).all()
+        questions = session.query(Question).filter(
+            Question.form == form_id).all()
+        db_question_group_ids = [qg.id for qg in question_groups]
+        db_question_ids = [q.id for q in questions]
     # add form
     if not form_id:
         form = crud.add_form(
@@ -197,9 +205,28 @@ def save_webform(session: Session, json_form: dict, form_id: int = None):
             default_language=json_form.get('defaultLanguage'),
             languages=json_form.get('languages'),
             translations=json_form.get('translations'))
+    question_group_ids = []
+    question_ids = []
     for qg in json_form.get('question_group'):
-        # add group, repeatable? translations?
-        if not form_id:
+        is_new_group = False
+        if form_id:
+            find_qg = session.query(QuestionGroup).filter(
+                QuestionGroup.id == qg.get('id')).first()
+            if find_qg:
+                question_group_ids.append(qg.get('id'))
+                question_group = crud_question_group.update_question_group(
+                    session=sessionUsed,
+                    id=qg.get('id'),
+                    form=form_id,
+                    name=qg.get('name'),
+                    order=qg.get('order'),
+                    description=qg.get('description'),
+                    repeatable=qg.get('repeatable'),
+                    repeat_text=qg.get('repeatText'),
+                    translations=qg.get('translations'))
+            else:
+                is_new_group = True
+        if not form_id or is_new_group:
             question_group = crud_question_group.add_question_group(
                 session=sessionUsed,
                 id=qg.get('id'),
@@ -210,19 +237,8 @@ def save_webform(session: Session, json_form: dict, form_id: int = None):
                 repeatable=qg.get('repeatable'),
                 repeat_text=qg.get('repeatText'),
                 translations=qg.get('translations'))
-        if form_id:
-            question_group = crud_question_group.update_question_group(
-                session=sessionUsed,
-                id=qg.get('id'),
-                form=form_id,
-                name=qg.get('name'),
-                order=qg.get('order'),
-                description=qg.get('description'),
-                repeatable=qg.get('repeatable'),
-                repeat_text=qg.get('repeatText'),
-                translations=qg.get('translations'))
         for q in qg.get('question'):
-            # add question, meta?
+            is_new_question = False
             dependency = q.get('dependency') if "dependency" in q else None
             # get addons
             addons = {}
@@ -230,7 +246,31 @@ def save_webform(session: Session, json_form: dict, form_id: int = None):
                 addons.update({'allowOther': q.get('allowOther')})
             if "allowOtherText" in q:
                 addons.update({'allowOtherText': q.get('allowOtherText')})
-            if not form_id:
+            if form_id:
+                find_q = session.query(Question).filter(
+                    Question.id == q.get('id')).first()
+                if find_q:
+                    question_ids.append(q.get('id'))
+                    crud_question.update_question(
+                        session=sessionUsed,
+                        id=q.get('id'),
+                        name=q.get('name'),
+                        form=form_id,
+                        question_group=qg.get('id'),
+                        type=q.get('type'),
+                        meta=False,
+                        order=q.get('order'),
+                        required=q.get('required'),
+                        rule=q.get('rule') if "rule" in q else None,
+                        dependency=dependency,
+                        tooltip=q.get('tooltip'),
+                        translations=q.get('translations'),
+                        api=q.get('api'),
+                        addons=addons if addons else None,
+                        option=q.get('option') if "option" in q else [])
+                else:
+                    is_new_question = True
+            if not form_id or is_new_question:
                 crud_question.add_question(
                     session=sessionUsed,
                     id=q.get('id'),
@@ -248,24 +288,25 @@ def save_webform(session: Session, json_form: dict, form_id: int = None):
                     api=q.get('api'),
                     addons=addons if addons else None,
                     option=q.get('option') if "option" in q else [])
-            if form_id:
-                crud_question.update_question(
-                    session=sessionUsed,
-                    id=q.get('id'),
-                    name=q.get('name'),
-                    form=form_id,
-                    question_group=qg.get('id'),
-                    type=q.get('type'),
-                    meta=False,
-                    order=q.get('order'),
-                    required=q.get('required'),
-                    rule=q.get('rule') if "rule" in q else None,
-                    dependency=dependency,
-                    tooltip=q.get('tooltip'),
-                    translations=q.get('translations'),
-                    api=q.get('api'),
-                    addons=addons if addons else None,
-                    option=q.get('option') if "option" in q else [])
+    # delete question group and question
+    if form_id:
+        deleted_question = []
+        deleted_group = []
+        for qid in db_question_ids:
+            if qid not in question_ids:
+                deleted_question.append(qid)
+        for qgid in db_question_group_ids:
+            if qgid not in question_group_ids:
+                deleted_group.append(qgid)
+        # delete
+        session.query(Question).filter(
+            Question.id.in_(deleted_question)).delete(
+                synchronize_session='fetch')
+        session.query(QuestionGroup).filter(
+            QuestionGroup.id.in_(deleted_group)).delete(
+                synchronize_session='fetch')
+        session.commit()
+        session.flush()
 
 
 @form_route.get("/form/",

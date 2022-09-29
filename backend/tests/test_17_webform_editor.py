@@ -170,6 +170,19 @@ class TestWebformEditorRoutes():
                         "id": 904875915
                     }]
                 }]
+            }, {
+                "id": 903430547,
+                "name": "Group 3",
+                "order": 3,
+                "repeatable": False,
+                "question": [{
+                    "id": 903430570,
+                    "order": 1,
+                    "questionGroupId": 903430547,
+                    "name": "Comment",
+                    "type": "text",
+                    "required": False,
+                }]
             }]
         }
         res = await client.post(
@@ -369,6 +382,31 @@ class TestWebformEditorRoutes():
                         "question": 903430562,
                     }],
                 }]
+            }, {
+                "id": 903430547,
+                "form": 903430001,
+                "name": "Group 3",
+                "order": 3,
+                "description": None,
+                "repeatable": False,
+                "translations": None,
+                "repeatText": None,
+                "question": [{
+                    "id": 903430570,
+                    "form": 903430001,
+                    "question_group": 903430547,
+                    "name": "Comment",
+                    "order": 1,
+                    "meta": False,
+                    "type": "text",
+                    "required": False,
+                    "rule": None,
+                    "dependency": None,
+                    "tooltip": None,
+                    "translations": None,
+                    "api": None,
+                    "option": [],
+                }]
             }],
             "cascade": cascade
         }
@@ -463,37 +501,32 @@ class TestWebformEditorRoutes():
                 "order": 2,
                 "repeatable": False,
                 "question": [{
-                    "id": 903430560,
-                    "order": 1,
-                    "questionGroupId": 903430546,
-                    "name": "Dependent to Gender Male",
-                    "type": "text",
-                    "required": False,
-                    "tooltip": {
-                        "text": "This question is for male",
-                        "translations": {
-                            "language": "id",
-                            "text": "Pertanyaan ini akan untuk laki-laki"
-                        }
-                    },
-                    "dependency": [{
-                        "id": 903430557,
-                        "options": ["Male"]
-                    }]
-                }, {
                     "id": 903430561,
-                    "order": 2,
+                    "order": 1,
                     "questionGroupId": 903430546,
                     "name": "Describe about yourself",
                     "type": "text",
                     "required": True
                 }, {
                     "id": 903430562,
-                    "order": 3,
+                    "order": 2,
                     "questionGroupId": 903430546,
                     "name": "Describe your favorite food",
                     "type": "text",
                     "required": False
+                }]
+            }, {
+                "id": 903430548,
+                "name": "Group 4",
+                "order": 3,
+                "repeatable": False,
+                "question": [{
+                    "id": 903430580,
+                    "order": 1,
+                    "questionGroupId": 903430548,
+                    "name": "Sort comment",
+                    "type": "text",
+                    "required": False,
                 }]
             }]
         }
@@ -639,33 +672,11 @@ class TestWebformEditorRoutes():
                 "translations": None,
                 "repeatText": None,
                 "question": [{
-                    "id": 903430560,
-                    "form": 903430001,
-                    "question_group": 903430546,
-                    "name": "Dependent to Gender Male",
-                    "order": 1,
-                    "meta": False,
-                    "type": "text",
-                    "required": False,
-                    "rule": None,
-                    "dependency": [
-                        {"id": 903430557, "options": ["Male"]}],
-                    "tooltip": {
-                        "text": "This question is for male",
-                        "translations": {
-                            "text": "Pertanyaan ini akan untuk laki-laki",
-                            "language": "id",
-                        },
-                    },
-                    "translations": None,
-                    "api": None,
-                    "option": [],
-                }, {
                     "id": 903430561,
                     "form": 903430001,
                     "question_group": 903430546,
                     "name": "Describe about yourself",
-                    "order": 2,
+                    "order": 1,
                     "meta": False,
                     "type": "text",
                     "required": True,
@@ -680,7 +691,32 @@ class TestWebformEditorRoutes():
                     "form": 903430001,
                     "question_group": 903430546,
                     "name": "Describe your favorite food",
-                    "order": 3,
+                    "order": 2,
+                    "meta": False,
+                    "type": "text",
+                    "required": False,
+                    "rule": None,
+                    "dependency": None,
+                    "tooltip": None,
+                    "translations": None,
+                    "api": None,
+                    "option": [],
+                }]
+            }, {
+                "id": 903430548,
+                "form": 903430001,
+                "name": "Group 4",
+                "order": 3,
+                "description": None,
+                "repeatable": False,
+                "translations": None,
+                "repeatText": None,
+                "question": [{
+                    "id": 903430580,
+                    "form": 903430001,
+                    "question_group": 903430548,
+                    "name": "Sort comment",
+                    "order": 1,
                     "meta": False,
                     "type": "text",
                     "required": False,
