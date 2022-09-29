@@ -12,6 +12,7 @@ import './admin.scss';
 
 const { TabPane } = Tabs;
 const { adminText } = window.i18n;
+const { allowEdit } = window.features.formFeature;
 
 api
   .get('/organisation')
@@ -95,7 +96,7 @@ const Admin = ({ match }) => {
                 key="manage-users"
               />
             )}
-            {user?.role === 'admin' && (
+            {user?.role === 'admin' && allowEdit && (
               <TabPane
                 tab={<div className="tab-pane-text">{tabManageFormText}</div>}
                 key="manage-form"

@@ -8,6 +8,9 @@ var features = {
     advancedFilterFeature: {
         isMultiSelect: true,
     },
+    formFeature: {
+        allowEdit: false,
+    },
 };
 
 var navigation_config = [

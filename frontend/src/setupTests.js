@@ -20,6 +20,9 @@ window.features = {
   advancedFilterFeature: {
     isMultiSelect: true,
   },
+  formFeature: {
+    allowEdit: true,
+  },
 };
 
 window.page_config = {
