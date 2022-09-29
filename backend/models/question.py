@@ -42,7 +42,7 @@ class QuestionDict(TypedDict):
     required: bool
     rule: Optional[dict]
     option: Optional[List[OptionBase]] = None
-    dependency: Optional[List[DependencyDict]] = None
+    dependency: Optional[List[dict]] = None
     tooltip: Optional[dict]
     translations: Optional[List[dict]]
     api: Optional[dict]
@@ -75,7 +75,7 @@ class Question(Base):
     def __init__(self, id: Optional[int], name: str, order: int, form: int,
                  question_group: int, meta: bool, type: QuestionType,
                  required: Optional[bool], rule: Optional[dict],
-                 dependency: Optional[List[DependencyDict]],
+                 dependency: Optional[List[dict]],
                  tooltip: Optional[dict], translations: Optional[List[dict]],
                  api: Optional[dict], addons: Optional[dict]):
         self.id = id
@@ -150,7 +150,7 @@ class QuestionBase(BaseModel):
     required: bool
     rule: Optional[dict]
     option: List[OptionBaseWithId]
-    dependency: Optional[List[DependencyDict]]
+    dependency: Optional[List[dict]]
     tooltip: Optional[dict]
     translations: Optional[List[dict]]
     api: Optional[dict]
