@@ -108,6 +108,10 @@ def update_question(
     question = session.query(Question).filter(and_(
         Question.form == form,
         Question.id == id)).first()
+    # clear option when question type change
+    if question.type in [QuestionType.option, QuestionType.multiple_option]:
+        session.query(Option).filter(
+            Option.question == question.id).delete(synchronize_session='fetch')
     question.name = name
     question.order = order if order else last_question
     question.meta = meta

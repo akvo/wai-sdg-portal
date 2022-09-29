@@ -135,7 +135,7 @@ class TestWebformEditorRoutes():
                     }]
                 }, {
                     "id": 903430561,
-                    "order": 1,
+                    "order": 2,
                     "questionGroupId": 903430546,
                     "name": "Dependent to Age greater than 17",
                     "type": "text",
@@ -150,6 +150,24 @@ class TestWebformEditorRoutes():
                     "dependency": [{
                         "id": 903430559,
                         "min": 17
+                    }]
+                }, {
+                    "id": 903430562,
+                    "order": 3,
+                    "questionGroupId": 903430546,
+                    "name": "Favorite food",
+                    "type": "option",
+                    "required": False,
+                    "option": [{
+                        "code": None,
+                        "name": "Rendang",
+                        "order": 1,
+                        "id": 904875914
+                    }, {
+                        "code": None,
+                        "name": "Chicken Pop",
+                        "order": 2,
+                        "id": 904875915
                     }]
                 }]
             }]
@@ -301,7 +319,7 @@ class TestWebformEditorRoutes():
                     "form": 903430001,
                     "question_group": 903430546,
                     "name": "Dependent to Age greater than 17",
-                    "order": 1,
+                    "order": 2,
                     "meta": False,
                     "type": "text",
                     "required": True,
@@ -317,6 +335,39 @@ class TestWebformEditorRoutes():
                     "translations": None,
                     "api": None,
                     "option": [],
+                }, {
+                    "id": 903430562,
+                    "form": 903430001,
+                    "question_group": 903430546,
+                    "name": "Favorite food",
+                    "order": 3,
+                    "meta": False,
+                    "type": "option",
+                    "required": False,
+                    "rule": None,
+                    "dependency": None,
+                    "tooltip": None,
+                    "translations": None,
+                    "api": None,
+                    "option": [{
+                        "translations": None,
+                        "score": None,
+                        "order": 1,
+                        "name": "Rendang",
+                        "id": 904875914,
+                        "code": None,
+                        "color": None,
+                        "question": 903430562,
+                    }, {
+                        "translations": None,
+                        "score": None,
+                        "order": 2,
+                        "name": "Chicken Pop",
+                        "id": 904875915,
+                        "code": None,
+                        "color": None,
+                        "question": 903430562,
+                    }],
                 }]
             }],
             "cascade": cascade
@@ -431,22 +482,18 @@ class TestWebformEditorRoutes():
                     }]
                 }, {
                     "id": 903430561,
-                    "order": 1,
+                    "order": 2,
                     "questionGroupId": 903430546,
-                    "name": "Dependent to Age greater than 17",
+                    "name": "Describe about yourself",
                     "type": "text",
-                    "required": True,
-                    "tooltip": {
-                        "text": "This question is for age greater than 17",
-                        "translations": {
-                            "language": "id",
-                            "text": "Pertanyaan ini untuk usia di atas 17"
-                        }
-                    },
-                    "dependency": [{
-                        "id": 903430559,
-                        "min": 17
-                    }]
+                    "required": True
+                }, {
+                    "id": 903430562,
+                    "order": 3,
+                    "questionGroupId": 903430546,
+                    "name": "Describe your favorite food",
+                    "type": "text",
+                    "required": False
                 }]
             }]
         }
@@ -617,20 +664,29 @@ class TestWebformEditorRoutes():
                     "id": 903430561,
                     "form": 903430001,
                     "question_group": 903430546,
-                    "name": "Dependent to Age greater than 17",
-                    "order": 1,
+                    "name": "Describe about yourself",
+                    "order": 2,
                     "meta": False,
                     "type": "text",
                     "required": True,
                     "rule": None,
-                    "dependency": [{"id": 903430559, "min": 17}],
-                    "tooltip": {
-                        "text": "This question is for age greater than 17",
-                        "translations": {
-                            "text": "Pertanyaan ini untuk usia di atas 17",
-                            "language": "id",
-                        },
-                    },
+                    "dependency": None,
+                    "tooltip": None,
+                    "translations": None,
+                    "api": None,
+                    "option": [],
+                }, {
+                    "id": 903430562,
+                    "form": 903430001,
+                    "question_group": 903430546,
+                    "name": "Describe your favorite food",
+                    "order": 3,
+                    "meta": False,
+                    "type": "text",
+                    "required": False,
+                    "rule": None,
+                    "dependency": None,
+                    "tooltip": None,
                     "translations": None,
                     "api": None,
                     "option": [],
