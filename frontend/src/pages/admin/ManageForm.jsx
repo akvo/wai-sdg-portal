@@ -4,6 +4,7 @@ import WebformEditor from 'akvo-react-form-editor';
 import 'akvo-react-form-editor/dist/index.css';
 import { DropdownNavigation } from '../../components/common';
 import api from '../../util/api';
+import isEmpty from 'lodash/isEmpty';
 
 const { buttonText } = window.i18n;
 
@@ -26,7 +27,7 @@ const ManageForm = () => {
 
   const onSaveForm = (values) => {
     // if initialValue defined => edit
-    if (formId && Object.keys(initialValue).length) {
+    if (formId && !isEmpty(initialValue)) {
       api
         .put(`/webform/${formId}`, values)
         .then(() =>
@@ -73,28 +74,32 @@ const ManageForm = () => {
           </Col>
         </Row>
       </div>
-      <Divider />
-      <WebformEditor
-        onSave={onSaveForm}
-        initialValue={initialValue}
-        defaultQuestion={defaultQuestion}
-        limitQuestionType={[
-          'text',
-          'number',
-          'option',
-          'multiple_option',
-          'date',
-          'geo',
-          'cascade',
-        ]}
-        settingCascadeURL={[
-          {
-            id: 1,
-            name: 'administration',
-            endpoint: '/api/administration',
-          },
-        ]}
-      />
+      {!isEmpty(initialValue) && (
+        <>
+          <Divider />
+          <WebformEditor
+            onSave={onSaveForm}
+            initialValue={initialValue}
+            defaultQuestion={defaultQuestion}
+            limitQuestionType={[
+              'text',
+              'number',
+              'option',
+              'multiple_option',
+              'date',
+              'geo',
+              'cascade',
+            ]}
+            settingCascadeURL={[
+              {
+                id: 1,
+                name: 'administration',
+                endpoint: '/api/administration',
+              },
+            ]}
+          />
+        </>
+      )}
     </div>
   );
 };
