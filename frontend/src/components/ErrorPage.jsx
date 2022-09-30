@@ -1,14 +1,18 @@
-import React from "react";
-import { Result, Button } from "antd";
-import { InfoCircleFilled } from "@ant-design/icons";
+import React from 'react';
+import { Result, Button } from 'antd';
+import { InfoCircleFilled } from '@ant-design/icons';
 
-const { buttonText, errorPageText } = window?.i18n;
+const { buttonText, errorPageText } = window.i18n;
 
-const ErrorIcon = () => <InfoCircleFilled style={{ color: "#ff4d4f" }} />;
+const ErrorIcon = () => <InfoCircleFilled style={{ color: '#ff4d4f' }} />;
 
 const RefreshButton = () => {
   return (
-    <Button type="default" onClick={() => window.location.reload()} danger>
+    <Button
+      type="default"
+      onClick={() => window.location.reload()}
+      danger
+    >
       {buttonText?.btnTryAgain}
     </Button>
   );
@@ -19,19 +23,19 @@ const pageProps = (status) => {
   switch (status) {
     case 404:
       return {
-        status: "warning",
+        status: 'warning',
         title: notFoundText?.title,
         subTitle: notFoundText?.subTitle,
       };
     case 401:
       return {
-        status: "warning",
+        status: 'warning',
         title: notAuthorizedText?.title,
         subTitle: notAuthorizedText?.subTitle,
       };
     default:
       return {
-        status: "info",
+        status: 'info',
         icon: <ErrorIcon />,
         title: errorText?.title,
         subTitle: errorText?.subTitle,

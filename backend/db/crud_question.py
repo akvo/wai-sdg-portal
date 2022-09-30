@@ -6,7 +6,6 @@ from models.data import Answer
 from models.question_group import QuestionGroup
 from models.question import Question, QuestionIds
 from models.question import QuestionDict, QuestionBase, QuestionType
-from models.question import DependencyDict
 from models.option import Option, OptionDict
 import db.crud_option as crud_option
 
@@ -53,7 +52,7 @@ def add_question(
     option: Optional[List[OptionDict]] = None,
     required: Optional[bool] = True,
     rule: Optional[dict] = None,
-    dependency: Optional[List[DependencyDict]] = None,
+    dependency: Optional[List[dict]] = None,
     tooltip: Optional[dict] = None,
     translations: Optional[List[dict]] = None,
     api: Optional[dict] = None,
@@ -98,7 +97,7 @@ def update_question(
     option: Optional[List[OptionDict]] = None,
     required: Optional[bool] = True,
     rule: Optional[dict] = None,
-    dependency: Optional[List[DependencyDict]] = None,
+    dependency: Optional[List[dict]] = None,
     tooltip: Optional[dict] = None,
     translations: Optional[List[dict]] = None,
     api: Optional[dict] = None,
@@ -109,6 +108,10 @@ def update_question(
     question = session.query(Question).filter(and_(
         Question.form == form,
         Question.id == id)).first()
+    # clear option when question type change
+    if question.type in [QuestionType.option, QuestionType.multiple_option]:
+        session.query(Option).filter(
+            Option.question == question.id).delete(synchronize_session='fetch')
     question.name = name
     question.order = order if order else last_question
     question.meta = meta
@@ -245,7 +248,8 @@ def get_definition(session: Session, form: int):
     return framed
 
 
-def validate_dependency(session: Session, dependency: List[DependencyDict]):
+def validate_dependency(session: Session, dependency: List[dict]):
+    # TODO: need to allow dependency for number and date
     errors = []
     for question in dependency:
         qid = question["id"]

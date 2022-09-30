@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
-import { MapContainer, GeoJSON, TileLayer } from "react-leaflet";
-import { defaultPos, geojson, tileOSM } from "../util/geo-util";
-import { UIState } from "../state/ui";
+import React, { useEffect } from 'react';
+import { MapContainer, GeoJSON, TileLayer } from 'react-leaflet';
+import { defaultPos, geojson, tileOSM } from '../util/geo-util';
+import { UIState } from '../state/ui';
 
 const defPos = defaultPos();
 const landingPos = window?.landing_map_pos || 0.6;
@@ -30,8 +30,8 @@ const Map = () => {
         zoomControl={false}
         scrollWheelZoom={false}
         style={{
-          height: "100%",
-          width: "100%",
+          height: '100%',
+          width: '100%',
         }}
       >
         <TileLayer {...tileOSM} />
@@ -39,10 +39,10 @@ const Map = () => {
           key="geodata"
           style={{
             weight: 2,
-            fillColor: "#00989f",
+            fillColor: '#00989f',
             fillOpacity: 0.5,
             opacity: 0.5,
-            color: "#FFF",
+            color: '#FFF',
           }}
           data={geojson}
         />

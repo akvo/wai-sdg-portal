@@ -1,12 +1,21 @@
 /* eslint-disable */
 var site_name = "JMP Explorer";
 
+/*
+ * position for landing page
+ * optional:
+ */
+var landing_map_pos = 4.25;
+
 var features = {
     chartFeature: {
         stack: false,
     },
     advancedFilterFeature: {
         isMultiSelect: true,
+    },
+    formFeature: {
+        allowEdit: true,
     },
 };
 

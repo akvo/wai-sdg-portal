@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   Row,
   Col,
@@ -9,43 +9,43 @@ import {
   Pagination,
   Modal,
   notification,
-} from "antd";
+} from 'antd';
 import {
   SaveOutlined,
   EditOutlined,
   UndoOutlined,
   DeleteOutlined,
   DownloadOutlined,
-} from "@ant-design/icons";
-import { Link } from "react-router-dom";
-import takeRight from "lodash/takeRight";
-import { columnNames } from "./admin-static";
-import { UIState } from "../../state/ui";
-import api from "../../util/api";
-import { getLocationName, generateAdvanceFilterURL } from "../../util/utils";
-import MainTableChild from "../main/MainTableChild.jsx";
-import ErrorPage from "../../components/ErrorPage";
+} from '@ant-design/icons';
+import { Link } from 'react-router-dom';
+import takeRight from 'lodash/takeRight';
+import { columnNames } from './admin-static';
+import { UIState } from '../../state/ui';
+import api from '../../util/api';
+import { getLocationName, generateAdvanceFilterURL } from '../../util/utils';
+import MainTableChild from '../main/MainTableChild.jsx';
+import ErrorPage from '../../components/ErrorPage';
 import {
   DataUpdateMessage,
   DataDeleteMessage,
-} from "./../../components/Notifications";
-import { SelectLevel, DropdownNavigation } from "../../components/common";
-import ConfirmationModal from "../../components/ConfirmationModal";
-import AdvanceSearch from "../../components/AdvanceSearch";
-import isEmpty from "lodash/isEmpty";
-import without from "lodash/without";
-import union from "lodash/union";
-import xor from "lodash/xor";
-import config from "../../config";
+} from './../../components/Notifications';
+import { SelectLevel, DropdownNavigation } from '../../components/common';
+import ConfirmationModal from '../../components/ConfirmationModal';
+import AdvanceSearch from '../../components/AdvanceSearch';
+import isEmpty from 'lodash/isEmpty';
+import without from 'lodash/without';
+import union from 'lodash/union';
+import xor from 'lodash/xor';
+import config from '../../config';
 
-const { notificationText, buttonText, adminText } = window?.i18n;
+const { notificationText, buttonText, adminText } = window.i18n;
 
 const getRowClassName = (record, editedRow) => {
   const edited = editedRow?.[record.key];
   if (edited) {
-    return "edited";
+    return 'edited';
   }
-  return "";
+  return '';
 };
 
 const ManageData = ({ handleTabClick }) => {
@@ -69,13 +69,13 @@ const ManageData = ({ handleTabClick }) => {
   const [selectedRow, setSelectedRow] = useState([]);
   const [deleting, setDeleting] = useState(false);
   const [exportLoading, setExportLoading] = useState(false);
-  const [lastSubmitted, setLastSubmitted] = useState({ by: "", at: "" });
+  const [lastSubmitted, setLastSubmitted] = useState({ by: '', at: '' });
 
   //ConfirmationModal state
   const [confirmationModal, setConfirmationModal] = useState({
     visible: false,
     handleOk: null,
-    type: "default",
+    type: 'default',
   });
 
   const current = config?.[form];
@@ -105,8 +105,8 @@ const ManageData = ({ handleTabClick }) => {
     UIState.update((e) => {
       e.reloadData = false;
     });
-    const savedValues = Object.keys(editedRow).map((k, v) => {
-      const values = Object.keys(editedRow[k]).map((o, v) => ({
+    const savedValues = Object.keys(editedRow).map((k) => {
+      const values = Object.keys(editedRow[k]).map((o) => ({
         question: o,
         value: editedRow[k][o],
       }));
@@ -151,7 +151,7 @@ const ManageData = ({ handleTabClick }) => {
         });
         return res;
       })
-      .catch((err) => {
+      .catch(() => {
         notification.error({ message: notificationText?.errorText });
       })
       .finally(() => {
@@ -164,7 +164,7 @@ const ManageData = ({ handleTabClick }) => {
     UIState.update((e) => {
       e.reloadData = false;
     });
-    const ids = values.join("&id=");
+    const ids = values.join('&id=');
     api
       .delete(`data?id=${ids}`)
       .then((res) => {
@@ -177,7 +177,7 @@ const ManageData = ({ handleTabClick }) => {
         });
         return res;
       })
-      .catch((err) => {
+      .catch(() => {
         notification.error({ message: notificationText?.errorText });
       })
       .finally(() => {
@@ -196,14 +196,14 @@ const ManageData = ({ handleTabClick }) => {
     url = generateAdvanceFilterURL(advanceSearchValue, url);
     api
       .get(url)
-      .then((d) => {
+      .then(() => {
         notification.success({
           message: notificationText?.dataExportCreatedText,
         });
         setExportLoading(false);
-        handleTabClick("exports");
+        handleTabClick('exports');
       })
-      .catch((error) => {
+      .catch(() => {
         setExportLoading(false);
       });
   };
@@ -260,7 +260,7 @@ const ManageData = ({ handleTabClick }) => {
               (adm) => adm.id === x.administration
             )?.parent;
             const isActionDisabled =
-              user?.role === "editor" &&
+              user?.role === 'editor' &&
               !user?.access.includes(administrationParent);
             return {
               key: x.id,
@@ -271,7 +271,11 @@ const ManageData = ({ handleTabClick }) => {
               detail: x.answer,
               disabled: isActionDisabled,
               action: (
-                <Space size="small" align="center" wrap={true}>
+                <Space
+                  size="small"
+                  align="center"
+                  wrap={true}
+                >
                   <Button
                     size="small"
                     icon={<EditOutlined />}
@@ -287,7 +291,7 @@ const ManageData = ({ handleTabClick }) => {
                       setConfirmationModal({
                         visible: true,
                         handleOk: () => handleDelete(x),
-                        type: "delete",
+                        type: 'delete',
                       })
                     }
                     disabled={isActionDisabled}
@@ -335,7 +339,7 @@ const ManageData = ({ handleTabClick }) => {
           setLastSubmitted(res.data);
         })
         .catch(() => {
-          setLastSubmitted({ by: "", at: "" });
+          setLastSubmitted({ by: '', at: '' });
         });
     }
   }, [user, current, selectedAdministration, advanceSearchValue]);
@@ -347,9 +351,19 @@ const ManageData = ({ handleTabClick }) => {
   return (
     <>
       <div className="filter-wrapper">
-        <Space size={20} align="center" wrap={true}>
-          <DropdownNavigation value={form} onChange={setForm} />
-          <SelectLevel setPage={setPage} setSelectedRow={setSelectedRow} />
+        <Space
+          size={20}
+          align="center"
+          wrap={true}
+        >
+          <DropdownNavigation
+            value={form}
+            onChange={setForm}
+          />
+          <SelectLevel
+            setPage={setPage}
+            setSelectedRow={setSelectedRow}
+          />
         </Space>
         <Button
           type="primary"
@@ -375,15 +389,18 @@ const ManageData = ({ handleTabClick }) => {
       >
         <Col span={8}>
           <span className="info title">
-            {total ? `Total: ${total} Submissions` : "No Data"}
+            {total ? `Total: ${total} Submissions` : 'No Data'}
             {hasSelected
               ? `, Selected ${selectedRow.length} datapoint${
-                  selectedRow.length > 1 ? "s" : ""
+                  selectedRow.length > 1 ? 's' : ''
                 }`
-              : ""}
+              : ''}
           </span>
         </Col>
-        <Col span={16} align="end">
+        <Col
+          span={16}
+          align="end"
+        >
           {total ? (
             <div className="info">
               {`${adminText?.lastSubmittedAtText}: ${lastSubmitted.at}`}
@@ -391,7 +408,7 @@ const ManageData = ({ handleTabClick }) => {
               {`${adminText?.lastSubmittedByText}: ${lastSubmitted.by}`}
             </div>
           ) : (
-            ""
+            ''
           )}
         </Col>
       </Row>
@@ -414,7 +431,10 @@ const ManageData = ({ handleTabClick }) => {
           }}
         />
         <Divider />
-        <Row align="middle" justify="space-around">
+        <Row
+          align="middle"
+          justify="space-around"
+        >
           <Col span={16}>
             {total ? (
               <Pagination
@@ -428,10 +448,13 @@ const ManageData = ({ handleTabClick }) => {
                 onChange={changePage}
               />
             ) : (
-              ""
+              ''
             )}
           </Col>
-          <Col span={8} align="right">
+          <Col
+            span={8}
+            align="right"
+          >
             <Space>
               <Button
                 loading={saving}
@@ -447,7 +470,7 @@ const ManageData = ({ handleTabClick }) => {
                   setConfirmationModal({
                     visible: true,
                     handleOk: () => handleBulkDelete(selectedRow),
-                    type: "delete",
+                    type: 'delete',
                   })
                 }
               >
@@ -464,7 +487,7 @@ const ManageData = ({ handleTabClick }) => {
         <Modal
           key="main-table-child-modal"
           title={dataSelected?.name}
-          bodyStyle={{ padding: "0px" }}
+          bodyStyle={{ padding: '0px' }}
           visible={dataSelected}
           className="data-edit-modal"
           centered
@@ -478,8 +501,8 @@ const ManageData = ({ handleTabClick }) => {
           cancelText={buttonText?.btnResetAll}
           cancelButtonProps={{
             icon: <UndoOutlined />,
-            type: "danger",
-            style: { float: "left" },
+            type: 'danger',
+            style: { float: 'left' },
             disabled: !editedRow?.[dataId],
           }}
           okButtonProps={editedRow?.[dataId] && { icon: <SaveOutlined /> }}
@@ -494,7 +517,7 @@ const ManageData = ({ handleTabClick }) => {
           </div>
         </Modal>
       ) : (
-        ""
+        ''
       )}
 
       {/* ConfirmationModal */}

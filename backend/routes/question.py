@@ -7,7 +7,6 @@ import db.crud_question as crud
 import db.crud_question_group as crud_question_group
 from db.connection import get_session
 from models.question import QuestionDict, QuestionBase, QuestionType
-from models.question import DependencyDict
 from models.option import OptionDict
 from middleware import verify_admin
 
@@ -64,7 +63,7 @@ class PostQueryParams:
 def add(req: Request,
         params: PostQueryParams = Depends(),
         option: List[OptionDict] = [],
-        dependency: List[DependencyDict] = None,
+        dependency: List[dict] = None,
         tooltip: Optional[dict] = None,
         translations: Optional[List[dict]] = None,
         api: Optional[dict] = None,

@@ -13,12 +13,16 @@ class GeoLevels(enum.Enum):
     }]
     wai_demo = [{
         "level": 0,
-        "name": "UNIT_TYPE",
-        "alias": "Woreda"
+        "name": "DISTRICT",
+        "alias": "District"
     }, {
         "level": 1,
-        "name": "UNIT_NAME",
-        "alias": "Kebele"
+        "name": "SUB_DIST",
+        "alias": "Sub-District"
+    }, {
+        "level": 2,
+        "name": "NAME",
+        "alias": "Village"
     }]
     wai_ethiopia = [{
         "level": 0,
@@ -61,7 +65,7 @@ class GeoLevels(enum.Enum):
 # Landing Page
 class GeoCenter(enum.Enum):
     notset = [106.3715, -8.84902]
-    wai_demo = [38.6682, 7.3942]
+    wai_demo = [70.622, 25.664]
     wai_ethiopia = [38.6682, 7.3942]
     wai_uganda = [33.3486, 2.9251]
     wai_bangladesh = [89.02973, 22.75877]

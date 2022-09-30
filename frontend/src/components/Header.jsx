@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   Row,
   Col,
@@ -10,7 +10,7 @@ import {
   Avatar,
   Space,
   Popover,
-} from "antd";
+} from 'antd';
 import {
   MenuOutlined,
   FieldTimeOutlined,
@@ -19,23 +19,23 @@ import {
   CheckCircleTwoTone,
   CloseCircleTwoTone,
   DownloadOutlined,
-} from "@ant-design/icons";
-import { UIState } from "../state/ui";
+} from '@ant-design/icons';
+import { UIState } from '../state/ui';
 
 const {
   noActivityText,
   activityLogText,
   recentActivityLogText,
   attachmentText,
-} = window?.i18n?.header;
+} = window.i18n.header;
 
-const { loginText, logoutText } = window?.i18n?.navigation;
+const { loginText, logoutText } = window.i18n.navigation;
 
 const IconList = ({ type }) => {
-  if (type === "warning") {
+  if (type === 'warning') {
     return <ExclamationCircleTwoTone twoToneColor="#c4c41a" />;
   }
-  if (type === "danger") {
+  if (type === 'danger') {
     return <CloseCircleTwoTone twoToneColor="#eb2f96" />;
   }
   return <CheckCircleTwoTone twoToneColor="#52c41a" />;
@@ -55,7 +55,10 @@ const ActivityLog = () => {
             desc = (
               <div>
                 {item.status}
-                <a className="attachment-badge" href={item.attachment}>
+                <a
+                  className="attachment-badge"
+                  href={item.attachment}
+                >
                   <DownloadOutlined /> {attachmentText}
                 </a>
               </div>
@@ -85,16 +88,29 @@ const Header = ({ logout, loginWithPopup, isAuthenticated }) => {
     });
   };
   return (
-    <Row align="middle" justify="space-between" wrap={true}>
-      <Col span={8} className="header-logo">
+    <Row
+      align="middle"
+      justify="space-between"
+      wrap={true}
+    >
+      <Col
+        span={8}
+        className="header-logo"
+      >
         <Link to="/">
           <Space size={20}>
-            <Avatar src="/wai-logo.png" alt="wai-logo" />
+            <Avatar
+              src="/wai-logo.png"
+              alt="wai-logo"
+            />
             <div className="web-title">{window.site_name}</div>
           </Space>
         </Link>
       </Col>
-      <Col span={8} className="header-menu">
+      <Col
+        span={8}
+        className="header-menu"
+      >
         <Space size={20}>
           {/* Activity Log  */}
           {user && (
@@ -111,7 +127,10 @@ const Header = ({ logout, loginWithPopup, isAuthenticated }) => {
           )}
           {/* Login, Sign-up - Logout button */}
           {!isAuthenticated ? (
-            <Button icon={<UserOutlined />} onClick={loginWithPopup}>
+            <Button
+              icon={<UserOutlined />}
+              onClick={loginWithPopup}
+            >
               {loginText}
             </Button>
           ) : (
@@ -129,11 +148,19 @@ const Header = ({ logout, loginWithPopup, isAuthenticated }) => {
               alt="user-avatar"
             />
           ) : user ? (
-            user(<Avatar icon={<UserOutlined />} alt="user-avatar" />)
+            user(
+              <Avatar
+                icon={<UserOutlined />}
+                alt="user-avatar"
+              />
+            )
           ) : (
-            ""
+            ''
           )}
-          <MenuOutlined onClick={onOpen} className="menu-outlined" />
+          <MenuOutlined
+            onClick={onOpen}
+            className="menu-outlined"
+          />
         </Space>
       </Col>
     </Row>

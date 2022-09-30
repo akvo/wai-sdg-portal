@@ -1,7 +1,7 @@
-import SwaggerUI from "swagger-ui-react";
-import "swagger-ui-react/swagger-ui.css";
-import "./doc.scss";
-import api from "../../util/api";
+import SwaggerUI from 'swagger-ui-react';
+import 'swagger-ui-react/swagger-ui.css';
+import './doc.scss';
+import api from '../../util/api';
 
 const Doc = () => {
   if (api?.token) {
@@ -11,12 +11,12 @@ const Doc = () => {
         persistAuthorization={true}
         url="/api/openapi.json"
         onComplete={(ui) => {
-          ui.preauthorizeApiKey("HTTPBearer", api.token);
+          ui.preauthorizeApiKey('HTTPBearer', api.token);
         }}
       />
     );
   }
-  return "";
+  return '';
 };
 
 export default Doc;

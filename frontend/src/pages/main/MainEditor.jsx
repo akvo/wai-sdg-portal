@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Row,
   Col,
@@ -9,16 +9,16 @@ import {
   DatePicker,
   Popover,
   Typography,
-} from "antd";
-import { UndoOutlined, SaveOutlined } from "@ant-design/icons";
-import moment from "moment";
-import { pickBy } from "lodash";
-import { UIState } from "../../state/ui";
+} from 'antd';
+import { UndoOutlined, SaveOutlined } from '@ant-design/icons';
+import moment from 'moment';
+import { pickBy } from 'lodash';
+import { UIState } from '../../state/ui';
 
 const { Option } = Select;
 const { Text } = Typography;
-const { buttonText } = window?.i18n;
-const defInputNumberPopoverState = { visible: [], content: "" };
+const { buttonText } = window.i18n;
+const defInputNumberPopoverState = { visible: [], content: '' };
 
 const MainEditor = ({ value, question, edited, dataPointId }) => {
   const [fieldActive, setFieldActive] = useState(null);
@@ -29,7 +29,7 @@ const MainEditor = ({ value, question, edited, dataPointId }) => {
 
   const onSave = (question) => {
     const { type, rule } = question;
-    if (type === "number" && rule) {
+    if (type === 'number' && rule) {
       const { min, max } = rule;
       const isNotInRange = max
         ? newValue < min || newValue > max
@@ -38,7 +38,7 @@ const MainEditor = ({ value, question, edited, dataPointId }) => {
         visible: isNotInRange,
         content: (
           <Text type="danger">
-            {max ? `range : ${[min, max].join(" - ")}` : `min : ${min}`}
+            {max ? `range : ${[min, max].join(' - ')}` : `min : ${min}`}
           </Text>
         ),
       });
@@ -81,42 +81,52 @@ const MainEditor = ({ value, question, edited, dataPointId }) => {
 
   if (fieldActive) {
     return (
-      <Row className="editor" justify="space-around" align="middle">
+      <Row
+        className="editor"
+        justify="space-around"
+        align="middle"
+      >
         <Col span={18}>
-          {question.type === "option" ? (
+          {question.type === 'option' ? (
             <Select
               defaultValue={newValue || value || null}
-              style={{ width: "100%" }}
+              style={{ width: '100%' }}
               onChange={setNewValue}
               size="small"
             >
               {question.option.map((o, oi) => (
-                <Option key={oi} value={o.name}>
+                <Option
+                  key={oi}
+                  value={o.name}
+                >
                   {o.name}
                 </Option>
               ))}
             </Select>
-          ) : question.type === "multiple_option" ? (
+          ) : question.type === 'multiple_option' ? (
             <Select
               defaultValue={newValue || value || null}
-              style={{ width: "100%" }}
+              style={{ width: '100%' }}
               onChange={setNewValue}
               size="small"
               mode="multiple"
             >
               {question.option.map((o, oi) => (
-                <Option key={oi} value={o.name}>
+                <Option
+                  key={oi}
+                  value={o.name}
+                >
                   {o.name}
                 </Option>
               ))}
             </Select>
-          ) : question.type === "date" ? (
+          ) : question.type === 'date' ? (
             <DatePicker
               size="small"
-              defaultValue={moment(newValue || value, "YY-MM-DD")}
+              defaultValue={moment(newValue || value, 'YY-MM-DD')}
               onChange={(d, ds) => setNewValue(ds)}
             />
-          ) : question.type === "number" ? (
+          ) : question.type === 'number' ? (
             <Popover
               placement="top"
               title={inputNumberPopover.content}
@@ -149,18 +159,25 @@ const MainEditor = ({ value, question, edited, dataPointId }) => {
     );
   }
 
-  if (question.type === "date") {
+  if (question.type === 'date') {
     let dateValue = newValue || value;
     if (dateValue) {
-      dateValue = dateValue.split(" ")[0];
+      dateValue = dateValue.split(' ')[0];
       if (edited?.[question.id]) {
         return (
-          <Row justify="space-around" align="middle">
+          <Row
+            justify="space-around"
+            align="middle"
+          >
             <Col span={18}>
               <div onClick={() => setFieldActive(true)}>{dateValue}</div>
             </Col>
             <Col span={6}>
-              <Button size="small" onClick={onReset} icon={<UndoOutlined />}>
+              <Button
+                size="small"
+                onClick={onReset}
+                icon={<UndoOutlined />}
+              >
                 {buttonText?.btnUndo}
               </Button>
             </Col>
@@ -172,16 +189,23 @@ const MainEditor = ({ value, question, edited, dataPointId }) => {
   }
   if (edited?.[question.id]) {
     return (
-      <Row justify="space-around" align="middle">
+      <Row
+        justify="space-around"
+        align="middle"
+      >
         <Col span={18}>
           <div onClick={() => setFieldActive(true)}>
-            {question.type !== "multiple_option"
+            {question.type !== 'multiple_option'
               ? newValue
-              : newValue.join(", ")}
+              : newValue.join(', ')}
           </div>
         </Col>
         <Col span={6}>
-          <Button size="small" onClick={onReset} icon={<UndoOutlined />}>
+          <Button
+            size="small"
+            onClick={onReset}
+            icon={<UndoOutlined />}
+          >
             {buttonText?.btnUndo}
           </Button>
         </Col>
@@ -192,10 +216,10 @@ const MainEditor = ({ value, question, edited, dataPointId }) => {
   return (
     <div onClick={() => setFieldActive(true)}>
       {value
-        ? question.type !== "multiple_option"
+        ? question.type !== 'multiple_option'
           ? value
-          : value.join(", ")
-        : "-"}
+          : value.join(', ')
+        : '-'}
     </div>
   );
 };
