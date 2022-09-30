@@ -1,6 +1,6 @@
-import "./custom.scss";
-import TabJMP from "./TabJMP";
-import TabODF from "./TabODF";
+import './custom.scss';
+import TabJMP from './TabJMP';
+import TabODF from './TabODF';
 
 const TabContent = ({
   parentLoading,
@@ -17,7 +17,7 @@ const TabContent = ({
   const { component, chartList, chartSetting } = self;
   const { formId } = current;
   switch (component) {
-    case "JMP-CHARTS":
+    case 'JMP-CHARTS':
       return (
         <TabJMP
           show={show}
@@ -26,7 +26,7 @@ const TabContent = ({
           question={question}
         />
       );
-    case "ODF-CHARTS":
+    case 'ODF-CHARTS':
       return (
         <TabODF
           show={show}
@@ -41,7 +41,7 @@ const TabContent = ({
         />
       );
     default:
-      return "";
+      return '';
   }
 };
 

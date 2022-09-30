@@ -1,35 +1,31 @@
-import React, { useEffect, useState } from "react";
-import { Row, Col, Modal, Avatar, Checkbox, Input, Space, Button } from "antd";
+import React, { useEffect, useState } from 'react';
+import { Row, Col, Modal, Avatar, Checkbox, Input, Space, Button } from 'antd';
 import {
   SaveOutlined,
   UploadOutlined,
   DeleteOutlined,
-} from "@ant-design/icons";
+} from '@ant-design/icons';
 
-const {
-  submitText,
-  deleteText,
-  saveText,
-  deleteUserText,
-} = window?.i18n?.confirmationModalText;
+const { submitText, deleteText, saveText, deleteUserText } =
+  window.i18n.confirmationModalText;
 
 const modalProps = (type, secureDelete, setSecureDelete) => {
   switch (type) {
-    case "submit":
+    case 'submit':
       return {
         icon: <UploadOutlined />,
         title: submitText?.title,
         subTitle: submitText?.subTitle,
         btnOkText: submitText?.btnOkText,
       };
-    case "delete-user":
+    case 'delete-user':
       return {
         icon: <DeleteOutlined />,
         title: deleteUserText?.title,
         subTitle: deleteUserText?.subTitle,
         btnOkText: deleteUserText?.btnOkText,
       };
-    case "delete":
+    case 'delete':
       return {
         icon: <DeleteOutlined />,
         title: deleteText?.title,
@@ -52,7 +48,7 @@ const modalProps = (type, secureDelete, setSecureDelete) => {
                   }
                   style={{
                     borderColor:
-                      secureDelete.text === "DELETE" ? "#01770e" : "#9f0031",
+                      secureDelete.text === 'DELETE' ? '#01770e' : '#9f0031',
                   }}
                 />
               </div>
@@ -83,15 +79,15 @@ const modalProps = (type, secureDelete, setSecureDelete) => {
 };
 
 const defSecureDeleteState = {
-  text: "",
+  text: '',
   checked: false,
 };
 
 const ConfirmationModal = ({ visible, type, onOk, onCancel }) => {
   const [secureDelete, setSecureDelete] = useState(defSecureDeleteState);
   const modalProp = modalProps(type, secureDelete, setSecureDelete);
-  const isSecure = secureDelete.text === "DELETE" && secureDelete.checked;
-  const disabledOkBtn = type === "delete" ? !isSecure : false;
+  const isSecure = secureDelete.text === 'DELETE' && secureDelete.checked;
+  const disabledOkBtn = type === 'delete' ? !isSecure : false;
 
   useEffect(() => {
     setSecureDelete(defSecureDeleteState);
@@ -109,7 +105,7 @@ const ConfirmationModal = ({ visible, type, onOk, onCancel }) => {
         <Button
           key="confirm-ok"
           size="large"
-          className={type.includes("delete") ? "delete" : type}
+          className={type.includes('delete') ? 'delete' : type}
           onClick={onOk}
           disabled={disabledOkBtn}
         >
@@ -117,17 +113,23 @@ const ConfirmationModal = ({ visible, type, onOk, onCancel }) => {
         </Button>,
       ]}
     >
-      <Row align="middle" justify="center">
-        <Col span={24} align="center">
+      <Row
+        align="middle"
+        justify="center"
+      >
+        <Col
+          span={24}
+          align="center"
+        >
           <Avatar
-            className={type.includes("delete") ? "delete" : type}
+            className={type.includes('delete') ? 'delete' : type}
             icon={modalProp?.icon}
             alt={modalProp?.title}
             size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
           />
           <h2>{modalProp?.title}</h2>
           <p>{modalProp?.subTitle}</p>
-          {modalProp?.secure ? modalProp.secure : ""}
+          {modalProp?.secure ? modalProp.secure : ''}
         </Col>
       </Row>
     </Modal>

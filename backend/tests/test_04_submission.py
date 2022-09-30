@@ -22,11 +22,23 @@ class TestSubmissionRoutes():
         assert res == {
             "id": 1,
             "name": "test",
+            "description": "test description",
+            "default_language": "en",
+            "languages": ["en", "id"],
+            "translations": [{
+                "language": "id",
+                "name": "uji coba",
+                "description": "deskripsi uji coba"
+            }],
             "question_group": [{
                 "form": 1,
                 "id": 1,
                 "name": "Test Question Group",
                 "order": 1,
+                "description": None,
+                "repeatable": False,
+                "repeat_text": None,
+                "translations": None,
                 "question": [{
                     "form": 1,
                     "id": 1,
@@ -43,20 +55,39 @@ class TestSubmissionRoutes():
                         "name": "Option 1",
                         "order": 1,
                         "score": None,
+                        "code": "OP1",
+                        "translations": [{
+                            "language": "id",
+                            "name": "Pilihan 1"
+                        }]
                     }, {
                         "color": "#333",
                         "id": 2,
                         "name": "Option 2",
                         "order": 2,
                         "score": 5,
+                        "code": "OP2",
+                        "translations": [{
+                            "language": "id",
+                            "name": "Pilihan 2"
+                        }]
                     }, {
                         "color": None,
                         "id": 3,
                         "name": "Option 3",
                         "order": None,
                         "score": 10,
+                        "code": "OP3",
+                        "translations": [{
+                            "language": "id",
+                            "name": "Pilihan 3"
+                        }]
                     }],
                     "dependency": None,
+                    "tooltip": None,
+                    "translations": None,
+                    "api": None,
+                    "addons": None
                 }, {
                     "form": 1,
                     "id": 2,
@@ -69,6 +100,10 @@ class TestSubmissionRoutes():
                     "rule": None,
                     "option": [],
                     "dependency": None,
+                    "tooltip": None,
+                    "translations": None,
+                    "api": None,
+                    "addons": None
                 }, {
                     "form": 1,
                     "id": 3,
@@ -81,6 +116,10 @@ class TestSubmissionRoutes():
                     "rule": None,
                     "option": [],
                     "dependency": None,
+                    "tooltip": None,
+                    "translations": None,
+                    "api": None,
+                    "addons": None
                 }, {
                     "form": 1,
                     "id": 4,
@@ -96,6 +135,10 @@ class TestSubmissionRoutes():
                         "id": 1,
                         "options": ["Option 1"]
                     }],
+                    "tooltip": None,
+                    "translations": None,
+                    "api": None,
+                    "addons": None
                 }]
             }]
         }
@@ -166,19 +209,34 @@ class TestSubmissionRoutes():
             "name": "Option 1",
             "color": "#333",
             "order": 1,
-            "score": None
+            "score": None,
+            "code": "OP1",
+            "translations": [{
+                "language": "id",
+                "name": "Pilihan 1"
+            }]
         }, {
             "id": 2,
             "name": "Option 2",
             "color": "#333",
             "order": 2,
             "score": 5,
+            "code": "OP2",
+            "translations": [{
+                "language": "id",
+                "name": "Pilihan 2"
+            }]
         }, {
             "id": 3,
             "name": "Option 3",
             "color": None,
             "order": None,
             "score": 10,
+            "code": "OP3",
+            "translations": [{
+                "language": "id",
+                "name": "Pilihan 3"
+            }]
         }]
 
     @pytest.mark.asyncio
@@ -190,7 +248,12 @@ class TestSubmissionRoutes():
                 "name": "Option 1",
                 "color": "#333",
                 "order": 1,
+                "code": "OP1"
             },
+            json=[{
+                "language": "id",
+                "name": "Pilihan 1"
+            }],
             headers={"Authorization": f"Bearer {account.token}"},
         )
         assert res.status_code == 200
@@ -201,4 +264,26 @@ class TestSubmissionRoutes():
             "name": "Option 1",
             "order": 1,
             "score": None,
+            "code": "OP1",
+            "translations": [{
+                "language": "id",
+                "name": "Pilihan 1"
+            }]
         }
+
+    @pytest.mark.asyncio
+    async def test_get_webform_editor(
+        self, app: FastAPI,
+        session: Session,
+        client: AsyncClient
+    ) -> None:
+        res = await client.get(
+            app.url_path_for("webform:get_by_id", id=1),
+            params={'edit': True},
+            headers={"Authorization": f"Bearer {account.token}"})
+        assert res.status_code == 200
+        res = res.json()
+        for qg in res.get('question_group'):
+            for q in qg.get('question'):
+                assert 'disableDelete' in q
+                assert q.get('disableDelete') is True

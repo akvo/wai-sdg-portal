@@ -1,27 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { Row, Col, Space, Card, Select, Spin } from "antd";
+import React, { useState, useEffect } from 'react';
+import { Row, Col, Space, Card, Select, Spin } from 'antd';
 
-import "./main.scss";
-import { UIState } from "../../state/ui";
-import { generateAdvanceFilterURL } from "../../util/utils";
-import Chart from "../../chart";
-import api from "../../util/api";
-import upperFirst from "lodash/upperFirst";
-import isEmpty from "lodash/isEmpty";
-import takeRight from "lodash/takeRight";
-import reverse from "lodash/reverse";
+import './main.scss';
+import { UIState } from '../../state/ui';
+import { generateAdvanceFilterURL } from '../../util/utils';
+import Chart from '../../chart';
+import api from '../../util/api';
+import upperFirst from 'lodash/upperFirst';
+import isEmpty from 'lodash/isEmpty';
+import takeRight from 'lodash/takeRight';
+import reverse from 'lodash/reverse';
 
 const { chartFeature } = window.features;
 const levels = window.map_config?.shapeLevels?.length;
-const { mainText, chartText } = window?.i18n;
+const { mainText, chartText } = window.i18n;
 
 const MainChart = ({ current, question }) => {
-  const {
-    user,
-    selectedAdministration,
-    advanceSearchValue,
-    administration,
-  } = UIState.useState((s) => s);
+  const { user, selectedAdministration, advanceSearchValue, administration } =
+    UIState.useState((s) => s);
   const [loadingChartData, setLoadingChartData] = useState(false);
   const [chartData, setChartData] = useState({});
   const [selectedQuestion, setSelectedQuestion] = useState({});
@@ -29,7 +25,7 @@ const MainChart = ({ current, question }) => {
   const [chartTitle, setChartTitle] = useState(null);
 
   // Get question option only
-  question = question?.filter((q) => q.type === "option");
+  question = question?.filter((q) => q.type === 'option');
 
   const revertChart = () => {
     setSelectedQuestion({});
@@ -69,20 +65,20 @@ const MainChart = ({ current, question }) => {
       // advance search
       url = generateAdvanceFilterURL(advanceSearchValue, url);
       if (!isEmpty(advanceSearchValue)) {
-        const filterByText = advanceSearchValue?.map((x, xi) => {
+        const filterByText = advanceSearchValue?.map((x) => {
           const { question, option } = x;
-          let optText = "";
+          let optText = '';
           // support multiple select on advanced filter option
           if (Array.isArray(option)) {
-            optText = option.map((opt) => opt.split("|")[1]).join(", ");
+            optText = option.map((opt) => opt.split('|')[1]).join(', ');
           } else {
-            optText = option.split("|")?.[1];
+            optText = option.split('|')?.[1];
           }
           return `{question|${question}} is {option|${optText}}`;
         });
         chartTitleTemp = `${chartTitleTemp}, where ${filterByText?.join(
-          " and "
-        )}${adminId ? "," : ""}`;
+          ' and '
+        )}${adminId ? ',' : ''}`;
       }
       // chart title text for administration
       if (adminId) {
@@ -92,7 +88,7 @@ const MainChart = ({ current, question }) => {
           adminText = reverse(adminText)?.map(
             (x) => administration?.find((a) => a.id === x)?.name
           );
-          adminText = adminText.join(", ");
+          adminText = adminText.join(', ');
         }
         chartTitleTemp = `${chartTitleTemp} for {question|${adminText}}`;
       }
@@ -100,7 +96,7 @@ const MainChart = ({ current, question }) => {
         .get(url)
         .then((res) => {
           let temp = [];
-          if (res.data.type === "BAR") {
+          if (res.data.type === 'BAR') {
             temp = selectedQuestion.option.map((opt) => {
               const val = res.data.data.find(
                 (d) => d.name.toLowerCase() === opt.name.toLowerCase()
@@ -111,7 +107,7 @@ const MainChart = ({ current, question }) => {
               };
             });
           }
-          if (res.data.type === "BARSTACK") {
+          if (res.data.type === 'BARSTACK') {
             temp = selectedQuestion.option.map((opt) => {
               const group = res.data.data.find(
                 (d) => d.group.toLowerCase() === opt.name.toLowerCase()
@@ -169,21 +165,34 @@ const MainChart = ({ current, question }) => {
   };
 
   return (
-    <Row align="middle" className="collapse-wrapper">
-      <Col span={24} className="container">
+    <Row
+      align="middle"
+      className="collapse-wrapper"
+    >
+      <Col
+        span={24}
+        className="container"
+      >
         <Card
           className="visual-card-wrapper"
           title={mainText?.mainChartCardTitle}
           key="main-chart-card"
         >
-          <Space size="large" direction="vertical" style={{ width: "100%" }}>
-            <Row align="middle" gutter={[24, 24]}>
+          <Space
+            size="large"
+            direction="vertical"
+            style={{ width: '100%' }}
+          >
+            <Row
+              align="middle"
+              gutter={[24, 24]}
+            >
               <Col span={chartFeature?.stack ? 12 : 24}>
                 <Select
                   allowClear
                   showSearch
                   placeholder={mainText?.mainChartSelectOptionPlaceholder}
-                  style={{ width: "100%" }}
+                  style={{ width: '100%' }}
                   options={question
                     ?.filter((q) => q.id !== selectedStack?.id)
                     ?.map((q) => ({
@@ -206,7 +215,7 @@ const MainChart = ({ current, question }) => {
                     placeholder={
                       mainText?.mainChartStackSelectOptionPlaceholder
                     }
-                    style={{ width: "100%" }}
+                    style={{ width: '100%' }}
                     options={question
                       ?.filter((q) => q.id !== selectedQuestion?.id)
                       ?.map((q) => ({
@@ -228,7 +237,7 @@ const MainChart = ({ current, question }) => {
             <div className="chart-container">
               {!isEmpty(chartData) && !loadingChartData ? (
                 <Chart
-                  title={chartTitle || ""}
+                  title={chartTitle || ''}
                   type={chartData.type}
                   data={chartData.data}
                   height={550}
@@ -246,7 +255,7 @@ const MainChart = ({ current, question }) => {
               ) : loadingChartData ? (
                 <Spin />
               ) : (
-                ""
+                ''
               )}
             </div>
           </Space>

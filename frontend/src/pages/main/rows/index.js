@@ -1,10 +1,10 @@
-import RowPieChartGroup from "./RowPieChartGroup";
+import RowPieChartGroup from './RowPieChartGroup';
 
 const RowContent = ({ current, self }) => {
   const { component, chartList } = self;
   const { formId } = current;
   switch (component) {
-    case "PIE-CHART-GROUP":
+    case 'PIE-CHART-GROUP':
       return (
         <RowPieChartGroup
           formId={formId}
@@ -13,7 +13,7 @@ const RowContent = ({ current, self }) => {
         />
       );
     default:
-      return "";
+      return '';
   }
 };
 

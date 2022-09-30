@@ -1,13 +1,12 @@
 from fastapi import Depends, Request, APIRouter, Query, HTTPException
 from fastapi.security import HTTPBearer
 from fastapi.security import HTTPBasicCredentials as credentials
-from typing import List
+from typing import List, Optional
 from sqlalchemy.orm import Session
 import db.crud_question as crud
 import db.crud_question_group as crud_question_group
 from db.connection import get_session
 from models.question import QuestionDict, QuestionBase, QuestionType
-from models.question import DependencyDict
 from models.option import OptionDict
 from middleware import verify_admin
 
@@ -64,7 +63,11 @@ class PostQueryParams:
 def add(req: Request,
         params: PostQueryParams = Depends(),
         option: List[OptionDict] = [],
-        dependency: List[DependencyDict] = None,
+        dependency: List[dict] = None,
+        tooltip: Optional[dict] = None,
+        translations: Optional[List[dict]] = None,
+        api: Optional[dict] = None,
+        addons: Optional[dict] = None,
         session: Session = Depends(get_session),
         credentials: credentials = Depends(security)):
     verify_admin(req.state.authenticated, session)
@@ -100,5 +103,9 @@ def add(req: Request,
                                  rule=rule if has_rule else None,
                                  dependency=dependency,
                                  question_group=question_group.id,
-                                 option=option)
+                                 option=option,
+                                 tooltip=tooltip,
+                                 translations=translations,
+                                 api=api,
+                                 addons=addons)
     return question.serialize

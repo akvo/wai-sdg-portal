@@ -15,7 +15,7 @@ services:
     ports:
       - 5432:5432
   backend:
-    image: amancevice/pandas:0.24.2-slim
+    image: python:3.8.5
     working_dir: /app
     command: ["./dev.sh"]
     volumes:
@@ -27,7 +27,7 @@ services:
       - db
     network_mode: service:mainnetwork
   worker:
-    image: amancevice/pandas:0.24.2-slim
+    image: python:3.8.5
     working_dir: /app
     command: ["./worker.sh"]
     volumes:
@@ -40,7 +40,7 @@ services:
       - backend
     network_mode: service:mainnetwork
   frontend:
-    image: akvo/akvo-node-14-alpine:20210106.152005.1864760
+    image: akvo/akvo-node-18-alpine:20220923.084347.0558ee6
     working_dir: /app
     command: ["./start.sh"]
     volumes:

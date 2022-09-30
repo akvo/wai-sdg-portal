@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Row,
   Col,
@@ -8,25 +8,24 @@ import {
   Space,
   Pagination,
   notification,
-} from "antd";
-import { Link } from "react-router-dom";
-import MainTableChild from "./MainTableChild";
-import { UIState } from "../../state/ui";
-import api from "../../util/api";
-import { getLuma } from "../../util/color";
-import { DataUpdateMessage } from "./../../components/Notifications";
-import flatten from "lodash/flatten";
-import isEmpty from "lodash/isEmpty";
-import intersection from "lodash/intersection";
+} from 'antd';
+import { Link } from 'react-router-dom';
+import MainTableChild from './MainTableChild';
+import { UIState } from '../../state/ui';
+import api from '../../util/api';
+import { getLuma } from '../../util/color';
+import { DataUpdateMessage } from './../../components/Notifications';
+import isEmpty from 'lodash/isEmpty';
+import intersection from 'lodash/intersection';
 
-const { buttonText, adminText } = window?.i18n;
+const { buttonText, adminText } = window.i18n;
 
 const getRowClassName = (record, editedRow) => {
   const edited = editedRow?.[record.key];
   if (edited) {
-    return "edited";
+    return 'edited';
   }
-  return "";
+  return '';
 };
 
 const MainTable = ({
@@ -35,7 +34,6 @@ const MainTable = ({
   current,
   loading,
   data,
-  dataSource,
   questionGroup,
   total,
   changePage,
@@ -49,16 +47,9 @@ const MainTable = ({
   const [expanded, setExpanded] = useState([]);
   const { editedRow, administration, user } = UIState.useState((e) => e);
 
-  // Filter administration question
-  const administrationQuestionIds = flatten(
-    questionGroup.map((qg) =>
-      qg.question.filter((q) => q.type === "administration")
-    )
-  )?.map((x) => x.id);
-
   // Filter by Access
   const administrationIdsByUserAccess =
-    user?.role === "editor" && !isEmpty(user?.access)
+    user?.role === 'editor' && !isEmpty(user?.access)
       ? administration
           .filter(
             (adm) =>
@@ -72,8 +63,8 @@ const MainTable = ({
     UIState.update((e) => {
       e.reloadData = false;
     });
-    const savedValues = Object.keys(editedRow).map((k, _) => {
-      const values = Object.keys(editedRow[k]).map((o, _) => ({
+    const savedValues = Object.keys(editedRow).map((k) => {
+      const values = Object.keys(editedRow[k]).map((o) => ({
         question: o,
         value: editedRow[k][o],
       }));
@@ -101,7 +92,7 @@ const MainTable = ({
   };
 
   // Modify column config to add render function
-  const modifyColumnRender = current.columns.map((col, idx) => {
+  const modifyColumnRender = current.columns.map((col) => {
     if (current.values.includes(col.key)) {
       return {
         ...col,
@@ -110,7 +101,7 @@ const MainTable = ({
           return {
             props: {
               style: {
-                background: text?.color || "",
+                background: text?.color || '',
                 color: getLuma(text?.color),
               },
             },
@@ -140,7 +131,10 @@ const MainTable = ({
             {` (${total})`}
           </span>
         </Col>
-        <Col span={16} align="end">
+        <Col
+          span={16}
+          align="end"
+        >
           {total ? (
             <div className="info">
               {`${adminText?.lastSubmittedAtText}: ${lastSubmitted.at}`}
@@ -148,7 +142,7 @@ const MainTable = ({
               {`${adminText?.lastSubmittedByText}: ${lastSubmitted.by}`}
             </div>
           ) : (
-            ""
+            ''
           )}
         </Col>
       </Row>
@@ -196,7 +190,10 @@ const MainTable = ({
         </Col>
       </Row>
       <Divider />
-      <Row align="middle" justify="space-around">
+      <Row
+        align="middle"
+        justify="space-around"
+      >
         <Col span={16}>
           {total ? (
             <Pagination
@@ -211,10 +208,13 @@ const MainTable = ({
               onChange={changePage}
             />
           ) : (
-            ""
+            ''
           )}
         </Col>
-        <Col span={8} align="right">
+        <Col
+          span={8}
+          align="right"
+        >
           <Space>
             <Button
               size="small"

@@ -2,7 +2,9 @@ import os
 import json
 import pandas as pd
 from db.truncator import truncate
-from db.connection import engine, SessionLocal
+from db.crud_administration import add_administration
+from models.administration import Administration
+from db.connection import SessionLocal
 from source.geoconfig import GeoLevels
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -56,4 +58,8 @@ with open(source_file, 'r') as geo:
     res["id"] = res.index + 1
     res["parent"] = res.apply(lambda x: get_parent_id(res, x), axis=1)
     res = res[["id", "name", "parent"]]
-    res.to_sql('administration', engine, if_exists='append',  index=False)
+    for adm in res.to_dict("records"):
+        parent = adm["parent"] if adm["parent"] == adm["parent"] else None
+        add_administration(session=session, data=Administration(
+            id=int(adm["id"]), parent=parent, name=adm["name"]))
+    res.to_csv(f"./source/{source_path}/data/cascade.csv", index=False)

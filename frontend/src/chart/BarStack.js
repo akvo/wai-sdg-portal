@@ -10,12 +10,12 @@ import {
   Title,
   axisTitle,
   NoData,
-} from "./chart-style.js";
-import uniq from "lodash/uniq";
-import isEmpty from "lodash/isEmpty";
-import upperFirst from "lodash/upperFirst";
+} from './chart-style.js';
+import uniq from 'lodash/uniq';
+import isEmpty from 'lodash/isEmpty';
+import upperFirst from 'lodash/upperFirst';
 
-const { chartText } = window?.i18n;
+const chartText = window?.i18n?.chartText;
 
 const BarStack = (data, chartTitle, extra) => {
   if (isEmpty(data) || !data) {
@@ -25,14 +25,14 @@ const BarStack = (data, chartTitle, extra) => {
   // Custom Axis Title
   const { xAxisTitle, yAxisTitle } = axisTitle(extra);
 
-  let stacked = data[0].stack.map((x) => ({ name: x.name, color: x.color }));
-  let legends = stacked.map((s, si) => ({
+  const stacked = data[0].stack.map((x) => ({ name: x.name, color: x.color }));
+  const legends = stacked.map((s, si) => ({
     name: s.name,
     itemStyle: { color: s.color || Color.color[si] },
   }));
-  let xAxis = uniq(data.map((x) => x.name));
-  let series = stacked.map((s, si) => {
-    const temp = data.map((d, di) => {
+  const xAxis = uniq(data.map((x) => x.name));
+  const series = stacked.map((s, si) => {
+    const temp = data.map((d) => {
       const val = d.stack.find((c) => c.name === s.name);
       return {
         name: val?.name || null,
@@ -42,25 +42,25 @@ const BarStack = (data, chartTitle, extra) => {
     });
     return {
       name: s.name,
-      type: "bar",
-      stack: "count",
+      type: 'bar',
+      stack: 'count',
       label: {
-        colorBy: "data",
-        position: si % 2 === 0 ? "left" : "right",
+        colorBy: 'data',
+        position: si % 2 === 0 ? 'left' : 'right',
         show: true,
         padding: 5,
-        backgroundColor: "rgba(0,0,0,.3)",
+        backgroundColor: 'rgba(0,0,0,.3)',
         ...TextStyle,
-        color: "#fff",
+        color: '#fff',
       },
       barMaxWidth: 50,
       emphasis: {
-        focus: "series",
+        focus: 'series',
       },
       data: temp,
     };
   });
-  let option = {
+  const option = {
     ...Color,
     title: {
       ...Title,
@@ -71,37 +71,37 @@ const BarStack = (data, chartTitle, extra) => {
     legend: {
       ...Legend,
       data: legends,
-      top: "bottom",
-      left: "center",
+      top: 'bottom',
+      left: 'center',
     },
     grid: {
-      top: "25%",
-      bottom: "23%",
+      top: '25%',
+      bottom: '23%',
       show: true,
       label: {
-        color: "#222",
+        color: '#222',
         ...TextStyle,
       },
     },
     tooltip: {
-      trigger: "axis",
+      trigger: 'axis',
       axisPointer: {
-        type: "shadow",
+        type: 'shadow',
       },
-      backgroundColor: "#ffffff",
+      backgroundColor: '#ffffff',
       ...TextStyle,
     },
     toolbox: {
       show: true,
-      orient: "vertical",
+      orient: 'vertical',
       right: 15,
-      top: "top",
+      top: 'top',
       feature: {
         saveAsImage: {
-          type: "jpg",
+          type: 'jpg',
           title: chartText?.btnSaveImage,
           icon: Icons.saveAsImage,
-          backgroundColor: "#EAF5FB",
+          backgroundColor: '#EAF5FB',
         },
         dataView: {
           ...DataView,
@@ -110,45 +110,45 @@ const BarStack = (data, chartTitle, extra) => {
             var series = opt.series.map((x) => x.data);
             var table =
               '<table border="1" style="width:90%;text-align:center">';
-            table += "<thead><tr><th></th>";
+            table += '<thead><tr><th></th>';
             for (var a = 0, b = xAxis.length; a < b; a++) {
-              table += "<th>" + upperFirst(xAxis[a]) + "</th>";
+              table += '<th>' + upperFirst(xAxis[a]) + '</th>';
             }
-            table += "</tr></thead><tbody>";
+            table += '</tr></thead><tbody>';
             for (var i = 0, l = series.length; i < l; i++) {
-              table += "<tr>";
-              table += "<td><b>" + upperFirst(series[i][0].name) + "</b></td>";
+              table += '<tr>';
+              table += '<td><b>' + upperFirst(series[i][0].name) + '</b></td>';
               for (var x = 0, y = series[i].length; x < y; x++) {
-                table += "<td>" + series[i][x].value + "</td>";
+                table += '<td>' + series[i][x].value + '</td>';
               }
-              table += "</tr>";
+              table += '</tr>';
             }
-            table += "</tbody></table>";
+            table += '</tbody></table>';
             return (
               '<div style="display:flex;align-items:center;justify-content:center">' +
               table +
-              "</div>"
+              '</div>'
             );
           },
         },
       },
     },
     yAxis: {
-      type: "value",
-      name: yAxisTitle || "",
+      type: 'value',
+      name: yAxisTitle || '',
       nameTextStyle: { ...TextStyle },
-      nameLocation: "middle",
+      nameLocation: 'middle',
       nameGap: 50,
     },
     xAxis: {
       data: xAxis,
-      type: "category",
-      name: xAxisTitle || "",
+      type: 'category',
+      name: xAxisTitle || '',
       nameTextStyle: { ...TextStyle },
-      nameLocation: "middle",
+      nameLocation: 'middle',
       nameGap: 50,
       axisLabel: {
-        color: "#222",
+        color: '#222',
         ...TextStyle,
         ...AxisLabelFormatter,
       },

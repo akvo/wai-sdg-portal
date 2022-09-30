@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Col, Spin } from "antd";
+import React, { useState, useEffect } from 'react';
+import { Col, Spin } from 'antd';
 
-import "../main.scss";
-import { UIState } from "../../../state/ui";
-import { generateAdvanceFilterURL } from "../../../util/utils";
-import Chart from "../../../chart";
-import api from "../../../util/api";
-import takeRight from "lodash/takeRight";
-import { titleCase } from "title-case";
+import '../main.scss';
+import { UIState } from '../../../state/ui';
+import { generateAdvanceFilterURL } from '../../../util/utils';
+import Chart from '../../../chart';
+import api from '../../../util/api';
+import takeRight from 'lodash/takeRight';
+import { titleCase } from 'title-case';
 
 const levels = window.map_config?.shapeLevels?.length;
 
@@ -86,7 +86,7 @@ const TabJMP = ({ formId, chartList, question, show }) => {
             return {
               name: selectedQuestion?.name
                 ? titleCase(selectedQuestion.name)
-                : "",
+                : '',
               type: chartSetting?.type,
               selectedAdministration:
                 selectedAdministration.length <= levels
@@ -114,14 +114,13 @@ const TabJMP = ({ formId, chartList, question, show }) => {
   ]);
 
   if (!chartList.length) {
-    return "";
+    return '';
   }
 
   if (!show) {
     return null;
   }
 
-  console.log(chartData);
   return (
     <div className="container chart-container">
       {pageLoading ? (
@@ -141,12 +140,15 @@ const TabJMP = ({ formId, chartList, question, show }) => {
               >
                 <span className="info title">{c?.name}</span>
               </Col>,
-              <Col key={`jmp-chart-row-${ci}`} span={24}>
+              <Col
+                key={`jmp-chart-row-${ci}`}
+                span={24}
+              >
                 <div className="jmp-chart">
                   <Chart
                     title=""
                     subTitle=""
-                    type={"JMP-BARSTACK"}
+                    type={'JMP-BARSTACK'}
                     data={c?.data}
                     wrapper={false}
                     height={height < 320 ? 320 : height}

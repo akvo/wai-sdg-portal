@@ -42,7 +42,11 @@ class QuestionDict(TypedDict):
     required: bool
     rule: Optional[dict]
     option: Optional[List[OptionBase]] = None
-    dependency: Optional[List[DependencyDict]] = None
+    dependency: Optional[List[dict]] = None
+    tooltip: Optional[dict]
+    translations: Optional[List[dict]]
+    api: Optional[dict]
+    addons: Optional[dict]
 
 
 class Question(Base):
@@ -57,6 +61,12 @@ class Question(Base):
     required = Column(Boolean, nullable=True)
     rule = Column(MutableDict.as_mutable(pg.JSONB), nullable=True)
     dependency = Column(pg.ARRAY(pg.JSONB), nullable=True)
+    tooltip = Column(MutableDict.as_mutable(pg.JSONB), nullable=True)
+    translations = Column(pg.ARRAY(pg.JSONB), nullable=True)
+    api = Column(MutableDict.as_mutable(pg.JSONB), nullable=True)
+    # addons column
+    # save allowOther, allowOtherText etc extra params
+    addons = Column(MutableDict.as_mutable(pg.JSONB), nullable=True)
     option = relationship("Option",
                           cascade="all, delete",
                           passive_deletes=True,
@@ -65,7 +75,9 @@ class Question(Base):
     def __init__(self, id: Optional[int], name: str, order: int, form: int,
                  question_group: int, meta: bool, type: QuestionType,
                  required: Optional[bool], rule: Optional[dict],
-                 dependency: Optional[List[DependencyDict]]):
+                 dependency: Optional[List[dict]],
+                 tooltip: Optional[dict], translations: Optional[List[dict]],
+                 api: Optional[dict], addons: Optional[dict]):
         self.id = id
         self.form = form
         self.order = order
@@ -76,6 +88,10 @@ class Question(Base):
         self.required = required
         self.rule = rule
         self.dependency = dependency
+        self.tooltip = tooltip
+        self.translations = translations
+        self.api = api
+        self.addons = addons
 
     def __repr__(self) -> int:
         return f"<Question {self.id}>"
@@ -93,6 +109,10 @@ class Question(Base):
             "required": self.required,
             "rule": self.rule,
             "dependency": self.dependency,
+            "tooltip": self.tooltip,
+            "translations": self.translations,
+            "api": self.api,
+            "addons": self.addons,
             "option": self.option,
         }
 
@@ -130,7 +150,11 @@ class QuestionBase(BaseModel):
     required: bool
     rule: Optional[dict]
     option: List[OptionBaseWithId]
-    dependency: Optional[List[DependencyDict]]
+    dependency: Optional[List[dict]]
+    tooltip: Optional[dict]
+    translations: Optional[List[dict]]
+    api: Optional[dict]
+    addons: Optional[dict]
 
     class Config:
         orm_mode = True

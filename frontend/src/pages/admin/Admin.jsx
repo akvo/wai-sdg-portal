@@ -1,19 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { Row, Col, Tabs } from "antd";
-import { UIState } from "../../state/ui";
-import api from "../../util/api";
-import ManageData from "./ManageData";
-import ManageUser from "./ManageUser";
-import ManageUpload from "./ManageUpload";
-import Export from "./Export";
-import { useHistory } from "react-router-dom";
-import "./admin.scss";
+import React, { useEffect, useState } from 'react';
+import { Row, Col, Tabs } from 'antd';
+import { UIState } from '../../state/ui';
+import api from '../../util/api';
+import ManageData from './ManageData';
+import ManageUser from './ManageUser';
+import ManageUpload from './ManageUpload';
+import ManageForm from './ManageForm';
+import Export from './Export';
+import { useHistory } from 'react-router-dom';
+import './admin.scss';
 
 const { TabPane } = Tabs;
-const { adminText } = window?.i18n;
+const { adminText } = window.i18n;
+const { allowEdit } = window.features.formFeature;
 
 api
-  .get("/organisation")
+  .get('/organisation')
   .then((res) => {
     UIState.update((s) => {
       s.organisations = res.data;
@@ -30,6 +32,7 @@ const Admin = ({ match }) => {
     tabExportText,
     tabDataUploadText,
     tabManageUserText,
+    tabManageFormText,
   } = adminText;
   const [page, setPage] = useState(match?.params?.page);
   const history = useHistory();
@@ -53,13 +56,19 @@ const Admin = ({ match }) => {
       {/* Jumbotron */}
       <Col span={24}>
         <Row className="jumbotron-container">
-          <Col span={24} className="container">
+          <Col
+            span={24}
+            className="container"
+          >
             <h1>{welcomeText}</h1>
           </Col>
         </Row>
       </Col>
       {/* Content */}
-      <Col span={24} className="container content-wrapper">
+      <Col
+        span={24}
+        className="container content-wrapper"
+      >
         <div className="card-container">
           <Tabs
             type="card"
@@ -67,24 +76,45 @@ const Admin = ({ match }) => {
             tabBarGutter={0}
             activeKey={page}
             onTabClick={handleTabClick}
+            className="admin-tabs-wrapper"
           >
-            <TabPane tab={tabManageDataText} key="manage-data">
-              {page === "manage-data" && (
-                <ManageData handleTabClick={handleTabClick} currentTab={page} />
-              )}
-            </TabPane>
-            <TabPane tab={tabExportText} key="exports">
-              {page === "exports" && <Export />}
-            </TabPane>
-            <TabPane tab={tabDataUploadText} key="data-upload">
-              {page === "data-upload" && <ManageUpload />}
-            </TabPane>
-            {user?.role === "admin" && (
-              <TabPane tab={tabManageUserText} key="manage-users">
-                {page === "manage-users" && <ManageUser />}
-              </TabPane>
+            <TabPane
+              tab={<div className="tab-pane-text">{tabManageDataText}</div>}
+              key="manage-data"
+            />
+            <TabPane
+              tab={<div className="tab-pane-text">{tabExportText}</div>}
+              key="exports"
+            />
+            <TabPane
+              tab={<div className="tab-pane-text">{tabDataUploadText}</div>}
+              key="data-upload"
+            />
+            {user?.role === 'admin' && (
+              <TabPane
+                tab={<div className="tab-pane-text">{tabManageUserText}</div>}
+                key="manage-users"
+              />
+            )}
+            {user?.role === 'admin' && allowEdit && (
+              <TabPane
+                tab={<div className="tab-pane-text">{tabManageFormText}</div>}
+                key="manage-form"
+              />
             )}
           </Tabs>
+        </div>
+        <div className="card-content-container">
+          {page === 'manage-data' && (
+            <ManageData
+              handleTabClick={handleTabClick}
+              currentTab={<div className="tab-pane-text">{page}</div>}
+            />
+          )}
+          {page === 'exports' && <Export />}
+          {page === 'data-upload' && <ManageUpload />}
+          {user?.role === 'admin' && page === 'manage-users' && <ManageUser />}
+          {user?.role === 'admin' && page === 'manage-form' && <ManageForm />}
         </div>
       </Col>
     </Row>

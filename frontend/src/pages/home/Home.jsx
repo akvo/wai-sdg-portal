@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { Row, Col, Card, Space, Carousel, Image, Spin } from "antd";
-import CountUp from "react-countup";
-import api from "../../util/api";
+import React, { useEffect, useState } from 'react';
+import { Row, Col, Card, Space, Carousel, Image, Spin } from 'antd';
+import CountUp from 'react-countup';
+import api from '../../util/api';
 
-import "./home.scss";
-import Map from "../../components/Map";
-import Chart from "../../chart";
-import isEmpty from "lodash/isEmpty";
-import upperFirst from "lodash/upperFirst";
+import './home.scss';
+import Map from '../../components/Map';
+import Chart from '../../chart';
+import isEmpty from 'lodash/isEmpty';
+import upperFirst from 'lodash/upperFirst';
 
 const level2 = window.levels[0];
 const { jumbotron, datasetsInPortal, overviews } = window.landing_config;
-const { overviewSectionTitle, datasetSectionTitle } = window?.i18n?.home;
+const { overviewSectionTitle, datasetSectionTitle } = window.i18n.home;
 
 const OverviewInfo = ({ item, order }) => {
   const { type, category, data } = item;
   const { above_text, number_text, value, total } = data;
   let text = number_text;
-  if (text?.includes("##total##")) {
-    text = text.replace("##total##", total || "");
+  if (text?.includes('##total##')) {
+    text = text.replace('##total##', total || '');
   }
   return (
     <Col
@@ -34,7 +34,10 @@ const OverviewInfo = ({ item, order }) => {
           align="middle"
           justify="center"
         >
-          <Col span={8} align="center">
+          <Col
+            span={8}
+            align="center"
+          >
             <Image
               className="overview-icon"
               width="100%"
@@ -46,7 +49,11 @@ const OverviewInfo = ({ item, order }) => {
           <Col span={16}>
             <div className="area">{above_text}</div>
             <div className="count">
-              <CountUp decimals={1} end={value || 0} />%
+              <CountUp
+                decimals={1}
+                end={value || 0}
+              />
+              %
             </div>
             <div className="text">{text}</div>
           </Col>
@@ -66,13 +73,29 @@ const OverviewChart = ({ item, order }) => {
       order={order}
     >
       <Card className={`overview-item-card ${category}`}>
-        <Row align="middle" justify="center" className="overview-item">
-          <Col span={24} align="center">
-            <Space direction="vertical" size="large" style={{ width: "100%" }}>
+        <Row
+          align="middle"
+          justify="center"
+          className="overview-item"
+        >
+          <Col
+            span={24}
+            align="center"
+          >
+            <Space
+              direction="vertical"
+              size="large"
+              style={{ width: '100%' }}
+            >
               <div className="chart-title">
                 {qname ? upperFirst(qname) : upperFirst(name)}
               </div>
-              <Chart type="PIE" data={data} wrapper={false} height={250} />
+              <Chart
+                type="PIE"
+                data={data}
+                wrapper={false}
+                height={250}
+              />
             </Space>
           </Col>
         </Row>
@@ -83,7 +106,7 @@ const OverviewChart = ({ item, order }) => {
 
 const OverviewColumn = ({ items, index }) => {
   return items.map((item, idx) => {
-    if (item?.type === "info") {
+    if (item?.type === 'info') {
       return (
         <OverviewInfo
           key={`${item?.type}-${idx}`}
@@ -104,21 +127,24 @@ const OverviewColumn = ({ items, index }) => {
 
 const JumbotronInfo = ({ jumbotron }) => {
   const ListComponent = ({ listType, className, children }) => {
-    if (listType === "number") {
+    if (listType === 'number') {
       return <ol className={className}>{children}</ol>;
     }
     return <ul className={className}>{children}</ul>;
   };
   const { title, list_type, list } = jumbotron;
   let titleText = title;
-  if (titleText?.includes("##administration##")) {
-    titleText = titleText.replace("##administration##", level2);
+  if (titleText?.includes('##administration##')) {
+    titleText = titleText.replace('##administration##', level2);
   }
   if (list.length && list_type) {
     return (
       <>
         <h4 className="title">{titleText}</h4>
-        <ListComponent listType={list_type} className="list">
+        <ListComponent
+          listType={list_type}
+          className="list"
+        >
           {list.map((l, il) => (
             <li key={il}>{l}</li>
           ))}
@@ -135,13 +161,13 @@ const Home = () => {
   useEffect(() => {
     if (!isEmpty(overviews) && isEmpty(overviewData)) {
       const apiCall = overviews?.map(({ form_id, question, option }) => {
-        let url = `chart/overviews/${form_id}/${question}/${option}`;
+        const url = `chart/overviews/${form_id}/${question}/${option}`;
         return api.get(url);
       });
       Promise.all(apiCall)
         .then((res) => {
           const allData = res?.map((r) => {
-            const { form, question, question_name, data } = r?.data;
+            const { form, question, question_name, data } = r.data;
             // find overview config
             const overview = overviews?.find(
               (x) => x.form_id === form && x.question === question
@@ -150,9 +176,9 @@ const Home = () => {
             const dataTmp = data.map((d) => {
               const { above_text, number_text, explore, name } = overview;
               const category = name
-                ? name.toLowerCase().split(" ").join("-")
-                : "";
-              if (d?.type === "info") {
+                ? name.toLowerCase().split(' ').join('-')
+                : '';
+              if (d?.type === 'info') {
                 return {
                   ...d,
                   category: category,
@@ -192,7 +218,7 @@ const Home = () => {
           justify="space-between"
           wrap={true}
         >
-          <div lg={24} className="jumbotron-overlay-container">
+          <div className="jumbotron-overlay-container">
             <JumbotronInfo jumbotron={jumbotron} />
           </div>
           <Col lg={24}>
@@ -204,20 +230,33 @@ const Home = () => {
       </Col>
       {/* Dataset Card */}
       <Col span={24}>
-        <Row className="dataset-container" align="middle">
-          <Col className="container dataset-col" span={24}>
+        <Row
+          className="dataset-container"
+          align="middle"
+        >
+          <Col
+            className="container dataset-col"
+            span={24}
+          >
             <h1>{datasetSectionTitle}</h1>
-            <Row align="middle" justify="space-around" wrap={true}>
-              {datasetsInPortal.map(
-                ({ title, description, readmore, explore }) => (
-                  <Col key={title} sm={24} md={18} lg={7}>
-                    <Card className="dataset-item">
-                      <h2>{title}</h2>
-                      <p>{description}</p>
-                    </Card>
-                  </Col>
-                )
-              )}
+            <Row
+              align="middle"
+              justify="space-around"
+              wrap={true}
+            >
+              {datasetsInPortal.map(({ title, description }) => (
+                <Col
+                  key={title}
+                  sm={24}
+                  md={18}
+                  lg={7}
+                >
+                  <Card className="dataset-item">
+                    <h2>{title}</h2>
+                    <p>{description}</p>
+                  </Card>
+                </Col>
+              ))}
             </Row>
           </Col>
         </Row>
@@ -225,11 +264,20 @@ const Home = () => {
       {/* Overview Caraousel */}
       <Col span={24}>
         <Row className="overview-container">
-          <Col span={24} className="container">
+          <Col
+            span={24}
+            className="container"
+          >
             <h1>{overviewSectionTitle}</h1>
           </Col>
-          <Col span={24} className="overview-content-wrapper">
-            <Carousel autoplay effect="fade">
+          <Col
+            span={24}
+            className="overview-content-wrapper"
+          >
+            <Carousel
+              autoplay
+              effect="fade"
+            >
               {isEmpty(overviewData) && (
                 <div className="chart-loading">
                   <Spin />

@@ -1,21 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { Row, Col, Spin, Card } from "antd";
+import React, { useEffect, useState } from 'react';
+import { Row, Col, Spin, Card } from 'antd';
 
-import "../main.scss";
-import { UIState } from "../../../state/ui";
-import { generateAdvanceFilterURL } from "../../../util/utils";
-import Chart from "../../../chart";
-import api from "../../../util/api";
-import takeRight from "lodash/takeRight";
-import upperFirst from "lodash/upperFirst";
+import '../main.scss';
+import { UIState } from '../../../state/ui';
+import { generateAdvanceFilterURL } from '../../../util/utils';
+import Chart from '../../../chart';
+import api from '../../../util/api';
+import takeRight from 'lodash/takeRight';
+import upperFirst from 'lodash/upperFirst';
 
 const RowPieChartGroup = ({ formId, configFormId, chartList }) => {
-  const {
-    user,
-    selectedAdministration,
-    advanceSearchValue,
-    loadedFormId,
-  } = UIState.useState((s) => s);
+  const { user, selectedAdministration, advanceSearchValue, loadedFormId } =
+    UIState.useState((s) => s);
   const [pieChartData, setPieChartData] = useState([]);
 
   useEffect(() => {
@@ -66,8 +62,14 @@ const RowPieChartGroup = ({ formId, configFormId, chartList }) => {
   }
 
   return (
-    <Row align="middle" className="collapse-wrapper">
-      <Col span={24} className="container">
+    <Row
+      align="middle"
+      className="collapse-wrapper"
+    >
+      <Col
+        span={24}
+        className="container"
+      >
         {!pieChartData.length ? (
           <div className="chart-loading">
             <Spin />
@@ -78,10 +80,13 @@ const RowPieChartGroup = ({ formId, configFormId, chartList }) => {
               <div className="flexible-container">
                 {pieChartData?.map((p, pi) => {
                   return (
-                    <div key={pi} className="flexible-columns">
+                    <div
+                      key={pi}
+                      className="flexible-columns"
+                    >
                       <Card
                         className="visual-card-wrapper splited"
-                        title={p?.name ? upperFirst(p?.name) : ""}
+                        title={p?.name ? upperFirst(p?.name) : ''}
                       >
                         <Chart
                           type={p.type}

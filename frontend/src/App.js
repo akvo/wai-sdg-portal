@@ -1,29 +1,24 @@
-import React, { useEffect } from "react";
-import { Layout, notification } from "antd";
-import { NonActiveUserMessage } from "./components/Notifications";
-import Navigation from "./components/Navigation";
-import RegistrationPopup from "./components/RegistrationPopup";
-import Footer from "./components/Footer";
-import Header from "./components/Header";
-import Content from "./components/Content";
-import { UIState } from "./state/ui";
-import api from "./util/api";
-import { useAuth0 } from "@auth0/auth0-react";
-import { createBrowserHistory } from "history";
-import { Router } from "react-router-dom";
-import isEmpty from "lodash/isEmpty";
-import "./App.scss";
+import React, { useEffect } from 'react';
+import { Layout, notification } from 'antd';
+import { NonActiveUserMessage } from './components/Notifications';
+import Navigation from './components/Navigation';
+import RegistrationPopup from './components/RegistrationPopup';
+import Footer from './components/Footer';
+import Header from './components/Header';
+import Content from './components/Content';
+import { UIState } from './state/ui';
+import api from './util/api';
+import { useAuth0 } from '@auth0/auth0-react';
+import { createBrowserHistory } from 'history';
+import { Router } from 'react-router-dom';
+import isEmpty from 'lodash/isEmpty';
+import './App.scss';
 
 const history = createBrowserHistory();
 
 function App() {
-  const {
-    isAuthenticated,
-    loginWithPopup,
-    logout,
-    user,
-    getIdTokenClaims,
-  } = useAuth0();
+  const { isAuthenticated, loginWithPopup, logout, user, getIdTokenClaims } =
+    useAuth0();
   const { registrationPopup } = UIState.useState((s) => s);
 
   useEffect(() => {
@@ -34,7 +29,7 @@ function App() {
           api.setToken(response.__raw);
         }
         api
-          .get("user/me")
+          .get('user/me')
           .then(({ data }) => {
             const { active } = data || {};
             UIState.update((u) => {
@@ -46,9 +41,9 @@ function App() {
               });
             }
             if (active) {
-              api.get("administration").then((a) => {
+              api.get('administration').then((a) => {
                 let administrationByAccess = a.data;
-                if (user?.role !== "admin" && !isEmpty(data?.access)) {
+                if (user?.role !== 'admin' && !isEmpty(data?.access)) {
                   administrationByAccess = a.data.filter(
                     (adm) =>
                       data?.access.includes(adm.id) ||
@@ -57,7 +52,7 @@ function App() {
                 }
 
                 const selectedAdministration =
-                  user?.role === "admin" || data?.access?.length > 1
+                  user?.role === 'admin' || data?.access?.length > 1
                     ? [null]
                     : [null, data?.access?.[0]];
                 UIState.update((u) => {
@@ -89,9 +84,9 @@ function App() {
           UIState.update((c) => {
             c.loading = false;
           });
-          if (window.location.pathname === "/login") {
+          if (window.location.pathname === '/login') {
             loginWithPopup();
-            history.push("/");
+            history.push('/');
           }
         }, 1000);
       }

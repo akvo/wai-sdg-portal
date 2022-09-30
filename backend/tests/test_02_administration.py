@@ -4,10 +4,9 @@ import pandas as pd
 from fastapi import FastAPI
 from httpx import AsyncClient
 from tests.test_01_auth import Acc
-from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
-from db.connection import get_db_url
 from db import crud_administration as ca
+from models.administration import Administration
 
 pytestmark = pytest.mark.asyncio
 sys.path.append("..")
@@ -20,7 +19,6 @@ class TestAdministrationRoute():
     @pytest.mark.asyncio
     async def test_seed_administration(self, app: FastAPI, session: Session,
                                        client: AsyncClient) -> None:
-        engine = create_engine(get_db_url())
         data = pd.read_csv(administration_file)
         parents = list(data['UNIT_TYPE'].unique())
         parents = pd.DataFrame(parents, columns=['name'])
@@ -32,10 +30,10 @@ class TestAdministrationRoute():
         results = parents[['name', 'parent'
                            ]].append(data).reset_index()[['name', 'parent']]
         results['id'] = results.index + 1
-        results.to_sql('administration',
-                       engine,
-                       if_exists='append',
-                       index=False)
+        for adm in results.to_dict("records"):
+            parent = adm["parent"] if adm["parent"] == adm["parent"] else None
+            ca.add_administration(session=session, data=Administration(
+                id=int(adm["id"]), parent=parent, name=adm["name"]))
         res = await client.get(app.url_path_for("administration:get"))
         assert res.status_code == 200
         res = res.json()

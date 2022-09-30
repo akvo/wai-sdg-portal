@@ -8,8 +8,17 @@ def add_form(
     session: Session,
     name: str,
     id: Optional[int] = None,
+    description: Optional[str] = None,
+    default_language: Optional[str] = None,
+    languages: Optional[List[str]] = None,
+    translations: Optional[List[dict]] = None
 ) -> FormDict:
-    form = Form(name=name, id=id)
+    form = Form(id=id,
+                name=name,
+                description=description,
+                default_language=default_language,
+                languages=languages,
+                translations=translations)
     session.add(form)
     session.commit()
     session.flush()
@@ -43,3 +52,24 @@ def get_form_list():
     session = Session(engine)
     form = session.query(Form).all()
     return [f"{f.id} - {f.name}" for f in form]
+
+
+def update_form(
+    session: Session,
+    id: int,
+    name: str,
+    description: Optional[str] = None,
+    default_language: Optional[str] = None,
+    languages: Optional[List[str]] = None,
+    translations: Optional[List[dict]] = None
+) -> FormDict:
+    form = session.query(Form).filter(Form.id == id).first()
+    form.name = name
+    form.description = description
+    form.default_language = default_language
+    form.languages = languages
+    form.translations = translations
+    session.commit()
+    session.flush()
+    session.refresh(form)
+    return form

@@ -30,7 +30,8 @@ class Administration(Base):
     children = relationship("Administration")
     parent_detail = relationship("Administration", remote_side=[id])
 
-    def __init__(self, parent: int, name: str):
+    def __init__(self, id: int, parent: int, name: str):
+        self.id = id
         self.parent = parent
         self.name = name
 
@@ -69,10 +70,7 @@ class Administration(Base):
 
     @property
     def simplify_serialize_with_children(self):
-        return {
-            "id": self.id,
-            "children": [c.id for c in self.children]
-        }
+        return {"id": self.id, "children": [c.id for c in self.children]}
 
 
 class AdministrationBase(BaseModel):

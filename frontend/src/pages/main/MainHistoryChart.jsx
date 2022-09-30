@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { Row, Col, Card, Select, Spin, Space } from "antd";
-import { CloseSquareOutlined } from "@ant-design/icons";
+import React, { useState, useEffect } from 'react';
+import { Row, Col, Card, Select, Spin, Space } from 'antd';
+import { CloseSquareOutlined } from '@ant-design/icons';
 
-import "./main.scss";
-import { UIState } from "../../state/ui";
-import api from "../../util/api";
-import Chart from "../../chart";
-import isEmpty from "lodash/isEmpty";
+import './main.scss';
+import { UIState } from '../../state/ui';
+import api from '../../util/api';
+import Chart from '../../chart';
+import isEmpty from 'lodash/isEmpty';
 
-const { mainText } = window?.i18n;
+const { mainText } = window.i18n;
 const { Option } = Select;
 
-const MainHistoryChart = ({ current, data, question }) => {
+const MainHistoryChart = ({ data, question }) => {
   const { historyChart } = UIState.useState((s) => s);
   const { disabled } = historyChart;
   const [historyChartData, setHistoryChartData] = useState([]);
@@ -20,7 +20,7 @@ const MainHistoryChart = ({ current, data, question }) => {
 
   // Filter question option & number
   question = question
-    .filter((q) => ["option", "number"].includes(q.type))
+    .filter((q) => ['option', 'number'].includes(q.type))
     .map((q) => ({
       ...q,
       disabled: disabled?.map((d) => d.question)?.includes(q.id),
@@ -40,7 +40,7 @@ const MainHistoryChart = ({ current, data, question }) => {
             ...x,
             key: `history-${i}`,
           }));
-          if (selected?.type === "option") {
+          if (selected?.type === 'option') {
             data = selected?.option?.map((opt) => {
               const find = data?.find(
                 (d) => d?.value?.toLowerCase() === opt?.name?.toLowerCase()
@@ -52,7 +52,7 @@ const MainHistoryChart = ({ current, data, question }) => {
               };
             });
           }
-          if (selected?.type === "number") {
+          if (selected?.type === 'number') {
             data = data?.map((d) => ({
               ...d,
               type: selected?.type,
@@ -61,7 +61,7 @@ const MainHistoryChart = ({ current, data, question }) => {
           }
           setHistoryChartData(data);
         })
-        .catch((err) => {
+        .catch(() => {
           setHistoryChartData([]);
         })
         .finally(() => {
@@ -83,21 +83,33 @@ const MainHistoryChart = ({ current, data, question }) => {
   };
 
   return (
-    <Row align="middle" className="collapse-wrapper">
-      <Col span={24} className="container">
+    <Row
+      align="middle"
+      className="collapse-wrapper"
+    >
+      <Col
+        span={24}
+        className="container"
+      >
         <Card
           className="visual-card-wrapper"
           title={
             <Row align="middle">
-              <Col align="start" span={12}>
+              <Col
+                align="start"
+                span={12}
+              >
                 {mainText?.historyChartCardTitle}
               </Col>
-              <Col align="end" span={12}>
+              <Col
+                align="end"
+                span={12}
+              >
                 <CloseSquareOutlined
                   onClick={() => {
                     window.scrollTo({
                       top: 0,
-                      behavior: "smooth",
+                      behavior: 'smooth',
                     });
                     UIState.update((s) => {
                       s.historyChart = {};
@@ -109,12 +121,16 @@ const MainHistoryChart = ({ current, data, question }) => {
           }
           key="history-chart-card"
         >
-          <Space size="large" direction="vertical" style={{ width: "100%" }}>
+          <Space
+            size="large"
+            direction="vertical"
+            style={{ width: '100%' }}
+          >
             <Select
               allowClear
               showSearch
               placeholder={mainText?.historyChartSelectOptionPlaceholder}
-              style={{ width: "100%" }}
+              style={{ width: '100%' }}
               optionFilterProp="label"
               filterOption={(input, option) =>
                 option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -123,7 +139,11 @@ const MainHistoryChart = ({ current, data, question }) => {
               value={isEmpty(historyChart) ? [] : [historyChart.selected.id]}
             >
               {question.map((q, qi) => (
-                <Option key={qi} value={q.id} disabled={q.disabled}>
+                <Option
+                  key={qi}
+                  value={q.id}
+                  disabled={q.disabled}
+                >
                   {q.name}
                 </Option>
               ))}
