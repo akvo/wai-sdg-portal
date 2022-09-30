@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Row, Col, Button, Space, Divider, notification } from 'antd';
+import { Row, Col, Button, Space, Divider, notification, Spin } from 'antd';
 import WebformEditor from 'akvo-react-form-editor';
 import 'akvo-react-form-editor/dist/index.css';
 import { DropdownNavigation } from '../../components/common';
@@ -17,11 +17,16 @@ const defaultQuestion = {
 const ManageForm = () => {
   const [form, setForm] = useState(null);
   const [initialValue, setInitialValue] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const { formId } = form ? window.page_config[form] : {};
 
   const loadForm = () => {
+    setIsLoading(true);
     api.get(`/webform/${formId}?edit=true`).then((res) => {
       setInitialValue(res.data);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
     });
   };
 
@@ -74,7 +79,15 @@ const ManageForm = () => {
           </Col>
         </Row>
       </div>
-      {!isEmpty(initialValue) && (
+      {isLoading && (
+        <>
+          <Divider />
+          <div className="loading">
+            <Spin />
+          </div>
+        </>
+      )}
+      {!isEmpty(initialValue) && !isLoading && (
         <>
           <Divider />
           <WebformEditor

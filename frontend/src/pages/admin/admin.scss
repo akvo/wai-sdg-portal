@@ -273,3 +273,11 @@
     }
   }
 }
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  min-height: 52vh;
+}
