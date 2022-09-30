@@ -50,7 +50,7 @@ const Navigation = () => {
         className="menu-drawer-container"
         placement="right"
         onClose={onClose}
-        visible={visible}
+        open={visible}
       >
         <Menu
           mode="inline"
