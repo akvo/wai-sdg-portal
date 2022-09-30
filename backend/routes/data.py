@@ -141,8 +141,8 @@ def add(req: Request,
                         created=datetime.now())
         if q.type == QuestionType.administration:
             check_access(a["value"][0], user)
-            if len(a["value"]) == 2:
-                administration = int(a["value"][1])
+            if len(a["value"]):
+                administration = int(a["value"][-1])
                 answer.value = administration
                 if q.meta:
                     adm_name = crud_administration.get_administration_by_id(
