@@ -129,27 +129,38 @@ def get_form_definition(req: Request, id: int, session: Session,
 
 def generateId(index: int = 0):
     now = datetime.now().timestamp() * 1000000
-    return str(round(now) + index)[-9:]
+    unique_id = str(round(now) + index)[-9:]
+    return int(unique_id)
 
 
-def transformJsonForm(json_form: dict):
+def transformJsonForm(session: Session, json_form: dict, edit: bool = False):
     qid_mapping = {}
-    form_id = generateId()
+    form_id = json_form.get('id') if edit else generateId()
     # question group
     question_group = []
     for qg in json_form.get('question_group'):
-        qg_id = generateId()
+        is_new_group = True
+        if edit:
+            find_qg = session.query(QuestionGroup).filter(
+                QuestionGroup.id == qg.get('id')).first()
+            is_new_group = False if find_qg else True
+        qg_id = generateId() if is_new_group else qg.get('id')
         qg.update({'id': qg_id})
         # question
         question = []
         for q in qg.get('question'):
+            is_new_question = True
+            if edit:
+                find_q = session.query(Question).filter(
+                    Question.id == q.get('id')).first()
+                is_new_question = False if find_q else True
             curr_qid = q.get('id')
-            qid = generateId()
+            qid = generateId() if is_new_question else q.get('id')
             qid_mapping.update({curr_qid: qid})
             q.update({'id': qid})
             q.update({'questionGroupId': qg_id})
             # dependency
-            if 'dependency' in q:
+            if 'dependency' in q and q.get('dependency'):
                 dependency = []
                 for d in q.get('dependency'):
                     depend_to = d.get('id')
@@ -157,10 +168,10 @@ def transformJsonForm(json_form: dict):
                     dependency.append(d)
                 q.update({'dependency': dependency})
             # option
-            if 'option' in q:
+            if 'option' in q and q.get('option'):
                 option = []
                 for o in q.get('option'):
-                    oid = generateId()
+                    oid = generateId() if is_new_question else o.get('id')
                     o.update({'id': oid})
                     option.append(o)
                 q.update({'option': option})
@@ -228,11 +239,9 @@ def save_webform(session: Session, json_form: dict, form_id: int = None):
             else:
                 is_new_group = True
         if not form_id or is_new_group:
-            qgid = qg.get('id') if is_test or not is_new_group \
-                else generateId()
             question_group = crud_question_group.add_question_group(
                 session=sessionUsed,
-                id=qgid,
+                id=qg.get('id'),
                 form=form.id,
                 name=qg.get('name'),
                 order=qg.get('order'),
@@ -277,11 +286,9 @@ def save_webform(session: Session, json_form: dict, form_id: int = None):
                 else:
                     is_new_question = True
             if not form_id or is_new_question:
-                qid = q.get('id') if is_test or not is_new_question \
-                    else generateId()
                 crud_question.add_question(
                     session=sessionUsed,
-                    id=qid,
+                    id=q.get('id'),
                     name=q.get('name'),
                     form=form.id,
                     question_group=question_group.id,
@@ -402,7 +409,7 @@ async def add_webform(
     if os.environ.get('TESTING'):
         json_form = payload
     else:
-        json_form = transformJsonForm(json_form=payload)
+        json_form = transformJsonForm(session=session, json_form=payload)
     background_tasks.add_task(
         save_webform, session=session, json_form=json_form)
     return json_form
@@ -421,6 +428,11 @@ async def update_webform(
     session: Session = Depends(get_session),
     credentials: credentials = Depends(security)
 ):
+    if os.environ.get('TESTING'):
+        json_form = payload
+    else:
+        json_form = transformJsonForm(
+            session=session, json_form=payload, edit=True)
     background_tasks.add_task(
-        save_webform, session=session, json_form=payload, form_id=id)
+        save_webform, session=session, json_form=json_form, form_id=id)
     return payload
