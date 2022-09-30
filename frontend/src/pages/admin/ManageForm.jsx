@@ -81,38 +81,39 @@ const ManageForm = () => {
         </Row>
       </div>
       <Divider />
-      {isLoading && (
-        <div className="loading">
-          <Spin />
+      <div>
+        {isLoading && (
+          <div className="loading">
+            <Spin />
+          </div>
+        )}
+        <div
+          style={{
+            visibility: !isEmpty(initialValue) && formId ? 'visible' : 'hidden',
+          }}
+        >
+          <WebformEditor
+            onSave={onSaveForm}
+            initialValue={initialValue}
+            defaultQuestion={defaultQuestion}
+            limitQuestionType={[
+              'text',
+              'number',
+              'option',
+              'multiple_option',
+              'date',
+              'geo',
+              'cascade',
+            ]}
+            settingCascadeURL={[
+              {
+                id: 1,
+                name: 'administration',
+                endpoint: '/api/administration',
+              },
+            ]}
+          />
         </div>
-      )}
-      <div
-        style={{
-          visibility:
-            !isEmpty(initialValue) && !isLoading ? 'visible' : 'hidden',
-        }}
-      >
-        <WebformEditor
-          onSave={onSaveForm}
-          initialValue={initialValue}
-          defaultQuestion={defaultQuestion}
-          limitQuestionType={[
-            'text',
-            'number',
-            'option',
-            'multiple_option',
-            'date',
-            'geo',
-            'cascade',
-          ]}
-          settingCascadeURL={[
-            {
-              id: 1,
-              name: 'administration',
-              endpoint: '/api/administration',
-            },
-          ]}
-        />
       </div>
     </div>
   );
