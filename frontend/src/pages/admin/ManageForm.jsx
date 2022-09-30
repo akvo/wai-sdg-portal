@@ -26,7 +26,7 @@ const ManageForm = () => {
       setInitialValue(res.data);
       setTimeout(() => {
         setIsLoading(false);
-      }, 500);
+      }, 1000);
     });
   };
 
@@ -35,11 +35,12 @@ const ManageForm = () => {
     if (formId && !isEmpty(initialValue)) {
       api
         .put(`/webform/${formId}`, values)
-        .then(() =>
+        .then((res) => {
+          setInitialValue(res.data);
           notification.success({
             message: 'Form updated successfully',
-          })
-        )
+          });
+        })
         .catch(() =>
           notification.success({
             message: 'Oops, something went wrong',
