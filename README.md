@@ -1,6 +1,6 @@
 # WAI SDG Portal
 
-[![Build Status](https://akvo.semaphoreci.com/badges/wai-sdg-portal/branches/main.svg?style=shields)](https://akvo.semaphoreci.com/projects/wai-sdg-portal) [![Repo Size](https://img.shields.io/github/repo-size/akvo/wai-sdg-portal)](https://img.shields.io/github/repo-size/akvo/wai-sdg-portal) [![Languages](https://img.shields.io/github/languages/count/akvo/wai-sdg-portal
+[![Build Status](https://akvo.semaphoreci.com/badges/wai-sdg-portal/branches/main.svg?style=shields)](https://akvo.semaphoreci.com/projects/wai-sdg-portal) [![Repo Size](https://img.shields.io/github/repo-size/akvo/wai-sdg-portal)](https://img.shields.io/github/repo-size/akvo/wai-sdg-portal) [![Coverage Status](https://coveralls.io/repos/github/akvo/wai-sdg-portal/badge.svg?branch=main)](https://coveralls.io/github/akvo/wai-sdg-portal?branch=main) [![Languages](https://img.shields.io/github/languages/count/akvo/wai-sdg-portal
 )](https://img.shields.io/github/languages/count/akvo/wai-sdg-portal
 ) [![Issues](https://img.shields.io/github/issues/akvo/wai-sdg-portal
 )](https://img.shields.io/github/issues/akvo/wai-sdg-portal
