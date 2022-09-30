@@ -26,7 +26,7 @@ const ManageForm = () => {
       setInitialValue(res.data);
       setTimeout(() => {
         setIsLoading(false);
-      }, 1000);
+      }, 100);
     });
   };
 
@@ -80,40 +80,40 @@ const ManageForm = () => {
           </Col>
         </Row>
       </div>
+      <Divider />
       {isLoading && (
-        <>
-          <Divider />
-          <div className="loading">
-            <Spin />
-          </div>
-        </>
+        <div className="loading">
+          <Spin />
+        </div>
       )}
-      {!isEmpty(initialValue) && !isLoading && (
-        <>
-          <Divider />
-          <WebformEditor
-            onSave={onSaveForm}
-            initialValue={initialValue}
-            defaultQuestion={defaultQuestion}
-            limitQuestionType={[
-              'text',
-              'number',
-              'option',
-              'multiple_option',
-              'date',
-              'geo',
-              'cascade',
-            ]}
-            settingCascadeURL={[
-              {
-                id: 1,
-                name: 'administration',
-                endpoint: '/api/administration',
-              },
-            ]}
-          />
-        </>
-      )}
+      <div
+        style={{
+          visibility:
+            !isEmpty(initialValue) && !isLoading ? 'visible' : 'hidden',
+        }}
+      >
+        <WebformEditor
+          onSave={onSaveForm}
+          initialValue={initialValue}
+          defaultQuestion={defaultQuestion}
+          limitQuestionType={[
+            'text',
+            'number',
+            'option',
+            'multiple_option',
+            'date',
+            'geo',
+            'cascade',
+          ]}
+          settingCascadeURL={[
+            {
+              id: 1,
+              name: 'administration',
+              endpoint: '/api/administration',
+            },
+          ]}
+        />
+      </div>
     </div>
   );
 };
