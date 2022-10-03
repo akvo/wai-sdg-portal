@@ -44,7 +44,7 @@ const TabJMP = ({ formId, chartList, question, show }) => {
           : selectedAdministration[levels - 1];
 
       const administrationList = administration.filter(
-        (adm) => adm?.parent === administrationId
+        (adm) => adm?.parent === (administrationId || null)
       );
 
       const apiCall = chartList?.map((chart) => {
