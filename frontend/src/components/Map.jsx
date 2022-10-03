@@ -15,6 +15,9 @@ const Map = () => {
         return x;
       });
 
+  // use tile layer from config
+  const baseMap = window?.features?.mapFeature?.baseMap || tileOSM;
+
   useEffect(() => {
     if (!boundsAlignToRight) {
       UIState.update((u) => {
@@ -34,7 +37,7 @@ const Map = () => {
           width: '100%',
         }}
       >
-        <TileLayer {...tileOSM} />
+        <TileLayer {...baseMap} />
         <GeoJSON
           key="geodata"
           style={{

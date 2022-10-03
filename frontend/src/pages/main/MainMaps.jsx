@@ -410,6 +410,9 @@ const MainMaps = ({ question, current }) => {
 
   const shapeQuestion = question.find((q) => q.id === current.maps?.shape?.id);
 
+  // use tile layer from config
+  const baseMap = window?.features?.mapFeature?.baseMap || tileOSM;
+
   // support selectable marker question
   const { selectableMarkerDropdown } = current;
   const [selectableMarkerQuestion, setSelectableMarkerQuestion] =
@@ -840,7 +843,7 @@ const MainMaps = ({ question, current }) => {
             width: '100%',
           }}
         >
-          <TileLayer {...tileOSM} />
+          <TileLayer {...baseMap} />
           <GeoJSON
             key="geodata"
             style={geoStyle}
