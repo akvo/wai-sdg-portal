@@ -32,7 +32,11 @@ random_point = os.path.exists(random_point_file)
 sample_geo = False
 if random_point:
     sample_geo = pd.read_csv(random_point_file)
+    sample_geo = sample_geo.sample(frac=1)
     sample_geo = sample_geo.rename(columns={levels[-1]: "name"})
+    sample_geo = sample_geo.to_dict('records')
+else:
+    print(f"{random_point_file} is required")
 with open(source_geo, 'r') as geo:
     geo = json.load(geo)
     ob = geo["objects"]
@@ -84,20 +88,17 @@ for table in ["data", "answer", "history"]:
 fake = Faker()
 
 
-def get_random_administration(fake, session, tmp=[]):
-    fa = fake.random_choices(elements=parent_administration, length=1)
+def get_random_administration(fake, session, adm_name=None):
+    fa = [adm_name] if adm_name else fake.random_choices(
+        elements=parent_administration, length=1)
     administration = crud_administration.get_administration_by_name(
         session=session, name=fa[0])
+    if adm_name:
+        return administration
     if not administration.children:
-        return get_random_administration(fake, session, tmp)
+        return get_random_administration(fake, session)
     fa = fake.random_int(min=0, max=len(administration.children) - 1)
-    adm = administration.children[fa]
-    if len(tmp) == len(parent_administration):
-        tmp = []
-    if adm.name in tmp and len(tmp) != len(parent_administration):
-        return get_random_administration(fake, session, tmp)
-    tmp.append(adm.name)
-    return adm
+    return administration.children[fa]
 
 
 def get_odf_value(status_verified, not_triggered):
@@ -117,12 +118,13 @@ for form in forms:
     if form.id in child_forms:
         answer_options = crud_answer.get_answer_by_question(
             session=session, question=1260775116)
-    tmp = []  # to list administration
     for i in range(repeats):
         answers = []
         names = []
-        administration = get_random_administration(fake, session, tmp)
-        geo = None
+        iloc = i % (len(sample_geo) - 1)
+        geo = sample_geo[iloc]
+        administration = get_random_administration(
+            fake, session, adm_name=geo['name'])
         project_id = None
         if form.id in child_forms:
             project_id = fake.random_choices(
@@ -131,14 +133,10 @@ for form in forms:
                 session=session, id=project_id.data)
             administration = crud_administration.get_administration_by_id(
                 session=session, id=administration.administration)
-        if random_point:
-            geo = sample_geo[sample_geo['name'] == administration.name]
-            if geo.shape[0]:
-                geo = geo.to_dict("records")
-                iloc = fake.random_int(min=0, max=len(geo) - 1)
-                geo = [geo[iloc]['lat'], geo[iloc]['long']]
-            else:
-                geo = None
+        if geo:
+            geo = [geo['lat'], geo['long']]
+        else:
+            geo = None
         # For ODF
         status_verified = fake.boolean()
         not_triggered = fake.boolean(chance_of_getting_true=5)
