@@ -37,6 +37,8 @@ if random_point:
     sample_geo = sample_geo.to_dict('records')
 else:
     print(f"{random_point_file} is required")
+    sys.exit()
+
 with open(source_geo, 'r') as geo:
     geo = json.load(geo)
     ob = geo["objects"]
