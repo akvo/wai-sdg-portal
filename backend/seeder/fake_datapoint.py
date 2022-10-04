@@ -84,14 +84,20 @@ for table in ["data", "answer", "history"]:
 fake = Faker()
 
 
-def get_random_administration(fake, session):
+def get_random_administration(fake, session, tmp=[]):
     fa = fake.random_choices(elements=parent_administration, length=1)
     administration = crud_administration.get_administration_by_name(
         session=session, name=fa[0])
     if not administration.children:
-        return get_random_administration(fake, session)
+        return get_random_administration(fake, session, tmp)
     fa = fake.random_int(min=0, max=len(administration.children) - 1)
-    return administration.children[fa]
+    adm = administration.children[fa]
+    if len(tmp) == len(parent_administration):
+        tmp = []
+    if adm.name in tmp and len(tmp) != len(parent_administration):
+        return get_random_administration(fake, session, tmp)
+    tmp.append(adm.name)
+    return adm
 
 
 def get_odf_value(status_verified, not_triggered):
@@ -111,17 +117,18 @@ for form in forms:
     if form.id in child_forms:
         answer_options = crud_answer.get_answer_by_question(
             session=session, question=1260775116)
+    tmp = []  # to list administration
     for i in range(repeats):
         answers = []
         names = []
-        administration = get_random_administration(fake, session)
+        administration = get_random_administration(fake, session, tmp)
         geo = None
         project_id = None
         if form.id in child_forms:
-            project_id = fake.random_choices(elements=answer_options,
-                                             length=1)[0]
-            administration = crud_data.get_data_by_id(session=session,
-                                                      id=project_id.data)
+            project_id = fake.random_choices(
+                elements=answer_options, length=1)[0]
+            administration = crud_data.get_data_by_id(
+                session=session, id=project_id.data)
             administration = crud_administration.get_administration_by_id(
                 session=session, id=administration.administration)
         if random_point:
@@ -147,8 +154,8 @@ for form in forms:
                     fa = fake.random_int(min=0, max=len(q.option) - 1)
                     answer.options = [q.option[fa].name]
                     if q.id == 557700349:
-                        answer.options = get_odf_value(status_verified,
-                                                       not_triggered)
+                        answer.options = get_odf_value(
+                            status_verified, not_triggered)
                     value = True
                 if q.type == QuestionType.answer_list:
                     answer.value = project_id.value
@@ -193,11 +200,12 @@ for form in forms:
                     answers.append(answer)
         name = " - ".join(names)
         administration = administration.id
-        data = crud_data.add_data(session=session,
-                                  form=form.id,
-                                  name=name,
-                                  geo=geo,
-                                  administration=administration,
-                                  created_by=user.id,
-                                  answers=answers)
+        data = crud_data.add_data(
+            session=session,
+            form=form.id,
+            name=name,
+            geo=geo,
+            administration=administration,
+            created_by=user.id,
+            answers=answers)
     print(f"ADDED {repeats} datapoint to {form.name}")
