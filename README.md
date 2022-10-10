@@ -157,7 +157,7 @@ see:
 
 ## Test Instances
 
-![Website Ethiopia](https://img.shields.io/website?down_color=red&down_message=offline&label=WAI-Ethiopia&up_color=green&up_message=online&url=https%3A%2F%2Fwai-ethiopia.akvotest.org) ![Website Uganda](https://img.shields.io/website?down_color=red&down_message=offline&label=WAI-Uganda&up_color=green&up_message=online&url=https%3A%2F%2Fwai-uganda.akvotest.org) ![Website Nepal](https://img.shields.io/website?down_color=red&down_message=offline&label=WAI-Nepal&up_color=green&up_message=online&url=https%3A%2F%2Fwai-nepal.akvotest.org) ![Website Bangladesh](https://img.shields.io/website?down_color=red&down_message=offline&label=WAI-Bangladesh&up_color=green&up_message=online&url=https%3A%2F%2Fwai-bangladesh.akvotest.org)
+![Website JMP-Explorer](https://img.shields.io/website?down_color=red&down_message=offline&label=JMP-Explorer&up_color=green&up_message=online&url=https%3A%2F%2Fjmp-explorer.akvotest.org) ![Website Ethiopia](https://img.shields.io/website?down_color=red&down_message=offline&label=WAI-Ethiopia&up_color=green&up_message=online&url=https%3A%2F%2Fwai-ethiopia.akvotest.org) ![Website Uganda](https://img.shields.io/website?down_color=red&down_message=offline&label=WAI-Uganda&up_color=green&up_message=online&url=https%3A%2F%2Fwai-uganda.akvotest.org) ![Website Nepal](https://img.shields.io/website?down_color=red&down_message=offline&label=WAI-Nepal&up_color=green&up_message=online&url=https%3A%2F%2Fwai-nepal.akvotest.org) ![Website Bangladesh](https://img.shields.io/website?down_color=red&down_message=offline&label=WAI-Bangladesh&up_color=green&up_message=online&url=https%3A%2F%2Fwai-bangladesh.akvotest.org)
 
 ### Contact
 
