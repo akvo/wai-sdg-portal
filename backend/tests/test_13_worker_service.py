@@ -25,7 +25,7 @@ class TestWorkerRoutes():
             headers={"Authorization": f"Bearer {account.token}"})
         assert res.status_code == 200
         res = res.json()
-        assert res["total"] == 1
+        assert res["total"] == 2
 
     @pytest.mark.asyncio
     async def test_execute_first_queue(self, worker: FastAPI, session: Session,
@@ -64,4 +64,4 @@ class TestWorkerRoutes():
             headers={"Authorization": f"Bearer {account.token}"})
         assert res.status_code == 200
         res = res.json()
-        assert res["total"] == 3
+        assert res["total"] == 4

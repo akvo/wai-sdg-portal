@@ -22,10 +22,10 @@ class TestDataRoutes():
         assert res.status_code == 200
         res = res.json()
         assert res["current"] == 1
-        assert res["total"] == 1
+        assert res["total"] == 2
         assert res["total_page"] == 1
-        assert len(res["data"]) == 1
-        first_data = res["data"][0]
+        assert len(res["data"]) == 2
+        first_data = res["data"][len(res["data"]) - 1]
         assert first_data == {
             "id": 1,
             "name": "Garut - Garut",

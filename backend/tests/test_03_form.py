@@ -205,7 +205,8 @@ class TestFormRoutes():
                 "form": 1,
                 "question_group": "Test Question Group",
                 "meta": True,
-                "type": "text"
+                "type": "text",
+                "required": False,
             },
             json={"dependency": [{
                 "id": 1,
@@ -221,7 +222,7 @@ class TestFormRoutes():
         assert res["order"] == 4
         assert res["name"] == "Test Datapoint Text Question"
         assert res["meta"] is True
-        assert res["required"] is True
+        assert res["required"] is False
         assert res["rule"] is None
         assert res["type"] == "text"
         assert res["dependency"] == [{

@@ -34,7 +34,7 @@ def get(req: Request, question_id: int,
         Question.id == question_id).first()
     answers = session.query(Answer).filter(
         Answer.question == question_id).all()
-    if question.type == QuestionType.number:
+    if question.type == QuestionType.number and answers:
         values = [answer.value for answer in answers]
         mean = f"Average value is {round(np.mean(values), 2)}"
         q1 = f"First quantile value is {round(np.quantile(values, .25), 2)}"
