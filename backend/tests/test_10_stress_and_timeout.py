@@ -28,12 +28,10 @@ class TestStressAndTimeout():
         assert df.shape[0] == 1000
         df.to_excel(excel_file, index=False, sheet_name='data')
         start = datetime.now()
-        errors = validation.validate(session=session,
-                                     form=1,
-                                     administration=1,
-                                     file=excel_file)
+        errors = validation.validate(
+            session=session, form=1, administration=1, file=excel_file)
         done = datetime.now()
         elapsed = done - start
         assert len(errors) == 5000
-        assert elapsed.seconds < 1
+        assert elapsed.seconds < 1.5
         os.remove(excel_file)
