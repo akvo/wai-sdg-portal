@@ -131,7 +131,7 @@ class TestSubmissionRoutes():
                     "order": 4,
                     "question_group": 1,
                     "type": "text",
-                    "required": True,
+                    "required": False,
                     "rule": None,
                     "option": [],
                     "dependency": [{
@@ -262,6 +262,49 @@ class TestSubmissionRoutes():
             }, {
                 "question": 4,
                 "value": "Garut"
+            }]
+        }
+        # second submission
+        res = await client.post(
+            app.url_path_for("data:create", form_id=1),
+            json=[{
+                "question": 1,
+                "value": "Option 2"
+            }, {
+                "question": 2,
+                "value": [2, 10]
+            }, {
+                "question": 3,
+                "value": {
+                    "lat": -7.836114,
+                    "lng": 110.331143
+                }
+            }],
+            headers={"Authorization": f"Bearer {account.token}"})
+        assert res.status_code == 200
+        res = res.json()
+        assert res == {
+            "id": 2,
+            "name": "Garut",
+            "administration": 10,
+            "created": today,
+            "created_by": "Akvo Support",
+            "form": 1,
+            "geo": {
+                "lat": -7.836114,
+                "long": 110.331143
+            },
+            "updated": None,
+            "updated_by": None,
+            "answer": [{
+                "question": 1,
+                "value": "Option 2"
+            }, {
+                "question": 2,
+                "value": 10
+            }, {
+                "question": 3,
+                "value": "-7.836114|110.331143"
             }]
         }
 
