@@ -46,7 +46,7 @@ class TestAdvancedFilter():
             ],
             [{"id": 1, "question": "1", "answer": "option 2"}],
         ]
-
+        # search option 1
         res = await client.get(
             app.url_path_for("data:get", form_id=1),
             params={"q": "1|option 1"},
@@ -57,7 +57,7 @@ class TestAdvancedFilter():
         assert res["total"] == 1
         assert res["total_page"] == 1
         assert len(res["data"]) == 1
-
+        # search option 2
         res = await client.get(
             app.url_path_for("data:get", form_id=1),
             params={"q": "1|option 2"},
@@ -68,6 +68,17 @@ class TestAdvancedFilter():
         assert res["total"] == 3
         assert res["total_page"] == 1
         assert len(res["data"]) == 3
+        # search with question and administration filter
+        res = await client.get(
+            app.url_path_for("data:get", form_id=1),
+            params={"question": [1, 4], "administration": 10},
+            headers={"Authorization": f"Bearer {account.token}"})
+        assert res.status_code == 200
+        res = res.json()
+        assert res["current"] == 1
+        assert res["total"] == 2
+        assert res["total_page"] == 1
+        assert len(res["data"]) == 2
 
     @pytest.mark.asyncio
     async def test_get_maps_with_query_option(self, app: FastAPI,

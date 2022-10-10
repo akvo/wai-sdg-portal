@@ -14,13 +14,14 @@ sys.path.append("..")
 
 
 class Acc:
-    def __init__(self, verified):
+    def __init__(
+            self, verified: bool = False, email: str = None, name: str = None):
         self.exp_date = (datetime.now() + timedelta(days=30)).timestamp()
         self.data = {
-            "email": "support@akvo.org",
-            "name": "Akvo Support",
+            "email": email if email else "support@akvo.org",
+            "name": name if name else "Akvo Support",
             "exp": self.exp_date,
-            "email_verified": verified
+            "email_verified": verified,
         }
         self.token = jwt.encode(self.data, "secret", algorithm="HS256")
         self.decoded = jwt.decode(self.token, "secret", algorithms=["HS256"])
@@ -28,7 +29,7 @@ class Acc:
 
 class TestAuthorizationSetup:
     def test_token_verification(self):
-        account = Acc(True)
+        account = Acc(verified=True)
         assert account.token != ""
         assert account.decoded == account.data
         assert True if verify_token(account.decoded) else False
@@ -37,36 +38,190 @@ class TestAuthorizationSetup:
             verify_token(account.decoded)
 
     @pytest.mark.asyncio
-    async def test_user_get_registered(self, app: FastAPI, session: Session,
-                                       client: AsyncClient) -> None:
-        org = crud_organisation.add_organisation(session=session,
-                                                 name="Akvo",
-                                                 type="iNGO")
+    async def test_user_get_registered(
+        self, app: FastAPI, session: Session, client: AsyncClient
+    ) -> None:
+        org = crud_organisation.add_organisation(
+            session=session, name="Akvo", type="iNGO"
+        )
         org = org.serialize
         assert org["id"] == 1
         assert org["name"] == "Akvo"
         assert org["type"] == OrganisationType.iNGO
-        account = Acc(True)
+        account = Acc(verified=True)
         res = await client.post(
             app.url_path_for("user:register"),
             params={
                 "first_name": "Akvo",
                 "last_name": "Support",
-                "organisation": org["id"]
+                "organisation": org["id"],
             },
-            headers={"Authorization": f"Bearer {account.token}"})
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
         assert res.status_code == 200
         res = res.json()
-        user = crud_user.update_user_by_id(session=session,
-                                           id=1,
-                                           role="admin",
-                                           active=True)
+        user = crud_user.update_user_by_id(
+            session=session, id=1, role="admin", active=True
+        )
         assert res["email"] == user.email
         assert res["active"] is False
         res = await client.get(
             app.url_path_for("user:me"),
-            headers={"Authorization": f"Bearer {account.token}"})
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
         assert res.status_code == 200
         res = res.json()
         assert res["active"] is user.active
         assert res["role"] == "admin"
+
+    @pytest.mark.asyncio
+    async def test_get_user(
+        self, app: FastAPI, session: Session, client: AsyncClient
+    ) -> None:
+        account = Acc(verified=True)
+        res = await client.get(
+            app.url_path_for("user:get"),
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
+        assert res.status_code == 404
+
+        res = await client.get(
+            app.url_path_for("user:get"),
+            params={"page": 2},
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
+        assert res.status_code == 404
+        # get active user
+        res = await client.get(
+            app.url_path_for("user:get"),
+            params={"active": 1},
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
+        assert res.status_code == 200
+        res = res.json()
+        assert res["current"] == 1
+        assert res["total"] == 1
+        assert res["total_page"] == 1
+        assert len(res["data"]) == 1
+        assert res["data"] == [
+            {
+                "id": 1,
+                "email": "support@akvo.org",
+                "name": "Akvo Support",
+                "role": "admin",
+                "active": True,
+                "email_verified": True,
+                "picture": None,
+                "organisation": 1,
+            }
+        ]
+        # register as new user
+        new_account = Acc(
+            verified=True, email="john_doe@mail.com", name="John Doe")
+        res = await client.post(
+            app.url_path_for("user:register"),
+            params={
+                "first_name": "John",
+                "last_name": "Doe",
+                "organisation": 1,
+            },
+            headers={"Authorization": f"Bearer {new_account.token}"},
+        )
+        assert res.status_code == 200
+        # get non active user
+        res = await client.get(
+            app.url_path_for("user:get"),
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
+        assert res.status_code == 200
+        res = res.json()
+        assert res["current"] == 1
+        assert res["total"] == 1
+        assert res["total_page"] == 1
+        assert len(res["data"]) == 1
+        assert res["data"] == [
+            {
+                "id": 2,
+                "email": "john_doe@mail.com",
+                "name": "John Doe",
+                "role": "user",
+                "active": False,
+                "email_verified": None,
+                "picture": None,
+                "organisation": 1,
+            }
+        ]
+        # get user by id
+        res = await client.get(
+            app.url_path_for("user:get_by_id", id=3),
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
+        assert res.status_code == 404
+
+        res = await client.get(
+            app.url_path_for("user:get_by_id", id=1),
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
+        assert res.status_code == 200
+        res = res.json()
+        assert res == {
+            "id": 1,
+            "email": "support@akvo.org",
+            "name": "Akvo Support",
+            "role": "admin",
+            "active": True,
+            "access": [],
+            "organisation": 1
+        }
+
+    @pytest.mark.asyncio
+    async def test_update_user(
+        self, app: FastAPI, session: Session, client: AsyncClient
+    ) -> None:
+        account = Acc(verified=True)
+        res = await client.get(
+            app.url_path_for("user:get_by_id", id=2),
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
+        assert res.status_code == 200
+        user = res.json()
+        # update John Doe
+        res = await client.put(
+            app.url_path_for("user:update", id=user["id"]),
+            params={
+                "active": True,
+                "role": "admin",
+                "first_name": "John",
+                "last_name": "Doe",
+                "organisation": 1,
+            },
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
+        assert res.status_code == 200
+        res = res.json()
+        assert res == {
+            "id": 2,
+            "email": "john_doe@mail.com",
+            "name": "John Doe",
+            "role": "admin",
+            "active": True,
+            "access": [],
+            "organisation": 1
+        }
+
+        @pytest.mark.asyncio
+        async def test_delete_user(
+            self, app: FastAPI, session: Session, client: AsyncClient
+        ) -> None:
+            account = Acc(verified=True)
+            res = await client.get(
+                app.url_path_for("user:get_by_id", id=2),
+                headers={"Authorization": f"Bearer {account.token}"},
+            )
+            assert res.status_code == 200
+            user = res.json()
+            res = await client.delete(
+                app.url_path_for("user:delete", id=user["id"]),
+                headers={"Authorization": f"Bearer {account.token}"},
+            )
+            assert res.status_code == 204
