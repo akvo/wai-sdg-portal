@@ -14,8 +14,8 @@ today = datetime.today().strftime("%B %d, %Y")
 
 class TestDataUpdateRoutes():
     @pytest.mark.asyncio
-    async def test_update_data(self, app: FastAPI, session: Session,
-                               client: AsyncClient) -> None:
+    async def test_update_data(
+            self, app: FastAPI, session: Session, client: AsyncClient) -> None:
         res = await client.put(
             app.url_path_for("data:update", id=1),
             json=[{
@@ -55,6 +55,43 @@ class TestDataUpdateRoutes():
                 "value": "Bandung"
             }]
         }
+        # update data 2
+        res = await client.put(
+            app.url_path_for("data:update", id=2),
+            json=[{
+                "question": 4,
+                "value": "Bali"
+            }],
+            headers={"Authorization": f"Bearer {account.token}"})
+        assert res.status_code == 200
+        res = res.json()
+        assert res == {
+            "id": 2,
+            "name": "Garut",
+            "administration": 10,
+            "created_by": "Akvo Support",
+            "created": today,
+            "form": 1,
+            "geo": {
+                "lat": -7.836114,
+                "long": 110.331143
+            },
+            "updated_by": "Akvo Support",
+            "updated": today,
+            "answer": [{
+                "question": 1,
+                "value": "Option 2"
+            }, {
+                "question": 2,
+                "value": 10
+            }, {
+                "question": 3,
+                "value": "-7.836114|110.331143"
+            }, {
+                "question": 4,
+                "value": "Bali"
+            }]
+        }
 
 
 class TestHistoryRoutes():
@@ -77,18 +114,18 @@ class TestHistoryRoutes():
         }]
 
     @pytest.mark.asyncio
-    async def test_get_data(self, app: FastAPI, session: Session,
-                            client: AsyncClient) -> None:
+    async def test_get_data_with_history_status(
+            self, app: FastAPI, session: Session, client: AsyncClient) -> None:
         res = await client.get(
             app.url_path_for("data:get", form_id=1),
             headers={"Authorization": f"Bearer {account.token}"})
         assert res.status_code == 200
         res = res.json()
         assert res["current"] == 1
-        assert res["total"] == 1
+        assert res["total"] == 2
         assert res["total_page"] == 1
-        assert len(res["data"]) == 1
-        first_data = res["data"][0]
+        assert len(res["data"]) == 2
+        first_data = res["data"][len(res["data"]) - 1]
         assert first_data == {
             "id": 1,
             "name": "Garut - Garut",

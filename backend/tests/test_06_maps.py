@@ -12,8 +12,8 @@ account = Acc(True)
 
 class TestMapsRoutes():
     @pytest.mark.asyncio
-    async def test_get_data(self, app: FastAPI, session: Session,
-                            client: AsyncClient) -> None:
+    async def test_get_map_data(
+            self, app: FastAPI, session: Session, client: AsyncClient) -> None:
         res = await client.get(app.url_path_for("maps:get", form_id=1),
                                params={
                                    "marker": 1,
@@ -27,6 +27,14 @@ class TestMapsRoutes():
             "name": "Garut - Garut",
             "loc": "Garut",
             "marker": "Option 1",
+            "marker_hover": None,
+            "shape": 10.0,
+        }, {
+            "id": 2,
+            "geo": [-7.836114, 110.331143],
+            "name": "Garut",
+            "loc": "Garut",
+            "marker": "Option 2",
             "marker_hover": None,
             "shape": 10.0,
         }]

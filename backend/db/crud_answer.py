@@ -37,7 +37,7 @@ def add_answer(
     session.add(answer)
     session.commit()
     session.flush()
-    session.refresh(answer)
+    # session.refresh(answer)
     return answer
 
 
@@ -54,10 +54,6 @@ def update_answer(
     session.flush()
     session.refresh(answer)
     return answer
-
-
-def get_answer(session: Session) -> List[AnswerDict]:
-    return session.query(Answer).all()
 
 
 def get_answer_by_question(
