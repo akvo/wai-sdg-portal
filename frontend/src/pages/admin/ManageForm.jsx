@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Row, Col, Button, Space, Divider, notification, Spin } from 'antd';
 import WebformEditor from 'akvo-react-form-editor';
 import 'akvo-react-form-editor/dist/index.css';
@@ -7,6 +7,9 @@ import api from '../../util/api';
 import isEmpty from 'lodash/isEmpty';
 
 const { buttonText } = window.i18n;
+const formIdsFromConfig = Object.keys(window.page_config).map(
+  (key) => window.page_config?.[key]?.formId
+);
 
 const defaultQuestion = {
   type: 'text',
@@ -19,7 +22,19 @@ const ManageForm = () => {
   const [initialValue, setInitialValue] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [isAddNew, setIsAddNew] = useState(false);
-  const { formId } = form ? window.page_config[form] : {};
+  const [otherForms, setOtherForms] = useState([]);
+  const { formId } = form ? window.page_config?.[form] || { formId: form } : {};
+
+  const loadOtherForms = useCallback(() => {
+    // get form from add new feature
+    api.get('/form/').then((res) => {
+      setOtherForms(res.data.filter((d) => !formIdsFromConfig.includes(d.id)));
+    });
+  }, []);
+
+  useEffect(() => {
+    loadOtherForms();
+  }, [loadOtherForms]);
 
   const loadForm = () => {
     setIsAddNew(false);
@@ -52,9 +67,12 @@ const ManageForm = () => {
     // handle post
     if (isAddNew && !formId) {
       api
-        .post(`/webform/`, values)
+        .post('/webform/', values)
         .then((res) => {
           setInitialValue(res.data);
+          setTimeout(() => {
+            loadOtherForms();
+          }, 500);
           notification.success({
             message: 'Form saved successfully',
           });
@@ -87,6 +105,7 @@ const ManageForm = () => {
               <DropdownNavigation
                 value={form}
                 onChange={setForm}
+                otherForms={otherForms}
               />
               <Button
                 onClick={loadForm}

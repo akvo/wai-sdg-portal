@@ -77,7 +77,7 @@ export const SelectLevel = ({ setPage, setSelectedRow }) => {
   );
 };
 
-export const DropdownNavigation = ({ value, onChange }) => {
+export const DropdownNavigation = ({ value, onChange, otherForms = [] }) => {
   return (
     <Select
       value={[value]}
@@ -109,6 +109,21 @@ export const DropdownNavigation = ({ value, onChange }) => {
           </Option>
         );
       })}
+      {otherForms.length && (
+        <OptGroup
+          label="Other Forms"
+          key={`other-forms`}
+        >
+          {otherForms.map((form) => (
+            <Option
+              value={form.id}
+              key={`${form.id}`}
+            >
+              {form.name}
+            </Option>
+          ))}
+        </OptGroup>
+      )}
     </Select>
   );
 };
