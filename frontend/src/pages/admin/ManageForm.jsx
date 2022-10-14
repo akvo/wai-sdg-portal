@@ -18,9 +18,11 @@ const ManageForm = () => {
   const [form, setForm] = useState(null);
   const [initialValue, setInitialValue] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [isAddNew, setIsAddNew] = useState(false);
   const { formId } = form ? window.page_config[form] : {};
 
   const loadForm = () => {
+    setIsAddNew(false);
     setIsLoading(true);
     api.get(`/webform/${formId}?edit=true`).then((res) => {
       setInitialValue(res.data);
@@ -39,6 +41,22 @@ const ManageForm = () => {
           setInitialValue(res.data);
           notification.success({
             message: 'Form updated successfully',
+          });
+        })
+        .catch(() =>
+          notification.success({
+            message: 'Oops, something went wrong',
+          })
+        );
+    }
+    // handle post
+    if (isAddNew && !formId) {
+      api
+        .post(`/webform/`, values)
+        .then((res) => {
+          setInitialValue(res.data);
+          notification.success({
+            message: 'Form saved successfully',
           });
         })
         .catch(() =>
@@ -76,6 +94,9 @@ const ManageForm = () => {
               >
                 {buttonText?.btnEdit}
               </Button>
+              <Button onClick={() => setIsAddNew(true)}>
+                {buttonText?.btnAddNew}
+              </Button>
             </Space>
           </Col>
         </Row>
@@ -89,7 +110,10 @@ const ManageForm = () => {
         )}
         <div
           style={{
-            visibility: !isEmpty(initialValue) && formId ? 'visible' : 'hidden',
+            visibility:
+              (!isEmpty(initialValue) && formId) || isAddNew
+                ? 'visible'
+                : 'hidden',
           }}
         >
           <WebformEditor
