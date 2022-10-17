@@ -16,6 +16,7 @@ var features = {
   },
   formFeature: {
     allowEdit: true,
+    allowAddNew: true,
   },
   mapFeature: {
     baseMap: {

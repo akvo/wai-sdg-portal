@@ -7,6 +7,8 @@ import api from '../../util/api';
 import isEmpty from 'lodash/isEmpty';
 
 const { buttonText } = window.i18n;
+const { allowEdit, allowAddNew } = window.features.formFeature;
+
 const formIdsFromConfig = Object.keys(window.page_config).map(
   (key) => window.page_config?.[key]?.formId
 );
@@ -107,15 +109,19 @@ const ManageForm = () => {
                 onChange={setForm}
                 otherForms={otherForms}
               />
-              <Button
-                onClick={loadForm}
-                disabled={!form}
-              >
-                {buttonText?.btnEdit}
-              </Button>
-              <Button onClick={() => setIsAddNew(true)}>
-                {buttonText?.btnAddNew}
-              </Button>
+              {allowEdit && (
+                <Button
+                  onClick={loadForm}
+                  disabled={!form}
+                >
+                  {buttonText?.btnEdit}
+                </Button>
+              )}
+              {allowAddNew && (
+                <Button onClick={() => setIsAddNew(true)}>
+                  {buttonText?.btnAddNew}
+                </Button>
+              )}
             </Space>
           </Col>
         </Row>

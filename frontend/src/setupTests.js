@@ -22,6 +22,7 @@ window.features = {
   },
   formFeature: {
     allowEdit: true,
+    allowAddNew: true,
   },
 };
 

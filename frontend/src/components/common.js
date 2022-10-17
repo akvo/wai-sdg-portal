@@ -8,6 +8,7 @@ const levels = window.levels;
 const { Option, OptGroup } = Select;
 
 const { buttonText, mainText, notificationText } = window.i18n;
+const { allowAddNew: allowAddNewForm } = window.features.formFeature;
 
 export const SelectLevel = ({ setPage, setSelectedRow }) => {
   const { selectedAdministration, administrationByAccess, user } =
@@ -109,7 +110,7 @@ export const DropdownNavigation = ({ value, onChange, otherForms = [] }) => {
           </Option>
         );
       })}
-      {otherForms.length && (
+      {allowAddNewForm && otherForms.length && (
         <OptGroup
           label="Other Forms"
           key={`other-forms`}
