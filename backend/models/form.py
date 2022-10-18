@@ -22,6 +22,17 @@ class FormDict(TypedDict):
     translations: Optional[List[dict]]
 
 
+class FormDictWithFlag(TypedDict):
+    id: int
+    name: str
+    disableDelete: bool
+    version: Optional[float]
+    description: Optional[str]
+    default_language: Optional[str]
+    languages: Optional[List[str]]
+    translations: Optional[List[dict]]
+
+
 class Form(Base):
     __tablename__ = "form"
     id = Column(Integer, primary_key=True, index=True, nullable=True)

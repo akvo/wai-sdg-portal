@@ -11,7 +11,7 @@ import db.crud_answer as crud_answer
 import db.crud_administration as crud_administration
 import db.crud_question_group as crud_question_group
 from db.connection import get_session
-from models.form import FormDict, FormBase
+from models.form import FormDict, FormBase, FormDictWithFlag
 from models.user import UserRole
 from models.question_group import QuestionGroup
 from models.question import QuestionType, QuestionDict, Question
@@ -332,12 +332,18 @@ def save_webform(session: Session, json_form: dict, form_id: int = None):
 
 
 @form_route.get("/form/",
-                response_model=List[FormDict],
+                response_model=List[FormDictWithFlag],
                 summary="get all forms",
+                name="form:get_all",
                 tags=["Form"])
 def get(req: Request, session: Session = Depends(get_session)):
     form = crud.get_form(session=session)
-    return [f.serialize for f in form]
+    forms = []
+    for fr in [f.serialize for f in form]:
+        data = crud_data.count(session=session, form=fr.get('id'))
+        fr.update({'disableDelete': True if data else False})
+        forms.append(fr)
+    return forms
 
 
 @form_route.get("/form/{id:path}",
