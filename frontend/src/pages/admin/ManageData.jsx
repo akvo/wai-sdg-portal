@@ -96,6 +96,7 @@ const ManageData = ({ handleTabClick }) => {
     type: 'default',
   });
 
+  // { formId: form } only for new form
   const current = config?.[form] || {
     formId: form,
     title: allForm.find((x) => x.id === form)?.name,

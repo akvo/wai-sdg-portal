@@ -28,7 +28,7 @@ const ManageForm = () => {
 
   const formId = useMemo(() => {
     const { formId: currentFormId } = form
-      ? window.page_config?.[form] || { formId: form }
+      ? window.page_config?.[form] || { formId: form } // { formId: form } only for new form
       : {};
     return currentFormId;
   }, [form]);

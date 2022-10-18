@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   Row,
   Col,
@@ -26,6 +26,10 @@ const allowedFiles = [
 ];
 const regExpFilename = /filename="(?<filename>.*)"/;
 const { notificationText, adminText, buttonText, formText } = window.i18n;
+
+const formIdsFromConfig = Object.keys(window.page_config).map(
+  (key) => window.page_config?.[key]?.formId
+);
 
 const checkJobs = (id, filename) => {
   axios.get(`/worker/jobs/status/${id}`).then((res) => {
@@ -79,12 +83,28 @@ const ManageUpload = () => {
     UIState.useState((s) => s);
   const [form, setForm] = useState(Object.keys(window.page_config)[0]);
   const [fileName, setFileName] = useState(null);
-  const { formId } = config[form];
   const [selectedAdm, setSelectedAdm] = useState(null);
   const [uploadState, setUploadState] = useState(null);
   const [jobState, setJobState] = useState(null);
+  const [allForm, setAllForm] = useState([]);
 
   const key = 'updatable';
+
+  useEffect(() => {
+    api.get('/form/').then((res) => {
+      setAllForm(res.data);
+    });
+  }, []);
+
+  const otherForms = useMemo(() => {
+    if (allForm.length) {
+      return allForm.filter((d) => !formIdsFromConfig.includes(d.id));
+    }
+    return [];
+  }, [allForm]);
+
+  // { formId: form } only for new form
+  const { formId } = config?.[form] || { formId: form };
 
   const onChange = (info) => {
     const nextState = {};
@@ -209,6 +229,7 @@ const ManageUpload = () => {
               <DropdownNavigation
                 value={form}
                 onChange={setForm}
+                otherForms={otherForms}
               />
               <Button onClick={downloadTemplate}>
                 {buttonText?.btnDownload}
@@ -237,6 +258,7 @@ const ManageUpload = () => {
               <DropdownNavigation
                 value={form}
                 onChange={setForm}
+                otherForms={otherForms}
               />
               <Select
                 onChange={setSelectedAdm}
