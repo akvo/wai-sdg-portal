@@ -56,8 +56,8 @@ const ManageForm = () => {
   };
 
   const handleAddNew = () => {
-    setIsLoading(true);
     setInitialValue({});
+    setIsLoading(true);
     setForm(null);
     setIsAddNew(true);
     setTimeout(() => {
