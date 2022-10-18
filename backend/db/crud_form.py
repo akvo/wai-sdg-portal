@@ -8,6 +8,7 @@ def add_form(
     session: Session,
     name: str,
     id: Optional[int] = None,
+    version: Optional[float] = None,
     description: Optional[str] = None,
     default_language: Optional[str] = None,
     languages: Optional[List[str]] = None,
@@ -15,6 +16,7 @@ def add_form(
 ) -> FormDict:
     form = Form(id=id,
                 name=name,
+                version=version if version else 1.0,
                 description=description,
                 default_language=default_language,
                 languages=languages,
@@ -58,6 +60,7 @@ def update_form(
     session: Session,
     id: int,
     name: str,
+    version: Optional[float] = None,
     description: Optional[str] = None,
     default_language: Optional[str] = None,
     languages: Optional[List[str]] = None,
@@ -65,6 +68,12 @@ def update_form(
 ) -> FormDict:
     form = session.query(Form).filter(Form.id == id).first()
     form.name = name
+    if not form.version:
+        form.version = 1.0
+    if form.version:
+        form.version = form.version + 1
+    if version:
+        form.version = version
     form.description = description
     form.default_language = default_language
     form.languages = languages
