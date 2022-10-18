@@ -20,7 +20,8 @@ class TestFormRoutes():
             params={
                 "name": "test",
                 "description": "test description",
-                "default_language": "en"
+                "default_language": "en",
+                "version": 1.0
             },
             json={
                 "languages": ["en", "id"],
@@ -36,6 +37,7 @@ class TestFormRoutes():
         assert res == {
             "id": 1,
             "name": "test",
+            "version": 1.0,
             "description": "test description",
             "default_language": "en",
             "languages": ["en", "id"],

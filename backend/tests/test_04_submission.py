@@ -25,6 +25,7 @@ class TestSubmissionRoutes():
         assert res == {
             "id": 1,
             "name": "test",
+            "version": 1.0,
             "description": "test description",
             "default_language": "en",
             "languages": ["en", "id"],

@@ -60,6 +60,7 @@ class TestWebformEditorRoutes():
         form_definition = {
             "id": 903430001,
             "name": "Test Form",
+            "version": 1.0,
             "description": "This is a test form definition for webform editor",
             "defaultLanguage": "en",
             "languages": ["en", "id"],
@@ -202,6 +203,7 @@ class TestWebformEditorRoutes():
         assert res == {
             "id": 903430001,
             "name": "Test Form",
+            "version": 1.0,
             "description": "This is a test form definition for webform editor",
             "defaultLanguage": "en",
             "languages": ["en", "id"],
@@ -547,6 +549,7 @@ class TestWebformEditorRoutes():
         assert res == {
             "id": 903430001,
             "name": "Test Form Updated",
+            "version": 2.0,
             "description": "This is a test form definition for webform editor",
             "defaultLanguage": "en",
             "languages": ["en", "id"],
