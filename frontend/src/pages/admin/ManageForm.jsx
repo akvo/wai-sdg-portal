@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Row, Col, Button, Space, Divider, notification, Spin } from 'antd';
 import WebformEditor from 'akvo-react-form-editor';
 import 'akvo-react-form-editor/dist/index.css';
@@ -25,7 +25,13 @@ const ManageForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isAddNew, setIsAddNew] = useState(false);
   const [otherForms, setOtherForms] = useState([]);
-  const { formId } = form ? window.page_config?.[form] || { formId: form } : {};
+
+  const formId = useMemo(() => {
+    const { formId: currentFormId } = form
+      ? window.page_config?.[form] || { formId: form }
+      : {};
+    return currentFormId;
+  }, [form]);
 
   const loadOtherForms = useCallback(() => {
     // get form from add new feature
@@ -84,6 +90,7 @@ const ManageForm = () => {
           setInitialValue(res.data);
           setTimeout(() => {
             loadOtherForms();
+            setForm(res.data.id);
           }, 500);
           notification.success({
             message: 'Form saved successfully',
