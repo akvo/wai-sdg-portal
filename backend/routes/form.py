@@ -136,6 +136,12 @@ def generateId(index: int = 0):
 def transformJsonForm(session: Session, json_form: dict, edit: bool = False):
     qid_mapping = {}
     form_id = json_form.get('id') if edit else generateId()
+    # check form on db to get version
+    current_form = crud.get_form_by_id(session=session, id=form_id)
+    version = 1.0
+    if current_form:
+        current_version = current_form.version
+        version = current_version + 1 if current_version else version
     # question group
     question_group = []
     for qg in json_form.get('question_group'):
@@ -179,6 +185,7 @@ def transformJsonForm(session: Session, json_form: dict, edit: bool = False):
         qg.update({'question': question})
         question_group.append(qg)
     json_form.update({'id': form_id})
+    json_form.update({'version': version})
     json_form.update({'question_group': question_group})
     return json_form
 

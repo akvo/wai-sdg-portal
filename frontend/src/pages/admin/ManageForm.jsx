@@ -49,6 +49,16 @@ const ManageForm = () => {
     });
   };
 
+  const handleAddNew = () => {
+    setIsLoading(true);
+    setInitialValue({});
+    setForm(null);
+    setIsAddNew(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+  };
+
   const onSaveForm = (values) => {
     // if initialValue defined => edit
     if (formId && !isEmpty(initialValue)) {
@@ -118,9 +128,7 @@ const ManageForm = () => {
                 </Button>
               )}
               {allowAddNew && (
-                <Button onClick={() => setIsAddNew(true)}>
-                  {buttonText?.btnAddNew}
-                </Button>
+                <Button onClick={handleAddNew}>{buttonText?.btnAddNew}</Button>
               )}
             </Space>
           </Col>
