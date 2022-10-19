@@ -4,7 +4,7 @@
 from typing_extensions import TypedDict
 from typing import List, Optional
 from pydantic import BaseModel
-from sqlalchemy import Column, Integer, String, Text
+from sqlalchemy import Column, Integer, String, Text, Float
 from sqlalchemy.orm import relationship
 from db.connection import Base
 from models.question_group import QuestionGroupBase
@@ -15,6 +15,18 @@ import sqlalchemy.dialects.postgresql as pg
 class FormDict(TypedDict):
     id: int
     name: str
+    version: Optional[float]
+    description: Optional[str]
+    default_language: Optional[str]
+    languages: Optional[List[str]]
+    translations: Optional[List[dict]]
+
+
+class FormDictWithFlag(TypedDict):
+    id: int
+    name: str
+    disableDelete: bool
+    version: Optional[float]
     description: Optional[str]
     default_language: Optional[str]
     languages: Optional[List[str]]
@@ -29,21 +41,25 @@ class Form(Base):
     default_language = Column(String, nullable=True)
     languages = Column(pg.ARRAY(String), nullable=True)
     translations = Column(pg.ARRAY(pg.JSONB), nullable=True)
+    version = Column(Float, nullable=True, default=0.0)
 
-    question_group = relationship("QuestionGroup",
-                                  cascade="all, delete",
-                                  passive_deletes=True,
-                                  backref="question_group")
+    question_group = relationship(
+        "QuestionGroup", cascade="all, delete",
+        passive_deletes=True, backref="question_group")
 
-    def __init__(self,
-                 id: Optional[int],
-                 name: str,
-                 description: Optional[str] = None,
-                 default_language: Optional[str] = None,
-                 languages: Optional[List[str]] = None,
-                 translations: Optional[List[dict]] = None):
+    def __init__(
+        self,
+        id: Optional[int],
+        name: str,
+        version: Optional[float] = 0.0,
+        description: Optional[str] = None,
+        default_language: Optional[str] = None,
+        languages: Optional[List[str]] = None,
+        translations: Optional[List[dict]] = None
+    ):
         self.id = id
         self.name = name
+        self.version = version
         self.description = description
         self.default_language = default_language
         self.languages = languages
@@ -57,6 +73,7 @@ class Form(Base):
         return {
             "id": self.id,
             "name": self.name,
+            "version": self.version,
             "description": self.description,
             "default_language": self.default_language,
             "languages": self.languages,
@@ -84,6 +101,7 @@ class Form(Base):
 class FormBase(BaseModel):
     id: int
     name: str
+    version: Optional[float]
     description: Optional[str]
     default_language: Optional[str]
     languages: Optional[List[str]]

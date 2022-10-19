@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   Row,
   Col,
@@ -40,6 +40,10 @@ import config from '../../config';
 
 const { notificationText, buttonText, adminText } = window.i18n;
 
+const formIdsFromConfig = Object.keys(window.page_config).map(
+  (key) => window.page_config?.[key]?.formId
+);
+
 const getRowClassName = (record, editedRow) => {
   const edited = editedRow?.[record.key];
   if (edited) {
@@ -70,6 +74,20 @@ const ManageData = ({ handleTabClick }) => {
   const [deleting, setDeleting] = useState(false);
   const [exportLoading, setExportLoading] = useState(false);
   const [lastSubmitted, setLastSubmitted] = useState({ by: '', at: '' });
+  const [allForm, setAllForm] = useState([]);
+
+  useEffect(() => {
+    api.get('/form/').then((res) => {
+      setAllForm(res.data);
+    });
+  }, []);
+
+  const otherForms = useMemo(() => {
+    if (allForm.length) {
+      return allForm.filter((d) => !formIdsFromConfig.includes(d.id));
+    }
+    return [];
+  }, [allForm]);
 
   //ConfirmationModal state
   const [confirmationModal, setConfirmationModal] = useState({
@@ -78,10 +96,24 @@ const ManageData = ({ handleTabClick }) => {
     type: 'default',
   });
 
-  const current = config?.[form];
+  // { formId: form } only for new form
+  const current = config?.[form] || {
+    formId: form,
+    title: allForm.find((x) => x.id === form)?.name,
+  };
   const dataSelected = dataId ? data.find((x) => x.key === dataId) : false;
 
   const { formId, title } = current;
+
+  const columns = useMemo(() => {
+    const hasAdministrationColumn = questionGroup.flatMap((qg) =>
+      qg.question.filter((q) => q.type === 'administration')
+    ).length;
+    if (!hasAdministrationColumn) {
+      return columnNames.filter((cl) => cl.key !== 'administration');
+    }
+    return columnNames;
+  }, [questionGroup]);
 
   const showModal = (id) => {
     setDataId(id);
@@ -325,9 +357,9 @@ const ManageData = ({ handleTabClick }) => {
   ]);
 
   useEffect(() => {
-    if (user && current) {
+    if (user && formId) {
       const adminId = takeRight(selectedAdministration)[0];
-      let url = `last-submitted?form_id=${current.formId}`;
+      let url = `last-submitted?form_id=${formId}`;
       if (adminId) {
         url += `&administration=${adminId}`;
       }
@@ -342,7 +374,7 @@ const ManageData = ({ handleTabClick }) => {
           setLastSubmitted({ by: '', at: '' });
         });
     }
-  }, [user, current, selectedAdministration, advanceSearchValue]);
+  }, [user, formId, selectedAdministration, advanceSearchValue]);
 
   if (!current) {
     return <ErrorPage status={404} />;
@@ -359,6 +391,7 @@ const ManageData = ({ handleTabClick }) => {
           <DropdownNavigation
             value={form}
             onChange={setForm}
+            otherForms={otherForms}
           />
           <SelectLevel
             setPage={setPage}
@@ -417,7 +450,7 @@ const ManageData = ({ handleTabClick }) => {
           size="small"
           rowClassName={(record) => getRowClassName(record, editedRow)}
           loading={loading}
-          columns={columnNames}
+          columns={columns}
           scroll={perPage > 10 ? { y: 420 } : false}
           pagination={false}
           dataSource={data}

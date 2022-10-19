@@ -8,6 +8,7 @@ const levels = window.levels;
 const { Option, OptGroup } = Select;
 
 const { buttonText, mainText, notificationText } = window.i18n;
+const { allowAddNew: allowAddNewForm } = window.features.formFeature;
 
 export const SelectLevel = ({ setPage, setSelectedRow }) => {
   const { selectedAdministration, administrationByAccess, user } =
@@ -77,7 +78,7 @@ export const SelectLevel = ({ setPage, setSelectedRow }) => {
   );
 };
 
-export const DropdownNavigation = ({ value, onChange }) => {
+export const DropdownNavigation = ({ value, onChange, otherForms = [] }) => {
   return (
     <Select
       value={[value]}
@@ -109,6 +110,21 @@ export const DropdownNavigation = ({ value, onChange }) => {
           </Option>
         );
       })}
+      {allowAddNewForm && otherForms.length && (
+        <OptGroup
+          label="Other Forms"
+          key={`other-forms`}
+        >
+          {otherForms.map((form) => (
+            <Option
+              value={form.id}
+              key={`${form.id}`}
+            >
+              {form.name}
+            </Option>
+          ))}
+        </OptGroup>
+      )}
     </Select>
   );
 };

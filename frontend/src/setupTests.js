@@ -22,6 +22,7 @@ window.features = {
   },
   formFeature: {
     allowEdit: true,
+    allowAddNew: true,
   },
 };
 
@@ -757,6 +758,11 @@ window.i18n = {
       title: 'Delete User?',
       subTitle: 'Are you sure you want to delete this user?',
       btnOkText: 'Yes, Delete This User',
+    },
+    deleteFormText: {
+      text: 'Are you sure want to delete this form?',
+      btnOkText: 'Yes',
+      btnCancelText: 'No',
     },
   },
   notificationText: {

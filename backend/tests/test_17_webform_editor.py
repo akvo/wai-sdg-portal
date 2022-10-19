@@ -60,6 +60,7 @@ class TestWebformEditorRoutes():
         form_definition = {
             "id": 903430001,
             "name": "Test Form",
+            "version": 1.0,
             "description": "This is a test form definition for webform editor",
             "defaultLanguage": "en",
             "languages": ["en", "id"],
@@ -202,6 +203,7 @@ class TestWebformEditorRoutes():
         assert res == {
             "id": 903430001,
             "name": "Test Form",
+            "version": 1.0,
             "description": "This is a test form definition for webform editor",
             "defaultLanguage": "en",
             "languages": ["en", "id"],
@@ -547,6 +549,7 @@ class TestWebformEditorRoutes():
         assert res == {
             "id": 903430001,
             "name": "Test Form Updated",
+            "version": 2.0,
             "description": "This is a test form definition for webform editor",
             "defaultLanguage": "en",
             "languages": ["en", "id"],
@@ -730,3 +733,36 @@ class TestWebformEditorRoutes():
             }],
             "cascade": cascade
         }
+
+    async def test_get_all_form(self, app: FastAPI, session: Session,
+                                client: AsyncClient) -> None:
+        res = await client.get(app.url_path_for("form:get_all"))
+        assert res.status_code == 200
+        res = res.json()
+        assert res == [{
+            "id": 1,
+            "name": "test",
+            "disableDelete": False,
+            "version": 1.0,
+            "description": "test description",
+            "default_language": "en",
+            "languages": ["en", "id"],
+            "translations": [{
+                "name": "uji coba",
+                "language": "id",
+                "description": "deskripsi uji coba"
+            }],
+        }, {
+            "id": 903430001,
+            "name": "Test Form Updated",
+            "disableDelete": False,
+            "version": 2.0,
+            "description": "This is a test form definition for webform editor",
+            "default_language": "en",
+            "languages": ["en", "id"],
+            "translations": [{
+                "name": "Pembaharuan Formulir Uji Coba",
+                "language": "id",
+                "description": "Ini adalah formulir uji coba untuk webform",
+            }],
+        }]

@@ -1,5 +1,6 @@
 import os
-from fastapi import Depends, Request, APIRouter, BackgroundTasks
+from http import HTTPStatus
+from fastapi import Depends, Request, APIRouter, BackgroundTasks, Response
 from fastapi.security import HTTPBearer
 from fastapi.security import HTTPBasicCredentials as credentials
 from typing import List, Optional
@@ -11,7 +12,7 @@ import db.crud_answer as crud_answer
 import db.crud_administration as crud_administration
 import db.crud_question_group as crud_question_group
 from db.connection import get_session
-from models.form import FormDict, FormBase
+from models.form import FormDict, FormBase, FormDictWithFlag
 from models.user import UserRole
 from models.question_group import QuestionGroup
 from models.question import QuestionType, QuestionDict, Question
@@ -136,6 +137,12 @@ def generateId(index: int = 0):
 def transformJsonForm(session: Session, json_form: dict, edit: bool = False):
     qid_mapping = {}
     form_id = json_form.get('id') if edit else generateId()
+    # check form on db to get version
+    current_form = crud.get_form_by_id(session=session, id=form_id)
+    version = 1.0
+    if current_form:
+        current_version = current_form.version
+        version = current_version + 1 if current_version else version
     # question group
     question_group = []
     for qg in json_form.get('question_group'):
@@ -179,6 +186,7 @@ def transformJsonForm(session: Session, json_form: dict, edit: bool = False):
         qg.update({'question': question})
         question_group.append(qg)
     json_form.update({'id': form_id})
+    json_form.update({'version': version})
     json_form.update({'question_group': question_group})
     return json_form
 
@@ -325,12 +333,18 @@ def save_webform(session: Session, json_form: dict, form_id: int = None):
 
 
 @form_route.get("/form/",
-                response_model=List[FormDict],
+                response_model=List[FormDictWithFlag],
                 summary="get all forms",
+                name="form:get_all",
                 tags=["Form"])
 def get(req: Request, session: Session = Depends(get_session)):
     form = crud.get_form(session=session)
-    return [f.serialize for f in form]
+    forms = []
+    for fr in [f.serialize for f in form]:
+        data = crud_data.count(session=session, form=fr.get('id'))
+        fr.update({'disableDelete': True if data else False})
+        forms.append(fr)
+    return forms
 
 
 @form_route.get("/form/{id:path}",
@@ -377,6 +391,7 @@ def get_webform_by_id(req: Request,
                  tags=["Form"])
 def add(req: Request,
         name: str,
+        version: Optional[float] = 0.0,
         description: Optional[str] = None,
         default_language: Optional[str] = None,
         languages: Optional[List[str]] = None,
@@ -387,6 +402,7 @@ def add(req: Request,
     form = crud.add_form(
         session=session,
         name=name,
+        version=version,
         description=description,
         default_language=default_language,
         languages=languages,
@@ -436,3 +452,21 @@ async def update_webform(
     background_tasks.add_task(
         save_webform, session=session, json_form=json_form, form_id=id)
     return payload
+
+
+@form_route.delete(
+    "/form/{id:path}", responses={204: {
+        "model": None}},
+    status_code=HTTPStatus.NO_CONTENT,
+    summary="delete form",
+    name="form:delete",
+    tags=["Form"])
+def delete(
+        req: Request, id: int, session: Session = Depends(get_session),
+        credentials: credentials = Depends(security)):
+    verify_editor(req.state.authenticated, session)
+    check_data = crud_data.count(session=session, form=id)
+    if check_data:
+        return Response(status_code=HTTPStatus.BAD_REQUEST.value)
+    crud.delete_by_id(session=session, id=id)
+    return Response(status_code=HTTPStatus.NO_CONTENT.value)
