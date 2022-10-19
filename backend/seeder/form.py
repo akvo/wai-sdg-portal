@@ -29,6 +29,7 @@ for file in sorted(files):
         session=session,
         name=json_form["form"],
         id=json_form["id"],
+        version=json_form.get('version') if 'version' in json_form else 1.0,
         description=json_form.get('description'),
         default_language=json_form.get('defaultLanguage'),
         languages=json_form.get('languages'),

@@ -27,9 +27,9 @@ class DataDict(TypedDict):
     id: int
     name: str
     form: int
-    administration: int
-    geo: Optional[GeoData] = None
     created_by: str
+    administration: Optional[int] = None
+    geo: Optional[GeoData] = None
     updated_by: Optional[str] = None
     created: Optional[str] = None
     updated: Optional[str] = None
