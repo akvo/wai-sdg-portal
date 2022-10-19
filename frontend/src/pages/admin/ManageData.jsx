@@ -105,6 +105,16 @@ const ManageData = ({ handleTabClick }) => {
 
   const { formId, title } = current;
 
+  const columns = useMemo(() => {
+    const hasAdministrationColumn = questionGroup.flatMap((qg) =>
+      qg.question.filter((q) => q.type === 'administration')
+    ).length;
+    if (!hasAdministrationColumn) {
+      return columnNames.filter((cl) => cl.key !== 'administration');
+    }
+    return columnNames;
+  }, [questionGroup]);
+
   const showModal = (id) => {
     setDataId(id);
   };
@@ -440,7 +450,7 @@ const ManageData = ({ handleTabClick }) => {
           size="small"
           rowClassName={(record) => getRowClassName(record, editedRow)}
           loading={loading}
-          columns={columnNames}
+          columns={columns}
           scroll={perPage > 10 ? { y: 420 } : false}
           pagination={false}
           dataSource={data}
