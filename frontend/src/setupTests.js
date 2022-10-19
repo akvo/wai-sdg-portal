@@ -759,6 +759,11 @@ window.i18n = {
       subTitle: 'Are you sure you want to delete this user?',
       btnOkText: 'Yes, Delete This User',
     },
+    deleteFormText: {
+      text: 'Are you sure want to delete this form?',
+      btnOkText: 'Yes',
+      btnCancelText: 'No',
+    },
   },
   notificationText: {
     emailSentText: 'Email has been sent',
