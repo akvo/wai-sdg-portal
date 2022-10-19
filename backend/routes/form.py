@@ -1,5 +1,6 @@
 import os
-from fastapi import Depends, Request, APIRouter, BackgroundTasks
+from http import HTTPStatus
+from fastapi import Depends, Request, APIRouter, BackgroundTasks, Response
 from fastapi.security import HTTPBearer
 from fastapi.security import HTTPBasicCredentials as credentials
 from typing import List, Optional
@@ -451,3 +452,21 @@ async def update_webform(
     background_tasks.add_task(
         save_webform, session=session, json_form=json_form, form_id=id)
     return payload
+
+
+@form_route.delete(
+    "/form/{id:path}", responses={204: {
+        "model": None}},
+    status_code=HTTPStatus.NO_CONTENT,
+    summary="delete form",
+    name="form:delete",
+    tags=["Form"])
+def delete(
+        req: Request, id: int, session: Session = Depends(get_session),
+        credentials: credentials = Depends(security)):
+    verify_editor(req.state.authenticated, session)
+    check_data = crud_data.count(session=session, form=id)
+    if check_data:
+        return Response(status_code=HTTPStatus.BAD_REQUEST.value)
+    crud.delete_by_id(session=session, id=id)
+    return Response(status_code=HTTPStatus.NO_CONTENT.value)

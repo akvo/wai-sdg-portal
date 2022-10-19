@@ -82,3 +82,8 @@ def update_form(
     session.flush()
     session.refresh(form)
     return form
+
+
+def delete_by_id(session: Session, id: int) -> None:
+    session.query(Form).filter(Form.id == id).delete()
+    session.commit()
