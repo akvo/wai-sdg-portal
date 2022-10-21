@@ -92,6 +92,9 @@ const ManageForm = () => {
       .delete(`/form/${formId}`)
       .then(() => {
         loadOtherForms();
+        setForm(null);
+        setIsAddNew(false);
+        setInitialValue({});
         notification.success({
           message: 'Form deleted successfully',
         });

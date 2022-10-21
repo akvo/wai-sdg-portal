@@ -16,7 +16,8 @@ const Forms = ({ match }) => {
 
   const onFinish = (values) => {
     let data = Object.keys(values).map((v) => {
-      if (values[v]) {
+      // do not transfrom datapoint to post params
+      if (values[v] && v !== 'datapoint') {
         return { question: parseInt(v), value: values[v] };
       }
       return false;
