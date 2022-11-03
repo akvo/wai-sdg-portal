@@ -109,7 +109,12 @@ class TestWebformEditorRoutes():
                     "questionGroupId": 903430556,
                     "name": "Age",
                     "type": "number",
-                    "required": True
+                    "required": True,
+                    "hint": {
+                        "id": 1,
+                        "endpoint": "/api/hint/1667456499056",
+                        "path": ["max"]
+                    },
                 }]
             }, {
                 "id": 903430546,
@@ -297,6 +302,11 @@ class TestWebformEditorRoutes():
                     "translations": None,
                     "api": None,
                     "option": [],
+                    "hint": {
+                        "id": 1,
+                        "endpoint": "/api/hint/1667456499056",
+                        "path": ["max"]
+                    },
                 }]
             }, {
                 "id": 903430546,
@@ -529,6 +539,11 @@ class TestWebformEditorRoutes():
                     "name": "Sort comment",
                     "type": "text",
                     "required": False,
+                    "hint": {
+                        "id": 1,
+                        "endpoint": "/api/hint/1667456499056",
+                        "path": ["count"]
+                    },
                 }]
             }]
         }
@@ -729,6 +744,11 @@ class TestWebformEditorRoutes():
                     "translations": None,
                     "api": None,
                     "option": [],
+                    "hint": {
+                        "id": 1,
+                        "endpoint": "/api/hint/1667456499056",
+                        "path": ["count"]
+                    }
                 }]
             }],
             "cascade": cascade

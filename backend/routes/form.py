@@ -269,6 +269,8 @@ def save_webform(session: Session, json_form: dict, form_id: int = None):
                 addons.update({'allowOther': q.get('allowOther')})
             if "allowOtherText" in q:
                 addons.update({'allowOtherText': q.get('allowOtherText')})
+            if "hint" in q:
+                addons.update({"hint": q.get('hint')})
             # transform cascade type to administration
             if q.get('type') == "cascade":
                 q["type"] = QuestionType.administration
