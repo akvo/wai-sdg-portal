@@ -2620,10 +2620,10 @@ ajv@^8.0.0, ajv@^8.6.0, ajv@^8.8.0:
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
-akvo-react-form-editor@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/akvo-react-form-editor/-/akvo-react-form-editor-1.1.0.tgz#7dd09f90abc84b0022066e24fffc4abecc001b5e"
-  integrity sha512-ZkL69pnsPchWplFbvprXBpCfMkpx/Dl5l0/6ihXJlU8nuMc4S3Blyvc3OMA9yHIb9UOZCMoOtv6NAwltJ9TWdg==
+akvo-react-form-editor@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/akvo-react-form-editor/-/akvo-react-form-editor-1.1.1.tgz#95d4d5bb814b11c9dec8e440f4c404b1b042cecd"
+  integrity sha512-awn2UGm24KqO5ccQpINGu1Jp1AXyAgzoN0VE5M6bdns3FE34JsB5OYtE05cfInKS08opk9hAbHvTRMxnMNMRiw==
   dependencies:
     akvo-react-form "^2.0.4"
     antd "^4.20.0"
