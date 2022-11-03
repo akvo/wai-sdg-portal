@@ -253,6 +253,42 @@ const ManageForm = () => {
                 endpoint: '/api/administration',
               },
             ]}
+            settingHintURL={{
+              questionTypes: ['number'],
+              settings: [
+                {
+                  id: 1,
+                  name: 'Hint Endpoint',
+                  endpoint: '/api/hint',
+                  path: [
+                    {
+                      label: 'Maximum',
+                      value: 'max',
+                    },
+                    {
+                      label: 'Minimum',
+                      value: 'min',
+                    },
+                    {
+                      label: 'Average',
+                      value: 'mean',
+                    },
+                    {
+                      label: 'Quantile 1',
+                      value: 'q1',
+                    },
+                    {
+                      label: 'Quantile 2',
+                      value: 'q2',
+                    },
+                    {
+                      label: 'Quantile 3',
+                      value: 'q3',
+                    },
+                  ],
+                },
+              ],
+            }}
           />
         </div>
       </div>
