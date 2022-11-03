@@ -157,10 +157,12 @@ def transformJsonForm(session: Session, json_form: dict, edit: bool = False):
         question = []
         for q in qg.get('question'):
             is_new_question = True
+            prev_type = q.get('type')
             if edit:
                 find_q = session.query(Question).filter(
                     Question.id == q.get('id')).first()
                 is_new_question = False if find_q else True
+                prev_type = find_q.type.value if find_q else prev_type
             curr_qid = q.get('id')
             qid = generateId() if is_new_question else q.get('id')
             qid_mapping.update({curr_qid: qid})
@@ -178,7 +180,8 @@ def transformJsonForm(session: Session, json_form: dict, edit: bool = False):
             if 'option' in q and q.get('option'):
                 option = []
                 for o in q.get('option'):
-                    oid = generateId() if is_new_question else o.get('id')
+                    oid = generateId() if is_new_question \
+                        or prev_type != q.get('type') else o.get('id')
                     o.update({'id': oid})
                     option.append(o)
                 q.update({'option': option})
@@ -266,6 +269,8 @@ def save_webform(session: Session, json_form: dict, form_id: int = None):
                 addons.update({'allowOther': q.get('allowOther')})
             if "allowOtherText" in q:
                 addons.update({'allowOtherText': q.get('allowOtherText')})
+            if "hint" in q:
+                addons.update({"hint": q.get('hint')})
             # transform cascade type to administration
             if q.get('type') == "cascade":
                 q["type"] = QuestionType.administration
@@ -281,7 +286,7 @@ def save_webform(session: Session, json_form: dict, form_id: int = None):
                         form=form_id,
                         question_group=qg.get('id'),
                         type=q.get('type'),
-                        meta=False,
+                        meta=q.get('meta') if "meta" in q else False,
                         order=q.get('order'),
                         required=q.get('required'),
                         rule=q.get('rule') if "rule" in q else None,
