@@ -185,6 +185,13 @@ def transformJsonForm(session: Session, json_form: dict, edit: bool = False):
                     o.update({'id': oid})
                     option.append(o)
                 q.update({'option': option})
+            # hint
+            if 'hint' in q and q.get('hint'):
+                hint = q.get('hint')
+                endpoint = hint.get('endpoint').replace(
+                    str(curr_qid), str(qid))
+                hint.update({'endpoint': endpoint})
+                q.update({'hint': hint})
             question.append(q)
         qg.update({'question': question})
         question_group.append(qg)
