@@ -274,3 +274,8 @@ def get_project_question(session: Session, form: int) -> QuestionDict:
     return session.query(Question).filter(
         and_(Question.form == form,
              Question.type == QuestionType.answer_list)).first()
+
+
+def delete_by_form(session: Session, form: int) -> None:
+    session.query(Question).filter(Question.form == form).delete()
+    session.commit()

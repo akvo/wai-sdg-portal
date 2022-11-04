@@ -480,5 +480,7 @@ def delete(
     check_data = crud_data.count(session=session, form=id)
     if check_data:
         return Response(status_code=HTTPStatus.BAD_REQUEST.value)
+    crud_question.delete_by_form(session=session, form=id)
+    crud_question_group.delete_by_form(session=session, form=id)
     crud.delete_by_id(session=session, id=id)
     return Response(status_code=HTTPStatus.NO_CONTENT.value)
