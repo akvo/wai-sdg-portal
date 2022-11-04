@@ -6,7 +6,7 @@
     "@ant-design/icons": "^4.6.2",
     "@auth0/auth0-react": "^1.6.0",
     "akvo-react-form": "^2.0.4",
-    "akvo-react-form-editor": "^1.1.1",
+    "akvo-react-form-editor": "^1.1.4",
     "antd": "^4.18.3",
     "axios": "^0.25.0",
     "currency-formatter": "^1.5.8",
