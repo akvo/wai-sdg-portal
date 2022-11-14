@@ -68,12 +68,17 @@ app = FastAPI(
 )
 
 origins = ["http://localhost:3000"]
+methods = ["GET"]
+if INSTANCE_NAME == "wai-demo":
+    origins = ["*"]
+    methods = ["GET", "POST"]
+
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["GET"],
+    allow_methods=methods,
     allow_headers=["*"],
 )
 
