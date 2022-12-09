@@ -167,6 +167,7 @@ var i18n = {
     btnSave: "Save",
     btnUndo: "Undo",
     btnRemoveFilter: "Remove Filter",
+    btnGetLastItem: "Get last item",
   },
   formText: {
     labelName: "Name",

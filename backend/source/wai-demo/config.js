@@ -1,5 +1,5 @@
 /* eslint-disable */
-var site_name = "JMP Explorer";
+var site_name = "JMP Explorer Trial";
 
 /*
  * position for landing page

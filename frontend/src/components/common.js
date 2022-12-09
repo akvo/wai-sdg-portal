@@ -13,24 +13,22 @@ const { allowAddNew: allowAddNewForm } = window.features.formFeature;
 export const SelectLevel = ({ setPage, setSelectedRow }) => {
   const { selectedAdministration, administrationByAccess, user } =
     UIState.useState((s) => s);
+
+  const onSelect = (v, si) => {
+    setPage(1);
+    if (setSelectedRow) {
+      setSelectedRow([]);
+    }
+    UIState.update((u) => {
+      u.selectedAdministration[si + 1] = v;
+    });
+    UIState.update((u) => {
+      u.selectedAdministration = u.selectedAdministration.splice(0, si + 2);
+    });
+  };
   return (
     <Space>
       {selectedAdministration.map((s, si) => {
-        const onSelect = (v) => {
-          setPage(1);
-          if (setSelectedRow) {
-            setSelectedRow([]);
-          }
-          UIState.update((u) => {
-            u.selectedAdministration[si + 1] = v;
-          });
-          UIState.update((u) => {
-            u.selectedAdministration = u.selectedAdministration.splice(
-              0,
-              si + 2
-            );
-          });
-        };
         const list = administrationByAccess
           .filter((a) => a.parent === s)
           .map((a) => ({
@@ -46,7 +44,7 @@ export const SelectLevel = ({ setPage, setSelectedRow }) => {
               placeholder={`${mainText?.mainSelectPlaceholder} ${levels[si]}`}
               options={list}
               optionFilterProp="label"
-              onSelect={onSelect}
+              onSelect={(v) => onSelect(v, si)}
               filterOption={(input, option) =>
                 option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
               }
