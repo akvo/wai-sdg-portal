@@ -1,8 +1,13 @@
 import uuid
 import re
+import functools
 import sqlalchemy as sa
 from sqlalchemy.dialects.postgresql import TSVECTOR
 import functools
+
+keys = "5mgkswvcrxju3p2dl9-fiz4078b6aentq1ohy"
+chars = "9id4aretl6mkx7h10bcu3f-5qojp2gzwy8vns"
+an = len(chars)
 
 keys = "5mgkswvcrxju3p2dl9-fiz4078b6aentq1ohy"
 chars = "9id4aretl6mkx7h10bcu3f-5qojp2gzwy8vns"
