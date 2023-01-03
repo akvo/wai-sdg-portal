@@ -95,7 +95,12 @@ def get(req: Request,
         role=role)
     if not user:
         raise HTTPException(status_code=404, detail="Not found")
-    total = crud.count(session=session, active=active)
+    total = crud.count(
+        session=session,
+        active=active,
+        search=search,
+        organisation=organisation,
+        role=role)
     user = [i.serialize for i in user]
     if not active:
         auth0_data = get_auth0_user()

@@ -24,8 +24,22 @@ def add_user(session: Session,
     return user
 
 
-def count(session: Session, active: int = 0) -> int:
-    return session.query(User).filter(User.active == bool(active)).count()
+def count(
+    session: Session,
+    active: int = 0,
+    search: Optional[str] = None,
+    organisation: Optional[int] = None,
+    role: Optional[UserRole] = None
+) -> int:
+    count = session.query(User)
+    if search:
+        count = count.filter(User.__ts_vector__.match(search))
+    if organisation:
+        count = count.filter(User.organisation == organisation)
+    if role:
+        count = count.filter(User.role == role)
+    count = count.filter(User.active == bool(active)).count()
+    return count
 
 
 def get_user(
