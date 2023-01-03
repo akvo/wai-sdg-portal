@@ -270,7 +270,7 @@ const ManageUser = () => {
         align="middle"
         className="checkbox-wrapper"
       >
-        <Col span={12}>
+        <Col span={20}>
           <Form
             form={form}
             name="search-form"
@@ -334,7 +334,7 @@ const ManageUser = () => {
           </Form>
         </Col>
         <Col
-          span={12}
+          span={4}
           align="end"
         >
           <Space align="center">
