@@ -12,6 +12,7 @@ import {
   Modal,
   Select,
   Input,
+  Switch,
 } from 'antd';
 import { EditOutlined, CheckOutlined, DeleteOutlined } from '@ant-design/icons';
 import api from '../../util/api';
@@ -25,7 +26,7 @@ const { notificationText, buttonText, adminText, formText, tableText } =
 
 const ManageUser = () => {
   const { manageUserTableText } = tableText;
-  const { organisations, administration } = UIState.useState((s) => s);
+  const { organisations, administration, user } = UIState.useState((s) => s);
   const [form] = Form.useForm();
   const [showPendingUser, setShowPendingUser] = useState(true);
   const [tableLoading, setTableLoading] = useState(false);
@@ -53,7 +54,13 @@ const ManageUser = () => {
     setLoading(true);
     api
       .put(
-        `/user/${selectedValue.id}?active=1&role=${values.role}&organisation=${values.organisation}`,
+        `/user/${selectedValue.id}?active=1&role=${values.role}&organisation=${
+          values.organisation
+        }${
+          values.manage_form_passcode
+            ? `&manage_form_passcode=${values.manage_form_passcode}`
+            : ''
+        }`,
         values.access
       )
       .then(() => {
@@ -248,6 +255,11 @@ const ManageUser = () => {
     setSelectedValue({ ...selectedValue, access: value });
   };
 
+  const onPasscodeChange = (value) => {
+    form.setFieldsValue({ manage_form_passcode: value });
+    setSelectedValue({ ...selectedValue, manage_form_passcode: value });
+  };
+
   return (
     <>
       <Row
@@ -336,8 +348,8 @@ const ManageUser = () => {
         <Form
           form={form}
           name="user-form"
-          labelCol={{ span: 6 }}
-          wrapperCol={{ span: 16 }}
+          labelCol={{ span: 7 }}
+          wrapperCol={{ span: 15 }}
           initialValues={selectedValue}
           onFinish={onFinish}
         >
@@ -457,6 +469,31 @@ const ManageUser = () => {
               }))}
               value={selectedValue?.organisation}
             />
+          </Form.Item>
+
+          <Form.Item
+            key="passcode-form"
+            noStyle
+            shouldUpdate={(prevValues, currentValues) =>
+              prevValues.role !== currentValues.role
+            }
+          >
+            {({ getFieldValue }) =>
+              getFieldValue('role') === 'admin' ? (
+                <Form.Item
+                  key="manage_form_passcode"
+                  label="Manage Password"
+                  valuePropName="manage_form_passcode"
+                  name="manage_form_passcode"
+                >
+                  <Switch
+                    onChange={onPasscodeChange}
+                    checked={selectedValue?.manage_form_passcode}
+                    disabled={!user?.manage_form_passcode}
+                  />
+                </Form.Item>
+              ) : null
+            }
           </Form.Item>
         </Form>
       </Modal>
