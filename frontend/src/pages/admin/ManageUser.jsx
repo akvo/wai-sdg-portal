@@ -92,7 +92,7 @@ const ManageUser = () => {
     form.resetFields();
     form.setFieldsValue({ search: '' });
     setSearchValue({});
-    getUsers(0);
+    getUsers(active);
   };
 
   const fetchUserDetail = (id) => {
