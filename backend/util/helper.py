@@ -1,5 +1,7 @@
 import uuid
 import re
+import sqlalchemy as sa
+from sqlalchemy.dialects.postgresql import TSVECTOR
 
 
 def tr(obj):
@@ -25,3 +27,7 @@ class UUID(str):
     def __init__(self, string: str):
         self.uuid = get_uuid()
         self.str = f"{string}-{self.uuid}"
+
+
+class TSVector(sa.types.TypeDecorator):
+    impl = TSVECTOR
