@@ -55,6 +55,7 @@ class TestAuthorizationSetup:
                 "first_name": "Akvo",
                 "last_name": "Support",
                 "organisation": org["id"],
+                "manage_form_passcode": True,
             },
             headers={"Authorization": f"Bearer {account.token}"},
         )
@@ -73,6 +74,7 @@ class TestAuthorizationSetup:
         res = res.json()
         assert res["active"] is user.active
         assert res["role"] == "admin"
+        assert res["manage_form_passcode"] is True
 
     @pytest.mark.asyncio
     async def test_get_user(
@@ -113,7 +115,7 @@ class TestAuthorizationSetup:
                 "email_verified": True,
                 "picture": None,
                 "organisation": 1,
-                "manage_form_passcode": False,
+                "manage_form_passcode": True,
             }
         ]
         # register as new user
@@ -216,7 +218,7 @@ class TestAuthorizationSetup:
             "active": True,
             "access": [],
             "organisation": 1,
-            "manage_form_passcode": False,
+            "manage_form_passcode": True,
         }
 
     @pytest.mark.asyncio
@@ -239,6 +241,7 @@ class TestAuthorizationSetup:
                 "first_name": "John",
                 "last_name": "Doe",
                 "organisation": 1,
+                "manage_form_passcode": True,
             },
             headers={"Authorization": f"Bearer {account.token}"},
         )
@@ -252,7 +255,7 @@ class TestAuthorizationSetup:
             "active": True,
             "access": [],
             "organisation": 1,
-            "manage_form_passcode": False,
+            "manage_form_passcode": True,
         }
 
         @pytest.mark.asyncio
