@@ -51,7 +51,7 @@ export const titleCase = (str) => {
 
 export const query = (obj) =>
   Object.entries(obj).reduce((a, [k, v]) => {
-    if (v !== undefined) {
+    if (typeof v !== 'undefined') {
       a[k] = v;
     }
     return a;
