@@ -348,8 +348,6 @@ const ManageUser = () => {
         <Form
           form={form}
           name="user-form"
-          labelCol={{ span: 7 }}
-          wrapperCol={{ span: 15 }}
           initialValues={selectedValue}
           onFinish={onFinish}
         >
@@ -482,7 +480,7 @@ const ManageUser = () => {
               getFieldValue('role') === 'admin' ? (
                 <Form.Item
                   key="manage_form_passcode"
-                  label="Manage Password"
+                  label="Manage Form Passcode"
                   valuePropName="manage_form_passcode"
                   name="manage_form_passcode"
                 >
