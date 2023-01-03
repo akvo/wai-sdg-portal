@@ -15,6 +15,7 @@ import {
 } from 'antd';
 import { EditOutlined, CheckOutlined, DeleteOutlined } from '@ant-design/icons';
 import api from '../../util/api';
+import { query } from '../../util/utils';
 import capitalize from 'lodash/capitalize';
 import isEmpty from 'lodash/isEmpty';
 import { UIState } from '../../state/ui';
@@ -80,14 +81,18 @@ const ManageUser = () => {
       });
   };
 
-  const onSearch = () => {
-    getUsers(active);
+  const onSearch = (values) => {
+    const searchParams = new URLSearchParams();
+    const params = query(values);
+    Object.keys(params).forEach((key) => searchParams.append(key, params[key]));
+    getUsers(active, 1, 10, searchParams.toString());
   };
 
   const onReset = () => {
     form.resetFields();
+    form.setFieldsValue({ search: '' });
     setSearchValue({});
-    getUsers(active);
+    getUsers(0);
   };
 
   const fetchUserDetail = (id) => {
@@ -215,10 +220,10 @@ const ManageUser = () => {
     },
   ];
 
-  const getUsers = useCallback((active, page = 1, pageSize = 10) => {
+  const getUsers = useCallback((active, page = 1, pageSize = 10, query) => {
     setTableLoading(true);
     api
-      .get(`/user?active=${active}&page=${page}`)
+      .get(`/user?active=${active}&page=${page}${query ? `&${query}` : ''}`)
       .then((res) => {
         setUsers(res.data?.data);
         setPaginate({
@@ -259,8 +264,6 @@ const ManageUser = () => {
     setSelectedValue({ ...selectedValue, access: value });
   };
 
-  console.log(searchValue);
-
   return (
     <>
       <Row
@@ -280,7 +283,7 @@ const ManageUser = () => {
               name="search"
             >
               <Input
-                value={searchValue?.name}
+                value={searchValue?.search}
                 placeholder="Search by Name, Email"
                 onChange={(e) => {
                   form.setFieldsValue({ search: e.target.value });
