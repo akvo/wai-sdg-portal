@@ -113,6 +113,7 @@ class TestAuthorizationSetup:
                 "email_verified": True,
                 "picture": None,
                 "organisation": 1,
+                "manage_form_passcode": False,
             }
         ]
         # register as new user
@@ -149,6 +150,7 @@ class TestAuthorizationSetup:
                 "email_verified": None,
                 "picture": None,
                 "organisation": 1,
+                "manage_form_passcode": False,
             }
         ]
         # get non active user with extra filter return 404
@@ -190,6 +192,7 @@ class TestAuthorizationSetup:
                 "email_verified": None,
                 "picture": None,
                 "organisation": 1,
+                "manage_form_passcode": False,
             }
         ]
         # get user by id
@@ -212,7 +215,8 @@ class TestAuthorizationSetup:
             "role": "admin",
             "active": True,
             "access": [],
-            "organisation": 1
+            "organisation": 1,
+            "manage_form_passcode": False,
         }
 
     @pytest.mark.asyncio
@@ -247,7 +251,8 @@ class TestAuthorizationSetup:
             "role": "admin",
             "active": True,
             "access": [],
-            "organisation": 1
+            "organisation": 1,
+            "manage_form_passcode": False,
         }
 
         @pytest.mark.asyncio
