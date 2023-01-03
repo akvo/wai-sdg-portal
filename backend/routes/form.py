@@ -19,6 +19,7 @@ from models.question import QuestionType, QuestionDict, Question
 from middleware import verify_user, verify_admin, verify_editor
 from source.geoconfig import GeoCenter
 from datetime import datetime
+from util.helper import Cipher
 
 INSTANCE_NAME = os.environ["INSTANCE_NAME"]
 class_path = INSTANCE_NAME.replace("-", "_")
@@ -350,11 +351,15 @@ def save_webform(session: Session, json_form: dict, form_id: int = None):
                 name="form:get_all",
                 tags=["Form"])
 def get(req: Request, session: Session = Depends(get_session)):
+    webdomain = os.environ['WEBDOMAIN']
     form = crud.get_form(session=session)
     forms = []
     for fr in [f.serialize for f in form]:
+        url = Cipher(f"{class_path}-{fr.get('id')}").encode()
+        url = f"https://{webdomain}/webform/{url}"
         data = crud_data.count(session=session, form=fr.get('id'))
         fr.update({'disableDelete': True if data else False})
+        fr.update({'url': url or None})
         forms.append(fr)
     return forms
 

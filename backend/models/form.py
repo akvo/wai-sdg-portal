@@ -31,6 +31,7 @@ class FormDictWithFlag(TypedDict):
     default_language: Optional[str]
     languages: Optional[List[str]]
     translations: Optional[List[dict]]
+    url: Optional[str] = None
 
 
 class Form(Base):

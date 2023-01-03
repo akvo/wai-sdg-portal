@@ -1,3 +1,4 @@
+import os
 import sys
 import pytest
 from fastapi import FastAPI
@@ -756,6 +757,7 @@ class TestWebformEditorRoutes():
 
     async def test_get_all_form(self, app: FastAPI, session: Session,
                                 client: AsyncClient) -> None:
+        webdomain = os.environ.get('WEBDOMAIN')
         res = await client.get(app.url_path_for("form:get_all"))
         assert res.status_code == 200
         res = res.json()
@@ -772,6 +774,7 @@ class TestWebformEditorRoutes():
                 "language": "id",
                 "description": "deskripsi uji coba"
             }],
+            "url": f"https://{webdomain}/webform/nk5_wvp57b5kz21",
         }, {
             "id": 903430001,
             "name": "Test Form Updated",
@@ -785,4 +788,5 @@ class TestWebformEditorRoutes():
                 "language": "id",
                 "description": "Ini adalah formulir uji coba untuk webform",
             }],
+            "url": f"https://{webdomain}/webform/tsm_vc2m86ms45likillld0",
         }]
