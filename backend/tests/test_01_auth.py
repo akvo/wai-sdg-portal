@@ -151,6 +151,47 @@ class TestAuthorizationSetup:
                 "organisation": 1,
             }
         ]
+        # get non active user with extra filter return 404
+        res = await client.get(
+            app.url_path_for("user:get"),
+            params={
+                "active": 0,
+                "search": "john",
+                "organisation": 1,
+                "role": "admin"
+            },
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
+        assert res.status_code == 404
+        # get non active user with extra filter return 200
+        res = await client.get(
+            app.url_path_for("user:get"),
+            params={
+                "active": 0,
+                "search": "john",
+                "organisation": 1,
+                "role": "user"
+            },
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
+        assert res.status_code == 200
+        res = res.json()
+        assert res["current"] == 1
+        assert res["total"] == 1
+        assert res["total_page"] == 1
+        assert len(res["data"]) == 1
+        assert res["data"] == [
+            {
+                "id": 2,
+                "email": "john_doe@mail.com",
+                "name": "John Doe",
+                "role": "user",
+                "active": False,
+                "email_verified": None,
+                "picture": None,
+                "organisation": 1,
+            }
+        ]
         # get user by id
         res = await client.get(
             app.url_path_for("user:get_by_id", id=3),
