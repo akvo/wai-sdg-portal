@@ -45,6 +45,8 @@ services:
     command: ["./start.sh"]
     volumes:
       - ./frontend:/app:delegated
+    environment:
+      - INSTANCE_NAME=$INSTANCE_NAME
     network_mode: service:mainnetwork
 volumes:
   pg-data:
