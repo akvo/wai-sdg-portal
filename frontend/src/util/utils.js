@@ -48,3 +48,11 @@ export const formatNumber = (x) => {
 export const titleCase = (str) => {
   return startCase(toLower(str));
 };
+
+export const query = (obj) =>
+  Object.entries(obj).reduce((a, [k, v]) => {
+    if (typeof v !== 'undefined') {
+      a[k] = v;
+    }
+    return a;
+  }, {});

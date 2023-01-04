@@ -1,10 +1,11 @@
 from http import HTTPStatus
 import pandas as pd
 from math import ceil
-from fastapi import Depends, Request, APIRouter, HTTPException, Response
+from fastapi import Depends, Request, APIRouter
+from fastapi import HTTPException, Response, Query
 from fastapi.security import HTTPBearer
 from fastapi.security import HTTPBasicCredentials as credentials
-from typing import List
+from typing import List, Optional
 from sqlalchemy.orm import Session
 import db.crud_user as crud
 from db.connection import get_session
@@ -19,39 +20,48 @@ security = HTTPBearer()
 user_route = APIRouter()
 
 
-@user_route.get("/user/me",
-                response_model=UserAccessBase,
-                summary="get account information",
-                name="user:me",
-                tags=["User"])
-def me(req: Request,
-       session: Session = Depends(get_session),
-       credentials: credentials = Depends(security)):
+@user_route.get(
+    "/user/me",
+    response_model=UserAccessBase,
+    summary="get account information",
+    name="user:me",
+    tags=["User"])
+def me(
+    req: Request,
+    session: Session = Depends(get_session),
+    credentials: credentials = Depends(security)
+):
     user = verify_user(req.state.authenticated, session)
     return user.serialize
 
 
-@user_route.post("/user",
-                 response_model=UserBase,
-                 summary="register new user",
-                 name="user:register",
-                 tags=["User"])
-def add(req: Request,
-        organisation: int,
-        first_name: str,
-        last_name: str = "",
-        session: Session = Depends(get_session),
-        credentials: credentials = Depends(security)):
+@user_route.post(
+    "/user",
+    response_model=UserBase,
+    summary="register new user",
+    name="user:register",
+    tags=["User"])
+def add(
+    req: Request,
+    organisation: int,
+    first_name: str,
+    last_name: str = "",
+    manage_form_passcode: Optional[bool] = None,
+    session: Session = Depends(get_session),
+    credentials: credentials = Depends(security)
+):
     name = f"{first_name} {last_name}"
     user = verify_token(req.state.authenticated)
-    user = crud.add_user(session=session,
-                         name=name,
-                         email=user.get("email"),
-                         role="user",
-                         organisation=organisation)
+    user = crud.add_user(
+        session=session,
+        name=name,
+        email=user.get("email"),
+        role="user",
+        organisation=organisation,
+        manage_form_passcode=manage_form_passcode)
     # send email to admin
-    organisation = get_organisation_by_id(session=session,
-                                          id=user.organisation)
+    organisation = get_organisation_by_id(
+        session=session, id=user.organisation)
     context = f'''
                 <table border="1">
                     <tr>
@@ -65,29 +75,46 @@ def add(req: Request,
                 </table>
             '''
     recipient = crud.get_all_admin_recipient(session=session)
-    email = Email(recipients=recipient, type=MailTypeEnum.user_reg_new,
-                  context=context)
+    email = Email(
+        recipients=recipient,
+        type=MailTypeEnum.user_reg_new,
+        context=context)
     email.send
     return user.serialize
 
 
-@user_route.get("/user",
-                response_model=UserResponse,
-                summary="get all users",
-                name="user:get",
-                tags=["User"])
-def get(req: Request,
-        active: int = 0,
-        page: int = 1,
-        session: Session = Depends(get_session),
-        credentials: credentials = Depends(security)):
+@user_route.get(
+    "/user",
+    response_model=UserResponse,
+    summary="get all users",
+    name="user:get",
+    tags=["User"])
+def get(
+    req: Request,
+    active: int = 0,
+    page: int = 1,
+    search: Optional[str] = Query(None),
+    organisation: Optional[int] = Query(None),
+    role: Optional[UserRole] = Query(None),
+    session: Session = Depends(get_session),
+    credentials: credentials = Depends(security)
+):
     verify_admin(req.state.authenticated, session)
-    user = crud.get_user(session=session,
-                         skip=(10 * (page - 1)),
-                         active=active)
+    user = crud.get_user(
+        session=session,
+        skip=(10 * (page - 1)),
+        active=active,
+        search=search,
+        organisation=organisation,
+        role=role)
     if not user:
         raise HTTPException(status_code=404, detail="Not found")
-    total = crud.count(session=session, active=active)
+    total = crud.count(
+        session=session,
+        active=active,
+        search=search,
+        organisation=organisation,
+        role=role)
     user = [i.serialize for i in user]
     if not active:
         auth0_data = get_auth0_user()
@@ -111,15 +138,18 @@ def get(req: Request,
     }
 
 
-@user_route.get("/user/{id:path}",
-                response_model=UserAccessBase,
-                summary="get user detail",
-                name="user:get_by_id",
-                tags=["User"])
-def get_by_id(req: Request,
-              id: int,
-              session: Session = Depends(get_session),
-              credentials: credentials = Depends(security)):
+@user_route.get(
+    "/user/{id:path}",
+    response_model=UserAccessBase,
+    summary="get user detail",
+    name="user:get_by_id",
+    tags=["User"])
+def get_by_id(
+    req: Request,
+    id: int,
+    session: Session = Depends(get_session),
+    credentials: credentials = Depends(security)
+):
     verify_admin(req.state.authenticated, session)
     user = crud.get_user_by_id(session=session, id=id)
     if user is None:
@@ -127,21 +157,25 @@ def get_by_id(req: Request,
     return user.serialize
 
 
-@user_route.put("/user/{id:path}",
-                response_model=UserAccessBase,
-                summary="Update user",
-                name="user:update",
-                tags=["User"])
-def update_by_id(req: Request,
-                 id: int,
-                 active: bool,
-                 role: UserRole,
-                 first_name: str = "",
-                 last_name: str = "",
-                 access: List[int] = [],
-                 organisation: int = None,
-                 session: Session = Depends(get_session),
-                 credentials: credentials = Depends(security)):
+@user_route.put(
+    "/user/{id:path}",
+    response_model=UserAccessBase,
+    summary="Update user",
+    name="user:update",
+    tags=["User"])
+def update_by_id(
+    req: Request,
+    id: int,
+    active: bool,
+    role: UserRole,
+    first_name: str = "",
+    last_name: str = "",
+    access: List[int] = [],
+    organisation: int = None,
+    manage_form_passcode: Optional[bool] = None,
+    session: Session = Depends(get_session),
+    credentials: credentials = Depends(security)
+):
     verify_admin(req.state.authenticated, session)
     # get old value
     old_user = crud.get_user_by_id(session=session, id=id)
@@ -162,12 +196,14 @@ def update_by_id(req: Request,
         name = ""
     access = [Access(user=id, administration=a) for a in access]
     access = crud.add_access(session=session, user=id, access=access)
-    user = crud.update_user_by_id(session=session,
-                                  id=id,
-                                  name=name,
-                                  organisation=organisation,
-                                  active=active,
-                                  role=role)
+    user = crud.update_user_by_id(
+        session=session,
+        id=id,
+        name=name,
+        organisation=organisation,
+        active=active,
+        role=role,
+        manage_form_passcode=manage_form_passcode)
     if user is None:
         raise HTTPException(status_code=404, detail="Not Found")
     if user.role == UserRole.admin:
@@ -189,31 +225,34 @@ def update_by_id(req: Request,
     # check approval
     if active is True and old_active is False:
         # send approval email
-        email = Email(recipients=[old_user.recipient],
-                      type=MailTypeEnum.user_reg_approved,
-                      context=context)
+        email = Email(
+            recipients=[old_user.recipient],
+            type=MailTypeEnum.user_reg_approved,
+            context=context)
         email.send
     else:
         # send user updated email
-        email = Email(recipients=[old_user.recipient],
-                      type=MailTypeEnum.user_acc_changed,
-                      context=context)
+        email = Email(
+            recipients=[old_user.recipient],
+            type=MailTypeEnum.user_acc_changed,
+            context=context)
         email.send
     return user.serialize
 
 
-@user_route.delete("/user/{id:path}",
-                   responses={204: {
-                       "model": None
-                    }},
-                   status_code=HTTPStatus.NO_CONTENT,
-                   summary="delete non admin user by id",
-                   name="user:delete",
-                   tags=["User"])
-def delete_user_by_id(req: Request,
-                      id: int,
-                      session: Session = Depends(get_session),
-                      credentials: credentials = Depends(security)):
+@user_route.delete(
+    "/user/{id:path}",
+    responses={204: {"model": None}},
+    status_code=HTTPStatus.NO_CONTENT,
+    summary="delete non admin user by id",
+    name="user:delete",
+    tags=["User"])
+def delete_user_by_id(
+    req: Request,
+    id: int,
+    session: Session = Depends(get_session),
+    credentials: credentials = Depends(security)
+):
     verify_admin(req.state.authenticated, session)
     crud.delete_user_by_id(session=session, id=id)
     return Response(status_code=HTTPStatus.NO_CONTENT.value)

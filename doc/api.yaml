@@ -1,0 +1,2878 @@
+openapi: 3.0.2
+info:
+  title: WAI-DEMO
+  description: "Auth Client ID: 99w2F1wVLZq8GqJwZph1kE42GuAZFvlF"
+  version: 1.0.0
+servers:
+- url: /api
+paths:
+  /administration:
+    get:
+      tags:
+      - Administration
+      summary: get all administrations
+      operationId: administration_get_administration_get
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title: Response Administration Get Administration Get
+                type: array
+                items:
+                  $ref: '#/components/schemas/AdministrationBase'
+  /administration/{id}:
+    get:
+      tags:
+      - Administration
+      summary: get administration by id
+      operationId: get_by_id_administration__id__get
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Id
+          type: integer
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdministrationResponse'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /administration-boundary:
+    get:
+      tags:
+      - Administration
+      summary: get nested id's list of parent administration
+      operationId: get_all_ids_administration_boundary_get
+      parameters:
+      - name: id
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Id
+          type: array
+          items:
+            type: integer
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /administration-simple:
+    get:
+      tags:
+      - Administration
+      summary: get simplified administration data
+      operationId: get_all_with_parent_name_administration_simple_get
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /organisation:
+    get:
+      tags:
+      - Organisation
+      summary: get all organisations
+      operationId: get_organisation_get
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title: Response Get Organisation Get
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrganisationBase'
+  /organisation/{id}:
+    get:
+      tags:
+      - Organisation
+      summary: get organisation by id
+      operationId: get_by_id_organisation__id__get
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Id
+          type: integer
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganisationDict'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    put:
+      tags:
+      - Organisation
+      summary: Update organisation by id
+      operationId: update_organisation__id__put
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Id
+          type: integer
+      - name: name
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Name
+          type: string
+      - name: type
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/OrganisationType'
+      responses:
+        "204":
+          description: Successful Response
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /user/me:
+    get:
+      tags:
+      - User
+      summary: get account information
+      operationId: user_me_user_me_get
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAccessBase'
+      security:
+      - HTTPBearer: []
+  /user:
+    get:
+      tags:
+      - User
+      summary: get all users
+      operationId: user_get_user_get
+      parameters:
+      - name: active
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Active
+          type: integer
+          default: 0
+      - name: page
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Page
+          type: integer
+          default: 1
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - User
+      summary: register new user
+      operationId: user_register_user_post
+      parameters:
+      - name: organisation
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          title: Organisation
+          type: integer
+      - name: first_name
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          title: First Name
+          type: string
+      - name: last_name
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Last Name
+          type: string
+          default: ""
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserBase'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /user/{id}:
+    get:
+      tags:
+      - User
+      summary: get user detail
+      operationId: user_get_by_id_user__id__get
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Id
+          type: integer
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAccessBase'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    put:
+      tags:
+      - User
+      summary: Update user
+      operationId: user_update_user__id__put
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Id
+          type: integer
+      - name: active
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          title: Active
+          type: boolean
+      - name: role
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/UserRole'
+      - name: first_name
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: First Name
+          type: string
+          default: ""
+      - name: last_name
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Last Name
+          type: string
+          default: ""
+      - name: organisation
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Organisation
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Access
+              type: array
+              items:
+                type: integer
+              default: []
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAccessBase'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - User
+      summary: delete non admin user by id
+      operationId: user_delete_user__id__delete
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Id
+          type: integer
+      responses:
+        "204":
+          description: Successful Response
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /form/:
+    get:
+      tags:
+      - Form
+      summary: get all forms
+      operationId: get_form__get
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title: Response Get Form  Get
+                type: array
+                items:
+                  $ref: '#/components/schemas/FormDict'
+    post:
+      tags:
+      - Form
+      summary: add new form
+      operationId: form_create_form__post
+      parameters:
+      - name: name
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          title: Name
+          type: string
+      - name: description
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Description
+          type: string
+      - name: default_language
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Default Language
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Body_form_create_form__post'
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormDict'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /form/{id}:
+    get:
+      tags:
+      - Form
+      summary: get form by id
+      operationId: form_get_by_id_form__id__get
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Id
+          type: integer
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormBase'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /webform/{id}:
+    get:
+      tags:
+      - Form
+      summary: get form by id
+      operationId: webform_get_by_id_webform__id__get
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Id
+          type: integer
+      - name: edit
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Edit
+          type: boolean
+          default: false
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    put:
+      tags:
+      - Form
+      summary: update webform editor definition
+      operationId: webform_update_webform__id__put
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Id
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Payload
+              type: object
+        required: true
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /webform/:
+    post:
+      tags:
+      - Form
+      summary: post webform editor JSON value
+      operationId: webform_create_webform__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Payload
+              type: object
+        required: true
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /question/:
+    get:
+      tags:
+      - Form
+      summary: get all questions
+      operationId: get_question__get
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title: Response Get Question  Get
+                type: array
+                items:
+                  $ref: '#/components/schemas/QuestionDict'
+    post:
+      tags:
+      - Form
+      summary: add new question
+      operationId: question_create_question__post
+      parameters:
+      - name: name
+        in: query
+        description: question text
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Name
+          type: string
+          description: question text
+      - name: order
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Order
+          type: integer
+      - name: type
+        in: query
+        description: question type
+        required: false
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/type'
+      - name: meta
+        in: query
+        description: Wether question is metadata or not
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Meta
+          type: boolean
+          description: Wether question is metadata or not
+          default: false
+      - name: required
+        in: query
+        description: Wether question is required or not
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Required
+          type: boolean
+          description: Wether question is required or not
+          default: true
+      - name: min
+        in: query
+        description: "Minimum number for number question type, default: 0"
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Min
+          type: integer
+          description: "Minimum number for number question type, default: 0"
+          default: 0
+      - name: max
+        in: query
+        description: Max number for number question type
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Max
+          type: integer
+          description: Max number for number question type
+      - name: form
+        in: query
+        description: "Existing form id, create if you don't have one"
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Form
+          type: integer
+          description: "Existing form id, create if you don't have one"
+      - name: question_group
+        in: query
+        description: "Name of Question Group, Append or Create"
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Question Group
+          type: string
+          description: "Name of Question Group, Append or Create"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Body_question_create_question__post'
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuestionBase'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /option/:
+    get:
+      tags:
+      - Option
+      summary: get all options
+      operationId: option_get_option__get
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title: Response Option Get Option  Get
+                type: array
+                items:
+                  $ref: '#/components/schemas/OptionBaseWithId'
+    post:
+      tags:
+      - Option
+      summary: Add new option
+      operationId: option_post_option__post
+      parameters:
+      - name: question_id
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          title: Question Id
+          type: integer
+      - name: name
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Name
+          type: string
+      - name: order
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Order
+          type: string
+      - name: color
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Color
+          type: string
+      - name: score
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Score
+          type: string
+      - name: code
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Code
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Translations
+              type: array
+              items:
+                type: object
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OptionBaseWithId'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /option/{id}:
+    put:
+      tags:
+      - Option
+      summary: update option
+      operationId: option_update_option__id__put
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Id
+          type: integer
+      - name: name
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Name
+          type: string
+      - name: order
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Order
+          type: string
+      - name: color
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Color
+          type: string
+      - name: score
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Score
+          type: string
+      - name: code
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Code
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Translations
+              type: array
+              items:
+                type: object
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OptionBaseWithId'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /data/form/{form_id}:
+    get:
+      tags:
+      - Data
+      summary: get all datas
+      operationId: data_get_data_form__form_id__get
+      parameters:
+      - name: form_id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Form Id
+          type: integer
+      - name: page
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Page
+          type: integer
+          default: 1
+      - name: perpage
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Perpage
+          type: integer
+          default: 10
+      - name: administration
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Administration
+          type: integer
+      - name: question
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Question
+          type: array
+          items:
+            type: integer
+      - name: q
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Q
+          type: array
+          items:
+            type: string
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataResponse'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Data
+      summary: add new data
+      operationId: data_create_data_form__form_id__post
+      parameters:
+      - name: form_id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Form Id
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Answers
+              type: array
+              items:
+                $ref: '#/components/schemas/AnswerDict'
+        required: true
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataDict'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /data/{id}:
+    get:
+      tags:
+      - Data
+      summary: get data by id
+      operationId: data_get_by_id_data__id__get
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Id
+          type: integer
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataDict'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    put:
+      tags:
+      - Data
+      summary: update data
+      operationId: data_update_data__id__put
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Id
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Answers
+              type: array
+              items:
+                $ref: '#/components/schemas/AnswerDict'
+        required: true
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataDict'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Data
+      summary: delete data
+      operationId: data_delete_data__id__delete
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Id
+          type: integer
+      responses:
+        "204":
+          description: Successful Response
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /data:
+    delete:
+      tags:
+      - Data
+      summary: bulk delete data
+      operationId: data_bulk_delete_data_delete
+      parameters:
+      - name: id
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Id
+          type: array
+          items:
+            type: integer
+      responses:
+        "204":
+          description: Successful Response
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /last-submitted:
+    get:
+      tags:
+      - Data
+      summary: get last submission
+      operationId: data_last_submitted_last_submitted_get
+      parameters:
+      - name: form_id
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          title: Form Id
+          type: integer
+      - name: administration
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Administration
+          type: integer
+      - name: q
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Q
+          type: array
+          items:
+            type: string
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubmissionInfo'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /history/{data_id}/{question_id}:
+    get:
+      tags:
+      - Data
+      summary: get answer with it's history
+      operationId: data_history_history__data_id___question_id__get
+      parameters:
+      - name: data_id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Data Id
+          type: integer
+      - name: question_id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Question Id
+          type: integer
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /maps/{form_id}:
+    get:
+      tags:
+      - Maps
+      summary: get maps data by form id
+      operationId: maps_get_maps__form_id__get
+      parameters:
+      - name: form_id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Form Id
+          type: integer
+      - name: shape
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          title: Shape
+          type: integer
+      - name: marker
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Marker
+          type: integer
+      - name: hover_ids
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Hover Ids
+          type: string
+      - name: q
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Q
+          type: array
+          items:
+            type: string
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title: Response Maps Get Maps  Form Id  Get
+                type: array
+                items:
+                  $ref: '#/components/schemas/MapsDict'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /chart/:
+    get:
+      tags:
+      - Charts
+      summary: get chart list
+      operationId: charts_get_chart__get
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /chart/data/{form_id}:
+    get:
+      tags:
+      - Charts
+      summary: get chart aggregate data
+      operationId: charts_get_aggregated_chart_data_chart_data__form_id__get
+      parameters:
+      - name: form_id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Form Id
+          type: integer
+      - name: question
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          title: Question
+          type: integer
+      - name: stack
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Stack
+          type: integer
+      - name: administration
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Administration
+          type: integer
+      - name: q
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Q
+          type: array
+          items:
+            type: string
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /chart/pie-data/{form_id}/{question_id}:
+    get:
+      tags:
+      - Charts
+      summary: get pie chart aggregate data
+      operationId: charts_get_aggregated_pie_chart_data_chart_pie_data__form_id___question_id__get
+      parameters:
+      - name: form_id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Form Id
+          type: integer
+      - name: question_id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Question Id
+          type: integer
+      - name: administration
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Administration
+          type: integer
+      - name: q
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Q
+          type: array
+          items:
+            type: string
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /chart/jmp-data/{form_id}/{question_id}:
+    get:
+      tags:
+      - Charts
+      summary: get jmp chart aggregate data
+      operationId: charts_get_aggregated_jmp_chart_data_chart_jmp_data__form_id___question_id__get
+      parameters:
+      - name: form_id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Form Id
+          type: integer
+      - name: question_id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Question Id
+          type: integer
+      - name: administration
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Administration
+          type: integer
+      - name: q
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Q
+          type: array
+          items:
+            type: string
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /chart/overviews/{form_id}/{question_id}/{option}:
+    get:
+      tags:
+      - Charts
+      summary: get overviews chart and info data
+      operationId: charts_get_overviews_chart_and_info_chart_overviews__form_id___question_id___option__get
+      parameters:
+      - name: form_id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Form Id
+          type: integer
+      - name: question_id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Question Id
+          type: integer
+      - name: option
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Option
+          type: string
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /chart/{name}:
+    get:
+      tags:
+      - Charts
+      summary: get chart by name
+      operationId: charts_get_by_name_chart__name__get
+      parameters:
+      - name: name
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Name
+          type: string
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /excel-template/{form_id}:
+    get:
+      tags:
+      - File
+      summary: 'get excel template for '
+      operationId: excel_template_get_by_form_id_excel_template__form_id__get
+      parameters:
+      - name: form_id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Form Id
+          type: integer
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /excel-template/{form_id}/{administration}:
+    post:
+      tags:
+      - File
+      summary: post excel file
+      operationId: excel_template_post_excel_template__form_id___administration__post
+      parameters:
+      - name: form_id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Form Id
+          type: integer
+      - name: administration
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Administration
+          type: integer
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Body_excel_template_post_excel_template__form_id___administration__post'
+        required: true
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobsBase'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /download/file/{file_name}:
+    get:
+      tags:
+      - File
+      summary: 'get excel template for '
+      operationId: excel_data_download_download_file__file_name__get
+      parameters:
+      - name: file_name
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: File Name
+          type: string
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /download/data:
+    get:
+      tags:
+      - File
+      summary: download data
+      operationId: excel_data_generate_download_data_get
+      parameters:
+      - name: form_id
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          title: Form Id
+          type: integer
+      - name: administration
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Administration
+          type: integer
+      - name: q
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Q
+          type: array
+          items:
+            type: string
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobsBase'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /download/list:
+    get:
+      tags:
+      - File
+      summary: list of generated data
+      operationId: excel_data_download_list_download_list_get
+      parameters:
+      - name: page
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Page
+          type: integer
+          default: 1
+      - name: perpage
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Perpage
+          type: integer
+          default: 5
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title: Response Excel Data Download List Download List Get
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobsBase'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /download/status:
+    get:
+      tags:
+      - File
+      summary: list of generated data
+      operationId: excel_data_download_status_download_status_get
+      parameters:
+      - name: id
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          title: Id
+          type: integer
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobsBase'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /project/{id}:
+    get:
+      tags:
+      - Custom
+      summary: get project by id
+      operationId: project_get_by_id_project__id__get
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Id
+          type: integer
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title: Response Project Get By Id Project  Id  Get
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectBase'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /log:
+    get:
+      tags:
+      - Log
+      summary: get all log
+      operationId: log_status_log_get
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title: Response Log Status Log Get
+                type: array
+                items:
+                  $ref: '#/components/schemas/LogDict'
+      security:
+      - HTTPBearer: []
+  /log/{id}:
+    get:
+      tags:
+      - Log
+      summary: get all log
+      operationId: log_status_log__id__get
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Id
+          type: integer
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogDict'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /hint/{question_id}:
+    get:
+      tags:
+      - Dev
+      summary: get hint for requested question
+      operationId: hint_get_hint__question_id__get
+      parameters:
+      - name: question_id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Question Id
+          type: integer
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HintResponse'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /config.js:
+    get:
+      tags:
+      - Config
+      summary: Config.Js
+      description: static javascript config
+      operationId: config_js_config_js_get
+      responses:
+        "200":
+          description: Successful Response
+  /:
+    get:
+      tags:
+      - Dev
+      summary: Read Main
+      operationId: read_main__get
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /health-check:
+    get:
+      tags:
+      - Dev
+      summary: Health Check
+      operationId: health_check_health_check_get
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+components:
+  schemas:
+    AdministrationBase:
+      title: AdministrationBase
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        parent:
+          title: Parent
+          type: integer
+        name:
+          title: Name
+          type: string
+    AdministrationResponse:
+      title: AdministrationResponse
+      required:
+      - children
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        parent:
+          title: Parent
+          type: integer
+        name:
+          title: Name
+          type: string
+        children:
+          title: Children
+          type: array
+          items:
+            $ref: '#/components/schemas/AdministrationBase'
+    AnswerDict:
+      title: AnswerDict
+      required:
+      - question
+      - value
+      type: object
+      properties:
+        question:
+          title: Question
+          type: integer
+        value:
+          title: Value
+          anyOf:
+          - type: integer
+          - type: number
+          - type: string
+          - type: boolean
+          - type: object
+          - type: array
+            items:
+              type: string
+          - type: array
+            items:
+              type: integer
+          - type: array
+            items:
+              type: number
+    AnswerDictWithHistory:
+      title: AnswerDictWithHistory
+      required:
+      - history
+      - question
+      - value
+      type: object
+      properties:
+        history:
+          title: History
+          type: boolean
+        question:
+          title: Question
+          type: integer
+        value:
+          title: Value
+          anyOf:
+          - type: integer
+          - type: string
+          - type: boolean
+          - type: object
+          - type: array
+            items:
+              type: string
+          - type: array
+            items:
+              type: integer
+          - type: array
+            items:
+              type: number
+          - type: number
+    Body_excel_template_post_excel_template__form_id___administration__post:
+      title: Body_excel_template_post_excel_template__form_id___administration__post
+      required:
+      - file
+      type: object
+      properties:
+        file:
+          title: File
+          type: string
+          format: binary
+    Body_form_create_form__post:
+      title: Body_form_create_form__post
+      type: object
+      properties:
+        languages:
+          title: Languages
+          type: array
+          items:
+            type: string
+        translations:
+          title: Translations
+          type: array
+          items:
+            type: object
+    Body_question_create_question__post:
+      title: Body_question_create_question__post
+      type: object
+      properties:
+        option:
+          title: Option
+          type: array
+          items:
+            $ref: '#/components/schemas/OptionDict'
+          default: []
+        dependency:
+          title: Dependency
+          type: array
+          items:
+            type: object
+        tooltip:
+          title: Tooltip
+          type: object
+        translations:
+          title: Translations
+          type: array
+          items:
+            type: object
+        api:
+          title: Api
+          type: object
+        addons:
+          title: Addons
+          type: object
+    DataDict:
+      title: DataDict
+      required:
+      - administration
+      - answer
+      - created
+      - created_by
+      - form
+      - geo
+      - id
+      - name
+      - updated
+      - updated_by
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        name:
+          title: Name
+          type: string
+        form:
+          title: Form
+          type: integer
+        administration:
+          title: Administration
+          type: integer
+        geo:
+          $ref: '#/components/schemas/GeoData'
+        created_by:
+          title: Created By
+          type: string
+        updated_by:
+          title: Updated By
+          type: string
+        created:
+          title: Created
+          type: string
+        updated:
+          title: Updated
+          type: string
+        answer:
+          title: Answer
+          type: array
+          items:
+            $ref: '#/components/schemas/AnswerDict'
+    DataDictWithHistory:
+      title: DataDictWithHistory
+      required:
+      - administration
+      - answer
+      - created
+      - created_by
+      - form
+      - geo
+      - id
+      - name
+      - updated
+      - updated_by
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        name:
+          title: Name
+          type: string
+        form:
+          title: Form
+          type: integer
+        administration:
+          title: Administration
+          type: integer
+        geo:
+          $ref: '#/components/schemas/GeoData'
+        created_by:
+          title: Created By
+          type: string
+        updated_by:
+          title: Updated By
+          type: string
+        created:
+          title: Created
+          type: string
+        updated:
+          title: Updated
+          type: string
+        answer:
+          title: Answer
+          type: array
+          items:
+            $ref: '#/components/schemas/AnswerDictWithHistory'
+    DataResponse:
+      title: DataResponse
+      required:
+      - current
+      - data
+      - total
+      - total_page
+      type: object
+      properties:
+        current:
+          title: Current
+          type: integer
+        data:
+          title: Data
+          type: array
+          items:
+            $ref: '#/components/schemas/DataDictWithHistory'
+        total:
+          title: Total
+          type: integer
+        total_page:
+          title: Total Page
+          type: integer
+    FormBase:
+      title: FormBase
+      required:
+      - id
+      - name
+      - question_group
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        name:
+          title: Name
+          type: string
+        description:
+          title: Description
+          type: string
+        default_language:
+          title: Default Language
+          type: string
+        languages:
+          title: Languages
+          type: array
+          items:
+            type: string
+        translations:
+          title: Translations
+          type: array
+          items:
+            type: object
+        question_group:
+          title: Question Group
+          type: array
+          items:
+            $ref: '#/components/schemas/QuestionGroupBase'
+    FormDict:
+      title: FormDict
+      required:
+      - default_language
+      - description
+      - id
+      - languages
+      - name
+      - translations
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        name:
+          title: Name
+          type: string
+        description:
+          title: Description
+          type: string
+        default_language:
+          title: Default Language
+          type: string
+        languages:
+          title: Languages
+          type: array
+          items:
+            type: string
+        translations:
+          title: Translations
+          type: array
+          items:
+            type: object
+    GeoData:
+      title: GeoData
+      required:
+      - lat
+      - long
+      type: object
+      properties:
+        long:
+          title: Long
+          maximum: 180
+          minimum: -180
+          type: number
+        lat:
+          title: Lat
+          maximum: 90
+          minimum: -90
+          type: number
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+    HintResponse:
+      title: HintResponse
+      type: object
+      properties:
+        mean:
+          title: Mean
+          type: string
+        q1:
+          title: Q1
+          type: string
+        q2:
+          title: Q2
+          type: string
+        q3:
+          title: Q3
+          type: string
+        max:
+          title: Max
+          type: string
+        min:
+          title: Min
+          type: string
+    JobStatus:
+      title: JobStatus
+      type: string
+      description: An enumeration.
+      enum:
+      - pending
+      - on_progress
+      - failed
+      - done
+    JobType:
+      title: JobType
+      type: string
+      description: An enumeration.
+      enum:
+      - send_email
+      - validate_data
+      - seed_data
+      - download
+    JobsBase:
+      title: JobsBase
+      required:
+      - created_by
+      - id
+      - payload
+      - type
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        type:
+          $ref: '#/components/schemas/JobType'
+        status:
+          allOf:
+          - $ref: '#/components/schemas/JobStatus'
+          default: pending
+        payload:
+          title: Payload
+          type: string
+        info:
+          title: Info
+          type: object
+        attempt:
+          title: Attempt
+          type: integer
+          default: 1
+        created_by:
+          title: Created By
+          type: integer
+        created:
+          title: Created
+          type: string
+        available:
+          title: Available
+          type: string
+          format: date-time
+    LogDict:
+      title: LogDict
+      required:
+      - at
+      - attachment
+      - id
+      - message
+      - status
+      - user
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        user:
+          title: User
+          type: integer
+        message:
+          title: Message
+          type: string
+        attachment:
+          title: Attachment
+          type: string
+        status:
+          $ref: '#/components/schemas/JobStatus'
+        at:
+          title: At
+          type: string
+          format: date-time
+    MapsDict:
+      title: MapsDict
+      required:
+      - id
+      - loc
+      - name
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        loc:
+          title: Loc
+          type: string
+        geo:
+          title: Geo
+          type: array
+          items:
+            type: number
+        name:
+          title: Name
+          type: string
+        marker:
+          title: Marker
+        shape:
+          title: Shape
+        marker_hover:
+          title: Marker Hover
+          type: array
+          items:
+            type: object
+    OptionBase:
+      title: OptionBase
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+        order:
+          title: Order
+          type: integer
+        color:
+          title: Color
+          type: string
+        score:
+          title: Score
+          type: integer
+        code:
+          title: Code
+          type: string
+        translations:
+          title: Translations
+          type: array
+          items:
+            type: object
+    OptionBaseWithId:
+      title: OptionBaseWithId
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        name:
+          title: Name
+          type: string
+        order:
+          title: Order
+          type: integer
+        color:
+          title: Color
+          type: string
+        score:
+          title: Score
+          type: integer
+        code:
+          title: Code
+          type: string
+        translations:
+          title: Translations
+          type: array
+          items:
+            type: object
+    OptionDict:
+      title: OptionDict
+      required:
+      - code
+      - color
+      - name
+      - order
+      - score
+      - translations
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+        order:
+          title: Order
+          type: integer
+        color:
+          title: Color
+          type: string
+        score:
+          title: Score
+          type: integer
+        code:
+          title: Code
+          type: string
+        translations:
+          title: Translations
+          type: array
+          items:
+            type: object
+    OrganisationBase:
+      title: OrganisationBase
+      required:
+      - name
+      - type
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        name:
+          title: Name
+          type: string
+        type:
+          $ref: '#/components/schemas/OrganisationType'
+    OrganisationDict:
+      title: OrganisationDict
+      required:
+      - id
+      - name
+      - type
+      - user
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        name:
+          title: Name
+          type: string
+        type:
+          $ref: '#/components/schemas/OrganisationType'
+        user:
+          title: User
+          type: array
+          items:
+            $ref: '#/components/schemas/UserBase'
+    OrganisationType:
+      title: OrganisationType
+      type: string
+      description: An enumeration.
+      enum:
+      - iNGO
+      - Company
+      - Government
+    ProjectBase:
+      title: ProjectBase
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        name:
+          title: Name
+          type: integer
+        label:
+          title: Label
+          type: string
+    QuestionBase:
+      title: QuestionBase
+      required:
+      - form
+      - id
+      - meta
+      - name
+      - option
+      - question_group
+      - required
+      - type
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        form:
+          title: Form
+          type: integer
+        question_group:
+          title: Question Group
+          type: integer
+        name:
+          title: Name
+          type: string
+        order:
+          title: Order
+          type: integer
+        meta:
+          title: Meta
+          type: boolean
+        type:
+          $ref: '#/components/schemas/QuestionType'
+        required:
+          title: Required
+          type: boolean
+        rule:
+          title: Rule
+          type: object
+        option:
+          title: Option
+          type: array
+          items:
+            $ref: '#/components/schemas/OptionBaseWithId'
+        dependency:
+          title: Dependency
+          type: array
+          items:
+            type: object
+        tooltip:
+          title: Tooltip
+          type: object
+        translations:
+          title: Translations
+          type: array
+          items:
+            type: object
+        api:
+          title: Api
+          type: object
+        addons:
+          title: Addons
+          type: object
+    QuestionDict:
+      title: QuestionDict
+      required:
+      - addons
+      - api
+      - dependency
+      - form
+      - id
+      - meta
+      - name
+      - option
+      - order
+      - question_group
+      - required
+      - rule
+      - tooltip
+      - translations
+      - type
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        form:
+          title: Form
+          type: integer
+        question_group:
+          title: Question Group
+          type: integer
+        order:
+          title: Order
+          type: integer
+        name:
+          title: Name
+          type: string
+        meta:
+          title: Meta
+          type: boolean
+        type:
+          $ref: '#/components/schemas/QuestionType'
+        required:
+          title: Required
+          type: boolean
+        rule:
+          title: Rule
+          type: object
+        option:
+          title: Option
+          type: array
+          items:
+            $ref: '#/components/schemas/OptionBase'
+        dependency:
+          title: Dependency
+          type: array
+          items:
+            type: object
+        tooltip:
+          title: Tooltip
+          type: object
+        translations:
+          title: Translations
+          type: array
+          items:
+            type: object
+        api:
+          title: Api
+          type: object
+        addons:
+          title: Addons
+          type: object
+    QuestionGroupBase:
+      title: QuestionGroupBase
+      required:
+      - form
+      - id
+      - name
+      - question
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        form:
+          title: Form
+          type: integer
+        name:
+          title: Name
+          type: string
+        order:
+          title: Order
+          type: integer
+        description:
+          title: Description
+          type: string
+        repeatable:
+          title: Repeatable
+          type: boolean
+          default: false
+        repeat_text:
+          title: Repeat Text
+          type: string
+        translations:
+          title: Translations
+          type: array
+          items:
+            type: object
+        question:
+          title: Question
+          type: array
+          items:
+            $ref: '#/components/schemas/QuestionBase'
+    QuestionType:
+      title: QuestionType
+      type: string
+      description: An enumeration.
+      enum:
+      - text
+      - number
+      - option
+      - multiple_option
+      - photo
+      - date
+      - geo
+      - administration
+      - answer_list
+    SubmissionInfo:
+      title: SubmissionInfo
+      required:
+      - at
+      - by
+      type: object
+      properties:
+        by:
+          title: By
+          type: string
+        at:
+          title: At
+          type: string
+    UserAccessBase:
+      title: UserAccessBase
+      required:
+      - access
+      - email
+      - id
+      - name
+      - organisation
+      - role
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        email:
+          title: Email
+          type: string
+        name:
+          title: Name
+          type: string
+        role:
+          $ref: '#/components/schemas/UserRole'
+        active:
+          title: Active
+          type: boolean
+          default: false
+        access:
+          title: Access
+          type: array
+          items:
+            type: integer
+        organisation:
+          title: Organisation
+          type: integer
+    UserBase:
+      title: UserBase
+      required:
+      - email
+      - id
+      - organisation
+      - role
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        email:
+          title: Email
+          type: string
+        name:
+          title: Name
+          type: string
+        role:
+          $ref: '#/components/schemas/UserRole'
+        active:
+          title: Active
+          type: boolean
+          default: false
+        email_verified:
+          title: Email Verified
+          type: boolean
+          default: false
+        picture:
+          title: Picture
+          type: string
+        organisation:
+          title: Organisation
+          type: integer
+    UserResponse:
+      title: UserResponse
+      required:
+      - current
+      - data
+      - total
+      - total_page
+      type: object
+      properties:
+        current:
+          title: Current
+          type: integer
+        data:
+          title: Data
+          type: array
+          items:
+            $ref: '#/components/schemas/UserBase'
+        total:
+          title: Total
+          type: integer
+        total_page:
+          title: Total Page
+          type: integer
+    UserRole:
+      title: UserRole
+      type: string
+      description: An enumeration.
+      enum:
+      - user
+      - admin
+      - editor
+    ValidationError:
+      title: ValidationError
+      required:
+      - loc
+      - msg
+      - type
+      type: object
+      properties:
+        loc:
+          title: Location
+          type: array
+          items:
+            type: string
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+    type:
+      description: question type
+      allOf:
+      - $ref: '#/components/schemas/QuestionType'
+      default: text
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      scheme: bearer

@@ -437,6 +437,8 @@ async def add_webform(
     if os.environ.get('TESTING'):
         json_form = payload
     else:
+        if INSTANCE_NAME != "wai-demo":
+            return Response(status_code=HTTPStatus.METHOD_NOT_ALLOWED.value)
         json_form = transformJsonForm(session=session, json_form=payload)
     background_tasks.add_task(
         save_webform, session=session, json_form=json_form)
@@ -445,7 +447,7 @@ async def add_webform(
 
 @form_route.put(
     "/webform/{id:path}",
-    summary="update webform editor definition",
+    summary="update webform definition",
     name="webform:update",
     tags=["Form"])
 async def update_webform(
@@ -459,6 +461,8 @@ async def update_webform(
     if os.environ.get('TESTING'):
         json_form = payload
     else:
+        if INSTANCE_NAME != "wai-demo":
+            return Response(status_code=HTTPStatus.METHOD_NOT_ALLOWED.value)
         json_form = transformJsonForm(
             session=session, json_form=payload, edit=True)
     background_tasks.add_task(
