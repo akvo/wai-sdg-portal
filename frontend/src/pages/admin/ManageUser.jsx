@@ -15,6 +15,7 @@ import {
 } from 'antd';
 import { EditOutlined, CheckOutlined, DeleteOutlined } from '@ant-design/icons';
 import api from '../../util/api';
+import { query } from '../../util/utils';
 import capitalize from 'lodash/capitalize';
 import isEmpty from 'lodash/isEmpty';
 import { UIState } from '../../state/ui';
@@ -36,6 +37,7 @@ const ManageUser = () => {
     pageSize: 10,
   });
   const [selectedValue, setSelectedValue] = useState({});
+  const [searchValue, setSearchValue] = useState({});
   const [isUserModalVisible, setIsUserModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isInformUser, setIsInformUser] = useState(false);
@@ -77,6 +79,20 @@ const ManageUser = () => {
         setIsInformUser(false);
         setIsUserModalVisible(false);
       });
+  };
+
+  const onSearch = (values) => {
+    const searchParams = new URLSearchParams();
+    const params = query(values);
+    Object.keys(params).forEach((key) => searchParams.append(key, params[key]));
+    getUsers(active, 1, 10, searchParams.toString());
+  };
+
+  const onReset = () => {
+    form.resetFields();
+    form.setFieldsValue({ search: '' });
+    setSearchValue({});
+    getUsers(active);
   };
 
   const fetchUserDetail = (id) => {
@@ -204,10 +220,10 @@ const ManageUser = () => {
     },
   ];
 
-  const getUsers = useCallback((active, page = 1, pageSize = 10) => {
+  const getUsers = useCallback((active, page = 1, pageSize = 10, query) => {
     setTableLoading(true);
     api
-      .get(`/user?active=${active}&page=${page}`)
+      .get(`/user?active=${active}&page=${page}${query ? `&${query}` : ''}`)
       .then((res) => {
         setUsers(res.data?.data);
         setPaginate({
@@ -254,8 +270,71 @@ const ManageUser = () => {
         align="middle"
         className="checkbox-wrapper"
       >
+        <Col span={20}>
+          <Form
+            form={form}
+            name="search-form"
+            initialValues={searchValue}
+            onFinish={onSearch}
+            layout="inline"
+          >
+            <Form.Item
+              key="search"
+              name="search"
+            >
+              <Input
+                value={searchValue?.search}
+                placeholder="Search by Name, Email"
+                onChange={(e) => {
+                  form.setFieldsValue({ search: e.target.value });
+                  setSearchValue({ ...searchValue, search: e.target.value });
+                }}
+              />
+            </Form.Item>
+            <UserRole
+              style={{ width: '150px' }}
+              onRoleChange={(value) => {
+                form.setFieldsValue({ role: value });
+                setSearchValue({ ...searchValue, role: value });
+              }}
+              selectedValue={searchValue}
+            />
+            <UserOrganisation
+              style={{ width: '200px' }}
+              onOrganisationChange={(value) => {
+                form.setFieldsValue({ organisation: value });
+                setSearchValue({ ...searchValue, organisation: value });
+              }}
+              selectedValue={searchValue}
+              organisations={organisations}
+            />
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                disabled={Object.values(searchValue).every(
+                  (x) => x === '' || x === null || typeof x === 'undefined'
+                )}
+              >
+                Search
+              </Button>
+              {Object.values(searchValue).length > 0 &&
+                Object.values(searchValue).every(
+                  (x) => typeof x !== 'undefined'
+                ) && (
+                  <Button
+                    htmlType="button"
+                    onClick={onReset}
+                    style={{ marginLeft: '10px' }}
+                  >
+                    Reset
+                  </Button>
+                )}
+            </Form.Item>
+          </Form>
+        </Col>
         <Col
-          span={24}
+          span={4}
           align="end"
         >
           <Space align="center">
@@ -367,36 +446,12 @@ const ManageUser = () => {
             />
           </Form.Item>
 
-          <Form.Item
-            key="role"
-            label={formText?.labelRole}
-            name="role"
-            valuePropName="role"
-          >
-            <Select
-              onChange={onRoleChange}
-              value={selectedValue?.role}
-            >
-              <Select.Option
-                key="opt-admin"
-                value="admin"
-              >
-                {formText?.optionRoleAdmin}
-              </Select.Option>
-              <Select.Option
-                key="opt-editor"
-                value="editor"
-              >
-                {formText?.optionRoleEditor}
-              </Select.Option>
-              <Select.Option
-                key="opt-user"
-                value="user"
-              >
-                {formText?.optionRoleUser}
-              </Select.Option>
-            </Select>
-          </Form.Item>
+          <UserRole
+            onRoleChange={onRoleChange}
+            selectedValue={selectedValue}
+            label
+          />
+
           <Form.Item
             key="group-form"
             noStyle
@@ -441,23 +496,12 @@ const ManageUser = () => {
               ) : null
             }
           </Form.Item>
-
-          <Form.Item
-            key="organisation"
-            label={formText?.labelOrg}
-            name="organisation"
-            valuePropName="organisation"
-          >
-            <Select
-              showSearch
-              onChange={onOrganisationChange}
-              options={organisations.map((x) => ({
-                label: x.name,
-                value: x.id,
-              }))}
-              value={selectedValue?.organisation}
-            />
-          </Form.Item>
+          <UserOrganisation
+            onOrganisationChange={onOrganisationChange}
+            selectedValue={selectedValue}
+            label
+            organisations={organisations}
+          />
         </Form>
       </Modal>
 
@@ -469,6 +513,72 @@ const ManageUser = () => {
         onCancel={() => handleCloseConfirmationModal()}
       />
     </>
+  );
+};
+
+const UserRole = ({ onRoleChange, selectedValue, label, style }) => {
+  return (
+    <Form.Item
+      key="role"
+      label={label ? formText?.labelRole : ''}
+      name="role"
+      valuePropName="role"
+    >
+      <Select
+        style={style}
+        placeholder="Select role"
+        onChange={onRoleChange}
+        value={selectedValue?.role}
+      >
+        <Select.Option
+          key="opt-admin"
+          value="admin"
+        >
+          {formText?.optionRoleAdmin}
+        </Select.Option>
+        <Select.Option
+          key="opt-editor"
+          value="editor"
+        >
+          {formText?.optionRoleEditor}
+        </Select.Option>
+        <Select.Option
+          key="opt-user"
+          value="user"
+        >
+          {formText?.optionRoleUser}
+        </Select.Option>
+      </Select>
+    </Form.Item>
+  );
+};
+
+const UserOrganisation = ({
+  onOrganisationChange,
+  selectedValue,
+  label,
+  organisations,
+  style,
+}) => {
+  return (
+    <Form.Item
+      key="organisation"
+      label={label ? formText?.labelOrg : ''}
+      name="organisation"
+      valuePropName="organisation"
+    >
+      <Select
+        style={style}
+        showSearch
+        onChange={onOrganisationChange}
+        placeholder="Select organisation"
+        options={organisations.map((x) => ({
+          label: x.name,
+          value: x.id,
+        }))}
+        value={selectedValue?.organisation}
+      />
+    </Form.Item>
   );
 };
 

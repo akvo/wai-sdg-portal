@@ -1,10 +1,11 @@
 from http import HTTPStatus
 import pandas as pd
 from math import ceil
-from fastapi import Depends, Request, APIRouter, HTTPException, Response
+from fastapi import Depends, Request, APIRouter
+from fastapi import HTTPException, Response, Query
 from fastapi.security import HTTPBearer
 from fastapi.security import HTTPBasicCredentials as credentials
-from typing import List
+from typing import List, Optional
 from sqlalchemy.orm import Session
 import db.crud_user as crud
 from db.connection import get_session
@@ -79,15 +80,27 @@ def add(req: Request,
 def get(req: Request,
         active: int = 0,
         page: int = 1,
+        search: Optional[str] = Query(None),
+        organisation: Optional[int] = Query(None),
+        role: Optional[UserRole] = Query(None),
         session: Session = Depends(get_session),
         credentials: credentials = Depends(security)):
     verify_admin(req.state.authenticated, session)
-    user = crud.get_user(session=session,
-                         skip=(10 * (page - 1)),
-                         active=active)
+    user = crud.get_user(
+        session=session,
+        skip=(10 * (page - 1)),
+        active=active,
+        search=search,
+        organisation=organisation,
+        role=role)
     if not user:
         raise HTTPException(status_code=404, detail="Not found")
-    total = crud.count(session=session, active=active)
+    total = crud.count(
+        session=session,
+        active=active,
+        search=search,
+        organisation=organisation,
+        role=role)
     user = [i.serialize for i in user]
     if not active:
         auth0_data = get_auth0_user()

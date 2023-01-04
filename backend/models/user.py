@@ -7,11 +7,12 @@ from datetime import datetime
 from typing import List, Optional
 from typing_extensions import TypedDict
 from sqlalchemy import Column, Integer, Boolean, String
-from sqlalchemy import Enum, DateTime
+from sqlalchemy import Enum, DateTime, Computed, Index
 from sqlalchemy.orm import relationship
 from sqlalchemy import ForeignKey
 from db.connection import Base
 from models.access import AccessDict
+from util.helper import TSVector
 
 
 class UserRole(enum.Enum):
@@ -55,6 +56,12 @@ class User(Base):
                           cascade="all, delete",
                           passive_deletes=True,
                           backref="access")
+
+    __ts_vector__ = Column(TSVector(), Computed(
+        "to_tsvector('english', name || ' ' || email)",
+        persisted=True))
+    __table_args__ = (Index('ix_user___ts_vector__',
+                            __ts_vector__, postgresql_using='gin'),)
 
     def __init__(self, email: str, name: str, role: UserRole, active: bool,
                  organisation: int):

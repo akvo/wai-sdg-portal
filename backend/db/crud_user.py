@@ -24,16 +24,43 @@ def add_user(session: Session,
     return user
 
 
-def count(session: Session, active: int = 0) -> int:
-    return session.query(User).filter(User.active == bool(active)).count()
+def count(
+    session: Session,
+    active: int = 0,
+    search: Optional[str] = None,
+    organisation: Optional[int] = None,
+    role: Optional[UserRole] = None
+) -> int:
+    count = session.query(User)
+    if search:
+        count = count.filter(User.__ts_vector__.match(search))
+    if organisation:
+        count = count.filter(User.organisation == organisation)
+    if role:
+        count = count.filter(User.role == role)
+    count = count.filter(User.active == bool(active)).count()
+    return count
 
 
-def get_user(session: Session,
-             skip: int = 0,
-             limit: int = 10,
-             active: int = 0) -> List[User]:
-    return session.query(User).filter(User.active == bool(active)).order_by(
+def get_user(
+    session: Session,
+    skip: int = 0,
+    limit: int = 10,
+    active: int = 0,
+    search: Optional[str] = None,
+    organisation: Optional[int] = None,
+    role: Optional[UserRole] = None
+) -> List[User]:
+    users = session.query(User).filter(User.active == bool(active))
+    if search:
+        users = users.filter(User.__ts_vector__.match(search))
+    if organisation:
+        users = users.filter(User.organisation == organisation)
+    if role:
+        users = users.filter(User.role == role)
+    users = users.order_by(
         desc(User.id)).offset(skip).limit(limit).all()
+    return users
 
 
 def update_user_by_id(session: Session,
