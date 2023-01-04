@@ -3,6 +3,8 @@
 
 set -exuo pipefail
 
+INSTANCES="wai-ethiopia wai-uganda wai-bangladesh wai-nepal wai-demo"
+
 [[ -n "${CI_TAG:=}" ]] && { echo "Skip build"; exit 0; }
 
 image_prefix="eu.gcr.io/akvo-lumen/wai-sdg-portal"
@@ -19,6 +21,19 @@ dci () {
     dc -f docker-compose.yml \
        -f docker-compose.ci.yml "$@"
 }
+
+documentation_build () {
+    for INSTANCE in ${INSTANCES}
+    do
+        echo "Build ${INSTANCE} documentation"
+        docker run -it --rm -v "$(pwd)/docs/${INSTANCE}:/docs" \
+            akvo/akvo-sphinx:20220525.082728.594558b make html
+        mkdir -p frontend/build/docs/${INSTANCE}
+        cp -r docs/${INSTANCE}/build/html frontend/build/docs/${INSTANCE}
+
+    done
+}
+
 
 frontend_build () {
 
@@ -61,7 +76,7 @@ worker_build () {
 
 worker_build
 backend_build
-
+documentation_build
 frontend_build
 
 #test-connection
