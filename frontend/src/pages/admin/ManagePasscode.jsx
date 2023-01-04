@@ -7,7 +7,10 @@ import {
   Table,
   notification,
   Typography,
+  Tooltip,
+  Button,
 } from 'antd';
+import { CopyOutlined } from '@ant-design/icons';
 
 const { notificationText } = window.i18n;
 
@@ -105,6 +108,20 @@ const ManagePasscode = () => {
       title: 'URL',
       dataIndex: 'url',
       width: '25%',
+      render: (val) => {
+        return (
+          <Input.Group compact>
+            <Input
+              style={{ width: 'calc(100% - 200px)' }}
+              defaultValue={val}
+              readOnly
+            />
+            <Tooltip title="copy git url">
+              <Button icon={<CopyOutlined />} />
+            </Tooltip>
+          </Input.Group>
+        );
+      },
     },
     {
       title: 'Passcode',
