@@ -34,7 +34,7 @@ const Content = () => {
       />
       <ProtectedContent
         exact
-        path="/documentation"
+        path="/api-docs"
         component={Doc}
       />
       <Route

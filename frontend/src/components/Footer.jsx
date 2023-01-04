@@ -54,7 +54,7 @@ const FooterEnd = () => {
         {/* <Link to="/tos">{footer?.termsOfService}</Link> */}
         {user && (
           <Link
-            to="/documentation"
+            to="/api-docs"
             onClick={() => changePage('documentation')}
           >
             {footer?.developer}
