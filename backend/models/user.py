@@ -52,10 +52,12 @@ class User(Base):
     active = Column(Boolean, nullable=True, default=True)
     created = Column(DateTime, default=datetime.utcnow)
     organisation = Column(Integer, ForeignKey('organisation.id'))
-    access = relationship("Access",
-                          cascade="all, delete",
-                          passive_deletes=True,
-                          backref="access")
+    manage_form_passcode = Column(Boolean, default=False)
+    access = relationship(
+        "Access",
+        cascade="all, delete",
+        passive_deletes=True,
+        backref="access")
 
     __ts_vector__ = Column(TSVector(), Computed(
         "to_tsvector('english', name || ' ' || email)",
@@ -63,13 +65,17 @@ class User(Base):
     __table_args__ = (Index('ix_user___ts_vector__',
                             __ts_vector__, postgresql_using='gin'),)
 
-    def __init__(self, email: str, name: str, role: UserRole, active: bool,
-                 organisation: int):
+    def __init__(
+        self, email: str, name: str, role: UserRole,
+        active: bool, organisation: int,
+        manage_form_passcode: Optional[bool] = False
+    ):
         self.email = email
         self.name = name
         self.active = active
         self.role = role
         self.organisation = organisation
+        self.manage_form_passcode = manage_form_passcode
 
     def __repr__(self) -> int:
         return f"<User {self.id}>"
@@ -83,7 +89,8 @@ class User(Base):
             "role": self.role,
             "active": self.active,
             "access": [a.administration for a in self.access],
-            "organisation": self.organisation
+            "organisation": self.organisation,
+            "manage_form_passcode": self.manage_form_passcode
         }
 
     @property
@@ -104,6 +111,7 @@ class UserBase(BaseModel):
     picture: Optional[str] = None
     name: Optional[str] = None
     organisation: int
+    manage_form_passcode: Optional[bool] = False
 
     class Config:
         orm_mode = True
@@ -124,6 +132,7 @@ class UserAccessBase(BaseModel):
     active: Optional[bool] = False
     access: List[int]
     organisation: int
+    manage_form_passcode: Optional[bool] = False
 
     class Config:
         orm_mode = True
