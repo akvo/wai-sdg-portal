@@ -116,7 +116,7 @@ const ManagePasscode = () => {
               defaultValue={val}
               readOnly
             />
-            <Tooltip title="copy git url">
+            <Tooltip title="copy form url">
               <Button icon={<CopyOutlined />} />
             </Tooltip>
           </Input.Group>

@@ -104,7 +104,7 @@ const Admin = ({ match }) => {
               />
             )}
             <TabPane
-              tab={<div className="tab-pane-text">Manage Passcode</div>}
+              tab={<div className="tab-pane-text">Manage Form Passcode</div>}
               key="manage-passcode"
             />
           </Tabs>
