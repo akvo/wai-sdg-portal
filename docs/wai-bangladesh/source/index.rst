@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to SDG Portal documentation!
+Welcome to SDG Bangladesh Portal documentation!
 ====================================
 
 |Build Status| |Repo Size| |Languages| |Issues| |Last Commit| |Documentation Status|
