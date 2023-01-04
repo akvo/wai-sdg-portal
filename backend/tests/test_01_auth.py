@@ -224,6 +224,7 @@ class TestAuthorizationSetup:
                 "email_verified": None,
                 "picture": None,
                 "organisation": 1,
+                "manage_form_passcode": False,
             }
         ]
         # get user by id
