@@ -47,6 +47,8 @@ frontend_build () {
        frontend \
        bash release.sh
 
+    documentation_build
+
     docker build \
         --tag "${image_prefix}/frontend:latest" \
         --tag "${image_prefix}/frontend:${CI_COMMIT}" frontend
@@ -77,7 +79,6 @@ worker_build () {
 worker_build
 backend_build
 frontend_build
-documentation_build
 
 #test-connection
 if ! dci run -T ci ./basic.sh; then
@@ -85,3 +86,4 @@ if ! dci run -T ci ./basic.sh; then
   echo "Build failed when running basic.sh"
   exit 1
 fi
+
