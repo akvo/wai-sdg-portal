@@ -48,8 +48,15 @@ const EditableCell = ({
               message: '',
             },
             {
-              pattern: /^(?!.* )(?=.*\d)(?=.*[A-Z]).{8,15}$/,
-              message: '',
+              pattern: /^(?!.* )(?=.*\d)(?=.*[A-Z]).{8,}$/,
+              message: (
+                <Tooltip
+                  visible={true}
+                  color="red"
+                  placement="bottom"
+                  title="The minimum password length is 8 charachters and must contain at least 1 capital letter 1 number"
+                />
+              ),
             },
           ]}
         >
