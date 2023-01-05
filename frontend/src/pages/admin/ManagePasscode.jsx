@@ -18,12 +18,12 @@ const { notificationText } = window.i18n;
 const EditableCell = ({
   editing,
   dataIndex,
-  title,
   inputType,
   record,
   children,
   cancel,
   save,
+  loading,
   ...restProps
 }) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -32,7 +32,6 @@ const EditableCell = ({
       <InputNumber />
     ) : (
       <Space
-        block
         size="small"
         direction="horizontal"
         style={{ width: '100%' }}
@@ -46,7 +45,11 @@ const EditableCell = ({
           rules={[
             {
               required: true,
-              message: `Please Input ${title}!`,
+              message: '',
+            },
+            {
+              pattern: /^(?!.* )(?=.*\d)(?=.*[A-Z]).{8,15}$/,
+              message: '',
             },
           ]}
         >
@@ -61,6 +64,7 @@ const EditableCell = ({
           type="primary"
           style={{ width: 80 }}
           onClick={() => save(record.id)}
+          loading={loading}
         >
           Save
         </Button>
@@ -83,6 +87,7 @@ const ManagePasscode = () => {
   const [data, setData] = useState([]);
   const [editingKey, setEditingKey] = useState('');
   const [tableLoading, setTableLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [paginate, setPaginate] = useState({
     total: 1,
     current: 1,
@@ -103,6 +108,7 @@ const ManagePasscode = () => {
   };
 
   const save = async (key) => {
+    setLoading(true);
     try {
       const row = await form.validateFields();
       const newData = [...data];
@@ -120,10 +126,24 @@ const ManagePasscode = () => {
         setData(newData);
         setEditingKey('');
       }
+      api
+        .put(`/form/${key}?passcode=${row?.passcode}`)
+        .then(() => {
+          notification.success({
+            message: notificationText?.updateSuccessText,
+          });
+          getData();
+        })
+        .catch(() => {
+          notification.error({
+            message: notificationText?.errorText,
+          });
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     } catch (errInfo) {
-      notification.error({
-        message: notificationText?.errorText,
-      });
+      setLoading(false);
     }
   };
 
@@ -235,6 +255,7 @@ const ManagePasscode = () => {
         editing: isEditing(record),
         cancel,
         save,
+        loading,
       }),
     };
   });
