@@ -64,7 +64,8 @@ def update_form(
     description: Optional[str] = None,
     default_language: Optional[str] = None,
     languages: Optional[List[str]] = None,
-    translations: Optional[List[dict]] = None
+    translations: Optional[List[dict]] = None,
+    passcode: Optional[str] = None
 ) -> FormDict:
     form = session.query(Form).filter(Form.id == id).first()
     form.name = name
@@ -78,6 +79,7 @@ def update_form(
     form.default_language = default_language
     form.languages = languages
     form.translations = translations
+    form.passcode = passcode
     session.commit()
     session.flush()
     session.refresh(form)

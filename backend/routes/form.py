@@ -1,6 +1,7 @@
 import os
 from http import HTTPStatus
-from fastapi import Depends, Request, APIRouter, BackgroundTasks, Response
+from fastapi import Depends, Request, APIRouter, BackgroundTasks
+from fastapi import Response, HTTPException
 from fastapi.security import HTTPBearer
 from fastapi.security import HTTPBasicCredentials as credentials
 from typing import List, Optional
@@ -19,6 +20,7 @@ from models.question import QuestionType, QuestionDict, Question
 from middleware import verify_user, verify_admin, verify_editor
 from source.geoconfig import GeoCenter
 from datetime import datetime
+from util.helper import Cipher
 
 INSTANCE_NAME = os.environ["INSTANCE_NAME"]
 class_path = INSTANCE_NAME.replace("-", "_")
@@ -350,11 +352,15 @@ def save_webform(session: Session, json_form: dict, form_id: int = None):
                 name="form:get_all",
                 tags=["Form"])
 def get(req: Request, session: Session = Depends(get_session)):
+    webdomain = os.environ['WEBDOMAIN']
     form = crud.get_form(session=session)
     forms = []
     for fr in [f.serialize for f in form]:
+        url = Cipher(f"{class_path}-{fr.get('id')}").encode()
+        url = f"https://{webdomain}/webform/{url}"
         data = crud_data.count(session=session, form=fr.get('id'))
         fr.update({'disableDelete': True if data else False})
+        fr.update({'url': url or None})
         forms.append(fr)
     return forms
 
@@ -468,6 +474,39 @@ async def update_webform(
     background_tasks.add_task(
         save_webform, session=session, json_form=json_form, form_id=id)
     return payload
+
+
+@form_route.put(
+    "/form/{id:path}",
+    responses={204: {"model": None}},
+    summary="update form passcode",
+    name="form:update_passcode",
+    tags=["Form"])
+def update_form(
+    req: Request,
+    id: int,
+    passcode: str,
+    session: Session = Depends(get_session),
+    credentials: credentials = Depends(security)
+):
+    user = verify_admin(req.state.authenticated, session)
+    if not user.manage_form_passcode:
+        # prevent admin without manage form passcode
+        raise HTTPException(
+            status_code=403,
+            detail="You don't have data access, please contact admin")
+    form = crud.get_form_by_id(session=session, id=id)
+    crud.update_form(
+        session=session,
+        id=form.id,
+        name=form.name,
+        version=form.version,
+        description=form.description,
+        default_language=form.default_language,
+        languages=form.languages,
+        translations=form.translations,
+        passcode=passcode)
+    return Response(status_code=HTTPStatus.NO_CONTENT.value)
 
 
 @form_route.delete(
