@@ -1,6 +1,7 @@
 import os
 from http import HTTPStatus
-from fastapi import Depends, Request, APIRouter, BackgroundTasks, Response
+from fastapi import Depends, Request, APIRouter, BackgroundTasks
+from fastapi import Response, HTTPException
 from fastapi.security import HTTPBearer
 from fastapi.security import HTTPBasicCredentials as credentials
 from typing import List, Optional
@@ -477,6 +478,7 @@ async def update_webform(
 
 @form_route.put(
     "/form/{id:path}",
+    responses={204: {"model": None}},
     summary="update form passcode",
     name="form:update_passcode",
     tags=["Form"])
@@ -487,9 +489,24 @@ def update_form(
     session: Session = Depends(get_session),
     credentials: credentials = Depends(security)
 ):
-    verify_admin(req.state.authenticated, session)
-    form = crud.update_form(session=session, id=id, passcode=passcode)
-    return form.serialize
+    user = verify_admin(req.state.authenticated, session)
+    if not user.manage_form_passcode:
+        # prevent admin without manage form passcode
+        raise HTTPException(
+            status_code=403,
+            detail="You don't have data access, please contact admin")
+    form = crud.get_form_by_id(session=session, id=id)
+    crud.update_form(
+        session=session,
+        id=form.id,
+        name=form.name,
+        version=form.version,
+        description=form.description,
+        default_language=form.default_language,
+        languages=form.languages,
+        translations=form.translations,
+        passcode=passcode)
+    return Response(status_code=HTTPStatus.NO_CONTENT.value)
 
 
 @form_route.delete(
