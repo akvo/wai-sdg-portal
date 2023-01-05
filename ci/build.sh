@@ -76,8 +76,8 @@ worker_build () {
 
 worker_build
 backend_build
-documentation_build
 frontend_build
+documentation_build
 
 #test-connection
 if ! dci run -T ci ./basic.sh; then
