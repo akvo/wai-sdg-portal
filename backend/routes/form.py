@@ -475,6 +475,23 @@ async def update_webform(
     return payload
 
 
+@form_route.put(
+    "/form/{id:path}",
+    summary="update form passcode",
+    name="form:update_passcode",
+    tags=["Form"])
+def update_form(
+    req: Request,
+    id: int,
+    passcode: str,
+    session: Session = Depends(get_session),
+    credentials: credentials = Depends(security)
+):
+    verify_admin(req.state.authenticated, session)
+    form = crud.update_form(session=session, id=id, passcode=passcode)
+    return form.serialize
+
+
 @form_route.delete(
     "/form/{id:path}", responses={204: {
         "model": None}},

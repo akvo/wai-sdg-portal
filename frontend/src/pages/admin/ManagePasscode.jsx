@@ -183,7 +183,7 @@ const ManagePasscode = () => {
     },
     {
       title: 'Passcode',
-      dataIndex: 'name',
+      dataIndex: 'passcode',
       width: '25%',
       editable: true,
       render: (val, record) => {

@@ -32,6 +32,7 @@ class FormDictWithFlag(TypedDict):
     languages: Optional[List[str]]
     translations: Optional[List[dict]]
     url: Optional[str] = None
+    passcode: Optional[str] = None
 
 
 class Form(Base):
@@ -43,6 +44,7 @@ class Form(Base):
     languages = Column(pg.ARRAY(String), nullable=True)
     translations = Column(pg.ARRAY(pg.JSONB), nullable=True)
     version = Column(Float, nullable=True, default=0.0)
+    passcode = Column(String, nullable=True)
 
     question_group = relationship(
         "QuestionGroup", cascade="all, delete",
@@ -56,7 +58,8 @@ class Form(Base):
         description: Optional[str] = None,
         default_language: Optional[str] = None,
         languages: Optional[List[str]] = None,
-        translations: Optional[List[dict]] = None
+        translations: Optional[List[dict]] = None,
+        passcode: Optional[str] = None
     ):
         self.id = id
         self.name = name
@@ -65,6 +68,7 @@ class Form(Base):
         self.default_language = default_language
         self.languages = languages
         self.translations = translations
+        self.passcode = passcode
 
     def __repr__(self) -> int:
         return f"<Form {self.id}>"
@@ -80,6 +84,7 @@ class Form(Base):
             "languages": self.languages,
             "translations": self.translations,
             "question_group": self.question_group,
+            "passcode": self.passcode,
         }
 
     @property

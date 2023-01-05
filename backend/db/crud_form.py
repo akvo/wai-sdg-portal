@@ -59,15 +59,17 @@ def get_form_list():
 def update_form(
     session: Session,
     id: int,
-    name: str,
+    name: Optional[str] = None,
     version: Optional[float] = None,
     description: Optional[str] = None,
     default_language: Optional[str] = None,
     languages: Optional[List[str]] = None,
-    translations: Optional[List[dict]] = None
+    translations: Optional[List[dict]] = None,
+    passcode: Optional[str] = None
 ) -> FormDict:
     form = session.query(Form).filter(Form.id == id).first()
-    form.name = name
+    if name:
+        form.name = name
     if not form.version:
         form.version = 1.0
     if form.version:
@@ -78,6 +80,7 @@ def update_form(
     form.default_language = default_language
     form.languages = languages
     form.translations = translations
+    form.passcode = passcode
     session.commit()
     session.flush()
     session.refresh(form)
