@@ -13,8 +13,15 @@ import {
   Select,
   Input,
   Empty,
+  Switch,
+  Tooltip,
 } from 'antd';
-import { EditOutlined, CheckOutlined, DeleteOutlined } from '@ant-design/icons';
+import {
+  EditOutlined,
+  CheckOutlined,
+  DeleteOutlined,
+  InfoCircleOutlined,
+} from '@ant-design/icons';
 import api from '../../util/api';
 import { query } from '../../util/utils';
 import capitalize from 'lodash/capitalize';
@@ -27,7 +34,7 @@ const { notificationText, buttonText, adminText, formText, tableText } =
 
 const ManageUser = () => {
   const { manageUserTableText } = tableText;
-  const { organisations, administration } = UIState.useState((s) => s);
+  const { organisations, administration, user } = UIState.useState((s) => s);
   const [form] = Form.useForm();
   const [showPendingUser, setShowPendingUser] = useState(true);
   const [tableLoading, setTableLoading] = useState(false);
@@ -56,7 +63,13 @@ const ManageUser = () => {
     setLoading(true);
     api
       .put(
-        `/user/${selectedValue.id}?active=1&role=${values.role}&organisation=${values.organisation}`,
+        `/user/${selectedValue.id}?active=1&role=${values.role}&organisation=${
+          values.organisation
+        }${
+          values.manage_form_passcode
+            ? `&manage_form_passcode=${values.manage_form_passcode}`
+            : ''
+        }`,
         values.access
       )
       .then(() => {
@@ -274,6 +287,11 @@ const ManageUser = () => {
     ),
   };
 
+  const onPasscodeChange = (value) => {
+    form.setFieldsValue({ manage_form_passcode: value });
+    setSelectedValue({ ...selectedValue, manage_form_passcode: value });
+  };
+
   return (
     <>
       <Row
@@ -426,8 +444,6 @@ const ManageUser = () => {
         <Form
           form={form}
           name="user-form"
-          labelCol={{ span: 6 }}
-          wrapperCol={{ span: 16 }}
           initialValues={selectedValue}
           onFinish={onFinish}
         >
@@ -507,12 +523,56 @@ const ManageUser = () => {
               ) : null
             }
           </Form.Item>
-          <UserOrganisation
-            onOrganisationChange={onOrganisationChange}
-            selectedValue={selectedValue}
-            label
-            organisations={organisations}
-          />
+          <Form.Item
+            key="organisation"
+            label={formText?.labelOrg}
+            name="organisation"
+            valuePropName="organisation"
+          >
+            <Select
+              showSearch
+              onChange={onOrganisationChange}
+              options={organisations.map((x) => ({
+                label: x.name,
+                value: x.id,
+              }))}
+              value={selectedValue?.organisation}
+            />
+          </Form.Item>
+
+          <Form.Item
+            key="passcode-form"
+            noStyle
+            shouldUpdate={(prevValues, currentValues) =>
+              prevValues.role !== currentValues.role
+            }
+          >
+            {({ getFieldValue }) =>
+              getFieldValue('role') === 'admin' ? (
+                <Form.Item
+                  key="manage_form_passcode"
+                  label="Manage Form Passcode"
+                  valuePropName="manage_form_passcode"
+                  name="manage_form_passcode"
+                  className="passcode-item"
+                >
+                  <Switch
+                    onChange={onPasscodeChange}
+                    checked={selectedValue?.manage_form_passcode}
+                    disabled={!user?.manage_form_passcode}
+                  />
+                  {!user?.manage_form_passcode && (
+                    <Tooltip
+                      placement="top"
+                      title="This feature can only be enabled by users with form passcode management permission"
+                    >
+                      <InfoCircleOutlined />
+                    </Tooltip>
+                  )}
+                </Form.Item>
+              ) : null
+            }
+          </Form.Item>
         </Form>
       </Modal>
 

@@ -6,17 +6,32 @@ from models.user import User, UserRole, UserDict
 from models.access import Access, AccessDict
 
 
-def add_user(session: Session,
-             email: str,
-             name: str,
-             organisation: int,
-             role: UserRole,
-             active: bool = False) -> UserDict:
-    user = User(role=role,
-                email=email,
-                name=name,
-                active=active,
-                organisation=organisation)
+def define_search_ts_vector(search: str):
+    if ' ' in search:
+        search = search.replace(' ', '&')
+    return search
+
+
+def add_user(
+    session: Session,
+    email: str,
+    name: str,
+    organisation: int,
+    role: UserRole,
+    active: bool = False,
+    manage_form_passcode: Optional[bool] = None
+) -> UserDict:
+    mfp = False
+    if manage_form_passcode is not None:
+        mfp = manage_form_passcode
+    user = User(
+        role=role,
+        email=email,
+        name=name,
+        active=active,
+        organisation=organisation,
+        manage_form_passcode=mfp
+    )
     session.add(user)
     session.commit()
     session.flush()
@@ -33,6 +48,7 @@ def count(
 ) -> int:
     count = session.query(User)
     if search:
+        search = define_search_ts_vector(search=search)
         count = count.filter(User.__ts_vector__.match(search))
     if organisation:
         count = count.filter(User.organisation == organisation)
@@ -53,6 +69,7 @@ def get_user(
 ) -> List[User]:
     users = session.query(User).filter(User.active == bool(active))
     if search:
+        search = define_search_ts_vector(search=search)
         users = users.filter(User.__ts_vector__.match(search))
     if organisation:
         users = users.filter(User.organisation == organisation)
@@ -63,12 +80,15 @@ def get_user(
     return users
 
 
-def update_user_by_id(session: Session,
-                      id: int,
-                      role: UserRole,
-                      active: bool,
-                      name: Optional[str] = None,
-                      organisation: Optional[int] = None) -> UserDict:
+def update_user_by_id(
+    session: Session,
+    id: int,
+    role: UserRole,
+    active: bool,
+    name: Optional[str] = None,
+    organisation: Optional[int] = None,
+    manage_form_passcode: Optional[bool] = None
+) -> UserDict:
     user = session.query(User).filter(User.id == id).first()
     user.role = role
     user.active = active
@@ -76,6 +96,8 @@ def update_user_by_id(session: Session,
         user.organisation = organisation
     if name:
         user.name = name
+    if manage_form_passcode is not None:
+        user.manage_form_passcode = manage_form_passcode
     session.flush()
     session.commit()
     session.refresh(user)
@@ -90,8 +112,11 @@ def get_user_by_email(session: Session, email: str) -> User:
     return session.query(User).filter(User.email == email).first()
 
 
-def add_access(session: Session, user: int,
-               access: List[Access]) -> List[AccessDict]:
+def add_access(
+    session: Session,
+    user: int,
+    access: List[Access]
+) -> List[AccessDict]:
     curr = session.query(Access).filter(Access.user == user)
     if access:
         curr = curr.all()
@@ -115,8 +140,8 @@ def add_access(session: Session, user: int,
                 session.flush()
         access = access.to_dict('records')
         for acc in access:
-            acc = Access(user=acc["user"],
-                         administration=acc["administration"])
+            acc = Access(
+                user=acc["user"], administration=acc["administration"])
             session.add(acc)
             session.commit()
             session.flush()
