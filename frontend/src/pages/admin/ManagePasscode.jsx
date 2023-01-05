@@ -6,11 +6,11 @@ import {
   Popconfirm,
   Table,
   notification,
-  Typography,
   Tooltip,
   Button,
+  Space,
 } from 'antd';
-import { CopyOutlined } from '@ant-design/icons';
+import { CopyOutlined, CloseOutlined } from '@ant-design/icons';
 import api from '../../util/api';
 
 const { notificationText } = window.i18n;
@@ -20,14 +20,24 @@ const EditableCell = ({
   dataIndex,
   title,
   inputType,
+  record,
   children,
+  cancel,
+  save,
   ...restProps
 }) => {
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const inputNode =
-    inputType === 'number' ? <InputNumber /> : <Input type="password" />;
-  return (
-    <td {...restProps}>
-      {editing ? (
+    inputType === 'number' ? (
+      <InputNumber />
+    ) : (
+      <Space
+        block
+        size="small"
+        direction="horizontal"
+        style={{ width: '100%' }}
+        className="passcode-wrapper"
+      >
         <Form.Item
           name={dataIndex}
           style={{
@@ -40,13 +50,32 @@ const EditableCell = ({
             },
           ]}
         >
-          {inputNode}
+          <Input.Password
+            visibilityToggle={{
+              visible: passwordVisible,
+              onVisibleChange: setPasswordVisible,
+            }}
+          />
         </Form.Item>
-      ) : (
-        children
-      )}
-    </td>
-  );
+        <Button
+          type="primary"
+          style={{ width: 80 }}
+          onClick={() => save(record.id)}
+        >
+          Save
+        </Button>
+        <Popconfirm
+          title="Sure to cancel?"
+          onConfirm={cancel}
+        >
+          <Button
+            shape="circle"
+            icon={<CloseOutlined />}
+          />
+        </Popconfirm>
+      </Space>
+    );
+  return <td {...restProps}>{editing ? <>{inputNode}</> : children}</td>;
 };
 
 const ManagePasscode = () => {
@@ -59,16 +88,14 @@ const ManagePasscode = () => {
     current: 1,
     pageSize: 10,
   });
-  const isEditing = (record) => record.key === editingKey;
+  const isEditing = (record) => record.id === editingKey;
 
   const edit = (record) => {
     form.setFieldsValue({
       name: '',
-      age: '',
-      address: '',
       ...record,
     });
-    setEditingKey(record.key);
+    setEditingKey(record.id);
   };
 
   const cancel = () => {
@@ -79,7 +106,7 @@ const ManagePasscode = () => {
     try {
       const row = await form.validateFields();
       const newData = [...data];
-      const index = newData.findIndex((item) => key === item.key);
+      const index = newData.findIndex((item) => key === item.id);
       if (index > -1) {
         const item = newData[index];
         newData.splice(index, 1, {
@@ -100,7 +127,7 @@ const ManagePasscode = () => {
     }
   };
 
-  const getData = useCallback((active, page = 1, pageSize = 10) => {
+  const getData = useCallback((pageSize = 10) => {
     setTableLoading(true);
     api
       .get(`/form/`)
@@ -159,46 +186,36 @@ const ManagePasscode = () => {
       dataIndex: 'name',
       width: '25%',
       editable: true,
-    },
-    {
-      title: 'Action',
-      dataIndex: 'operation',
-      render: (_, record) => {
-        const editable = isEditing(record);
-        return editable ? (
-          <span>
-            <Typography.Link
-              onClick={() => save(record.key)}
-              style={{
-                marginRight: 8,
-              }}
-            >
-              Save
-            </Typography.Link>
-            <Popconfirm
-              title="Sure to cancel?"
-              onConfirm={cancel}
-            >
-              <a>Cancel</a>
-            </Popconfirm>
-          </span>
-        ) : (
-          <Popconfirm
-            disabled={editingKey !== ''}
-            title={
-              <>
-                All current data collection will be effected if you change the
-                form passcode.
-                <br /> All data collectors will need to be informed about the
-                new passcode. <br /> Do you still want to edit the passcode?
-              </>
-            }
-            okText="Yes"
-            cancelText="No"
-            onConfirm={() => edit(record)}
-          >
-            <a>Edit</a>
-          </Popconfirm>
+      render: (val, record) => {
+        return (
+          <>
+            <Input.Group compact>
+              <Input
+                style={{ width: 'calc(100% - 200px)' }}
+                defaultValue={val}
+                type="password"
+                readOnly
+                disabled
+              />
+              <Popconfirm
+                disabled={editingKey !== ''}
+                title={
+                  <>
+                    All current data collection will be effected if you change
+                    the form passcode.
+                    <br /> All data collectors will need to be informed about
+                    the new passcode. <br /> Do you still want to edit the
+                    passcode?
+                  </>
+                }
+                okText="Yes"
+                cancelText="No"
+                onConfirm={() => edit(record)}
+              >
+                <Button type="primary">Edit Passcode</Button>
+              </Popconfirm>
+            </Input.Group>
+          </>
         );
       },
     },
@@ -216,6 +233,8 @@ const ManagePasscode = () => {
         dataIndex: col.dataIndex,
         title: col.title,
         editing: isEditing(record),
+        cancel,
+        save,
       }),
     };
   });
@@ -238,6 +257,8 @@ const ManagePasscode = () => {
           columns={mergedColumns}
           rowClassName="editable-row"
           pagination={{
+            current: paginate.current,
+            total: paginate.total,
             onChange: cancel,
             showSizeChanger: false,
           }}
