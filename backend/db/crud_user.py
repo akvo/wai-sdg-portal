@@ -6,6 +6,12 @@ from models.user import User, UserRole, UserDict
 from models.access import Access, AccessDict
 
 
+def define_search_ts_vector(search: str):
+    if ' ' in search:
+        search = search.replace(' ', '&')
+    return search
+
+
 def add_user(
     session: Session,
     email: str,
@@ -42,6 +48,7 @@ def count(
 ) -> int:
     count = session.query(User)
     if search:
+        search = define_search_ts_vector(search=search)
         count = count.filter(User.__ts_vector__.match(search))
     if organisation:
         count = count.filter(User.organisation == organisation)
@@ -62,6 +69,7 @@ def get_user(
 ) -> List[User]:
     users = session.query(User).filter(User.active == bool(active))
     if search:
+        search = define_search_ts_vector(search=search)
         users = users.filter(User.__ts_vector__.match(search))
     if organisation:
         users = users.filter(User.organisation == organisation)

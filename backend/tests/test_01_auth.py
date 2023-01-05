@@ -227,6 +227,36 @@ class TestAuthorizationSetup:
                 "manage_form_passcode": False,
             }
         ]
+        # full text search support
+        res = await client.get(
+            app.url_path_for("user:get"),
+            params={
+                "active": 0,
+                "search": "John Doe",
+                "organisation": 1,
+                "role": "user"
+            },
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
+        assert res.status_code == 200
+        res = res.json()
+        assert res["current"] == 1
+        assert res["total"] == 1
+        assert res["total_page"] == 1
+        assert len(res["data"]) == 1
+        assert res["data"] == [
+            {
+                "id": 2,
+                "email": "john_doe@mail.com",
+                "name": "John Doe",
+                "role": "user",
+                "active": False,
+                "email_verified": None,
+                "picture": None,
+                "organisation": 1,
+                "manage_form_passcode": False,
+            }
+        ]
         # get user by id
         res = await client.get(
             app.url_path_for("user:get_by_id", id=3),
