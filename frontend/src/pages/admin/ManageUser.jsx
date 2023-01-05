@@ -12,6 +12,7 @@ import {
   Modal,
   Select,
   Input,
+  Empty,
   Switch,
   Tooltip,
 } from 'antd';
@@ -277,6 +278,15 @@ const ManageUser = () => {
     setSelectedValue({ ...selectedValue, access: value });
   };
 
+  const locale = {
+    emptyText: (
+      <Empty
+        image={Empty.PRESENTED_IMAGE_SIMPLE}
+        description={<span>No User Found</span>}
+      />
+    ),
+  };
+
   const onPasscodeChange = (value) => {
     form.setFieldsValue({ manage_form_passcode: value });
     setSelectedValue({ ...selectedValue, manage_form_passcode: value });
@@ -383,6 +393,7 @@ const ManageUser = () => {
             current: paginate.current,
             total: paginate.total,
           }}
+          locale={locale}
         />
       </div>
 
