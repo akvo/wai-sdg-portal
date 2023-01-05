@@ -8,7 +8,7 @@ import ErrorPage from './ErrorPage';
 import Admin from '../pages/admin/Admin';
 import Forms from '../pages/Forms';
 import Main from '../pages/main/Main';
-import WebformLogin from '../pages/webform/WebformLogin';
+import WebformStandalone from '../pages/webform/WebformStandalone';
 
 const Content = () => {
   return (
@@ -44,7 +44,7 @@ const Content = () => {
       />
       <Route
         path="/webform/:uuid"
-        component={WebformLogin}
+        component={WebformStandalone}
       />
       <Route
         exact

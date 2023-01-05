@@ -1,12 +1,22 @@
 import React from 'react';
 import './webform.scss';
 import { Row, Col, Form, Input, Button, Card } from 'antd';
+import { UIState } from '../../state/ui';
 
 const WebformLogin = () => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
-    console.info(values);
+    /* TODO:: Call endpoint to check passcode
+    then navigate to standalone webform page
+    and update state */
+    const { submitter } = values;
+    UIState.update((s) => {
+      s.webformLogin = {
+        submitter: submitter,
+        isLogin: true,
+      };
+    });
   };
 
   return (
