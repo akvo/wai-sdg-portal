@@ -13,8 +13,14 @@ import {
   Select,
   Input,
   Switch,
+  Tooltip,
 } from 'antd';
-import { EditOutlined, CheckOutlined, DeleteOutlined } from '@ant-design/icons';
+import {
+  EditOutlined,
+  CheckOutlined,
+  DeleteOutlined,
+  InfoCircleOutlined,
+} from '@ant-design/icons';
 import api from '../../util/api';
 import { query } from '../../util/utils';
 import capitalize from 'lodash/capitalize';
@@ -537,12 +543,21 @@ const ManageUser = () => {
                   label="Manage Form Passcode"
                   valuePropName="manage_form_passcode"
                   name="manage_form_passcode"
+                  className="passcode-item"
                 >
                   <Switch
                     onChange={onPasscodeChange}
                     checked={selectedValue?.manage_form_passcode}
                     disabled={!user?.manage_form_passcode}
                   />
+                  {!user?.manage_form_passcode && (
+                    <Tooltip
+                      placement="top"
+                      title="This feature can only be enabled by users with form passcode management permission"
+                    >
+                      <InfoCircleOutlined />
+                    </Tooltip>
+                  )}
                 </Form.Item>
               ) : null
             }
