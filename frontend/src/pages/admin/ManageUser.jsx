@@ -12,6 +12,7 @@ import {
   Modal,
   Select,
   Input,
+  Empty,
 } from 'antd';
 import { EditOutlined, CheckOutlined, DeleteOutlined } from '@ant-design/icons';
 import api from '../../util/api';
@@ -264,6 +265,15 @@ const ManageUser = () => {
     setSelectedValue({ ...selectedValue, access: value });
   };
 
+  const locale = {
+    emptyText: (
+      <Empty
+        image={Empty.PRESENTED_IMAGE_SIMPLE}
+        description={<span>No User Found</span>}
+      />
+    ),
+  };
+
   return (
     <>
       <Row
@@ -365,6 +375,7 @@ const ManageUser = () => {
             current: paginate.current,
             total: paginate.total,
           }}
+          locale={locale}
         />
       </div>
 
