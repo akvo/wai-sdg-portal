@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
   Form,
   Input,
@@ -11,19 +11,9 @@ import {
   Button,
 } from 'antd';
 import { CopyOutlined } from '@ant-design/icons';
+import api from '../../util/api';
 
 const { notificationText } = window.i18n;
-
-const originData = [];
-
-for (let i = 0; i < 100; i++) {
-  originData.push({
-    key: i.toString(),
-    name: `Edrward ${i}`,
-    url: 'https://www.abc.com',
-    passcode: `London Park no. ${i}`,
-  });
-}
 
 const EditableCell = ({
   editing,
@@ -33,7 +23,8 @@ const EditableCell = ({
   children,
   ...restProps
 }) => {
-  const inputNode = inputType === 'number' ? <InputNumber /> : <Input />;
+  const inputNode =
+    inputType === 'number' ? <InputNumber /> : <Input type="password" />;
   return (
     <td {...restProps}>
       {editing ? (
@@ -57,11 +48,19 @@ const EditableCell = ({
     </td>
   );
 };
+
 const ManagePasscode = () => {
   const [form] = Form.useForm();
-  const [data, setData] = useState(originData);
+  const [data, setData] = useState([]);
   const [editingKey, setEditingKey] = useState('');
+  const [tableLoading, setTableLoading] = useState(false);
+  const [paginate, setPaginate] = useState({
+    total: 1,
+    current: 1,
+    pageSize: 10,
+  });
   const isEditing = (record) => record.key === editingKey;
+
   const edit = (record) => {
     form.setFieldsValue({
       name: '',
@@ -71,9 +70,11 @@ const ManagePasscode = () => {
     });
     setEditingKey(record.key);
   };
+
   const cancel = () => {
     setEditingKey('');
   };
+
   const save = async (key) => {
     try {
       const row = await form.validateFields();
@@ -98,16 +99,41 @@ const ManagePasscode = () => {
       });
     }
   };
+
+  const getData = useCallback((active, page = 1, pageSize = 10) => {
+    setTableLoading(true);
+    api
+      .get(`/form/`)
+      .then((res) => {
+        setData(res.data);
+        setPaginate({
+          current: res.data.current,
+          total: res.data.total,
+          pageSize: pageSize,
+        });
+      })
+      .catch(() => {
+        setData([]);
+      })
+      .finally(() => {
+        setTableLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    getData();
+  }, [getData]);
+
   const columns = [
     {
       title: 'Form Name',
       dataIndex: 'name',
-      width: '25%',
+      width: '20%',
     },
     {
       title: 'URL',
       dataIndex: 'url',
-      width: '25%',
+      width: '35%',
       render: (val) => {
         return (
           <Input.Group compact>
@@ -117,7 +143,12 @@ const ManagePasscode = () => {
               readOnly
             />
             <Tooltip title="copy form url">
-              <Button icon={<CopyOutlined />} />
+              <Button
+                onClick={() => {
+                  navigator.clipboard.writeText(val);
+                }}
+                icon={<CopyOutlined />}
+              />
             </Tooltip>
           </Input.Group>
         );
@@ -125,12 +156,12 @@ const ManagePasscode = () => {
     },
     {
       title: 'Passcode',
-      dataIndex: 'passcode',
+      dataIndex: 'name',
       width: '25%',
       editable: true,
     },
     {
-      title: 'operation',
+      title: 'Action',
       dataIndex: 'operation',
       render: (_, record) => {
         const editable = isEditing(record);
@@ -172,6 +203,7 @@ const ManagePasscode = () => {
       },
     },
   ];
+
   const mergedColumns = columns.map((col) => {
     if (!col.editable) {
       return col;
@@ -180,13 +212,14 @@ const ManagePasscode = () => {
       ...col,
       onCell: (record) => ({
         record,
-        inputType: col.dataIndex === 'age' ? 'number' : 'text',
+        inputType: 'text',
         dataIndex: col.dataIndex,
         title: col.title,
         editing: isEditing(record),
       }),
     };
   });
+
   return (
     <Form
       form={form}
@@ -194,12 +227,14 @@ const ManagePasscode = () => {
     >
       <div className="table-wrapper">
         <Table
+          rowKey={(record) => record.id}
           components={{
             body: {
               cell: EditableCell,
             },
           }}
           dataSource={data}
+          loading={tableLoading}
           columns={mergedColumns}
           rowClassName="editable-row"
           pagination={{
