@@ -14,8 +14,9 @@ account = Acc(True)
 
 class TestFileRoutes():
     @pytest.mark.asyncio
-    async def test_delete_data(self, app: FastAPI, session: Session,
-                               client: AsyncClient) -> None:
+    async def test_delete_data(
+        self, app: FastAPI, session: Session, client: AsyncClient
+    ) -> None:
         data = await client.get(
             app.url_path_for("data:get_by_id", id=1),
             headers={"Authorization": f"Bearer {account.token}"})
@@ -48,7 +49,7 @@ class TestFileRoutes():
             headers={"Authorization": f"Bearer {account.token}"})
         assert res.status_code == 200
         res = res.json()
-        assert res["total"] == 3
+        assert res["total"] == 4
 
         deleted_data = await client.get(
             app.url_path_for("data:get_by_id", id=data["id"]),
@@ -68,11 +69,11 @@ class TestFileRoutes():
             headers={"Authorization": f"Bearer {account.token}"})
         data = data.json()
         ids = [d["id"] for d in data["data"]]
-        assert data["total"] == 3
-        assert ids == [4, 3, 2]
+        assert data["total"] == 4
+        assert ids == [5, 4, 3, 2]
         res = await client.delete(
             app.url_path_for("data:bulk-delete"),
-            params="id=2&id=3&id=4",
+            params="id=2&id=3&id=4&id=5",
             headers={"Authorization": f"Bearer {account.token}"})
         assert res.status_code == 204
 

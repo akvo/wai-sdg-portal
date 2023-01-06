@@ -15,14 +15,14 @@ today = datetime.today().strftime("%B %d, %Y")
 
 class TestAdvancedFilter():
     @pytest.mark.asyncio
-    async def test_get_data_with_query_option(self, app: FastAPI,
-                                              session: Session,
-                                              client: AsyncClient) -> None:
+    async def test_get_data_with_query_option(
+        self, app: FastAPI, session: Session, client: AsyncClient
+    ) -> None:
         data_view = session.query(ViewData).all()
         data_view = [d.raw for d in data_view]
         assert data_view == [
             [
-                {"id": 4, "question": "1", "answer": "option 2"},
+                {"id": 4, "question": "1", "answer": "option 1"},
                 {"id": 4, "question": "6", "answer": "o"},
                 {"id": 4, "question": "6", "answer": "p"},
                 {"id": 4, "question": "6", "answer": "t"},
@@ -30,21 +30,22 @@ class TestAdvancedFilter():
                 {"id": 4, "question": "6", "answer": "o"},
                 {"id": 4, "question": "6", "answer": "n"},
                 {"id": 4, "question": "6", "answer": " "},
-                {"id": 4, "question": "6", "answer": "b"},
+                {"id": 4, "question": "6", "answer": "a"},
             ],
             [{"id": 2, "question": "1", "answer": "option 2"}],
-            [
-                {"id": 3, "question": "1", "answer": "option 1"},
-                {"id": 3, "question": "6", "answer": "o"},
-                {"id": 3, "question": "6", "answer": "p"},
-                {"id": 3, "question": "6", "answer": "t"},
-                {"id": 3, "question": "6", "answer": "i"},
-                {"id": 3, "question": "6", "answer": "o"},
-                {"id": 3, "question": "6", "answer": "n"},
-                {"id": 3, "question": "6", "answer": " "},
-                {"id": 3, "question": "6", "answer": "a"},
-            ],
+            [{"id": 3, "question": "1", "answer": "option 1"}],
             [{"id": 1, "question": "1", "answer": "option 2"}],
+            [
+                {"id": 5, "question": "1", "answer": "option 2"},
+                {"id": 5, "question": "6", "answer": "o"},
+                {"id": 5, "question": "6", "answer": "p"},
+                {"id": 5, "question": "6", "answer": "t"},
+                {"id": 5, "question": "6", "answer": "i"},
+                {"id": 5, "question": "6", "answer": "o"},
+                {"id": 5, "question": "6", "answer": "n"},
+                {"id": 5, "question": "6", "answer": " "},
+                {"id": 5, "question": "6", "answer": "b"},
+            ],
         ]
         # search option 1
         res = await client.get(
@@ -54,9 +55,9 @@ class TestAdvancedFilter():
         assert res.status_code == 200
         res = res.json()
         assert res["current"] == 1
-        assert res["total"] == 1
+        assert res["total"] == 2
         assert res["total_page"] == 1
-        assert len(res["data"]) == 1
+        assert len(res["data"]) == 2
         # search option 2
         res = await client.get(
             app.url_path_for("data:get", form_id=1),
@@ -76,9 +77,9 @@ class TestAdvancedFilter():
         assert res.status_code == 200
         res = res.json()
         assert res["current"] == 1
-        assert res["total"] == 2
+        assert res["total"] == 3
         assert res["total_page"] == 1
-        assert len(res["data"]) == 2
+        assert len(res["data"]) == 3
 
     @pytest.mark.asyncio
     async def test_get_maps_with_query_option(self, app: FastAPI,
@@ -117,7 +118,7 @@ class TestAdvancedFilter():
                 {"id": 2, "value": 10.0}
             ],
         }, {
-            "id": 4,
+            "id": 5,
             "loc": "Bantul",
             "geo": [-6.2, 106.81],
             "name": "Bantul - Testing Data 2",
