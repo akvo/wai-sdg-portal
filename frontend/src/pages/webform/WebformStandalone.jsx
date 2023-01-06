@@ -4,14 +4,15 @@ import { Webform } from 'akvo-react-form';
 import 'akvo-react-form/dist/index.css';
 import { UIState } from '../../state/ui';
 import WebformLogin from './WebformLogin';
-import { Row, Col, notification } from 'antd';
+import { Row, Col, Button, notification } from 'antd';
+import { FormOutlined } from '@ant-design/icons';
 import api from '../../util/api';
 
 const { notificationText } = window.i18n;
 
 const WebformStandalone = ({ match }) => {
   const uuid = match?.params?.uuid;
-  const { isLogin, formValue, submitter } = UIState.useState(
+  const { isLogin, formValue, submitter, complete } = UIState.useState(
     (s) => s.webformLogin
   );
 
@@ -36,9 +37,8 @@ const WebformStandalone = ({ match }) => {
         setTimeout(() => {
           UIState.update((s) => {
             s.webformLogin = {
-              submitter: null,
-              isLogin: false,
-              formValue: {},
+              ...s.webformLogin,
+              complete: true,
             };
           });
         }, 1000);
@@ -50,8 +50,37 @@ const WebformStandalone = ({ match }) => {
       });
   };
 
+  const handleAddNewSubmission = () => {
+    UIState.update((s) => {
+      s.webformLogin = {
+        ...s.webformLogin,
+        complete: false,
+      };
+    });
+  };
+
   if (!isLogin) {
     return <WebformLogin uuid={uuid} />;
+  }
+
+  if (complete) {
+    return (
+      <div className="webform-standalone-container">
+        <Row
+          align="center"
+          className="webform-complete-wrapper"
+        >
+          <Col
+            span={24}
+            align="center"
+          >
+            <FormOutlined style={{ fontSize: '40px' }} />
+            <h2>Thank you for your submission!</h2>
+            <Button onClick={handleAddNewSubmission}>Add New Submission</Button>
+          </Col>
+        </Row>
+      </div>
+    );
   }
 
   return (

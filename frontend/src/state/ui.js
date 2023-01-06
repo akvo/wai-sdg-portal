@@ -23,6 +23,7 @@ const defaultUIState = {
     submitter: null,
     isLogin: false,
     formValue: {},
+    complete: true,
   },
 };
 

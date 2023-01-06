@@ -32,6 +32,7 @@ const WebformLogin = ({ uuid }) => {
       .then((res) => {
         UIState.update((s) => {
           s.webformLogin = {
+            ...s.webformLogin,
             submitter: submitter,
             isLogin: true,
             formValue: res.data,
