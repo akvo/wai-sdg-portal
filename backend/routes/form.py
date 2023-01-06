@@ -1,10 +1,11 @@
 import os
 from http import HTTPStatus
 from fastapi import Depends, Request, APIRouter, BackgroundTasks
-from fastapi import Response, HTTPException
+from fastapi import Response, HTTPException, Query
 from fastapi.security import HTTPBearer
 from fastapi.security import HTTPBasicCredentials as credentials
 from typing import List, Optional
+from pydantic import Required
 from sqlalchemy.orm import Session
 import db.crud_form as crud
 import db.crud_data as crud_data
@@ -62,10 +63,19 @@ def get_project_form(
 # END PROJECT BASE
 
 
-def get_form_definition(req: Request, id: int, session: Session,
-                        credentials: credentials, answer_check=False):
-    user = verify_editor(req.state.authenticated, session)
-    access = [a.administration for a in user.access]
+def get_form_definition(
+    req: Request,
+    id: int,
+    session: Session,
+    answer_check=False,
+    credentials: Optional[credentials] = False
+):
+    user = None
+    if credentials:
+        user = verify_editor(req.state.authenticated, session)
+    access = None
+    if user and user.role != UserRole.admin:
+        access = [a.administration for a in user.access]
     form = crud.get_form_by_id(session=session, id=id)
     project = crud_question.get_project_question(session=session, form=id)
     form = form.serialize
@@ -121,8 +131,7 @@ def get_form_definition(req: Request, id: int, session: Session,
     form["question_group"] = sorted(
         form["question_group"], key=lambda x: x["order"])
     administration = crud_administration.get_parent_administration(
-        session=session,
-        access=None if user.role == UserRole.admin else access)
+        session=session, access=access)
     form.update(
         {"cascade": {
             "administration": [a.cascade for a in administration]
@@ -392,21 +401,25 @@ def get_by_id(req: Request, id: int, session: Session = Depends(get_session)):
                 summary="get form by id",
                 name="webform:get_by_id",
                 tags=["Form"])
-def get_webform_by_id(req: Request,
-                      id: int,
-                      edit: bool = False,
-                      session: Session = Depends(get_session),
-                      credentials: credentials = Depends(security)):
-    res = get_form_definition(req=req, id=id, session=session,
-                              credentials=credentials, answer_check=edit)
+def get_webform_by_id(
+    req: Request,
+    id: int,
+    edit: bool = False,
+    session: Session = Depends(get_session),
+    credentials: credentials = Depends(security)
+):
+    res = get_form_definition(
+        req=req, id=id, session=session,
+        credentials=credentials, answer_check=edit)
     return res
 
 
-@form_route.post("/form/",
-                 response_model=FormDict,
-                 summary="add new form",
-                 name="form:create",
-                 tags=["Form"])
+@form_route.post(
+    "/form/",
+    response_model=FormDict,
+    summary="add new form",
+    name="form:create",
+    tags=["Form"])
 def add(req: Request,
         name: str,
         version: Optional[float] = 0.0,
@@ -527,3 +540,24 @@ def delete(
     crud_question_group.delete_by_form(session=session, form=id)
     crud.delete_by_id(session=session, id=id)
     return Response(status_code=HTTPStatus.NO_CONTENT.value)
+
+
+@form_route.get(
+    "/webform-standalone/{uuid:path}",
+    summary="get standalone webform by uuid & passcode",
+    name="webform:get_standalone_form",
+    tags=["Form"])
+def get_standalone_webform_by_uuid(
+    req: Request,
+    uuid: str,
+    passcode: str = Query(default=Required),
+    session: Session = Depends(get_session)
+):
+    # decode form uuid
+    instance, form_id = Cipher(uuid).decode()
+    form = crud.get_form_by_id(session=session, id=int(form_id))
+    # check passcode
+    if form.passcode != passcode:
+        return Response(status_code=HTTPStatus.NOT_FOUND.value)
+    res = get_form_definition(req=req, id=form.id, session=session)
+    return res

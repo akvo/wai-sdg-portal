@@ -798,3 +798,24 @@ class TestWebformEditorRoutes():
             "url": f"https://{webdomain}/webform/{url2}",
             "passcode": None,
         }]
+
+    async def test_get_standalone_webform(
+        self, app: FastAPI,
+        session: Session, client: AsyncClient
+    ) -> None:
+        instance_name = os.environ.get('INSTANCE_NAME').replace("-", "_")
+        url1 = Cipher(f"{instance_name}-1").encode()
+        # wrong passcode
+        res = await client.get(
+            app.url_path_for("webform:get_standalone_form", uuid=url1),
+            params={"passcode": "password"})
+        assert res.status_code == 404
+        # correct passcode
+        res = await client.get(
+            app.url_path_for("webform:get_standalone_form", uuid=url1),
+            params={"passcode": "test@123"})
+        assert res.status_code == 200
+        res = res.json()
+        assert res["id"] == 1
+        assert len(res["question_group"]) > 0
+        assert res["cascade"] == cascade
