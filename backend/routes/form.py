@@ -543,8 +543,27 @@ def delete(
 
 
 @form_route.get(
+    "/form-standalone/{uuid:path}",
+    response_model=FormDict,
+    summary="get standalone form detail by URL",
+    name="form:get_standalone_form_detail",
+    tags=["Form"])
+def get_standalone_form_detail_by_uuid(
+    req: Request,
+    uuid: str,
+    session: Session = Depends(get_session)
+):
+    # decode form uuid
+    instance, form_id = Cipher(uuid).decode()
+    form = crud.get_form_by_id(session=session, id=form_id)
+    if not form:
+        return Response(status_code=HTTPStatus.NOT_FOUND.value)
+    return form.to_form_detail
+
+
+@form_route.get(
     "/webform-standalone/{uuid:path}",
-    summary="get standalone webform by uuid & passcode",
+    summary="get standalone webform definition by URL & passcode",
     name="webform:get_standalone_form",
     tags=["Form"])
 def get_standalone_webform_by_uuid(
@@ -555,7 +574,7 @@ def get_standalone_webform_by_uuid(
 ):
     # decode form uuid
     instance, form_id = Cipher(uuid).decode()
-    form = crud.get_form_by_id(session=session, id=int(form_id))
+    form = crud.get_form_by_id(session=session, id=form_id)
     # check passcode
     if form.passcode != passcode:
         return Response(status_code=HTTPStatus.NOT_FOUND.value)

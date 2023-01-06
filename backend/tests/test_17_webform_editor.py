@@ -805,6 +805,25 @@ class TestWebformEditorRoutes():
     ) -> None:
         instance_name = os.environ.get('INSTANCE_NAME').replace("-", "_")
         url1 = Cipher(f"{instance_name}-1").encode()
+        # get form detail
+        res = await client.get(
+            app.url_path_for(
+                "form:get_standalone_form_detail",
+                uuid="nk5_wvp57b5kz4r3g6d2y31"
+            )
+        )
+        assert res.status_code == 404
+        res = await client.get(
+            app.url_path_for(
+                "form:get_standalone_form_detail",
+                uuid=url1
+            )
+        )
+        assert res.status_code == 200
+        res = res.json()
+        assert res["id"] == 1
+        assert res["name"] == "test"
+        assert res["version"] == 1.0
         # wrong passcode
         res = await client.get(
             app.url_path_for("webform:get_standalone_form", uuid=url1),

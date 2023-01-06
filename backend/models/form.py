@@ -88,6 +88,18 @@ class Form(Base):
         }
 
     @property
+    def to_form_detail(self) -> FormDict:
+        return {
+            "id": self.id,
+            "name": self.name,
+            "version": self.version,
+            "description": self.description,
+            "default_language": self.default_language,
+            "languages": self.languages,
+            "translations": self.translations,
+        }
+
+    @property
     def list_of_questions(self) -> TypedDict:
         question_list = {}
         for qg in self.question_group:
