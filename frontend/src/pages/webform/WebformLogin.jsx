@@ -1,22 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './webform.scss';
-import { Row, Col, Form, Input, Button, Card } from 'antd';
+import { Row, Col, Form, Input, Button, Card, notification } from 'antd';
 import { UIState } from '../../state/ui';
+import api from '../../util/api';
 
-const WebformLogin = () => {
+const WebformLogin = ({ uuid }) => {
   const [form] = Form.useForm();
+  const [loading, setLoading] = useState(false);
 
   const onFinish = (values) => {
-    /* TODO:: Call endpoint to check passcode
-    then navigate to standalone webform page
-    and update state */
-    const { submitter } = values;
-    UIState.update((s) => {
-      s.webformLogin = {
-        submitter: submitter,
-        isLogin: true,
-      };
-    });
+    setLoading(true);
+    const { submitter, passcode } = values;
+    api
+      .get(`/webform-standalone/${uuid}?passcode=${passcode}`)
+      .then((res) => {
+        UIState.update((s) => {
+          s.webformLogin = {
+            submitter: submitter,
+            isLogin: true,
+            formValue: res.data,
+          };
+        });
+      })
+      .catch(() => {
+        notification.error({
+          message: 'Please check form passcode!',
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
@@ -58,6 +71,7 @@ const WebformLogin = () => {
                   type="primary"
                   htmlType="submit"
                   block
+                  loading={loading}
                 >
                   Login
                 </Button>

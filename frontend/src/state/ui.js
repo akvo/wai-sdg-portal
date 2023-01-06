@@ -22,6 +22,7 @@ const defaultUIState = {
   webformLogin: {
     submitter: null,
     isLogin: false,
+    formValue: {},
   },
 };
 
