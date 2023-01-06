@@ -183,6 +183,8 @@ var i18n = {
     supportExcelFileText: "Supported filetypes: .xls and .xlsx.",
     validationNameRequiredText: "Please input your name!",
     validationAccessRequiredText: "Please select region!",
+    formSelectPlaceholder: "Select",
+    formSearchPlaceholder: "Search",
   },
   mainText: {
     noDataText: "No Data",

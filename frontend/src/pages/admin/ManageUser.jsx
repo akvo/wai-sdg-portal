@@ -312,7 +312,7 @@ const ManageUser = () => {
             >
               <Input
                 value={searchValue?.search}
-                placeholder="Search by Name, Email"
+                placeholder={`${formText?.formSearchPlaceholder} ${adminText?.lastSubmittedByText} ${formText?.labelName} ${formText?.labelEmail}`}
                 onChange={(e) => {
                   form.setFieldsValue({ search: e.target.value });
                   setSearchValue({ ...searchValue, search: e.target.value });
@@ -344,7 +344,7 @@ const ManageUser = () => {
                   (x) => x === '' || x === null || typeof x === 'undefined'
                 )}
               >
-                Search
+                {formText?.formSearchPlaceholder}
               </Button>
               {Object.values(searchValue).length > 0 &&
                 Object.values(searchValue).every(
@@ -355,7 +355,7 @@ const ManageUser = () => {
                     onClick={onReset}
                     style={{ marginLeft: '10px' }}
                   >
-                    Reset
+                    {buttonText?.btnResetAll}
                   </Button>
                 )}
             </Form.Item>
@@ -597,9 +597,10 @@ const UserRole = ({ onRoleChange, selectedValue, label, style }) => {
     >
       <Select
         style={style}
-        placeholder="Select role"
+        placeholder={`${formText?.formSelectPlaceholder} ${formText?.labelRole}`}
         onChange={onRoleChange}
         value={selectedValue?.role}
+        allowClear
       >
         <Select.Option
           key="opt-admin"
@@ -642,12 +643,13 @@ const UserOrganisation = ({
         style={style}
         showSearch
         onChange={onOrganisationChange}
-        placeholder="Select organisation"
+        placeholder={`${formText?.formSelectPlaceholder} ${formText?.labelOrg}`}
         options={organisations.map((x) => ({
           label: x.name,
           value: x.id,
         }))}
         value={selectedValue?.organisation}
+        allowClear
       />
     </Form.Item>
   );
