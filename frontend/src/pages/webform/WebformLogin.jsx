@@ -10,6 +10,7 @@ const WebformLogin = ({ uuid }) => {
   const [loading, setLoading] = useState(false);
   const [formDetail, setFormDetail] = useState({});
   const isLoadingDetail = isEmpty(formDetail);
+  const allowUsingPasscode = formDetail?.passcode;
 
   useEffect(() => {
     api
@@ -27,8 +28,12 @@ const WebformLogin = ({ uuid }) => {
   const onFinish = (values) => {
     setLoading(true);
     const { submitter, passcode } = values;
+    let loginURL = `/webform-standalone/${uuid}`;
+    if (allowUsingPasscode) {
+      loginURL = `${loginURL}?passcode=${passcode}`;
+    }
     api
-      .get(`/webform-standalone/${uuid}?passcode=${passcode}`)
+      .get(loginURL)
       .then((res) => {
         UIState.update((s) => {
           s.webformLogin = {
@@ -36,6 +41,7 @@ const WebformLogin = ({ uuid }) => {
             submitter: submitter,
             isLogin: true,
             formValue: res.data,
+            complete: false,
           };
         });
       })
@@ -79,13 +85,15 @@ const WebformLogin = ({ uuid }) => {
                 >
                   <Input />
                 </Form.Item>
-                <Form.Item
-                  label="Form Passcode"
-                  name="passcode"
-                  rules={[{ required: true }]}
-                >
-                  <Input type="password" />
-                </Form.Item>
+                {allowUsingPasscode && (
+                  <Form.Item
+                    label="Form Passcode"
+                    name="passcode"
+                    rules={[{ required: true }]}
+                  >
+                    <Input type="password" />
+                  </Form.Item>
+                )}
                 <Form.Item>
                   <Button
                     type="primary"
