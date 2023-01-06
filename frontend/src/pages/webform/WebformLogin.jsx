@@ -1,12 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './webform.scss';
-import { Row, Col, Form, Input, Button, Card, notification } from 'antd';
+import { Row, Col, Form, Input, Button, Card, Spin, notification } from 'antd';
 import { UIState } from '../../state/ui';
 import api from '../../util/api';
+import isEmpty from 'lodash/isEmpty';
 
 const WebformLogin = ({ uuid }) => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const [formDetail, setFormDetail] = useState({});
+  const isLoadingDetail = isEmpty(formDetail);
+
+  useEffect(() => {
+    api
+      .get(`/form-standalone/${uuid}`)
+      .then((res) => {
+        setFormDetail(res.data);
+      })
+      .catch(() => {
+        notification.error({
+          message: 'Form not found, please contact your admin.',
+        });
+      });
+  }, [uuid]);
 
   const onFinish = (values) => {
     setLoading(true);
@@ -42,42 +58,47 @@ const WebformLogin = ({ uuid }) => {
           span={8}
           align="center"
         >
-          <Card
-            title="Form Name - 1.0"
-            className="webform-login-card"
-          >
-            <Form
-              form={form}
-              name="webform_standalone_login_form"
-              layout="vertical"
-              onFinish={onFinish}
+          {isLoadingDetail ? (
+            <Spin />
+          ) : (
+            <Card
+              title={`${formDetail?.name} - v${formDetail?.version}`}
+              className="webform-login-card"
             >
-              <Form.Item
-                label="Submitter Name"
-                name="submitter"
-                rules={[{ required: true }]}
+              <Form
+                form={form}
+                name="webform_standalone_login_form"
+                layout="vertical"
+                onFinish={onFinish}
               >
-                <Input />
-              </Form.Item>
-              <Form.Item
-                label="Form Passcode"
-                name="passcode"
-                rules={[{ required: true }]}
-              >
-                <Input type="password" />
-              </Form.Item>
-              <Form.Item>
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  block
-                  loading={loading}
+                <Form.Item
+                  label="Submitter Name"
+                  name="submitter"
+                  rules={[{ required: true }]}
                 >
-                  Login
-                </Button>
-              </Form.Item>
-            </Form>
-          </Card>
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  label="Form Passcode"
+                  name="passcode"
+                  rules={[{ required: true }]}
+                >
+                  <Input type="password" />
+                </Form.Item>
+                <Form.Item>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    block
+                    loading={loading}
+                    disabled={isLoadingDetail}
+                  >
+                    Login
+                  </Button>
+                </Form.Item>
+              </Form>
+            </Card>
+          )}
         </Col>
       </Row>
     </div>
