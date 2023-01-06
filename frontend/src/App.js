@@ -100,7 +100,9 @@ function App() {
       <div className="App">
         <Navigation />
         <Layout theme="light">
-          <Layout.Header>
+          <Layout.Header
+            className={isWebformStandalone ? 'webform-standalone' : ''}
+          >
             <Header
               loginWithPopup={loginWithPopup}
               isAuthenticated={isAuthenticated}
