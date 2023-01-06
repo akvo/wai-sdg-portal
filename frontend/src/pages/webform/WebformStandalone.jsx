@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './webform.scss';
 import { Webform } from 'akvo-react-form';
 import 'akvo-react-form/dist/index.css';
@@ -12,11 +12,13 @@ const { notificationText } = window.i18n;
 
 const WebformStandalone = ({ match }) => {
   const uuid = match?.params?.uuid;
+  const [submitting, setSubmitting] = useState(false);
   const { isLogin, formValue, submitter, complete } = UIState.useState(
     (s) => s.webformLogin
   );
 
   const onFinish = (values) => {
+    setSubmitting(true);
     let data = Object.keys(values).map((v) => {
       // do not transfrom datapoint to post params
       if (values[v] && v !== 'datapoint') {
@@ -47,6 +49,9 @@ const WebformStandalone = ({ match }) => {
         notification.error({
           message: notificationText?.errorText,
         });
+      })
+      .finally(() => {
+        setSubmitting(false);
       });
   };
 
@@ -94,6 +99,7 @@ const WebformStandalone = ({ match }) => {
             forms={formValue}
             onFinish={onFinish}
             sticky={true}
+            submitButtonSetting={{ loading: submitting }}
           />
         </Col>
       </Row>
