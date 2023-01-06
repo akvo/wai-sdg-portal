@@ -5,7 +5,6 @@ from fastapi import Response, HTTPException, Query
 from fastapi.security import HTTPBearer
 from fastapi.security import HTTPBasicCredentials as credentials
 from typing import List, Optional
-from pydantic import Required
 from sqlalchemy.orm import Session
 import db.crud_form as crud
 import db.crud_data as crud_data
@@ -569,14 +568,14 @@ def get_standalone_form_detail_by_uuid(
 def get_standalone_webform_by_uuid(
     req: Request,
     uuid: str,
-    passcode: str = Query(default=Required),
+    passcode: Optional[str] = Query(None),
     session: Session = Depends(get_session)
 ):
     # decode form uuid
     instance, form_id = Cipher(uuid).decode()
     form = crud.get_form_by_id(session=session, id=form_id)
     # check passcode
-    if form.passcode != passcode:
+    if passcode and form.passcode != passcode:
         return Response(status_code=HTTPStatus.NOT_FOUND.value)
     res = get_form_definition(req=req, id=form.id, session=session)
     return res

@@ -20,6 +20,7 @@ class FormDict(TypedDict):
     default_language: Optional[str]
     languages: Optional[List[str]]
     translations: Optional[List[dict]]
+    passcode: Optional[bool] = None
 
 
 class FormDictWithFlag(TypedDict):
@@ -97,6 +98,7 @@ class Form(Base):
             "default_language": self.default_language,
             "languages": self.languages,
             "translations": self.translations,
+            "passcode": True if self.passcode else False
         }
 
     @property
