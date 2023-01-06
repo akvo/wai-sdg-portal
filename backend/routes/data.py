@@ -6,13 +6,14 @@ from fastapi.security import HTTPBearer
 from fastapi.security import HTTPBasicCredentials as credentials
 from typing import List, Optional
 from sqlalchemy.orm import Session
+from pydantic import Required
 import db.crud_data as crud
 from db import crud_question
 from db import crud_administration
 from db import crud_answer
 from db import crud_form
 from db import crud_user
-from models.user import UserRole
+from models.user import User, UserRole
 from models.answer import Answer, AnswerDict
 from models.question import QuestionType
 from models.history import History
@@ -59,9 +60,71 @@ def check_project(session: Session, data: List[DataDictWithHistory],
                     }
                     d["answer"].append(total_projects)
     return data
-
-
 # END PROJECT BASE
+
+
+def save_datapoint(
+    session: Session, form_id: int,
+    answers: List[AnswerDict], user: Optional[User] = None,
+    submitter: Optional[str] = None
+) -> DataDict:
+    administration = None
+    geo = None
+    answerlist = []
+    names = []
+    parent_code = None
+    user_id = None if not user else user.id
+    for a in answers:
+        q = crud_question.get_question_by_id(session=session, id=a["question"])
+        answer = Answer(question=q.id,
+                        created_by=user_id,
+                        created=datetime.now())
+        if q.type == QuestionType.administration:
+            # check user access
+            if user:
+                check_access(a["value"][0], user)
+            if len(a["value"]):
+                administration = int(a["value"][-1])
+                answer.value = administration
+                if q.meta:
+                    adm_name = crud_administration.get_administration_by_id(
+                        session, id=administration)
+                    names.append(adm_name.name)
+        if q.type == QuestionType.geo:
+            if "lat" in a["value"] and "lng" in a["value"]:
+                geo = [a["value"]["lat"], a["value"]["lng"]]
+                answer.text = ("{}|{}").format(geo[0], geo[1])
+        if q.type in [QuestionType.text, QuestionType.date]:
+            answer.text = a["value"]
+            if q.meta:
+                names.append(a["value"])
+        if q.type == QuestionType.number:
+            answer.value = a["value"]
+            if q.meta:
+                names.append(str(a["value"]))
+        if q.type == QuestionType.option:
+            answer.options = [a["value"]]
+        if q.type == QuestionType.multiple_option:
+            answer.options = a["value"]
+        if q.type == QuestionType.answer_list:
+            parent = crud.get_data_by_name(session=session, name=a["value"])
+            parent_code = parent.name.split(" - ")[-1]
+            administration = parent.administration
+            answer.value = int(parent_code)
+        answerlist.append(answer)
+    name = " - ".join([str(n) for n in names])
+    if parent_code:
+        name = f"{parent_code} - {name}"
+    data = crud.add_data(
+        session=session,
+        form=form_id,
+        name=name,
+        geo=geo,
+        administration=administration,
+        created_by=user_id,
+        answers=answerlist,
+        submitter=submitter)
+    return data
 
 
 @data_route.get("/data/form/{form_id:path}",
@@ -118,68 +181,40 @@ def get(req: Request,
     }
 
 
-@data_route.post("/data/form/{form_id:path}",
-                 response_model=DataDict,
-                 summary="add new data",
-                 name="data:create",
-                 tags=["Data"])
+@data_route.post(
+    "/data/form/{form_id:path}",
+    response_model=DataDict,
+    summary="add new data",
+    name="data:create",
+    tags=["Data"])
 def add(req: Request,
         form_id: int,
         answers: List[AnswerDict],
         session: Session = Depends(get_session),
         credentials: credentials = Depends(security)):
     user = verify_editor(req.state.authenticated, session)
-    administration = None
-    geo = None
-    answerlist = []
-    names = []
-    parent_code = None
-    for a in answers:
-        q = crud_question.get_question_by_id(session=session, id=a["question"])
-        answer = Answer(question=q.id,
-                        created_by=user.id,
-                        created=datetime.now())
-        if q.type == QuestionType.administration:
-            check_access(a["value"][0], user)
-            if len(a["value"]):
-                administration = int(a["value"][-1])
-                answer.value = administration
-                if q.meta:
-                    adm_name = crud_administration.get_administration_by_id(
-                        session, id=administration)
-                    names.append(adm_name.name)
-        if q.type == QuestionType.geo:
-            if "lat" in a["value"] and "lng" in a["value"]:
-                geo = [a["value"]["lat"], a["value"]["lng"]]
-                answer.text = ("{}|{}").format(geo[0], geo[1])
-        if q.type in [QuestionType.text, QuestionType.date]:
-            answer.text = a["value"]
-            if q.meta:
-                names.append(a["value"])
-        if q.type == QuestionType.number:
-            answer.value = a["value"]
-            if q.meta:
-                names.append(str(a["value"]))
-        if q.type == QuestionType.option:
-            answer.options = [a["value"]]
-        if q.type == QuestionType.multiple_option:
-            answer.options = a["value"]
-        if q.type == QuestionType.answer_list:
-            parent = crud.get_data_by_name(session=session, name=a["value"])
-            parent_code = parent.name.split(" - ")[-1]
-            administration = parent.administration
-            answer.value = int(parent_code)
-        answerlist.append(answer)
-    name = " - ".join([str(n) for n in names])
-    if parent_code:
-        name = f"{parent_code} - {name}"
-    data = crud.add_data(session=session,
-                         form=form_id,
-                         name=name,
-                         geo=geo,
-                         administration=administration,
-                         created_by=user.id,
-                         answers=answerlist)
+    data = save_datapoint(
+        session=session, form_id=form_id,
+        answers=answers, user=user)
+    return data.serialize
+
+
+@data_route.post(
+    "/data/form-standalone/{form_id:path}",
+    response_model=DataDict,
+    summary="add new data for standalone form",
+    name="data:create_form_standalone",
+    tags=["Data"])
+def add_form_standalone(
+    req: Request,
+    form_id: int,
+    answers: List[AnswerDict],
+    submitter: str = Query(default=Required),
+    session: Session = Depends(get_session)
+):
+    data = save_datapoint(
+        session=session, form_id=form_id,
+        answers=answers, submitter=submitter)
     return data.serialize
 
 
@@ -312,17 +347,20 @@ def get_last_submission(req: Request,
             session=session, parents=[administration], current=[])
         if not len(administration_ids):
             raise HTTPException(status_code=404, detail="Not found")
-    last_submitted = crud.get_last_submitted(session=session,
-                                             form=form_id,
-                                             options=options,
-                                             administration=administration_ids)
+    last_submitted = crud.get_last_submitted(
+        session=session, form=form_id, options=options,
+        administration=administration_ids)
     if not last_submitted:
         raise HTTPException(status_code=404, detail="Not found")
+    submitter = last_submitted.submitter
     last_submitted = last_submitted.submission_info
-    last_submitted_user = crud_user.get_user_by_id(session=session,
-                                                   id=last_submitted["by"])
+    last_submitted_user = submitter
+    if last_submitted["by"]:
+        last_submitted_user = crud_user.get_user_by_id(
+            session=session, id=last_submitted["by"])
+        last_submitted_user = last_submitted_user.name
     last_submitted.update({
-        'by': last_submitted_user.name,
+        'by': last_submitted_user,
         'at': last_submitted["at"].strftime("%B %d, %Y")
     })
     return last_submitted
