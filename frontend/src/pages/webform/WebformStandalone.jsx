@@ -4,6 +4,7 @@ import { Webform } from 'akvo-react-form';
 import 'akvo-react-form/dist/index.css';
 import { UIState } from '../../state/ui';
 import WebformLogin from './WebformLogin';
+import WebformCaptcha from './WebformCaptcha';
 import { Row, Col, Button, notification } from 'antd';
 import { FormOutlined } from '@ant-design/icons';
 import api from '../../util/api';
@@ -13,24 +14,22 @@ const { notificationText } = window.i18n;
 const WebformStandalone = ({ match }) => {
   const uuid = match?.params?.uuid;
   const [submitting, setSubmitting] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [payload, setPayload] = useState([]);
   const { isLogin, formValue, submitter, complete } = UIState.useState(
     (s) => s.webformLogin
   );
 
-  const onFinish = (values) => {
+  const onSubmit = () => {
+    setIsVisible(false);
+    if (!payload.length) {
+      return;
+    }
     setSubmitting(true);
-    let data = Object.keys(values).map((v) => {
-      // do not transfrom datapoint to post params
-      if (values[v] && v !== 'datapoint') {
-        return { question: parseInt(v), value: values[v] };
-      }
-      return false;
-    });
-    data = data.filter((x) => x);
     api
       .post(
         `data/form-standalone/${formValue?.id}?submitter=${submitter}`,
-        data
+        payload
       )
       .then((res) => {
         notification.success({
@@ -53,6 +52,19 @@ const WebformStandalone = ({ match }) => {
       .finally(() => {
         setSubmitting(false);
       });
+  };
+
+  const onFinish = (values) => {
+    let data = Object.keys(values).map((v) => {
+      // do not transfrom datapoint to post params
+      if (values[v] && v !== 'datapoint') {
+        return { question: parseInt(v), value: values[v] };
+      }
+      return false;
+    });
+    data = data.filter((x) => x);
+    setPayload(data);
+    setIsVisible(true);
   };
 
   const handleAddNewSubmission = () => {
@@ -103,6 +115,12 @@ const WebformStandalone = ({ match }) => {
           />
         </Col>
       </Row>
+      <WebformCaptcha
+        isVisible={isVisible}
+        onOk={onSubmit}
+        onCancel={() => setIsVisible(false)}
+        submitting={submitting}
+      />
     </div>
   );
 };
