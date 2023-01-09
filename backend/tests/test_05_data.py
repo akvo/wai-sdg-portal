@@ -22,9 +22,9 @@ class TestDataRoutes():
         assert res.status_code == 200
         res = res.json()
         assert res["current"] == 1
-        assert res["total"] == 2
+        assert res["total"] == 3
         assert res["total_page"] == 1
-        assert len(res["data"]) == 2
+        assert len(res["data"]) == 3
         first_data = res["data"][len(res["data"]) - 1]
         assert first_data == {
             "id": 1,
@@ -58,12 +58,14 @@ class TestDataRoutes():
         }
 
     @pytest.mark.asyncio
-    async def test_get_last_submitted(self, app: FastAPI, session: Session,
-                                      client: AsyncClient) -> None:
+    async def test_get_last_submitted(
+        self, app: FastAPI, session: Session, client: AsyncClient
+    ) -> None:
         res = await client.get(
             app.url_path_for("data:last-submitted"),
             params={"form_id": 1},
             headers={"Authorization": f"Bearer {account.token}"})
         assert res.status_code == 200
         res = res.json()
-        assert res == {"at": today, "by": account.decoded["name"]}
+        # account.decoded["name"]
+        assert res == {"at": today, "by": "Wayan Galih"}

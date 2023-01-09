@@ -122,9 +122,9 @@ class TestHistoryRoutes():
         assert res.status_code == 200
         res = res.json()
         assert res["current"] == 1
-        assert res["total"] == 2
+        assert res["total"] == 3
         assert res["total_page"] == 1
-        assert len(res["data"]) == 2
+        assert len(res["data"]) == 3
         first_data = res["data"][len(res["data"]) - 1]
         assert first_data == {
             "id": 1,

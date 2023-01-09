@@ -16,13 +16,16 @@ class PaginatedData(TypedDict):
     count: int
 
 
-def add_data(session: Session,
-             name: str,
-             form: int,
-             administration: int,
-             created_by: int,
-             answers: List[AnswerBase],
-             geo: Optional[List[float]] = None) -> DataDict:
+def add_data(
+    session: Session,
+    name: str,
+    form: int,
+    administration: int,
+    created_by: int,
+    answers: List[AnswerBase],
+    geo: Optional[List[float]] = None,
+    submitter: Optional[str] = None
+) -> DataDict:
     data = Data(name=name,
                 form=form,
                 administration=administration,
@@ -30,7 +33,8 @@ def add_data(session: Session,
                 created_by=created_by,
                 updated_by=None,
                 created=datetime.now(),
-                updated=None)
+                updated=None,
+                submitter=submitter)
     for answer in answers:
         data.answer.append(answer)
     session.add(data)

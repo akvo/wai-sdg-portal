@@ -798,3 +798,57 @@ class TestWebformEditorRoutes():
             "url": f"https://{webdomain}/webform/{url2}",
             "passcode": None,
         }]
+
+    async def test_get_standalone_webform(
+        self, app: FastAPI,
+        session: Session, client: AsyncClient
+    ) -> None:
+        instance_name = os.environ.get('INSTANCE_NAME').replace("-", "_")
+        url1 = Cipher(f"{instance_name}-1").encode()
+        url2 = Cipher(f"{instance_name}-903430001").encode()
+        # get form detail
+        res = await client.get(
+            app.url_path_for(
+                "form:get_standalone_form_detail",
+                uuid="nk5_wvp57b5kz4r3g6d2y31"
+            )
+        )
+        assert res.status_code == 404
+        res = await client.get(
+            app.url_path_for(
+                "form:get_standalone_form_detail",
+                uuid=url1
+            )
+        )
+        assert res.status_code == 200
+        res = res.json()
+        assert res["id"] == 1
+        assert res["name"] == "test"
+        assert res["version"] == 1.0
+        # wrong passcode
+        res = await client.get(
+            app.url_path_for("webform:get_standalone_form", uuid=url1),
+            params={"passcode": "password"})
+        assert res.status_code == 404
+        # correct passcode
+        res = await client.get(
+            app.url_path_for("webform:get_standalone_form", uuid=url1),
+            params={"passcode": "test@123"})
+        assert res.status_code == 200
+        res = res.json()
+        assert res["id"] == 1
+        assert len(res["question_group"]) > 0
+        assert res["cascade"] == cascade
+        # without passcode
+        res = await client.get(
+            app.url_path_for(
+                "form:get_standalone_form_detail",
+                uuid=url2
+            )
+        )
+        assert res.status_code == 200
+        res = await client.get(
+            app.url_path_for("webform:get_standalone_form", uuid=url2))
+        assert res.status_code == 200
+        res = res.json()
+        assert res["id"] == 903430001
