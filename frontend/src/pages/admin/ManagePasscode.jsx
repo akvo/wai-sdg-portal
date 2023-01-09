@@ -13,7 +13,8 @@ import {
 import { CopyOutlined, CloseOutlined } from '@ant-design/icons';
 import api from '../../util/api';
 
-const { notificationText } = window.i18n;
+const { notificationText, buttonText, tableText, confirmationModalText } =
+  window.i18n;
 
 const EditableCell = ({
   editing,
@@ -73,23 +74,21 @@ const EditableCell = ({
           onClick={() => save(record.id)}
           loading={loading}
         >
-          Save
+          {buttonText?.btnSave}
         </Button>
-        <Popconfirm
-          title="Sure to cancel?"
-          onConfirm={cancel}
-        >
-          <Button
-            shape="circle"
-            icon={<CloseOutlined />}
-          />
-        </Popconfirm>
+        <Button
+          onClick={cancel}
+          shape="circle"
+          icon={<CloseOutlined />}
+        />
       </Space>
     );
   return <td {...restProps}>{editing ? <>{inputNode}</> : children}</td>;
 };
 
 const ManagePasscode = () => {
+  const { managePasscodeTableText } = tableText;
+  const { deleteFormText } = confirmationModalText;
   const [form] = Form.useForm();
   const [data, setData] = useState([]);
   const [editingKey, setEditingKey] = useState('');
@@ -180,12 +179,12 @@ const ManagePasscode = () => {
 
   const columns = [
     {
-      title: 'Form Name',
+      title: managePasscodeTableText?.colName,
       dataIndex: 'name',
       width: '20%',
     },
     {
-      title: 'URL',
+      title: managePasscodeTableText?.colUrl,
       dataIndex: 'url',
       width: '35%',
       render: (val) => {
@@ -209,7 +208,7 @@ const ManagePasscode = () => {
       },
     },
     {
-      title: 'Passcode',
+      title: managePasscodeTableText?.colPasscode,
       dataIndex: 'passcode',
       width: '25%',
       editable: true,
@@ -235,11 +234,11 @@ const ManagePasscode = () => {
                     passcode?
                   </>
                 }
-                okText="Yes"
-                cancelText="No"
+                okText={deleteFormText?.btnOkText}
+                cancelText={deleteFormText?.btnCancelText}
                 onConfirm={() => edit(record)}
               >
-                <Button type="primary">Edit Passcode</Button>
+                <Button type="primary">{`${buttonText?.btnEdit} ${buttonText?.btnPasscode}`}</Button>
               </Popconfirm>
             </Input.Group>
           </>

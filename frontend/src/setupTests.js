@@ -708,6 +708,7 @@ window.i18n = {
     tabDataUploadText: 'Data Upload',
     tabManageUserText: 'Manage Users',
     tabManageFormText: 'Manage Forms',
+    tabManageFormPasscodeText: 'Manage Form Passcode',
     modalEditUserTitle: 'Edit User',
     modalApproveUserTitle: 'Approve User',
     checkboxShowPendingUserText: 'Show Pending Users',
@@ -795,6 +796,11 @@ window.i18n = {
       colOrg: 'Organisation',
       colRole: 'Role',
     },
+    managePasscodeTableText: {
+      colName: 'Form Name',
+      colUrl: 'URL',
+      colPasscode: 'Passcode',
+    },
     manageDataTableText: {
       colName: 'Entry',
       colAdministration: 'Region',
@@ -834,6 +840,7 @@ window.i18n = {
     btnSave: 'Save',
     btnUndo: 'Undo',
     btnRemoveFilter: 'Remove Filter',
+    btnPasscode: 'Passcode',
   },
   formText: {
     labelName: 'Name',
@@ -852,6 +859,9 @@ window.i18n = {
     validationAccessRequiredText: 'Please select region!',
     formSelectPlaceholder: 'Select',
     formSearchPlaceholder: 'Search',
+    formPasscodePlaceholder: 'Manage Form Passcode',
+    formPasscodeInfoText:
+      'This feature can only be enabled by users with form passcode management permission',
   },
   mainText: {
     noDataText: 'No Data',

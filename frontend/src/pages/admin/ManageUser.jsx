@@ -551,7 +551,7 @@ const ManageUser = () => {
               getFieldValue('role') === 'admin' ? (
                 <Form.Item
                   key="manage_form_passcode"
-                  label="Manage Form Passcode"
+                  label={formText?.formPasscodePlaceholder}
                   valuePropName="manage_form_passcode"
                   name="manage_form_passcode"
                   className="passcode-item"
@@ -564,7 +564,7 @@ const ManageUser = () => {
                   {!user?.manage_form_passcode && (
                     <Tooltip
                       placement="top"
-                      title="This feature can only be enabled by users with form passcode management permission"
+                      title={formText?.formPasscodeInfoText}
                     >
                       <InfoCircleOutlined />
                     </Tooltip>
