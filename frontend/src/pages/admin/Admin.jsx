@@ -104,12 +104,16 @@ const Admin = ({ match }) => {
                 key="manage-form"
               />
             )}
-            <TabPane
-              tab={
-                <div className="tab-pane-text">{tabManageFormPasscodeText}</div>
-              }
-              key="manage-passcode"
-            />
+            {user?.role === 'admin' && user?.manage_form_passcode && (
+              <TabPane
+                tab={
+                  <div className="tab-pane-text">
+                    {tabManageFormPasscodeText}
+                  </div>
+                }
+                key="manage-passcode"
+              />
+            )}
           </Tabs>
         </div>
         <div className="card-content-container">
@@ -123,9 +127,9 @@ const Admin = ({ match }) => {
           {page === 'data-upload' && <ManageUpload />}
           {user?.role === 'admin' && page === 'manage-users' && <ManageUser />}
           {user?.role === 'admin' && page === 'manage-form' && <ManageForm />}
-          {user?.role === 'admin' && page === 'manage-passcode' && (
-            <ManagePasscode />
-          )}
+          {user?.role === 'admin' &&
+            user?.manage_form_passcode &&
+            page === 'manage-passcode' && <ManagePasscode />}
         </div>
       </Col>
     </Row>
