@@ -172,7 +172,7 @@ var i18n = {
     btnSave: "Save",
     btnUndo: "Undo",
     btnRemoveFilter: "Remove Filter",
-    btnPasscode:"Passcode"
+    btnPasscode: "Edit Passcode",
   },
   formText: {
     labelName: "Name",
@@ -192,7 +192,8 @@ var i18n = {
     formSelectPlaceholder: "Select",
     formSearchPlaceholder: "Search",
     formPasscodePlaceholder: "Manage Form Passcode",
-    formPasscodeInfoText: "This feature can only be enabled by users with form passcode management permission",
+    formPasscodeInfoText:
+      "This feature can only be enabled by users with form passcode management permission",
   },
   mainText: {
     noDataText: "No Data",

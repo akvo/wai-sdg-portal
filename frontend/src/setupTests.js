@@ -840,7 +840,7 @@ window.i18n = {
     btnSave: 'Save',
     btnUndo: 'Undo',
     btnRemoveFilter: 'Remove Filter',
-    btnPasscode: 'Passcode',
+    btnPasscode: 'Edit Passcode',
   },
   formText: {
     labelName: 'Name',

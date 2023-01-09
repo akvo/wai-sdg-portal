@@ -238,7 +238,7 @@ const ManagePasscode = () => {
                 cancelText={deleteFormText?.btnCancelText}
                 onConfirm={() => edit(record)}
               >
-                <Button type="primary">{`${buttonText?.btnEdit} ${buttonText?.btnPasscode}`}</Button>
+                <Button type="primary">{buttonText?.btnPasscode}</Button>
               </Popconfirm>
             </Input.Group>
           </>
