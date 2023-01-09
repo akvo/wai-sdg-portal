@@ -34,6 +34,7 @@ const Admin = ({ match }) => {
     tabDataUploadText,
     tabManageUserText,
     tabManageFormText,
+    tabManageFormPasscodeText,
   } = adminText;
   const [page, setPage] = useState(match?.params?.page);
   const history = useHistory();
@@ -104,7 +105,9 @@ const Admin = ({ match }) => {
               />
             )}
             <TabPane
-              tab={<div className="tab-pane-text">Manage Form Passcode</div>}
+              tab={
+                <div className="tab-pane-text">{tabManageFormPasscodeText}</div>
+              }
               key="manage-passcode"
             />
           </Tabs>
