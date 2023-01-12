@@ -123,6 +123,8 @@ const Main = ({ match }) => {
   const [loading, setLoading] = useState(true);
   const [lastSubmitted, setLastSubmitted] = useState({ by: '', at: '' });
   const [activeTab, setActiveTab] = useState(null);
+  const [callCategory, setCallCategory] = useState(false);
+  const [categories, setCategories] = useState(null);
 
   const current = config?.[match.params.page];
   const changePage = (p) => {
@@ -277,7 +279,44 @@ const Main = ({ match }) => {
     } else {
       setActiveTab('data');
     }
-  }, [user, current, questionLoaded]);
+    if (!callCategory && !categories && current?.formId && data?.length) {
+      const promises = data?.map((d) => {
+        const apiUrl = `/collection/categories?form=${current.formId}&data=${d.key}`;
+        return api.get(apiUrl);
+      });
+      Promise.all(promises).then((values) => {
+        const _data = values
+          ?.map((v) => {
+            const { data: _categories } = v;
+            setCategories(_categories);
+            const category = _categories.pop();
+            const fd = data?.find((d) => d.key === category.data);
+            const rd = {};
+            for (let cx = 0; cx < current?.columns?.length; cx++) {
+              if (fd[current.columns[cx]?.key]?.value) {
+                const _title = current.columns[cx]?.title?.toLowerCase();
+                const fdc = _categories?.find((c) => {
+                  return c?.name?.toLowerCase() === _title;
+                });
+                const _obj = fdc
+                  ? { ...fd[current.columns[cx].key], value: fdc.category }
+                  : {};
+                Object.assign(rd, { [current.columns[cx].key]: _obj });
+              }
+            }
+            return fd ? { ...fd, ...rd } : null;
+          })
+          ?.filter((d) => d);
+        setData(_data);
+      });
+      setCallCategory(true);
+    }
+
+    if (loading && callCategory && categories?.length) {
+      setCategories(null);
+      setCallCategory(false);
+    }
+  }, [user, current, questionLoaded, callCategory, categories, data, loading]);
 
   if (!current) {
     return <ErrorPage status={404} />;

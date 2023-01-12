@@ -20,6 +20,7 @@ from routes.log import log_route
 from routes.option import option_route
 from routes.hint import hint_route
 from source.geoconfig import GeoLevels
+from AkvoResponseGrouper.routes import collection_route
 
 INSTANCE_NAME = os.environ["INSTANCE_NAME"]
 CONFIG_NAME = INSTANCE_NAME.replace("-", "_")
@@ -95,6 +96,7 @@ app.include_router(file_route)
 app.include_router(project_route)
 app.include_router(log_route)
 app.include_router(hint_route)
+app.include_router(collection_route)
 
 
 @lru_cache()
