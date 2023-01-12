@@ -1,0 +1,303 @@
+[
+    {
+        "name": "Sanitation",
+        "form": 494780323,
+        "categories": [
+            {
+                "name": "Basic",
+                "and": [
+                    {
+                        "question": 559830324,
+                        "options": [
+                            "Flush / Pour-flush toilet",
+                            "VIP latrine",
+                            "Pit latrine",
+                            "Composting toilet"
+                        ]
+                    }
+                ],
+                "and": [
+                    {
+                        "question": 559830321,
+                        "options": [
+                            "Yes"
+                        ]
+                    },
+                    {
+                        "question": 559830322,
+                        "options": [
+                            "Yes"
+                        ]
+                    },
+                    {
+                        "question": 559830320,
+                        "options": [
+                            "Yes"
+                        ]
+                    },
+                    {
+                        "question": 559830318,
+                        "options": [
+                            "Yes"
+                        ]
+                    },
+                    {
+                        "question": 559830319,
+                        "options": [
+                            "Yes"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Limited",
+                "and": [
+                    {
+                        "question": 559830324,
+                        "options": [
+                            "Flush / Pour-flush toilet",
+                            "VIP latrine",
+                            "Pit latrine",
+                            "Composting toilet"
+                        ]
+                    }
+                ],
+                "and": [
+                    {
+                        "question": 559830321,
+                        "options": [
+                            "No"
+                        ]
+                    },
+                    {
+                        "question": 559830322,
+                        "options": [
+                            "No"
+                        ]
+                    },
+                    {
+                        "question": 559830320,
+                        "options": [
+                            "No"
+                        ]
+                    },
+                    {
+                        "question": 559830318,
+                        "options": [
+                            "No"
+                        ]
+                    },
+                    {
+                        "question": 559830319,
+                        "options": [
+                            "No"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "No service",
+                "and": [
+                    {
+                        "question": 559830321,
+                        "options": [
+                            "No"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Hygiene",
+        "form": 494780323,
+        "categories": [
+            {
+                "name": "Basic",
+                "and": [
+                    {
+                        "question": 555940319,
+                        "options": [
+                            "Yes"
+                        ]
+                    },
+                    {
+                        "question": 561220158,
+                        "options": [
+                            "Yes"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Limited",
+                "and": [
+                    {
+                        "question": 555940319,
+                        "options": [
+                            "No, hand hygienes present but not functional"
+                        ]
+                    },
+                    {
+                        "question": 561220158,
+                        "options": [
+                            "Yes"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "No service",
+                "and": [
+                    {
+                        "question": 555940319,
+                        "options": [
+                            "No, hand hygienes present but not functional",
+                            "No hand hygiene facilities at points of care"
+                        ]
+                    },
+                    {
+                        "question": 561220158,
+                        "options": [
+                            "No, handwashing facilities are near the toilets but lacking soap and/or water",
+                            "No, no handwashing facilities near toilets (within 5 m)"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Health Care Waste Management",
+        "form": 494780323,
+        "categories": [
+            {
+                "name": "Basic",
+                "and": [
+                    {
+                        "question": 569090293,
+                        "options": [
+                            "Yes"
+                        ]
+                    },
+                    {
+                        "question": 569090295,
+                        "options": [
+                            "Autoclaved",
+                            "Incinerated (other)",
+                            "Not treated, but buried in lined, protected pit",
+                            "Not treated, but collected for medical waste disposal off-site"
+                        ]
+                    },
+                    {
+                        "question": 569090294,
+                        "options": [
+                            "Autoclaved",
+                            "Incinerated (other)",
+                            "Not treated, but buried in lined, protected pit",
+                            "Not treated, but collected for medical waste disposal off-site"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Limited",
+                "and": [
+                    {
+                        "question": 569090293,
+                        "options": [
+                            "No, bins did not meet all requirements"
+                        ]
+                    },
+                    {
+                        "question": 569090295,
+                        "options": [
+                            "Autoclaved",
+                            "Incinerated (other)",
+                            "Not treated, but buried in lined, protected pit",
+                            "Not treated, but collected for medical waste disposal off-site"
+                        ]
+                    },
+                    {
+                        "question": 569090294,
+                        "options": [
+                            "Autoclaved",
+                            "Incinerated (other)",
+                            "Not treated, but buried in lined, protected pit",
+                            "Not treated, but collected for medical waste disposal off-site"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "No service",
+                "and": [
+                    {
+                        "question": 569090293,
+                        "options": [
+                            "No bins were present"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Environmental Cleaning",
+        "form": 494780323,
+        "categories": [
+            {
+                "name": "Basic",
+                "and": [
+                    {
+                        "question": 571050236,
+                        "options": [
+                            "Yes"
+                        ]
+                    },
+                    {
+                        "question": 571050237,
+                        "options": [
+                            "Yes"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Limited",
+                "and": [
+                    {
+                        "question": 571050236,
+                        "options": [
+                            "Yes"
+                        ]
+                    },
+                    {
+                        "question": 571050237,
+                        "options": [
+                            "No, some but not all have been trained"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "No service",
+                "and": [
+                    {
+                        "question": 571050236,
+                        "options": [
+                            "Yes"
+                        ]
+                    },
+                    {
+                        "question": 571050237,
+                        "options": [
+                            "No, none have been trained",
+                            "No staff were responsible for cleaning"
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

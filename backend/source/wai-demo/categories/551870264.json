@@ -1,0 +1,192 @@
+[
+    {
+        "name": "Drinking Water",
+        "form": "551870264",
+        "categories": [
+            {
+                "name": "Basic",
+                "or": [
+                    {
+                        "question": 561200192,
+                        "options": [
+                            "Piped water supply",
+                            "Protected well/spring",
+                            "Rainwater",
+                            "Unprotected well/spring",
+                            "Packaged bottled water"
+                        ]
+                    }
+                ],
+                "and": [
+                    {
+                        "question": 561200190,
+                        "options": [
+                            "Yes"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Limited",
+                "or": [
+                    {
+                        "question": 561200192,
+                        "options": [
+                            "Piped water supply",
+                            "Protected well/spring",
+                            "Rainwater",
+                            "Unprotected well/spring",
+                            "Packaged bottled water"
+                        ]
+                    }
+                ],
+                "and": [
+                    {
+                        "question": 561200190,
+                        "options": [
+                            "No"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "No Service",
+                "or": [
+                    {
+                        "question": 561200192,
+                        "options": [
+                            "Tanker-truck or cart",
+                            "Surface water (lake, river, stream)",
+                            "No water source"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Sanitation",
+        "form": "551870264",
+        "categories": [
+            {
+                "name": "Basic",
+                "or": [
+                    {
+                        "question": 546630147,
+                        "options": [
+                            "Flush / Pour-flush toilets",
+                            "Pit latrines with slab",
+                            "Composting toilets"
+                        ]
+                    }
+                ],
+                "and": [
+                    {
+                        "question": 557690281,
+                        "options": [
+                            "Yes"
+                        ]
+                    },
+                    {
+                        "question": 557690277,
+                        "options": [
+                            "Yes"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Limited",
+                "or": [
+                    {
+                        "question": 546630147,
+                        "options": [
+                            "Flush / Pour-flush toilets",
+                            "Pit latrines with slab",
+                            "Composting toilets"
+                        ]
+                    }
+                ],
+                "and": [
+                    {
+                        "question": 557690281,
+                        "options": [
+                            "No"
+                        ]
+                    },
+                    {
+                        "question": 557690277,
+                        "options": [
+                            "Yes"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "No Service",
+                "or": [
+                    {
+                        "question": 546630147,
+                        "options": [
+                            "Pit latrines with slab",
+                            "Hanging latrines",
+                            "Bucket latrines",
+                            "No toilets or latrines"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Hygiene",
+        "form": "551870264",
+        "categories": [
+            {
+                "name": "Basic",
+                "and": [
+                    {
+                        "question": 567440264,
+                        "options": [
+                            "Yes"
+                        ]
+                    },
+                    {
+                        "question": 567440263,
+                        "options": [
+                            "Yes, water and soap"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Limited",
+                "and": [
+                    {
+                        "question": 567440264,
+                        "options": [
+                            "Yes"
+                        ]
+                    },
+                    {
+                        "question": 567440263,
+                        "options": [
+                            "Water only"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "No Service",
+                "and": [
+                    {
+                        "question": 567440264,
+                        "options": [
+                            "No"
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]
