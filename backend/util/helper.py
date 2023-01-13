@@ -1,6 +1,7 @@
 import uuid
 import re
 import functools
+import hashlib
 import sqlalchemy as sa
 from sqlalchemy.dialects.postgresql import TSVECTOR
 
@@ -19,6 +20,19 @@ def get_uuid():
 
 def contain_numbers(inputString):
     return bool(re.search(r'\d', inputString))
+
+
+def hash_chipper(text: str, length: int = 4):
+    hash_result = hashlib.sha1(bytes(text, 'utf-8'))
+    dig = hash_result.digest()
+    res = ""
+    for i in range(0, length):
+        x = dig[i] % 52
+        if x >= 26:
+            res += chr(ord('A') + x - 26)
+        else:
+            res += chr(ord('a') + x)
+    return res
 
 
 class HText(str):
