@@ -99,7 +99,7 @@ const Header = ({
       wrap={true}
     >
       <Col
-        span={8}
+        span={isWebformStandalone ? 24 : 8}
         className="header-logo"
       >
         <Link to="/">

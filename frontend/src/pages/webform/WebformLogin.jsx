@@ -62,7 +62,7 @@ const WebformLogin = ({ uuid }) => {
         className="webform-login-wrapper"
       >
         <Col
-          span={8}
+          span={24}
           align="center"
         >
           {isLoadingDetail ? (

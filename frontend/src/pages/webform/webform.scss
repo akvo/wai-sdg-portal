@@ -4,7 +4,24 @@
     margin-top: 175px;
   }
 
+  .webform-login-card {
+    max-width: 600px;
+    width: 90%;
+    .ant-card-head-title {
+      white-space: pre-line;
+    }
+  }
+
   .webform {
     padding: 0;
+    form {
+      min-height: 700px;
+    }
+  }
+
+  .arf-mobile-header-wrapper > h1 {
+    font-size: 16px;
+    line-height: 20px;
+    margin-bottom: 10px;
   }
 }
