@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './webform.scss';
-import { Webform } from 'akvo-react-form';
+import { Webform, SavedSubmission } from 'akvo-react-form';
 import 'akvo-react-form/dist/index.css';
 import { UIState } from '../../state/ui';
 import WebformLogin from './WebformLogin';
@@ -19,6 +19,9 @@ const WebformStandalone = ({ match }) => {
   const { isLogin, formValue, submitter, complete } = UIState.useState(
     (s) => s.webformLogin
   );
+
+  const { id: formId } = formValue;
+  const dataPointName = `${formId} - ${submitter}`;
 
   const onSubmit = () => {
     setIsVisible(false);
@@ -112,6 +115,16 @@ const WebformStandalone = ({ match }) => {
             onFinish={onFinish}
             sticky={true}
             submitButtonSetting={{ loading: submitting }}
+            autoSave={{
+              formId: formId,
+              name: dataPointName,
+              buttonText: 'Save',
+            }}
+            leftDrawerConfig={{
+              visible: true,
+              title: 'Saved Submissions',
+              content: <SavedSubmission formId={formId} />,
+            }}
           />
         </Col>
       </Row>
