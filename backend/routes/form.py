@@ -364,8 +364,10 @@ def get(req: Request, session: Session = Depends(get_session)):
     form = crud.get_form(session=session)
     forms = []
     for fr in [f.serialize for f in form]:
-        url = Cipher(f"{class_path}-{fr.get('id')}").encode()
-        url = f"https://{webdomain}/webform/{url}"
+        hash_survey_id = Cipher(f"{class_path}-{fr.get('id')}").encode()
+        url = f"{webdomain}/webform/{hash_survey_id}"
+        if "https" not in webdomain:
+            url = f"https://{webdomain}/webform/{hash_survey_id}"
         data = crud_data.count(session=session, form=fr.get('id'))
         fr.update({'disableDelete': True if data else False})
         fr.update({'url': url or None})
