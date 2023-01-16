@@ -22,7 +22,7 @@ def contain_numbers(inputString):
     return bool(re.search(r'\d', inputString))
 
 
-def hash_chipper(text: str, length: int = 4):
+def hash_cipher(text: str, length: int = 4):
     hash_result = hashlib.sha1(bytes(text, 'utf-8'))
     dig = hash_result.digest()
     res = ""

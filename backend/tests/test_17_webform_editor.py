@@ -5,7 +5,7 @@ from fastapi import FastAPI
 from httpx import AsyncClient
 from tests.test_01_auth import Acc
 from sqlalchemy.orm import Session
-from util.helper import Cipher
+from util.helper import hash_cipher
 
 pytestmark = pytest.mark.asyncio
 sys.path.append("..")
@@ -761,12 +761,11 @@ class TestWebformEditorRoutes():
     async def test_get_all_form(self, app: FastAPI, session: Session,
                                 client: AsyncClient) -> None:
         webdomain = os.environ.get('WEBDOMAIN')
-        instance_name = os.environ.get('INSTANCE_NAME').replace("-", "_")
         res = await client.get(app.url_path_for("form:get_all"))
         assert res.status_code == 200
         res = res.json()
-        url1 = Cipher(f"{instance_name}-1").encode()
-        url2 = Cipher(f"{instance_name}-903430001").encode()
+        url1 = hash_cipher(text="1")
+        url2 = hash_cipher(text="903430001")
         assert res == [{
             "id": 1,
             "name": "test",
@@ -803,9 +802,8 @@ class TestWebformEditorRoutes():
         self, app: FastAPI,
         session: Session, client: AsyncClient
     ) -> None:
-        instance_name = os.environ.get('INSTANCE_NAME').replace("-", "_")
-        url1 = Cipher(f"{instance_name}-1").encode()
-        url2 = Cipher(f"{instance_name}-903430001").encode()
+        url1 = hash_cipher(text="1")
+        url2 = hash_cipher(text="903430001")
         # get form detail
         res = await client.get(
             app.url_path_for(

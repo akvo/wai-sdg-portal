@@ -1,4 +1,5 @@
 import os
+import json
 from http import HTTPStatus
 from fastapi import Depends, Request, APIRouter, BackgroundTasks
 from fastapi import Response, HTTPException, Query
@@ -20,9 +21,11 @@ from models.question import QuestionType, QuestionDict, Question
 from middleware import verify_user, verify_admin, verify_editor
 from source.geoconfig import GeoCenter
 from datetime import datetime
-from util.helper import Cipher
+from util.helper import hash_cipher
 
 INSTANCE_NAME = os.environ["INSTANCE_NAME"]
+SOURCE_PATH = f"./source/{INSTANCE_NAME}"
+URL_FORM_CONFIG = f"{SOURCE_PATH}/form_url_dump.json"
 class_path = INSTANCE_NAME.replace("-", "_")
 security = HTTPBearer()
 form_route = APIRouter()
@@ -354,6 +357,26 @@ def save_webform(session: Session, json_form: dict, form_id: int = None):
         session.flush()
 
 
+def write_form_url_config(session: Session):
+    form = crud.get_form(session=session)
+    configs = {}
+    for fr in [f.serialize for f in form]:
+        form_id = fr.get('id')
+        hash_survey_id = hash_cipher(text=str(form_id))
+        configs.update({hash_survey_id: form_id})
+    # write forms value as a config file
+    open(URL_FORM_CONFIG, 'w').write(json.dumps(configs))
+
+
+def get_form_id_from_url_config(uuid: str):
+    with open(URL_FORM_CONFIG, 'r') as j:
+        configs = json.loads(j.read())
+    form_id = configs.get(uuid)
+    if not form_id:
+        return None
+    return int(form_id)
+
+
 @form_route.get("/form/",
                 response_model=List[FormDictWithFlag],
                 summary="get all forms",
@@ -363,15 +386,22 @@ def get(req: Request, session: Session = Depends(get_session)):
     webdomain = os.environ['WEBDOMAIN']
     form = crud.get_form(session=session)
     forms = []
+    configs = {}
     for fr in [f.serialize for f in form]:
-        hash_survey_id = Cipher(f"{class_path}-{fr.get('id')}").encode()
+        form_id = fr.get('id')
+        if 'question_group' in fr:
+            del fr['question_group']
+        hash_survey_id = hash_cipher(text=str(form_id))
         url = f"{webdomain}/webform/{hash_survey_id}"
         if "https" not in webdomain:
             url = f"https://{webdomain}/webform/{hash_survey_id}"
-        data = crud_data.count(session=session, form=fr.get('id'))
+        data = crud_data.count(session=session, form=form_id)
         fr.update({'disableDelete': True if data else False})
         fr.update({'url': url or None})
         forms.append(fr)
+        configs.update({hash_survey_id: form_id})
+    # write forms value as a config file
+    open(URL_FORM_CONFIG, 'w').write(json.dumps(configs))
     return forms
 
 
@@ -554,8 +584,10 @@ def get_standalone_form_detail_by_uuid(
     uuid: str,
     session: Session = Depends(get_session)
 ):
-    # decode form uuid
-    instance, form_id = Cipher(uuid).decode()
+    # write config
+    write_form_url_config(session=session)
+    # get form id by uuid
+    form_id = get_form_id_from_url_config(uuid=uuid)
     form = crud.get_form_by_id(session=session, id=form_id)
     if not form:
         return Response(status_code=HTTPStatus.NOT_FOUND.value)
@@ -573,8 +605,8 @@ def get_standalone_webform_by_uuid(
     passcode: Optional[str] = Query(None),
     session: Session = Depends(get_session)
 ):
-    # decode form uuid
-    instance, form_id = Cipher(uuid).decode()
+    # get form id by uuid
+    form_id = get_form_id_from_url_config(uuid=uuid)
     form = crud.get_form_by_id(session=session, id=form_id)
     # check passcode
     if passcode and form.passcode != passcode:
