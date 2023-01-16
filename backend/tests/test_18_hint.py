@@ -66,7 +66,7 @@ class TestHintRoutes():
         assert res.status_code == 200
         res = res.json()
         assert res == {
-            "id": 5,
+            "id": 6,
             "name": "Garut - Hint Test",
             "administration": 10,
             "created": today,

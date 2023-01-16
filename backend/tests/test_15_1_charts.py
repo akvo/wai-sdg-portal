@@ -23,7 +23,7 @@ class TestChartsRoutes():
             "type": "BAR",
             "data": [{
                 "name": "option 1",
-                "value": 1
+                "value": 2
             }, {
                 "name": "option 2",
                 "value": 3
@@ -77,17 +77,17 @@ class TestChartsRoutes():
             "form": 1,
             "question": 1,
             "data": [{
-                "count": 1,
+                "count": 2,
                 "itemStyle": {"color": "#333"},
                 "name": 'Option 1',
-                "total": 4,
-                "value": 25.0,
+                "total": 5,
+                "value": 40.0,
             }, {
                 "count": 3,
                 "itemStyle": {"color": "#333"},
                 "name": "Option 2",
-                "total": 4,
-                "value": 75.0,
+                "total": 5,
+                "value": 60.0,
             }]
         }
 
@@ -112,23 +112,23 @@ class TestChartsRoutes():
                     "itemStyle": {"color": "#333"},
                     "count": 3,
                     "name": "Option 2",
-                    "total": 4,
-                    "value": 75.0,
+                    "total": 5,
+                    "value": 60.0,
                 },
                 "type": "info",
             }, {
                 "data": [{
-                    "count": 1,
+                    "count": 2,
                     "itemStyle": {"color": "#333"},
                     "name": 'Option 1',
-                    "total": 4,
-                    "value": 25.0,
+                    "total": 5,
+                    "value": 40.0,
                 }, {
                     "count": 3,
                     "itemStyle": {"color": "#333"},
                     "name": "Option 2",
-                    "total": 4,
-                    "value": 75.0,
+                    "total": 5,
+                    "value": 60.0,
                 }],
                 "type": "chart",
             }]

@@ -17,7 +17,7 @@ const FooterContent = ({ title, text }) => {
 };
 */
 
-const FooterEnd = () => {
+const FooterEnd = ({ isWebformStandalone }) => {
   const { user } = UIState.useState((c) => c);
   const changePage = ({ key }) => {
     UIState.update((s) => {
@@ -52,7 +52,7 @@ const FooterEnd = () => {
       >
         {/* <Link to="/privacy-policy">{footer?.privacyPolicy}</Link> */}
         {/* <Link to="/tos">{footer?.termsOfService}</Link> */}
-        {user && (
+        {user && !isWebformStandalone && (
           <Link
             to="/api-docs"
             onClick={() => changePage('documentation')}
@@ -65,7 +65,7 @@ const FooterEnd = () => {
   );
 };
 
-const Footer = () => {
+const Footer = ({ isWebformStandalone }) => {
   return (
     <>
       {/* ## FIXME: Enable once footer text is ready
@@ -78,7 +78,7 @@ const Footer = () => {
         <FooterContent title={footer?.workTitle} text={footer?.workText} />
       </Row>
         */}
-      <FooterEnd />
+      <FooterEnd isWebformStandalone={isWebformStandalone} />
     </>
   );
 };

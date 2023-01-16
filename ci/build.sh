@@ -3,7 +3,11 @@
 
 set -exuo pipefail
 
-INSTANCES="wai-ethiopia wai-uganda wai-bangladesh wai-nepal wai-demo"
+if [[ "${CI_BRANCH:=}" = "develop" ]]; then
+	INSTANCES="wai-demo"
+else
+	INSTANCES="wai-ethiopia wai-uganda wai-bangladesh wai-nepal"
+fi
 
 [[ -n "${CI_TAG:=}" ]] && { echo "Skip build"; exit 0; }
 

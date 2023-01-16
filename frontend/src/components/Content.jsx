@@ -8,6 +8,7 @@ import ErrorPage from './ErrorPage';
 import Admin from '../pages/admin/Admin';
 import Forms from '../pages/Forms';
 import Main from '../pages/main/Main';
+import WebformStandalone from '../pages/webform/WebformStandalone';
 
 const Content = () => {
   return (
@@ -40,6 +41,10 @@ const Content = () => {
       <Route
         path="/form/:title/:id"
         component={Forms}
+      />
+      <Route
+        path="/webform/:uuid"
+        component={WebformStandalone}
       />
       <Route
         exact

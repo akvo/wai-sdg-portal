@@ -20,6 +20,7 @@ class FormDict(TypedDict):
     default_language: Optional[str]
     languages: Optional[List[str]]
     translations: Optional[List[dict]]
+    passcode: Optional[bool] = None
 
 
 class FormDictWithFlag(TypedDict):
@@ -85,6 +86,19 @@ class Form(Base):
             "translations": self.translations,
             "question_group": self.question_group,
             "passcode": self.passcode,
+        }
+
+    @property
+    def to_form_detail(self) -> FormDict:
+        return {
+            "id": self.id,
+            "name": self.name,
+            "version": self.version,
+            "description": self.description,
+            "default_language": self.default_language,
+            "languages": self.languages,
+            "translations": self.translations,
+            "passcode": True if self.passcode else False
         }
 
     @property
