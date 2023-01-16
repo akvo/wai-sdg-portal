@@ -9,7 +9,7 @@ import { Row, Col, Button, notification } from 'antd';
 import { FormOutlined } from '@ant-design/icons';
 import api from '../../util/api';
 
-const { notificationText } = window.i18n;
+const { notificationText, buttonText, formText } = window.i18n;
 
 const WebformStandalone = ({ match }) => {
   const uuid = match?.params?.uuid;
@@ -96,7 +96,9 @@ const WebformStandalone = ({ match }) => {
           >
             <FormOutlined style={{ fontSize: '40px' }} />
             <h2>Thank you for your submission!</h2>
-            <Button onClick={handleAddNewSubmission}>Add New Submission</Button>
+            <Button onClick={handleAddNewSubmission}>
+              {buttonText?.btnAddNewSubmission}
+            </Button>
           </Col>
         </Row>
       </div>
@@ -118,11 +120,11 @@ const WebformStandalone = ({ match }) => {
             autoSave={{
               formId: formId,
               name: dataPointName,
-              buttonText: 'Save',
+              buttonText: buttonText?.btnSave,
             }}
             leftDrawerConfig={{
               visible: true,
-              title: 'Saved Submissions',
+              title: formText?.savedSubmissionText,
               content: <SavedSubmission formId={formId} />,
             }}
           />

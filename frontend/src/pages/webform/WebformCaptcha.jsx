@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { Modal, Typography, Space, InputNumber, Button, Result } from 'antd';
 
 const { Text } = Typography;
+const { formText } = window.i18n;
 
 const CaptchaNumber = ({ validateCaptcha, setValidateCaptcha }) => {
   const [captchaValue, setCaptchaValue] = useState(null);
@@ -58,7 +59,7 @@ const CaptchaNumber = ({ validateCaptcha, setValidateCaptcha }) => {
             size={5}
           >
             <InputNumber
-              placeholder="Enter the sum"
+              placeholder={formText?.placeholderCaptcha}
               min={1}
               max={100}
               size="large"

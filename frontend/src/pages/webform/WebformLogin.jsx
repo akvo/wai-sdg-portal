@@ -5,6 +5,8 @@ import { UIState } from '../../state/ui';
 import api from '../../util/api';
 import isEmpty from 'lodash/isEmpty';
 
+const { buttonText, formText } = window.i18n;
+
 const WebformLogin = ({ uuid }) => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
@@ -79,7 +81,7 @@ const WebformLogin = ({ uuid }) => {
                 onFinish={onFinish}
               >
                 <Form.Item
-                  label="Submitter Name"
+                  label={formText?.labelSubmitterName}
                   name="submitter"
                   rules={[{ required: true }]}
                 >
@@ -87,7 +89,7 @@ const WebformLogin = ({ uuid }) => {
                 </Form.Item>
                 {allowUsingPasscode && (
                   <Form.Item
-                    label="Form Passcode"
+                    label={formText?.labelFormPasscode}
                     name="passcode"
                     rules={[{ required: true }]}
                   >
@@ -102,7 +104,7 @@ const WebformLogin = ({ uuid }) => {
                     loading={loading}
                     disabled={isLoadingDetail}
                   >
-                    Login
+                    {buttonText?.btnLogin}
                   </Button>
                 </Form.Item>
               </Form>
