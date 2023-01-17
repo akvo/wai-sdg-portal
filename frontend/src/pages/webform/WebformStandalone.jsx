@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './webform.scss';
-import { Webform } from 'akvo-react-form';
+import { Webform, SavedSubmission } from 'akvo-react-form';
 import 'akvo-react-form/dist/index.css';
 import { UIState } from '../../state/ui';
 import WebformLogin from './WebformLogin';
@@ -9,7 +9,7 @@ import { Row, Col, Button, notification } from 'antd';
 import { FormOutlined } from '@ant-design/icons';
 import api from '../../util/api';
 
-const { notificationText } = window.i18n;
+const { notificationText, buttonText, formText } = window.i18n;
 
 const WebformStandalone = ({ match }) => {
   const uuid = match?.params?.uuid;
@@ -19,6 +19,9 @@ const WebformStandalone = ({ match }) => {
   const { isLogin, formValue, submitter, complete } = UIState.useState(
     (s) => s.webformLogin
   );
+
+  const { id: formId } = formValue;
+  const dataPointName = `${formId} - ${submitter}`;
 
   const onSubmit = () => {
     setIsVisible(false);
@@ -93,7 +96,9 @@ const WebformStandalone = ({ match }) => {
           >
             <FormOutlined style={{ fontSize: '40px' }} />
             <h2>Thank you for your submission!</h2>
-            <Button onClick={handleAddNewSubmission}>Add New Submission</Button>
+            <Button onClick={handleAddNewSubmission}>
+              {buttonText?.btnAddNewSubmission}
+            </Button>
           </Col>
         </Row>
       </div>
@@ -112,6 +117,16 @@ const WebformStandalone = ({ match }) => {
             onFinish={onFinish}
             sticky={true}
             submitButtonSetting={{ loading: submitting }}
+            autoSave={{
+              formId: formId,
+              name: dataPointName,
+              buttonText: buttonText?.btnSave,
+            }}
+            leftDrawerConfig={{
+              visible: true,
+              title: formText?.savedSubmissionText,
+              content: <SavedSubmission formId={formId} />,
+            }}
           />
         </Col>
       </Row>

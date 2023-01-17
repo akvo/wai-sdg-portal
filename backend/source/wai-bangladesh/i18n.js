@@ -28,6 +28,7 @@ var i18n = {
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac consectetur diam. Pellentesque lacinia, erat ac efficitur molestie, sapien odio efficitur purus, non ornare sem massa euismod metus.",
   },
   home: {
+    datasetSectionTitle: "Datasets in this Portal",
     overviewSectionTitle: "Overview",
     exploreText: "Explore",
     exploreDataText: "EXPLORE THE DATA",
@@ -173,6 +174,8 @@ var i18n = {
     btnUndo: "Undo",
     btnRemoveFilter: "Remove Filter",
     btnPasscode: "Edit Passcode",
+    btnLogin: "Login",
+    btnAddNewSubmission: "Add New Submission",
   },
   formText: {
     labelName: "Name",
@@ -194,6 +197,10 @@ var i18n = {
     formPasscodePlaceholder: "Manage Form Passcode",
     formPasscodeInfoText:
       "This feature can only be enabled by users with form passcode management permission",
+    labelSubmitterName: "Submitter Name",
+    labelFormPasscode: "Form Passcode",
+    placeholderCaptcha: "Enter the sum",
+    savedSubmissionText: "Saved Submissions",
   },
   mainText: {
     noDataText: "No Data",
