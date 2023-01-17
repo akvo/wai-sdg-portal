@@ -841,6 +841,8 @@ window.i18n = {
     btnUndo: 'Undo',
     btnRemoveFilter: 'Remove Filter',
     btnPasscode: 'Edit Passcode',
+    btnLogin: 'Login',
+    btnAddNewSubmission: 'Add New Submission',
   },
   formText: {
     labelName: 'Name',
@@ -862,6 +864,10 @@ window.i18n = {
     formPasscodePlaceholder: 'Manage Form Passcode',
     formPasscodeInfoText:
       'This feature can only be enabled by users with form passcode management permission',
+    labelSubmitterName: 'Submitter Name',
+    labelFormPasscode: 'Form Passcode',
+    placeholderCaptcha: 'Enter the sum',
+    savedSubmissionText: 'Saved Submissions',
   },
   mainText: {
     noDataText: 'No Data',

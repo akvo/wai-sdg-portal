@@ -2651,6 +2651,25 @@ akvo-react-form@^2.0.4:
     react-icons "^4.3.1"
     react-leaflet "^4.0.2"
 
+akvo-react-form@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/akvo-react-form/-/akvo-react-form-2.0.6.tgz#3393d83bd313e4820c24f72d4ae9bdfa6cfa2a69"
+  integrity sha512-y1kzQ6fJd37CzphK2LBoD/eB/bYpJaFgE0+AO3C/Mhz6uEOSDT/J5UODTTmdEIgnVcJZQw8sE5VXmLhVnXqSJw==
+  dependencies:
+    "@react-leaflet/core" ">=1.0.0 <1.1.0 || ^1.1.1"
+    antd "^4.20.0"
+    antd-table-saveas-excel "^2.2.1"
+    axios "^0.23.0"
+    dexie "^3.2.2"
+    html-react-parser "^1.4.10"
+    leaflet "^1.7.1"
+    locale-codes "^1.3.1"
+    lodash "^4.17.21"
+    pullstate "^1.24.0"
+    react-html-parser "^2.0.2"
+    react-icons "^4.3.1"
+    react-leaflet "^4.0.2"
+
 ansi-escapes@^4.2.1, ansi-escapes@^4.3.1:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/ansi-escapes/-/ansi-escapes-4.3.2.tgz#6b2291d1db7d98b6521d5f1efa42d0f3a9feb65e"
