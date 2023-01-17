@@ -154,20 +154,30 @@ def get(req: Request,
             session=session, parents=[administration], current=[])
         if not len(administration_ids):
             raise HTTPException(status_code=404, detail="Not found")
-    data = crud.get_data(session=session,
-                         form=form_id,
-                         administration=administration_ids,
-                         question=question,
-                         options=options,
-                         skip=(perpage * (page - 1)),
-                         perpage=perpage)
-    if not data["count"]:
+    res = crud.get_data(
+        session=session,
+        form=form_id,
+        administration=administration_ids,
+        question=question,
+        options=options,
+        skip=(perpage * (page - 1)),
+        perpage=perpage)
+    if not res["count"]:
         raise HTTPException(status_code=404, detail="Not found")
-    total_page = ceil(data["count"] / 10) if data["count"] > 0 else 0
+    total_page = ceil(res["count"] / 10) if res["count"] > 0 else 0
     if total_page < page:
         raise HTTPException(status_code=404, detail="Not found")
-    count = data["count"]
-    data = [d.serialize for d in data["data"]]
+    count = res["count"]
+    data = [d.serialize for d in res["data"]]
+    categories = [
+        {
+            "id": c.id,
+            "data": c.data,
+            "form": c.form,
+            "name": c.name,
+            "category": c.category
+        } for c in res["categories"]
+    ]
     if question:
         data = check_project(session=session,
                              data=data,
@@ -178,6 +188,7 @@ def get(req: Request,
         'data': data,
         'total': count,
         'total_page': total_page,
+        'categories': categories
     }
 
 

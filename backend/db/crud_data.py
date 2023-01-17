@@ -9,11 +9,14 @@ from models.history import History
 from models.views.view_data import ViewData
 from models.answer import AnswerBase
 from models.views.view_data_score import ViewDataScore
+from AkvoResponseGrouper.views import get_categories
+from AkvoResponseGrouper.models import CategoryDict
 
 
 class PaginatedData(TypedDict):
     data: List[DataDict]
     count: int
+    categories: List[CategoryDict]
 
 
 def add_data(
@@ -119,7 +122,9 @@ def get_data(session: Session,
         data = data.order_by(desc(Data.id))
 
     data = data.offset(skip).limit(perpage).all()
-    return PaginatedData(data=data, count=count)
+    dps = [d.id for d in data]
+    categories = get_categories(data=dps, form=form, session=session)
+    return PaginatedData(data=data, count=count, categories=categories)
 
 
 def get_data_by_id(session: Session, id: int) -> DataDict:

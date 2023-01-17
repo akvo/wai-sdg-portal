@@ -123,8 +123,6 @@ const Main = ({ match }) => {
   const [loading, setLoading] = useState(true);
   const [lastSubmitted, setLastSubmitted] = useState({ by: '', at: '' });
   const [activeTab, setActiveTab] = useState(null);
-  const [callCategory, setCallCategory] = useState(false);
-  const [categories, setCategories] = useState(null);
 
   const current = config?.[match.params.page];
   const changePage = (p) => {
@@ -184,12 +182,22 @@ const Main = ({ match }) => {
       api
         .get(url)
         .then((d) => {
+          const { categories } = d?.data || {};
           const tableData = d.data.data.map((x) => {
             const values = current?.values?.reduce((o, key) => {
               const ans = x.answer.find((a) => a.question === key);
               const q = current.columns.find((c) => c.key === key);
               let value = ans?.value;
               const qtype = question.find((qs) => qs.id === q.key)?.type;
+              const fc = categories?.find((c) => {
+                return (
+                  c.data === x.id &&
+                  c?.name?.toLowerCase() === q?.title?.toLowerCase()
+                );
+              });
+              if (fc?.category) {
+                value = fc.category;
+              }
               if (q?.fn && value) {
                 value = q.fn(value);
               }
@@ -206,9 +214,8 @@ const Main = ({ match }) => {
                   (opt) => opt.name?.toLowerCase() === value?.toLowerCase()
                 )?.color;
               }
-              return Object.assign(o, {
-                [key]: { value: value, color: color },
-              });
+              const _value = fc ? { value: value, color: color } : {};
+              return Object.assign(o, { [key]: _value });
             }, {});
             return {
               key: x.id,
@@ -279,44 +286,7 @@ const Main = ({ match }) => {
     } else {
       setActiveTab('data');
     }
-    if (!callCategory && !categories && current?.formId && data?.length) {
-      const promises = data?.map((d) => {
-        const apiUrl = `/collection/categories?form=${current.formId}&data=${d.key}`;
-        return api.get(apiUrl);
-      });
-      Promise.all(promises).then((values) => {
-        const _data = values
-          ?.map((v) => {
-            const { data: _categories } = v;
-            setCategories(_categories);
-            const category = _categories.pop();
-            const fd = data?.find((d) => d.key === category.data);
-            const rd = {};
-            for (let cx = 0; cx < current?.columns?.length; cx++) {
-              if (fd[current.columns[cx]?.key]?.value) {
-                const _title = current.columns[cx]?.title?.toLowerCase();
-                const fdc = _categories?.find((c) => {
-                  return c?.name?.toLowerCase() === _title;
-                });
-                const _obj = fdc
-                  ? { ...fd[current.columns[cx].key], value: fdc.category }
-                  : {};
-                Object.assign(rd, { [current.columns[cx].key]: _obj });
-              }
-            }
-            return fd ? { ...fd, ...rd } : null;
-          })
-          ?.filter((d) => d);
-        setData(_data);
-      });
-      setCallCategory(true);
-    }
-
-    if (loading && callCategory && categories?.length) {
-      setCategories(null);
-      setCallCategory(false);
-    }
-  }, [user, current, questionLoaded, callCategory, categories, data, loading]);
+  }, [user, current, questionLoaded]);
 
   if (!current) {
     return <ErrorPage status={404} />;
