@@ -10,7 +10,12 @@ import {
   Button,
   Space,
 } from 'antd';
-import { CopyOutlined, CloseOutlined } from '@ant-design/icons';
+import {
+  CopyOutlined,
+  CloseOutlined,
+  EyeInvisibleOutlined,
+  EyeTwoTone,
+} from '@ant-design/icons';
 import api from '../../util/api';
 
 const { notificationText, buttonText, tableText, confirmationModalText } =
@@ -49,13 +54,13 @@ const EditableCell = ({
               message: '',
             },
             {
-              pattern: /^(?!.* )(?=.*\d)(?=.*[A-Z]).{8,}$/,
+              min: 5,
               message: (
                 <Tooltip
                   visible={true}
                   color="red"
                   placement="bottom"
-                  title="The minimum password length is 8 charachters and must contain at least 1 capital letter 1 number"
+                  title="Password must be greater than 4 characters."
                 />
               ),
             },
@@ -94,6 +99,7 @@ const ManagePasscode = () => {
   const [editingKey, setEditingKey] = useState('');
   const [tableLoading, setTableLoading] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState('');
   const [paginate, setPaginate] = useState({
     total: 1,
     current: 1,
@@ -216,12 +222,24 @@ const ManagePasscode = () => {
         return (
           <>
             <Input.Group compact>
-              <Input
+              <Input.Password
                 style={{ width: 'calc(100% - 200px)' }}
                 defaultValue={val}
                 type="password"
                 readOnly
-                disabled
+                iconRender={(visible) =>
+                  visible ? (
+                    <EyeTwoTone onClick={() => setPasswordVisible(true)} />
+                  ) : (
+                    <EyeInvisibleOutlined
+                      onClick={() => setPasswordVisible(true)}
+                    />
+                  )
+                }
+                visibilityToggle={{
+                  visible: passwordVisible,
+                  onVisibleChange: setPasswordVisible,
+                }}
               />
               <Popconfirm
                 disabled={editingKey !== ''}
