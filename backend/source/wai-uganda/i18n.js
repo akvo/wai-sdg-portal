@@ -174,7 +174,7 @@ var i18n = {
     btnUndo: "Undo",
     btnRemoveFilter: "Remove Filter",
     btnPasscode: "Edit Passcode",
-    btnLogin: "Login",
+    btnLogin: "Start",
     btnAddNewSubmission: "Add New Submission",
   },
   formText: {
