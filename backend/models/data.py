@@ -16,6 +16,7 @@ from .user import User
 from .answer import Answer
 from .administration import Administration
 from .views.view_data import ViewData
+from AkvoResponseGrouper.models import CategoryDict
 
 
 class GeoData(BaseModel):
@@ -46,6 +47,7 @@ class SubmissionInfo(TypedDict):
 
 
 class DataResponse(BaseModel):
+    categories: List[CategoryDict]
     current: int
     data: List[DataDictWithHistory]
     total: int

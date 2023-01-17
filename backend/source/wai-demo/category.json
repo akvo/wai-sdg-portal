@@ -306,7 +306,7 @@
         "categories": [
             {
                 "name": "Basic",
-                "or": [
+                "and": [
                     {
                         "question": 561200192,
                         "options": [
@@ -316,9 +316,7 @@
                             "Unprotected well/spring",
                             "Packaged bottled water"
                         ]
-                    }
-                ],
-                "and": [
+                    },
                     {
                         "question": 561200190,
                         "options": [
@@ -329,7 +327,7 @@
             },
             {
                 "name": "Limited",
-                "or": [
+                "and": [
                     {
                         "question": 561200192,
                         "options": [
@@ -339,9 +337,7 @@
                             "Unprotected well/spring",
                             "Packaged bottled water"
                         ]
-                    }
-                ],
-                "and": [
+                    },
                     {
                         "question": 561200190,
                         "options": [
@@ -371,7 +367,7 @@
         "categories": [
             {
                 "name": "Basic",
-                "or": [
+                "and": [
                     {
                         "question": 546630147,
                         "options": [
@@ -379,9 +375,7 @@
                             "Pit latrines with slab",
                             "Composting toilets"
                         ]
-                    }
-                ],
-                "and": [
+                    },
                     {
                         "question": 557690281,
                         "options": [
@@ -398,7 +392,7 @@
             },
             {
                 "name": "Limited",
-                "or": [
+                "and": [
                     {
                         "question": 546630147,
                         "options": [
@@ -406,9 +400,7 @@
                             "Pit latrines with slab",
                             "Composting toilets"
                         ]
-                    }
-                ],
-                "and": [
+                    },
                     {
                         "question": 557690281,
                         "options": [
@@ -425,7 +417,7 @@
             },
             {
                 "name": "No Service",
-                "or": [
+                "and": [
                     {
                         "question": 546630147,
                         "options": [
