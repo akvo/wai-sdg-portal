@@ -14,7 +14,11 @@ from db import crud_answer
 from db import crud_form
 from db import crud_user
 from db import crud_jmp_history
+<<<<<<< HEAD
 from models.user import User, UserRole
+=======
+from models.user import UserRole
+>>>>>>> 0f40c0f ([#261] Implementing JMP history feature)
 from models.answer import Answer, AnswerDict
 from models.question import QuestionType
 from models.history import History
