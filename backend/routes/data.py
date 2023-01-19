@@ -21,6 +21,7 @@ from db.connection import get_session
 from models.data import DataResponse, DataDict
 from models.data import DataDictWithHistory, SubmissionInfo
 from middleware import verify_user, verify_editor, check_query
+from AkvoResponseGrouper.views import refresh_view
 
 security = HTTPBearer()
 data_route = APIRouter()
@@ -317,9 +318,13 @@ def update_by_id(req: Request,
             history = answer.serialize
             del history['id']
             history = History(**history)
+            crud_jmp_history.add_history(
+                session=session,
+                history=history,
+                data=data
+            )
             a = crud_answer.update_answer(session=session,
                                           answer=answer,
-                                          history=history,
                                           user=user.id,
                                           type=questions[a["question"]],
                                           value=a["value"])
@@ -336,6 +341,8 @@ def update_by_id(req: Request,
             data.updated_by = user.id
             data.updated = datetime.now()
             data = crud.update_data(session=session, data=data)
+    # refresh materialized view ar_category after updating datapoint
+    refresh_view(session=session)
     return data.serialize
 
 
