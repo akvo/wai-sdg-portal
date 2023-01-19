@@ -16,6 +16,7 @@ from .user import User
 from .answer import Answer
 from .administration import Administration
 from .views.view_data import ViewData
+from .jmp_history import JmpHistory
 from AkvoResponseGrouper.models import CategoryDict
 
 

@@ -422,6 +422,18 @@
                             "Bucket latrines",
                             "No toilets or latrines"
                         ]
+                    },
+                    {
+                        "question": 557690281,
+                        "options": [
+                            "No"
+                        ]
+                    },
+                    {
+                        "question": 557690277,
+                        "options": [
+                            "No"
+                        ]
                     }
                 ]
             }

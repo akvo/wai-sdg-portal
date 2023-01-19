@@ -164,7 +164,7 @@ def record(answers, form, user):
     return data
 
 
-for table in ["data", "answer", "history"]:
+for table in ["data", "answer", "jmp_history", "history"]:
     action = truncate(session=session, table=table)
     print(action)
 
