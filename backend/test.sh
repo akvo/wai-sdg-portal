@@ -2,6 +2,9 @@
 
 set -euo pipefail
 
+echo "Migrating main schema"
+alembic upgrade head
+
 echo "Migrating DB From AkvoResponseGrouper Dependency"
 akvo-responsegrouper --config $(echo "./source/${INSTANCE_NAME}/category.json") --database $(echo $DATABASE_URL | sed 's/-/_/g')
 
