@@ -34,6 +34,7 @@ services:
       - AUTH0_SECRET
       - AUTH0_AUDIENCE
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 volumes:
   pg-data:
