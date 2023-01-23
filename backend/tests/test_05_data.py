@@ -5,6 +5,9 @@ from fastapi import FastAPI
 from httpx import AsyncClient
 from tests.test_01_auth import Acc
 from sqlalchemy.orm import Session
+from sqlalchemy.sql import text
+from AkvoResponseGrouper.cli.generate_schema import generate_schema
+from AkvoResponseGrouper.views import get_categories, refresh_view
 
 pytestmark = pytest.mark.asyncio
 sys.path.append("..")
@@ -13,6 +16,16 @@ today = datetime.today().strftime("%B %d, %Y")
 
 
 class TestDataRoutes():
+    @pytest.mark.asyncio
+    async def test_if_views_is_exists(
+        self, app: FastAPI, session: Session, client: AsyncClient
+    ) -> None:
+        schema = generate_schema(file_config="./source/wai-demo/category.json")
+        session.execute(text(schema))
+        refresh_view(session=session)
+        res = get_categories(session=session)
+        assert len(res) == 0
+
     @pytest.mark.asyncio
     async def test_get_data(self, app: FastAPI, session: Session,
                             client: AsyncClient) -> None:
