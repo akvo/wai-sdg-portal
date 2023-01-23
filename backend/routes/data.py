@@ -13,6 +13,7 @@ from db import crud_administration
 from db import crud_answer
 from db import crud_form
 from db import crud_user
+from db import crud_jmp_history
 from models.user import User, UserRole
 from models.answer import Answer, AnswerDict
 from models.question import QuestionType
