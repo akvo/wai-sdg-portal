@@ -1,5 +1,12 @@
-const cacheName = 'wai_offline_webform';
+/*
+ * Thanks to Danny Moerkerke for service worker explanation.
+ * https://itnext.io/how-to-make-your-website-work-offline-b5be47b92adc
+ * https://itnext.io/how-to-make-your-website-work-offline-part-2-6923b9038dd6
+ */
+
+const appName = 'wai-webform';
 const version = 1; // indexDB versioning
+const cacheName = `${appName}-v${version}`;
 
 // the static files we want to cache
 const staticFiles = [
@@ -26,7 +33,7 @@ const staticFiles = [
 // 'keyPath' is the key we use to retrieve the request or response, in this case it's the url
 // of the request or response
 const IDBConfig = {
-  name: 'wai_offline_webform',
+  name: appName,
   version,
   stores: [
     {
