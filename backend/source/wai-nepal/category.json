@@ -1,317 +1,292 @@
 [
-    {
-        "name": "Water",
-        "form": "556240162",
-        "categories": [
-            {
-                "name": "Surface Water",
-                "and": [
-                    {
-                        "question": 573340127,
-                        "options": [
-                            "Surface Water"
-                        ]
-                    }
-                ]
-            },
-            {
-                "name": "Unimproved",
-                "and": [
-                    {
-                        "question": 573340127,
-                        "options": [
-                            "Bottled water",
-                            "Unprotected spring",
-                            "Unprotected dug well"
-                        ]
-                    }
-                ]
-            },
-            {
-                "name": "Limited",
-                "and": [
-                    {
-                        "question": 573340127,
-                        "options": [
-                            "Protected dug well",
-                            "Public tap/standpipe",
-                            "Piped water into dwelling (household connection)",
-                            "Piped to neighbour",
-                            "Piped water to yard/plot",
-                            "Shared Deep tube well / shallow tube well",
-                            "Shallow tubewell/borehole",
-                            "Protected spring",
-                            "Deep tubewell/borehole"
-                        ]
-                    },
-                    {
-                        "question": 573340128,
-                        "options": [
-                            "More than 30 minutes"
-                        ]
-                    }
-                ]
-            },
-            {
-                "name": "Basic",
-                "and": [
-                    {
-                        "question": 573340127,
-                        "options": [
-                            "Protected dug well",
-                            "Public tap/standpipe",
-                            "Piped water into dwelling (household connection)",
-                            "Piped to neighbour",
-                            "Piped water to yard/plot",
-                            "Shared Deep tube well / shallow tube well",
-                            "Shallow tubewell/borehole",
-                            "Protected spring",
-                            "Deep tubewell/borehole"
-                        ]
-                    }
-                ],
-                "or": [
-                    {
-                        "question": 573340129,
-                        "options": [
-                            "Yes, at least once",
-                            "Don''t know"
-                        ]
-                    },
-                    {
-                        "question": 573340125,
-                        "options": [
-                            "Contaminated"
-                        ]
-                    }
-                ]
-            },
-            {
-                "name": "Safely Managed",
-                "and": [
-                    {
-                        "question": 573340127,
-                        "options": [
-                            "Protected dug well",
-                            "Public tap/standpipe",
-                            "Piped water into dwelling (household connection)",
-                            "Piped to neighbour",
-                            "Piped water to yard/plot",
-                            "Shared Deep tube well / shallow tube well",
-                            "Shallow tubewell/borehole",
-                            "Protected spring",
-                            "Deep tubewell/borehole"
-                        ]
-                    },
-                    {
-                        "question": 573340129,
-                        "options": [
-                            "No, always sufficient"
-                        ]
-                    },
-                    {
-                        "question": 573340125,
-                        "options": [
-                            "Free from feacal and prioirty chemical contamination"
-                        ]
-                    }
-                ]
-            }
+  {
+    "name": "Water",
+    "form": "556240162",
+    "categories": [
+      {
+        "name": "Surface Water",
+        "and": [
+          {
+            "question": 573340127,
+            "options": ["Surface Water"]
+          }
         ]
-    },
-    {
-        "name": "Sanitation",
-        "form": "556240162",
-        "categories": [
-            {
-                "name": "Safely managed",
-                "and": [
-                    {
-                        "question": 557970124,
-                        "options": [
-                            "Toilet that flush/pour to pit latrine",
-                            "Flush/pour flush to septic tank",
-                            "Pit latrine with slab",
-                            "Other composting latrine",
-                            "Twin pit latrine with slab"
-                        ]
-                    },
-                    {
-                        "question": 557970123,
-                        "options": [
-                            "No"
-                        ]
-                    }
-                ],
-                "or": [
-                    {
-                        "question": 557970122,
-                        "options": [
-                            "Never emptied"
-                        ]
-                    },
-                    {
-                        "question": 557970125,
-                        "options": [
-                            "Emptied by household and buried in a covered pit",
-                            "Removed by service provider and buried in a covered pit",
-                            "Removed by service provider to a treatment plant"
-                        ]
-                    }
-                ]
-            },
-            {
-                "name": "Basic",
-                "and": [
-                    {
-                        "question": 557970124,
-                        "options": [
-                            "Toilet that flush/pour to pit latrine",
-                            "Flush/pour flush to septic tank",
-                            "Pit latrine with slab",
-                            "Other composting latrine",
-                            "Twin pit latrine with slab"
-                        ]
-                    },
-                    {
-                        "question": 557970123,
-                        "options": [
-                            "No"
-                        ]
-                    }
-                ],
-                "or": [
-                    {
-                        "question": 557970122,
-                        "options": [
-                            "Don''t know"
-                        ]
-                    },
-                    {
-                        "question": 557970125,
-                        "options": [
-                            "Disposed by household to uncovered pit, open ground, waterbody or elsewhere",
-                            "Don''t know",
-                            "Removed by service provider to don''t know where"
-                        ]
-                    }
-                ]
-            },
-            {
-                "name": "Limited",
-                "and": [
-                    {
-                        "question": 557970124,
-                        "options": [
-                            "Toilet that flush/pour to pit latrine",
-                            "Flush/pour flush to septic tank",
-                            "Pit latrine with slab",
-                            "Other composting latrine",
-                            "Twin pit latrine with slab"
-                        ]
-                    },
-                    {
-                        "question": 557970123,
-                        "options": [
-                            "Yes"
-                        ]
-                    }
-                ]
-            },
-            {
-                "name": "Unimproved",
-                "and": [
-                    {
-                        "question": 557970124,
-                        "options": [
-                            "Flush/pour flush to don''t know where",
-                            "Pit latrine without slab/open pit"
-                        ]
-                    }
-                ]
-            },
-            {
-                "name": "Open Defecation",
-                "and": [
-                    {
-                        "question": 557970124,
-                        "options": [
-                            "No toilet"
-                        ]
-                    }
-                ]
-            }
+      },
+      {
+        "name": "Unimproved",
+        "and": [
+          {
+            "question": 573340127,
+            "options": [
+              "Bottled water",
+              "Unprotected spring",
+              "Unprotected dug well"
+            ]
+          }
         ]
-    },
-    {
-        "name": "Hygiene",
-        "form": "556240162",
-        "categories": [
-            {
-                "name": "Basic",
-                "and": [
-                    {
-                        "question": 563480061,
-                        "options": [
-                            "Fixed facility observed in dwelling",
-                            "Fixed facility observed in plot/yard",
-                            "Mobile object observed (bucket, jug, kettle)"
-                        ]
-                    },
-                    {
-                        "question": 563480059,
-                        "options": [
-                            "Water is available"
-                        ]
-                    },
-                    {
-                        "question": 563480060,
-                        "options": [
-                            "Soap or detergent is available"
-                        ]
-                    }
-                ]
-            },
-            {
-                "name": "Limited",
-                "and": [
-                    {
-                        "question": 563480061,
-                        "options": [
-                            "Fixed facility observed in dwelling",
-                            "Fixed facility observed in plot/yard",
-                            "Mobile object observed (bucket, jug, kettle)"
-                        ]
-                    }
-                ],
-                "or": [
-                    {
-                        "question": 563480059,
-                        "options": [
-                            "Water is not available"
-                        ]
-                    },
-                    {
-                        "question": 563480060,
-                        "options": [
-                            "Soap or detergent is not available"
-                        ]
-                    }
-                ]
-            },
-            {
-                "name": "No facility",
-                "and": [
-                    {
-                        "question": 563480061,
-                        "options": [
-                            "No handwashing place in dwelling/yard/plot",
-                            "No permission to see",
-                            "Other"
-                        ]
-                    }
-                ]
-            }
+      },
+      {
+        "name": "Limited",
+        "and": [
+          {
+            "question": 573340127,
+            "options": [
+              "Protected dug well",
+              "Public tap/standpipe",
+              "Piped water into dwelling (household connection)",
+              "Piped to neighbour",
+              "Piped water to yard/plot",
+              "Shared Deep tube well / shallow tube well",
+              "Shallow tubewell/borehole",
+              "Protected spring",
+              "Deep tubewell/borehole"
+            ]
+          },
+          {
+            "question": 573340128,
+            "options": ["More than 30 minutes"]
+          }
         ]
-    }
+      },
+      {
+        "name": "Basic",
+        "and": [
+          {
+            "question": 573340127,
+            "options": [
+              "Protected dug well",
+              "Public tap/standpipe",
+              "Piped water into dwelling (household connection)",
+              "Piped to neighbour",
+              "Piped water to yard/plot",
+              "Shared Deep tube well / shallow tube well",
+              "Shallow tubewell/borehole",
+              "Protected spring",
+              "Deep tubewell/borehole"
+            ]
+          },
+          {
+            "question": 573340128,
+            "options": ["Less than 30 minutes", "Don''t know"]
+          },
+          {
+            "question": 573340129,
+            "options": ["Yes, at least once", "Don''t know"],
+            "or": [
+              {
+                "question": 573340125,
+                "options": ["Contaminated"]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Safely Managed",
+        "and": [
+          {
+            "question": 573340127,
+            "options": [
+              "Protected dug well",
+              "Public tap/standpipe",
+              "Piped water into dwelling (household connection)",
+              "Piped to neighbour",
+              "Piped water to yard/plot",
+              "Shared Deep tube well / shallow tube well",
+              "Shallow tubewell/borehole",
+              "Protected spring",
+              "Deep tubewell/borehole"
+            ]
+          },
+          {
+            "question": 573340128,
+            "options": ["Less than 30 minutes", "Don''t know"]
+          },
+          {
+            "question": 573340129,
+            "options": ["No, always sufficient"]
+          },
+          {
+            "question": 573340125,
+            "options": ["Free from feacal and prioirty chemical contamination"]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Sanitation",
+    "form": "556240162",
+    "categories": [
+      {
+        "name": "Safely managed",
+        "and": [
+          {
+            "question": 557970124,
+            "options": [
+              "Toilet that flush/pour to pit latrine",
+              "Flush/pour flush to septic tank",
+              "Pit latrine with slab",
+              "Other composting latrine",
+              "Twin pit latrine with slab"
+            ]
+          },
+          {
+            "question": 557970123,
+            "options": ["No"]
+          },
+          {
+            "question": 557970122,
+            "options": ["Never emptied"],
+            "or": [
+              {
+                "question": 557970125,
+                "options": [
+                  "Emptied by household and buried in a covered pit",
+                  "Removed by service provider and buried in a covered pit",
+                  "Removed by service provider to a treatment plant"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Basic",
+        "and": [
+          {
+            "question": 557970124,
+            "options": [
+              "Toilet that flush/pour to pit latrine",
+              "Flush/pour flush to septic tank",
+              "Pit latrine with slab",
+              "Other composting latrine",
+              "Twin pit latrine with slab"
+            ]
+          },
+          {
+            "question": 557970123,
+            "options": ["No"]
+          },
+          {
+            "question": 557970122,
+            "options": ["Don''t know"],
+            "or": [
+              {
+                "question": 557970125,
+                "options": [
+                  "Disposed by household to uncovered pit, open ground, waterbody or elsewhere",
+                  "Don''t know",
+                  "Removed by service provider to don''t know where"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Limited",
+        "and": [
+          {
+            "question": 557970124,
+            "options": [
+              "Toilet that flush/pour to pit latrine",
+              "Flush/pour flush to septic tank",
+              "Pit latrine with slab",
+              "Other composting latrine",
+              "Twin pit latrine with slab"
+            ]
+          },
+          {
+            "question": 557970123,
+            "options": ["Yes"]
+          }
+        ]
+      },
+      {
+        "name": "Unimproved",
+        "and": [
+          {
+            "question": 557970124,
+            "options": [
+              "Flush/pour flush to don''t know where",
+              "Pit latrine without slab/open pit"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Open Defecation",
+        "and": [
+          {
+            "question": 557970124,
+            "options": ["No toilet"]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Hygiene",
+    "form": "556240162",
+    "categories": [
+      {
+        "name": "Basic",
+        "and": [
+          {
+            "question": 563480061,
+            "options": [
+              "Fixed facility observed in dwelling",
+              "Fixed facility observed in plot/yard",
+              "Mobile object observed (bucket, jug, kettle)"
+            ]
+          },
+          {
+            "question": 563480059,
+            "options": ["Water is available"]
+          },
+          {
+            "question": 563480060,
+            "options": ["Soap or detergent is available"]
+          }
+        ]
+      },
+      {
+        "name": "Limited",
+        "and": [
+          {
+            "question": 563480061,
+            "options": [
+              "Fixed facility observed in dwelling",
+              "Fixed facility observed in plot/yard",
+              "Mobile object observed (bucket, jug, kettle)"
+            ]
+          },
+          {
+            "question": 563480059,
+            "options": ["Water is not available"],
+            "or": [
+              {
+                "question": 563480060,
+                "options": ["Soap or detergent is not available"]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "No facility",
+        "and": [
+          {
+            "question": 563480061,
+            "options": [
+              "No handwashing place in dwelling/yard/plot",
+              "No permission to see",
+              "Other"
+            ]
+          }
+        ]
+      }
+    ]
+  }
 ]
