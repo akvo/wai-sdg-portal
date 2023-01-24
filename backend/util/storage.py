@@ -10,10 +10,15 @@ def upload(file: str, folder: str, filename: str = None, public: bool = False):
     if not filename:
         filename = file.split("/")[-1]
     TESTING = os.environ.get("TESTING")
+    STORAGE_LOCATION = os.environ.get("STORAGE_LOCATION")
     if TESTING:
         fake_location = f"./tmp/fake-storage/{filename}"
         shutil.copy2(file, fake_location)
         return fake_location
+    if STORAGE_LOCATION:
+        location = f"./{STORAGE_LOCATION}/{filename}"
+        shutil.copy2(file, location)
+        return location
     storage_client = storage.Client()
     bucket = storage_client.bucket(bucket_name)
     destination_blob_name = f"{folder}/{filename}"
