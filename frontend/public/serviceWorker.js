@@ -10,6 +10,13 @@ const cacheName = `${appName}-v${version}`;
 
 // the static files we want to cache
 const staticFiles = [
+  // routes
+  '/',
+  '/webform/HeTJ',
+  '/webform/DrCL',
+  '/webform/CxfC',
+  '/webform/Tgxc',
+  '/webform/HuLo',
   // assets
   '/static/js/main.chunk.js',
   '/static/js/0.chunk.js',
@@ -21,9 +28,6 @@ const staticFiles = [
   '/favicon-32x32.png',
   '/favicon-16x16.png',
   '/wai-logo.png',
-  // routes
-  '/',
-  '/webform/DrCL',
 ];
 
 // #######################################################

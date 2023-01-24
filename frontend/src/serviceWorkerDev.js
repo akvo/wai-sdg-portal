@@ -4,7 +4,15 @@ export default function registerServiceWorker() {
   }
   // only for webform
   const url = `${process.env.PUBLIC_URL}/serviceWorker.js`;
-  navigator.serviceWorker.register(url).then((res) => {
-    console.error('response', res);
-  });
+  navigator.serviceWorker
+    .register(url)
+    .then((res) => {
+      console.info(
+        'ServiceWorker registration successful with scope: ',
+        res.scope
+      );
+    })
+    .catch((err) => {
+      console.error('ServiceWorker registration failed: ', err);
+    });
 }
