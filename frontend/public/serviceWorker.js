@@ -181,8 +181,12 @@ const networkThenCache = async (request) => {
 };
 
 // here we try to serve a cached api response and if it doesn't exist we try the network
-const getCachedOrNetworkApiResponse = async (request) =>
-  (await getCachedApiResponse(request)) || networkThenCache(request);
+const getCachedOrNetworkApiResponse = async (request) => {
+  if (navigator.onLine) {
+    return await networkThenCache(request);
+  }
+  return await getCachedApiResponse(request);
+};
 
 // here we retry any cached api requests that were stored earlier when the network was not available
 // this is typically called when the client comes back online and the 'sync' event is fired
