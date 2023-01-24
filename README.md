@@ -15,6 +15,21 @@
 
 This app requires [Auth0](https://auth0.com) to provides Single sign-on (SSO) that allow users to log in with single ID and password such as Gmail or other variety of available providers, and a diverse set of user-friendly tools the developer will really like.
 
+1. Sign up to [Auth0.com](https://auth0.com)
+2. Create a new tenant for obtaining the service.
+3. Go to Applications: Create Applications, then select Single Web Page Applications
+4. Go to the Application Setings:
+  4.1 Upload your Application Logo
+	4.2 In the Application URI's section Set:
+	- Allowed Callback URL & Allowed Origins (CORS)
+		```plain
+		https://your_domain.com, http://localhost:3000
+		```
+	- Allowed Logout URL
+	```plain
+	https://your_domain.com, https://your_domain.com/login, http://localhost:3000
+	```
+
 Environment Setup:
 ```
 export AUTH0_DOMAIN="string_url"
@@ -31,9 +46,17 @@ Environment Setup:
 ```
 export GOOGLE_APPLICATION_CREDENTIALS=path_to_service_account.json
 ```
+###### Using Storage Service
+If you want to use custom storage location (e.g storage in local backend container). add "STORAGE_LOCATION" to the backend environment. Example format: "/tmp/storage".
+
+```
+export STORAGE_LOCATION=/tmp/storage
+```
 
 ##### Email Service
-Environment Setup:
+
+To use the Mailjet Email API, you need to create a Mailjet account, then retrieve your API and Secret keys. They will be used for authentication purposes.
+
 ```
 export MAILJET_SECRET="string"
 export MAILJET_APIKEY="string"
