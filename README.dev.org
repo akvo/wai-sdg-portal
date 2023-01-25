@@ -1,0 +1,541 @@
+#+PROPERTY: header-args:bash    :results verbatim raw
+#+PROPERTY: header-args:sql     :cache yes
+#+PROPERTY: header-args:sql     :exports both
+#+PROPERTY: header-args:sql+    :engine postgresql
+#+PROPERTY: header-args:sql+    :dbhost localhost
+#+PROPERTY: header-args:sql+    :dbuser wai
+#+PROPERTY: header-args:sql+    :dbpassword password
+#+PROPERTY: header-args:sql+    :database wai_demo
+#+PROPERTY: header-args :tangle data-model.sql
+#+STARTUP: showall
+
+* Services
+
+** Services
+
+#+NAME: Services
+#+begin_src bash
+docker compose ps
+#+end_src
+
+#+RESULTS: Services
+NAME                           IMAGE                                              COMMAND                  SERVICE             CREATED             STATUS              PORTS
+wai-sdg-portal-backend-1       python:3.8.5                                       "./dev.sh"               backend             2 hours ago         Up 2 hours
+wai-sdg-portal-db-1            postgres:12-alpine                                 "docker-entrypoint.s…"   db                  2 hours ago         Up 2 hours          0.0.0.0:5432->5432/tcp, :::5432->5432/tcp
+wai-sdg-portal-frontend-1      akvo/akvo-node-18-alpine:20220923.084347.0558ee6   "run-as-user.sh ./st…"   frontend            2 hours ago         Up 2 hours
+wai-sdg-portal-mainnetwork-1   alpine:3.14.0                                      "tail -f /dev/null"      mainnetwork         2 hours ago         Up 2 hours          0.0.0.0:3000->3000/tcp, :::3000->3000/tcp, 0.0.0.0:5050->5050/tcp, :::5050->5050/tcp, 0.0.0.0:8000->8000/tcp, :::8000->8000/tcp
+wai-sdg-portal-pgadmin-1       dpage/pgadmin4:5.7                                 "/entrypoint.sh"         pgadmin             2 hours ago         Up 2 hours
+wai-sdg-portal-worker-1        python:3.8.5                                       "./worker.sh"            worker              2 hours ago         Up 2 hours
+
+** Container Detail
+
+*** Backend
+
+#+NAME: Backend Processes
+#+begin_src bash
+docker compose -f ../docker-compose.yml top backend
+#+end_src
+
+#+RESULTS: Backend Processes
+wai-sdg-portal-backend-1
+UID    PID     PPID    C    STIME   TTY   TIME       CMD
+root   94628   94577   0    12:12   ?     00:00:00   bash ./dev.sh
+root   95594   94628   3    12:12   ?     00:04:20   /usr/local/bin/python /usr/local/bin/uvicorn main:app --reload --port 5000
+root   95595   95594   0    12:12   ?     00:00:00   /usr/local/bin/python -c from multiprocessing.resource_tracker import main;main(4)
+root   95596   95594   0    12:12   ?     00:00:26   /usr/local/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=5, pipe_handle=7) --multiprocessing-fork
+
+**** Commands
+
+#+NAME: Backend Commands
+#+begin_src bash
+docker compose exec backend ./seed.sh
+#+end_src
+
+#+RESULTS: Backend Commands
+This script require more than 0 argument/s
+Example: ./test.sh dev@akvo.org "My Name" "My Organisation"
+
+#+NAME: Seeder
+#+begin_src bash
+docker compose exec backend cat ./seed.sh | grep seeder. | sed 's/#\ //g'
+#+end_src
+
+#+RESULTS: Seeder
+python -m seeder.administration
+python -m seeder.admin "$@"
+python -m seeder.fake_user 30 "$3"
+python -m seeder.form
+python -m seeder.datapoint "$1"
+
+
+*** Frontend
+
+**** Processes
+
+#+NAME: Frontend Processes
+#+begin_src bash
+docker compose -f ../docker-compose.yml top frontend
+#+end_src
+
+#+RESULTS: Frontend Processes
+wai-sdg-portal-frontend-1
+UID    PID     PPID    C    STIME   TTY   TIME       CMD
+root   94620   94559   0    12:12   ?     00:00:00   bash ./start.sh
+root   94820   94620   0    12:12   ?     00:00:02   node /opt/yarn-v1.22.19/bin/yarn.js start
+root   94841   94820   0    12:12   ?     00:00:00   /usr/local/bin/node /app/node_modules/.bin/react-scripts start
+root   94849   94841   0    12:12   ?     00:00:17   /usr/local/bin/node /app/node_modules/react-scripts/scripts/start.js
+
+
+**** Commands
+
+#+NAME: Frontend Commands
+#+begin_src bash
+docker compose exec frontend yarn run
+#+end_src
+
+#+RESULTS: Frontend Commands
+yarn run v1.22.19
+info Commands available from binary scripts: acorn, ansi-html, autoprefixer, browserslist, browserslist-lint, cross-env, cross-env-shell, css-blank-pseudo, css-has-pseudo, css-prefers-color-scheme, cssesc, detect, detect-port, detective, ejs, escodegen, esgenerate, eslint, eslint-config-prettier, esparse, esvalidate, he, html-minifier-terser, import-local-fixture, is-docker, jake, jest, js-yaml, jsesc, json5, loose-envify, lz-string, mime, mkdirp, multicast-dns, nanoid, nmtree, node-which, parser, prettier, react-scripts, regjsparser, remarkable, resolve, rimraf, rollup, sass, semver, sha.js, svgo, synp, tailwind, tailwindcss, terser, topo2geo, topomerge, topoquantize, uuid, webpack, webpack-dev-server, yarn-audit-fix
+info Project commands
+   - build
+      react-scripts build
+   - eject
+      react-scripts eject
+   - lint
+      eslint --config .eslintrc.json src --ext .js,.jsx
+   - prettier
+      prettier --check src
+   - start
+      react-scripts start
+   - test
+      react-scripts test --updateSnapshot --transformIgnorePatterns "node_modules/(?!d3|d3-geo|d3-array|internmap|delaunator|robust-predicates|react-leaflet)/"
+   - test:ci
+      CI=true react-scripts test --watchAll=false --coverage --transformIgnorePatterns "node_modules/(?!d3|d3-geo|d3-array|internmap|delaunator|robust-predicates)/"
+Done in 0.02s.
+
+*** Worker
+
+#+NAME: Worker Processes
+#+begin_src bash
+docker compose -f ../docker-compose.yml top worker
+#+end_src
+
+#+RESULTS: Worker Processes
+wai-sdg-portal-worker-1
+UID    PID     PPID    C    STIME   TTY   TIME       CMD
+root   94704   94679   0    12:12   ?     00:00:00   bash ./worker.sh
+root   95588   94704   3    12:12   ?     00:04:21   /usr/local/bin/python /usr/local/bin/uvicorn worker:worker --reload --port 5001
+root   95590   95588   0    12:12   ?     00:00:00   /usr/local/bin/python -c from multiprocessing.resource_tracker import main;main(4)
+root   95591   95588   0    12:12   ?     00:00:29   /usr/local/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=5, pipe_handle=7) --multiprocessing-fork
+
+
+*** Database
+
+#+NAME: Database Processes
+#+begin_src bash
+docker compose -f ../docker-compose.yml top db
+#+end_src
+
+#+RESULTS: Database Processes
+wai-sdg-portal-db-1
+UID   PID      PPID    C    STIME   TTY   TIME       CMD
+70    94342    94316   0    12:12   ?     00:00:00   postgres
+70    94635    94342   0    12:12   ?     00:00:00   postgres: checkpointer
+70    94636    94342   0    12:12   ?     00:00:00   postgres: background writer
+70    94637    94342   0    12:12   ?     00:00:00   postgres: walwriter
+70    94638    94342   0    12:12   ?     00:00:00   postgres: autovacuum launcher
+70    94639    94342   0    12:12   ?     00:00:00   postgres: stats collector
+70    94640    94342   0    12:12   ?     00:00:00   postgres: logical replication launcher
+70    95628    94342   0    12:12   ?     00:00:00   postgres: wai wai_demo 172.20.0.3(38228) idle
+70    95629    94342   0    12:12   ?     00:00:01   postgres: wai wai_demo 172.20.0.3(38234) idle
+70    95642    94342   0    12:12   ?     00:00:00   postgres: wai wai_demo 172.20.0.3(38242) idle
+70    103242   94342   0    12:17   ?     00:00:00   postgres: wai wai_demo 172.20.0.3(36900) idle
+70    103243   94342   0    12:17   ?     00:00:00   postgres: wai wai_demo 172.20.0.3(36916) idle
+70    103244   94342   0    12:17   ?     00:00:00   postgres: wai wai_demo 172.20.0.3(36926) idle
+70    287436   94342   0    14:11   ?     00:00:00   postgres: autovacuum worker postgres
+
+
+*** Dev
+
+**** PG Admin
+
+#+NAME: PG Admin Processes
+#+begin_src bash
+docker compose -f ../docker-compose.yml top pgadmin
+#+end_src
+
+#+RESULTS: PG Admin Processes
+wai-sdg-portal-pgadmin-1
+UID        PID      PPID    C    STIME   TTY   TIME       CMD
+5050       94608    94537   0    12:12   ?     00:00:01   /venv/bin/python3 /venv/bin/gunicorn --timeout 86400 --bind [::]:5050 -w 1 --threads 25 --access-logfile - -c gunicorn_config.py run_pgadmin:app
+root       94812    94608   0    12:12   ?     00:00:00   /usr/libexec/postfix/master -w
+systemd+   94814    94812   0    12:12   ?     00:00:00   qmgr -l -t unix -u
+5050       94905    94608   0    12:12   ?     00:00:07   /venv/bin/python3 /venv/bin/gunicorn --timeout 86400 --bind [::]:5050 -w 1 --threads 25 --access-logfile - -c gunicorn_config.py run_pgadmin:app
+systemd+   255282   94812   0    13:52   ?     00:00:00   pickup -l -t unix -u
+
+
+**** Main Network
+
+#+NAME: Main Network Processes
+#+begin_src bash
+docker compose -f ../docker-compose.yml top mainnetwork
+#+end_src
+
+#+RESULTS: Main Network Processes
+wai-sdg-portal-mainnetwork-1
+UID    PID     PPID    C    STIME   TTY   TIME       CMD
+root   94393   94363   0    12:12   ?     00:00:00   tail -f /dev/null
+
+
+
+* Database Schema
+
+** Table
+
+#+NAME: Tables
+#+BEGIN_SRC sql
+  SELECT relname, relkind
+  FROM   pg_class
+  WHERE relreplident = 'd'
+  AND relhasindex = true;
+#+END_SRC
+
+#+RESULTS: Tables
+| relname         | relkind |
+|-----------------+---------|
+| alembic_version | r       |
+| administration  | r       |
+| access          | r       |
+| question_group  | r       |
+| form            | r       |
+| question        | r       |
+| data            | r       |
+| answer          | r       |
+| organisation    | r       |
+| jobs            | r       |
+| log             | r       |
+| option          | r       |
+| history         | r       |
+| user            | r       |
+
+** Relationship
+
+#+NAME: List of Relations
+#+BEGIN_SRC sql
+ \d
+#+END_SRC
+
+#+RESULTS: List of Relations
+| List of relations |                       |          |       |
+|-------------------+-----------------------+----------+-------|
+| Schema            | Name                  | Type     | Owner |
+| public            | access                | table    | wai   |
+| public            | access_id_seq         | sequence | wai   |
+| public            | administration        | table    | wai   |
+| public            | administration_id_seq | sequence | wai   |
+| public            | alembic_version       | table    | wai   |
+| public            | answer                | table    | wai   |
+| public            | answer_id_seq         | sequence | wai   |
+| public            | answer_search         | view     | wai   |
+| public            | data                  | table    | wai   |
+| public            | data_id_seq           | sequence | wai   |
+| public            | form                  | table    | wai   |
+| public            | form_id_seq           | sequence | wai   |
+| public            | history               | table    | wai   |
+| public            | history_id_seq        | sequence | wai   |
+| public            | jobs                  | table    | wai   |
+| public            | jobs_id_seq           | sequence | wai   |
+| public            | log                   | table    | wai   |
+| public            | log_id_seq            | sequence | wai   |
+| public            | option                | table    | wai   |
+| public            | option_id_seq         | sequence | wai   |
+| public            | organisation          | table    | wai   |
+| public            | organisation_id_seq   | sequence | wai   |
+| public            | question              | table    | wai   |
+| public            | question_group        | table    | wai   |
+| public            | question_group_id_seq | sequence | wai   |
+| public            | question_id_seq       | sequence | wai   |
+| public            | score_view            | view     | wai   |
+| public            | user                  | table    | wai   |
+| public            | user_id_seq           | sequence | wai   |
+
+** Administration
+
+#+name: Administration Table
+#+begin_src sql
+SELECT ordinal_position as pos, column_name, data_type, udt_name, column_default, is_nullable
+FROM   information_schema.columns
+WHERE  table_name = 'administration'
+ORDER  BY ordinal_position;
+#+end_src
+
+#+RESULTS: Administration Table
+| pos | column_name | data_type         | udt_name | column_default                             | is_nullable |
+|-----+-------------+-------------------+----------+--------------------------------------------+-------------|
+|   1 | id          | integer           | int4     | nextval('administration_id_seq'::regclass) | NO          |
+|   2 | parent      | integer           | int4     |                                            | YES         |
+|   3 | name        | character varying | varchar  |                                            | YES         |
+
+** User
+
+#+name: User Table
+#+begin_src sql
+SELECT ordinal_position as pos, column_name, data_type, udt_name, column_default, is_nullable
+FROM   information_schema.columns
+WHERE  table_name = 'user'
+ORDER  BY ordinal_position;
+#+end_src
+
+#+RESULTS: User Table
+| pos | column_name          | data_type                   | udt_name  | column_default                   | is_nullable |
+|-----+----------------------+-----------------------------+-----------+----------------------------------+-------------|
+|   1 | id                   | integer                     | int4      | nextval('user_id_seq'::regclass) | NO          |
+|   2 | email                | character varying           | varchar   |                                  | YES         |
+|   3 | active               | boolean                     | bool      |                                  | YES         |
+|   4 | role                 | USER-DEFINED                | userrole  |                                  | YES         |
+|   5 | created              | timestamp without time zone | timestamp |                                  | YES         |
+|   6 | organisation         | integer                     | int4      |                                  | YES         |
+|   7 | name                 | character varying           | varchar   |                                  | YES         |
+|   8 | __ts_vector__        | tsvector                    | tsvector  |                                  | YES         |
+|   9 | manage_form_passcode | boolean                     | bool      | false                            | NO          |
+
+** User Access
+
+#+name: Access Table
+#+begin_src sql
+SELECT ordinal_position as pos, column_name, data_type, udt_name, column_default, is_nullable
+FROM   information_schema.columns
+WHERE  table_name = 'access'
+ORDER  BY ordinal_position;
+#+end_src
+
+#+RESULTS: Access Table
+| pos | column_name    | data_type | udt_name | column_default                     | is_nullable |
+|-----+----------------+-----------+----------+------------------------------------+-------------|
+|   1 | id             | integer   | int4     | nextval('access_id_seq'::regclass) | NO          |
+|   2 | user           | integer   | int4     |                                    | YES         |
+|   3 | administration | integer   | int4     |                                    | YES         |
+
+** Organisation
+
+#+name: Organisation Table
+#+begin_src sql
+SELECT ordinal_position as pos, column_name, data_type, udt_name, column_default, is_nullable
+FROM   information_schema.columns
+WHERE  table_name = 'organisation'
+ORDER  BY ordinal_position;
+#+end_src
+
+#+RESULTS: Organisation Table
+| pos | column_name | data_type                   | udt_name          | column_default                           | is_nullable |
+|-----+-------------+-----------------------------+-------------------+------------------------------------------+-------------|
+|   1 | id          | integer                     | int4              | nextval('organisation_id_seq'::regclass) | NO          |
+|   2 | name        | character varying           | varchar           |                                          | YES         |
+|   3 | type        | USER-DEFINED                | organisation_type |                                          | YES         |
+|   4 | created     | timestamp without time zone | timestamp         |                                          | YES         |
+
+** Form
+
+#+name: Forms
+#+begin_src sql
+SELECT ordinal_position as pos, column_name, data_type, udt_name, column_default, is_nullable
+FROM   information_schema.columns
+WHERE  table_name = 'form'
+ORDER  BY ordinal_position;
+#+end_src
+
+#+RESULTS: Forms
+| pos | column_name      | data_type         | udt_name | column_default                   | is_nullable |
+|-----+------------------+-------------------+----------+----------------------------------+-------------|
+|   1 | id               | integer           | int4     | nextval('form_id_seq'::regclass) | NO          |
+|   2 | name             | character varying | varchar  |                                  | YES         |
+|   3 | description      | text              | text     |                                  | YES         |
+|   4 | default_language | character varying | varchar  |                                  | YES         |
+|   5 | languages        | ARRAY             | _varchar |                                  | YES         |
+|   6 | translations     | ARRAY             | _jsonb   |                                  | YES         |
+|   7 | version          | double precision  | float8   |                                  | YES         |
+
+** Question Group
+
+#+name: Question Group
+#+begin_src sql
+SELECT ordinal_position as pos, column_name, data_type, udt_name, column_default, is_nullable
+FROM   information_schema.columns
+WHERE  table_name = 'question_group'
+ORDER  BY ordinal_position;
+#+end_src
+
+#+RESULTS: Question Group
+| pos | column_name  | data_type         | udt_name | column_default                             | is_nullable |
+|-----+--------------+-------------------+----------+--------------------------------------------+-------------|
+|   1 | id           | integer           | int4     | nextval('question_group_id_seq'::regclass) | NO          |
+|   2 | order        | integer           | int4     |                                            | YES         |
+|   3 | name         | character varying | varchar  |                                            | YES         |
+|   4 | form         | integer           | int4     |                                            | YES         |
+|   5 | description  | text              | text     |                                            | YES         |
+|   6 | repeatable   | boolean           | bool     | false                                      | YES         |
+|   7 | repeat_text  | character varying | varchar  |                                            | YES         |
+|   8 | translations | ARRAY             | _jsonb   |                                            | YES         |
+
+** Question
+
+#+name: Question
+#+begin_src sql
+SELECT ordinal_position as pos, column_name, data_type, udt_name, column_default, is_nullable
+FROM   information_schema.columns
+WHERE  table_name = 'question'
+ORDER  BY ordinal_position;
+#+end_src
+
+#+RESULTS: Question
+| pos | column_name    | data_type         | udt_name     | column_default                       | is_nullable |
+|-----+----------------+-------------------+--------------+--------------------------------------+-------------|
+|   1 | id             | integer           | int4         | nextval('question_id_seq'::regclass) | NO          |
+|   2 | order          | integer           | int4         |                                      | YES         |
+|   3 | name           | character varying | varchar      |                                      | YES         |
+|   4 | form           | integer           | int4         |                                      | YES         |
+|   5 | meta           | boolean           | bool         |                                      | NO          |
+|   6 | type           | USER-DEFINED      | questiontype |                                      | YES         |
+|   7 | question_group | integer           | int4         |                                      | YES         |
+|   8 | required       | boolean           | bool         | true                                 | NO          |
+|   9 | rule           | jsonb             | jsonb        |                                      | YES         |
+|  10 | dependency     | ARRAY             | _jsonb       |                                      | YES         |
+|  11 | tooltip        | jsonb             | jsonb        |                                      | YES         |
+|  12 | translations   | ARRAY             | _jsonb       |                                      | YES         |
+|  13 | api            | jsonb             | jsonb        |                                      | YES         |
+|  14 | addons         | jsonb             | jsonb        |                                      | YES         |
+
+** Option
+
+#+name: Option
+#+begin_src sql
+SELECT ordinal_position as pos, column_name, data_type, udt_name, column_default, is_nullable
+FROM   information_schema.columns
+WHERE  table_name = 'option'
+ORDER  BY ordinal_position;
+#+end_src
+
+#+RESULTS: Option
+| pos | column_name  | data_type         | udt_name | column_default                     | is_nullable |
+|-----+--------------+-------------------+----------+------------------------------------+-------------|
+|   1 | id           | integer           | int4     | nextval('option_id_seq'::regclass) | NO          |
+|   2 | order        | integer           | int4     |                                    | YES         |
+|   3 | name         | character varying | varchar  |                                    | YES         |
+|   4 | question     | integer           | int4     |                                    | YES         |
+|   5 | color        | character varying | varchar  |                                    | YES         |
+|   6 | score        | integer           | int4     |                                    | YES         |
+|   7 | code         | character varying | varchar  |                                    | YES         |
+|   8 | translations | ARRAY             | _jsonb   |                                    | YES         |
+
+** Data
+
+#+name: Data
+#+begin_src sql
+SELECT ordinal_position as pos, column_name, data_type, udt_name, column_default, is_nullable
+FROM   information_schema.columns
+WHERE  table_name = 'data'
+ORDER  BY ordinal_position;
+#+end_src
+
+#+RESULTS: Data
+| pos | column_name    | data_type                   | udt_name  | column_default                   | is_nullable |
+|-----+----------------+-----------------------------+-----------+----------------------------------+-------------|
+|   1 | id             | integer                     | int4      | nextval('data_id_seq'::regclass) | NO          |
+|   2 | name           | character varying           | varchar   |                                  | YES         |
+|   3 | form           | integer                     | int4      |                                  | YES         |
+|   4 | administration | integer                     | int4      |                                  | YES         |
+|   5 | geo            | ARRAY                       | _float8   |                                  | YES         |
+|   6 | created_by     | integer                     | int4      |                                  | YES         |
+|   7 | updated_by     | integer                     | int4      |                                  | YES         |
+|   8 | created        | timestamp without time zone | timestamp | CURRENT_TIMESTAMP                | YES         |
+|   9 | updated        | timestamp without time zone | timestamp |                                  | YES         |
+
+** Answer
+
+#+name: Answer
+#+begin_src sql
+SELECT ordinal_position as pos, column_name, data_type, udt_name, column_default, is_nullable
+FROM   information_schema.columns
+WHERE  table_name = 'answer'
+ORDER  BY ordinal_position;
+#+end_src
+
+#+RESULTS: Answer
+| pos | column_name | data_type                   | udt_name  | column_default                     | is_nullable |
+|-----+-------------+-----------------------------+-----------+------------------------------------+-------------|
+|   1 | id          | integer                     | int4      | nextval('answer_id_seq'::regclass) | NO          |
+|   2 | question    | integer                     | int4      |                                    | YES         |
+|   3 | data        | integer                     | int4      |                                    | YES         |
+|   4 | value       | double precision            | float8    |                                    | YES         |
+|   5 | text        | text                        | text      |                                    | YES         |
+|   6 | options     | ARRAY                       | _varchar  |                                    | YES         |
+|   7 | created_by  | integer                     | int4      |                                    | YES         |
+|   8 | updated_by  | integer                     | int4      |                                    | YES         |
+|   9 | created     | timestamp without time zone | timestamp | CURRENT_TIMESTAMP                  | YES         |
+|  10 | updated     | timestamp without time zone | timestamp |                                    | YES         |
+
+** History
+
+#+name: History
+#+begin_src sql
+SELECT ordinal_position as pos, column_name, data_type, udt_name, column_default, is_nullable
+FROM   information_schema.columns
+WHERE  table_name = 'history'
+ORDER  BY ordinal_position;
+#+end_src
+
+#+RESULTS: History
+| pos | column_name | data_type                   | udt_name  | column_default                      | is_nullable |
+|-----+-------------+-----------------------------+-----------+-------------------------------------+-------------|
+|   1 | id          | integer                     | int4      | nextval('history_id_seq'::regclass) | NO          |
+|   2 | question    | integer                     | int4      |                                     | YES         |
+|   3 | data        | integer                     | int4      |                                     | YES         |
+|   4 | value       | double precision            | float8    |                                     | YES         |
+|   5 | text        | text                        | text      |                                     | YES         |
+|   6 | options     | ARRAY                       | _varchar  |                                     | YES         |
+|   7 | created_by  | integer                     | int4      |                                     | YES         |
+|   8 | updated_by  | integer                     | int4      |                                     | YES         |
+|   9 | created     | timestamp without time zone | timestamp | CURRENT_TIMESTAMP                   | YES         |
+|  10 | updated     | timestamp without time zone | timestamp |                                     | YES         |
+
+** Jobs
+
+#+name: Jobs
+#+begin_src sql
+SELECT ordinal_position as pos, column_name, data_type, udt_name, column_default, is_nullable
+FROM   information_schema.columns
+WHERE  table_name = 'jobs'
+ORDER  BY ordinal_position;
+#+end_src
+
+#+RESULTS: Jobs
+| pos | column_name | data_type                   | udt_name  | column_default                   | is_nullable |
+|-----+-------------+-----------------------------+-----------+----------------------------------+-------------|
+|   1 | id          | integer                     | int4      | nextval('jobs_id_seq'::regclass) | NO          |
+|   2 | type        | USER-DEFINED                | jobtype   |                                  | YES         |
+|   3 | status      | USER-DEFINED                | jobstatus | 'pending'::jobstatus             | YES         |
+|   4 | payload     | text                        | text      |                                  | NO          |
+|   5 | info        | jsonb                       | jsonb     |                                  | YES         |
+|   6 | attempt     | integer                     | int4      | 0                                | YES         |
+|   7 | created_by  | integer                     | int4      |                                  | NO          |
+|   8 | created     | timestamp without time zone | timestamp | CURRENT_TIMESTAMP                | YES         |
+|   9 | available   | timestamp without time zone | timestamp |                                  | YES         |
+
+** Log
+
+#+name: Log
+#+begin_src sql
+SELECT ordinal_position as pos, column_name, data_type, udt_name, column_default, is_nullable
+FROM   information_schema.columns
+WHERE  table_name = 'log'
+ORDER  BY ordinal_position;
+#+end_src
+
+#+RESULTS: Log
+| pos | column_name | data_type                   | udt_name  | column_default                  | is_nullable |
+|-----+-------------+-----------------------------+-----------+---------------------------------+-------------|
+|   1 | id          | integer                     | int4      | nextval('log_id_seq'::regclass) | NO          |
+|   2 | user        | integer                     | int4      |                                 | YES         |
+|   3 | message     | text                        | text      |                                 | YES         |
+|   4 | at          | timestamp without time zone | timestamp | CURRENT_TIMESTAMP               | YES         |
+|   5 | jobs        | integer                     | int4      |                                 | YES         |
