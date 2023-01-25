@@ -1,4 +1,5 @@
 #+PROPERTY: header-args:bash    :results verbatim raw
+#+PROPERTY: header-args:bash    :exports both
 #+PROPERTY: header-args:sql     :cache yes
 #+PROPERTY: header-args:sql     :exports both
 #+PROPERTY: header-args:sql+    :engine postgresql
