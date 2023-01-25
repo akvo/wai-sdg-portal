@@ -1,4 +1,4 @@
-#+PROPERTY: header-args:bash    :results verbatim
+#+PROPERTY: header-args:bash    :results verbatim raw
 #+PROPERTY: header-args:sql     :cache yes
 #+PROPERTY: header-args:sql+    :engine postgresql
 #+PROPERTY: header-args:sql+    :dbhost localhost
@@ -14,18 +14,18 @@
 ** Services
 
 #+NAME: Services
-#+begin_src bash :results verbatim raw
+#+begin_src bash
 docker compose ps
 #+end_src
 
 #+RESULTS: Services
-NAME                           IMAGE                                              COMMAND                  SERVICE             CREATED             STATUS              PORTS
-wai-sdg-portal-backend-1       python:3.8.5                                       "./dev.sh"               backend             3 hours ago         Up 3 hours
-wai-sdg-portal-db-1            postgres:12-alpine                                 "docker-entrypoint.s…"   db                  3 hours ago         Up 3 hours          0.0.0.0:5432->5432/tcp, :::5432->5432/tcp
-wai-sdg-portal-frontend-1      akvo/akvo-node-18-alpine:20220923.084347.0558ee6   "run-as-user.sh ./st…"   frontend            3 hours ago         Up 3 hours
-wai-sdg-portal-mainnetwork-1   alpine:3.14.0                                      "tail -f /dev/null"      mainnetwork         3 hours ago         Up 3 hours          0.0.0.0:3000->3000/tcp, :::3000->3000/tcp, 0.0.0.0:5050->5050/tcp, :::5050->5050/tcp, 0.0.0.0:8000->8000/tcp, :::8000->8000/tcp
-wai-sdg-portal-pgadmin-1       dpage/pgadmin4:5.7                                 "/entrypoint.sh"         pgadmin             3 hours ago         Up 3 hours
-wai-sdg-portal-worker-1        python:3.8.5                                       "./worker.sh"            worker              3 hours ago         Up 3 hours
+: NAME                           IMAGE                                              COMMAND                  SERVICE             CREATED             STATUS              PORTS
+: wai-sdg-portal-backend-1       python:3.8.5                                       "./dev.sh"               backend             3 hours ago         Up 3 hours
+: wai-sdg-portal-db-1            postgres:12-alpine                                 "docker-entrypoint.s…"   db                  3 hours ago         Up 3 hours          0.0.0.0:5432->5432/tcp, :::5432->5432/tcp
+: wai-sdg-portal-frontend-1      akvo/akvo-node-18-alpine:20220923.084347.0558ee6   "run-as-user.sh ./st…"   frontend            3 hours ago         Up 3 hours
+: wai-sdg-portal-mainnetwork-1   alpine:3.14.0                                      "tail -f /dev/null"      mainnetwork         3 hours ago         Up 3 hours          0.0.0.0:3000->3000/tcp, :::3000->3000/tcp, 0.0.0.0:5050->5050/tcp, :::5050->5050/tcp, 0.0.0.0:8000->8000/tcp, :::8000->8000/tcp
+: wai-sdg-portal-pgadmin-1       dpage/pgadmin4:5.7                                 "/entrypoint.sh"         pgadmin             3 hours ago         Up 3 hours
+: wai-sdg-portal-worker-1        python:3.8.5                                       "./worker.sh"            worker              3 hours ago         Up 3 hours
 
 ** Container Detail
 
