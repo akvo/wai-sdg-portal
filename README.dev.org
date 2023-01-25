@@ -1,5 +1,5 @@
 #+PROPERTY: header-args:sh      :results drawer
-#+PROPERTY: header-args:sh+     :exports both
+#+PROPERTY: header-args:sh+     :exports results
 #+PROPERTY: header-args:sql     :cache yes
 #+PROPERTY: header-args:sql+    :exports both
 #+PROPERTY: header-args:sql+    :engine postgresql
@@ -19,6 +19,17 @@
 docker compose ps
 #+end_src
 
+#+RESULTS: Services
+:results:
+NAME                           IMAGE                                              COMMAND                  SERVICE             CREATED             STATUS              PORTS
+wai-sdg-portal-backend-1       python:3.8.5                                       "./dev.sh"               backend             4 hours ago         Up 4 hours
+wai-sdg-portal-db-1            postgres:12-alpine                                 "docker-entrypoint.s…"   db                  4 hours ago         Up 4 hours          0.0.0.0:5432->5432/tcp, :::5432->5432/tcp
+wai-sdg-portal-frontend-1      akvo/akvo-node-18-alpine:20220923.084347.0558ee6   "run-as-user.sh ./st…"   frontend            4 hours ago         Up 4 hours
+wai-sdg-portal-mainnetwork-1   alpine:3.14.0                                      "tail -f /dev/null"      mainnetwork         4 hours ago         Up 4 hours          0.0.0.0:3000->3000/tcp, :::3000->3000/tcp, 0.0.0.0:5050->5050/tcp, :::5050->5050/tcp, 0.0.0.0:8000->8000/tcp, :::8000->8000/tcp
+wai-sdg-portal-pgadmin-1       dpage/pgadmin4:5.7                                 "/entrypoint.sh"         pgadmin             4 hours ago         Up 4 hours
+wai-sdg-portal-worker-1        python:3.8.5                                       "./worker.sh"            worker              4 hours ago         Up 4 hours
+:end:
+
 ** Container Detail
 
 *** Backend
@@ -32,9 +43,9 @@ docker compose top backend | tail -n +2 | head -n -1
 :results:
 UID    PID     PPID    C    STIME   TTY   TIME       CMD
 root   94628   94577   0    12:12   ?     00:00:00   bash ./dev.sh
-root   95594   94628   3    12:12   ?     00:07:51   /usr/local/bin/python /usr/local/bin/uvicorn main:app --reload --port 5000
+root   95594   94628   3    12:12   ?     00:07:56   /usr/local/bin/python /usr/local/bin/uvicorn main:app --reload --port 5000
 root   95595   95594   0    12:12   ?     00:00:00   /usr/local/bin/python -c from multiprocessing.resource_tracker import main;main(4)
-root   95596   95594   0    12:12   ?     00:00:46   /usr/local/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=5, pipe_handle=7) --multiprocessing-fork
+root   95596   95594   0    12:12   ?     00:00:47   /usr/local/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=5, pipe_handle=7) --multiprocessing-fork
 :end:
 
 **** Commands
