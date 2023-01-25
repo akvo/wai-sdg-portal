@@ -15,7 +15,7 @@
 ** Services
 
 #+NAME: Services
-#+begin_src sh :exports results
+#+begin_src sh :exports both
 docker compose ps
 #+end_src
 
@@ -35,7 +35,7 @@ wai-sdg-portal-worker-1        python:3.8.5                                     
 *** Backend
 
 #+NAME: Backend Processes
-#+begin_src sh
+#+begin_src sh :exports both
 docker compose top backend | tail -n +2 | head -n -1
 #+end_src
 
@@ -43,15 +43,15 @@ docker compose top backend | tail -n +2 | head -n -1
 :results:
 UID    PID     PPID    C    STIME   TTY   TIME       CMD
 root   94628   94577   0    12:12   ?     00:00:00   bash ./dev.sh
-root   95594   94628   3    12:12   ?     00:07:56   /usr/local/bin/python /usr/local/bin/uvicorn main:app --reload --port 5000
+root   95594   94628   3    12:12   ?     00:08:11   /usr/local/bin/python /usr/local/bin/uvicorn main:app --reload --port 5000
 root   95595   95594   0    12:12   ?     00:00:00   /usr/local/bin/python -c from multiprocessing.resource_tracker import main;main(4)
-root   95596   95594   0    12:12   ?     00:00:47   /usr/local/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=5, pipe_handle=7) --multiprocessing-fork
+root   95596   95594   0    12:12   ?     00:00:48   /usr/local/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=5, pipe_handle=7) --multiprocessing-fork
 :end:
 
 **** Commands
 
 #+NAME: Backend Commands
-#+begin_src sh
+#+begin_src sh :exports both
 docker compose exec backend ./seed.sh
 #+end_src
 
@@ -62,7 +62,7 @@ Example: ./test.sh dev@akvo.org "My Name" "My Organisation"
 :end:
 
 #+NAME: Seeder
-#+begin_src sh
+#+begin_src sh :exports both
 docker compose exec backend cat ./seed.sh | grep seeder. | sed 's/#\ //g'
 #+end_src
 
@@ -80,7 +80,7 @@ docker compose exec backend cat ./seed.sh | grep seeder. | sed 's/#\ //g'
 **** Processes
 
 #+NAME: Frontend Processes
-#+begin_src sh
+#+begin_src sh :exports both
 docker compose -f docker-compose.yml top frontend | tail -n +2 | head -n -1
 #+end_src
 
@@ -96,7 +96,7 @@ root   94849   94841   0    12:12   ?     00:00:21   /usr/local/bin/node /app/no
 **** Commands
 
 #+NAME: Frontend Commands
-#+begin_src sh :results verbatim
+#+begin_src sh :results verbatim :exports both
 docker compose exec frontend yarn run
 #+end_src
 
@@ -125,7 +125,7 @@ Done in 0.02s.
 *** Worker
 
 #+NAME: Worker Processes
-#+begin_src sh
+#+begin_src sh :exports both
 docker compose top worker | tail -n +2 | head -n -1
 #+end_src
 
@@ -133,15 +133,15 @@ docker compose top worker | tail -n +2 | head -n -1
 :results:
 UID    PID     PPID    C    STIME   TTY   TIME       CMD
 root   94704   94679   0    12:12   ?     00:00:00   bash ./worker.sh
-root   95588   94704   3    12:12   ?     00:07:51   /usr/local/bin/python /usr/local/bin/uvicorn worker:worker --reload --port 5001
+root   95588   94704   3    12:12   ?     00:08:12   /usr/local/bin/python /usr/local/bin/uvicorn worker:worker --reload --port 5001
 root   95590   95588   0    12:12   ?     00:00:00   /usr/local/bin/python -c from multiprocessing.resource_tracker import main;main(4)
-root   95591   95588   0    12:12   ?     00:00:52   /usr/local/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=5, pipe_handle=7) --multiprocessing-fork
+root   95591   95588   0    12:12   ?     00:00:55   /usr/local/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=5, pipe_handle=7) --multiprocessing-fork
 :end:
 
 *** Database
 
 #+NAME: Database Processes
-#+begin_src sh
+#+begin_src sh :exports both
 docker compose top db | tail -n +2 | head -n -1
 #+end_src
 
@@ -168,7 +168,7 @@ UID   PID      PPID    C    STIME   TTY   TIME       CMD
 **** PG Admin
 
 #+NAME: PG Admin Processes
-#+begin_src sh
+#+begin_src sh :exports both
 docker compose top pgadmin | tail -n +2 | head -n -1
 #+end_src
 
@@ -185,7 +185,7 @@ systemd+   425845   94812   0    15:32   ?     00:00:00   pickup -l -t unix -u
 **** Main Network
 
 #+NAME: Main Network Processes
-#+begin_src sh
+#+begin_src sh :exports both
 docker compose top mainnetwork | tail -n +2 | head -n -1
 #+end_src
 
