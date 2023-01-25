@@ -38,7 +38,6 @@ wai-sdg-portal-worker-1        python:3.8.5                                     
 docker compose top backend | tail -n +2 | head -n -1
 #+end_src
 
-#+RESULTS: Backend Processes
 #+begin_example
 | UID  |   PID |  PPID | C | STIME | TTY |     TIME | CMD                   |                        |          |                                  |        |              |                          |                |                        |
 | root | 94628 | 94577 | 0 | 12:12 | ?   | 00:00:00 | bash                  | ./dev.sh               |          |                                  |        |              |                          |                |                        |
@@ -54,7 +53,6 @@ docker compose top backend | tail -n +2 | head -n -1
 docker compose exec backend ./seed.sh
 #+end_src
 
-#+RESULTS: Backend Commands
 #+begin_example
 This script require more than 0 argument/s
 Example: ./test.sh dev@akvo.org "My Name" "My Organisation"
@@ -66,7 +64,6 @@ Example: ./test.sh dev@akvo.org "My Name" "My Organisation"
 docker compose exec backend cat ./seed.sh | grep seeder. | sed 's/#\ //g'
 #+end_src
 
-#+RESULTS: Seeder
 #+begin_example
     python -m seeder.administration
     python -m seeder.admin "$@"
@@ -85,7 +82,6 @@ docker compose exec backend cat ./seed.sh | grep seeder. | sed 's/#\ //g'
 docker compose -f docker-compose.yml top frontend | tail -n +2 | head -n -1
 #+end_src
 
-#+RESULTS: Frontend Processes
 #+begin_example
 | UID  |   PID |  PPID | C | STIME | TTY |     TIME | CMD                 |                                                  |       |
 | root | 94620 | 94559 | 0 | 12:12 | ?   | 00:00:00 | bash                | ./start.sh                                       |       |
@@ -101,7 +97,6 @@ docker compose -f docker-compose.yml top frontend | tail -n +2 | head -n -1
 docker compose exec frontend yarn run
 #+end_src
 
-#+RESULTS: Frontend Commands
 #+begin_example
 yarn run v1.22.19
 info Commands available from binary scripts: acorn, ansi-html, autoprefixer, browserslist, browserslist-lint, cross-env, cross-env-shell, css-blank-pseudo, css-has-pseudo, css-prefers-color-scheme, cssesc, detect, detect-port, detective, ejs, escodegen, esgenerate, eslint, eslint-config-prettier, esparse, esvalidate, he, html-minifier-terser, import-local-fixture, is-docker, jake, jest, js-yaml, jsesc, json5, loose-envify, lz-string, mime, mkdirp, multicast-dns, nanoid, nmtree, node-which, parser, prettier, react-scripts, regjsparser, remarkable, resolve, rimraf, rollup, sass, semver, sha.js, svgo, synp, tailwind, tailwindcss, terser, topo2geo, topomerge, topoquantize, uuid, webpack, webpack-dev-server, yarn-audit-fix
@@ -130,7 +125,6 @@ Done in 0.02s.
 docker compose top worker | tail -n +2 | head -n -1
 #+end_src
 
-#+RESULTS: Worker Processes
 #+begin_example
 | UID  |   PID |  PPID | C | STIME | TTY |     TIME | CMD                   |                        |               |                                  |        |              |                          |                |                        |
 | root | 94704 | 94679 | 0 | 12:12 | ?   | 00:00:00 | bash                  | ./worker.sh            |               |                                  |        |              |                          |                |                        |
@@ -147,7 +141,6 @@ docker compose top worker | tail -n +2 | head -n -1
 docker compose top db | tail -n +2 | head -n -1
 #+end_src
 
-#+RESULTS: Database Processes
 #+begin_example
 | UID |    PID |  PPID | C | STIME | TTY |     TIME | CMD       |              |             |                   |      |
 |  70 |  94342 | 94316 | 0 | 12:12 | ?   | 00:00:00 | postgres  |              |             |                   |      |
@@ -174,7 +167,6 @@ docker compose top db | tail -n +2 | head -n -1
 docker compose top pgadmin | tail -n +2 | head -n -1
 #+end_src
 
-#+RESULTS: PG Admin Processes
 #+begin_example
 | UID      |    PID |  PPID | C | STIME | TTY |     TIME | CMD                         |                    |           |       |        |           |    |   |           |    |                  |   |    |                    |                 |
 | 5050     |  94608 | 94537 | 0 | 12:12 | ?   | 00:00:02 | /venv/bin/python3           | /venv/bin/gunicorn | --timeout | 86400 | --bind | [::]:5050 | -w | 1 | --threads | 25 | --access-logfile | - | -c | gunicorn_config.py | run_pgadmin:app |
@@ -192,7 +184,6 @@ docker compose top pgadmin | tail -n +2 | head -n -1
 docker compose top mainnetwork | tail -n +2 | head -n -1
 #+end_src
 
-#+RESULTS: Main Network Processes
 #+begin_example
 | UID  |   PID |  PPID | C | STIME | TTY |     TIME | CMD  |    |           |
 | root | 94393 | 94363 | 0 | 12:12 | ?   | 00:00:00 | tail | -f | /dev/null |
