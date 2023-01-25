@@ -1,12 +1,11 @@
-#+PROPERTY: header-args:bash    :exports both
-#+PROPERTY: header-args:bash+   :results verbatim
+#+PROPERTY: header-args:bash    :results verbatim
 #+PROPERTY: header-args:sql     :cache yes
-#+PROPERTY: header-args:sql+    :exports both
 #+PROPERTY: header-args:sql+    :engine postgresql
 #+PROPERTY: header-args:sql+    :dbhost localhost
 #+PROPERTY: header-args:sql+    :dbuser wai
 #+PROPERTY: header-args:sql+    :dbpassword password
 #+PROPERTY: header-args:sql+    :database wai_demo
+#+PROPERTY: header-args :exports both
 #+PROPERTY: header-args :tangle data-model.sql
 #+STARTUP: showall
 
