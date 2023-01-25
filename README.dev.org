@@ -1,4 +1,4 @@
-#+PROPERTY: header-args:sh      :results drawer :wrap example
+#+PROPERTY: header-args:sh      :results drawer :wrap example :exports both
 #+PROPERTY: header-args:sql     :cache yes
 #+PROPERTY: header-args:sql+    :engine postgresql
 #+PROPERTY: header-args:sql+    :dbhost localhost
