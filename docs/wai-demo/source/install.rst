@@ -15,6 +15,15 @@ System Requirements
 * 25 GiB or more Disk
 * Ubuntu Server 22.04
 
+************
+prerequisite
+************
+
+* Docker Engine > 20.10
+* Git > 2.39
+* Auth0 Tenant
+* MAILJET Account
+
 ===========
 Preparation
 ===========
@@ -82,14 +91,27 @@ Auth0 Identity Providers
 
 This application **DO NOT** store directly any personal information. WAI SDG Portal uses `AUTH0`_ for a flexible solution to add authentication services.
 
+Please visit `AUTH0`_, then follow below guide:
+
 .. _AUTH0: https://auth0.com/
 
-Mailer Service
-**************
+.. toctree::
+   :maxdepth: 2
+
+   auth0
+
+
+Mailjet Service
+***************
 
 You need to have `MAILJET`_ account to manage the notification deliverability.
 
 .. _MAILJET: https://mailjet.com/
+
+.. toctree::
+   :maxdepth: 2
+
+   mailjet
 
 
 ============
