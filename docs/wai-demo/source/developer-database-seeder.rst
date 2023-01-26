@@ -4,7 +4,7 @@ Database Seeder
 
 Before you seed the baseline data, please make sure that you have all the required file in the following structure:
 
-Folder Path: /backend/source/
+Folder Path: `/backend/source/`
 
 .. code:: bash
 
@@ -22,45 +22,51 @@ Folder Path: /backend/source/
         │   └── 05-wp.json
         └── topojson.js
 
+===========================
 Administration Level Seeder
-***************************
+===========================
 
 .. code:: bash
 
     docker compose exec backend python -m seeder.administration
 
+===================
 Organisation Seeder
-*******************
+===================
 
 .. code:: bash
 
     docker compose exec backend python -m seeder.organisation
 
+===========
 Super Admin
-***********
+===========
 
 .. code:: bash
 
     docker compose exec backend python -m seeder.admin youremail@akvo.org "Your Name" Akvo
 
-Seed Random User
-****************
+==============
+Seed Fake User
+==============
 
 .. code:: bash
 
-    docker compose exec backend python -m seeder.user <number_of_user> Akvo
+    docker compose exec backend python -m seeder.fake_user <number_of_user> Akvo
 
+===========
 Form Seeder
-***********
+===========
 
 .. code:: bash
 
     docker compose exec backend python -m seeder.form
 
+================
 Datapoint Seeder
-****************
+================
 
 .. code:: bash
 
-    docker compose exec backend python -m seeder.datapoint youremail@akvo.org
+    docker compose exec backend python -m seeder.fake_datapoint youremail@akvo.org
 

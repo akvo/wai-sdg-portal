@@ -1,5 +1,5 @@
-Sign up
-~~~~~~~
+Create Auth0 Account
+~~~~~~~~~~~~~~~~~~~~
 
 **1. Visit Auth0.com**
 
