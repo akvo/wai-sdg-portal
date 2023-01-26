@@ -85,7 +85,7 @@ Seed Random User
 ~~~~~~~~~~~~~~~~~
 
 .. code:: bash
-    
+
     docker-compose exec backend python -m seeder.user <number_of_user> Akvo
 
 Form Seeder
@@ -106,7 +106,7 @@ Run all the seeder in one command
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code:: bash
-    
+
     docker-compose exec backend ./seed.sh youremail@akvo.org "Your Name" Akvo
 
 Running Test
@@ -124,7 +124,7 @@ export CI_COMMIT='local'
 This will generate two docker images with prefix eu.gcr.io/akvo-lumen/wai-sdg-portal for backend and frontend
 
 .. code:: bash
-    
+
     docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d
 
 Then visit: localhost:8080. Any endpoints with prefix
