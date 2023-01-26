@@ -35,7 +35,8 @@ def delete(url: str):
     file = url.split("/")[-1]
     folder = url.split("/")[-2]
     TESTING = os.environ.get("TESTING")
-    if TESTING:
+    STORAGE_LOCATION = os.environ.get("STORAGE_LOCATION")
+    if TESTING or STORAGE_LOCATION:
         os.remove(url)
         return url
     storage_client = storage.Client()
@@ -47,7 +48,8 @@ def delete(url: str):
 
 def check(url: str):
     TESTING = os.environ.get("TESTING")
-    if TESTING:
+    STORAGE_LOCATION = os.environ.get("STORAGE_LOCATION")
+    if TESTING or STORAGE_LOCATION:
         path = Path(url)
         return path.is_file()
     storage_client = storage.Client()
@@ -57,7 +59,8 @@ def check(url: str):
 
 def download(url):
     TESTING = os.environ.get("TESTING")
-    if TESTING:
+    STORAGE_LOCATION = os.environ.get("STORAGE_LOCATION")
+    if TESTING or STORAGE_LOCATION:
         return url
     storage_client = storage.Client()
     bucket = storage_client.bucket(bucket_name)
