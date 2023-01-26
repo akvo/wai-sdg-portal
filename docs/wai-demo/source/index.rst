@@ -18,25 +18,25 @@ Welcome to Demo SDG Portal documentation!
    :maxdepth: 2
    :caption: Getting Started
 
-   ethiopia/gettingStarted
+   gettingStarted
 
 .. toctree::
    :maxdepth: 2
    :caption: Datasets
 
-   ethiopia/datasets
+   datasets
 
 .. toctree::
    :maxdepth: 2
    :caption: Data
 
-   ethiopia/data
+   data
 
 .. toctree::
    :maxdepth: 2
    :caption: Admin
 
-   ethiopia/admin
+   admin
 
 .. |Build Status| image:: https://akvo.semaphoreci.com/badges/wai-sdg-portal/branches/main.svg?style=shields
    :target: https://akvo.semaphoreci.com/projects/wai-sdg-portal
