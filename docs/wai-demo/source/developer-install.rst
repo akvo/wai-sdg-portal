@@ -36,7 +36,7 @@ Once you have all the required environment ready, then run the App using:
 
 * Reset the app
 
-.. code:: bash
+  .. code:: bash
 
     docker-compose down -v
 
@@ -46,5 +46,5 @@ Running Test
 
 .. code:: bash
 
-    docker-compose exec backend ./test.sh
+  docker-compose exec backend ./test.sh
 
