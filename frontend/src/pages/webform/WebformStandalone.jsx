@@ -49,7 +49,14 @@ const WebformStandalone = ({ location }) => {
       })
       .catch(() => {
         notification.error({
-          message: notificationText?.errorText,
+          message: navigator.onLine ? (
+            notificationText?.errorText
+          ) : (
+            <>
+              You are <i>offline</i>, please <b>Save</b> your submission and{' '}
+              <i>Submit</i> once you back online.
+            </>
+          ),
         });
       })
       .finally(() => {

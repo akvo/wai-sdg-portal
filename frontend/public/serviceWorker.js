@@ -4,7 +4,9 @@
  * https://itnext.io/how-to-make-your-website-work-offline-part-2-6923b9038dd6
  */
 
-const appName = 'wai-webform';
+const { hostname } = self.location;
+const isLocal = hostname === 'localhost';
+const appName = isLocal ? 'wai-webform' : hostname;
 const version = 1; // indexDB versioning
 const cacheName = `${appName}-v${version}`;
 
@@ -12,11 +14,7 @@ const cacheName = `${appName}-v${version}`;
 const staticFiles = [
   // routes
   '/',
-  '/webform/HeTJ',
-  '/webform/DrCL',
-  '/webform/CxfC',
-  '/webform/Tgxc',
-  '/webform/HuLo',
+  '/webform',
   // assets
   '/static/js/main.chunk.js',
   '/static/js/0.chunk.js',
@@ -82,7 +80,6 @@ const getStoreFactory =
         const db = request.result;
         const transaction = db.transaction(name, mode);
         const store = transaction.objectStore(name);
-
         return resolve(store);
       };
       request.onerror = (e) => reject(request.error);
@@ -134,7 +131,7 @@ const prefetch = async (url) => {
 const cacheApiResponse = async (response) => {
   try {
     const store = await openStore(IDBConfig.stores[1], 'readwrite');
-    store.add(response);
+    store.put(response);
   } catch (error) {
     console.error('idb error', error);
   }
@@ -248,9 +245,17 @@ const fetchHandler = async (e) => {
   // fetch it from the network
   else {
     e.respondWith(
-      caches
-        .match(request)
-        .then((response) => (response ? response : fetch(request)))
+      caches.open(cacheName).then((cache) => {
+        return cache.match(request).then((response) => {
+          return (
+            response ||
+            fetch(request).then((response) => {
+              cache.put(request, response.clone());
+              return response;
+            })
+          );
+        });
+      })
     );
   }
 };

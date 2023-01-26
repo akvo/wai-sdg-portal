@@ -1,17 +1,18 @@
 export default function registerServiceWorker() {
-  if (!window.location.pathname.includes('/webform/')) {
-    return;
-  }
-  // only for webform
   if ('serviceWorker' in navigator) {
     const url = `${process.env.PUBLIC_URL}/serviceWorker.js`;
     navigator.serviceWorker
-      .register(url)
-      .then((res) => {
-        console.info(
-          'ServiceWorker registration successful with scope: ',
-          res.scope
-        );
+      .register(url, {
+        scope: '/webform',
+      })
+      .then((registration) => {
+        if (registration.installing) {
+          console.info('Service worker installing');
+        } else if (registration.waiting) {
+          console.info('Service worker installed');
+        } else if (registration.active) {
+          console.info('Service worker active');
+        }
       })
       .catch((err) => {
         console.error('ServiceWorker registration failed: ', err);
