@@ -1,7 +1,16 @@
-Getting Started
+##################
+Installation Guide
+##################
 
-Environment Setup:
-------------------
+************************
+Development Installation
+************************
+
+.. note:: Below step is for development purposes. See :doc:`/deployment` for the production deployment.
+
+=================
+Environment Setup
+=================
 
 .. code:: bash
 
@@ -10,121 +19,153 @@ Environment Setup:
     export AUTH0_SECRET="string"
     export AUTH0_AUDIENCE="string"
 
+=============
 Start the App
---------------
+=============
 
 Once you have all the required environment ready, then run the App using:
 
-Running
-~~~~~~~
+* Run the application
 
-.. code:: bash
+  .. code:: bash
 
     export INSTANCE_NAME=<project-name>
     docker-compose up -d
 
-Stop
-~~~~~
+* Stop
 
-.. code:: bash
+  .. code:: bash
 
     docker-compose down
 
-Reset the app
-~~~~~~~~~~~~~~
+* Reset the app
 
 .. code:: bash
 
     docker-compose down -v
 
-Database Seeder
-----------------
-
-Before you seed the baseline data, please make sure that you have all the required file in the following structure:
-
-Folder Path: /backend/source/
-
-.. code:: bash
-
-    /backend/source.
-    └── project-name
-        ├── config.js
-        ├── config.min.js
-        ├── data
-        │   └── organisation.csv
-        ├── forms
-        │   ├── 01-clts.json
-        │   ├── 02-health.json
-        │   ├── 03-hh.json
-        │   ├── 04-school.json
-        │   └── 05-wp.json
-        └── topojson.js
-
-Administration Level Seeder
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code:: bash
-
-    docker-compose exec backend python -m seeder.administration
-
-Organisation Seeder
-~~~~~~~~~~~~~~~~~~~~
-
-.. code:: bash
-
-    docker-compose exec backend python -m seeder.organisation
-
-Super Admin
-~~~~~~~~~~~
-
-.. code:: bash
-
-    docker-compose exec backend python -m seeder.admin youremail@akvo.org "Your Name" Akvo
-
-Seed Random User
-~~~~~~~~~~~~~~~~~
-
-.. code:: bash
-
-    docker-compose exec backend python -m seeder.user <number_of_user> Akvo
-
-Form Seeder
-~~~~~~~~~~~
-
-.. code:: bash
-
-    docker-compose exec backend python -m seeder.form
-
-Datapoint Seeder
-~~~~~~~~~~~~~~~~
-
-.. code:: bash
-
-    docker-compose exec backend python -m seeder.datapoint youremail@akvo.org
-
-Run all the seeder in one command
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code:: bash
-
-    docker-compose exec backend ./seed.sh youremail@akvo.org "Your Name" Akvo
-
+============
 Running Test
-~~~~~~~~~~~~
+============
 
 .. code:: bash
 
     docker-compose exec backend ./test.sh
 
-Production
-----------
+*********************
+Production Deployment
+*********************
+=====================
 
-export CI_COMMIT='local'
-./ci/build.sh
-This will generate two docker images with prefix eu.gcr.io/akvo-lumen/wai-sdg-portal for backend and frontend
+System Requirements
+*******************
 
-.. code:: bash
+* 4 GiB System Memory
+* 2 GHz Dual Core Processor
+* 25 GiB or more Disk
 
-    docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d
+Prerequisites
+*************
 
-Then visit: localhost:8080. Any endpoints with prefix
+* Ubuntu Server 22.04
+* Docker v20.10.23
+* git v2.34.1
+
+Installation
+************
+
+Install Docker
+~~~~~~~~~~~~~~
+
+#. Update the apt package index and install packages to allow apt to use a repository over HTTPS:
+
+   .. code:: bash
+
+     sudo apt update
+     sudo apt install ca-certificates curl gnupg lsb-release
+
+#. Add Docker’s official GPG key:
+
+   .. code:: bash
+
+     sudo mkdir -p /etc/apt/keyrings
+     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
+#. Use the following command to set up the repository:
+
+   .. code:: bash
+
+     echo \
+      "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+      $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+#. Update the apt package index:
+
+   .. code:: bash
+
+     sudo apt update
+
+#. Install Docker Engine, containerd, and Docker Compose.
+
+   .. code:: bash
+
+     sudo apt-get install \
+      docker-ce docker-ce-cli \
+      containerd.io docker-compose-plugin
+
+#. Manage Docker as a non-root user
+
+   .. code:: bash
+
+    sudo groupadd docker
+    sudo usermod -aG docker $USER
+    newgrp docker
+
+Cloning The Repository
+~~~~~~~~~~~~~~~~~~~~~~
+
+#. Install Git
+
+   .. code:: bash
+
+     sudo apt install git
+
+#. Clone the wai-sdg-portal Repository
+
+   .. code:: bash
+
+     git clone https://github.com/akvo/wai-sdg-portal.git
+
+Setup Environement
+~~~~~~~~~~~~~~~~~~
+
+#. Edit the required Environment:
+
+   .. code:: bash
+
+     cd wai-sdg-portal/deploy
+     vim .env
+
+   .. code:: bash
+
+     POSTGRES_PASSWORD=
+     WAI_DB_USER=
+     WAI_DB_PASSWORD=
+     INSTANCE_NAME=
+     AUTH0_DOMAIN=
+     AUTH0_CLIENT_ID=
+     AUTH0_SECRET=
+     AUTH0_AUDIENCE=
+     STORAGE_LOCATION=
+     MAILJET_SECRET=
+     MAILJET_APIKEY=
+     WEBDOMAIN=
+
+Running The App
+~~~~~~~~~~~~~~~
+
+#. Run the App:
+
+   .. code:: bash
+
+     ./run.sh
