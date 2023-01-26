@@ -16,33 +16,15 @@ Welcome to SDG Portal documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Post Installation
+   :caption: User Guide
 
-   post-install
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Getting Started
-
-   getting-started
+   user-guide
 
 .. toctree::
    :maxdepth: 2
-   :caption: Datasets
+   :caption: Developer Guide
 
-   datasets
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Data
-
-   data
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Admin
-
-   admin
+   developer-guide
 
 .. |Build Status| image:: https://akvo.semaphoreci.com/badges/wai-sdg-portal/branches/main.svg?style=shields
    :target: https://akvo.semaphoreci.com/projects/wai-sdg-portal

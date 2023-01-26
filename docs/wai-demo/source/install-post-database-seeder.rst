@@ -1,8 +1,6 @@
-Post-Installation Steps
-=======================
-
+###############
 Database Seeder
-----------------
+###############
 
 Before you seed the baseline data, please make sure that you have all the required file in the following structure:
 
