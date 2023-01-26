@@ -11,8 +11,8 @@ import api from '../../util/api';
 
 const { notificationText, buttonText, formText } = window.i18n;
 
-const WebformStandalone = ({ match }) => {
-  const uuid = match?.params?.uuid;
+const WebformStandalone = ({ location }) => {
+  const uuid = location?.search?.split('id=')?.[1];
   const [submitting, setSubmitting] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [payload, setPayload] = useState([]);
