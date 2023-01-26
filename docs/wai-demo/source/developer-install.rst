@@ -2,7 +2,6 @@
 Development Installation
 ########################
 
-.. note:: Below step is for development purposes. Please follow :ref:`Production Deployment<Production Deployment>` for the production ready installation.
 
 =================
 Environment Setup

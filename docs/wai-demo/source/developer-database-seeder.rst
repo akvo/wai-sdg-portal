@@ -27,46 +27,40 @@ Administration Level Seeder
 
 .. code:: bash
 
-    docker-compose exec backend python -m seeder.administration
+    docker compose exec backend python -m seeder.administration
 
 Organisation Seeder
 *******************
 
 .. code:: bash
 
-    docker-compose exec backend python -m seeder.organisation
+    docker compose exec backend python -m seeder.organisation
 
 Super Admin
 ***********
 
 .. code:: bash
 
-    docker-compose exec backend python -m seeder.admin youremail@akvo.org "Your Name" Akvo
+    docker compose exec backend python -m seeder.admin youremail@akvo.org "Your Name" Akvo
 
 Seed Random User
 ****************
 
 .. code:: bash
 
-    docker-compose exec backend python -m seeder.user <number_of_user> Akvo
+    docker compose exec backend python -m seeder.user <number_of_user> Akvo
 
 Form Seeder
 ***********
 
 .. code:: bash
 
-    docker-compose exec backend python -m seeder.form
+    docker compose exec backend python -m seeder.form
 
 Datapoint Seeder
 ****************
 
 .. code:: bash
 
-    docker-compose exec backend python -m seeder.datapoint youremail@akvo.org
+    docker compose exec backend python -m seeder.datapoint youremail@akvo.org
 
-Run all the seeder in one command
-*********************************
-
-.. code:: bash
-
-    docker-compose exec backend ./seed.sh youremail@akvo.org "Your Name" Akvo

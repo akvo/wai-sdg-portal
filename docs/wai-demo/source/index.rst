@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to SDG Portal documentation!
-====================================
+Welcome to WAI SDG Portal documentation!
+========================================
 
 |Build Status| |Repo Size| |Languages| |Issues| |Last Commit| |Documentation Status|
 
@@ -24,7 +24,8 @@ Welcome to SDG Portal documentation!
    :maxdepth: 2
    :caption: Developer Guide
 
-   developer-guide
+   developer-install
+   developer-database-seeder
 
 .. |Build Status| image:: https://akvo.semaphoreci.com/badges/wai-sdg-portal/branches/main.svg?style=shields
    :target: https://akvo.semaphoreci.com/projects/wai-sdg-portal
