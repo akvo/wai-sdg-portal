@@ -1,0 +1,125 @@
+---
+version: "3.9"
+services:
+  mainnetwork:
+    image: alpine:3.14.0
+    command: ["tail", "-f", "/dev/null"]
+    ports:
+      - 80:80
+      - 5000:5000
+      - 5001:5001
+  db:
+    image: postgres:12-alpine
+    container_name: db
+    volumes:
+      - ../db/docker-entrypoint-initdb.d/${INSTANCE_NAME}:/docker-entrypoint-initdb.d
+      - pg-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - WAI_DB_PASSWORD=${WAI_DB_PASSWORD}
+      - WAI_DB_USER=${WAI_DB_USER}
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 2s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    container_name: backend
+    working_dir: /usr/src/app
+    command: ["./run.sh"]
+    volumes:
+      - ./data:${STORAGE_LOCATION}
+    environment:
+      - DATABASE_URL=postgresql://${WAI_DB_USER}:${WAI_DB_PASSWORD}@db:5432/${INSTANCE_NAME}
+      - INSTANCE_NAME=${INSTANCE_NAME}
+      - MAILJET_SECRET=${MAILJET_SECRET}
+      - MAILJET_APIKEY=${MAILJET_APIKEY}
+      - WEBDOMAIN=${WEBDOMAIN}
+      - AUTH0_DOMAIN=${AUTH0_DOMAIN}
+      - AUTH0_CLIENT_ID=${AUTH0_CLIENT_ID}
+      - AUTH0_SECRET=${AUTH0_SECRET}
+      - AUTH0_AUDIENCE=${AUTH0_AUDIENCE}
+      - STORAGE_LOCATION=${STORAGE_LOCATION}
+    depends_on:
+      db:
+        condition: service_healthy
+    network_mode: service:mainnetwork
+
+  worker:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile.worker
+    container_name: worker
+    working_dir: /usr/src/app
+    command: ["./run-worker.sh"]
+    volumes:
+      - ./data:${STORAGE_LOCATION}
+    environment:
+      - DATABASE_URL=postgresql://${WAI_DB_USER}:${WAI_DB_PASSWORD}@db:5432/${INSTANCE_NAME}
+      - INSTANCE_NAME=${INSTANCE_NAME}
+      - MAILJET_SECRET=${MAILJET_SECRET}
+      - MAILJET_APIKEY=${MAILJET_APIKEY}
+      - WEBDOMAIN=${WEBDOMAIN}
+      - AUTH0_DOMAIN=${AUTH0_DOMAIN}
+      - AUTH0_CLIENT_ID=${AUTH0_CLIENT_ID}
+      - AUTH0_SECRET=${AUTH0_SECRET}
+      - AUTH0_AUDIENCE=${AUTH0_AUDIENCE}
+      - STORAGE_LOCATION=${STORAGE_LOCATION}
+    depends_on:
+      db:
+        condition: service_healthy
+    network_mode: service:mainnetwork
+
+  frontend_build:
+    image: akvo/akvo-node-18-alpine:20220923.084347.0558ee6
+    container_name: frontend_build
+    working_dir: /app
+    command:
+      - /bin/bash
+      - -c
+      - |
+        echo "PUBLIC_URL=/" > .env
+        sed 's/"warn"/"error"/g' < .eslintrc.json > .eslintrc.prod.json
+        ./release.sh
+    volumes:
+      - ../frontend:/app:delegated
+    environment:
+      - INSTANCE_NAME=${INSTANCE_NAME}
+      - GENERATE_SOURCEMAP=false
+      - NODE_OPTIONS=--max-old-space-size=2048
+    network_mode: service:mainnetwork
+
+  documentation_build:
+    image: akvo/akvo-sphinx:20220525.082728.594558b
+    container_name: documentation_build
+    working_dir: /app/docs/${INSTANCE_NAME}
+    command:
+      - /bin/bash
+      - -c
+      - |
+        pwd && make html
+        mkdir -p /app/frontend/build/docs/${INSTANCE_NAME}
+        cp -r /app/docs/${INSTANCE_NAME}/build/html /app/frontend/build/docs/${INSTANCE_NAME}
+    volumes:
+      - ..:/app:delegated
+    environment:
+      - INSTANCE_NAME=${INSTANCE_NAME}
+    network_mode: service:mainnetwork
+
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    environment:
+      - INSTANCE_NAME=${INSTANCE_NAME}
+    network_mode: service:mainnetwork
+
+volumes:
+  pg-data:
