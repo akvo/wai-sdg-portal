@@ -126,25 +126,41 @@ Installation
 
 #. Edit the required Environment:
 
+   Install text editor to be able to edit `.env` file
+
+   .. code:: bash
+
+     sudo apt install nano
+
+   or
+
+   .. code:: bash
+
+     sudo apt install vim
+
+   Go to the repository directory, then edit the environment
+
    .. code:: bash
 
      cd wai-sdg-portal/deploy
      vim .env
 
+   Example Environemnt:
+
    .. code:: bash
 
-     POSTGRES_PASSWORD=
-     WAI_DB_USER=
-     WAI_DB_PASSWORD=
-     INSTANCE_NAME=
-     AUTH0_DOMAIN=
-     AUTH0_CLIENT_ID=
-     AUTH0_SECRET=
-     AUTH0_AUDIENCE=
-     STORAGE_LOCATION=
-     MAILJET_SECRET=
-     MAILJET_APIKEY=
-     WEBDOMAIN=
+     POSTGRES_PASSWORD=postgres
+     WAI_DB_USER=yourname
+     WAI_DB_PASSWORD=sUpeRsTr0ngPa**word
+     INSTANCE_NAME=wai-ethiopia
+     AUTH0_DOMAIN=your-domain.eu.auth0.com
+     AUTH0_CLIENT_ID=acad34xxxxxxxx
+     AUTH0_SECRET=938axxxxxxxxxxx
+     AUTH0_AUDIENCE=cdary8xxxxxxxx
+     STORAGE_LOCATION=/data/storage
+     MAILJET_SECRET=093asbalxxxxxxxx
+     MAILJET_APIKEY=9acadlkbxxxxxxxx
+     WEBDOMAIN=https://your-domain.com
 
 #. Run the App:
 
@@ -155,6 +171,20 @@ Installation
 =================
 Post-Installation
 =================
+
+Once the app is started, we need to populate the database with the initial data set. The initial dataset are:
+
+- 1st Super Admin
+- 1st Organisation
+- Administration Levels Data
+
+Run the database seeder:
+
+.. code:: bash
+
+    docker compose exec backend ./seed.sh youremail@akvo.org "Your Full Name" "Your Organisation"
+
+Example:
 
 .. code:: bash
 
