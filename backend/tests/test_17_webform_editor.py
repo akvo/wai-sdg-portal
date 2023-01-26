@@ -779,7 +779,7 @@ class TestWebformEditorRoutes():
                 "language": "id",
                 "description": "deskripsi uji coba"
             }],
-            "url": f"https://{webdomain}/webform/{url1}",
+            "url": f"https://{webdomain}/webform?id={url1}",
             "passcode": "test@123",
         }, {
             "id": 903430001,
@@ -794,7 +794,7 @@ class TestWebformEditorRoutes():
                 "language": "id",
                 "description": "Ini adalah formulir uji coba untuk webform",
             }],
-            "url": f"https://{webdomain}/webform/{url2}",
+            "url": f"https://{webdomain}/webform?id={url2}",
             "passcode": None,
         }]
 
