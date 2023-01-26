@@ -438,7 +438,7 @@ class TestWebformEditorRoutes():
             "translations": [{
                 "language": "id",
                 "name": "Pembaharuan Formulir Uji Coba",
-                "description": "Ini adalah formulir uji coba untuk webform"
+                "description": "Lorem Ipsum is simply dummy text Description"
             }],
             "question_group": [{
                 "id": 903430556,
@@ -448,8 +448,8 @@ class TestWebformEditorRoutes():
                 "repeatable": False,
                 "translations": [{
                     "language": "id",
-                    "name": "Pendaftaran",
-                    "description": "Ini adalah bagian registrasi"
+                    "name": "Registrasi",
+                    "description": "Lorem Ipsum Registration Description"
                 }],
                 "question": [{
                     "id": 903430547,
@@ -574,7 +574,7 @@ class TestWebformEditorRoutes():
             "translations": [{
                 "language": "id",
                 "name": "Pembaharuan Formulir Uji Coba",
-                "description": "Ini adalah formulir uji coba untuk webform"
+                "description": "Lorem Ipsum is simply dummy text Description"
             }],
             "passcode": None,
             "question_group": [{
@@ -586,8 +586,8 @@ class TestWebformEditorRoutes():
                 "repeatable": False,
                 "translations": [{
                     "language": "id",
-                    "name": "Pendaftaran",
-                    "description": "Ini adalah bagian registrasi"
+                    "name": "Registrasi",
+                    "description": "Lorem Ipsum Registration Description"
                 }],
                 "repeatText": None,
                 "question": [{
@@ -779,7 +779,7 @@ class TestWebformEditorRoutes():
                 "language": "id",
                 "description": "deskripsi uji coba"
             }],
-            "url": f"https://{webdomain}/webform/{url1}",
+            "url": f"https://{webdomain}/webform?id={url1}",
             "passcode": "test@123",
         }, {
             "id": 903430001,
@@ -792,9 +792,9 @@ class TestWebformEditorRoutes():
             "translations": [{
                 "name": "Pembaharuan Formulir Uji Coba",
                 "language": "id",
-                "description": "Ini adalah formulir uji coba untuk webform",
+                "description": "Lorem Ipsum is simply dummy text Description",
             }],
-            "url": f"https://{webdomain}/webform/{url2}",
+            "url": f"https://{webdomain}/webform?id={url2}",
             "passcode": None,
         }]
 

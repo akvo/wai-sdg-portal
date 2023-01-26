@@ -11,8 +11,8 @@ import api from '../../util/api';
 
 const { notificationText, buttonText, formText } = window.i18n;
 
-const WebformStandalone = ({ match }) => {
-  const uuid = match?.params?.uuid;
+const WebformStandalone = ({ location }) => {
+  const uuid = location?.search?.split('id=')?.[1];
   const [submitting, setSubmitting] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [payload, setPayload] = useState([]);
@@ -49,7 +49,14 @@ const WebformStandalone = ({ match }) => {
       })
       .catch(() => {
         notification.error({
-          message: notificationText?.errorText,
+          message: navigator.onLine ? (
+            notificationText?.errorText
+          ) : (
+            <>
+              You are <i>offline</i>, please <b>Save</b> your submission and{' '}
+              <i>Submit</i> once you back online.
+            </>
+          ),
         });
       })
       .finally(() => {

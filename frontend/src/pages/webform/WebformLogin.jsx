@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './webform.scss';
 import { Row, Col, Form, Input, Button, Card, Spin, notification } from 'antd';
 import { UIState } from '../../state/ui';
+import ErrorPage from '../../components/ErrorPage';
 import api from '../../util/api';
 import isEmpty from 'lodash/isEmpty';
 
@@ -21,6 +22,10 @@ const WebformLogin = ({ uuid }) => {
         setFormDetail(res.data);
       })
       .catch(() => {
+        setFormDetail({
+          error: true,
+          status: 404,
+        });
         notification.error({
           message: 'Form not found, please contact your admin.',
         });
@@ -56,6 +61,11 @@ const WebformLogin = ({ uuid }) => {
         setLoading(false);
       });
   };
+
+  // return error page
+  if (formDetail?.error) {
+    return <ErrorPage status={formDetail?.status} />;
+  }
 
   return (
     <div className="webform-standalone-container">

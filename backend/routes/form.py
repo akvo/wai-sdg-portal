@@ -394,7 +394,7 @@ def get(req: Request, session: Session = Depends(get_session)):
         hash_survey_id = hash_cipher(text=str(form_id))
         url = f"{webdomain}/webform/{hash_survey_id}"
         if "https" not in webdomain:
-            url = f"https://{webdomain}/webform/{hash_survey_id}"
+            url = f"https://{webdomain}/webform?id={hash_survey_id}"
         data = crud_data.count(session=session, form=form_id)
         fr.update({'disableDelete': True if data else False})
         fr.update({'url': url or None})

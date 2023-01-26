@@ -43,7 +43,7 @@ const Content = () => {
         component={Forms}
       />
       <Route
-        path="/webform/:uuid"
+        path="/webform"
         component={WebformStandalone}
       />
       <Route
