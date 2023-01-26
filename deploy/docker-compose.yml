@@ -91,7 +91,7 @@ services:
       - ../frontend:/app:delegated
     environment:
       - INSTANCE_NAME=${INSTANCE_NAME}
-      - GENERATE_SOURCEMAP=false                                                                      │    739 root       20   0 80048  2088  1932 S  0.0  0.1  0:13.75 /usr/sbin/qemu-ga
+      - GENERATE_SOURCEMAP=false
       - NODE_OPTIONS=--max-old-space-size=2048
     network_mode: service:mainnetwork
 
