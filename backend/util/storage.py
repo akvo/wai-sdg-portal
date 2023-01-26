@@ -16,7 +16,7 @@ def upload(file: str, folder: str, filename: str = None, public: bool = False):
         shutil.copy2(file, fake_location)
         return fake_location
     if STORAGE_LOCATION:
-        location = f"./{STORAGE_LOCATION}/{filename}"
+        location = f"{STORAGE_LOCATION}/{filename}"
         shutil.copy2(file, location)
         return location
     storage_client = storage.Client()
