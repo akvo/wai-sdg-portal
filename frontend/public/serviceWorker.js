@@ -236,6 +236,13 @@ const fetchHandler = async (e) => {
   const { request } = e;
   const { url } = request;
   const { pathname } = new URL(url);
+  // excludes url from cache
+  if (
+    url.includes('/api/user/me') ||
+    url.includes('/api/webform-standalone/login')
+  ) {
+    return;
+  }
   // if there's a call to our api, we try to serve a cached response, otherwise we call the api
   // and cache the response for later use
   if (url.includes('/api')) {
