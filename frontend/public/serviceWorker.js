@@ -7,7 +7,7 @@
 const { hostname } = self.location;
 const isLocal = hostname === 'localhost';
 const appName = isLocal ? 'wai-webform' : hostname;
-const version = 2; // indexDB versioning
+const version = 2; // indexDB, cache versioning
 const cacheName = `${appName}-v${version}`;
 
 // the static files we want to cache
@@ -16,6 +16,7 @@ const staticFiles = [
   '/',
   '/webform',
   // assets
+  '/config.js',
   '/static/js/main.chunk.js',
   '/static/js/0.chunk.js',
   '/static/js/bundle.js',
@@ -235,22 +236,21 @@ const activateHandler = (e) => {
           return await caches.delete(cache);
         }
       });
+      // unregister service worker if diff version cache and online mode
+      if (isCacheChange && navigator.onLine) {
+        self.registration
+          .unregister()
+          .then(function () {
+            return self.clients.matchAll();
+          })
+          .then(function (clients) {
+            clients.forEach((client) => client.navigate(client.url));
+            isCacheChange = false;
+          });
+      }
       return deleted;
     })()
-  ).then(() => {
-    // unregister service worker if diff version cache and online mode
-    if (isCacheChange && navigator.onLine) {
-      self.registration
-        .unregister()
-        .then(function () {
-          return self.clients.matchAll();
-        })
-        .then(function (clients) {
-          clients.forEach((client) => client.navigate(client.url));
-          isCacheChange = false;
-        });
-    }
-  });
+  );
 
   return self.clients.claim();
   // use below if we have default api to call

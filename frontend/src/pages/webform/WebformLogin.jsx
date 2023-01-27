@@ -39,6 +39,17 @@ const WebformLogin = ({ uuid }) => {
           message: 'Form not found, please contact your admin.',
         });
       });
+    // call current api when first loading so service worker can fetch
+    if (navigator.onLine) {
+      navigator.serviceWorker.ready.then((registration) => {
+        if (registration.active) {
+          setTimeout(() => {
+            fetch(window.location.href);
+            api.get(`/webform-standalone/${uuid}`);
+          }, 2000);
+        }
+      });
+    }
   }, [uuid]);
 
   const onWebformLogin = (values) => {
