@@ -173,7 +173,7 @@ Run the Application
 
    .. code:: bash
 
-     ./run.sh
+     ./install.sh
 
 Post-Installation
 *****************
