@@ -118,17 +118,19 @@ You need to have `MAILJET`_ account to manage the notification deliverability.
    mailjet
 
 
-============
+************
 Installation
-============
+************
 
-#. Clone the wai-sdg-portal Repository
+Clone the Repository
+********************
 
    .. code:: bash
 
      git clone https://github.com/akvo/wai-sdg-portal.git
 
-#. Edit the required Environment:
+Environment Variable Setup
+**************************
 
    Install text editor to be able to edit `.env` file
 
@@ -166,15 +168,15 @@ Installation
      MAILJET_APIKEY=9acadlkbxxxxxxxx
      WEBDOMAIN=https://your-domain.com
 
-#. Run the App:
+Run the Application
+*******************
 
    .. code:: bash
 
      ./run.sh
 
-=================
 Post-Installation
-=================
+*****************
 
 Once the app is started, we need to populate the database with the initial data set. The initial dataset are:
 
