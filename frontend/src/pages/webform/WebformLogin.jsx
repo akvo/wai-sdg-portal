@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import './webform.scss';
 import { Row, Col, Form, Input, Button, Card, Spin, notification } from 'antd';
 import { UIState } from '../../state/ui';
@@ -13,11 +13,20 @@ const WebformLogin = ({ uuid }) => {
   const [loading, setLoading] = useState(false);
   const [formDetail, setFormDetail] = useState({});
   const isLoadingDetail = isEmpty(formDetail);
-  const allowUsingPasscode = formDetail?.passcode;
+  const allowUsingPasscode = formDetail?.passcode !== null;
+
+  const cardTitle = useMemo(() => {
+    if (isEmpty(formDetail) && formDetail?.error) {
+      return '';
+    }
+    return formDetail?.version
+      ? `${formDetail?.name} - v${formDetail?.version}`
+      : formDetail?.name;
+  }, [formDetail]);
 
   useEffect(() => {
     api
-      .get(`/form-standalone/${uuid}`)
+      .get(`/webform-standalone/${uuid}`)
       .then((res) => {
         setFormDetail(res.data);
       })
@@ -32,34 +41,67 @@ const WebformLogin = ({ uuid }) => {
       });
   }, [uuid]);
 
-  const onFinish = (values) => {
+  const onWebformLogin = (values) => {
     setLoading(true);
     const { submitter, passcode } = values;
-    let loginURL = `/webform-standalone/${uuid}`;
-    if (allowUsingPasscode) {
-      loginURL = `${loginURL}?passcode=${passcode}`;
+    if (allowUsingPasscode && navigator.onLine) {
+      const data = new FormData();
+      data.append('uuid', uuid);
+      data.append('passcode', passcode);
+      api
+        .post('webform-standalone/login', data)
+        .then(() => {
+          UIState.update((s) => {
+            s.webformLogin = {
+              ...s.webformLogin,
+              submitter: submitter,
+              isLogin: true,
+              formValue: formDetail,
+              complete: false,
+            };
+          });
+        })
+        .catch(() => {
+          notification.error({
+            message: 'Please check form passcode.',
+          });
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+      return;
     }
-    api
-      .get(loginURL)
-      .then((res) => {
+    if (allowUsingPasscode && !navigator.onLine) {
+      if (passcode === formDetail?.passcode) {
         UIState.update((s) => {
           s.webformLogin = {
             ...s.webformLogin,
             submitter: submitter,
             isLogin: true,
-            formValue: res.data,
+            formValue: formDetail,
             complete: false,
           };
         });
-      })
-      .catch(() => {
+      } else {
         notification.error({
-          message: 'Please check form passcode!',
+          message: 'Please check form passcode.',
         });
-      })
-      .finally(() => {
-        setLoading(false);
+      }
+    }
+    if (!allowUsingPasscode) {
+      UIState.update((s) => {
+        s.webformLogin = {
+          ...s.webformLogin,
+          submitter: submitter,
+          isLogin: true,
+          formValue: formDetail,
+          complete: false,
+        };
       });
+    }
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   };
 
   // return error page
@@ -81,14 +123,14 @@ const WebformLogin = ({ uuid }) => {
             <Spin />
           ) : (
             <Card
-              title={`${formDetail?.name} - v${formDetail?.version}`}
+              title={cardTitle}
               className="webform-login-card"
             >
               <Form
                 form={form}
                 name="webform_standalone_login_form"
                 layout="vertical"
-                onFinish={onFinish}
+                onFinish={onWebformLogin}
               >
                 <Form.Item
                   label={formText?.labelSubmitterName}
