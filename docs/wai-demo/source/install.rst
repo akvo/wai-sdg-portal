@@ -2,31 +2,35 @@
 Installation Guide
 ##################
 
-.. note:: Below step is for production-ready installation. Please follow `Developer-Guide`_ to setup the development mode.
+.. warning:: Below step is for production-ready installation process. Please follow `Developer-Guide`_ to setup the development mode.
 
 .. _developer-guide: /developer-install.html
 
-===================
+*******************
 System Requirements
-===================
+*******************
 
-* 4 GiB System Memory
-* 2 GHz Dual Core Processor
-* 25 GiB or more Disk
-* Ubuntu Server 22.04
+    :System Memory: 4 GiB
+    :CPU: 2 GHz Dual Core Processor
+    :Storage: 25 GiB or more Disk
+    :Operating System: Ubuntu Server 22.04
+
+**************************
 
 ************
-prerequisite
+Prerequisite
 ************
 
-* Docker Engine > 20.10
-* Git > 2.39
-* Auth0 Tenant
-* MAILJET Account
+    :Docker Engine: 20.10 or above
+    :Git: 2.39 or above
+    :3rd Party Service Providers: - Auth0
+				  - Mailjet
 
-===========
+***********
 Preparation
-===========
+***********
+
+.. note:: The following guide is an example installation on **Ubuntu and Debian based systems**. It has been with **Ubuntu 22.04**.
 
 Install Docker Engine
 *********************

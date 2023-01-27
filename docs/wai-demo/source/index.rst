@@ -26,6 +26,9 @@ Welcome to WAI SDG Portal documentation!
 
    developer-install
    developer-database-seeder
+   tests
+   developer-database-schema
+   services
 
 .. |Build Status| image:: https://akvo.semaphoreci.com/badges/wai-sdg-portal/branches/main.svg?style=shields
    :target: https://akvo.semaphoreci.com/projects/wai-sdg-portal
