@@ -42,6 +42,8 @@ documentation_build () {
 frontend_build () {
 
     echo "PUBLIC_URL=/" > frontend/.env
+		echo "REACT_APP_AUTH0_DOMAIN=wai-ethiopia.eu.auth0.com" >> frontend/.env
+		echo "REACT_APP_AUTH0_CLIENT_ID=OlqShNF3knpLpwX7iPLUHFTr9BlrrkHF" >> frontend/.env
 
     sed 's/"warn"/"error"/g' < frontend/.eslintrc.json > frontend/.eslintrc.prod.json
 
