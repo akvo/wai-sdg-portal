@@ -85,8 +85,7 @@ services:
       - -c
       - |
         echo "PUBLIC_URL=/" > .env
-        sed 's/"warn"/"error"/g' < .eslintrc.json > .eslintrc.prod.json
-        ./release.sh
+        ./release.prod.sh
     volumes:
       - ../frontend:/app:delegated
     environment:
