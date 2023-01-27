@@ -7,7 +7,7 @@
 const { hostname } = self.location;
 const isLocal = hostname === 'localhost';
 const appName = isLocal ? 'wai-webform' : hostname;
-const version = 1; // indexDB versioning
+const version = 2; // indexDB versioning
 const cacheName = `${appName}-v${version}`;
 
 // the static files we want to cache
@@ -212,15 +212,46 @@ const retryApiCalls = () => {
 // #######################################################
 // when our service worker is installed we populate the cache with our static assets
 const installHandler = (e) => {
+  self.skipWaiting();
   e.waitUntil(
     caches.open(cacheName).then((cache) => cache.addAll(staticFiles))
   );
 };
 
 const activateHandler = (e) => {
+  let isCacheChange = false;
   if (self.indexedDB) {
     createIndexedDB(IDBConfig);
   }
+
+  // clear old cache for this app
+  e.waitUntil(
+    (async () => {
+      const keys = await caches.keys();
+      const deleted = keys.map(async (cache) => {
+        // only delete cache for this app
+        if (cache.includes(appName) && cache !== cacheName) {
+          isCacheChange = true;
+          return await caches.delete(cache);
+        }
+      });
+      return deleted;
+    })()
+  ).then(() => {
+    // unregister service worker if diff version cache and online mode
+    if (isCacheChange && navigator.onLine) {
+      self.registration
+        .unregister()
+        .then(function () {
+          return self.clients.matchAll();
+        })
+        .then(function (clients) {
+          clients.forEach((client) => client.navigate(client.url));
+          isCacheChange = false;
+        });
+    }
+  });
+
   return self.clients.claim();
   // use below if we have default api to call
   // const apiToCache = [`/api/xxx`];
