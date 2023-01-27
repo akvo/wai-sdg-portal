@@ -827,12 +827,12 @@ class TestWebformEditorRoutes():
         # wrong passcode
         res = await client.post(
             app.url_path_for("webform:check_passcode"),
-            params={"uuid": url1, "passcode": "password"})
+            data={"uuid": url1, "passcode": "password"})
         assert res.status_code == 403
         # correct passcode
         res = await client.post(
             app.url_path_for("webform:check_passcode"),
-            params={"uuid": url1, "passcode": "pwd123"})
+            data={"uuid": url1, "passcode": "pwd123"})
         assert res.status_code == 200
         res = res.json()
         assert res == {
@@ -845,7 +845,7 @@ class TestWebformEditorRoutes():
         assert res.status_code == 200
         res = res.json()
         assert res["id"] == 1
-        assert res["passcode"] is True
+        assert res["passcode"] == "pwd123"
         assert len(res["question_group"]) > 0
         assert res["cascade"] == cascade
 
@@ -854,4 +854,4 @@ class TestWebformEditorRoutes():
         assert res.status_code == 200
         res = res.json()
         assert res["id"] == 903430001
-        assert res["passcode"] is False
+        assert res["passcode"] is None

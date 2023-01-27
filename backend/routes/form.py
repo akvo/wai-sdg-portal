@@ -1,8 +1,9 @@
 import os
 import json
 from http import HTTPStatus
+from pydantic import Required
 from fastapi import Depends, Request, APIRouter, BackgroundTasks
-from fastapi import Response, HTTPException
+from fastapi import Response, HTTPException, Form
 from fastapi.security import HTTPBearer
 from fastapi.security import HTTPBasicCredentials as credentials
 from typing import List, Optional
@@ -603,13 +604,15 @@ def get_standalone_form_detail_by_uuid(
     tags=["Form"])
 def form_standalone_login(
     req: Request,
-    uuid: str,
-    passcode: str,
+    uuid: str = Form(default=Required),
+    passcode: str = Form(default=Required),
     session: Session = Depends(get_session)
 ):
     form_id = get_form_id_from_url_config(uuid=uuid)
     form = crud.get_form_by_id(session=session, id=form_id)
-    # # check passcode
+    if not form:
+        return Response(status_code=HTTPStatus.NOT_FOUND.value)
+    # check passcode
     if passcode and form.passcode != passcode:
         return Response(status_code=HTTPStatus.FORBIDDEN.value)
     return {
@@ -635,7 +638,5 @@ def get_standalone_webform_by_uuid(
     form = crud.get_form_by_id(session=session, id=form_id)
     if not form:
         return Response(status_code=HTTPStatus.NOT_FOUND.value)
-    form_detail = form.to_form_detail
     res = get_form_definition(req=req, id=form.id, session=session)
-    res.update({"passcode": form_detail.get('passcode')})
     return res
