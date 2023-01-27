@@ -14,6 +14,7 @@ from db import crud_answer
 from db import crud_form
 from db import crud_user
 from db import crud_jmp_history
+from db import crud_jmp
 from models.user import User, UserRole
 from models.answer import Answer, AnswerDict
 from models.question import QuestionType
@@ -171,26 +172,20 @@ def get(req: Request,
         raise HTTPException(status_code=404, detail="Not found")
     count = res["count"]
     data = [d.serialize for d in res["data"]]
-    categories = [
-        {
-            "id": c.id,
-            "data": c.data,
-            "form": c.form,
-            "name": c.name,
-            "category": c.category
-        } for c in res["categories"]
-    ]
+    ids = [d["id"] for d in data]
+    categories = crud_jmp.get_categories_by_data_ids(
+        session=session, form=form_id, ids=ids
+    )
     if question:
-        data = check_project(session=session,
-                             data=data,
-                             question=question,
-                             form=form_id)
+        data = check_project(
+            session=session, data=data, question=question, form=form_id
+        )
     return {
-        'current': page,
-        'data': data,
-        'total': count,
-        'total_page': total_page,
-        'categories': categories
+        "current": page,
+        "data": data,
+        "total": count,
+        "total_page": total_page,
+        "categories": categories,
     }
 
 

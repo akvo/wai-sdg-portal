@@ -214,7 +214,10 @@ const Main = ({ match }) => {
                   (opt) => opt.name?.toLowerCase() === value?.toLowerCase()
                 )?.color;
               }
-              const _value = fc ? { value: value, color: color } : {};
+              const _value =
+                fc || categories?.length === 0
+                  ? { value: value, color: color }
+                  : {};
               return Object.assign(o, { [key]: _value });
             }, {});
             return {
