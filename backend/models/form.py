@@ -36,6 +36,11 @@ class FormDictWithFlag(TypedDict):
     passcode: Optional[str] = None
 
 
+class FormLoginResponse(TypedDict):
+    uuid: str
+    passcode: str
+
+
 class Form(Base):
     __tablename__ = "form"
     id = Column(Integer, primary_key=True, index=True, nullable=True)

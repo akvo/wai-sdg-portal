@@ -780,7 +780,7 @@ class TestWebformEditorRoutes():
                 "description": "deskripsi uji coba"
             }],
             "url": f"https://{webdomain}/webform?id={url1}",
-            "passcode": "test@123",
+            "passcode": "pwd123",
         }, {
             "id": 903430001,
             "name": "Test Form Updated",
@@ -823,30 +823,35 @@ class TestWebformEditorRoutes():
         assert res["id"] == 1
         assert res["name"] == "test"
         assert res["version"] == 1.0
+        assert "passcode" in res
         # wrong passcode
-        res = await client.get(
-            app.url_path_for("webform:get_standalone_form", uuid=url1),
-            params={"passcode": "password"})
-        assert res.status_code == 404
+        res = await client.post(
+            app.url_path_for("webform:check_passcode"),
+            params={"uuid": url1, "passcode": "password"})
+        assert res.status_code == 403
         # correct passcode
+        res = await client.post(
+            app.url_path_for("webform:check_passcode"),
+            params={"uuid": url1, "passcode": "pwd123"})
+        assert res.status_code == 200
+        res = res.json()
+        assert res == {
+            "uuid": url1,
+            "passcode": "pwd123"
+        }
+        # get webform stand alone form definition
         res = await client.get(
-            app.url_path_for("webform:get_standalone_form", uuid=url1),
-            params={"passcode": "test@123"})
+            app.url_path_for("webform:get_standalone_form", uuid=url1))
         assert res.status_code == 200
         res = res.json()
         assert res["id"] == 1
+        assert res["passcode"] is True
         assert len(res["question_group"]) > 0
         assert res["cascade"] == cascade
-        # without passcode
-        res = await client.get(
-            app.url_path_for(
-                "form:get_standalone_form_detail",
-                uuid=url2
-            )
-        )
-        assert res.status_code == 200
+
         res = await client.get(
             app.url_path_for("webform:get_standalone_form", uuid=url2))
         assert res.status_code == 200
         res = res.json()
         assert res["id"] == 903430001
+        assert res["passcode"] is False
