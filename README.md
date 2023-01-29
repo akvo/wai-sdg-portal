@@ -17,7 +17,7 @@ This app requires [Auth0](https://auth0.com) to provides Single sign-on (SSO) th
 
 1. Sign up to [Auth0.com](https://auth0.com)
 2. Create a new tenant for obtaining the service.
-3. Go to Applications: Create Applications, then select Single Web Page Applications
+3. Go to Applications: Create Applications, then select **Single Web Page Applications**
 4. Go to the Application Setings:
   4.1 Upload your Application Logo
 	4.2 In the Application URI's section Set:
@@ -29,14 +29,23 @@ This app requires [Auth0](https://auth0.com) to provides Single sign-on (SSO) th
 	```plain
 	https://your_domain.com, https://your_domain.com/login, http://localhost:3000
 	```
+5. Create another applications: Select **Machine to Machine Application**
+6. Once you clieck create, grant all authorization access by **Selecting all** then click **Authorize**
+7. Repeat the step #4.
 
 Environment Setup:
 ```
-export AUTH0_DOMAIN="string_url"
-export AUTH0_CLIENT_ID="string"
-export AUTH0_SECRET="string"
-export AUTH0_AUDIENCE="string"
+export WAI_AUTH0_DOMAIN="string_url"
+export WAI_AUTH0_CLIENT_ID="string"
+export WAI_AUTH0_SECRET="string"
+export WAI_AUTH0_AUDIENCE="string"
+export WAI_AUTH0_SECRET="string"
+export WAI_AUTH0_SPA_DOMAIN="string_url"
+export WAI_AUTH0_SPA_CLIENT_ID="string"
+export INSTANCE_NAME="wai-demo"
 ```
+
+Note: `WAI_AUTH0_AUDIENCE` is comming from Grant ID (API's tab) in your **Auth0 Machine to Machine applications**
 
 ##### Storage Service
 
@@ -47,7 +56,7 @@ Environment Setup:
 export GOOGLE_APPLICATION_CREDENTIALS=path_to_service_account.json
 ```
 ###### Using Storage Service
-If you want to use custom storage location (e.g storage in local backend container). add "STORAGE_LOCATION" to the backend environment. Example format: "/tmp/storage".
+If you want to use custom storage location (e.g storage in local backend container). add `STORAGE_LOCATION` to the backend environment. Example format: "/tmp/storage".
 
 ```
 export STORAGE_LOCATION=/tmp/storage
