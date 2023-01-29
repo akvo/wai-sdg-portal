@@ -77,19 +77,19 @@ Now you have all the required environment ready, then run the App using:
 
 ```bash
 export INSTANCE_NAME=<project-name>
-docker-compose up -d
+docker compose up -d
 ```
 
 To stop:
 
 ```bash
-docker-compose down
+docker compose down
 ```
 
 Reset the app:
 
 ```bash
-docker-compose down -v
+docker compose down -v
 ```
 
 The app should be running at: [localhost:3000](http://localhost:3000). Any endpoints with prefix
@@ -126,66 +126,48 @@ Note that project-name should be same as [**INSTANCE_NAME**](#2.-start-the-app) 
 ##### Administration Level Seeder
 Assuming that you have **topojson.js** inside `./backend/source/{project_name}` folder you will be able to run.
 ```
-docker-compose exec backend python -m seeder.administration
+docker compose exec backend python -m seeder.administration
 ```
 ##### Organisation Seeder
 To seed organisation, you need to have **organisation.csv** inside `./backend/source/{project_name}/data` folder you will be able to run.
 ```
-docker-compose exec backend python -m seeder.organisation
+docker compose exec backend python -m seeder.organisation
 ```
 ##### Add Super Admin
 Note you wont be able to use some of the backend API if you haven't confirmed your email address with **Auth0** tenant which you will received once your account is registered. You also have to perform [Administration](#administration-level-seeder) and [Organisation Seeder](#organisation-seeder) first
 ```
-docker-compose exec backend python -m seeder.admin youremail@akvo.org "Your Name" Akvo
+docker compose exec backend python -m seeder.admin youremail@akvo.org "Your Name" Akvo
 ```
 ##### Seed Random User
 ```
-docker-compose exec backend python -m seeder.user <number_of_user> Akvo
+docker compose exec backend python -m seeder.user <number_of_user> Akvo
 ```
 ##### Form Seeder
 Assuming that you have **id-form_name.json** inside `./backend/source/{project_name}/forms/` folder you should be able to run.
 ```
-docker-compose exec backend python -m seeder.form
+docker compose exec backend python -m seeder.form
 ```
 ##### Datapoint Seeder
 Assuming that you have **baseline.xlsx** inside `./backend/source` folder you should be able to run.
 ```
-docker-compose exec backend python -m seeder.datapoint youremail@akvo.org
+docker compose exec backend python -m seeder.datapoint youremail@akvo.org
 ```
 ##### Run all the seeder in one command
 If you wish to run all the necessary seeder, you could also run
 ```
-docker-compose exec backend ./seed.sh youremail@akvo.org "Your Name" Akvo
+docker compose exec backend ./seed.sh youremail@akvo.org "Your Name" Akvo
 ```
 
 #### Running Test
 
 ```bash
-docker-compose exec backend ./test.sh
+docker compose exec backend ./test.sh
 ```
 -----------------
 
 ## Production
 
-```bash
-export CI_COMMIT='local'
-./ci/build.sh
-```
-This will generate two docker images with prefix `eu.gcr.io/akvo-lumen/wai-sdg-portal` for backend and frontend
-
-```bash
-docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d
-```
-
-Then visit: [localhost:8080](http://localhost:8080). Any endpoints with prefix
-- `/api` is redirected to backend API: [localhost:5000](http://localhost:5000)
-- `/worker` is redirected to service worker: [localhost:5001](http://localhost:5001)
-- `/config.js` is a static config that redirected to [localhost:5001/config.js](http://localhost:5000/config.js)
-inside the network container
-
-see:
-- [nginx](https://github.com/akvo/wai-sdg-portal/blob/main/frontend/nginx/conf.d/default.conf) config
-- [mainnetwork](https://github.com/akvo/wai-sdg-portal/blob/0aa961abd05b3611533f47133aac0fe4f682c2cd/docker-compose.ci.yml#L75-L81) container setup
+Please read the full documentation here: [https://wai-sdg-portal.readthedocs.io/en/latest](https://wai-sdg-portal.readthedocs.io/en/latest/)
 
 ## Test Instances
 
