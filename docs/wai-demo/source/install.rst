@@ -171,9 +171,9 @@ Environment Variable Setup
      WEBDOMAIN=https://your-domain.com
 
    .. note::
-      - Use **Domain** and **Client ID** field from your **Auth0 SPA application** to ``AUTH_SPA_DOMAIN`` and ``AUTH_SPA_CLIENT_ID``
-      - Use **Domain**, **Secret** and **Client ID** field from your **Auth0 Backend application** to ``AUTH_DOMAIN``, ``AUTH_SECRET`` and ``AUTH_CLIENT_ID``.
-      - To get the ``AUTH0_AUDIENCE``, Go to your **Auth0 backend application**, click **APIs** Tab, expand **Auth0 Management API**. You will find **Grant ID** field to fill ``AUTH0_AUDIENCE``.
+      - Use **Domain** and **Client ID** field from your **Auth0 SPA application** for ``AUTH_SPA_DOMAIN`` and ``AUTH_SPA_CLIENT_ID``
+      - Use **Domain**, **Secret** and **Client ID** field from your **Auth0 Backend application** for ``AUTH_DOMAIN``, ``AUTH_SECRET`` and ``AUTH_CLIENT_ID``.
+      - For ``AUTH0_AUDIENCE``, Go to your **Auth0 backend application**, click **APIs** Tab, expand **Auth0 Management API**. Use the **Grant ID** field.
 
 
 Run the Application
