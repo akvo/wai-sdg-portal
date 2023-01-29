@@ -163,10 +163,18 @@ Environment Variable Setup
      AUTH0_CLIENT_ID=acad34xxxxxxxx
      AUTH0_SECRET=938axxxxxxxxxxx
      AUTH0_AUDIENCE=cdary8xxxxxxxx
+     AUTH0_SPA_DOMAIN=5a2axxxxxxxxxxx
+     AUTH0_SPA_CLIENT_ID=b821y8xxxxxxxx
      STORAGE_LOCATION=/data/storage
      MAILJET_SECRET=093asbalxxxxxxxx
      MAILJET_APIKEY=9acadlkbxxxxxxxx
      WEBDOMAIN=https://your-domain.com
+
+   .. note::
+      - Use **Domain** and **Client ID** field from your **Auth0 SPA application** to ``AUTH_SPA_DOMAIN`` and ``AUTH_SPA_CLIENT_ID``
+      - Use **Domain**, **Secret** and **Client ID** field from your **Auth0 Backend application** to ``AUTH_DOMAIN``, ``AUTH_SECRET`` and ``AUTH_CLIENT_ID``.
+      - To get the ``AUTH0_AUDIENCE``, Go to your **Auth0 backend application**, click **APIs** Tab, expand **Auth0 Management API**. You will find **Grant ID** field to fill ``AUTH0_AUDIENCE``.
+
 
 Run the Application
 *******************
