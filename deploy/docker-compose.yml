@@ -85,8 +85,8 @@ services:
       - -c
       - |
         echo "PUBLIC_URL=/" > .env
-        echo "REACT_APP_AUTH0_DOMAIN=${AUTH0_SPA_DOMAIN}" >> frontend/.env
-        echo "REACT_APP_AUTH0_CLIENT_ID=${AUTH0_SPA_CLIENT_ID}" >> frontend/.env
+        echo "REACT_APP_AUTH0_DOMAIN=${AUTH0_SPA_DOMAIN}" >> .env
+        echo "REACT_APP_AUTH0_CLIENT_ID=${AUTH0_SPA_CLIENT_ID}" >> .env
         ./release.prod.sh
     volumes:
       - ../frontend:/app:delegated
