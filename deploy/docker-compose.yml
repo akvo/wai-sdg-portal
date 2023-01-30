@@ -90,6 +90,8 @@ services:
       - ../frontend:/app:delegated
     environment:
       - INSTANCE_NAME=${INSTANCE_NAME}
+      - AUTH0_DOMAIN=${AUTH0_SPA_DOMAIN}
+      - AUTH0_CLIENT_ID=${AUTH0_SPA_CLIENT_ID}
       - GENERATE_SOURCEMAP=false
       - NODE_OPTIONS=--max-old-space-size=2048
     network_mode: service:mainnetwork

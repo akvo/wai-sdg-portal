@@ -78,6 +78,11 @@ Creating New Tenant
 Create Application
 ~~~~~~~~~~~~~~~~~~
 
+To run this site, 2 types of applications are required for the authorization and authentication process. The first application is the Single Page Application (SPA) type authentication which needed by The JavaScript frontend to authenticate. The second application is for verifying the token that has been created by the frontend which will be used for the process of authorizing access to all the Backend endpoints (API)
+
+Create New SPA Application
+--------------------------
+
 **1. Click the 3rd icon in the right corner**
 
   .. image:: ../assets/auth0-steps/c6852380-7da7-4b3a-bf66-ca65c3a853fa.png
@@ -194,6 +199,116 @@ Create Application
 
   .. image:: ../assets/auth0-steps/579153c3-9303-464a-ae4c-8e043a7a237f.png
      :alt: Step 28 screenshot
+     :width: 800
+
+************************
+
+Create New Backend Application
+------------------------------
+
+**1. Click on Create Application**
+
+  .. image:: ../assets/auth0-steps/8c4718ba-1469-4af0-97cb-2e3c654fc3d8.png
+     :alt: Step 29 screenshot
+     :width: 800
+
+************************
+
+**2. Select Machine to Machine Application**
+
+  .. image:: ../assets/auth0-steps/5d0dc29e-463b-4901-8d0a-d4b577f956f5.png
+     :alt: Step 30 screenshot
+     :width: 800
+
+************************
+
+**3. Rename the Application**
+
+  .. image:: ../assets/auth0-steps/2d9b8fb4-02ad-4066-a90f-1b3e0204adb9.png
+     :alt: Step 31 screenshot
+     :width: 800
+
+************************
+
+**4. Click on Create**
+
+  .. image:: ../assets/auth0-steps/89358aa2-2592-4315-ad1e-a6088b21ba6f.png
+     :alt: Step 32 screenshot
+     :width: 800
+
+************************
+
+**5. Click on option**
+  Once you click create button, there will be a popup with dropdown selector to authorize this application. Please select **Auth0 Management API**
+
+  .. image:: ../assets/auth0-steps/0662285f-e750-44bd-ad39-8beff769be70.png
+     :alt: Step 33 screenshot
+     :width: 800
+
+************************
+
+**6. Authorize All the Permissions**
+
+  .. image:: ../assets/auth0-steps/38704dc2-e1c1-4dd8-9e25-b2d9c167317e.png
+     :alt: Step 34 screenshot
+     :width: 800
+
+************************
+
+**7. Click on Authorize**
+
+  .. image:: ../assets/auth0-steps/042b32e1-6aa9-4fc5-9fac-880557bf96eb.png
+     :alt: Step 35 screenshot
+     :width: 800
+
+************************
+
+**8. Click on Settings**
+
+  .. image:: ../assets/auth0-steps/cae7e780-c16a-4772-a01f-0d1d14e8e0c5.png
+     :alt: Step 36 screenshot
+     :width: 800
+
+************************
+
+**9. Change your-domain.com with your app-domain for all the field below**
+
+  .. image:: ../assets/auth0-steps/fd75db30-54ea-4f61-9be4-c0d15a618561.png
+     :alt: Step 20 screenshot
+     :width: 800
+
+************************
+
+  .. image:: ../assets/auth0-steps/e5b7c497-9ed2-423d-a6af-a451be8252c5.png
+     :alt: Step 21 screenshot
+     :width: 800
+
+************************
+
+  .. image:: ../assets/auth0-steps/c96499a7-f374-4166-a362-a9fb1b8d4c59.png
+     :alt: Step 22 screenshot
+     :width: 800
+
+************************
+
+  .. image:: ../assets/auth0-steps/e86db00a-ef8f-40a6-b091-4c21fcb6a97d.png
+     :alt: Step 23 screenshot
+     :width: 800
+
+************************
+
+**10. Modify the ID Token Expiration**
+
+  .. image:: ../assets/auth0-steps/d432f2db-d02b-492b-a74d-518084fa50f1.png
+     :alt: Step 24 screenshot
+     :width: 800
+
+************************
+
+**11. Click Save Button**
+
+  .. image:: ../assets/auth0-steps/4a69f25b-a1f2-44de-93ec-a26b183162f5.png
+     :alt: Step 25 screenshot
      :width: 800
 
 ************************
