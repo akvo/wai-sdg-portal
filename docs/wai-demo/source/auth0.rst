@@ -133,7 +133,7 @@ Create New SPA Application
 
 ************************
 
-**7. Change your-domain.com with your app-domain for all the field below**
+**7. Change your-domain.com with your app-domain for all the field below keep login url blank**
 
   .. image:: ../assets/auth0-steps/fd75db30-54ea-4f61-9be4-c0d15a618561.png
      :alt: Step 20 screenshot
@@ -175,7 +175,7 @@ Create New SPA Application
 
 ************************
 
-**10. Select Connections Tab**
+**10. Select Organizations Tab**
 
   .. image:: ../assets/auth0-steps/9032ed92-6ea2-4688-8117-016a1d0f0ef6.png
      :alt: Step 26 screenshot
@@ -210,18 +210,18 @@ Create New Backend Application
 
 ************************
 
-**2. Select Machine to Machine Application**
+**2. Rename the Application**
 
-  .. image:: ../assets/auth0-steps/5d0dc29e-463b-4901-8d0a-d4b577f956f5.png
-     :alt: Step 30 screenshot
+  .. image:: ../assets/auth0-steps/2d9b8fb4-02ad-4066-a90f-1b3e0204adb9.png
+     :alt: Step 31 screenshot
      :width: 800
 
 ************************
 
-**3. Rename the Application**
+**3. Select Machine to Machine Application**
 
-  .. image:: ../assets/auth0-steps/2d9b8fb4-02ad-4066-a90f-1b3e0204adb9.png
-     :alt: Step 31 screenshot
+  .. image:: ../assets/auth0-steps/5d0dc29e-463b-4901-8d0a-d4b577f956f5.png
+     :alt: Step 30 screenshot
      :width: 800
 
 ************************
@@ -267,7 +267,7 @@ Create New Backend Application
 
 ************************
 
-**9. Change your-domain.com with your app-domain for all the field below**
+**9. Change your-domain.com with your app-domain for all the field below keep the login url blank**
 
   .. image:: ../assets/auth0-steps/fd75db30-54ea-4f61-9be4-c0d15a618561.png
      :alt: Step 20 screenshot
