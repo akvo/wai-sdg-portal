@@ -83,7 +83,7 @@ To run this site, 2 types of applications are required for the authorization and
 Create New SPA Application
 --------------------------
 
-**1. Click the 3rd icon in the right corner**
+**1. Click the 3rd icon(Applications tab) in the left corner**
 
   .. image:: ../assets/auth0-steps/c6852380-7da7-4b3a-bf66-ca65c3a853fa.png
      :alt: Step 12 screenshot
@@ -107,14 +107,10 @@ Create New SPA Application
 
 ************************
 
-**4. Fill the name field then Click Create**
+**4. Fill the name field and click on single page web applications then Click Create**
 
   .. image:: ../assets/auth0-steps/9696dc40-03ca-4d94-bd49-d0568aeac039.png
      :alt: Step 16 screenshot
-     :width: 800
-
-  .. image:: ../assets/auth0-steps/df7aad17-dfc2-4f3e-adf1-a756295988a3.png
-     :alt: Step 17 screenshot
      :width: 800
 
 ************************
