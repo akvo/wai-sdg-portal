@@ -182,12 +182,22 @@ const Main = ({ match }) => {
       api
         .get(url)
         .then((d) => {
+          const { categories } = d?.data || {};
           const tableData = d.data.data.map((x) => {
             const values = current?.values?.reduce((o, key) => {
               const ans = x.answer.find((a) => a.question === key);
               const q = current.columns.find((c) => c.key === key);
               let value = ans?.value;
               const qtype = question.find((qs) => qs.id === q.key)?.type;
+              const fc = categories?.find((c) => {
+                return (
+                  c.data === x.id &&
+                  c?.name?.toLowerCase() === q?.title?.toLowerCase()
+                );
+              });
+              if (fc?.category) {
+                value = fc.category;
+              }
               if (q?.fn && value) {
                 value = q.fn(value);
               }
@@ -204,9 +214,11 @@ const Main = ({ match }) => {
                   (opt) => opt.name?.toLowerCase() === value?.toLowerCase()
                 )?.color;
               }
-              return Object.assign(o, {
-                [key]: { value: value, color: color },
-              });
+              const _value =
+                fc || categories?.length === 0
+                  ? { value: value, color: color }
+                  : {};
+              return Object.assign(o, { [key]: _value });
             }, {});
             return {
               key: x.id,

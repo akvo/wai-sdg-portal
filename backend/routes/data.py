@@ -13,6 +13,8 @@ from db import crud_administration
 from db import crud_answer
 from db import crud_form
 from db import crud_user
+from db import crud_jmp_history
+from db import crud_jmp
 from models.user import User, UserRole
 from models.answer import Answer, AnswerDict
 from models.question import QuestionType
@@ -21,6 +23,7 @@ from db.connection import get_session
 from models.data import DataResponse, DataDict
 from models.data import DataDictWithHistory, SubmissionInfo
 from middleware import verify_user, verify_editor, check_query
+from AkvoResponseGrouper.views import refresh_view
 
 security = HTTPBearer()
 data_route = APIRouter()
@@ -154,30 +157,35 @@ def get(req: Request,
             session=session, parents=[administration], current=[])
         if not len(administration_ids):
             raise HTTPException(status_code=404, detail="Not found")
-    data = crud.get_data(session=session,
-                         form=form_id,
-                         administration=administration_ids,
-                         question=question,
-                         options=options,
-                         skip=(perpage * (page - 1)),
-                         perpage=perpage)
-    if not data["count"]:
+    res = crud.get_data(
+        session=session,
+        form=form_id,
+        administration=administration_ids,
+        question=question,
+        options=options,
+        skip=(perpage * (page - 1)),
+        perpage=perpage)
+    if not res["count"]:
         raise HTTPException(status_code=404, detail="Not found")
-    total_page = ceil(data["count"] / 10) if data["count"] > 0 else 0
+    total_page = ceil(res["count"] / 10) if res["count"] > 0 else 0
     if total_page < page:
         raise HTTPException(status_code=404, detail="Not found")
-    count = data["count"]
-    data = [d.serialize for d in data["data"]]
+    count = res["count"]
+    data = [d.serialize for d in res["data"]]
+    ids = [d["id"] for d in data]
+    categories = crud_jmp.get_categories_by_data_ids(
+        session=session, form=form_id, ids=ids
+    )
     if question:
-        data = check_project(session=session,
-                             data=data,
-                             question=question,
-                             form=form_id)
+        data = check_project(
+            session=session, data=data, question=question, form=form_id
+        )
     return {
-        'current': page,
-        'data': data,
-        'total': count,
-        'total_page': total_page,
+        "current": page,
+        "data": data,
+        "total": count,
+        "total_page": total_page,
+        "categories": categories,
     }
 
 
@@ -306,9 +314,13 @@ def update_by_id(req: Request,
             history = answer.serialize
             del history['id']
             history = History(**history)
+            crud_jmp_history.add_history(
+                session=session,
+                history=history,
+                data=data
+            )
             a = crud_answer.update_answer(session=session,
                                           answer=answer,
-                                          history=history,
                                           user=user.id,
                                           type=questions[a["question"]],
                                           value=a["value"])
@@ -325,6 +337,8 @@ def update_by_id(req: Request,
             data.updated_by = user.id
             data.updated = datetime.now()
             data = crud.update_data(session=session, data=data)
+    # refresh materialized view ar_category after updating datapoint
+    refresh_view(session=session)
     return data.serialize
 
 

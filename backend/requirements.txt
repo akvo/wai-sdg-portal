@@ -1,3 +1,4 @@
+AkvoResponseGrouper==1.1.7
 alembic==1.6.5
 fastapi==0.67.0
 FastAPI-SQLAlchemy==0.2.1
