@@ -89,6 +89,10 @@
 
           a {
             margin-left: 10px;
+            &:not(:first-child) {
+              border-left: 1px solid #ddd;
+              padding-left: 5px;
+            }
           }
         }
       }

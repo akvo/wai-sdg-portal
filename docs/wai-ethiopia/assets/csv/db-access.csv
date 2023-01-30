@@ -1,0 +1,4 @@
+pos,column_name,data_type,column_default,is_nullable
+1,id,integer,nextval('access_id_seq'::regclass),NO
+2,user,integer,,YES
+3,administration,integer,,YES
