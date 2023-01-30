@@ -1,8 +1,8 @@
-"""create jmp_history table
+"""create jmp history
 
-Revision ID: 974a3418ace8
-Revises: f2f0ac233521
-Create Date: 2023-01-19 03:57:07.481110
+Revision ID: d37e4c7dbf21
+Revises: 301adfe1cccc
+Create Date: 2023-01-30 06:19:50.001584
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = "974a3418ace8"
-down_revision = "f2f0ac233521"
+revision = "d37e4c7dbf21"
+down_revision = "301adfe1cccc"
 branch_labels = None
 depends_on = None
 
