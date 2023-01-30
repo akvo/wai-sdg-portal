@@ -16,7 +16,10 @@ var i18n = {
   footer: {
     privacyPolicy: "Privacy Policy",
     termsOfService: "Terms of Service",
-    developer: "Developer",
+    documentation: {
+	rtd: "Documentation",
+	swagger: "Developer API",
+    },
     dataTitle: "Data",
     dataText:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac consectetur diam. Pellentesque lacinia, erat ac efficitur molestie, sapien odio efficitur purus, non ornare sem massa euismod metus.",

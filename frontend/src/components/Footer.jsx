@@ -52,14 +52,21 @@ const FooterEnd = () => {
       >
         {/* <Link to="/privacy-policy">{footer?.privacyPolicy}</Link> */}
         {/* <Link to="/tos">{footer?.termsOfService}</Link> */}
-        {user && (
+        {user && [
           <Link
+            key="api-documentation"
             to="/api-docs"
             onClick={() => changePage('documentation')}
           >
-            {footer?.developer}
-          </Link>
-        )}
+            {footer?.documentation?.swagger}
+          </Link>,
+          <Link
+            key="user-documentation"
+            to="/documentation"
+          >
+            {footer?.documentation?.rtd}
+          </Link>,
+        ]}
       </Col>
     </Row>
   );
