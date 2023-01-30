@@ -392,7 +392,7 @@ def get(req: Request, session: Session = Depends(get_session)):
         if 'question_group' in fr:
             del fr['question_group']
         hash_survey_id = hash_cipher(text=str(form_id))
-        url = f"{webdomain}/webform/{hash_survey_id}"
+        url = f"{webdomain}/webform?id={hash_survey_id}"
         if "https" not in webdomain:
             url = f"https://{webdomain}/webform?id={hash_survey_id}"
         data = crud_data.count(session=session, form=form_id)
