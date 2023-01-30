@@ -1,0 +1,10 @@
+pos,column_name,data_type,column_default,is_nullable
+1,id,integer,nextval('user_id_seq'::regclass),NO
+2,email,character varying,,YES
+3,active,boolean,,YES
+4,role,USER-DEFINED,,YES
+5,created,timestamp without time zone,,YES
+6,organisation,integer,,YES
+7,name,character varying,,YES
+8,__ts_vector__,tsvector,,YES
+9,manage_form_passcode,boolean,false,NO
