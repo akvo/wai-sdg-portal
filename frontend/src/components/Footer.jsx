@@ -62,7 +62,7 @@ const FooterEnd = () => {
           </Link>,
           <Link
             key="user-documentation"
-            to="/documentation"
+            to="/documentation/"
           >
             {footer?.documentation?.rtd}
           </Link>,
