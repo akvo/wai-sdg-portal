@@ -342,7 +342,7 @@ def update_by_id(
             data.updated = datetime.now()
             data = crud.update_data(session=session, data=data)
     # refresh materialized view ar_category after updating datapoint
-    # TODO: Please move this to worker or throw it somewhere! otherwise, the refresh view get's triggered everytime we update the data
+    # TODO: Please check if data gets updated
     TESTING = environ.get("TESTING")
     if not TESTING:
         background_tasks.add_task(refresh_view, session)
