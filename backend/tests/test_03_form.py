@@ -55,20 +55,20 @@ class TestFormRoutes():
         # test no auth
         res = await client.put(
             app.url_path_for("form:update_passcode", id=1),
-            params={"passcode": "test@123"})
+            params={"passcode": "pwd123"})
         assert res.status_code == 403
         # test normal admin
         normal_admin_acc = Acc(
             verified=True, email="normal_admin@mail.com", name="Normal Admin")
         res = await client.put(
             app.url_path_for("form:update_passcode", id=1),
-            params={"passcode": "test@123"},
+            params={"passcode": "pwd123"},
             headers={"Authorization": f"Bearer {normal_admin_acc.token}"})
         assert res.status_code == 403
         # test admin with manage form passcode
         res = await client.put(
             app.url_path_for("form:update_passcode", id=1),
-            params={"passcode": "test@123"},
+            params={"passcode": "pwd123"},
             headers={"Authorization": f"Bearer {account.token}"})
         assert res.status_code == 204
 

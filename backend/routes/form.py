@@ -1,8 +1,9 @@
 import os
 import json
 from http import HTTPStatus
+from pydantic import Required
 from fastapi import Depends, Request, APIRouter, BackgroundTasks
-from fastapi import Response, HTTPException, Query
+from fastapi import Response, HTTPException, Form
 from fastapi.security import HTTPBearer
 from fastapi.security import HTTPBasicCredentials as credentials
 from typing import List, Optional
@@ -15,6 +16,7 @@ import db.crud_administration as crud_administration
 import db.crud_question_group as crud_question_group
 from db.connection import get_session
 from models.form import FormDict, FormBase, FormDictWithFlag
+from models.form import FormLoginResponse
 from models.user import UserRole
 from models.question_group import QuestionGroup
 from models.question import QuestionType, QuestionDict, Question
@@ -594,6 +596,31 @@ def get_standalone_form_detail_by_uuid(
     return form.to_form_detail
 
 
+@form_route.post(
+    "/webform-standalone/login",
+    response_model=FormLoginResponse,
+    summary="get standalone form detail by URL",
+    name="webform:check_passcode",
+    tags=["Form"])
+def form_standalone_login(
+    req: Request,
+    uuid: str = Form(default=Required),
+    passcode: str = Form(default=Required),
+    session: Session = Depends(get_session)
+):
+    form_id = get_form_id_from_url_config(uuid=uuid)
+    form = crud.get_form_by_id(session=session, id=form_id)
+    if not form:
+        return Response(status_code=HTTPStatus.NOT_FOUND.value)
+    # check passcode
+    if passcode and form.passcode != passcode:
+        return Response(status_code=HTTPStatus.FORBIDDEN.value)
+    return {
+        "uuid": uuid,
+        "passcode": form.passcode
+    }
+
+
 @form_route.get(
     "/webform-standalone/{uuid:path}",
     summary="get standalone webform definition by URL & passcode",
@@ -602,14 +629,14 @@ def get_standalone_form_detail_by_uuid(
 def get_standalone_webform_by_uuid(
     req: Request,
     uuid: str,
-    passcode: Optional[str] = Query(None),
     session: Session = Depends(get_session)
 ):
+    # get form id by uuid# write config
+    write_form_url_config(session=session)
     # get form id by uuid
     form_id = get_form_id_from_url_config(uuid=uuid)
     form = crud.get_form_by_id(session=session, id=form_id)
-    # check passcode
-    if passcode and form.passcode != passcode:
+    if not form:
         return Response(status_code=HTTPStatus.NOT_FOUND.value)
     res = get_form_definition(req=req, id=form.id, session=session)
     return res

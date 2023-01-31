@@ -7,7 +7,7 @@
 const { hostname } = self.location;
 const isLocal = hostname === 'localhost';
 const appName = isLocal ? 'wai-webform' : hostname;
-const version = 1; // indexDB versioning
+const version = 2; // indexDB, cache versioning
 const cacheName = `${appName}-v${version}`;
 
 // the static files we want to cache
@@ -16,6 +16,7 @@ const staticFiles = [
   '/',
   '/webform',
   // assets
+  '/config.js',
   '/static/js/main.chunk.js',
   '/static/js/0.chunk.js',
   '/static/js/bundle.js',
@@ -212,15 +213,45 @@ const retryApiCalls = () => {
 // #######################################################
 // when our service worker is installed we populate the cache with our static assets
 const installHandler = (e) => {
+  self.skipWaiting();
   e.waitUntil(
     caches.open(cacheName).then((cache) => cache.addAll(staticFiles))
   );
 };
 
 const activateHandler = (e) => {
+  let isCacheChange = false;
   if (self.indexedDB) {
     createIndexedDB(IDBConfig);
   }
+
+  // clear old cache for this app
+  e.waitUntil(
+    (async () => {
+      const keys = await caches.keys();
+      const deleted = keys.map(async (cache) => {
+        // only delete cache for this app
+        if (cache.includes(appName) && cache !== cacheName) {
+          isCacheChange = true;
+          return await caches.delete(cache);
+        }
+      });
+      // unregister service worker if diff version cache and online mode
+      if (isCacheChange && navigator.onLine) {
+        self.registration
+          .unregister()
+          .then(function () {
+            return self.clients.matchAll();
+          })
+          .then(function (clients) {
+            clients.forEach((client) => client.navigate(client.url));
+            isCacheChange = false;
+          });
+      }
+      return deleted;
+    })()
+  );
+
   return self.clients.claim();
   // use below if we have default api to call
   // const apiToCache = [`/api/xxx`];
@@ -236,6 +267,13 @@ const fetchHandler = async (e) => {
   const { request } = e;
   const { url } = request;
   const { pathname } = new URL(url);
+  // excludes url from cache
+  if (
+    url.includes('/api/user/me') ||
+    url.includes('/api/webform-standalone/login')
+  ) {
+    return;
+  }
   // if there's a call to our api, we try to serve a cached response, otherwise we call the api
   // and cache the response for later use
   if (url.includes('/api')) {
