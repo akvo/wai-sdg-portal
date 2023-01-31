@@ -1,3 +1,4 @@
+from os import environ
 from http import HTTPStatus
 from datetime import datetime
 from math import ceil
@@ -282,12 +283,13 @@ def bulk_delete(req: Request,
                 summary="update data",
                 name="data:update",
                 tags=["Data"])
-def update_by_id(req: Request,
-                 id: int,
-                 background_tasks: BackgroundTasks,
-                 answers: List[AnswerDict],
-                 session: Session = Depends(get_session),
-                 credentials: credentials = Depends(security)):
+def update_by_id(
+        req: Request,
+        id: int,
+        background_tasks: BackgroundTasks,
+        answers: List[AnswerDict],
+        session: Session = Depends(get_session),
+        credentials: credentials = Depends(security)):
     user = verify_editor(req.state.authenticated, session)
     data = crud.get_data_by_id(session=session, id=id)
     form = crud_form.get_form_by_id(session=session, id=data.form)
@@ -341,7 +343,9 @@ def update_by_id(req: Request,
             data = crud.update_data(session=session, data=data)
     # refresh materialized view ar_category after updating datapoint
     # TODO: Please move this to worker or throw it somewhere! otherwise, the refresh view get's triggered everytime we update the data
-    background_tasks.add_task(refresh_view, session)
+    TESTING = environ.get("TESTING")
+    if not TESTING:
+        background_tasks.add_task(refresh_view, session)
     return data.serialize
 
 
