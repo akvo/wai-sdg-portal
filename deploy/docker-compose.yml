@@ -6,6 +6,7 @@ services:
     command: ["tail", "-f", "/dev/null"]
     ports:
       - 80:80
+      - 443:443
       - 5000:5000
       - 5001:5001
   db:
@@ -85,8 +86,8 @@ services:
       - -c
       - |
         echo "PUBLIC_URL=/" > .env
-        echo "REACT_APP_AUTH0_DOMAIN=${AUTH0_SPA_DOMAIN}" >> .env
-        echo "REACT_APP_AUTH0_CLIENT_ID=${AUTH0_SPA_CLIENT_ID}" >> .env
+        echo REACT_APP_AUTH0_DOMAIN=${AUTH0_DOMAIN} >> .env
+        echo REACT_APP_AUTH0_CLIENT_ID=${AUTH0_CLIENT_ID} >> .env
         ./release.prod.sh
     volumes:
       - ../frontend:/app:delegated
@@ -122,6 +123,43 @@ services:
     container_name: frontend
     environment:
       - INSTANCE_NAME=${INSTANCE_NAME}
+    network_mode: service:mainnetwork
+
+  frontend_ssl:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    container_name: frontend_ssl
+    volumes:
+      - ./certbot/www:/var/www/certbot/:ro
+      - ./certbot/conf/:/etc/nginx/ssl/:ro
+      - ./nginx/default.ssl.conf:/etc/nginx/templates/default.conf.template
+    environment:
+      - INSTANCE_NAME=${INSTANCE_NAME}
+      - DOMAIN=${DOMAIN}
+    network_mode: service:mainnetwork
+
+
+  certbot:
+    image: certbot/certbot:latest
+    container_name: certbot
+    volumes:
+      - ./certbot/www/:/var/www/certbot/:rw
+      - ./certbot/conf/:/etc/letsencrypt/:rw
+    environment:
+      - DOMAIN=${DOMAIN}
+    network_mode: service:mainnetwork
+
+
+  nginx_certbot:
+    image: nginx:1.21.0-alpine
+    container_name: nginx_certbot
+    volumes:
+      - ./certbot/www:/var/www/certbot/:rw
+      - ./certbot/conf/:/etc/nginx/ssl/:rw
+      - ./nginx/default.conf:/etc/nginx/templates/default.conf.template
+    environment:
+      - DOMAIN=${DOMAIN}
     network_mode: service:mainnetwork
 
 volumes:
