@@ -60,12 +60,13 @@ const FooterEnd = () => {
           >
             {footer?.documentation?.swagger}
           </Link>,
-          <Link
+          <a
             key="user-documentation"
-            to="/documentation/"
+            href="/documentation/index.html"
+            target="_blank"
           >
             {footer?.documentation?.rtd}
-          </Link>,
+          </a>,
         ]}
       </Col>
     </Row>
