@@ -86,15 +86,15 @@ services:
       - -c
       - |
         echo "PUBLIC_URL=/" > .env
-        echo REACT_APP_AUTH0_DOMAIN=${AUTH0_DOMAIN} >> .env
-        echo REACT_APP_AUTH0_CLIENT_ID=${AUTH0_CLIENT_ID} >> .env
+        echo REACT_APP_AUTH0_DOMAIN=${AUTH0_SPA_DOMAIN} >> .env
+        echo REACT_APP_AUTH0_CLIENT_ID=${AUTH0_SPA_CLIENT_ID} >> .env
         ./release.prod.sh
     volumes:
       - ../frontend:/app:delegated
     environment:
       - INSTANCE_NAME=${INSTANCE_NAME}
-      - AUTH0_DOMAIN=${AUTH0_SPA_DOMAIN}
-      - AUTH0_CLIENT_ID=${AUTH0_SPA_CLIENT_ID}
+      - AUTH0_SPA_DOMAIN=${AUTH0_SPA_DOMAIN}
+      - AUTH0_SPA_CLIENT_ID=${AUTH0_SPA_CLIENT_ID}
       - GENERATE_SOURCEMAP=false
       - NODE_OPTIONS=--max-old-space-size=2048
     network_mode: service:mainnetwork
