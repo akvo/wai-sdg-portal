@@ -61,19 +61,20 @@ const FooterEnd = ({ isWebformStandalone }) => {
             >
               {footer?.documentation?.swagger}
             </Link>,
-            <Link
+            <a
               key="user-documentation"
-              to="/documentation"
+              href="/documentation/index.html"
+              target="_blank"
             >
               {footer?.documentation?.rtd}
-            </Link>,
+            </a>,
           ]}
       </Col>
     </Row>
   );
 };
 
-const Footer = ({ isWebformStandalone }) => {
+const Footer = () => {
   return (
     <>
       {/* ## FIXME: Enable once footer text is ready
@@ -86,7 +87,7 @@ const Footer = ({ isWebformStandalone }) => {
         <FooterContent title={footer?.workTitle} text={footer?.workText} />
       </Row>
         */}
-      <FooterEnd isWebformStandalone={isWebformStandalone} />
+      <FooterEnd />
     </>
   );
 };
