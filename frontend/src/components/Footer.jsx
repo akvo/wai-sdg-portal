@@ -74,7 +74,7 @@ const FooterEnd = ({ isWebformStandalone }) => {
   );
 };
 
-const Footer = () => {
+const Footer = ({ isWebformStandalone }) => {
   return (
     <>
       {/* ## FIXME: Enable once footer text is ready
@@ -87,7 +87,7 @@ const Footer = () => {
         <FooterContent title={footer?.workTitle} text={footer?.workText} />
       </Row>
         */}
-      <FooterEnd />
+      <FooterEnd isWebformStandalone={isWebformStandalone} />
     </>
   );
 };
