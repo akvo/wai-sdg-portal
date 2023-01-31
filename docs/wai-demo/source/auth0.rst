@@ -83,7 +83,7 @@ To run this site, 2 types of applications are required for the authorization and
 Create New SPA Application
 --------------------------
 
-**1. Click the 3rd icon in the right corner**
+**1. Click the 3rd icon(Applications tab) in the left corner**
 
   .. image:: ../assets/auth0-steps/c6852380-7da7-4b3a-bf66-ca65c3a853fa.png
      :alt: Step 12 screenshot
@@ -107,14 +107,10 @@ Create New SPA Application
 
 ************************
 
-**4. Fill the name field then Click Create**
+**4. Fill the name field and click on single page web applications then Click Create**
 
   .. image:: ../assets/auth0-steps/9696dc40-03ca-4d94-bd49-d0568aeac039.png
      :alt: Step 16 screenshot
-     :width: 800
-
-  .. image:: ../assets/auth0-steps/df7aad17-dfc2-4f3e-adf1-a756295988a3.png
-     :alt: Step 17 screenshot
      :width: 800
 
 ************************
@@ -137,7 +133,7 @@ Create New SPA Application
 
 ************************
 
-**7. Change your-domain.com with your app-domain for all the field below**
+**7. Change your-domain.com with your app-domain for all the field below keep login url blank**
 
   .. image:: ../assets/auth0-steps/fd75db30-54ea-4f61-9be4-c0d15a618561.png
      :alt: Step 20 screenshot
@@ -179,7 +175,7 @@ Create New SPA Application
 
 ************************
 
-**10. Select Connections Tab**
+**10. Select Organizations Tab**
 
   .. image:: ../assets/auth0-steps/9032ed92-6ea2-4688-8117-016a1d0f0ef6.png
      :alt: Step 26 screenshot
@@ -214,18 +210,18 @@ Create New Backend Application
 
 ************************
 
-**2. Select Machine to Machine Application**
+**2. Rename the Application**
 
-  .. image:: ../assets/auth0-steps/5d0dc29e-463b-4901-8d0a-d4b577f956f5.png
-     :alt: Step 30 screenshot
+  .. image:: ../assets/auth0-steps/2d9b8fb4-02ad-4066-a90f-1b3e0204adb9.png
+     :alt: Step 31 screenshot
      :width: 800
 
 ************************
 
-**3. Rename the Application**
+**3. Select Machine to Machine Application**
 
-  .. image:: ../assets/auth0-steps/2d9b8fb4-02ad-4066-a90f-1b3e0204adb9.png
-     :alt: Step 31 screenshot
+  .. image:: ../assets/auth0-steps/5d0dc29e-463b-4901-8d0a-d4b577f956f5.png
+     :alt: Step 30 screenshot
      :width: 800
 
 ************************
@@ -271,7 +267,7 @@ Create New Backend Application
 
 ************************
 
-**9. Change your-domain.com with your app-domain for all the field below**
+**9. Change your-domain.com with your app-domain for all the field below keep the login url blank**
 
   .. image:: ../assets/auth0-steps/fd75db30-54ea-4f61-9be4-c0d15a618561.png
      :alt: Step 20 screenshot
