@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './webform.scss';
 import { Webform, SavedSubmission } from 'akvo-react-form';
 import 'akvo-react-form/dist/index.css';
-import { UIState } from '../../state/ui';
 import WebformLogin from './WebformLogin';
 import WebformCaptcha from './WebformCaptcha';
 import { Row, Col, Button, notification } from 'antd';
@@ -16,14 +15,20 @@ const WebformStandalone = ({ location }) => {
   const [submitting, setSubmitting] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [payload, setPayload] = useState([]);
-  const { isLogin, formValue, submitter, complete } = UIState.useState(
-    (s) => s.webformLogin
-  );
+
+  const [states, setStates] = useState({
+    submitter: null,
+    isLogin: false,
+    formValue: {},
+    complete: false,
+  });
+
+  const { isLogin, formValue, submitter, complete } = states;
 
   const { id: formId } = formValue;
   const dataPointName = `${formId} - ${submitter}`;
 
-  const onSubmit = () => {
+  const onSubmit = (current) => {
     setIsVisible(false);
     if (!payload.length) {
       return;
@@ -39,11 +44,9 @@ const WebformStandalone = ({ location }) => {
           message: `${res.data.id} - ${res.data.name} submitted.`,
         });
         setTimeout(() => {
-          UIState.update((s) => {
-            s.webformLogin = {
-              ...s.webformLogin,
-              complete: true,
-            };
+          setStates({
+            ...current,
+            complete: true,
           });
         }, 1000);
       })
@@ -77,17 +80,20 @@ const WebformStandalone = ({ location }) => {
     setIsVisible(true);
   };
 
-  const handleAddNewSubmission = () => {
-    UIState.update((s) => {
-      s.webformLogin = {
-        ...s.webformLogin,
-        complete: false,
-      };
+  const handleAddNewSubmission = (current) => {
+    setStates({
+      ...current,
+      complete: false,
     });
   };
 
   if (!isLogin) {
-    return <WebformLogin uuid={uuid} />;
+    return (
+      <WebformLogin
+        uuid={uuid}
+        setStates={setStates}
+      />
+    );
   }
 
   if (complete) {
@@ -139,7 +145,7 @@ const WebformStandalone = ({ location }) => {
       </Row>
       <WebformCaptcha
         isVisible={isVisible}
-        onOk={onSubmit}
+        onOk={() => onSubmit(states)}
         onCancel={() => setIsVisible(false)}
         submitting={submitting}
       />

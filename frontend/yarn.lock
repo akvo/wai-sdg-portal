@@ -2651,10 +2651,10 @@ akvo-react-form@^2.0.4:
     react-icons "^4.3.1"
     react-leaflet "^4.0.2"
 
-akvo-react-form@^2.0.6:
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/akvo-react-form/-/akvo-react-form-2.0.6.tgz#3393d83bd313e4820c24f72d4ae9bdfa6cfa2a69"
-  integrity sha512-y1kzQ6fJd37CzphK2LBoD/eB/bYpJaFgE0+AO3C/Mhz6uEOSDT/J5UODTTmdEIgnVcJZQw8sE5VXmLhVnXqSJw==
+akvo-react-form@^2.0.8:
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/akvo-react-form/-/akvo-react-form-2.0.8.tgz#bbbd0a9dc3cf0703481832681b4fa23d3f45d180"
+  integrity sha512-7ZHBmctR/9pm+1LSxGnX7BocJgTf6OW8A/WlYr7KRfHVSH9j6I/E1AmTVMOyCPF6mQr0RCAf1Dmpk/ATMvacvA==
   dependencies:
     "@react-leaflet/core" ">=1.0.0 <1.1.0 || ^1.1.1"
     antd "^4.20.0"
