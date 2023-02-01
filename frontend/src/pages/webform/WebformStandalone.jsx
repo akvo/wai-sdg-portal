@@ -56,8 +56,8 @@ const WebformStandalone = ({ location }) => {
             notificationText?.errorText
           ) : (
             <>
-              You are <i>offline</i>, please <b>Save</b> your submission and{' '}
-              <i>Submit</i> once you back online.
+              Looks like you are <i>offline</i>. Your submission has been{' '}
+              <b>saved</b>. Please load it and submit once you are online.
             </>
           ),
         });
