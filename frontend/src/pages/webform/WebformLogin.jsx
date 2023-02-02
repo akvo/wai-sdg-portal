@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import './webform.scss';
 import { Row, Col, Form, Input, Button, Card, Spin, notification } from 'antd';
-import { UIState } from '../../state/ui';
 import ErrorPage from '../../components/ErrorPage';
 import api from '../../util/api';
 import isEmpty from 'lodash/isEmpty';
 
 const { buttonText, formText } = window.i18n;
 
-const WebformLogin = ({ uuid }) => {
+const WebformLogin = ({ uuid, setStates }) => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [formDetail, setFormDetail] = useState({});
@@ -62,14 +61,11 @@ const WebformLogin = ({ uuid }) => {
       api
         .post('webform-standalone/login', data)
         .then(() => {
-          UIState.update((s) => {
-            s.webformLogin = {
-              ...s.webformLogin,
-              submitter: submitter,
-              isLogin: true,
-              formValue: formDetail,
-              complete: false,
-            };
+          setStates({
+            submitter: submitter,
+            isLogin: true,
+            formValue: formDetail,
+            complete: false,
           });
         })
         .catch(() => {
@@ -84,14 +80,11 @@ const WebformLogin = ({ uuid }) => {
     }
     if (allowUsingPasscode && !navigator.onLine) {
       if (passcode === formDetail?.passcode) {
-        UIState.update((s) => {
-          s.webformLogin = {
-            ...s.webformLogin,
-            submitter: submitter,
-            isLogin: true,
-            formValue: formDetail,
-            complete: false,
-          };
+        setStates({
+          submitter: submitter,
+          isLogin: true,
+          formValue: formDetail,
+          complete: false,
         });
       } else {
         notification.error({
@@ -100,14 +93,11 @@ const WebformLogin = ({ uuid }) => {
       }
     }
     if (!allowUsingPasscode) {
-      UIState.update((s) => {
-        s.webformLogin = {
-          ...s.webformLogin,
-          submitter: submitter,
-          isLogin: true,
-          formValue: formDetail,
-          complete: false,
-        };
+      setStates({
+        submitter: submitter,
+        isLogin: true,
+        formValue: formDetail,
+        complete: false,
       });
     }
     setTimeout(() => {

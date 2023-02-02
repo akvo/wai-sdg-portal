@@ -19,12 +19,6 @@ const defaultUIState = {
   historyChart: {},
   loadedFormId: null,
   boundsAlignToRight: null,
-  webformLogin: {
-    submitter: null,
-    isLogin: false,
-    formValue: {},
-    complete: false,
-  },
 };
 
 export const UIState = new Store(defaultUIState);
