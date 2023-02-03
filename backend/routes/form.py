@@ -385,7 +385,6 @@ def get_form_id_from_url_config(uuid: str):
                 name="form:get_all",
                 tags=["Form"])
 def get(req: Request, session: Session = Depends(get_session)):
-    webdomain = os.environ['WEBDOMAIN']
     form = crud.get_form(session=session)
     forms = []
     configs = {}
@@ -394,9 +393,7 @@ def get(req: Request, session: Session = Depends(get_session)):
         if 'question_group' in fr:
             del fr['question_group']
         hash_survey_id = hash_cipher(text=str(form_id))
-        url = f"{webdomain}/webform?id={hash_survey_id}"
-        if "https" not in webdomain:
-            url = f"https://{webdomain}/webform?id={hash_survey_id}"
+        url = f"/webform?id={hash_survey_id}"
         data = crud_data.count(session=session, form=form_id)
         fr.update({'disableDelete': True if data else False})
         fr.update({'url': url or None})

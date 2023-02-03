@@ -164,7 +164,12 @@ const ManagePasscode = () => {
     api
       .get(`/form/`)
       .then((res) => {
-        setData(res.data);
+        setData(
+          res.data.map((x) => ({
+            ...x,
+            url: `${window.document.location.origin}${x.url}`,
+          }))
+        );
         setPaginate({
           current: res.data.current,
           total: res.data.total,
