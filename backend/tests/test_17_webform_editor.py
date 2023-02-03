@@ -760,7 +760,6 @@ class TestWebformEditorRoutes():
 
     async def test_get_all_form(self, app: FastAPI, session: Session,
                                 client: AsyncClient) -> None:
-        webdomain = os.environ.get('WEBDOMAIN')
         res = await client.get(app.url_path_for("form:get_all"))
         assert res.status_code == 200
         res = res.json()
