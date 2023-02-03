@@ -37,7 +37,6 @@ const WebformStandalone = ({ location }) => {
   const { isLogin, formValue, submitter, complete } = states;
 
   const { id: formId } = formValue;
-  const dataPointName = `${formId} - ${submitter}`;
 
   const onSubmit = (current) => {
     setIsVisible(false);
@@ -146,7 +145,7 @@ const WebformStandalone = ({ location }) => {
             submitButtonSetting={{ loading: submitting }}
             autoSave={{
               formId: formId,
-              name: `${dataPointName} - ${dataPointId}`,
+              name: `${submitter} - ${dataPointId}`,
               buttonText: buttonText?.btnSave,
             }}
             leftDrawerConfig={{
