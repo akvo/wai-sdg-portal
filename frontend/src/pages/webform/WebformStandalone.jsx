@@ -10,8 +10,19 @@ import api from '../../util/api';
 
 const { notificationText, buttonText, formText } = window.i18n;
 
+const createUniqueId = () => {
+  const date = new Date();
+  const components = [
+    date.toLocaleDateString().replace(/\//g, '-'),
+    date.toLocaleTimeString(),
+  ];
+  return components.join(' - ');
+};
+
 const WebformStandalone = ({ location }) => {
+  const initialId = createUniqueId();
   const uuid = location?.search?.split('id=')?.[1];
+  const [dataPointId, setDataPointId] = useState(initialId);
   const [submitting, setSubmitting] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [payload, setPayload] = useState([]);
@@ -67,7 +78,7 @@ const WebformStandalone = ({ location }) => {
       });
   };
 
-  const onFinish = (values) => {
+  const onFinish = (values, refreshForm) => {
     let data = Object.keys(values).map((v) => {
       // do not transfrom datapoint to post params
       if (values[v] && v !== 'datapoint') {
@@ -78,6 +89,9 @@ const WebformStandalone = ({ location }) => {
     data = data.filter((x) => x);
     setPayload(data);
     setIsVisible(true);
+    const newId = createUniqueId();
+    setDataPointId(newId);
+    refreshForm();
   };
 
   const handleAddNewSubmission = (current) => {
@@ -109,7 +123,7 @@ const WebformStandalone = ({ location }) => {
           >
             <FormOutlined style={{ fontSize: '40px' }} />
             <h2>Thank you for your submission!</h2>
-            <Button onClick={handleAddNewSubmission}>
+            <Button onClick={() => handleAddNewSubmission(states)}>
               {buttonText?.btnAddNewSubmission}
             </Button>
           </Col>
@@ -132,7 +146,7 @@ const WebformStandalone = ({ location }) => {
             submitButtonSetting={{ loading: submitting }}
             autoSave={{
               formId: formId,
-              name: dataPointName,
+              name: `${dataPointName} - ${dataPointId}`,
               buttonText: buttonText?.btnSave,
             }}
             leftDrawerConfig={{
