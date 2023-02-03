@@ -779,7 +779,7 @@ class TestWebformEditorRoutes():
                 "language": "id",
                 "description": "deskripsi uji coba"
             }],
-            "url": f"https://{webdomain}/webform?id={url1}",
+            "url": f"/webform?id={url1}",
             "passcode": "pwd123",
         }, {
             "id": 903430001,
@@ -794,7 +794,7 @@ class TestWebformEditorRoutes():
                 "language": "id",
                 "description": "Lorem Ipsum is simply dummy text Description",
             }],
-            "url": f"https://{webdomain}/webform?id={url2}",
+            "url": f"/webform?id={url2}",
             "passcode": None,
         }]
 
