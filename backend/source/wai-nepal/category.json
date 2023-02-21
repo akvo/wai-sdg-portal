@@ -24,10 +24,25 @@
                         }
                     },
                     {
+                        "id": 552050125,
+                        "name": "Is water available from the main water point at time of the survey?",
+                        "options": [
+                            "Yes"
+                        ],
+                        "else": {
+                            "name": "Limited"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "No Service",
+                "questions": [
+                    {
                         "id": 552050124,
                         "name": "Where is the main water supply for the facility located?",
                         "options": [
-                            "On premises"
+                            "500 m or further"
                         ],
                         "other": [
                             {
@@ -39,17 +54,7 @@
                             }
                         ],
                         "else": {
-                            "name": "No Service"
-                        }
-                    },
-                    {
-                        "id": 552050125,
-                        "name": "Is water available from the main water point at time of the survey?",
-                        "options": [
-                            "Yes"
-                        ],
-                        "else": {
-                            "name": "Limited"
+                            "name": "Basic"
                         }
                     }
                 ]
@@ -415,10 +420,20 @@
                         "id": 578820193,
                         "name": "Are both soap and water currently available at the handwashing facilities?",
                         "options": [
-                            "Yes"
+                            "Yes, water and soap"
+                        ],
+                        "other": [
+                            {
+                                "name": "Limited",
+                                "options": [
+                                    "Water only",
+                                    "Soap only"
+                                ],
+                                "questions": []
+                            }
                         ],
                         "else": {
-                            "name": "Limited"
+                            "name": "No Service"
                         }
                     }
                 ]
