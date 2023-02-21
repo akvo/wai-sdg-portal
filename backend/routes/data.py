@@ -20,7 +20,7 @@ from db.connection import get_session
 from models.data import DataResponse, DataDict
 from models.data import DataDictWithHistory, SubmissionInfo
 from middleware import verify_user, verify_editor, check_query
-
+from db.crud_jmp import get_jmp_as_table_view
 security = HTTPBearer()
 data_route = APIRouter()
 
@@ -104,7 +104,7 @@ def get(req: Request,
     if total_page < page:
         raise HTTPException(status_code=404, detail="Not found")
     count = data["count"]
-    data = [d.serialize for d in data["data"]]
+    data = get_jmp_as_table_view(session=session, form=form_id, data=data)
     if question:
         data = check_project(session=session,
                              data=data,
