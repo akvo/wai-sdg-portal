@@ -83,7 +83,7 @@ const MainTable = ({
       api
         .get('/collection/refresh')
         .then(() => setSaving(false))
-        .catch((err) => setSaving(false));
+        .catch(() => setSaving(false));
       UIState.update((e) => {
         e.editedRow = {};
         e.historyChart = {};

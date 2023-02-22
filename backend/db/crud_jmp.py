@@ -1,9 +1,9 @@
 from sqlalchemy.orm import Session
 from typing import List
 from AkvoResponseGrouper.views import get_categories
-from models.data import Data, DataDict
+from models.data import DataDict
 
-# temporary solution when migrating WAI to AkvoResponseGrouper
+# Workaround while WAI to AkvoResponseGrouper migration is in progress
 config_items = [
     {
         "formId": 557950127,
@@ -44,20 +44,23 @@ def transform_to_answer(q: dict, categories: list):
 
 
 def get_jmp_as_table_view(
-    session: Session, form: int, data: List[Data]
+    session: Session, form: int, data: List[DataDict]
 ) -> List[DataDict]:
-    config = list(filter(lambda c: c["formId"] == form, config_items)).pop()
-    gs = get_categories(session=session, form=form)
-    ql = [c["question"] for c in config["questions"]]
-    data = [d.serialize for d in data["data"]]
-    for d in data:
-        answer = list(filter(lambda x: (x["question"] not in ql), d["answer"]))
-        categories = list(filter(lambda s: (s["data"] == d["id"]), gs))
-        levels = list(
-            map(
-                lambda q: transform_to_answer(q=q, categories=categories),
-                config["questions"],
+    config = list(filter(lambda c: c["formId"] == form, config_items))
+    if len(config):
+        config = config[0]
+        gc = get_categories(session=session, form=form)
+        ql = [c["question"] for c in config["questions"]]
+        for d in data:
+            answer = list(
+                filter(lambda x: (x["question"] not in ql), d["answer"])
             )
-        )
-        d.update({"answer": answer + levels})
+            categories = list(filter(lambda s: (s["data"] == d["id"]), gc))
+            levels = list(
+                map(
+                    lambda q: transform_to_answer(q=q, categories=categories),
+                    config["questions"],
+                )
+            )
+            d.update({"answer": answer + levels})
     return data
