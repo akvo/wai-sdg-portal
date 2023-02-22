@@ -1,3 +1,5 @@
+import json
+from collections import defaultdict
 from typing import List, Optional
 from fastapi import Request, APIRouter, HTTPException, Query
 from fastapi import Depends
@@ -76,25 +78,33 @@ def get_aggregated_pie_chart_data(req: Request,
     return value
 
 
-def group_children(p, values):
+def group_children(p, data_source, labels):
     data = list(
-        filter(lambda d: (d["administration"] in p["children"]), values)
+        filter(lambda d: (d["administration"] in p["children"]), data_source)
     )
     data = [{"category": d["category"], "data": d["data"]} for d in data]
     total = len(data)
-    obj = {}
     childs = []
     groups = groupby(data, key=lambda d: d["category"])
+    counter = defaultdict()
     for k, values in groups:
-        obj[k] = list(values)
-    for k, v in obj.items():
-        count = len(v)
-        percent = count / total * 100
-        childs.append({
-            "option": k,
-            "count": count,
-            "percent": percent
-        })
+        for v in list(values):
+            if v["category"] in list(counter):
+                counter[v["category"]] += 1
+            else:
+                counter[v["category"]] = 1
+    for lb in labels:
+        label = lb["name"]
+        count = counter[label] if label in counter else 0
+        percent = count / total * 100 if count > 0 else 0
+        childs.append(
+            {
+                "option": label,
+                "count": count,
+                "percent": percent,
+                "color": lb["color"],
+            }
+        )
     return {"administration": p["id"], "score": 0, "child": childs}
 
 
@@ -122,9 +132,23 @@ def get_aggregated_jmp_chart_data(
     data = get_jmp_overview(
         session=session, form=form_id, name=cname
     )
+    try:
+        with open("./.category.json", "r") as categories:
+            json_config = json.load(categories)
+    except Exception:
+        json_config = []
+    category_config = list(filter(lambda c: c["form"] == form_id, json_config))
+    labels = []
+    if len(category_config):
+        fl = list(
+            filter(
+                lambda l: l["name"].lower() == cname.lower(), category_config
+            )
+        )
+        labels = fl[0]["labels"] if "labels" in fl[0] else []
     group = list(
         map(
-            lambda p: group_children(p, data),
+            lambda p: group_children(p, data, labels),
             parent_administration,
         )
     )
