@@ -209,7 +209,7 @@ Example:
     docker compose exec backend ./seed.sh youremail@akvo.org "Your Name" Akvo
 
 Renew SSL Certificate
-*****************
+*********************
 The certificate from Let's Encrypt will expire every 90 days. To renew the certificate, please run the following command. For automation, you can also set this command to run with Cron.
 
 .. code:: bash
