@@ -9,6 +9,9 @@ from source.geoconfig import GeoLevels
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 source_path = os.environ["INSTANCE_NAME"]
+SANDBOX_DATA_SOURCE = os.environ["SANDBOX_DATA_SOURCE"]
+if SANDBOX_DATA_SOURCE:
+    source_path = SANDBOX_DATA_SOURCE
 session = SessionLocal()
 class_path = source_path.replace("-", "_")
 source_file = f"./source/{source_path}/topojson.json"

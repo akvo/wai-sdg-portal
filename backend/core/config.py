@@ -22,6 +22,9 @@ from routes.hint import hint_route
 from source.geoconfig import GeoLevels
 
 INSTANCE_NAME = os.environ["INSTANCE_NAME"]
+SANDBOX_DATA_SOURCE = os.environ["SANDBOX_DATA_SOURCE"]
+if SANDBOX_DATA_SOURCE:
+    INSTANCE_NAME = SANDBOX_DATA_SOURCE
 CONFIG_NAME = INSTANCE_NAME.replace("-", "_")
 SOURCE_PATH = f"./source/{INSTANCE_NAME}"
 JS_FILE = f"{SOURCE_PATH}/config"
@@ -30,16 +33,23 @@ GEO_CONFIG = GeoLevels[CONFIG_NAME].value
 JS_i18n_FILE = f"{SOURCE_PATH}/i18n"
 JS_i18n_FILE = jsmin(open(f"{JS_i18n_FILE}.js").read())
 
-MINJS = jsmin("".join([
-    "var levels=" + str([g["alias"] for g in GEO_CONFIG]) + ";"
-    "var map_config={shapeLevels:" + str([g["name"]
-                                          for g in GEO_CONFIG]) + "};",
-    "var topojson=",
-    open(f"{SOURCE_PATH}/topojson.json").read(),
-    ";", JS_FILE, JS_i18n_FILE
-]))
+MINJS = jsmin(
+    "".join(
+        [
+            "var levels=" + str([g["alias"] for g in GEO_CONFIG]) + ";"
+            "var map_config={shapeLevels:"
+            + str([g["name"] for g in GEO_CONFIG])
+            + "};",
+            "var topojson=",
+            open(f"{SOURCE_PATH}/topojson.json").read(),
+            ";",
+            JS_FILE,
+            JS_i18n_FILE,
+        ]
+    )
+)
 JS_FILE = f"{SOURCE_PATH}/config.min.js"
-open(JS_FILE, 'w').write(MINJS)
+open(JS_FILE, "w").write(MINJS)
 
 
 class Settings(BaseSettings):
@@ -102,11 +112,13 @@ def get_setting():
     return Settings()
 
 
-@app.get("/config.js",
-         response_class=FileResponse,
-         tags=["Config"],
-         name="config.js",
-         description="static javascript config")
+@app.get(
+    "/config.js",
+    response_class=FileResponse,
+    tags=["Config"],
+    name="config.js",
+    description="static javascript config",
+)
 async def main(res: Response):
     res.headers["Content-Type"] = "application/x-javascript; charset=utf-8"
     return settings.js_file
@@ -124,10 +136,11 @@ def health_check():
 
 @app.middleware("http")
 async def route_middleware(request: Request, call_next):
-    auth = request.headers.get('Authorization')
+    auth = request.headers.get("Authorization")
     if auth:
-        auth = jwt.decode(auth.replace("Bearer ", ""),
-                          options={"verify_signature": False})
+        auth = jwt.decode(
+            auth.replace("Bearer ", ""), options={"verify_signature": False}
+        )
         request.state.authenticated = auth
     response = await call_next(request)
     return response

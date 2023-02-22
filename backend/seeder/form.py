@@ -13,6 +13,9 @@ Base.metadata.create_all(bind=engine)
 session = SessionLocal()
 
 source_path = os.environ["INSTANCE_NAME"]
+SANDBOX_DATA_SOURCE = os.environ["SANDBOX_DATA_SOURCE"]
+if SANDBOX_DATA_SOURCE:
+    source_path = SANDBOX_DATA_SOURCE
 file_path = f"./source/{source_path}/forms/"
 
 files = list(filter(lambda x: ".bak" not in x, os.listdir(file_path)))
