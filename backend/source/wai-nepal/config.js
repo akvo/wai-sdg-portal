@@ -119,9 +119,9 @@ var page_config = {
         component: "JMP-CHARTS",
         selected: true,
         chartList: [
-          { question: 569340077, name: "Water Service Level" },
-          { question: 569340075, name: "Sanitation Service Level" },
-          { question: 569340076, name: "Hygiene Service Level" },
+          { question: "water", name: "Water Service Level" },
+          { question: "sanitation", name: "Sanitation Service Level" },
+          { question: "hygiene", name: "Hygiene Service Level" },
         ],
       },
     ],

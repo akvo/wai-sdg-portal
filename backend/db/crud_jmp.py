@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from typing import List
 from AkvoResponseGrouper.views import get_categories
-from models.data import DataDict
+from models.data import DataDict, Data
 
 # Workaround while WAI to AkvoResponseGrouper migration is in progress
 config_items = [
@@ -64,3 +64,20 @@ def get_jmp_as_table_view(
             )
             d.update({"answer": answer + levels})
     return data
+
+
+def get_jmp_overview(session: Session, form: int, name: str):
+    try:
+        gc = get_categories(session=session, form=form, name=name)
+        data = session.query(Data).filter(Data.form == form).all()
+        data = [
+            {"id": d.id, "administration": d.administration, "geo": d.geo}
+            for d in data
+        ]
+        for d in data:
+            fc = list(filter(lambda c: (c["data"] == d["id"]), gc))
+            if len(fc):
+                d.update(fc[0])
+        return data
+    except Exception:
+        return []
