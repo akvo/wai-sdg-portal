@@ -91,6 +91,26 @@ spec:
                 secretKeyRef:
                   name: ${INSTANCE_NAME}
                   key: instance-name
+            - name: SANDBOX_STATUS
+              valueFrom:
+                secretKeyRef:
+                  name: ${INSTANCE_NAME}
+                  key: sandbox-status
+            - name: SANDBOX_DATA_SOURCE
+              valueFrom:
+                secretKeyRef:
+                  name: ${INSTANCE_NAME}
+                  key: sandbox-data-source
+            - name: AUTH0_SPA_DOMAIN
+              valueFrom:
+                secretKeyRef:
+                  name: ${INSTANCE_NAME}
+                  key: auth0-spa-domain
+            - name: AUTH0_SPA_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: ${INSTANCE_NAME}
+                  key: auth0-spa-client-id
             - name: ONLINE
               value: "TRUE"
             - name: GOOGLE_APPLICATION_CREDENTIALS

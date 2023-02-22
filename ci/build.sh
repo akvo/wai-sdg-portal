@@ -5,6 +5,8 @@ set -exuo pipefail
 
 if [[ "${CI_BRANCH:=}" = "develop" ]]; then
 	INSTANCES="wai-demo"
+elif [[ "${CI_BRANCH:=}" = "sandbox" ]]; then
+        INSTANCES="wai-sandbox"
 else
 	INSTANCES="wai-ethiopia wai-uganda wai-bangladesh wai-nepal"
 fi
