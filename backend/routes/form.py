@@ -21,6 +21,9 @@ from source.geoconfig import GeoCenter
 from datetime import datetime
 
 INSTANCE_NAME = os.environ["INSTANCE_NAME"]
+SANDBOX_DATA_SOURCE = os.environ.get("SANDBOX_DATA_SOURCE")
+if SANDBOX_DATA_SOURCE:
+    INSTANCE_NAME = SANDBOX_DATA_SOURCE
 class_path = INSTANCE_NAME.replace("-", "_")
 security = HTTPBearer()
 form_route = APIRouter()
