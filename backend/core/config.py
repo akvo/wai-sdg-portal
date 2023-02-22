@@ -22,7 +22,7 @@ from routes.hint import hint_route
 from source.geoconfig import GeoLevels
 
 INSTANCE_NAME = os.environ["INSTANCE_NAME"]
-SANDBOX_DATA_SOURCE = os.environ["SANDBOX_DATA_SOURCE"]
+SANDBOX_DATA_SOURCE = os.environ.get("SANDBOX_DATA_SOURCE")
 if SANDBOX_DATA_SOURCE:
     INSTANCE_NAME = SANDBOX_DATA_SOURCE
 CONFIG_NAME = INSTANCE_NAME.replace("-", "_")
