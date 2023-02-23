@@ -175,39 +175,19 @@ const Main = ({ match }) => {
       // advance search
       url = generateAdvanceFilterURL(advanceSearchValue, url);
       // send question id to get the data score
-      if (current?.values?.length) {
-        const urlScore = current?.values?.map((v) => `question=${v}`).join('&');
-        url += `&${urlScore}`;
-      }
+      // if (current?.values?.length) {
+      //   const urlScore = current?.values?.map((v) => `question=${v}`).join('&');
+      //   url += `&${urlScore}`;
+      // }
       api
         .get(url)
         .then((d) => {
           const tableData = d.data.data.map((x) => {
-            const values = current?.values?.reduce((o, key) => {
-              const ans = x.answer.find((a) => a.question === key);
-              const q = current.columns.find((c) => c.key === key);
-              let value = ans?.value;
-              const qtype = question.find((qs) => qs.id === q.key)?.type;
-              if (q?.fn && value) {
-                value = q.fn(value);
-              }
-              if (!q?.fn && value) {
-                value =
-                  qtype !== 'date'
-                    ? startCase(value)
-                    : moment(value)?.format('DD MMM, Y');
-              }
-              const option = question.find((qs) => qs.id === key)?.option;
-              let color = null;
-              if (!isEmpty(option)) {
-                color = option.find(
-                  (opt) => opt.name?.toLowerCase() === value?.toLowerCase()
-                )?.color;
-              }
-              return Object.assign(o, {
-                [key]: { value: value, color: color },
-              });
-            }, {});
+            const values = {};
+            x?.categories?.forEach((c) => {
+              const { key: keyName, ...category } = c;
+              Object.assign(values, { [keyName]: { ...category } });
+            });
             return {
               key: x.id,
               name: (

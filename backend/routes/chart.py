@@ -1,4 +1,3 @@
-import json
 from collections import defaultdict
 from typing import List, Optional
 from fastapi import Request, APIRouter, HTTPException, Query
@@ -11,7 +10,11 @@ import db.crud_charts as crud_charts
 import db.crud_administration as crud_administration
 from middleware import check_query
 from itertools import groupby
-from db.crud_jmp import get_jmp_overview
+from db.crud_jmp import (
+    get_jmp_overview,
+    get_jmp_config_by_form,
+    get_jmp_labels
+)
 
 chart_route = APIRouter()
 
@@ -82,7 +85,13 @@ def group_children(p, data_source, labels):
     data = list(
         filter(lambda d: (d["administration"] in p["children"]), data_source)
     )
-    data = [{"category": d["category"], "data": d["data"]} for d in data]
+    data = [
+        {
+            "category": d["category"] if "category" in d else None,
+            "data": d["data"]
+        }
+        for d in data
+    ]
     total = len(data)
     childs = []
     groups = groupby(data, key=lambda d: d["category"])
@@ -109,7 +118,7 @@ def group_children(p, data_source, labels):
 
 
 @chart_route.get(
-    "/chart/jmp-data/{form_id:path}/{cname:path}",
+    "/chart/jmp-data/{form_id:path}/{type:path}",
     name="charts:get_aggregated_jmp_chart_data",
     summary="get jmp chart aggregate data",
     tags=["Charts"],
@@ -117,9 +126,9 @@ def group_children(p, data_source, labels):
 def get_aggregated_jmp_chart_data(
     req: Request,
     form_id: int,
-    cname: str,
-    administration: Optional[int] = None,
-    q: Optional[List[str]] = Query(None),
+    type: str,
+    # administration: Optional[int] = None,
+    # q: Optional[List[str]] = Query(None),
     session: Session = Depends(get_session),
 ):
     # options = check_query(q) if q else None
@@ -130,29 +139,17 @@ def get_aggregated_jmp_chart_data(
         x.simplify_serialize_with_children for x in parent_administration
     ]
     data = get_jmp_overview(
-        session=session, form=form_id, name=cname
+        session=session, form=form_id, name=type
     )
-    try:
-        with open("./.category.json", "r") as categories:
-            json_config = json.load(categories)
-    except Exception:
-        json_config = []
-    category_config = list(filter(lambda c: c["form"] == form_id, json_config))
-    labels = []
-    if len(category_config):
-        fl = list(
-            filter(
-                lambda l: l["name"].lower() == cname.lower(), category_config
-            )
-        )
-        labels = fl[0]["labels"] if "labels" in fl[0] else []
+    configs = get_jmp_config_by_form(form=form_id)
+    labels = get_jmp_labels(configs=configs, name=type)
     group = list(
         map(
             lambda p: group_children(p, data, labels),
             parent_administration,
         )
     )
-    return {"form": form_id, "question": cname, "data": group}
+    return {"form": form_id, "question": type, "data": group}
 
 
 @chart_route.get(

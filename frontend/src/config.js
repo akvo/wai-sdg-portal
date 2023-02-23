@@ -18,11 +18,9 @@ const mapColumns = (values) => {
 };
 
 const mapValues = (values) => {
-  return values?.columns
-    ?.filter((val) => !isNaN(val.key))
-    ?.map((val) => {
-      return val.key;
-    });
+  return values?.columns?.slice(1)?.map((val) => {
+    return val.key;
+  });
 };
 
 const mapAll = (properties) => {

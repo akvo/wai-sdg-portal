@@ -94,15 +94,15 @@ var page_config = {
       },
       {
         title: "Water",
-        key: 569340077,
+        key: "water",
       },
       {
         title: "Sanitation",
-        key: 569340075,
+        key: "sanitation",
       },
       {
         title: "Hygiene",
-        key: 569340076,
+        key: "hygiene",
       },
     ],
     maps: {
@@ -170,15 +170,15 @@ var page_config = {
       },
       {
         title: "Water",
-        key: 573300191,
+        key: 'water',
       },
       {
         title: "Sanitation",
-        key: 573300189,
+        key: 'sanitation',
       },
       {
         title: "Hygiene",
-        key: 573300190,
+        key: 'hygiene',
       },
     ],
     maps: {
@@ -224,15 +224,15 @@ var page_config = {
       },
       {
         title: "Water",
-        key: 578820188,
+        key: "water",
       },
       {
         title: "Sanitation",
-        key: 578820187,
+        key: "sanitation",
       },
       {
         title: "Hygiene",
-        key: 578820186,
+        key: "hygiene",
       },
     ],
     maps: {

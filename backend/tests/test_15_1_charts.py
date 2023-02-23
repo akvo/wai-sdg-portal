@@ -36,12 +36,12 @@ class TestChartsRoutes():
         res = await client.get(
             app.url_path_for(
                 "charts:get_aggregated_jmp_chart_data",
-                form_id=1, cname='1'))
+                form_id=1, type='water'))
         assert res.status_code == 200
         res = res.json()
         assert res == {
             "form": 1,
-            "question": '1',
+            "question": 'water',
             "data": [{
                 "administration": 1,
                 "child": [],
