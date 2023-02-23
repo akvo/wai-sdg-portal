@@ -26,7 +26,9 @@ import RowContent from './rows';
 import startCase from 'lodash/startCase';
 import flatten from 'lodash/flatten';
 import isEmpty from 'lodash/isEmpty';
+import omit from 'lodash/omit';
 import config from '../../config';
+import moment from 'moment';
 
 const { mainText } = window.i18n;
 
@@ -174,15 +176,15 @@ const Main = ({ match }) => {
       // advance search
       url = generateAdvanceFilterURL(advanceSearchValue, url);
       // send question id to get the data score
-      // if (current?.values?.length) {
-      //   const urlScore = current?.values?.map((v) => `question=${v}`).join('&');
-      //   url += `&${urlScore}`;
-      // }
+      if (current?.values?.filter((v) => !isNaN(v))?.length) {
+        const urlScore = current?.values?.map((v) => `question=${v}`).join('&');
+        url += `&${urlScore}`;
+      }
       api
         .get(url)
         .then((d) => {
           const tableData = d.data.data.map((x) => {
-            const values = current?.values?.reduce((o, key) => {
+            let values = current?.values?.reduce((o, key) => {
               const ans =
                 x.answer.find((a) => a.question === key) ||
                 x?.categories?.find((dc) => dc.key === key);
@@ -214,6 +216,7 @@ const Main = ({ match }) => {
                 [key]: { value: value, color: color },
               });
             }, {});
+            values = omit(values, ['name']);
             return {
               key: x.id,
               name: (

@@ -74,7 +74,7 @@ def get(req: Request,
         page: int = 1,
         perpage: int = 10,
         administration: Optional[int] = None,
-        # question: Optional[List[int]] = Query(None),
+        question: Optional[List[int]] = Query(None),
         q: Optional[List[str]] = Query(None),
         session: Session = Depends(get_session),
         credentials: credentials = Depends(security)):
@@ -107,11 +107,11 @@ def get(req: Request,
     configs = get_jmp_config_by_form(form=form_id)
     data = [d.serialize for d in data["data"]]
     data = get_jmp_table_view(session=session, data=data, configs=configs)
-    # if question:
-    #     data = check_project(session=session,
-    #                          data=data,
-    #                          question=question,
-    #                          form=form_id)
+    if question:
+        data = check_project(session=session,
+                             data=data,
+                             question=question,
+                             form=form_id)
     return {
         'current': page,
         'data': data,
