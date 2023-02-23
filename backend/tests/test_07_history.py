@@ -155,5 +155,6 @@ class TestHistoryRoutes():
                 "question": 4,
                 "value": "Bandung",
                 "history": True,
-            }]
+            }],
+            "categories": []
         }

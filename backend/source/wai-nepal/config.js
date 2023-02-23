@@ -91,18 +91,22 @@ var page_config = {
       {
         title: "Name",
         key: "name",
+        category: true,
       },
       {
         title: "Water",
-        key: 569340077,
+        key: "water",
+        category: true,
       },
       {
         title: "Sanitation",
-        key: 569340075,
+        key: "sanitation",
+        category: true,
       },
       {
         title: "Hygiene",
-        key: 569340076,
+        key: "hygiene",
+        category: true,
       },
     ],
     maps: {
@@ -119,9 +123,9 @@ var page_config = {
         component: "JMP-CHARTS",
         selected: true,
         chartList: [
-          { question: 569340077, name: "Water Service Level" },
-          { question: 569340075, name: "Sanitation Service Level" },
-          { question: 569340076, name: "Hygiene Service Level" },
+          { question: "water", name: "Water Service Level" },
+          { question: "sanitation", name: "Sanitation Service Level" },
+          { question: "hygiene", name: "Hygiene Service Level" },
         ],
       },
     ],
@@ -167,18 +171,22 @@ var page_config = {
       {
         title: "School Name",
         key: "name",
+        category: true,
       },
       {
         title: "Water",
-        key: 573300191,
+        key: 'water',
+        category: true,
       },
       {
         title: "Sanitation",
-        key: 573300189,
+        key: 'sanitation',
+        category: true,
       },
       {
         title: "Hygiene",
-        key: 573300190,
+        key: 'hygiene',
+        category: true,
       },
     ],
     maps: {
@@ -224,15 +232,18 @@ var page_config = {
       },
       {
         title: "Water",
-        key: 578820188,
+        key: "water",
+        category: true,
       },
       {
         title: "Sanitation",
-        key: 578820187,
+        key: "sanitation",
+        category: true,
       },
       {
         title: "Hygiene",
-        key: 578820186,
+        key: "hygiene",
+        category: true,
       },
     ],
     maps: {

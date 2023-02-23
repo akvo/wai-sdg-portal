@@ -20,7 +20,7 @@ from db.connection import get_session
 from models.data import DataResponse, DataDict
 from models.data import DataDictWithHistory, SubmissionInfo
 from middleware import verify_user, verify_editor, check_query
-
+from db.crud_jmp import get_jmp_table_view, get_jmp_config_by_form
 security = HTTPBearer()
 data_route = APIRouter()
 
@@ -94,7 +94,7 @@ def get(req: Request,
     data = crud.get_data(session=session,
                          form=form_id,
                          administration=administration_ids,
-                         question=question,
+                         # question=question,
                          options=options,
                          skip=(perpage * (page - 1)),
                          perpage=perpage)
@@ -104,7 +104,9 @@ def get(req: Request,
     if total_page < page:
         raise HTTPException(status_code=404, detail="Not found")
     count = data["count"]
+    configs = get_jmp_config_by_form(form=form_id)
     data = [d.serialize for d in data["data"]]
+    data = get_jmp_table_view(session=session, data=data, configs=configs)
     if question:
         data = check_project(session=session,
                              data=data,
