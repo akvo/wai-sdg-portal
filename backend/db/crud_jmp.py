@@ -18,7 +18,7 @@ def get_jmp_table_view(session: Session, data: list, configs: list):
             labels = get_jmp_labels(configs=configs, name=c["name"])
             fl = list(
                 filter(
-                    lambda l: l["name"].lower() == c["category"].lower(),
+                    lambda l: l["name"].lower() == str(c["category"]).lower(),
                     labels,
                 )
             )
