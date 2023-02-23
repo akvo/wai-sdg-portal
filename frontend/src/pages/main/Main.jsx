@@ -27,7 +27,6 @@ import startCase from 'lodash/startCase';
 import flatten from 'lodash/flatten';
 import isEmpty from 'lodash/isEmpty';
 import config from '../../config';
-import moment from 'moment';
 
 const { mainText } = window.i18n;
 
