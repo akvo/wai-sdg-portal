@@ -182,11 +182,38 @@ const Main = ({ match }) => {
         .get(url)
         .then((d) => {
           const tableData = d.data.data.map((x) => {
-            const values = {};
-            x?.categories?.forEach((c) => {
-              const { key: keyName, ...category } = c;
-              Object.assign(values, { [keyName]: { ...category } });
-            });
+            const values = current?.values?.reduce((o, key) => {
+              const ans =
+                x.answer.find((a) => a.question === key) ||
+                x?.categories?.find((dc) => dc.key === key);
+              const q = current.columns.find((c) => {
+                if (c?.category) {
+                  return x.categories.find((dc) => dc.key === c.key);
+                }
+                return c.key === key;
+              });
+              let value = ans?.value;
+              const qtype = question.find((qs) => qs.id === q.key)?.type;
+              if (q?.fn && value) {
+                value = q.fn(value);
+              }
+              if (!q?.fn && value) {
+                value =
+                  qtype !== 'date'
+                    ? startCase(value)
+                    : moment(value)?.format('DD MMM, Y');
+              }
+              const option = question.find((qs) => qs.id === key)?.option;
+              let color = ans?.color || null;
+              if (!isEmpty(option)) {
+                color = option.find(
+                  (opt) => opt.name?.toLowerCase() === value?.toLowerCase()
+                )?.color;
+              }
+              return Object.assign(o, {
+                [key]: { value: value, color: color },
+              });
+            }, {});
             return {
               key: x.id,
               name: (

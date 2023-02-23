@@ -91,18 +91,22 @@ var page_config = {
       {
         title: "Name",
         key: "name",
+        category: true,
       },
       {
         title: "Water",
         key: "water",
+        category: true,
       },
       {
         title: "Sanitation",
         key: "sanitation",
+        category: true,
       },
       {
         title: "Hygiene",
         key: "hygiene",
+        category: true,
       },
     ],
     maps: {
@@ -167,18 +171,22 @@ var page_config = {
       {
         title: "School Name",
         key: "name",
+        category: true,
       },
       {
         title: "Water",
         key: 'water',
+        category: true,
       },
       {
         title: "Sanitation",
         key: 'sanitation',
+        category: true,
       },
       {
         title: "Hygiene",
         key: 'hygiene',
+        category: true,
       },
     ],
     maps: {
@@ -225,14 +233,17 @@ var page_config = {
       {
         title: "Water",
         key: "water",
+        category: true,
       },
       {
         title: "Sanitation",
         key: "sanitation",
+        category: true,
       },
       {
         title: "Hygiene",
         key: "hygiene",
+        category: true,
       },
     ],
     maps: {
