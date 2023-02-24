@@ -14,12 +14,6 @@ const Forms = ({ match }) => {
   const [offset, setOffset] = useState(0);
   const [percentage, setPercentage] = useState(0);
 
-  const callRefreshView = (success, error) =>
-    api
-      .get('/collection/refresh')
-      .then(() => success())
-      .catch((err) => error(err));
-
   const onFinish = (values) => {
     let data = Object.keys(values).map((v) => {
       // do not transfrom datapoint to post params
@@ -39,15 +33,9 @@ const Forms = ({ match }) => {
             `${res.data.id} - ${res.data.name}`
           ),
         });
-        callRefreshView(
-          () => {
-            history.goBack();
-          },
-          (err) => {
-            console.error(err);
-            history.goBack();
-          }
-        );
+        setTimeout(() => {
+          history.goBack();
+        }, 3000);
       })
       .catch(() => {
         notification.error({

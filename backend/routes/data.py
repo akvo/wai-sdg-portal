@@ -1,9 +1,11 @@
+import os
 from http import HTTPStatus
 from datetime import datetime
 from math import ceil
 from fastapi import Depends, Request, Response, APIRouter, HTTPException, Query
 from fastapi.security import HTTPBearer
 from fastapi.security import HTTPBasicCredentials as credentials
+from fastapi import BackgroundTasks
 from typing import List, Optional
 from sqlalchemy.orm import Session
 import db.crud_data as crud
@@ -21,6 +23,7 @@ from models.data import DataResponse, DataDict
 from models.data import DataDictWithHistory, SubmissionInfo
 from middleware import verify_user, verify_editor, check_query
 from db.crud_jmp import get_jmp_table_view, get_jmp_config_by_form
+from AkvoResponseGrouper.views import refresh_view
 security = HTTPBearer()
 data_route = APIRouter()
 
@@ -125,9 +128,10 @@ def get(req: Request,
                  summary="add new data",
                  name="data:create",
                  tags=["Data"])
-def add(req: Request,
+async def add(req: Request,
         form_id: int,
         answers: List[AnswerDict],
+        background_tasks: BackgroundTasks,
         session: Session = Depends(get_session),
         credentials: credentials = Depends(security)):
     user = verify_editor(req.state.authenticated, session)
@@ -182,6 +186,9 @@ def add(req: Request,
                          administration=administration,
                          created_by=user.id,
                          answers=answerlist)
+    TESTING = os.environ.get("TESTING")
+    if not TESTING:
+        background_tasks.add_task(refresh_view, session=session)
     return data.serialize
 
 
@@ -211,10 +218,14 @@ def get_by_id(req: Request,
                    tags=["Data"])
 def delete(req: Request,
            id: int,
+           background_tasks: BackgroundTasks,
            session: Session = Depends(get_session),
            credentials: credentials = Depends(security)):
     verify_editor(req.state.authenticated, session)
     crud.delete_by_id(session=session, id=id)
+    TESTING = os.environ.get("TESTING")
+    if not TESTING:
+        background_tasks.add_task(refresh_view, session=session)
     return Response(status_code=HTTPStatus.NO_CONTENT.value)
 
 
@@ -227,11 +238,15 @@ def delete(req: Request,
                    name="data:bulk-delete",
                    tags=["Data"])
 def bulk_delete(req: Request,
+                background_tasks: BackgroundTasks,
                 id: Optional[List[int]] = Query(None),
                 session: Session = Depends(get_session),
                 credentials: credentials = Depends(security)):
     verify_editor(req.state.authenticated, session)
     crud.delete_bulk(session=session, ids=id)
+    TESTING = os.environ.get("TESTING")
+    if not TESTING:
+        background_tasks.add_task(refresh_view, session=session)
     return Response(status_code=HTTPStatus.NO_CONTENT.value)
 
 
@@ -243,6 +258,7 @@ def bulk_delete(req: Request,
 def update_by_id(req: Request,
                  id: int,
                  answers: List[AnswerDict],
+                 background_tasks: BackgroundTasks,
                  session: Session = Depends(get_session),
                  credentials: credentials = Depends(security)):
     user = verify_editor(req.state.authenticated, session)
@@ -292,6 +308,9 @@ def update_by_id(req: Request,
             data.updated_by = user.id
             data.updated = datetime.now()
             data = crud.update_data(session=session, data=data)
+    TESTING = os.environ.get("TESTING")
+    if not TESTING:
+        background_tasks.add_task(refresh_view, session=session)
     return data.serialize
 
 
