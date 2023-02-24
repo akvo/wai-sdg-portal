@@ -8,6 +8,7 @@ from models.question import QuestionType
 from models.answer import Answer
 from datetime import datetime
 from util.helper import HText
+from AkvoResponseGrouper.views import refresh_view
 
 
 def save(session: Session, user: int, form: int, dp: dict, qs: dict):
@@ -125,4 +126,7 @@ def seed(session: Session, file: str, user: int, form: int):
     del questions
     del columns
     os.remove(file)
+    TESTING = os.environ.get("TESTING")
+    if not TESTING:
+        refresh_view(session=session)
     return total_data
