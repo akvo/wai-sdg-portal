@@ -484,6 +484,18 @@
 						}
 					},
 					{
+						"id": 578820191,
+						"text": "Is this school Girls Only/Boys Only/Co-Education?",
+						"options": [
+							"Co-education"
+						],
+						"else": {
+							"ignore": [
+								567800081
+							]
+						}
+					},
+					{
 						"id": 567800081,
 						"text": "Are the toilets/latrines separate for girls and boys?",
 						"options": [
@@ -709,13 +721,12 @@
 		],
 		"categories": [
 			{
-				"name": "Basic",
+				"name": "Safely Managed",
 				"questions": [
 					{
 						"id": 557970124,
 						"text": "What type of toilet do members of your household usually use?",
 						"options": [
-							"Flush/pour flush to piped sewer system",
 							"Flush/pour flush to septic tank",
 							"Flush/pour flush to pit latrine",
 							"Ventilated improved pit latrine (VIP) with slab",
@@ -734,17 +745,57 @@
 									"Twin pit without slab"
 								],
 								"questions": []
+							},
+							{
+								"name": "Open Defecation",
+								"options": [
+									"No facility"
+								],
+								"questions": []
 							}
+						]
+					},
+					{
+						"id": 557970122,
+						"text": "Has your pit toilet or septic tank ever been emptied?",
+						"options": [
+							"Yes emptied"
 						],
 						"else": {
-							"name": "Open Defecation"
+							"ignore": [
+								557970125
+							]
 						}
+					},
+					{
+						"id": 557970125,
+						"text": "How was the content of pit toilet or septic tank emptied or removed?",
+						"options": [
+							"Removed by service provider to a treatment plant",
+							"Removed by service provider and buried in a covered pit",
+							"Emptied by household and buried in a covered pit"
+						],
+						"else": {
+							"name": "Basic"
+						}
+					}
+				]
+			},
+			{
+				"name": "Basic",
+				"questions": [
+					{
+						"id": 557970124,
+						"text": "What type of toilet do members of your household usually use?",
+						"options": [
+							"Flush/pour flush to piped sewer system"
+						]
 					},
 					{
 						"id": 557970123,
 						"text": "Is the toilet facility shared with members outside of the household?",
 						"options": [
-							"Yes"
+							"No"
 						],
 						"else": {
 							"name": "Limited"
@@ -759,41 +810,6 @@
 						],
 						"else": {
 							"name": "Limited"
-						}
-					},
-					{
-						"id": 557970122,
-						"text": "Has your pit toilet or septic tank ever been emptied?",
-						"options": [
-							"Never emptied",
-							"Don't know"
-						],
-						"else": {
-							"name": "Safely Managed"
-						}
-					},
-					{
-						"id": 557970125,
-						"text": "How was the content of pit toilet or septic tank emptied or removed?",
-						"options": [
-							"Removed by service provider to don't know where",
-							"Disposed by household to uncovered pit, open ground, waterbody or elsewhere",
-							"Don't Know",
-							"Other"
-						],
-						"other": [
-							{
-								"name": "Safely Managed",
-								"options": [
-									"Removed by service provider to a treatment plant",
-									"Removed by service provider and buried in a covered pit",
-									"Emptied by household and buried in a covered pit"
-								],
-								"questions": []
-							}
-						],
-						"else": {
-							"name": "Unimproved"
 						}
 					}
 				]
