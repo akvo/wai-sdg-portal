@@ -39,13 +39,20 @@ def check_access(adm, user) -> None:
 
 # PROJECT BASE
 def check_project(
-    session: Session, data: List[DataDictWithHistory], question: List[int], form: int
+    session: Session,
+    data: List[DataDictWithHistory],
+    question: List[int],
+    form: int
 ) -> List[DataDictWithHistory]:
     form_question = crud_question.get_question_ids(session=session, form=form)
     form_question = [fq.id for fq in form_question]
-    external = [q for q in question if q not in form_question] if question else []
+    external = []
+    if question:
+        external = [q for q in question if q not in form_question]
     if len(external):
-        question = crud_question.get_question_by_id(session=session, id=external[0])
+        question = crud_question.get_question_by_id(
+                session=session,
+                id=external[0])
         if len(question.option):
             question = int(question.option[0].name)
             for d in data:
@@ -92,7 +99,9 @@ def get(
     administration_ids = False
     if not administration:
         administration_ids = crud_administration.get_all_childs(
-            session=session, parents=[a.administration for a in user.access], current=[]
+            session=session,
+            parents=[a.administration for a in user.access],
+            current=[]
         )
     if administration:
         administration_ids = crud_administration.get_all_childs(
@@ -153,7 +162,10 @@ async def add(
     parent_code = None
     for a in answers:
         q = crud_question.get_question_by_id(session=session, id=a["question"])
-        answer = Answer(question=q.id, created_by=user.id, created=datetime.now())
+        answer = Answer(
+                question=q.id,
+                created_by=user.id,
+                created=datetime.now())
         if q.type == QuestionType.administration:
             check_access(a["value"][0], user)
             if len(a["value"]):
@@ -219,7 +231,9 @@ def get_by_id(
 ):
     data = crud.get_data_by_id(session=session, id=id)
     if not data:
-        raise HTTPException(status_code=404, detail="data {} is not found".format(id))
+        raise HTTPException(
+                status_code=404,
+                detail="data {} is not found".format(id))
     return data.serialize
 
 
