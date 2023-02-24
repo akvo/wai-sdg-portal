@@ -29,6 +29,15 @@ security = HTTPBearer()
 data_route = APIRouter()
 
 
+def refresh_category_view(session: Session):
+    is_test = os.environ.get("TESTING")
+    if is_test:
+        sessionUsed = session
+    else:
+        sessionUsed = next(get_session())
+    refresh_view(session=sessionUsed)
+
+
 def check_access(adm, user) -> None:
     if user.role == UserRole.admin:
         return
@@ -42,7 +51,7 @@ def check_project(
     session: Session,
     data: List[DataDictWithHistory],
     question: List[int],
-    form: int
+    form: int,
 ) -> List[DataDictWithHistory]:
     form_question = crud_question.get_question_ids(session=session, form=form)
     form_question = [fq.id for fq in form_question]
@@ -51,8 +60,8 @@ def check_project(
         external = [q for q in question if q not in form_question]
     if len(external):
         question = crud_question.get_question_by_id(
-                session=session,
-                id=external[0])
+            session=session, id=external[0]
+        )
         if len(question.option):
             question = int(question.option[0].name)
             for d in data:
@@ -101,7 +110,7 @@ def get(
         administration_ids = crud_administration.get_all_childs(
             session=session,
             parents=[a.administration for a in user.access],
-            current=[]
+            current=[],
         )
     if administration:
         administration_ids = crud_administration.get_all_childs(
@@ -163,9 +172,8 @@ async def add(
     for a in answers:
         q = crud_question.get_question_by_id(session=session, id=a["question"])
         answer = Answer(
-                question=q.id,
-                created_by=user.id,
-                created=datetime.now())
+            question=q.id, created_by=user.id, created=datetime.now()
+        )
         if q.type == QuestionType.administration:
             check_access(a["value"][0], user)
             if len(a["value"]):
@@ -212,7 +220,7 @@ async def add(
     )
     TESTING = os.environ.get("TESTING")
     if not TESTING:
-        background_tasks.add_task(refresh_view, session=session)
+        background_tasks.add_task(refresh_category_view, session=session)
     return data.serialize
 
 
@@ -232,8 +240,8 @@ def get_by_id(
     data = crud.get_data_by_id(session=session, id=id)
     if not data:
         raise HTTPException(
-                status_code=404,
-                detail="data {} is not found".format(id))
+            status_code=404, detail="data {} is not found".format(id)
+        )
     return data.serialize
 
 
@@ -256,7 +264,7 @@ def delete(
     crud.delete_by_id(session=session, id=id)
     TESTING = os.environ.get("TESTING")
     if not TESTING:
-        background_tasks.add_task(refresh_view, session=session)
+        background_tasks.add_task(refresh_category_view, session=session)
     return Response(status_code=HTTPStatus.NO_CONTENT.value)
 
 
@@ -290,7 +298,7 @@ def bulk_delete(
     name="data:update",
     tags=["Data"],
 )
-def update_by_id(
+async def update_by_id(
     req: Request,
     id: int,
     answers: List[AnswerDict],
@@ -354,7 +362,7 @@ def update_by_id(
             data = crud.update_data(session=session, data=data)
     TESTING = os.environ.get("TESTING")
     if not TESTING:
-        background_tasks.add_task(refresh_view, session=session)
+        background_tasks.add_task(refresh_category_view, session=session)
     return data.serialize
 
 
