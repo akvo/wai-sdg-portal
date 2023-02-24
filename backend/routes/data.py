@@ -295,20 +295,21 @@ def update_by_id(
     [checked.update(a.dicted) for a in current_answers]
     for a in answers:
         execute = "update"
-        if a["question"] not in list(questions):
+        qid = a["question"]
+        if qid not in list(questions):
             raise HTTPException(
                 status_code=401,
-                detail="question {} is not part of this form".format(a["question"]),
+                detail="question {} is not part of this form".format(qid),
             )
         a.update({"type": questions[a["question"]]})
         if a["type"] == QuestionType.option:
             a.update({"value": [a["value"]]})
-        if a["question"] in list(checked):
+        if qid in list(checked):
             execute = "update"
         else:
             execute = "new"
-        if execute == "update" and a["value"] != checked[a["question"]]["value"]:
-            answer = checked[a["question"]]["data"]
+        if execute == "update" and a["value"] != checked[qid]["value"]:
+            answer = checked[qid]["data"]
             history = answer.serialize
             del history["id"]
             history = History(**history)
@@ -317,12 +318,12 @@ def update_by_id(
                 answer=answer,
                 history=history,
                 user=user.id,
-                type=questions[a["question"]],
+                type=questions[qid],
                 value=a["value"],
             )
         if execute == "new":
             answer = Answer(
-                question=a["question"],
+                question=qid,
                 data=data.id,
                 created_by=user.id,
                 created=datetime.now(),
@@ -330,7 +331,7 @@ def update_by_id(
             a = crud_answer.add_answer(
                 session=session,
                 answer=answer,
-                type=questions[a["question"]],
+                type=questions[qid],
                 value=a["value"],
             )
         if execute:
