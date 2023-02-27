@@ -135,7 +135,6 @@ def add(req: Request,
     geo = None
     answerlist = []
     names = []
-    parent_code = None
     for a in answers:
         q = crud_question.get_question_by_id(session=session, id=a["question"])
         answer = Answer(question=q.id,
@@ -171,10 +170,10 @@ def add(req: Request,
             parent_code = parent.name.split(" - ")[-1]
             administration = parent.administration
             answer.value = int(parent_code)
+            if q.meta:
+                names.append(parent.name)
         answerlist.append(answer)
     name = " - ".join([str(n) for n in names])
-    if parent_code:
-        name = f"{parent_code} - {name}"
     data = crud.add_data(session=session,
                          form=form_id,
                          name=name,
