@@ -80,10 +80,7 @@ const MainTable = ({
       });
     });
     Promise.all(promises).then(() => {
-      api
-        .get('/collection/refresh')
-        .then(() => setSaving(false))
-        .catch(() => setSaving(false));
+      setSaving(false);
       UIState.update((e) => {
         e.editedRow = {};
         e.historyChart = {};
