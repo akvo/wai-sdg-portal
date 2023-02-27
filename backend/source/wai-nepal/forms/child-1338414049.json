@@ -22,7 +22,7 @@
       "id": 1349554059,
       "question": "WUSC Name",
       "order": 2,
-      "meta": true,
+      "meta": false,
       "type": "text",
       "required": true,
       "options": null
