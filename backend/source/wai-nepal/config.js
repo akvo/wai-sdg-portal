@@ -318,7 +318,7 @@ var page_config = {
 		columns: [
 			{
 				title: "Project Name",
-				key: 1260775110,
+				key: "name",
 			},
 			{
 				title: "#Water Source",
