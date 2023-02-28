@@ -318,7 +318,7 @@ const Main = ({ match }) => {
               </Space>
               <AdvanceSearch
                 buttonPos="right"
-                customStyle={{ marginTop: '-33px', marginBottom: 0 }}
+                customStyle={{ marginTop: '24px', marginBottom: 0 }}
                 formId={current?.formId}
                 questionGroup={questionGroup}
                 setPage={setPage}
