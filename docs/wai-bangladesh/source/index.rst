@@ -18,25 +18,25 @@ Welcome to SDG Bangladesh Portal documentation!
    :maxdepth: 2
    :caption: Getting Started
 
-   ethiopia/gettingStarted
+   bangladesh/gettingStarted
 
 .. toctree::
    :maxdepth: 2
    :caption: Datasets
 
-   ethiopia/datasets
+   bangladesh/datasets
 
 .. toctree::
    :maxdepth: 2
    :caption: Data
 
-   ethiopia/data
+   bangladesh/data
 
 .. toctree::
    :maxdepth: 2
    :caption: Admin
 
-   ethiopia/admin
+   bangladesh/admin
 
 .. |Build Status| image:: https://akvo.semaphoreci.com/badges/wai-sdg-portal/branches/main.svg?style=shields
    :target: https://akvo.semaphoreci.com/projects/wai-sdg-portal
