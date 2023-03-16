@@ -22,7 +22,7 @@ Searching data by
 Advanced filter
 ***************
 
-If you wish to search in a more advanced way, you click on the **ADVANCED FILTER** buttpn.
+If you wish to search in a more advanced way, you click on the **ADVANCED FILTER** button.
 
 .. image:: ../assets/adavanced-filter-data-entry.png
     :alt: Advanced filter
