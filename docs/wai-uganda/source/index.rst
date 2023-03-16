@@ -18,25 +18,25 @@ Welcome to Uganda SDG Portal documentation!
    :maxdepth: 2
    :caption: Getting Started
 
-   ethiopia/gettingStarted
+   uganda/gettingStarted
 
 .. toctree::
    :maxdepth: 2
    :caption: Datasets
 
-   ethiopia/datasets
+   uganda/datasets
 
 .. toctree::
    :maxdepth: 2
    :caption: Data
 
-   ethiopia/data
+   uganda/data
 
 .. toctree::
    :maxdepth: 2
    :caption: Admin
 
-   ethiopia/admin
+   uganda/admin
 
 .. |Build Status| image:: https://akvo.semaphoreci.com/badges/wai-sdg-portal/branches/main.svg?style=shields
    :target: https://akvo.semaphoreci.com/projects/wai-sdg-portal
