@@ -1,6 +1,6 @@
 Overview
 ---------
-- Each data has multiplr questions and question groups.
+- Each data has multiple questions and question groups.
 
 .. image:: ../../assets/uganda/example-overview.png
     :alt: Datasets overview
@@ -12,7 +12,7 @@ Selecting
 ~~~~~~~~~
 
 - Filtering a data point by selecting name, village, town or city
-- You reset your search by clicking the **REMOVE FILTE** button.
+- You reset your search by clicking the **REMOVE FILTER** button.
 
 .. image:: ../../assets/uganda/filter.png
     :alt: Filtering

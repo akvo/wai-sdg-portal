@@ -16,7 +16,7 @@ Selecting
 *********
 
 - Filtering a data point by selecting name, village, town or city
-- You reset your search by clicking the **REMOVE FILTE** button.
+- You reset your search by clicking the **REMOVE FILTER** button.
 
 .. image:: ../assets/filter.png
     :alt: Filtering
