@@ -18,25 +18,25 @@ Welcome to Nepal SDG Portal documentation!
    :maxdepth: 2
    :caption: Getting Started
 
-   ethiopia/gettingStarted
+   nepal/gettingStarted
 
 .. toctree::
    :maxdepth: 2
    :caption: Datasets
 
-   ethiopia/datasets
+   nepal/datasets
 
 .. toctree::
    :maxdepth: 2
    :caption: Data
 
-   ethiopia/data
+   nepal/data
 
 .. toctree::
    :maxdepth: 2
    :caption: Admin
 
-   ethiopia/admin
+   nepal/admin
 
 .. |Build Status| image:: https://akvo.semaphoreci.com/badges/wai-sdg-portal/branches/main.svg?style=shields
    :target: https://akvo.semaphoreci.com/projects/wai-sdg-portal
