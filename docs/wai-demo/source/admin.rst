@@ -12,7 +12,7 @@ Filter
 
 Searching data by
 - data point
-- City, town or village
+- District, sub-district and village
 - You can also reset your filter search.
 
 .. image:: ../assets/add-data-entry.png
