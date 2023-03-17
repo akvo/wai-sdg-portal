@@ -8,8 +8,6 @@ pip check
 
 alembic upgrade head
 
-<<<<<<< Updated upstream
-=======
 CATEGORIES="./source/${INSTANCE_NAME}/category.json"
 
 if [ -f "${CATEGORIES}" ]; then
@@ -18,5 +16,4 @@ if [ -f "${CATEGORIES}" ]; then
 	echo "done"
 fi
 
->>>>>>> Stashed changes
 uvicorn main:app --reload --port 5000
