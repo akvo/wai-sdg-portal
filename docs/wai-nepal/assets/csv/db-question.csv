@@ -1,0 +1,15 @@
+pos,column_name,data_type,column_default,is_nullable
+1,id,integer,nextval('question_id_seq'::regclass),NO
+2,order,integer,,YES
+3,name,character varying,,YES
+4,form,integer,,YES
+5,meta,boolean,,NO
+6,type,USER-DEFINED,,YES
+7,question_group,integer,,YES
+8,required,boolean,true,NO
+9,rule,jsonb,,YES
+10,dependency,ARRAY,,YES
+11,tooltip,jsonb,,YES
+12,translations,ARRAY,,YES
+13,api,jsonb,,YES
+14,addons,jsonb,,YES

@@ -12,7 +12,7 @@ CATEGORIES="./source/${INSTANCE_NAME}/category.json"
 
 if [ -f "${CATEGORIES}" ]; then
   echo "${CATEGORIES} exists"
-	akvo-responsegrouper --config $(echo "./source/${INSTANCE_NAME}/category.json") --database $(echo $DATABASE_URL | sed 's/-/_/g')
+	# akvo-responsegrouper --config $(echo "./source/${INSTANCE_NAME}/category.json") --database $(echo $DATABASE_URL | sed 's/-/_/g')
 	echo "done"
 fi
 

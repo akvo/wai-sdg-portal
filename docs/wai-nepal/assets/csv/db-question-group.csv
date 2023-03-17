@@ -1,0 +1,9 @@
+pos,column_name,data_type,column_default,is_nullable
+1,id,integer,nextval('question_group_id_seq'::regclass),NO
+2,order,integer,,YES
+3,name,character varying,,YES
+4,form,integer,,YES
+5,description,text,,YES
+6,repeatable,boolean,false,YES
+7,repeat_text,character varying,,YES
+8,translations,ARRAY,,YES
