@@ -36,8 +36,15 @@ class DataDict(TypedDict):
     answer: List[AnswerDict]
 
 
+class CategoryWithColor(TypedDict):
+    key: str
+    value: str
+    color: Optional[str] = None
+
+
 class DataDictWithHistory(DataDict):
     answer: List[AnswerDictWithHistory]
+    categories: List[CategoryWithColor]
 
 
 class SubmissionInfo(TypedDict):

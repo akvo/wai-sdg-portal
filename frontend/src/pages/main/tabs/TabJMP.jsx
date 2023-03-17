@@ -11,7 +11,7 @@ import { titleCase } from 'title-case';
 
 const levels = window.map_config?.shapeLevels?.length;
 
-const TabJMP = ({ formId, chartList, question, show }) => {
+const TabJMP = ({ formId, chartList, show }) => {
   const {
     user,
     selectedAdministration,
@@ -33,7 +33,6 @@ const TabJMP = ({ formId, chartList, question, show }) => {
       user &&
       chartList?.length &&
       administration.length &&
-      question.length &&
       loadedFormId !== null &&
       loadedFormId === formId
     ) {
@@ -57,9 +56,6 @@ const TabJMP = ({ formId, chartList, question, show }) => {
       Promise.all(apiCall)
         .then((res) => {
           const allData = res?.map((r) => {
-            const selectedQuestion = question.find(
-              (q) => q.id === r?.data?.question
-            );
             const chartSetting = chartList?.find(
               (c) => c.question === r?.data?.question
             );
@@ -67,14 +63,16 @@ const TabJMP = ({ formId, chartList, question, show }) => {
               const findData = r?.data?.data?.find(
                 (d) => d.administration === adm.id
               );
-              let stack = [];
-              stack = selectedQuestion?.option?.map((opt) => {
-                const findStack = findData?.child?.find(
-                  (c) => c?.option?.toLowerCase() === opt?.name?.toLowerCase()
-                );
+              const stack = findData?.child?.map((c, cx) => {
                 return {
-                  ...opt,
-                  value: findStack?.percent || 0,
+                  id: cx,
+                  name: c.option,
+                  color: c.color,
+                  order: cx + 1,
+                  score: 0,
+                  code: null,
+                  translations: null,
+                  value: c.percent,
                 };
               });
               return {
@@ -84,9 +82,7 @@ const TabJMP = ({ formId, chartList, question, show }) => {
               };
             });
             return {
-              name: selectedQuestion?.name
-                ? titleCase(selectedQuestion.name)
-                : '',
+              name: titleCase(r?.data?.question),
               type: chartSetting?.type,
               selectedAdministration:
                 selectedAdministration.length <= levels
@@ -109,7 +105,6 @@ const TabJMP = ({ formId, chartList, question, show }) => {
     loadedFormId,
     administration,
     selectedAdministration,
-    question,
     advanceSearchValue,
   ]);
 

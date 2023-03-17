@@ -71,6 +71,9 @@ def generate_excel_template(session: Session, form: int):
     definitions.to_excel(writer, sheet_name='definitions', startrow=-1)
 
     source_path = os.environ["INSTANCE_NAME"]
+    SANDBOX_DATA_SOURCE = os.environ.get("SANDBOX_DATA_SOURCE")
+    if SANDBOX_DATA_SOURCE:
+        source_path = SANDBOX_DATA_SOURCE
     TESTING = os.environ.get("TESTING")
     if TESTING:
         source_path = "notset"
