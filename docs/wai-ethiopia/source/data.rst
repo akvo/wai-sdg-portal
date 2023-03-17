@@ -15,7 +15,7 @@ Search
 Selecting
 *********
 
-- Filtering a data point by selecting name, village, town or city
+- Filtering a data point by selecting name, woreda, kebele
 - You reset your search by clicking the **REMOVE FILTER** button.
 
 .. image:: ../assets/filter.png
@@ -34,7 +34,7 @@ If you wish to search in more advanced way, an **Advanced filter** button is cli
 Maps
 ====
 
-- A map is on the page which shows all places, village, town or city from where the data is collected.
+- A map is on the page which shows all places, woreda, kebele from where the data is collected.
 - This map can be zoomed out or in
 
 .. image:: ../assets/map.png
