@@ -161,10 +161,13 @@ for form in forms:
                             status_verified, not_triggered)
                     value = True
                 if q.type == QuestionType.answer_list:
+                    parent_data = crud_data.get_data_by_id(
+                            session=session,
+                            id=project_id.data)
                     answer.value = project_id.value
                     value = True
                     if q.meta:
-                        names.append(str(project_id.value))
+                        names.append(str(parent_data.name))
                 if q.type == QuestionType.number:
                     fa = fake.random_int(min=10, max=50)
                     answer.value = fa

@@ -6,6 +6,11 @@ services:
     image: postgres:12-alpine
     environment:
       - POSTGRES_PASSWORD=password
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 2s
+      timeout: 5s
+      retries: 5
     volumes:
       - ./db/docker-entrypoint-initdb.d.ci:/docker-entrypoint-initdb.d
       - pg-data:/var/lib/postgresql/data
@@ -29,6 +34,7 @@ services:
       - AUTH0_SECRET
       - AUTH0_AUDIENCE
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 volumes:
   pg-data:

@@ -51,15 +51,15 @@ var page_config = {
       },
       {
         title: "Water",
-        key: 551910082,
+        key: "water",
       },
       {
         title: "Sanitation",
-        key: 551910081,
+        key: "sanitation",
       },
       {
         title: "Hygiene",
-        key: 551910083,
+        key: "hygiene",
       },
     ],
     maps: {
@@ -73,9 +73,9 @@ var page_config = {
         component: "JMP-CHARTS",
         selected: true,
         chartList: [
-          { question: 551910082, name: "Water" },
-          { question: 551910081, name: "Sanitation" },
-          { question: 551910083, name: "Hygiene" },
+          { question: "water", name: "Water" },
+          { question: "sanitation", name: "Sanitation" },
+          { question: "hygiene", name: "Hygiene" },
         ],
       },
     ],
@@ -124,15 +124,15 @@ var page_config = {
       },
       {
         title: "Water",
-        key: 563280073,
+        key: "water",
       },
       {
         title: "Sanitation",
-        key: 563280074,
+        key: "sanitation",
       },
       {
         title: "Hygiene",
-        key: 563280072,
+        key: "hygiene",
       },
     ],
     maps: {
@@ -174,15 +174,15 @@ var page_config = {
       },
       {
         title: "Water",
-        key: 559910088,
+        key: "water",
       },
       {
         title: "Sanitation",
-        key: 559910089,
+        key: "sanitation",
       },
       {
         title: "Hygiene",
-        key: 559910090,
+        key: "hygiene",
       },
     ],
     maps: {

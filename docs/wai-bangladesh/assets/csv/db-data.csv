@@ -1,0 +1,10 @@
+pos,column_name,data_type,column_default,is_nullable
+1,id,integer,nextval('data_id_seq'::regclass),NO
+2,name,character varying,,YES
+3,form,integer,,YES
+4,administration,integer,,YES
+5,geo,ARRAY,,YES
+6,created_by,integer,,YES
+7,updated_by,integer,,YES
+8,created,timestamp without time zone,CURRENT_TIMESTAMP,YES
+9,updated,timestamp without time zone,,YES

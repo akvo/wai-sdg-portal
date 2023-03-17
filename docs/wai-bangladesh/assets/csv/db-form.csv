@@ -1,0 +1,8 @@
+pos,column_name,data_type,column_default,is_nullable
+1,id,integer,nextval('form_id_seq'::regclass),NO
+2,name,character varying,,YES
+3,description,text,,YES
+4,default_language,character varying,,YES
+5,languages,ARRAY,,YES
+6,translations,ARRAY,,YES
+7,version,double precision,,YES

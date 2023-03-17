@@ -1,0 +1,9 @@
+pos,column_name,data_type,column_default,is_nullable
+1,id,integer,nextval('option_id_seq'::regclass),NO
+2,order,integer,,YES
+3,name,character varying,,YES
+4,question,integer,,YES
+5,color,character varying,,YES
+6,score,integer,,YES
+7,code,character varying,,YES
+8,translations,ARRAY,,YES

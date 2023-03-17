@@ -1,3 +1,4 @@
+from collections import defaultdict
 from typing import List, Optional
 from fastapi import Request, APIRouter, HTTPException, Query
 from fastapi import Depends
@@ -8,6 +9,12 @@ from util.charts import get_chart_value
 import db.crud_charts as crud_charts
 import db.crud_administration as crud_administration
 from middleware import check_query
+from itertools import groupby
+from db.crud_jmp import (
+    get_jmp_overview,
+    get_jmp_config_by_form,
+    get_jmp_labels
+)
 
 chart_route = APIRouter()
 
@@ -74,37 +81,75 @@ def get_aggregated_pie_chart_data(req: Request,
     return value
 
 
-@chart_route.get("/chart/jmp-data/{form_id:path}/{question_id:path}",
-                 name="charts:get_aggregated_jmp_chart_data",
-                 summary="get jmp chart aggregate data",
-                 tags=["Charts"])
-def get_aggregated_jmp_chart_data(req: Request,
-                                  form_id: int,
-                                  question_id: int,
-                                  administration: Optional[int] = None,
-                                  q: Optional[List[str]] = Query(None),
-                                  session: Session = Depends(get_session)):
-    options = check_query(q) if q else None
+def group_children(p, data_source, labels):
+    data = list(
+        filter(lambda d: (d["administration"] in p["children"]), data_source)
+    )
+    data = [
+        {
+            "category": d["category"] if "category" in d else None,
+            "data": d["data"]
+        }
+        for d in data
+    ]
+    total = len(data)
+    childs = []
+    groups = groupby(data, key=lambda d: d["category"])
+    counter = defaultdict()
+    for k, values in groups:
+        for v in list(values):
+            if v["category"] in list(counter):
+                counter[v["category"]] += 1
+            else:
+                counter[v["category"]] = 1
+    for lb in labels:
+        label = lb["name"]
+        count = counter[label] if label in counter else 0
+        percent = count / total * 100 if count > 0 else 0
+        childs.append(
+            {
+                "option": label,
+                "count": count,
+                "percent": percent,
+                "color": lb["color"],
+            }
+        )
+    return {"administration": p["id"], "score": 0, "child": childs}
+
+
+@chart_route.get(
+    "/chart/jmp-data/{form_id:path}/{type:path}",
+    name="charts:get_aggregated_jmp_chart_data",
+    summary="get jmp chart aggregate data",
+    tags=["Charts"],
+)
+def get_aggregated_jmp_chart_data(
+    req: Request,
+    form_id: int,
+    type: str,
+    # administration: Optional[int] = None,
+    # q: Optional[List[str]] = Query(None),
+    session: Session = Depends(get_session),
+):
+    # options = check_query(q) if q else None
     parent_administration = crud_administration.get_parent_administration(
-        session=session)
+        session=session
+    )
     parent_administration = [
         x.simplify_serialize_with_children for x in parent_administration
     ]
-    administration_ids = crud_administration.get_all_childs(session=session)
-    if administration:
-        parent_administration = False
-        administration_ids = crud_administration.get_all_childs(
-            session=session, parents=[administration], current=[])
-        if not len(administration_ids):
-            raise HTTPException(status_code=404, detail="Not found")
-    value = crud_charts.get_jmp_chart_data(
-        session=session,
-        form=form_id,
-        question=question_id,
-        parent_administration=parent_administration,
-        administration=administration_ids,
-        options=options)
-    return value
+    data = get_jmp_overview(
+        session=session, form=form_id, name=type
+    )
+    configs = get_jmp_config_by_form(form=form_id)
+    labels = get_jmp_labels(configs=configs, name=type)
+    group = list(
+        map(
+            lambda p: group_children(p, data, labels),
+            parent_administration,
+        )
+    )
+    return {"form": form_id, "question": type, "data": group}
 
 
 @chart_route.get(

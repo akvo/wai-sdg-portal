@@ -158,7 +158,7 @@ Environment Variable Setup
      POSTGRES_PASSWORD=postgres
      WAI_DB_USER=yourname
      WAI_DB_PASSWORD=sUpeRsTr0ngPa**word
-     INSTANCE_NAME=wai-ethiopia
+     INSTANCE_NAME=wai-demo
      AUTH0_DOMAIN=your-domain.eu.auth0.com
      AUTH0_CLIENT_ID=acad34xxxxxxxx
      AUTH0_SECRET=938axxxxxxxxxxx
@@ -169,16 +169,12 @@ Environment Variable Setup
      MAILJET_SECRET=093asbalxxxxxxxx
      MAILJET_APIKEY=9acadlkbxxxxxxxx
      WEBDOMAIN=https://your-domain.com
-     CERTBOT_EMAIL=your-admin-email
 
    .. note::
-      - ``WEBDOMAIN`` field must be populated with your domain name. In the case of a production environment, kindly ensure to include "https://" prior to your domain name
-      - Kindly note that if you are installing to your localhost, it is necessary to add 'http://' before 'localhost' in the WEBDOMAIN variable
-      - Before proceeding with the application or installation process, it is crucial to confirm that your domain has been properly pointed to your public IP address
       - Use **Domain** and **Client ID** field from your **Auth0 SPA application** for ``AUTH_SPA_DOMAIN`` and ``AUTH_SPA_CLIENT_ID``
       - Use **Domain**, **Secret** and **Client ID** field from your **Auth0 Backend application** for ``AUTH_DOMAIN``, ``AUTH_SECRET`` and ``AUTH_CLIENT_ID``.
       - For ``AUTH0_AUDIENCE``, Go to your **Auth0 backend application**, click **APIs** Tab, expand **Auth0 Management API**. Use the **Grant ID** field.
-      - ``CERTBOT_EMAIL`` please provide the email of your DevOps or System Administrator who is responsible for managing the system. This email will be used to send alerts about certificate expiration, outdated configuration, and information related to Let's Encrypt
+
 
 Run the Application
 *******************
@@ -207,11 +203,3 @@ Example:
 .. code:: bash
 
     docker compose exec backend ./seed.sh youremail@akvo.org "Your Name" Akvo
-
-Renew SSL Certificate
-*********************
-The certificate from Let's Encrypt will expire every 90 days. To renew the certificate, please run the following command. For automation, you can also set this command to run with Cron.
-
-.. code:: bash
-
-    ./renew-ssl.sh
