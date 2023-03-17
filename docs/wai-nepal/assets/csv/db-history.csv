@@ -1,0 +1,11 @@
+pos,column_name,data_type,column_default,is_nullable
+1,id,integer,nextval('history_id_seq'::regclass),NO
+2,question,integer,,YES
+3,data,integer,,YES
+4,value,double precision,,YES
+5,text,text,,YES
+6,options,ARRAY,,YES
+7,created_by,integer,,YES
+8,updated_by,integer,,YES
+9,created,timestamp without time zone,CURRENT_TIMESTAMP,YES
+10,updated,timestamp without time zone,,YES
