@@ -16,27 +16,19 @@ Welcome to SDG Bangladesh Portal documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Getting Started
+   :caption: User Guide
 
-   bangladesh/gettingStarted
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Datasets
-
-   bangladesh/datasets
+   user-guide
 
 .. toctree::
    :maxdepth: 2
-   :caption: Data
+   :caption: Developer Guide
 
-   bangladesh/data
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Admin
-
-   bangladesh/admin
+   developer-install
+   developer-database-seeder
+   tests
+   developer-database-schema
+   services
 
 .. |Build Status| image:: https://akvo.semaphoreci.com/badges/wai-sdg-portal/branches/main.svg?style=shields
    :target: https://akvo.semaphoreci.com/projects/wai-sdg-portal
