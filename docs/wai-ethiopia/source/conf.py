@@ -1,4 +1,3 @@
-import sphinx_rtd_theme
 
 # Configuration file for the Sphinx documentation builder.
 #
@@ -19,7 +18,7 @@ import sphinx_rtd_theme
 
 # -- Project information -----------------------------------------------------
 
-project = 'wai-sdg-portal'
+project = 'Ethiopia SDG Portal'
 copyright = '2022, Akvo'
 author = 'Akvo'
 

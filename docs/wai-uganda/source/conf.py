@@ -19,7 +19,7 @@ import sphinx_rtd_theme
 
 # -- Project information -----------------------------------------------------
 
-project = 'wai-sdg-portal'
+project = 'Uganda SDG Portal'
 copyright = '2022, Akvo'
 author = 'Akvo'
 
