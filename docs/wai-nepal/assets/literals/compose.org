@@ -1,0 +1,164 @@
+** Services
+
+#+NAME: Services
+#+begin_src sh :results verbatim output :exports both
+docker compose ps
+#+end_src
+
+#+RESULTS: Services
+: NAME                           IMAGE                                              COMMAND                  SERVICE             CREATED             STATUS              PORTS
+: wai-sdg-portal-backend-1       python:3.8.5                                       "./dev.sh"               backend             4 hours ago         Up 4 hours
+: wai-sdg-portal-db-1            postgres:12-alpine                                 "docker-entrypoint.s…"   db                  4 hours ago         Up 4 hours          0.0.0.0:5432->5432/tcp, :::5432->5432/tcp
+: wai-sdg-portal-frontend-1      akvo/akvo-node-18-alpine:20220923.084347.0558ee6   "run-as-user.sh ./st…"   frontend            4 hours ago         Up 4 hours
+: wai-sdg-portal-mainnetwork-1   alpine:3.14.0                                      "tail -f /dev/null"      mainnetwork         4 hours ago         Up 4 hours          0.0.0.0:3000->3000/tcp, :::3000->3000/tcp, 0.0.0.0:5050->5050/tcp, :::5050->5050/tcp, 0.0.0.0:8000->8000/tcp, :::8000->8000/tcp
+: wai-sdg-portal-pgadmin-1       dpage/pgadmin4:5.7                                 "/entrypoint.sh"         pgadmin             4 hours ago         Up 4 hours
+: wai-sdg-portal-worker-1        python:3.8.5                                       "./worker.sh"            worker              4 hours ago         Up 4 hours
+
+** Container Detail
+
+*** Backend
+
+#+NAME: Backend Processes
+#+begin_src sh :exports both
+docker compose top backend | tail -n +2 | head -n -1
+#+end_src
+
+#+RESULTS: Backend Processes
+| UID  |   PID |  PPID | C | STIME | TTY |     TIME | CMD                   |                        |          |                                  |        |              |                          |                |                        |
+| root | 94628 | 94577 | 0 | 12:12 | ?   | 00:00:00 | bash                  | ./dev.sh               |          |                                  |        |              |                          |                |                        |
+| root | 95594 | 94628 | 3 | 12:12 | ?   | 00:08:17 | /usr/local/bin/python | /usr/local/bin/uvicorn | main:app | --reload                         | --port | 5000         |                          |                |                        |
+| root | 95595 | 95594 | 0 | 12:12 | ?   | 00:00:00 | /usr/local/bin/python | -c                     | from     | multiprocessing.resource_tracker | import | main;main(4) |                          |                |                        |
+| root | 95596 | 95594 | 0 | 12:12 | ?   | 00:00:49 | /usr/local/bin/python | -c                     | from     | multiprocessing.spawn            | import | spawn_main;  | spawn_main(tracker_fd=5, | pipe_handle=7) | --multiprocessing-fork |
+
+**** Commands
+
+#+NAME: Backend Commands
+#+begin_src sh :results verbatim :exports both
+docker compose exec backend ./seed.sh
+#+end_src
+
+#+RESULTS: Backend Commands
+: This script require more than 0 argument/s
+: Example: ./test.sh dev@akvo.org "My Name" "My Organisation"
+
+#+NAME: Seeder
+#+begin_src sh :results verbatim :exports both
+docker compose exec backend cat ./seed.sh | grep seeder. | sed 's/#\ //g'
+#+end_src
+
+#+RESULTS: Seeder
+:     python -m seeder.administration
+:     python -m seeder.admin "$@"
+:     python -m seeder.fake_user 30 "$3"
+:     python -m seeder.form
+:     python -m seeder.datapoint "$1"
+
+*** Frontend
+
+**** Processes
+
+#+NAME: Frontend Processes
+#+begin_src sh :exports both
+docker compose -f docker-compose.yml top frontend | tail -n +2 | head -n -1
+#+end_src
+
+#+RESULTS: Frontend Processes
+| UID  |   PID |  PPID | C | STIME | TTY |     TIME | CMD                 |                                                  |       |
+| root | 94620 | 94559 | 0 | 12:12 | ?   | 00:00:00 | bash                | ./start.sh                                       |       |
+| root | 94820 | 94620 | 0 | 12:12 | ?   | 00:00:03 | node                | /opt/yarn-v1.22.19/bin/yarn.js                   | start |
+| root | 94841 | 94820 | 0 | 12:12 | ?   | 00:00:00 | /usr/local/bin/node | /app/node_modules/.bin/react-scripts             | start |
+| root | 94849 | 94841 | 0 | 12:12 | ?   | 00:00:21 | /usr/local/bin/node | /app/node_modules/react-scripts/scripts/start.js |       |
+
+**** Commands
+
+#+NAME: Frontend Commands
+#+begin_src sh :results verbatim :exports both
+docker compose exec frontend yarn run
+#+end_src
+
+#+RESULTS: Frontend Commands
+#+begin_example
+yarn run v1.22.19
+info Commands available from binary scripts: acorn, ansi-html, autoprefixer, browserslist, browserslist-lint, cross-env, cross-env-shell, css-blank-pseudo, css-has-pseudo, css-prefers-color-scheme, cssesc, detect, detect-port, detective, ejs, escodegen, esgenerate, eslint, eslint-config-prettier, esparse, esvalidate, he, html-minifier-terser, import-local-fixture, is-docker, jake, jest, js-yaml, jsesc, json5, loose-envify, lz-string, mime, mkdirp, multicast-dns, nanoid, nmtree, node-which, parser, prettier, react-scripts, regjsparser, remarkable, resolve, rimraf, rollup, sass, semver, sha.js, svgo, synp, tailwind, tailwindcss, terser, topo2geo, topomerge, topoquantize, uuid, webpack, webpack-dev-server, yarn-audit-fix
+info Project commands
+   - build
+      react-scripts build
+   - eject
+      react-scripts eject
+   - lint
+      eslint --config .eslintrc.json src --ext .js,.jsx
+   - prettier
+      prettier --check src
+   - start
+      react-scripts start
+   - test
+      react-scripts test --updateSnapshot --transformIgnorePatterns "node_modules/(?!d3|d3-geo|d3-array|internmap|delaunator|robust-predicates|react-leaflet)/"
+   - test:ci
+      CI=true react-scripts test --watchAll=false --coverage --transformIgnorePatterns "node_modules/(?!d3|d3-geo|d3-array|internmap|delaunator|robust-predicates)/"
+Done in 0.02s.
+#+end_example
+
+*** Worker
+
+#+NAME: Worker Processes
+#+begin_src sh :exports both
+docker compose top worker | tail -n +2 | head -n -1
+#+end_src
+
+#+RESULTS: Worker Processes
+| UID  |   PID |  PPID | C | STIME | TTY |     TIME | CMD                   |                        |               |                                  |        |              |                          |                |                        |
+| root | 94704 | 94679 | 0 | 12:12 | ?   | 00:00:00 | bash                  | ./worker.sh            |               |                                  |        |              |                          |                |                        |
+| root | 95588 | 94704 | 3 | 12:12 | ?   | 00:08:19 | /usr/local/bin/python | /usr/local/bin/uvicorn | worker:worker | --reload                         | --port | 5001         |                          |                |                        |
+| root | 95590 | 95588 | 0 | 12:12 | ?   | 00:00:00 | /usr/local/bin/python | -c                     | from          | multiprocessing.resource_tracker | import | main;main(4) |                          |                |                        |
+| root | 95591 | 95588 | 0 | 12:12 | ?   | 00:00:55 | /usr/local/bin/python | -c                     | from          | multiprocessing.spawn            | import | spawn_main;  | spawn_main(tracker_fd=5, | pipe_handle=7) | --multiprocessing-fork |
+
+*** Database
+
+#+NAME: Database Processes
+#+begin_src sh :exports both
+docker compose top db | tail -n +2 | head -n -1
+#+end_src
+
+#+RESULTS: Database Processes
+| UID |    PID |  PPID | C | STIME | TTY |     TIME | CMD       |              |             |                   |      |
+|  70 |  94342 | 94316 | 0 | 12:12 | ?   | 00:00:00 | postgres  |              |             |                   |      |
+|  70 |  94635 | 94342 | 0 | 12:12 | ?   | 00:00:00 | postgres: | checkpointer |             |                   |      |
+|  70 |  94636 | 94342 | 0 | 12:12 | ?   | 00:00:00 | postgres: | background   | writer      |                   |      |
+|  70 |  94637 | 94342 | 0 | 12:12 | ?   | 00:00:00 | postgres: | walwriter    |             |                   |      |
+|  70 |  94638 | 94342 | 0 | 12:12 | ?   | 00:00:00 | postgres: | autovacuum   | launcher    |                   |      |
+|  70 |  94639 | 94342 | 0 | 12:12 | ?   | 00:00:00 | postgres: | stats        | collector   |                   |      |
+|  70 |  94640 | 94342 | 0 | 12:12 | ?   | 00:00:00 | postgres: | logical      | replication |          launcher |      |
+|  70 |  95628 | 94342 | 0 | 12:12 | ?   | 00:00:00 | postgres: | wai          | wai_demo    | 172.20.0.3(38228) | idle |
+|  70 |  95629 | 94342 | 0 | 12:12 | ?   | 00:00:02 | postgres: | wai          | wai_demo    | 172.20.0.3(38234) | idle |
+|  70 |  95642 | 94342 | 0 | 12:12 | ?   | 00:00:00 | postgres: | wai          | wai_demo    | 172.20.0.3(38242) | idle |
+|  70 | 103242 | 94342 | 0 | 12:17 | ?   | 00:00:00 | postgres: | wai          | wai_demo    | 172.20.0.3(36900) | idle |
+|  70 | 103243 | 94342 | 0 | 12:17 | ?   | 00:00:00 | postgres: | wai          | wai_demo    | 172.20.0.3(36916) | idle |
+|  70 | 103244 | 94342 | 0 | 12:17 | ?   | 00:00:00 | postgres: | wai          | wai_demo    | 172.20.0.3(36926) | idle |
+
+*** Dev
+
+**** PG Admin
+
+#+NAME: PG Admin Processes
+#+begin_src sh :exports both
+docker compose top pgadmin | tail -n +2 | head -n -1
+#+end_src
+
+#+RESULTS: PG Admin Processes
+| UID      |    PID |  PPID | C | STIME | TTY |     TIME | CMD                         |                    |           |       |        |           |    |   |           |    |                  |   |    |                    |                 |
+| 5050     |  94608 | 94537 | 0 | 12:12 | ?   | 00:00:03 | /venv/bin/python3           | /venv/bin/gunicorn | --timeout | 86400 | --bind | [::]:5050 | -w | 1 | --threads | 25 | --access-logfile | - | -c | gunicorn_config.py | run_pgadmin:app |
+| root     |  94812 | 94608 | 0 | 12:12 | ?   | 00:00:00 | /usr/libexec/postfix/master | -w                 |           |       |        |           |    |   |           |    |                  |   |    |                    |                 |
+| systemd+ |  94814 | 94812 | 0 | 12:12 | ?   | 00:00:00 | qmgr                        | -l                 | -t        |  unix | -u     |           |    |   |           |    |                  |   |    |                    |                 |
+| 5050     |  94905 | 94608 | 0 | 12:12 | ?   | 00:00:09 | /venv/bin/python3           | /venv/bin/gunicorn | --timeout | 86400 | --bind | [::]:5050 | -w | 1 | --threads | 25 | --access-logfile | - | -c | gunicorn_config.py | run_pgadmin:app |
+| systemd+ | 425845 | 94812 | 0 | 15:32 | ?   | 00:00:00 | pickup                      | -l                 | -t        |  unix | -u     |           |    |   |           |    |                  |   |    |                    |                 |
+
+**** Main Network
+
+#+NAME: Main Network Processes
+#+begin_src sh :exports both
+docker compose top mainnetwork | tail -n +2 | head -n -1
+#+end_src
+
+#+RESULTS: Main Network Processes
+| UID  |   PID |  PPID | C | STIME | TTY |     TIME | CMD  |    |           |
+| root | 94393 | 94363 | 0 | 12:12 | ?   | 00:00:00 | tail | -f | /dev/null |
