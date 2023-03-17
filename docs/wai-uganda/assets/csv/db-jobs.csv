@@ -1,0 +1,10 @@
+pos,column_name,data_type,column_default,is_nullable
+1,id,integer,nextval('jobs_id_seq'::regclass),NO
+2,type,USER-DEFINED,,YES
+3,status,USER-DEFINED,'pending'::jobstatus,YES
+4,payload,text,,NO
+5,info,jsonb,,YES
+6,attempt,integer,0,YES
+7,created_by,integer,,NO
+8,created,timestamp without time zone,CURRENT_TIMESTAMP,YES
+9,available,timestamp without time zone,,YES
