@@ -80,10 +80,6 @@
             {
               "name": "Co-education",
               "code": "TEMP3"
-            },
-            {
-              "name": "Incomplete",
-              "code": "TEMP4"
             }
           ]
         },
@@ -380,16 +376,12 @@
           "required": true,
           "options": [
             {
-              "name": "YES (if > 0)",
+              "name": "YES",
               "code": "ST1"
             },
             {
-              "name": "NO (if  =0)",
+              "name": "NO",
               "code": "ST2"
-            },
-            {
-              "name": "Incomplete",
-              "code": "ST3"
             }
           ],
           "dependency": [
@@ -423,10 +415,6 @@
             {
               "name": "No",
               "code": "TM3"
-            },
-            {
-              "name": "Incomplete",
-              "code": "TM4"
             }
           ],
           "dependency": [
