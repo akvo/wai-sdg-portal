@@ -7,7 +7,7 @@
       "questions": [
         {
           "order": 1,
-          "question": "location",
+          "question": "Location",
           "type": "administration",
           "meta": true,
           "required": true,
@@ -15,7 +15,7 @@
         },
         {
           "order": 4,
-          "question": "parish",
+          "question": "Parish",
           "type": "text",
           "meta": false,
           "required": true,
@@ -23,7 +23,7 @@
         },
         {
           "order": 5,
-          "question": "village",
+          "question": "Village",
           "type": "text",
           "meta": false,
           "required": true,
@@ -31,7 +31,7 @@
         },
         {
           "order": 6,
-          "question": "geolocation",
+          "question": "Geolocation",
           "type": "geo",
           "meta": true,
           "required": true,
@@ -39,7 +39,7 @@
         },
         {
           "order": 8,
-          "question": "name of household",
+          "question": "Name of household",
           "type": "text",
           "meta": true,
           "required": true,
@@ -47,367 +47,651 @@
         },
         {
           "order": 9,
-          "question": "what is the total number of household members, including yourself?",
+          "question": "What is the total number of household members, including yourself?",
           "type": "number",
           "meta": false,
           "required": true,
           "options": null
-        },
+        }
+      ]
+    },
+    {
+      "question_group": "Water",
+      "questions": [
         {
-          "order": 10,
-          "question": "water service level",
+          "id": 667814066,
+          "order": 1,
+          "question": "Main source of drinking water",
           "type": "option",
           "meta": false,
           "required": true,
           "options": [
             {
-              "name": "basic",
-              "color": null
+              "name": "Public tap/standpipe",
+              "code": "W1"
             },
             {
-              "name": "limited",
-              "color": null
+              "name": "Piped water into dwelling (household connection)",
+              "code": "W2"
             },
             {
-              "name": "unimproved",
-              "color": null
+              "name": "Piped water to yard/plot",
+              "code": "W3"
             },
             {
-              "name": "surface water",
-              "color": null
+              "name": "Tap",
+              "code": "W4"
+            },
+            {
+              "name": "Deep tubewell/borehole",
+              "code": "W5"
+            },
+            {
+              "name": "borehole",
+              "code": "W6"
+            },
+            {
+              "name": "Shallow tubewell/borehole",
+              "code": "W7"
+            },
+            {
+              "name": "Rainwater collection",
+              "code": "W8"
+            },
+            {
+              "name": "Protected spring",
+              "code": "W9"
+            },
+            {
+              "name": "Protected dug well",
+              "code": "W10"
+            },
+            {
+              "name": "Bottled water",
+              "code": "W11"
+            },
+            {
+              "name": "Cart with small tank/drum",
+              "code": "W12"
+            },
+            {
+              "name": "Tanker-truck",
+              "code": "W13"
+            },
+            {
+              "name": "Unprotected dug well",
+              "code": "W14"
+            },
+            {
+              "name": "Unprotected spring",
+              "code": "W15"
+            },
+            {
+              "name": "Dam",
+              "code": "W16"
+            },
+            {
+              "name": "Rivers",
+              "code": "W17"
+            },
+            {
+              "name": "Surface water",
+              "code": "W18"
             }
           ]
         },
         {
-          "order": 11,
-          "question": "main source of drinking water",
-          "type": "text",
-          "meta": false,
-          "required": true,
-          "options": null
-        },
-        {
-          "order": 12,
-          "question": "main source of water for other purposes",
-          "type": "number",
-          "meta": false,
-          "required": true,
-          "options": null
-        },
-        {
-          "order": 13,
-          "question": "specific location of water collection",
+          "id": 672324084,
+          "order": 2,
+          "question": "Specific location of water collection",
           "type": "option",
           "meta": false,
           "required": true,
           "options": [
             {
-              "name": "elsewhere",
-              "color": null
+              "name": "Water is located on the premises",
+              "code": "C1"
             },
             {
-              "name": "in own yard / plot",
-              "color": null
+              "name": "Less than 500 meters",
+              "code": "C2"
             },
             {
-              "name": "in own dwelling",
-              "color": null
+              "name": "More than 500 meters",
+              "code": "C3"
+            },
+            {
+              "name": "Don't know",
+              "code": "C4"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 667814066,
+              "options": [
+                "Public tap/standpipe",
+                "Piped water into dwelling (household connection)",
+                "Piped water to yard/plot",
+                "Tap",
+                "Deep tubewell/borehole",
+                "borehole",
+                "Shallow tubewell/borehole",
+                "Rainwater collection",
+                "Protected spring",
+                "Protected dug well",
+                "Bottled water",
+                "Cart with small tank/drum",
+                "Tanker-truck"
+              ]
             }
           ]
         },
         {
-          "order": 14,
-          "question": "time to collect water",
+          "id": 668774063,
+          "order": 3,
+          "question": "Time to collect water",
           "type": "option",
           "meta": false,
           "required": true,
           "options": [
             {
-              "name": "less than 30 minutes",
-              "color": null
+              "name": "Water is located on the premises",
+              "code": "D1"
             },
             {
-              "name": "more than 30 minutes",
-              "color": null
+              "name": "Less than 500 meters",
+              "code": "D2"
             },
             {
-              "name": "don't know",
-              "color": null
+              "name": "More than 500 meters",
+              "code": "D3"
+            },
+            {
+              "name": "Don't know",
+              "code": "D4"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 667814066,
+              "options": [
+                "Public tap/standpipe",
+                "Piped water into dwelling (household connection)",
+                "Piped water to yard/plot",
+                "Tap",
+                "Deep tubewell/borehole",
+                "borehole",
+                "Shallow tubewell/borehole",
+                "Rainwater collection",
+                "Protected spring",
+                "Protected dug well",
+                "Bottled water",
+                "Cart with small tank/drum",
+                "Tanker-truck"
+              ]
             }
           ]
         },
         {
-          "order": 15,
-          "question": "times in last month when drinking water quantity was insufficient",
+          "id": 671454067,
+          "order": 4,
+          "question": "Times in last month when drinking water quantity was insufficient",
           "type": "option",
           "meta": false,
           "required": true,
           "options": [
             {
-              "name": "yes, at least once",
-              "color": null
+              "name": "No, always sufficient",
+              "code": "S1"
             },
             {
-              "name": "no, always sufficient",
-              "color": null
+              "name": "Yes, at least once",
+              "code": "S2"
             },
             {
-              "name": "don't know",
-              "color": null
+              "name": "Don't know",
+              "code": "S3"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 667814066,
+              "options": [
+                "Public tap/standpipe",
+                "Piped water into dwelling (household connection)",
+                "Piped water to yard/plot",
+                "Tap",
+                "Deep tubewell/borehole",
+                "borehole",
+                "Shallow tubewell/borehole",
+                "Rainwater collection",
+                "Protected spring",
+                "Protected dug well",
+                "Bottled water",
+                "Cart with small tank/drum",
+                "Tanker-truck"
+              ]
             }
           ]
         },
         {
-          "order": 16,
-          "question": "fecal and chemical levels acceptable",
-          "type": "number",
-          "meta": false,
-          "required": true,
-          "options": null
-        },
-        {
-          "order": 17,
-          "question": "sanitation service level",
+          "id": 672404080,
+          "order": 5,
+          "question": "Fecal and chemical levels acceptable",
           "type": "option",
           "meta": false,
           "required": true,
           "options": [
             {
-              "name": "basic",
-              "color": null
+              "name": "Safe levels",
+              "code": "SL1"
             },
             {
-              "name": "limited",
-              "color": null
+              "name": "Unsafe levels",
+              "code": "SL2"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 667814066,
+              "options": [
+                "Public tap/standpipe",
+                "Piped water into dwelling (household connection)",
+                "Piped water to yard/plot",
+                "Tap",
+                "Deep tubewell/borehole",
+                "borehole",
+                "Shallow tubewell/borehole",
+                "Rainwater collection",
+                "Protected spring",
+                "Protected dug well",
+                "Bottled water",
+                "Cart with small tank/drum",
+                "Tanker-truck"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Sanitation",
+      "questions": [
+        {
+          "id": 671424081,
+          "order": 1,
+          "question": "Is a toilet facility used?",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "code": "TU1"
             },
             {
-              "name": "unimproved",
-              "color": null
-            },
-            {
-              "name": "open defecation",
-              "color": null
-            },
-            {
-              "name": "safely managed",
-              "color": null
+              "name": "No",
+              "code": "TU2"
             }
           ]
         },
         {
-          "order": 18,
-          "question": "type of toilet facility",
+          "id": 675114085,
+          "order": 2,
+          "question": "What type of toilet facility",
           "type": "option",
           "meta": false,
           "required": true,
           "options": [
             {
-              "name": "pit latrine with slab",
-              "color": null
+              "name": "Toilet that flush/pour flush to piped sewer system",
+              "code": "T1"
             },
             {
-              "name": "ventilated improved pit latrine (vip)",
-              "color": null
+              "name": "Toilet that flush/pour flush to septic tank",
+              "code": "T2"
             },
             {
-              "name": "toilet that flush/pour to pit latrine",
-              "color": null
+              "name": "Toilet that flush/pour flush but don't know where / toilet that flush/pour flush to elsewhere",
+              "code": "T3"
             },
             {
-              "name": "pit latrine without slab/open pit",
-              "color": null
+              "name": "Pit latrine with slab",
+              "code": "T4"
+            },
+            {
+              "name": "pit lantrine with slab made of wood / pitlantrine slab with woods",
+              "code": "T5"
+            },
+            {
+              "name": "pit lantrine slab with wood and roofed with grass thatch",
+              "code": "T6"
+            },
+            {
+              "name": "apit lantrine covered with wood and roof is open",
+              "code": "T7"
+            },
+            {
+              "name": "Traditional pit latrine",
+              "code": "T8"
+            },
+            {
+              "name": "Ventilated Improved Pit latrine (VIP)",
+              "code": "T9"
+            },
+            {
+              "name": "Composting toilet",
+              "code": "T10"
+            },
+            {
+              "name": "Mobile toilet / mobile toilet / mobilet / Mobile latrine",
+              "code": "T11"
+            },
+            {
+              "name": "Pit latrine without slab/open pit",
+              "code": "T12"
+            },
+            {
+              "name": "Hanging toilet/hanging latrine",
+              "code": "T13"
+            },
+            {
+              "name": "Bucket",
+              "code": "T14"
+            },
+            {
+              "name": "No latrine this compound",
+              "code": "T15"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 671424081,
+              "options": [
+                "Yes"
+              ]
             }
           ]
         },
         {
-          "order": 19,
-          "question": "facility is shared with others outside of the household",
+          "id": 668864018,
+          "order": 3,
+          "question": "Facility is shared with others outside of the household",
           "type": "option",
           "meta": false,
           "required": true,
           "options": [
             {
-              "name": "no",
-              "color": null
+              "name": "No",
+              "code": "TS1"
             },
             {
-              "name": "yes",
-              "color": null
+              "name": "Yes",
+              "code": "TS2"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 671424081,
+              "options": [
+                "Yes"
+              ]
+            },
+            {
+              "id": 675114085,
+              "options": [
+                "Toilet that flush/pour flush to piped sewer system",
+                "Toilet that flush/pour flush to septic tank",
+                "Toilet that flush/pour flush but don't know where / toilet that flush/pour flush to elsewhere",
+                "Pit latrine with slab",
+                "pit lantrine with slab made of wood / pitlantrine slab with woods",
+                "pit lantrine slab with wood and roofed with grass thatch",
+                "apit lantrine covered with wood and roof is open",
+                "Traditional pit latrine",
+                "Ventilated Improved Pit latrine (VIP)",
+                "Composting toilet"
+              ]
             }
           ]
         },
         {
-          "order": 20,
-          "question": "location of sanitation facility",
+          "id": 668864017,
+          "order": 4,
+          "question": "Location of sanitation facility",
           "type": "option",
           "meta": false,
           "required": true,
           "options": [
             {
-              "name": "in own plot/yard",
-              "color": null
+              "name": "Less than 10m",
+              "code": "TF1"
             },
             {
-              "name": "elsewhere",
-              "color": null
+              "name": "15 metres",
+              "code": "TF2"
             },
             {
-              "name": "in own dwelling",
-              "color": null
+              "name": "30 metres",
+              "code": "TF3"
+            },
+            {
+              "name": "more than 30 metres",
+              "code": "TF4"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 671424081,
+              "options": [
+                "Yes"
+              ]
+            },
+            {
+              "id": 675114085,
+              "options": [
+                "Toilet that flush/pour flush to piped sewer system",
+                "Toilet that flush/pour flush to septic tank",
+                "Toilet that flush/pour flush but don't know where / toilet that flush/pour flush to elsewhere",
+                "Pit latrine with slab",
+                "pit lantrine with slab made of wood / pitlantrine slab with woods",
+                "pit lantrine slab with wood and roofed with grass thatch",
+                "apit lantrine covered with wood and roof is open",
+                "Traditional pit latrine",
+                "Ventilated Improved Pit latrine (VIP)",
+                "Composting toilet"
+              ]
             }
           ]
         },
         {
-          "order": 21,
-          "question": "emptying of on-site sanitation facilities",
+          "id": 671454081,
+          "order": 5,
+          "question": "Emptying of on-site sanitation facilities",
           "type": "option",
           "meta": false,
           "required": true,
           "options": [
             {
-              "name": "no, never emptied",
-              "color": null
+              "name": "Yes, but don't know when",
+              "code": "PE1"
             },
             {
-              "name": "yes, within the last 5 years",
-              "color": null
+              "name": "Yes, within the last 5 years",
+              "code": "PE2"
             },
             {
-              "name": "don't know",
-              "color": null
+              "name": "Yes, more than 5 years ago",
+              "code": "PE3"
             },
             {
-              "name": "yes, but don't know when",
-              "color": null
+              "name": "No, never emptied",
+              "code": "PE4"
+            },
+            {
+              "name": "Don't know",
+              "code": "PE5"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 671424081,
+              "options": [
+                "Yes"
+              ]
+            },
+            {
+              "id": 675114085,
+              "options": [
+                "Toilet that flush/pour flush to piped sewer system",
+                "Toilet that flush/pour flush to septic tank",
+                "Toilet that flush/pour flush but don't know where / toilet that flush/pour flush to elsewhere",
+                "Pit latrine with slab",
+                "pit lantrine with slab made of wood / pitlantrine slab with woods",
+                "pit lantrine slab with wood and roofed with grass thatch",
+                "apit lantrine covered with wood and roof is open",
+                "Traditional pit latrine",
+                "Ventilated Improved Pit latrine (VIP)",
+                "Composting toilet"
+              ]
             }
           ]
         },
         {
-          "order": 22,
-          "question": "disposal of excreta from onite sanitation facilities",
+          "id": 669614079,
+          "order": 6,
+          "question": "Disposal of excreta from onite sanitation facilities",
           "type": "option",
           "meta": false,
           "required": true,
           "options": [
             {
-              "name": "by service provider to a treatment plant",
-              "color": null
+              "name": "By service provider to a treatment plant",
+              "code": "P1"
             },
             {
-              "name": "by household buried in a covered pit",
-              "color": null
+              "name": "By service provider buried in a covered pit",
+              "code": "P2"
             },
             {
-              "name": "by service provider but don't know where",
-              "color": null
+              "name": "By service provider but don't know where",
+              "code": "P3"
             },
             {
-              "name": "other (specify)",
-              "color": null
+              "name": "By household buried in a covered pit",
+              "code": "P4"
             },
             {
-              "name": "don't know",
-              "color": null
+              "name": "Don't know",
+              "code": "P5"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 671454081,
+              "options": [
+                "Yes, but don't know when",
+                "Yes, within the last 5 years",
+                "Yes, more than 5 years ago"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question_group": "Hygiene",
+      "questions": [
+        {
+          "id": 668734091,
+          "order": 1,
+          "question": "What type of handwashing facility used most often",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "Fixed facility observed in dwelling",
+              "code": "HW1"
             },
             {
-              "name": "by service provider buried in a covered pit",
-              "color": null
+              "name": "Fixed facility observed in plot/yard",
+              "code": "HW2"
+            },
+            {
+              "name": "Mobile object observed (bucket, jug, kettle)",
+              "code": "HW3"
+            },
+            {
+              "name": "No handwashing place available in dwelling/plot/yard",
+              "code": "HW4"
+            },
+            {
+              "name": "No permission to see",
+              "code": "HW5"
+            },
+            {
+              "name": "Other reason",
+              "code": "HW6"
             }
           ]
         },
         {
-          "order": 23,
-          "question": "hygiene",
+          "id": 670544075,
+          "order": 2,
+          "question": "Is water available at handwashing facility",
           "type": "option",
           "meta": false,
           "required": true,
           "options": [
             {
-              "name": "basic",
-              "color": null
+              "name": "Water is available",
+              "code": "WA1"
             },
             {
-              "name": "limited",
-              "color": null
-            },
+              "name": "Water is not available",
+              "code": "WA2"
+            }
+          ],
+          "dependency": [
             {
-              "name": "no facility",
-              "color": null
-            },
-            {
-              "name": "no permission",
-              "color": null
+              "id": 668734091,
+              "options": [
+                "Fixed facility observed in dwelling",
+                "Fixed facility observed in plot/yard",
+                "Mobile object observed (bucket, jug, kettle)"
+              ]
             }
           ]
         },
         {
-          "order": 24,
-          "question": "type of handwashing facility used most often",
+          "id": 672354093,
+          "order": 3,
+          "question": "Is soap available at handwashing facility",
           "type": "option",
           "meta": false,
           "required": true,
           "options": [
             {
-              "name": "fixed facility observed in plot/yard",
-              "color": null
+              "name": "Yes, soap or detergent are present",
+              "code": "SA1"
             },
             {
-              "name": "mobile object observed (bucket, jug, kettle)",
-              "color": null
+              "name": "Ash/mud/sand is present",
+              "code": "SA3"
             },
             {
-              "name": "no handwashing place available in dwelling/plot/yard",
-              "color": null
-            },
-            {
-              "name": "no permission to see",
-              "color": null
-            },
-            {
-              "name": "other reason (specify)",
-              "color": null
-            },
-            {
-              "name": "fixed facility observed in dwelling",
-              "color": null
+              "name": "No, not present",
+              "code": "SA2"
             }
-          ]
-        },
-        {
-          "order": 25,
-          "question": "water available at handwashing facility",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
+          ],
+          "dependency": [
             {
-              "name": "water is available",
-              "color": null
-            },
-            {
-              "name": "water is not available",
-              "color": null
-            }
-          ]
-        },
-        {
-          "order": 26,
-          "question": "soap available",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "yes, soap or detergent are present",
-              "color": null
-            },
-            {
-              "name": "no, not present",
-              "color": null
-            },
-            {
-              "name": "ash/mud/sand is present",
-              "color": null
+              "id": 668734091,
+              "options": [
+                "Fixed facility observed in dwelling",
+                "Fixed facility observed in plot/yard",
+                "Mobile object observed (bucket, jug, kettle)"
+              ]
             }
           ]
         }
