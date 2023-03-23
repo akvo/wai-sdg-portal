@@ -10,9 +10,11 @@
           "order": 1,
           "required": true,
           "type": "administration",
-          "meta": false
+          "meta": false,
+          "id": 494780333
         }
-      ]
+      ],
+      "id": 494780324
     },
     {
       "question_group": "Health Care Facility Information",
@@ -53,7 +55,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 494780325
     },
     {
       "question_group": "Water",
@@ -107,7 +110,7 @@
               "color": null
             },
             {
-              "name": "Don’t know",
+              "name": "Don\u2019t know",
               "color": null
             },
             {
@@ -173,7 +176,8 @@
           "required": false,
           "options": null
         }
-      ]
+      ],
+      "id": 494780328
     },
     {
       "question_group": "Sanitation",
@@ -360,7 +364,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 494780332
     },
     {
       "question_group": "Hygiene",
@@ -417,7 +422,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 494780339
     },
     {
       "question_group": "Health Care Waste Management",
@@ -457,7 +463,7 @@
               "color": null
             },
             {
-              "name": "Incinerated (two chamber, 850-1000 °C incinerator)",
+              "name": "Incinerated (two chamber, 850-1000 \u00b0C incinerator)",
               "color": null
             },
             {
@@ -503,7 +509,7 @@
               "color": null
             },
             {
-              "name": "Incinerated (two chamber, 850-1000 °C incinerator)",
+              "name": "Incinerated (two chamber, 850-1000 \u00b0C incinerator)",
               "color": null
             },
             {
@@ -536,7 +542,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 494780341
     },
     {
       "question_group": "Environmental Cleaning",
@@ -585,7 +592,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 494780344
     },
     {
       "question_group": "WASH Service Levels",
@@ -715,7 +723,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 494780346
     }
   ]
 }
