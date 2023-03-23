@@ -1,6 +1,7 @@
 import json
 import os
 import time
+import sys
 from datetime import timedelta
 from db import crud_form
 from db import crud_question_group
@@ -21,23 +22,47 @@ file_path = f"./source/{source_path}/forms/"
 files = list(filter(lambda x: ".bak" not in x, os.listdir(file_path)))
 start_time = time.process_time()
 
+# check if form init or updater
+updater = False
+if len(sys.argv) == 2 and sys.argv[1] == "update":
+    updater = True
+
 for table in ["form", "question_group", "question", "option"]:
-    action = truncate(session=session, table=table)
-    print(action)
+    if not updater:
+        # truncate only for init form seeder
+        action = truncate(session=session, table=table)
+        print(action)
 
 for file in sorted(files):
     with open(f'{file_path}{file}') as json_file:
         json_form = json.load(json_file)
-    form = crud_form.add_form(
-        session=session,
-        name=json_form["form"],
-        id=json_form["id"],
-        version=json_form.get('version') if 'version' in json_form else 1.0,
-        description=json_form.get('description'),
-        default_language=json_form.get('defaultLanguage'),
-        languages=json_form.get('languages'),
-        translations=json_form.get('translations'))
+    # check form exist
+    find_form = crud_form.get_form_by_id(
+        session=session, id=json_form["id"])
+    # updater
+    if updater and find_form:
+        form = crud_form.update_form(
+            session=session,
+            id=json_form["id"],
+            name=json_form["form"],
+            version=find_form.version + 1,
+            description=json_form.get('description'),
+            default_language=json_form.get('defaultLanguage'),
+            languages=json_form.get('languages'),
+            translations=json_form.get('translations'))
+    # init
+    if not updater and not find_form:
+        form = crud_form.add_form(
+            session=session,
+            name=json_form["form"],
+            id=json_form["id"],
+            version=json_form.get('version') if 'version' in json_form else 1.0,
+            description=json_form.get('description'),
+            default_language=json_form.get('defaultLanguage'),
+            languages=json_form.get('languages'),
+            translations=json_form.get('translations'))
     print(f"Form: {form.name}")
+    sys.exit()
     for qg in json_form["question_groups"]:
         question_group = crud_question_group.add_question_group(
             session=session,
