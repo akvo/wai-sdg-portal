@@ -89,10 +89,54 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 31, name: "Average number of patients per day" },
-      marker: { id: 32, name: "Water Service Level" },
+      shape: { id: 36, name: "Sanitation" },
+      marker: { id: 36, name: "Sanitation Service Level" },
     },
     formId: 2,
+    selectableMarkerDropdown: [
+      {
+        id: 32,
+        name: "Water service level",
+        hover: [
+          {
+            id: 5,
+            name: "Name of health facility",
+          },
+          {
+            id: 9,
+            name: "Type of health facility",
+          },
+        ],
+      },
+      {
+        id: 36,
+        name: "Sanitation service level",
+        hover: [
+          {
+            id: 5,
+            name: "Name of health facility",
+          },
+          {
+            id: 9,
+            name: "Type of health facility",
+          },
+        ],
+      },
+      {
+        id: 44,
+        name: "Hygiene service level",
+        hover: [
+          {
+            id: 5,
+            name: "Name of health facility",
+          },
+          {
+            id: 9,
+            name: "Type of health facility",
+          },
+        ],
+      },
+    ],
   },
   households: {
     title: "Households",
@@ -116,8 +160,8 @@ var page_config = {
     ],
     maps: {
       shape: {
-        id: 14,
-        name: "Sanitation Service Level (Basic or higher)",
+        id: 9,
+        name: "Household size",
         // set to true if title of shape legend by calculatedBy value
         isTitleByCalculated: false,
         // describe option value will be included for the calculation
@@ -131,6 +175,62 @@ var page_config = {
       marker: { id: 7, title: "Water Service Level" },
     },
     formId: 1,
+    tabs: [
+      {
+        name: "JMP",
+        component: "JMP-CHARTS",
+        selected: true,
+        chartList: [
+          { question: 7, name: "Water" },
+          { question: 14, name: "Sanitation" },
+          { question: 20, name: "Hygiene" },
+        ],
+      },
+    ],
+    selectableMarkerDropdown: [
+      {
+        id: 7,
+        name: "Water service level",
+        hover: [
+          {
+            id: 8,
+            name: "Household Name",
+          },
+          {
+            id: 9,
+            name: "Household Type",
+          },
+        ],
+      },
+      {
+        id: 14,
+        name: "Sanitation service level",
+        hover: [
+          {
+            id: 8,
+            name: "Household Name",
+          },
+          {
+            id: 9,
+            name: "Household Type",
+          },
+        ],
+      },
+      {
+        id: 20,
+        name: "Hygiene service level",
+        hover: [
+          {
+            id: 8,
+            name: "Household Name",
+          },
+          {
+            id: 9,
+            name: "Health Care Facility Type",
+          },
+        ],
+      },
+    ],
   },
   schools: {
     title: "Schools Facility",
@@ -141,11 +241,11 @@ var page_config = {
       },
       {
         title: "Water",
-        key: 63,
+        key: 12,
       },
       {
         title: "Sanitation",
-        key: 68,
+        key: 17,
       },
       {
         title: "Hygiene",
@@ -153,10 +253,54 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 62, name: "Number of School Staff" },
-      marker: { id: 63, title: "Water Service Level" },
+      shape: { id: 7, name: "School Name" },
+      marker: { id: 68, title: "Water Service Level" },
     },
     formId: 3,
+    selectableMarkerDropdown: [
+      {
+        id: 7,
+        name: "Water service level",
+        hover: [
+          {
+            id: 12,
+            name: "School Name",
+          },
+          {
+            id: 7,
+            name: "School Type",
+          },
+        ],
+      },
+      {
+        id: 17,
+        name: "Sanitation service level",
+        hover: [
+          {
+            id: 4,
+            name: "School Name",
+          },
+          {
+            id: 7,
+            name: "School Type",
+          },
+        ],
+      },
+      {
+        id: 28,
+        name: "Hygiene service level",
+        hover: [
+          {
+            id: 4,
+            name: "School Name",
+          },
+          {
+            id: 7,
+            name: "School Type",
+          },
+        ],
+      },
+    ],
   },
 };
 
