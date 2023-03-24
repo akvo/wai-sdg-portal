@@ -6,7 +6,7 @@
       "question_group": "Location",
       "questions": [
         {
-          "question": "location updated",
+          "question": "Location",
           "order": 1,
           "required": true,
           "type": "administration",

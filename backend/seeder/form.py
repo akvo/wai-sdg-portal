@@ -143,8 +143,7 @@ for file in sorted(files):
                     translations=q.get("translations"),
                     api=q.get("api"),
                     addons=addons if addons else None,
-                    option=None)
-                # handle create/update/delete option
+                    option=q["options"] if "options" in q else [])
                 print(f"Update {i}.{question.name}")
     print("------------------------------------------")
 
