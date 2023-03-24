@@ -1,5 +1,6 @@
 import json
 import os
+import time
 import numpy as np
 import pandas as pd
 
@@ -22,8 +23,12 @@ for file in sorted(files):
             ['question_groups', 'question_group']],
         record_prefix='question_')
     # generate unique IDs for question groups and questions
-    qg_length = len(data.get("question_groups"))
     df = df.replace(np.nan, None)
+    qg_length = len(data.get("question_groups"))
+    q_length = len(df.index)
+    opt_length = df["question_options"].apply(
+        lambda row: len(row) if row else 0)
+    opt_length = sum(list(opt_length))
     df['qgid'] = df.apply(lambda row: int(row['id'] + row.name + 1), axis=1)
     df['qid'] = df.apply(
         lambda row: int(row['qgid'] + row.name + 1 + qg_length)
@@ -35,9 +40,17 @@ for file in sorted(files):
             df["question_groups.question_group"] == qg.get("question_group")
         ].head(1)
         qg["id"] = int(find_qg["qgid"].values[0])
-
-        for i, q in enumerate(qg.get("questions")):
-            if "id" in q:
+        for j, q in enumerate(qg.get("questions")):
+            if q.get("options"):
+                for k, opt in enumerate(q.get("options")):
+                    if opt.get("id"):
+                        continue
+                    current_time = time.time()
+                    current_time = str(current_time)[-5:]
+                    opt_id = data["id"] + qg_length + q_length + opt_length
+                    opt_id += int(current_time)
+                    opt["id"] = opt_id
+            if q.get("id"):
                 continue
             find_q = df.loc[
                 df["question_question"] == q.get("question")
