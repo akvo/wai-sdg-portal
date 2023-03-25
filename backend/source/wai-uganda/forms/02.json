@@ -185,6 +185,7 @@
           ]
         },
         {
+          "id": 151515155,
           "order": 4,
           "question": "Functionality Status of Water Supply",
           "type": "option",
@@ -379,6 +380,7 @@
           ]
         },
         {
+          "id": 16161616,
           "order": 5,
           "question": "General condition of toilets?",
           "type": "option",
@@ -458,6 +460,7 @@
           ]
         },
         {
+          "id": 17171717,
           "order": 3,
           "question": "Is there a functional handwashing facility at one or more toilets on the day of the survey?",
           "type": "option",
@@ -502,6 +505,7 @@
           ]
         },
         {
+          "id": 18181818,
           "order": 2,
           "question": "Main method for disposing infectious waste",
           "type": "option",
@@ -527,6 +531,7 @@
           ]
         },
         {
+          "id": 19191919,
           "order": 3,
           "question": "Main method used for disposing sharp waste",
           "type": "option",
@@ -585,6 +590,7 @@
       "question_group": "Environmental Cleaning",
       "questions": [
         {
+          "id": 20202020,
           "order": 1,
           "question": "Cleaning protocols are available",
           "type": "option",
@@ -602,6 +608,7 @@
           ]
         },
         {
+          "id": 21212121,
           "order": 2,
           "question": "All staff responsible for cleaning received training",
           "type": "option",
