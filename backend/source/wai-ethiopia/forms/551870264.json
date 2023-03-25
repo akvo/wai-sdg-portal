@@ -104,7 +104,7 @@
       "questions": [
         {
           "id": 561200192,
-          "question": "Main Source of Drinking Water",
+          "question": "What is the main source of drinking water provided by the school? (select one - most frequently used)",
           "order": 1,
           "meta": false,
           "type": "option",
@@ -166,7 +166,7 @@
         },
         {
           "id": 561200190,
-          "question": "Drinking Water Available at Time of Survey",
+          "question": "Is drinking water from the main source currently available at the school at the time of the survey?",
           "order": 3,
           "meta": false,
           "type": "option",
@@ -209,7 +209,7 @@
       "questions": [
         {
           "id": 546630147,
-          "question": "Type of Toilets",
+          "question": "What type of student toilets are at the school? (Select the one that is most commonly used)",
           "order": 1,
           "meta": false,
           "type": "option",
@@ -320,8 +320,9 @@
           ]
         },
         {
+          "id": 343434343,
           "order": 4,
-          "question": "Are the toilets for girls separated for MHM? ",
+          "question": "Are the toilets for girls separated for MHM?",
           "type": "option",
           "meta": false,
           "required": true,
@@ -372,8 +373,8 @@
               "code": "DT1"
             },
             {
-              "name": "No",
-              "code": "No, the toilets are not accessible"
+              "name": "No, the toilets are not accessible",
+              "code": "DT2"
             }
           ],
           "dependency": [
