@@ -271,7 +271,8 @@
                             {
                                 "name": "Limited",
                                 "options": [
-                                    "Bins are present but do not meet all requirements or waste is not correctly segragated"
+                                    "Bins are present but do not meet all requirements or waste is not correctly segragated",
+                                    "INCOMPLETE"
                                 ],
                                 "questions": []
                             }
@@ -295,7 +296,8 @@
                                 "options": [
                                     "Not treated, but buried in lined, protected pit",
                                     "Not treated, but collected for medical waste disposal off-site",
-                                    "Open burning"
+                                    "Open burning",
+                                    "INCOMPLETE"
                                 ],
                                 "questions": []
                             }
@@ -319,7 +321,8 @@
                                 "options": [
                                     "Not treated, but buried in lined, protected pit",
                                     "Not treated, but collected for medical waste disposal off-site",
-                                    "Open burning"
+                                    "Open burning",
+                                    "INCOMPLETE"
                                 ],
                                 "questions": []
                             }
@@ -373,7 +376,8 @@
                             {
                                 "name": "Limited",
                                 "options": [
-                                    "No, some but not all have been trained"
+                                    "No, some but not all have been trained",
+                                    "INCOMPLETE"
                                 ],
                                 "questions": []
                             }
