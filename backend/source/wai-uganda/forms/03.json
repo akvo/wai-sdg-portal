@@ -369,6 +369,7 @@
           ]
         },
         {
+          "id": 31313131,
           "order": 6,
           "question": "Separate Toilets for Staff",
           "type": "option",
@@ -391,7 +392,8 @@
                 "Ventilated Improved Pit latrine (VIP) / vip latrine",
                 "traditional pit latrine",
                 "pour flush toilet",
-                "Ecosan Toilet /ecosan toilet (uddt)/ ecosan toilet uddt"
+                "Ecosan Toilet /ecosan toilet (uddt)/ ecosan toilet uddt",
+                "Pit latrine with slab"
               ]
             }
           ]

@@ -199,11 +199,11 @@
               "code": "D1"
             },
             {
-              "name": "Less than 500 meters",
+              "name": "Less than 30 minutes",
               "code": "D2"
             },
             {
-              "name": "More than 500 meters",
+              "name": "More than 30 minutes",
               "code": "D3"
             },
             {
@@ -289,6 +289,10 @@
             {
               "name": "Unsafe levels",
               "code": "SL2"
+            },
+            {
+              "name": "Data unavailable",
+              "code": null
             }
           ],
           "dependency": [

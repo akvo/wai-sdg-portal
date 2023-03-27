@@ -6,7 +6,7 @@
       "question_group": "Location Demographics",
       "questions": [
         {
-          "question": "location",
+          "question": "Location",
           "order": 1,
           "required": true,
           "type": "administration",
@@ -199,64 +199,78 @@
           "required": true,
           "options": [
             {
-              "name": "Pipeline connection",
-              "color": "#70AD47"
+              "name": "Pipeline connection / Piped water into dwelling (into the building)",
+              "color": "#70AD47",
+              "code": "W1"
             },
             {
               "name": "Protected well/spring",
-              "color": "#4472C4"
+              "color": "#4472C4",
+              "code": "W2"
             },
             {
               "name": "Deep tubewell/borehole",
-              "color": "#70AD47"
+              "color": "#70AD47",
+              "code": "W3"
             },
             {
               "name": "Shallow tubewell/borehole",
-              "color": "#00B0F0"
+              "color": "#00B0F0",
+              "code": "W4"
             },
             {
               "name": "PSF (Pond Sand Filter)",
-              "color": "#ED7D31"
+              "color": "#ED7D31",
+              "code": "W5"
             },
             {
               "name": "AIRP (Arsenic Iron Removable Plant)",
-              "color": "#9C5CFF"
+              "color": "#9C5CFF",
+              "code": "W6"
             },
             {
               "name": "Rainwater collection",
-              "color": "#2F5496"
+              "color": "#2F5496",
+              "code": "W7"
             },
             {
               "name": "Packaged bottled water",
-              "color": "#FFD966"
-            },
-            {
-              "name": "Tanker-truck or cart",
-              "color": "#FF83B7"
-            },
-            {
-              "name": "Unprotected well/spring",
-              "color": "#806000"
-            },
-            {
-              "name": "Surface water (lake, river, stream)",
-              "color": "#FFC000"
+              "color": "#FFD966",
+              "code": "W8"
             },
             {
               "name": "Bottled water",
-              "color": "#4472C4"
+              "color": "#4472C4",
+              "code": "W9"
             },
             {
               "name": "Student bring their own water",
-              "color": "#C45911"
+              "color": "#C45911",
+              "code": "W10"
             },
             {
-              "name": "Public Water Point",
-              "color": "#9CC2E5"
+              "name": "Public Water Point /Public tap/standpipe",
+              "code": "W11"
+            },
+            {
+              "name": "Tanker-truck or cart",
+              "color": "#FF83B7",
+              "code": "W12"
+            },
+            {
+              "name": "Unprotected well/spring",
+              "color": "#806000",
+              "code": "W13"
+            },
+            {
+              "name": "Surface water (lake, river, stream)",
+              "color": "#FFC000",
+              "code": "W14"
             },
             {
               "name": "No water source",
-              "color": "#FF0000"
+              "color": "#FF0000",
+              "code": "W15"
             }
           ]
         },
@@ -269,12 +283,31 @@
           "required": true,
           "options": [
             {
-              "name": "Yes",
-              "color": null
+              "name": "Yes, running water",
+              "code": "WA2"
             },
             {
               "name": "No",
-              "color": null
+              "code": "WA1"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 563280069,
+              "options": [
+                "Pipeline connection / Piped water into dwelling (into the building)",
+                "Protected well/spring",
+                "Deep tubewell/borehole",
+                "Shallow tubewell/borehole",
+                "PSF (Pond Sand Filter)",
+                "AIRP (Arsenic Iron Removable Plant)",
+                "Rainwater collection",
+                "Packaged bottled water",
+                "Bottled water",
+                "Student bring their own water",
+                "Public Water Point /Public tap/standpipe",
+                "Tanker-truck or cart"
+              ]
             }
           ]
         }
@@ -293,11 +326,11 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "code": "TP1"
             },
             {
               "name": "No",
-              "color": null
+              "code": "TP2"
             }
           ]
         },
@@ -311,63 +344,94 @@
           "options": [
             {
               "name": "Toilet that flush/poor flush to piped sewer system",
-              "color": "#70AD47"
+              "color": "#70AD47",
+              "code": "T1"
             },
             {
               "name": "Toilet that flush/poor flush to septic tank",
-              "color": "#C5E0B3"
+              "color": "#C5E0B3",
+              "code": "T2"
             },
             {
               "name": "Toilet that flush/poor flush to elsewhere",
-              "color": "#385623"
+              "color": "#385623",
+              "code": "T3"
             },
             {
               "name": "Toilet that flush/poor flush but don't know where",
-              "color": "#2F5496"
+              "color": "#2F5496",
+              "code": "T4"
             },
             {
               "name": "Pit latrine with slab",
-              "color": "#00B0F0"
+              "color": "#00B0F0",
+              "code": "T5"
             },
             {
               "name": "Ventilated Improved Pit latrine (VIP)",
-              "color": "#00B050"
+              "color": "#00B050",
+              "code": "T6"
             },
             {
               "name": "Twinpit offset latrine",
-              "color": "#BF8F00"
+              "color": "#BF8F00",
+              "code": "T7"
             },
             {
               "name": "Composting toilet",
-              "color": "#ED7D31"
+              "color": "#ED7D31",
+              "code": "T8"
             },
             {
               "name": "Pit latrine without slab/open pit",
-              "color": "#FF83B7"
+              "color": "#FF83B7",
+              "code": "T9"
             },
             {
               "name": "Hanging latrine",
-              "color": "#44546A"
+              "color": "#44546A",
+              "code": "T10"
             },
             {
               "name": "Bucket latrine",
-              "color": "#7030A0"
+              "color": "#7030A0",
+              "code": "T11"
+            },
+            {
+              "name": "No toilets or latrines",
+              "code": "T12"
             }
           ]
         },
         {
           "id": 552050054,
           "question": "How many student toilets are currently usable (accessible and functional and private)?",
-          "order": 3,
+          "order": 4,
           "meta": false,
-          "type": "number",
+          "type": "option",
           "required": true,
-          "options": null,
+          "options": [
+            {
+              "name": "if > 0",
+              "code": "TC1"
+            },
+            {
+              "name": "if =0",
+              "code": "TC2"
+            }
+          ],
           "dependency": [
             {
-              "id": 557970060,
+              "id": 578820058,
               "options": [
-                "Yes"
+                "Toilet that flush/poor flush to piped sewer system",
+                "Toilet that flush/poor flush to septic tank",
+                "Toilet that flush/poor flush to elsewhere",
+                "Toilet that flush/poor flush but don't know where",
+                "Pit latrine with slab",
+                "Ventilated Improved Pit latrine (VIP)",
+                "Twinpit offset latrine",
+                "Composting toilet"
               ]
             }
           ]
@@ -375,18 +439,18 @@
         {
           "id": 561220066,
           "question": "Are the toilets/latrines separate for girls and boys?",
-          "order": 4,
+          "order": 3,
           "meta": false,
           "type": "option",
           "required": true,
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "code": "TS1"
             },
             {
               "name": "No",
-              "color": null
+              "code": "TS2"
             }
           ],
           "dependency": [
@@ -394,6 +458,166 @@
               "id": 574900057,
               "options": [
                 "Co-education"
+              ]
+            },
+            {
+              "id": 578820058,
+              "options": [
+                "Toilet that flush/poor flush to piped sewer system",
+                "Toilet that flush/poor flush to septic tank",
+                "Toilet that flush/poor flush to elsewhere",
+                "Toilet that flush/poor flush but don't know where",
+                "Pit latrine with slab",
+                "Ventilated Improved Pit latrine (VIP)",
+                "Twinpit offset latrine",
+                "Composting toilet"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 677744015,
+          "order": 5,
+          "question": "Are the toilets for girls separated for MHM?",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, all of them",
+              "code": "TM1"
+            },
+            {
+              "name": "Yes, but not all of them",
+              "code": "TM2"
+            },
+            {
+              "name": "No",
+              "code": "TM3"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 574900057,
+              "options": [
+                "Co-education",
+                "Girls Only"
+              ]
+            },
+            {
+              "id": 578820058,
+              "options": [
+                "Toilet that flush/poor flush to piped sewer system",
+                "Toilet that flush/poor flush to septic tank",
+                "Toilet that flush/poor flush to elsewhere",
+                "Toilet that flush/poor flush but don't know where",
+                "Pit latrine with slab",
+                "Ventilated Improved Pit latrine (VIP)",
+                "Twinpit offset latrine",
+                "Composting toilet"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 677634039,
+          "order": 6,
+          "question": "Are there separate Toilets for Staff members?",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "if > 0",
+              "code": "ST1"
+            },
+            {
+              "name": "if =0",
+              "code": "ST2"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 578820058,
+              "options": [
+                "Toilet that flush/poor flush to piped sewer system",
+                "Toilet that flush/poor flush to septic tank",
+                "Toilet that flush/poor flush to elsewhere",
+                "Toilet that flush/poor flush but don't know where",
+                "Pit latrine with slab",
+                "Ventilated Improved Pit latrine (VIP)",
+                "Twinpit offset latrine",
+                "Composting toilet"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 668504030,
+          "order": 7,
+          "question": "Are Toilets available for the Disabled",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, at least one is accessible",
+              "code": "DT1"
+            },
+            {
+              "name": "No, the toilets are not accessible",
+              "code": "DT2"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 578820058,
+              "options": [
+                "Toilet that flush/poor flush to piped sewer system",
+                "Toilet that flush/poor flush to septic tank",
+                "Toilet that flush/poor flush to elsewhere",
+                "Toilet that flush/poor flush but don't know where",
+                "Pit latrine with slab",
+                "Ventilated Improved Pit latrine (VIP)",
+                "Twinpit offset latrine",
+                "Composting toilet"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 681454024,
+          "order": 8,
+          "question": "Are the toilets clean?",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, all of them",
+              "code": "CL1"
+            },
+            {
+              "name": "Yes, but not all of them",
+              "code": "CL2"
+            },
+            {
+              "name": "No",
+              "code": "CL3"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 578820058,
+              "options": [
+                "Toilet that flush/poor flush to piped sewer system",
+                "Toilet that flush/poor flush to septic tank",
+                "Toilet that flush/poor flush to elsewhere",
+                "Toilet that flush/poor flush but don't know where",
+                "Pit latrine with slab",
+                "Ventilated Improved Pit latrine (VIP)",
+                "Twinpit offset latrine",
+                "Composting toilet"
               ]
             }
           ]
@@ -405,7 +629,7 @@
       "questions": [
         {
           "id": 556040071,
-          "question": "Are there handwashing facilities at the school?",
+          "question": "Presence of Handwashing Facility",
           "order": 1,
           "meta": false,
           "type": "option",
@@ -413,17 +637,17 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "code": "HW1"
             },
             {
               "name": "No",
-              "color": null
+              "code": "HW2"
             }
           ]
         },
         {
           "id": 556040070,
-          "question": "Are both soap and water currently available at the handwashing facilities?",
+          "question": "Availability of Soap and Water at the Handwashing Facilities",
           "order": 2,
           "meta": false,
           "type": "option",
@@ -431,102 +655,27 @@
           "options": [
             {
               "name": "Yes, water and soap",
-              "color": null
+              "code": "SW1"
             },
             {
-              "name": "Water only",
-              "color": null
+              "name": "Only soap",
+              "code": "SW2"
             },
             {
-              "name": "Soap only",
-              "color": null
+              "name": "Only water",
+              "code": "SW3"
             },
             {
-              "name": "Neither water or soap",
-              "color": null
+              "name": "Neither water nor soap",
+              "code": "SW4"
             }
-          ]
-        }
-      ]
-    },
-    {
-      "question_group": "Service levels for Water, Sanitation, and Hygiene",
-      "questions": [
-        {
-          "id": 563280073,
-          "question": "Water service levels",
-          "order": 1,
-          "meta": false,
-          "type": "option",
-          "required": true,
-          "options": [
+          ],
+          "dependency": [
             {
-              "name": "Basic",
-              "color": "#5EBADF",
-              "order": 2,
-              "score": 10
-            },
-            {
-              "name": "Limited",
-              "color": "#FDF177",
-              "order": 3,
-              "score": 1
-            },
-            {
-              "name": "Surface water",
-              "color": "#F1AC2A",
-              "order": 5,
-              "score": -2
-            }
-          ]
-        },
-        {
-          "id": 563280074,
-          "question": "Sanitation service levels",
-          "order": 2,
-          "meta": false,
-          "type": "option",
-          "required": true,
-          "options": [
-            {
-              "name": "Basic",
-              "color": "#79BE7D",
-              "order": 2,
-              "score": 10
-            },
-            {
-              "name": "Limited",
-              "color": "#FDF177",
-              "order": 3,
-              "score": -1
-            },
-            {
-              "name": "No service",
-              "color": "#F1AC2A"
-            }
-          ]
-        },
-        {
-          "id": 563280072,
-          "question": "Hygiene service levels",
-          "order": 3,
-          "meta": false,
-          "type": "option",
-          "required": true,
-          "options": [
-            {
-              "name": "Basic",
-              "color": "#753780",
-              "score": 10
-            },
-            {
-              "name": "Limited",
-              "color": "#FDF177",
-              "score": -1
-            },
-            {
-              "name": "No service",
-              "color": "#F1AC2A"
+              "id": 556040071,
+              "options": [
+                "Yes"
+              ]
             }
           ]
         }
