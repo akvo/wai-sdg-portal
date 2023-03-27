@@ -264,10 +264,6 @@
             {
               "name": "No",
               "color": null
-            },
-            {
-              "name": "No toilets at all",
-              "color": null
             }
           ],
           "dependency": [
