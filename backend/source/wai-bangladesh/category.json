@@ -286,7 +286,8 @@
                             {
                                 "name": "Limited",
                                 "options": [
-                                    "Bins are present but do not meet all requirements or waste is not correctly segragated"
+                                    "Bins are present but do not meet all requirements or waste is not correctly segragated",
+                                    "INCOMPLETE"
                                 ],
                                 "questions": []
                             }
@@ -310,7 +311,8 @@
                                 "name": "Limited",
                                 "options": [
                                     "Burning in a protected pit",
-                                    "Open burning"
+                                    "Open burning",
+                                    "INCOMPLETE"
                                 ],
                                 "questions": []
                             }
@@ -334,7 +336,8 @@
                                 "name": "Limited",
                                 "options": [
                                     "Burning in a protected pit",
-                                    "Open burning"
+                                    "Open burning",
+                                    "INCOMPLETE"
                                 ],
                                 "questions": []
                             }
@@ -388,7 +391,8 @@
                             {
                                 "name": "Limited",
                                 "options": [
-                                    "No, some but not all have been trained"
+                                    "No, some but not all have been trained",
+                                    "INCOMPLETE"
                                 ],
                                 "questions": []
                             }
