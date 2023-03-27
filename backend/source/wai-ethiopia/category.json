@@ -415,12 +415,24 @@
                         "id": 561200192,
                         "text": "Main Source of Drinking Water",
                         "options": [
+                            "Piped water into dwelling (into the building)",
+                            "Piped water to yard/plot",
+                            "Deep tubewell/borehole",
+                            "They bring water from nearby improved source 7km public tap",
                             "Pipeline connection",
                             "Protected well/spring",
-                            "Shallow well fitted with pump",
-                            "Rainwater",
-                            "Packaged bottled water",
-                            "Tanker-truck or cart"
+                            "Shallow well fitted with pump / Shallow tubewell/borehole",
+                            "Rainwater / Roof catchment harvesting /Rainwater collection",
+                            "Packaged bottled water"
+                        ],
+                        "other": [
+                            {
+                                "name": "Limited",
+                                "options": [
+                                    "Tanker-truck or cart /Cart with small tank/drum"
+                                ],
+                                "questions": []
+                            }
                         ],
                         "else": {
                             "name": "No Service"
