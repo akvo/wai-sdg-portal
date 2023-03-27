@@ -399,26 +399,12 @@
           ]
         },
         {
-          "id": 567800080,
+          "id": 678864033,
           "question": "How many student toilets are currently usable (accessible and functional and private)?",
           "order": 4,
           "meta": false,
-          "type": "option",
+          "type": "number",
           "required": true,
-          "options": [
-            {
-              "name": "> or =0",
-              "code": "TU1"
-            },
-            {
-              "name": "if > 0",
-              "code": "TU2"
-            },
-            {
-              "name": "if =0",
-              "code": "TU3"
-            }
-          ],
           "dependency": [
             {
               "id": 567800083,
@@ -426,6 +412,29 @@
                 "Yes"
               ]
             },
+            {
+              "id": 567800082,
+              "options": [
+                "Toilet that flush/pour flush to piped sewer system",
+                "Toilet that flush/pour flush to septic tank",
+                "Toilet that flush/pour flush to elsewhere",
+                "Toilet that flush/poor flush but don't know where",
+                "Pit latrine with slab",
+                "Ventilated Improved Pit latrine (VIP)",
+                "Twinpit offset latrine",
+                "Composting toilet"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 686104019,
+          "question": "How many latrines are there for staff members?",
+          "order": 5,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "dependency": [
             {
               "id": 567800082,
               "options": [
@@ -481,7 +490,8 @@
           ]
         },
         {
-          "order": 5,
+          "id": 677744015,
+          "order": 6,
           "question": "Are the toilets for girls separated for MHM?",
           "type": "option",
           "meta": false,
@@ -525,7 +535,7 @@
         },
         {
           "id": 679604035,
-          "order": 6,
+          "order": 7,
           "question": "Are the toilets being used clean?",
           "type": "option",
           "meta": false,
@@ -568,7 +578,7 @@
         },
         {
           "id": 681744025,
-          "order": 7,
+          "order": 8,
           "question": "Is at least one of the toilet compartments accessible for students with disabilities?",
           "type": "option",
           "meta": false,
@@ -641,7 +651,7 @@
               "code": "WS1"
             },
             {
-              "name": "Water only",
+              "name": "Only water",
               "code": "WS2"
             },
             {
