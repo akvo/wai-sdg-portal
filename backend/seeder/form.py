@@ -23,9 +23,9 @@ files = list(filter(lambda x: ".bak" not in x, os.listdir(file_path)))
 start_time = time.process_time()
 
 # check if form init or updater
-updater = False
-if len(sys.argv) == 2 and sys.argv[1] == "update":
-    updater = True
+updater = True
+if len(sys.argv) == 2 and sys.argv[1] == "--truncate":
+    updater = False
 
 for table in ["form", "question_group", "question", "option"]:
     if not updater:
@@ -52,7 +52,7 @@ for file in sorted(files):
             translations=json_form.get('translations'))
         print(f"Update Form: {form.name}")
     # init
-    if not updater and not find_form:
+    if not updater or not find_form:
         form = crud_form.add_form(
             session=session,
             name=json_form["form"],
