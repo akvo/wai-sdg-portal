@@ -353,6 +353,15 @@
 						"options": [
 							"Yes"
 						],
+						"other": [
+							{
+								"name": "Limited",
+								"options": [
+									"INCOMPLETE"
+								],
+								"questions": []
+							}
+						],
 						"else": {
 							"name": "No Facility"
 						}
@@ -367,7 +376,8 @@
 							{
 								"name": "Limited",
 								"options": [
-									"No, some but not all have been trained"
+									"No, some but not all have been trained",
+									"INCOMPLETE"
 								],
 								"questions": []
 							}

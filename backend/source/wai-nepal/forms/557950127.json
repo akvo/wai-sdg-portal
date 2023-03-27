@@ -720,6 +720,10 @@
             {
               "name": "No",
               "code": "CP2"
+            },
+            {
+              "name": "INCOMPLETE",
+              "code": "CP3"
             }
           ]
         },
@@ -750,6 +754,10 @@
               "name": "No, there are no staff responsible for cleaning",
               "color": "#FF0000",
               "code": "ST4"
+            },
+            {
+              "name": "INCOMPLETE",
+              "code": "ST5"
             }
           ]
         }
