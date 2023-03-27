@@ -203,6 +203,10 @@
             {
               "name": "No water supply",
               "code": "F3"
+            },
+            {
+              "name": "INCOMPLETE",
+              "code": "F4"
             }
           ],
           "dependency": [
@@ -398,6 +402,10 @@
             {
               "name": "Filthy and not used /No toilet facilities",
               "code": "GC3"
+            },
+            {
+              "name": "INCOMPLETE",
+              "code": "GC4"
             }
           ],
           "dependency": [
@@ -478,6 +486,10 @@
             {
               "name": "No, no handwashing facilities near toilets (within 5 meters)",
               "code": "HT3"
+            },
+            {
+              "name": "INCOMPLETE",
+              "code": "HT4"
             }
           ]
         }
@@ -519,6 +531,10 @@
             {
               "name": "Not incinerated",
               "code": "WD2"
+            },
+            {
+              "name": "INCOMPLETE",
+              "code": "WD3"
             }
           ],
           "dependency": [
@@ -604,6 +620,10 @@
             {
               "name": "No",
               "code": "P2"
+            },
+            {
+              "name": "INCOMPLETE",
+              "code": "P3"
             }
           ]
         },
@@ -622,6 +642,10 @@
             {
               "name": "No",
               "code": "TR2"
+            },
+            {
+              "name": "INCOMPLETE",
+              "code": "TR3"
             }
           ]
         }
