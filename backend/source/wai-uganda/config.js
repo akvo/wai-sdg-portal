@@ -77,15 +77,18 @@ var page_config = {
       },
       {
         title: "Water",
-        key: 32,
+        key: "water",
+        category: true,
       },
       {
         title: "Sanitation",
-        key: 36,
+        key: "sanitation",
+        category: true,
       },
       {
         title: "Hygiene",
-        key: 44,
+        key: "hygiene",
+        category: true,
       },
     ],
     maps: {
@@ -103,15 +106,18 @@ var page_config = {
       },
       {
         title: "Water",
-        key: 7,
+        key: "water",
+        category: true,
       },
       {
         title: "Sanitation",
-        key: 14,
+        key: "sanitation",
+        category: true,
       },
       {
         title: "Hygiene",
-        key: 20,
+        key: "hygiene",
+        category: true,
       },
     ],
     maps: {
@@ -141,15 +147,18 @@ var page_config = {
       },
       {
         title: "Water",
-        key: 63,
+        key: "water",
+        category: true,
       },
       {
         title: "Sanitation",
-        key: 68,
+        key: "sanitation",
+        category: true,
       },
       {
         title: "Hygiene",
-        key: 26,
+        key: "hygiene",
+        category: true,
       },
     ],
     maps: {
