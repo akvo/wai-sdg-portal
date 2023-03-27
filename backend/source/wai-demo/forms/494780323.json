@@ -6,13 +6,15 @@
       "question_group": "Location",
       "questions": [
         {
-          "question": "location",
+          "question": "Location",
           "order": 1,
           "required": true,
           "type": "administration",
-          "meta": false
+          "meta": false,
+          "id": 494780333
         }
-      ]
+      ],
+      "id": 494780324
     },
     {
       "question_group": "Health Care Facility Information",
@@ -45,15 +47,18 @@
           "options": [
             {
               "name": "Health Post",
-              "color": null
+              "color": null,
+              "id": 494795489
             },
             {
               "name": "Other",
-              "color": null
+              "color": null,
+              "id": 494795556
             }
           ]
         }
-      ]
+      ],
+      "id": 494780325
     },
     {
       "question_group": "Water",
@@ -68,51 +73,63 @@
           "options": [
             {
               "name": "Piped supply inside the building",
-              "color": null
+              "color": null,
+              "id": 494799082
             },
             {
               "name": "Piped supply outside the building",
-              "color": null
+              "color": null,
+              "id": 494799122
             },
             {
               "name": "Tube well / Borehole",
-              "color": null
+              "color": null,
+              "id": 494799141
             },
             {
               "name": "Protected dug well",
-              "color": null
+              "color": null,
+              "id": 494799156
             },
             {
               "name": "Unprotected dug well",
-              "color": null
+              "color": null,
+              "id": 494799170
             },
             {
               "name": "Protected spring",
-              "color": null
+              "color": null,
+              "id": 494799180
             },
             {
               "name": "Unprotected spring",
-              "color": null
+              "color": null,
+              "id": 494799191
             },
             {
               "name": "Rain water",
-              "color": null
+              "color": null,
+              "id": 494799206
             },
             {
               "name": "Tanker truck",
-              "color": null
+              "color": null,
+              "id": 494832333
             },
             {
               "name": "Surface water (river/dam/lake/pond)",
-              "color": null
+              "color": null,
+              "id": 494799230
             },
             {
-              "name": "Don’t know",
-              "color": null
+              "name": "Don\u2019t know",
+              "color": null,
+              "id": 494799244
             },
             {
               "name": "No water source",
-              "color": null
+              "color": null,
+              "id": 494835645
             }
           ]
         },
@@ -126,19 +143,23 @@
           "options": [
             {
               "name": "On premises",
-              "color": null
+              "color": null,
+              "id": 494832339
             },
             {
               "name": "Up to 500 m",
-              "color": null
+              "color": null,
+              "id": 494799289
             },
             {
               "name": "500 m or further",
-              "color": null
+              "color": null,
+              "id": 494799304
             },
             {
               "name": "No water supply",
-              "color": null
+              "color": null,
+              "id": 494799315
             }
           ]
         },
@@ -152,15 +173,18 @@
           "options": [
             {
               "name": "Functional",
-              "color": "#91cc75"
+              "color": "#91cc75",
+              "id": 494799332
             },
             {
               "name": "Not functional",
-              "color": "#e39f00"
+              "color": "#e39f00",
+              "id": 494832346
             },
             {
               "name": "No water supply",
-              "color": "#ee6666"
+              "color": "#ee6666",
+              "id": 494799358
             }
           ]
         },
@@ -173,7 +197,8 @@
           "required": false,
           "options": null
         }
-      ]
+      ],
+      "id": 494780328
     },
     {
       "question_group": "Sanitation",
@@ -188,39 +213,48 @@
           "options": [
             {
               "name": "Flush / Pour-flush toilet to sewer connection",
-              "color": null
+              "color": null,
+              "id": 494802689
             },
             {
               "name": "Flush / Pour-flush toilet to tank or pit",
-              "color": null
+              "color": null,
+              "id": 494802730
             },
             {
               "name": "Pit latrine with slab",
-              "color": null
+              "color": null,
+              "id": 494832686
             },
             {
               "name": "Composting toilet",
-              "color": null
+              "color": null,
+              "id": 494802761
             },
             {
               "name": "Flush / Pour-flush toilet to open drain",
-              "color": null
+              "color": null,
+              "id": 494802775
             },
             {
               "name": "Pit latrine without slab/open pit",
-              "color": null
+              "color": null,
+              "id": 494832690
             },
             {
               "name": "Bucket",
-              "color": null
+              "color": null,
+              "id": 494802799
             },
             {
               "name": "Hanging toilet/latrine",
-              "color": null
+              "color": null,
+              "id": 494802813
             },
             {
               "name": "No toilet/latrine",
-              "color": null
+              "color": null,
+              "id": 494802825
             }
           ]
         },
@@ -234,15 +268,18 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "color": null,
+              "id": 494832696
             },
             {
               "name": "No",
-              "color": null
+              "color": null,
+              "id": 494802858
             },
             {
               "name": "No toilet facilities",
-              "color": null
+              "color": null,
+              "id": 494802870
             }
           ]
         },
@@ -256,15 +293,18 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "color": null,
+              "id": 494802889
             },
             {
               "name": "No",
-              "color": null
+              "color": null,
+              "id": 494802901
             },
             {
               "name": "No toilet facilities",
-              "color": null
+              "color": null,
+              "id": 494802916
             }
           ]
         },
@@ -278,15 +318,18 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "color": null,
+              "id": 494802932
             },
             {
               "name": "No",
-              "color": null
+              "color": null,
+              "id": 494802949
             },
             {
               "name": "No toilet facilities",
-              "color": null
+              "color": null,
+              "id": 494802961
             }
           ]
         },
@@ -300,15 +343,18 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "color": null,
+              "id": 494832709
             },
             {
               "name": "No",
-              "color": null
+              "color": null,
+              "id": 494802992
             },
             {
               "name": "No toilet facilities",
-              "color": null
+              "color": null,
+              "id": 494803004
             }
           ]
         },
@@ -322,15 +368,18 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "color": null,
+              "id": 494803020
             },
             {
               "name": "No",
-              "color": null
+              "color": null,
+              "id": 494803032
             },
             {
               "name": "No toilet facilities",
-              "color": null
+              "color": null,
+              "id": 494803044
             }
           ]
         },
@@ -344,23 +393,28 @@
           "options": [
             {
               "name": "Clean",
-              "color": null
+              "color": null,
+              "id": 494803066
             },
             {
               "name": "Dirty but being used",
-              "color": null
+              "color": null,
+              "id": 494832719
             },
             {
               "name": "Filthy and not used",
-              "color": null
+              "color": null,
+              "id": 494803090
             },
             {
               "name": "No toilet facilities",
-              "color": null
+              "color": null,
+              "id": 494803104
             }
           ]
         }
-      ]
+      ],
+      "id": 494780332
     },
     {
       "question_group": "Hygiene",
@@ -375,19 +429,23 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "color": null,
+              "id": 494833071
             },
             {
               "name": "No, hand hygienes present but not functional",
-              "color": null
+              "color": null,
+              "id": 494806635
             },
             {
               "name": "No hand hygiene facilities at points of care",
-              "color": null
+              "color": null,
+              "id": 494806652
             },
             {
               "name": "No hand hygiene facilities at the health facility",
-              "color": null
+              "color": null,
+              "id": 494833078
             }
           ]
         },
@@ -401,23 +459,28 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "color": null,
+              "id": 494806685
             },
             {
               "name": "No, handwashing facilities are near the toilets but lacking soap and/or water",
-              "color": null
+              "color": null,
+              "id": 494806699
             },
             {
               "name": "No, no handwashing facilities near toilets (within 5 m)",
-              "color": null
+              "color": null,
+              "id": 494806711
             },
             {
               "name": "No toilet facilities",
-              "color": null
+              "color": null,
+              "id": 494806723
             }
           ]
         }
-      ]
+      ],
+      "id": 494780339
     },
     {
       "question_group": "Health Care Waste Management",
@@ -432,15 +495,18 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "color": null,
+              "id": 494833412
             },
             {
               "name": "No, bins did not meet all requirements",
-              "color": null
+              "color": null,
+              "id": 494810044
             },
             {
               "name": "No bins were present",
-              "color": null
+              "color": null,
+              "id": 494810059
             }
           ]
         },
@@ -454,39 +520,48 @@
           "options": [
             {
               "name": "Autoclaved",
-              "color": null
+              "color": null,
+              "id": 494810080
             },
             {
-              "name": "Incinerated (two chamber, 850-1000 °C incinerator)",
-              "color": null
+              "name": "Incinerated (two chamber, 850-1000 \u00b0C incinerator)",
+              "color": null,
+              "id": 494810092
             },
             {
               "name": "Incinerated (other)",
-              "color": null
+              "color": null,
+              "id": 494833422
             },
             {
               "name": "Burning in a protected pit",
-              "color": null
+              "color": null,
+              "id": 494833423
             },
             {
               "name": "Not treated, but buried in lined, protected pit",
-              "color": null
+              "color": null,
+              "id": 494810130
             },
             {
               "name": "Not treated, but collected for medical waste disposal off-site",
-              "color": null
+              "color": null,
+              "id": 494810144
             },
             {
               "name": "Open dumping without treatment",
-              "color": null
+              "color": null,
+              "id": 494835754
             },
             {
               "name": "Open burning",
-              "color": null
+              "color": null,
+              "id": 494810168
             },
             {
               "name": "Not treated and added to general waste",
-              "color": null
+              "color": null,
+              "id": 494810180
             }
           ]
         },
@@ -500,43 +575,53 @@
           "options": [
             {
               "name": "Autoclaved",
-              "color": null
+              "color": null,
+              "id": 494833431
             },
             {
-              "name": "Incinerated (two chamber, 850-1000 °C incinerator)",
-              "color": null
+              "name": "Incinerated (two chamber, 850-1000 \u00b0C incinerator)",
+              "color": null,
+              "id": 494810211
             },
             {
               "name": "Incinerated (other)",
-              "color": null
+              "color": null,
+              "id": 494810223
             },
             {
               "name": "Burning in a protected pit",
-              "color": null
+              "color": null,
+              "id": 494833435
             },
             {
               "name": "Not treated, but buried in lined, protected pit",
-              "color": null
+              "color": null,
+              "id": 494810249
             },
             {
               "name": "Not treated, but collected for medical waste disposal off-site",
-              "color": null
+              "color": null,
+              "id": 494810259
             },
             {
               "name": "Open dumping without treatment",
-              "color": null
+              "color": null,
+              "id": 494810273
             },
             {
               "name": "Open burning",
-              "color": null
+              "color": null,
+              "id": 494810285
             },
             {
               "name": "Not treated and added to general waste",
-              "color": null
+              "color": null,
+              "id": 494833441
             }
           ]
         }
-      ]
+      ],
+      "id": 494780341
     },
     {
       "question_group": "Environmental Cleaning",
@@ -551,11 +636,13 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "color": null,
+              "id": 494833785
             },
             {
               "name": "No",
-              "color": null
+              "color": null,
+              "id": 494813776
             }
           ]
         },
@@ -569,23 +656,28 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "color": null,
+              "id": 494813799
             },
             {
               "name": "No, some but not all have been trained",
-              "color": null
+              "color": null,
+              "id": 494833793
             },
             {
               "name": "No, none have been trained",
-              "color": null
+              "color": null,
+              "id": 494833794
             },
             {
               "name": "No staff were responsible for cleaning",
-              "color": null
+              "color": null,
+              "id": 494813840
             }
           ]
         }
-      ]
+      ],
+      "id": 494780344
     },
     {
       "question_group": "WASH Service Levels",
@@ -601,17 +693,20 @@
             {
               "name": "Basic",
               "color": "#67B769",
-              "score": 10
+              "score": 10,
+              "id": 494817116
             },
             {
               "name": "Limited",
               "color": "#FCF176",
-              "score": -1
+              "score": -1,
+              "id": 494835824
             },
             {
               "name": "No service",
               "color": "#F9CA29",
-              "score": -2
+              "score": -2,
+              "id": 494817171
             }
           ]
         },
@@ -626,17 +721,20 @@
             {
               "name": "Basic",
               "color": "#67B769",
-              "score": 10
+              "score": 10,
+              "id": 494817192
             },
             {
               "name": "Limited",
               "color": "#FCF176",
-              "score": -1
+              "score": -1,
+              "id": 494817204
             },
             {
               "name": "No service",
               "color": "#F9CA29",
-              "score": -2
+              "score": -2,
+              "id": 494817218
             }
           ]
         },
@@ -651,17 +749,20 @@
             {
               "name": "Basic",
               "color": "#753780",
-              "score": 10
+              "score": 10,
+              "id": 494817235
             },
             {
               "name": "Limited",
               "color": "#FDF177",
-              "score": -1
+              "score": -1,
+              "id": 494834136
             },
             {
               "name": "No Service",
               "color": "#F1AC2A",
-              "score": -2
+              "score": -2,
+              "id": 494817261
             }
           ]
         },
@@ -676,17 +777,20 @@
             {
               "name": "Basic",
               "color": "#753780",
-              "score": 10
+              "score": 10,
+              "id": 494834139
             },
             {
               "name": "Limited",
               "color": "#FDF177",
-              "score": -1
+              "score": -1,
+              "id": 494817292
             },
             {
               "name": "No Service",
               "color": "#F1AC2A",
-              "score": -2
+              "score": -2,
+              "id": 494817304
             }
           ]
         },
@@ -701,21 +805,25 @@
             {
               "name": "Basic",
               "color": "#753780",
-              "score": 10
+              "score": 10,
+              "id": 494817323
             },
             {
               "name": "Limited",
               "color": "#FDF177",
-              "score": -1
+              "score": -1,
+              "id": 494817335
             },
             {
               "name": "No Service",
               "color": "#F1AC2A",
-              "score": -2
+              "score": -2,
+              "id": 494817345
             }
           ]
         }
-      ]
+      ],
+      "id": 494780346
     }
   ]
 }

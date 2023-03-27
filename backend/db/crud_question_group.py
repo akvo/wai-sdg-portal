@@ -87,3 +87,7 @@ def search_question_group(session: Session, form: int,
 def delete_by_form(session: Session, form: int) -> None:
     session.query(QuestionGroup).filter(QuestionGroup.form == form).delete()
     session.commit()
+
+
+def get_question_group_by_id(session: Session, id: int) -> QuestionGroupBase:
+    return session.query(QuestionGroup).filter(QuestionGroup.id == id).first()
