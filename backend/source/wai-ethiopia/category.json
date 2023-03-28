@@ -556,9 +556,9 @@
                     {
                         "id": 684734697,
                         "text": "How many student toilets are currently usable (accessible, functional, private)?",
-                        "options": [
-                            "YES (if > 0)"
-                        ],
+                        "number": {
+                            "greater_than": 0
+                        },
                         "else": {
                             "name": "Limited"
                         }
