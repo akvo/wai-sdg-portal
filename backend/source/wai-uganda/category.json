@@ -77,7 +77,7 @@
                                 "name": "Limited",
                                 "options": [
                                     "Not functional",
-                                    "INCOMPLETE"
+                                    "Data not collected"
                                 ],
                                 "questions": []
                             }
@@ -314,7 +314,7 @@
                                     "Not treated, but buried in lined, protected pit",
                                     "Not treated, but collected for medical waste disposal off-site",
                                     "Open burning",
-                                    "INCOMPLETE"
+                                    "Data not collected"
                                 ],
                                 "questions": []
                             }
@@ -369,7 +369,7 @@
                                 "name": "Limited",
                                 "options": [
                                     "No",
-                                    "INCOMPLETE"
+                                    "Data not collected"
                                 ],
                                 "questions": []
                             }
