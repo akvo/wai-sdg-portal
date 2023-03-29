@@ -60,7 +60,7 @@
                         "id": 672374002,
                         "text": "Is water available from the main water point at time of the survey?",
                         "options": [
-                            "Yes"
+                            "Yes /available"
                         ],
                         "else": {
                             "name": "Limited"
@@ -404,7 +404,7 @@
                 "name": "Basic",
                 "questions": [
                     {
-                        "id": 673304016161616,
+                        "id": 673304016,
                         "text": "What is the main source of drinking water provided by the school?",
                         "options": [
                             "Piped water into dwelling (into the building)",
@@ -489,7 +489,7 @@
                         }
                     },
                     {
-                        "id": 578820191,
+                        "id": 1490994052,
                         "text": "Is this school Girls Only/Boys Only/Co-Education?",
                         "options": [
                             "Girls Only",
@@ -526,7 +526,7 @@
                         "id": 31313131,
                         "text": "Separate Toilets for Staff",
                         "options": [
-                            "Yes"
+                            "YES"
                         ],
                         "else": {
                             "name": "Limited"
