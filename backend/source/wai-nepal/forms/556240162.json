@@ -582,8 +582,8 @@
             {
               "id": 557970124,
               "options": [
-                "Flush/pour flush to septic tank",
-                "Flush/pour flush to pit latrine"
+                "Flush/pour flush to piped sewer system",
+                "Flush/pour flush to septic tank"
               ]
             }
           ]

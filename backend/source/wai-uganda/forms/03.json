@@ -80,6 +80,10 @@
             {
               "name": "Co-education",
               "code": "TEMP3"
+            },
+            {
+              "name": "Data not collected",
+              "code": "TEMP4"
             }
           ]
         },
@@ -383,6 +387,10 @@
             {
               "name": "NO",
               "code": "ST2"
+            },
+            {
+              "name": "Data not collected",
+              "code": "ST3"
             }
           ],
           "dependency": [
@@ -417,6 +425,10 @@
             {
               "name": "No",
               "code": "TM3"
+            },
+            {
+              "name": "Data not collected",
+              "code": "TM4"
             }
           ],
           "dependency": [

@@ -60,7 +60,7 @@
                         "id": 672374002,
                         "text": "Is water available from the main water point at time of the survey?",
                         "options": [
-                            "Yes"
+                            "Yes /available"
                         ],
                         "else": {
                             "name": "Limited"
@@ -76,7 +76,8 @@
                             {
                                 "name": "Limited",
                                 "options": [
-                                    "Not functional"
+                                    "Not functional",
+                                    "Data not collected"
                                 ],
                                 "questions": []
                             }
@@ -312,7 +313,8 @@
                                 "options": [
                                     "Not treated, but buried in lined, protected pit",
                                     "Not treated, but collected for medical waste disposal off-site",
-                                    "Open burning"
+                                    "Open burning",
+                                    "Data not collected"
                                 ],
                                 "questions": []
                             }
@@ -366,7 +368,8 @@
                             {
                                 "name": "Limited",
                                 "options": [
-                                    "No"
+                                    "No",
+                                    "Data not collected"
                                 ],
                                 "questions": []
                             }
@@ -401,7 +404,7 @@
                 "name": "Basic",
                 "questions": [
                     {
-                        "id": 673304016161616,
+                        "id": 673304016,
                         "text": "What is the main source of drinking water provided by the school?",
                         "options": [
                             "Piped water into dwelling (into the building)",
@@ -480,12 +483,13 @@
                         ],
                         "else": {
                             "ignore": [
-                                668754021
+                                668754021,
+                                673274025
                             ]
                         }
                     },
                     {
-                        "id": 578820191,
+                        "id": 1490994052,
                         "text": "Is this school Girls Only/Boys Only/Co-Education?",
                         "options": [
                             "Girls Only",
@@ -493,7 +497,8 @@
                         ],
                         "else": {
                             "ignore": [
-                                673274025
+                                673274025,
+                                668754021
                             ]
                         }
                     },
@@ -521,7 +526,7 @@
                         "id": 31313131,
                         "text": "Separate Toilets for Staff",
                         "options": [
-                            "Yes"
+                            "YES"
                         ],
                         "else": {
                             "name": "Limited"

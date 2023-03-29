@@ -269,6 +269,7 @@
           ]
         },
         {
+          "id": 500740318,
           "order": 3,
           "question": "Functionality Status of Water Supply",
           "type": "option",
@@ -286,6 +287,10 @@
             {
               "name": "No water supply",
               "code": "F3"
+            },
+            {
+              "name": "Data not collected",
+              "code": "F4"
             }
           ],
           "dependency": [
@@ -622,6 +627,10 @@
               "name": "No, bins are not present",
               "color": "#FF0000",
               "code": "WG3"
+            },
+            {
+              "name": "Data not collected",
+              "code": "WG4"
             }
           ]
         },
@@ -668,6 +677,10 @@
             {
               "name": "Not treated and added to general waste",
               "code": "WD9"
+            },
+            {
+              "name": "Data not collected",
+              "code": "WD10"
             }
           ],
           "dependency": [
@@ -722,6 +735,10 @@
             {
               "name": "Not treated and added to general waste",
               "code": "WS9"
+            },
+            {
+              "name": "Data not collected",
+              "code": "WS10"
             }
           ],
           "dependency": [
@@ -753,6 +770,10 @@
             {
               "name": "No",
               "code": "CP2"
+            },
+            {
+              "name": "Data not collected",
+              "code": "CP3"
             }
           ]
         },
@@ -783,6 +804,10 @@
               "name": "No, there are no staff responsible for cleaning",
               "color": "#FF0000",
               "code": "ST4"
+            },
+            {
+              "name": "Data not collected",
+              "code": "ST5"
             }
           ]
         }

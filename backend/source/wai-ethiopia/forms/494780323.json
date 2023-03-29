@@ -429,6 +429,10 @@
             {
               "name": "Filthy and not used",
               "code": "GC3"
+            },
+            {
+              "name": "Data not collected",
+              "code": "GC4"
             }
           ],
           "dependency": [
@@ -564,6 +568,10 @@
             {
               "name": "No, bins are not present",
               "code": "WB3"
+            },
+            {
+              "name": "Data not collected",
+              "code": "WB4"
             }
           ]
         },
@@ -610,6 +618,10 @@
             {
               "name": "Not treated and added to general waste",
               "code": "WD9"
+            },
+            {
+              "name": "Data not collected",
+              "code": "WD10"
             }
           ],
           "dependency": [
@@ -665,6 +677,10 @@
             {
               "name": "Not treated and added to general waste",
               "code": "WS9"
+            },
+            {
+              "name": "Data not collected",
+              "code": "WS10"
             }
           ],
           "dependency": [
@@ -697,6 +713,10 @@
             {
               "name": "No",
               "code": "CP2"
+            },
+            {
+              "name": "Data not collected",
+              "code": "CP3"
             }
           ]
         },
@@ -723,6 +743,10 @@
             {
               "name": "No, there are no staff responsible for cleaning",
               "code": "ST4"
+            },
+            {
+              "name": "Data not collected",
+              "code": "ST5"
             }
           ]
         }

@@ -408,18 +408,8 @@
           "question": "How many student toilets are currently usable (accessible and functional and private)?",
           "order": 4,
           "meta": false,
-          "type": "option",
+          "type": "number",
           "required": true,
-          "options": [
-            {
-              "name": "if > 0",
-              "code": "TC1"
-            },
-            {
-              "name": "if =0",
-              "code": "TC2"
-            }
-          ],
           "dependency": [
             {
               "id": 578820058,
@@ -522,20 +512,10 @@
         {
           "id": 677634039,
           "order": 6,
-          "question": "Are there separate Toilets for Staff members?",
-          "type": "option",
+          "question": "How many latrines are there for staff members?",
+          "type": "number",
           "meta": false,
           "required": true,
-          "options": [
-            {
-              "name": "if > 0",
-              "code": "ST1"
-            },
-            {
-              "name": "if =0",
-              "code": "ST2"
-            }
-          ],
           "dependency": [
             {
               "id": 578820058,

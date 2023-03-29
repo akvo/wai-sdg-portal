@@ -271,7 +271,8 @@
                             {
                                 "name": "Limited",
                                 "options": [
-                                    "Bins are present but do not meet all requirements or waste is not correctly segragated"
+                                    "Bins are present but do not meet all requirements or waste is not correctly segragated",
+                                    "Data not collected"
                                 ],
                                 "questions": []
                             }
@@ -295,7 +296,8 @@
                                 "options": [
                                     "Not treated, but buried in lined, protected pit",
                                     "Not treated, but collected for medical waste disposal off-site",
-                                    "Open burning"
+                                    "Open burning",
+                                    "Data not collected"
                                 ],
                                 "questions": []
                             }
@@ -319,7 +321,8 @@
                                 "options": [
                                     "Not treated, but buried in lined, protected pit",
                                     "Not treated, but collected for medical waste disposal off-site",
-                                    "Open burning"
+                                    "Open burning",
+                                    "Data not collected"
                                 ],
                                 "questions": []
                             }
@@ -373,7 +376,8 @@
                             {
                                 "name": "Limited",
                                 "options": [
-                                    "No, some but not all have been trained"
+                                    "No, some but not all have been trained",
+                                    "Data not collected"
                                 ],
                                 "questions": []
                             }
@@ -411,12 +415,24 @@
                         "id": 561200192,
                         "text": "Main Source of Drinking Water",
                         "options": [
+                            "Piped water into dwelling (into the building)",
+                            "Piped water to yard/plot",
+                            "Deep tubewell/borehole",
+                            "They bring water from nearby improved source 7km public tap",
                             "Pipeline connection",
                             "Protected well/spring",
-                            "Shallow well fitted with pump",
-                            "Rainwater",
-                            "Packaged bottled water",
-                            "Tanker-truck or cart"
+                            "Shallow well fitted with pump / Shallow tubewell/borehole",
+                            "Rainwater / Roof catchment harvesting /Rainwater collection",
+                            "Packaged bottled water"
+                        ],
+                        "other": [
+                            {
+                                "name": "Limited",
+                                "options": [
+                                    "Tanker-truck or cart /Cart with small tank/drum"
+                                ],
+                                "questions": []
+                            }
                         ],
                         "else": {
                             "name": "No Service"
@@ -478,7 +494,8 @@
                         ],
                         "else": {
                             "ignore": [
-                                557690281
+                                557690281,
+                                343434343
                             ]
                         }
                     },
@@ -491,6 +508,7 @@
                         ],
                         "else": {
                             "ignore": [
+                                557690281,
                                 343434343
                             ]
                         }
@@ -538,9 +556,9 @@
                     {
                         "id": 684734697,
                         "text": "How many student toilets are currently usable (accessible, functional, private)?",
-                        "options": [
-                            "YES (if > 0)"
-                        ],
+                        "number": {
+                            "greater_than": 0
+                        },
                         "else": {
                             "name": "Limited"
                         }

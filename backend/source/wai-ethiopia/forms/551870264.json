@@ -264,10 +264,6 @@
             {
               "name": "No",
               "color": null
-            },
-            {
-              "name": "No toilets at all",
-              "color": null
             }
           ],
           "dependency": [
@@ -338,6 +334,10 @@
             {
               "name": "No",
               "code": "TM3"
+            },
+            {
+              "name": "Data not collected",
+              "code": "TM4"
             }
           ],
           "dependency": [
@@ -395,18 +395,8 @@
           "question": "How many student toilets are currently usable (accessible, functional, private)?",
           "order": 6,
           "meta": false,
-          "type": "option",
+          "type": "number",
           "required": false,
-          "options": [
-            {
-              "name": "YES (if > 0)",
-              "code": "GC1"
-            },
-            {
-              "name": "NO (if=0)",
-              "code": "GC2"
-            }
-          ],
           "dependency": [
             {
               "id": 546630147,
