@@ -22,7 +22,7 @@ class CustomAuth0User(Auth0User):
 
 
 auth = Auth0(domain=AUTH0_DOMAIN,
-             api_audience="wai-ethiopia-backend",
+             api_audience=AUTH0_AUDIENCE,
              auth0user_model=CustomAuth0User,
              scopes={'read:email': 'test'})
 
