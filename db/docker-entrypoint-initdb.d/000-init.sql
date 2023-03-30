@@ -1,69 +1,69 @@
 CREATE USER wai WITH CREATEDB PASSWORD 'password';
 
-CREATE DATABASE wai_demo
+CREATE DATABASE "wai-demo"
 WITH OWNER = wai
      TEMPLATE = template0
      ENCODING = 'UTF8'
      LC_COLLATE = 'en_US.UTF-8'
      LC_CTYPE = 'en_US.UTF-8';
 
-CREATE DATABASE wai_ethiopia
+CREATE DATABASE "wai-ethiopia"
 WITH OWNER = wai
      TEMPLATE = template0
      ENCODING = 'UTF8'
      LC_COLLATE = 'en_US.UTF-8'
      LC_CTYPE = 'en_US.UTF-8';
 
-CREATE DATABASE wai_uganda
+CREATE DATABASE "wai-uganda"
 WITH OWNER = wai
      TEMPLATE = template0
      ENCODING = 'UTF8'
      LC_COLLATE = 'en_US.UTF-8'
      LC_CTYPE = 'en_US.UTF-8';
 
-CREATE DATABASE wai_bangladesh
+CREATE DATABASE "wai-bangladesh"
 WITH OWNER = wai
      TEMPLATE = template0
      ENCODING = 'UTF8'
      LC_COLLATE = 'en_US.UTF-8'
      LC_CTYPE = 'en_US.UTF-8';
 
-CREATE DATABASE wai_nepal
+CREATE DATABASE "wai-nepal"
 WITH OWNER = wai
      TEMPLATE = template0
      ENCODING = 'UTF8'
      LC_COLLATE = 'en_US.UTF-8'
      LC_CTYPE = 'en_US.UTF-8';
 
-CREATE DATABASE wai_demo_test
+CREATE DATABASE "wai-demo_test"
 WITH OWNER = wai
      TEMPLATE = template0
      ENCODING = 'UTF8'
      LC_COLLATE = 'en_US.UTF-8'
      LC_CTYPE = 'en_US.UTF-8';
 
-CREATE DATABASE wai_ethiopia_test
+CREATE DATABASE "wai-ethiopia_test"
 WITH OWNER = wai
      TEMPLATE = template0
      ENCODING = 'UTF8'
      LC_COLLATE = 'en_US.UTF-8'
      LC_CTYPE = 'en_US.UTF-8';
 
-CREATE DATABASE wai_uganda_test
+CREATE DATABASE "wai-uganda_test"
 WITH OWNER = wai
      TEMPLATE = template0
      ENCODING = 'UTF8'
      LC_COLLATE = 'en_US.UTF-8'
      LC_CTYPE = 'en_US.UTF-8';
 
-CREATE DATABASE wai_bangladesh_test
+CREATE DATABASE "wai-bangladesh_test"
 WITH OWNER = wai
      TEMPLATE = template0
      ENCODING = 'UTF8'
      LC_COLLATE = 'en_US.UTF-8'
      LC_CTYPE = 'en_US.UTF-8';
 
-CREATE DATABASE wai_nepal_test
+CREATE DATABASE "wai-nepal_test"
 WITH OWNER = wai
      TEMPLATE = template0
      ENCODING = 'UTF8'
