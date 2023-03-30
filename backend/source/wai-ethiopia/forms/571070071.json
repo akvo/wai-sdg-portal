@@ -10,7 +10,8 @@
           "order": 1,
           "required": true,
           "type": "administration",
-          "meta": true
+          "meta": true,
+          "id": 571070075
         },
         {
           "id": 563210188,
@@ -30,7 +31,8 @@
           "required": true,
           "options": null
         }
-      ]
+      ],
+      "id": 571070072
     },
     {
       "question_group": "Water System Information",
@@ -54,43 +56,53 @@
           "options": [
             {
               "name": "AMREF",
-              "color": null
+              "color": null,
+              "id": 571102941
             },
             {
               "name": "BBBC",
-              "color": null
+              "color": null,
+              "id": 571098279
             },
             {
               "name": "CDA",
-              "color": null
+              "color": null,
+              "id": 571098300
             },
             {
               "name": "Government",
-              "color": null
+              "color": null,
+              "id": 571098315
             },
             {
               "name": "Kale Hiwot",
-              "color": null
+              "color": null,
+              "id": 571098329
             },
             {
               "name": "Catholic",
-              "color": null
+              "color": null,
+              "id": 571102954
             },
             {
               "name": "IRC",
-              "color": null
+              "color": null,
+              "id": 571098355
             },
             {
               "name": "OneWASH",
-              "color": null
+              "color": null,
+              "id": 571098370
             },
             {
               "name": "World Vision",
-              "color": null
+              "color": null,
+              "id": 571102958
             },
             {
               "name": "Others",
-              "color": null
+              "color": null,
+              "id": 571098396
             }
           ]
         },
@@ -104,31 +116,38 @@
           "options": [
             {
               "name": "Deep well with distribution",
-              "color": null
+              "color": null,
+              "id": 571098424
             },
             {
               "name": "Hand dug well",
-              "color": null
+              "color": null,
+              "id": 571098441
             },
             {
               "name": "Shallow well",
-              "color": null
+              "color": null,
+              "id": 571102965
             },
             {
               "name": "Protected spring",
-              "color": null
+              "color": null,
+              "id": 571098465
             },
             {
               "name": "Unprotected spring",
-              "color": null
+              "color": null,
+              "id": 571098482
             },
             {
               "name": "Rainwater collection",
-              "color": null
+              "color": null,
+              "id": 571102969
             },
             {
               "name": "Surface water",
-              "color": null
+              "color": null,
+              "id": 571098510
             }
           ]
         },
@@ -160,35 +179,43 @@
           "options": [
             {
               "name": "Afridev",
-              "color": null
+              "color": null,
+              "id": 571098532
             },
             {
               "name": "Gravity",
-              "color": null
+              "color": null,
+              "id": 571098546
             },
             {
               "name": "Indian Mark II",
-              "color": null
+              "color": null,
+              "id": 571098558
             },
             {
               "name": "Solar System",
-              "color": null
+              "color": null,
+              "id": 571098570
             },
             {
               "name": "Submersible pump",
-              "color": null
+              "color": null,
+              "id": 571102978
             },
             {
               "name": "Surface Pump",
-              "color": null
+              "color": null,
+              "id": 571098596
             },
             {
               "name": "Windlass",
-              "color": null
+              "color": null,
+              "id": 571098608
             },
             {
               "name": "I don't know",
-              "color": null
+              "color": null,
+              "id": 571102982
             }
           ]
         },
@@ -202,19 +229,23 @@
           "options": [
             {
               "name": "Diesel",
-              "color": null
+              "color": null,
+              "id": 571098639
             },
             {
               "name": "Electricity and grid",
-              "color": null
+              "color": null,
+              "id": 571098656
             },
             {
               "name": "Gravity flow",
-              "color": null
+              "color": null,
+              "id": 571098668
             },
             {
               "name": "Manual operation",
-              "color": null
+              "color": null,
+              "id": 571102988
             }
           ]
         },
@@ -255,15 +286,18 @@
           "options": [
             {
               "name": "Functional",
-              "color": "#91cc75"
+              "color": "#91cc75",
+              "id": 571098706
             },
             {
               "name": "Functional but with problems",
-              "color": "#e39f00"
+              "color": "#e39f00",
+              "id": 571102992
             },
             {
               "name": "Not functional",
-              "color": "#ee6666"
+              "color": "#ee6666",
+              "id": 571098734
             }
           ]
         },
@@ -277,31 +311,38 @@
           "options": [
             {
               "name": "Lack of water",
-              "color": null
+              "color": null,
+              "id": 571102995
             },
             {
               "name": "Pump broken",
-              "color": null
+              "color": null,
+              "id": 571098765
             },
             {
               "name": "Tap broken",
-              "color": null
+              "color": null,
+              "id": 571098780
             },
             {
               "name": "Distribution pipeline broken",
-              "color": null
+              "color": null,
+              "id": 571102999
             },
             {
               "name": "Power failure",
-              "color": null
+              "color": null,
+              "id": 571098806
             },
             {
               "name": "Lack of fuel",
-              "color": null
+              "color": null,
+              "id": 571098820
             },
             {
               "name": "Poor water quality",
-              "color": null
+              "color": null,
+              "id": 571163420
             }
           ]
         },
@@ -315,27 +356,33 @@
           "options": [
             {
               "name": "Extension",
-              "color": null
+              "color": null,
+              "id": 571098849
             },
             {
               "name": "Inspection",
-              "color": null
+              "color": null,
+              "id": 571103006
             },
             {
               "name": "National WASH Inventory",
-              "color": null
+              "color": null,
+              "id": 571098877
             },
             {
               "name": "New Scheme",
-              "color": null
+              "color": null,
+              "id": 571098892
             },
             {
               "name": "Repair",
-              "color": null
+              "color": null,
+              "id": 571103010
             }
           ]
         }
-      ]
+      ],
+      "id": 571070075
     }
   ]
 }

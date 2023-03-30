@@ -10,9 +10,11 @@
           "order": 1,
           "required": true,
           "type": "administration",
-          "meta": false
+          "meta": false,
+          "id": 494780332
         }
-      ]
+      ],
+      "id": 494780324
     },
     {
       "question_group": "Health Care Facility Information",
@@ -45,15 +47,18 @@
           "options": [
             {
               "name": "Health Post",
-              "color": null
+              "color": null,
+              "id": 494873300
             },
             {
               "name": "Other",
-              "color": null
+              "color": null,
+              "id": 494873379
             }
           ]
         }
-      ]
+      ],
+      "id": 494780325
     },
     {
       "question_group": "Water",
@@ -68,63 +73,78 @@
           "options": [
             {
               "name": "Piped supply inside the building",
-              "code": "W1"
+              "code": "W1",
+              "id": 494876950
             },
             {
               "name": "Piped supply outside the building",
-              "code": "W2"
+              "code": "W2",
+              "id": 494876998
             },
             {
               "name": "Tube well / Borehole",
-              "code": "W3"
+              "code": "W3",
+              "id": 494877017
             },
             {
               "name": "Protected dug well",
-              "code": "W4"
+              "code": "W4",
+              "id": 494877029
             },
             {
               "name": "Protected spring",
-              "code": "W5"
+              "code": "W5",
+              "id": 494877045
             },
             {
               "name": "Rain water / Rainwater collection",
-              "code": "W6"
+              "code": "W6",
+              "id": 494877057
             },
             {
               "name": "Tanker truck",
-              "code": "W7"
+              "code": "W7",
+              "id": 494877069
             },
             {
               "name": "Unprotected spring",
-              "code": "W8"
+              "code": "W8",
+              "id": 494880106
             },
             {
               "name": "Unprotected dug well",
-              "code": "W9"
+              "code": "W9",
+              "id": 494877096
             },
             {
               "name": "Surface water (river/dam/lake/pond / canal)",
-              "code": "W10"
+              "code": "W10",
+              "id": 494877110
             },
             {
               "name": "No water source /No water facilities",
-              "code": "W11"
+              "code": "W11",
+              "id": 494880110
             },
             {
-              "name": "Don’t know",
-              "code": "W12"
+              "name": "Don\u2019t know",
+              "code": "W12",
+              "id": 494877134
             },
             {
               "name": "Public tap/standpipe",
-              "code": "W13"
+              "code": "W13",
+              "id": 494877148
             },
             {
               "name": "Piped water to yard/plot",
-              "code": "W14"
+              "code": "W14",
+              "id": 494877160
             },
             {
               "name": "water from nearby improved source- water vender",
-              "code": "W15"
+              "code": "W15",
+              "id": 494880115
             }
           ]
         },
@@ -138,27 +158,33 @@
           "options": [
             {
               "name": "On the premises of the health centre",
-              "code": "D1"
+              "code": "D1",
+              "id": 494877193
             },
             {
               "name": "Up to 500 m",
-              "code": "D2"
+              "code": "D2",
+              "id": 494877205
             },
             {
               "name": "Further than 500 meter",
-              "code": "D3"
+              "code": "D3",
+              "id": 494877220
             },
             {
               "name": "No water supply",
-              "code": "D4"
+              "code": "D4",
+              "id": 494880121
             },
             {
               "name": "Less than 150 meters",
-              "code": "D5"
+              "code": "D5",
+              "id": 494877243
             },
             {
               "name": "Between 150 and 500 meter",
-              "code": "D6"
+              "code": "D6",
+              "id": 494877258
             }
           ],
           "dependency": [
@@ -189,11 +215,13 @@
           "options": [
             {
               "name": "Yes",
-              "code": "WA1"
+              "code": "WA1",
+              "id": 494877274
             },
             {
               "name": "No",
-              "code": "WA2"
+              "code": "WA2",
+              "id": 494877289
             }
           ],
           "dependency": [
@@ -214,7 +242,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 494780328
     },
     {
       "question_group": "Sanitation",
@@ -229,39 +258,48 @@
           "options": [
             {
               "name": "Flush / Pour-flush toilet to sewer connection",
-              "code": "T1"
+              "code": "T1",
+              "id": 494780860
             },
             {
               "name": "Flush / Pour-flush toilet to tank or pit",
-              "code": "T2"
+              "code": "T2",
+              "id": 494780488
             },
             {
               "name": "Pit latrine with slab",
-              "code": "T3"
+              "code": "T3",
+              "id": 494780920
             },
             {
               "name": "Composting toilet",
-              "code": "T4"
+              "code": "T4",
+              "id": 494780936
             },
             {
               "name": "Flush / Pour-flush toilet to open drain",
-              "code": "T5"
+              "code": "T5",
+              "id": 494780951
             },
             {
               "name": "Pit latrine without slab/open pit",
-              "code": "T6"
+              "code": "T6",
+              "id": 494780498
             },
             {
               "name": "Bucket",
-              "code": "T7"
+              "code": "T7",
+              "id": 494781018
             },
             {
               "name": "Hanging toilet/latrine",
-              "code": "T8"
+              "code": "T8",
+              "id": 494781034
             },
             {
               "name": "No toilet/latrine",
-              "code": "T9"
+              "code": "T9",
+              "id": 494781046
             }
           ]
         },
@@ -275,11 +313,13 @@
           "options": [
             {
               "name": "Yes",
-              "code": "TA1"
+              "code": "TA1",
+              "id": 494781070
             },
             {
               "name": "No",
-              "code": "TA2"
+              "code": "TA2",
+              "id": 494780506
             }
           ],
           "dependency": [
@@ -304,11 +344,13 @@
           "options": [
             {
               "name": "Yes",
-              "code": "TA1"
+              "code": "TA1",
+              "id": 494781103
             },
             {
               "name": "No",
-              "code": "TA2"
+              "code": "TA2",
+              "id": 494781115
             }
           ],
           "dependency": [
@@ -333,11 +375,13 @@
           "options": [
             {
               "name": "Yes",
-              "code": "TS1"
+              "code": "TS1",
+              "id": 494781134
             },
             {
               "name": "No",
-              "code": "TS2"
+              "code": "TS2",
+              "id": 494781146
             }
           ],
           "dependency": [
@@ -362,11 +406,13 @@
           "options": [
             {
               "name": "Yes",
-              "code": "TM1"
+              "code": "TM1",
+              "id": 494780514
             },
             {
               "name": "No",
-              "code": "TM2"
+              "code": "TM2",
+              "id": 494781177
             }
           ],
           "dependency": [
@@ -391,11 +437,13 @@
           "options": [
             {
               "name": "Yes",
-              "code": "TD1"
+              "code": "TD1",
+              "id": 494781194
             },
             {
               "name": "No",
-              "code": "TD2"
+              "code": "TD2",
+              "id": 494781208
             }
           ],
           "dependency": [
@@ -420,19 +468,23 @@
           "options": [
             {
               "name": "Clean",
-              "code": "GC1"
+              "code": "GC1",
+              "id": 494780520
             },
             {
               "name": "Dirty but being used",
-              "code": "GC2"
+              "code": "GC2",
+              "id": 494781235
             },
             {
               "name": "Filthy and not used",
-              "code": "GC3"
+              "code": "GC3",
+              "id": 494781249
             },
             {
               "name": "Data not collected",
-              "code": "GC4"
+              "code": "GC4",
+              "id": 494780524
             }
           ],
           "dependency": [
@@ -447,7 +499,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 494780331
     },
     {
       "question_group": "Hygiene",
@@ -462,11 +515,13 @@
           "options": [
             {
               "name": "Yes",
-              "code": "HH1"
+              "code": "HH1",
+              "id": 494780870
             },
             {
               "name": "No /Cannot observe",
-              "code": "HH2"
+              "code": "HH2",
+              "id": 494780874
             }
           ]
         },
@@ -480,11 +535,13 @@
           "options": [
             {
               "name": "Yes",
-              "code": "HF1"
+              "code": "HF1",
+              "id": 494784789
             },
             {
               "name": "No, not functional or lacking material",
-              "code": "HF2"
+              "code": "HF2",
+              "id": 494784806
             }
           ],
           "dependency": [
@@ -506,11 +563,13 @@
           "options": [
             {
               "name": "Yes",
-              "code": "HW1"
+              "code": "HW1",
+              "id": 494784825
             },
             {
               "name": "No",
-              "code": "HW2"
+              "code": "HW2",
+              "id": 494784837
             }
           ]
         },
@@ -524,15 +583,18 @@
           "options": [
             {
               "name": "Yes, water and soap are available",
-              "code": "SW2"
+              "code": "SW2",
+              "id": 494784856
             },
             {
               "name": "No, only water is available",
-              "code": "SW1"
+              "code": "SW1",
+              "id": 494784868
             },
             {
               "name": "No, only soap is available",
-              "code": "SW3"
+              "code": "SW3",
+              "id": 494784880
             }
           ],
           "dependency": [
@@ -544,7 +606,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 494780338
     },
     {
       "question_group": "Health Care Waste Management",
@@ -559,19 +622,23 @@
           "options": [
             {
               "name": "Yes, waste correctly segregated into at least three labelled bins in the consultation area",
-              "code": "WB1"
+              "code": "WB1",
+              "id": 494788020
             },
             {
               "name": "Bins are present but do not meet all requirements or waste is not correctly segragated",
-              "code": "WB2"
+              "code": "WB2",
+              "id": 494781204
             },
             {
               "name": "No, bins are not present",
-              "code": "WB3"
+              "code": "WB3",
+              "id": 494781206
             },
             {
               "name": "Data not collected",
-              "code": "WB4"
+              "code": "WB4",
+              "id": 494788094
             }
           ]
         },
@@ -585,43 +652,53 @@
           "options": [
             {
               "name": "Autoclaved",
-              "code": "WD1"
+              "code": "WD1",
+              "id": 494788118
             },
             {
-              "name": "Incinerated (two chamber, 850-1000 °C incinerator)",
-              "code": "WD2"
+              "name": "Incinerated (two chamber, 850-1000 \u00b0C incinerator)",
+              "code": "WD2",
+              "id": 494788130
             },
             {
               "name": "Incinerated (other)",
-              "code": "WD3"
+              "code": "WD3",
+              "id": 494870519
             },
             {
               "name": "Burning in a protected pit",
-              "code": "WD4"
+              "code": "WD4",
+              "id": 494788156
             },
             {
               "name": "Not treated, but buried in lined, protected pit",
-              "code": "WD5"
+              "code": "WD5",
+              "id": 494788168
             },
             {
               "name": "Not treated, but collected for medical waste disposal off-site",
-              "code": "WD6"
+              "code": "WD6",
+              "id": 494781216
             },
             {
               "name": "Open dumping without treatment",
-              "code": "WD7"
+              "code": "WD7",
+              "id": 494788194
             },
             {
               "name": "Open burning",
-              "code": "WD8"
+              "code": "WD8",
+              "id": 494788206
             },
             {
               "name": "Not treated and added to general waste",
-              "code": "WD9"
+              "code": "WD9",
+              "id": 494788220
             },
             {
               "name": "Data not collected",
-              "code": "WD10"
+              "code": "WD10",
+              "id": 494781221
             }
           ],
           "dependency": [
@@ -644,43 +721,53 @@
           "options": [
             {
               "name": "Autoclaved",
-              "code": "WS1"
+              "code": "WS1",
+              "id": 494781223
             },
             {
-              "name": "Incinerated (two chamber, 850-1000 °C incinerator)",
-              "code": "WS2"
+              "name": "Incinerated (two chamber, 850-1000 \u00b0C incinerator)",
+              "code": "WS2",
+              "id": 494781224
             },
             {
               "name": "Incinerated (other)",
-              "code": "WS3"
+              "code": "WS3",
+              "id": 494788275
             },
             {
               "name": "Burning in a protected pit",
-              "code": "WS4"
+              "code": "WS4",
+              "id": 494788289
             },
             {
               "name": "Not treated, but buried in lined, protected pit",
-              "code": "WS5"
+              "code": "WS5",
+              "id": 494781228
             },
             {
               "name": "Not treated, but collected for medical waste disposal off-site",
-              "code": "WS6"
+              "code": "WS6",
+              "id": 494781229
             },
             {
               "name": "Open dumping without treatment",
-              "code": "WS7"
+              "code": "WS7",
+              "id": 494788327
             },
             {
               "name": "Open burning",
-              "code": "WS8"
+              "code": "WS8",
+              "id": 494788337
             },
             {
               "name": "Not treated and added to general waste",
-              "code": "WS9"
+              "code": "WS9",
+              "id": 494788349
             },
             {
               "name": "Data not collected",
-              "code": "WS10"
+              "code": "WS10",
+              "id": 494788363
             }
           ],
           "dependency": [
@@ -693,7 +780,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 494780342
     },
     {
       "question_group": "Environmental Cleaning",
@@ -708,15 +796,18 @@
           "options": [
             {
               "name": "Yes",
-              "code": "CP1"
+              "code": "CP1",
+              "id": 494781715
             },
             {
               "name": "No",
-              "code": "CP2"
+              "code": "CP2",
+              "id": 494781720
             },
             {
               "name": "Data not collected",
-              "code": "CP3"
+              "code": "CP3",
+              "id": 494793239
             }
           ]
         },
@@ -730,27 +821,33 @@
           "options": [
             {
               "name": "Yes, all staff responsible for cleaning received training",
-              "code": "ST1"
+              "code": "ST1",
+              "id": 494793265
             },
             {
               "name": "No, some but not all have been trained",
-              "code": "ST2"
+              "code": "ST2",
+              "id": 494793277
             },
             {
               "name": "No, none have been trained",
-              "code": "ST3"
+              "code": "ST3",
+              "id": 494781727
             },
             {
               "name": "No, there are no staff responsible for cleaning",
-              "code": "ST4"
+              "code": "ST4",
+              "id": 494793303
             },
             {
               "name": "Data not collected",
-              "code": "ST5"
+              "code": "ST5",
+              "id": 494793320
             }
           ]
         }
-      ]
+      ],
+      "id": 494780345
     }
   ]
 }

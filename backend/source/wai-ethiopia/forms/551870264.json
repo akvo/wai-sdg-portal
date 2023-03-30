@@ -10,9 +10,11 @@
           "order": 1,
           "required": true,
           "type": "administration",
-          "meta": true
+          "meta": true,
+          "id": 551870271
         }
-      ]
+      ],
+      "id": 551870265
     },
     {
       "question_group": "School Information",
@@ -45,15 +47,18 @@
           "options": [
             {
               "name": "Primary 1 - 4",
-              "color": null
+              "color": null,
+              "id": 551954379
             },
             {
               "name": "Primary 1 - 8",
-              "color": null
+              "color": null,
+              "id": 551954429
             },
             {
               "name": "High school 9 - 10",
-              "color": null
+              "color": null,
+              "id": 551954450
             }
           ]
         },
@@ -67,15 +72,18 @@
           "options": [
             {
               "name": "Girls Only",
-              "code": "TEMP1"
+              "code": "TEMP1",
+              "id": 551878747
             },
             {
               "name": "Boys Only",
-              "code": "TEMP2"
+              "code": "TEMP2",
+              "id": 551954489
             },
             {
               "name": "Co-education",
-              "code": "TEMP3"
+              "code": "TEMP3",
+              "id": 551954500
             }
           ]
         },
@@ -97,7 +105,8 @@
           "required": false,
           "options": null
         }
-      ]
+      ],
+      "id": 551870266
     },
     {
       "question_group": "Drinking Water",
@@ -112,55 +121,68 @@
           "options": [
             {
               "name": "Pipeline connection",
-              "code": "W1"
+              "code": "W1",
+              "id": 551957614
             },
             {
               "name": "Protected well/spring",
-              "code": "W2"
+              "code": "W2",
+              "id": 551957655
             },
             {
               "name": "Shallow well fitted with pump / Shallow tubewell/borehole",
-              "code": "W3"
+              "code": "W3",
+              "id": 551957671
             },
             {
               "name": "Rainwater / Roof catchment harvesting /Rainwater collection",
-              "code": "W4"
+              "code": "W4",
+              "id": 551957686
             },
             {
               "name": "Packaged bottled water",
-              "code": "W5"
+              "code": "W5",
+              "id": 551957698
             },
             {
               "name": "Tanker-truck or cart /Cart with small tank/drum",
-              "code": "W6"
+              "code": "W6",
+              "id": 551879071
             },
             {
               "name": "Surface water (lake, river, stream, pond, canal)",
-              "code": "W7"
+              "code": "W7",
+              "id": 551957726
             },
             {
               "name": "Unprotected well/spring",
-              "code": "W8"
+              "code": "W8",
+              "id": 551957738
             },
             {
               "name": "No water source / no water /No water at or to be used in the school",
-              "code": "W9"
+              "code": "W9",
+              "id": 551879075
             },
             {
               "name": "Piped water into dwelling (into the building)",
-              "code": "W10"
+              "code": "W10",
+              "id": 551957764
             },
             {
               "name": "Piped water to yard/plot",
-              "code": "W11"
+              "code": "W11",
+              "id": 551957776
             },
             {
               "name": "Deep tubewell/borehole",
-              "code": "W12"
+              "code": "W12",
+              "id": 551957791
             },
             {
               "name": "They bring water from nearby improved source 7km public tap",
-              "code": "W13"
+              "code": "W13",
+              "id": 551879080
             }
           ]
         },
@@ -174,15 +196,18 @@
           "options": [
             {
               "name": "Yes, running water",
-              "code": "WA1"
+              "code": "WA1",
+              "id": 551879082
             },
             {
               "name": "Yes, in containers, but no running water",
-              "code": "WA3"
+              "code": "WA3",
+              "id": 551957836
             },
             {
               "name": "No",
-              "code": "WA2"
+              "code": "WA2",
+              "id": 551957850
             }
           ],
           "dependency": [
@@ -202,7 +227,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 551870272
     },
     {
       "question_group": "Sanitation",
@@ -217,35 +243,43 @@
           "options": [
             {
               "name": "Flush/Pour-flush toilets",
-              "code": "T1"
+              "code": "T1",
+              "id": 551960978
             },
             {
               "name": "Pit latrines with slab",
-              "code": "T2"
+              "code": "T2",
+              "id": 551961021
             },
             {
               "name": "Composting toilets",
-              "code": "T3"
+              "code": "T3",
+              "id": 551961036
             },
             {
               "name": "Pit latrines without slab/ open pit",
-              "code": "T4"
+              "code": "T4",
+              "id": 551961050
             },
             {
               "name": "Hanging latrines",
-              "code": "T5"
+              "code": "T5",
+              "id": 551879406
             },
             {
               "name": "Bucket latrines",
-              "code": "T6"
+              "code": "T6",
+              "id": 551961078
             },
             {
               "name": "No toilets or latrines",
-              "code": "T7"
+              "code": "T7",
+              "id": 551961090
             },
             {
               "name": "Ventilated Improved Pit latrine (VIP)",
-              "code": "T8"
+              "code": "T8",
+              "id": 551879410
             }
           ]
         },
@@ -259,11 +293,13 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "color": null,
+              "id": 551879412
             },
             {
               "name": "No",
-              "color": null
+              "color": null,
+              "id": 551961136
             }
           ],
           "dependency": [
@@ -295,11 +331,13 @@
           "options": [
             {
               "name": "Yes",
-              "code": "ST1"
+              "code": "ST1",
+              "id": 551961157
             },
             {
               "name": "No",
-              "code": "ST2"
+              "code": "ST2",
+              "id": 551961169
             }
           ],
           "dependency": [
@@ -325,19 +363,23 @@
           "options": [
             {
               "name": "Yes, all of them",
-              "code": "TM1"
+              "code": "TM1",
+              "id": 551961188
             },
             {
               "name": "Yes, but not all of them",
-              "code": "TM2"
+              "code": "TM2",
+              "id": 551961200
             },
             {
               "name": "No",
-              "code": "TM3"
+              "code": "TM3",
+              "id": 551961210
             },
             {
               "name": "Data not collected",
-              "code": "TM4"
+              "code": "TM4",
+              "id": 551879422
             }
           ],
           "dependency": [
@@ -370,11 +412,13 @@
           "options": [
             {
               "name": "Yes, at least one is accessible",
-              "code": "DT1"
+              "code": "DT1",
+              "id": 551961241
             },
             {
               "name": "No, the toilets are not accessible",
-              "code": "DT2"
+              "code": "DT2",
+              "id": 551961255
             }
           ],
           "dependency": [
@@ -410,7 +454,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 551870274
     },
     {
       "question_group": "Hygiene",
@@ -425,11 +470,13 @@
           "options": [
             {
               "name": "Yes",
-              "code": "H1"
+              "code": "H1",
+              "id": 551964388
             },
             {
               "name": "No",
-              "code": "H2"
+              "code": "H2",
+              "id": 551964431
             }
           ]
         },
@@ -443,23 +490,28 @@
           "options": [
             {
               "name": "Yes, water and soap",
-              "code": "HW1"
+              "code": "HW1",
+              "id": 551964454
             },
             {
               "name": "Water only",
-              "color": "HW2"
+              "color": "HW2",
+              "id": 551964469
             },
             {
               "name": "Soap only",
-              "color": "HW3"
+              "color": "HW3",
+              "id": 551879748
             },
             {
               "name": "Neither water or soap",
-              "color": "HW4"
+              "color": "HW4",
+              "id": 551964497
             },
             {
               "name": "No handwashing facility",
-              "color": "HW5"
+              "color": "HW5",
+              "id": 551964509
             }
           ],
           "dependency": [
@@ -471,7 +523,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 551870280
     }
   ]
 }
