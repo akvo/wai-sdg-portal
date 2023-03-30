@@ -2,6 +2,9 @@ import json
 import os
 import time
 import sys
+from models.question import Question
+from models.answer import Answer
+from models.data import Data
 from datetime import timedelta
 from db import crud_form
 from db import crud_question_group
@@ -33,12 +36,53 @@ for table in ["form", "question_group", "question", "option"]:
         action = truncate(session=session, table=table)
         print(action)
 
+
+def print_validation(fid, name, itype, message, is_error=True):
+    emsg = "ERROR" if is_error else "WARNING"
+    print(f"{emsg}: `{name}` {itype} in form {fid} {message}")
+
+
+def cleanup_form(json_form, qids):
+    questions = crud_question.get_question_by_form_id(session=session,
+                                                      fid=json_form["id"])
+    for q in questions:
+        if q.id not in qids:
+            session.query(Question).filter(Question.id == q.id).delete()
+            session.commit()
+            print_validation(json_form["id"], q.name, "question",
+                             "is removed from the database", False)
+
+
+def validate_form(json_form):
+    validated = True
+    fid = json_form["id"]
+    qids = []
+    for qg in json_form["question_groups"]:
+        if not qg.get("id"):
+            print_validation(fid, qg["question_group"], "QUESTION GROUP",
+                             "ID is not defined in the json")
+            validated = False
+        for q in qg["questions"]:
+            if not q.get("id"):
+                print_validation(fid, q["question"], "QUESTION",
+                                 "ID is not defined in the json")
+                validated = False
+            qids.append(q.get("id"))
+    return validated, qids
+
+
 for file in sorted(files):
     with open(f'{file_path}{file}') as json_file:
         json_form = json.load(json_file)
     # check form exist
-    find_form = crud_form.get_form_by_id(
-        session=session, id=json_form["id"])
+    valid, qids = validate_form(json_form)
+    if not valid:
+        exit(1)
+    find_form = crud_form.get_form_by_id(session=session, id=json_form["id"])
+    if updater and find_form:
+        # check if form has question id and question group id
+        # remove question if not available in json
+        cleanup_form(json_form, qids)
     # updater
     if updater and find_form:
         form = crud_form.update_form(
@@ -50,7 +94,7 @@ for file in sorted(files):
             default_language=json_form.get('defaultLanguage'),
             languages=json_form.get('languages'),
             translations=json_form.get('translations'))
-        print(f"Update Form: {form.name}")
+        print(f"Updating Form: {form.id} - {form.name}")
     # init
     if not updater or not find_form:
         form = crud_form.add_form(
@@ -63,7 +107,7 @@ for file in sorted(files):
             default_language=json_form.get('defaultLanguage'),
             languages=json_form.get('languages'),
             translations=json_form.get('translations'))
-        print(f"Seed Form: {form.name}")
+        print(f"Added Form: {form.name}\n")
     for qg in json_form["question_groups"]:
         # check question group exist
         find_group = crud_question_group.get_question_group_by_id(
@@ -80,9 +124,12 @@ for file in sorted(files):
                 repeatable=qg.get('repeatable'),
                 repeat_text=qg.get('repeatText'),
                 translations=qg.get('translations'))
-            print(f"Seed Question Group: {question_group.name}")
+            print(f"\nAdded Question Group: {question_group.name}")
         # updater
         if updater and find_group:
+            oqg = crud_question_group.get_question_group_by_id(session=session,
+                                                               id=qg.get("id"))
+            oname = oqg.name
             question_group = crud_question_group.update_question_group(
                 session=session,
                 form=form.id,
@@ -94,11 +141,12 @@ for file in sorted(files):
                 repeatable=qg.get('repeatable'),
                 repeat_text=qg.get('repeatText'),
                 translations=qg.get('translations'))
-            print(f"Update Question Group: {question_group.name}")
+            if question_group.name != oname:
+                print(f"\nUpdated Group: {oname} -> {question_group.name}")
         for i, q in enumerate(qg["questions"]):
             # check question exist
-            find_question = crud_question.get_question_by_id(
-                session=session, id=q.get('id'))
+            find_question = crud_question.get_question_by_id(session=session,
+                                                             id=q.get('id'))
             # get addons
             addons = {}
             if "allowOther" in q:
@@ -124,9 +172,13 @@ for file in sorted(files):
                     api=q.get('api'),
                     addons=addons if addons else None,
                     option=q["options"] if "options" in q else [])
-                print(f"Seed {i}.{question.name}")
+                print(f"Added: {question.id}|{question.name}")
             # updater
             if updater and find_question:
+                old_question = crud_question.get_question_by_id(
+                    session=session, id=q.get("id"))
+                oname = old_question.name
+                otype = old_question.type
                 question = crud_question.update_question(
                     session=session,
                     name=q.get("question"),
@@ -144,7 +196,10 @@ for file in sorted(files):
                     api=q.get("api"),
                     addons=addons if addons else None,
                     option=q["options"] if "options" in q else [])
-                print(f"Update {i}.{question.name}")
+                if question.name != oname:
+                    print(f"Updated: {question.id}|{oname} -> {question.name}")
+                if question.type != otype:
+                    print(f"Updated: {question.id}|{otype} -> {question.type}")
     print("------------------------------------------")
 
 elapsed_time = time.process_time() - start_time

@@ -12,10 +12,9 @@ import db.crud_option as crud_option
 
 def get_last_question(session: Session, form: int, question_group: int):
     last_question = session.query(Question).filter(
-        and_(
-            Question.form == form,
-            Question.question_group == question_group)).order_by(
-                Question.order.desc()).first()
+        and_(Question.form == form,
+             Question.question_group == question_group)).order_by(
+                 Question.order.desc()).first()
     if last_question:
         last_question = last_question.order + 1
     else:
@@ -40,26 +39,25 @@ def generateOptionObj(obj: dict):
     return opt
 
 
-def add_question(
-    session: Session,
-    name: str,
-    form: int,
-    question_group: int,
-    type: QuestionType,
-    meta: bool,
-    id: Optional[int] = None,
-    order: Optional[int] = None,
-    option: Optional[List[OptionDict]] = None,
-    required: Optional[bool] = True,
-    rule: Optional[dict] = None,
-    dependency: Optional[List[dict]] = None,
-    tooltip: Optional[dict] = None,
-    translations: Optional[List[dict]] = None,
-    api: Optional[dict] = None,
-    addons: Optional[dict] = None
-) -> QuestionBase:
-    last_question = get_last_question(
-        session=session, form=form, question_group=question_group)
+def add_question(session: Session,
+                 name: str,
+                 form: int,
+                 question_group: int,
+                 type: QuestionType,
+                 meta: bool,
+                 id: Optional[int] = None,
+                 order: Optional[int] = None,
+                 option: Optional[List[OptionDict]] = None,
+                 required: Optional[bool] = True,
+                 rule: Optional[dict] = None,
+                 dependency: Optional[List[dict]] = None,
+                 tooltip: Optional[dict] = None,
+                 translations: Optional[List[dict]] = None,
+                 api: Optional[dict] = None,
+                 addons: Optional[dict] = None) -> QuestionBase:
+    last_question = get_last_question(session=session,
+                                      form=form,
+                                      question_group=question_group)
     question = Question(id=id,
                         name=name,
                         order=order if order else last_question,
@@ -85,33 +83,31 @@ def add_question(
     return question
 
 
-def update_question(
-    session: Session,
-    name: str,
-    form: int,
-    question_group: int,
-    type: QuestionType,
-    meta: bool,
-    id: int,
-    order: Optional[int] = None,
-    option: Optional[List[OptionDict]] = None,
-    required: Optional[bool] = True,
-    rule: Optional[dict] = None,
-    dependency: Optional[List[dict]] = None,
-    tooltip: Optional[dict] = None,
-    translations: Optional[List[dict]] = None,
-    api: Optional[dict] = None,
-    addons: Optional[dict] = None
-) -> QuestionBase:
-    last_question = get_last_question(
-        session=session, form=form, question_group=question_group)
-    question = session.query(Question).filter(and_(
-        Question.form == form,
-        Question.id == id)).first()
+def update_question(session: Session,
+                    name: str,
+                    form: int,
+                    question_group: int,
+                    type: QuestionType,
+                    meta: bool,
+                    id: int,
+                    order: Optional[int] = None,
+                    option: Optional[List[OptionDict]] = None,
+                    required: Optional[bool] = True,
+                    rule: Optional[dict] = None,
+                    dependency: Optional[List[dict]] = None,
+                    tooltip: Optional[dict] = None,
+                    translations: Optional[List[dict]] = None,
+                    api: Optional[dict] = None,
+                    addons: Optional[dict] = None) -> QuestionBase:
+    last_question = get_last_question(session=session,
+                                      form=form,
+                                      question_group=question_group)
+    question = session.query(Question).filter(
+        and_(Question.form == form, Question.id == id)).first()
     # clear option when question type change
     if question.type in [QuestionType.option, QuestionType.multiple_option]:
-        session.query(Option).filter(
-            Option.question == question.id).delete(synchronize_session='fetch')
+        session.query(Option).filter(Option.question == question.id).delete(
+            synchronize_session='fetch')
     question.name = name
     question.order = order if order else last_question
     question.meta = meta
@@ -132,15 +128,14 @@ def update_question(
                 opt = opt = generateOptionObj(obj=o)
                 question.option.append(opt)
             if find_option:
-                crud_option.update_option(
-                    session=session,
-                    id=o.get('id'),
-                    name=o.get('name'),
-                    order=o.get('order'),
-                    color=o.get('color'),
-                    score=o.get('score'),
-                    code=o.get('code'),
-                    translations=o.get('translations'))
+                crud_option.update_option(session=session,
+                                          id=o.get('id'),
+                                          name=o.get('name'),
+                                          order=o.get('order'),
+                                          color=o.get('color'),
+                                          score=o.get('score'),
+                                          code=o.get('code'),
+                                          translations=o.get('translations'))
     session.commit()
     session.flush()
     session.refresh(question)
@@ -168,6 +163,10 @@ def get_question_by_name(session: Session, form: int,
     question = session.query(Question).filter(
         and_(Question.name == name, Question.form == form)).first()
     return question
+
+
+def get_question_by_form_id(session: Session, fid: int) -> QuestionDict:
+    return session.query(Question).filter(Question.form == fid).all()
 
 
 def get_question_name(session: Session, id: int) -> str:
