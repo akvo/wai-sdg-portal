@@ -36,10 +36,15 @@ def get_jmp_table_view(session: Session, data: list, configs: list):
     return data
 
 
-def get_jmp_overview(session: Session, form: int, name: str):
+def get_jmp_overview(session: Session, form: int, name: str = None):
     data = session.query(Data).filter(Data.form == form).all()
     data = [
-        {"data": d.id, "administration": d.administration, "geo": d.geo}
+        {
+            "data": d.id,
+            "name": d.name,
+            "administration": d.administration_detail.serialize,
+            "geo": d.geo,
+        }
         for d in data
     ]
     try:
