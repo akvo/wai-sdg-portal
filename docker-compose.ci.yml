@@ -7,7 +7,7 @@ services:
       db:
         condition: service_healthy
     environment:
-      - DATABASE_URL=postgresql://wai:password@db:5432/wai_ci
+      - DATABASE_URL=postgresql://wai:password@db:5432/wai-ci
       - SKIP_MIGRATION=yes
       - MAILJET_SECRET=notset
       - MAILJET_APIKEY=notset
@@ -29,7 +29,7 @@ services:
       - db
       - backend
     environment:
-      - DATABASE_URL=postgresql://wai:password@db:5432/wai_ci
+      - DATABASE_URL=postgresql://wai:password@db:5432/wai-ci
       - SKIP_MIGRATION=yes
       - MAILJET_SECRET=notset
       - MAILJET_APIKEY=notset
