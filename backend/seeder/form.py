@@ -3,8 +3,6 @@ import os
 import time
 import sys
 from models.question import Question
-from models.answer import Answer
-from models.data import Data
 from datetime import timedelta
 from db import crud_form
 from db import crud_question_group
@@ -195,7 +193,8 @@ for file in sorted(files):
                     translations=q.get("translations"),
                     api=q.get("api"),
                     addons=addons if addons else None,
-                    option=q["options"] if "options" in q else [])
+                    option=q["options"] if "options" in q else [],
+                    clear_option=True)
                 if question.name != oname:
                     print(f"Updated: {question.id}|{oname} -> {question.name}")
                 if question.type != otype:

@@ -92,6 +92,7 @@ def update_question(session: Session,
                     id: int,
                     order: Optional[int] = None,
                     option: Optional[List[OptionDict]] = None,
+                    clear_option: Optional[bool] = False,
                     required: Optional[bool] = True,
                     rule: Optional[dict] = None,
                     dependency: Optional[List[dict]] = None,
@@ -120,6 +121,8 @@ def update_question(session: Session,
     question.translations = translations
     question.api = api
     question.addons = addons
+    if clear_option:
+        session.query(Option).filter(Option.question == question.id).delete()
     if option:
         for o in option:
             find_option = session.query(Option).filter(
