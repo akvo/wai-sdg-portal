@@ -12,6 +12,8 @@ file_path = f"./source/{source_path}/forms/"
 
 files = list(filter(lambda x: ".bak" not in x, os.listdir(file_path)))
 
+
+# This will generate id based on form_id for missing id param
 for file in sorted(files):
     with open(f'{file_path}{file}') as json_file:
         data = json.load(json_file)
