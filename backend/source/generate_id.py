@@ -29,9 +29,10 @@ for file in sorted(files):
     opt_length = df["question_options"].apply(
         lambda row: len(row) if row else 0)
     opt_length = sum(list(opt_length))
-    df['qgid'] = df.apply(lambda row: int(row['id'] + row.name + 1), axis=1)
+    df['qgid'] = df.apply(
+        lambda row: int(row['id']) + int(row.name) + 1, axis=1)
     df['qid'] = df.apply(
-        lambda row: int(row['qgid'] + row.name + 1 + qg_length)
+        lambda row: int(row['qgid']) + int(row.name) + 1 + qg_length
         if not row["question_id"] else int(row["question_id"]),
         axis=1)
     # add question group and question id to json
@@ -47,7 +48,8 @@ for file in sorted(files):
                         continue
                     current_time = time.time()
                     current_time = str(current_time)[-5:]
-                    opt_id = data["id"] + qg_length + q_length + opt_length
+                    opt_id = int(data["id"]) + qg_length + q_length
+                    opt_id += opt_length
                     opt_id += int(current_time)
                     opt["id"] = opt_id
             if q.get("id"):
