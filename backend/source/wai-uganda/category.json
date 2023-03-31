@@ -24,7 +24,7 @@
                         "id": 671424009,
                         "text": "Main water supply for the facility",
                         "options": [
-                            "rain water harvesting",
+                            "Rainwater harvesting",
                             "Deep tubewell/borehole",
                             "Piped water to yard/plot",
                             "Piped water into dwelling (into the building)"
@@ -792,13 +792,13 @@
                         "id": 675114085,
                         "text": "Type of Toilet Facility",
                         "options": [
-                            "Toilet that flush/pour flush to piped sewer system",
-                            "Toilet that flush/pour flush to septic tank",
-                            "Toilet that flush/pour flush but don't know where / toilet that flush/pour flush to elsewhere",
+                            "Flush/Pour flush to piped sewer system",
+                            "Flush/Pour flush to septic tank",
+                            "Flush/Pour flush to don't know where",
                             "Pit latrine with slab",
-                            "pit lantrine with slab made of wood / pitlantrine slab with woods",
-                            "pit lantrine slab with wood and roofed with grass thatch",
-                            "apit lantrine covered with wood and roof is open",
+                            "Pit lantrine slab with wood",
+                            "Pit lantrine slab with wood and roofed with grass thatch",
+                            "Pit lantrine covered with wood and roof is open",
                             "Traditional pit latrine",
                             "Ventilated Improved Pit latrine (VIP)",
                             "Composting toilet"
