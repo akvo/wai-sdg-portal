@@ -37,6 +37,10 @@ for f in dump_files:
                     form_dump["question_name"] == q.get("question").lower()]
                 if qid and not len(q_dump.head()):
                     continue
+                if not len(q_dump.head()):
+                    # use latest question id on that dump + i
+                    q["id"] = int(db_dump.iloc[-1]["question"] + i + j)
+                    continue
                 q["id"] = int(q_dump.head().iloc[0]["question"])
             # question group
             qgid = qg.get("id")
