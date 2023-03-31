@@ -436,9 +436,10 @@ const MainMaps = ({ question, current }) => {
           const { selectableMarkerDropdown } = current;
           if (selectableMarkerDropdown?.length) {
             const _markerOptions = selectableMarkerDropdown?.map((md) => {
-              const findMarker = _.isNaN(md?.id)
-                ? scores?.find((s) => s?.name === md?.id)
-                : question?.find((q) => q?.id === md?.id);
+              const findMarker =
+                typeof md?.id === 'string'
+                  ? scores?.find((s) => s?.name === md?.id)
+                  : question?.find((q) => q?.id === md?.id);
               const markOptions = findMarker?.option || findMarker?.labels;
               return {
                 ...findMarker,
@@ -452,12 +453,13 @@ const MainMaps = ({ question, current }) => {
               const mId =
                 selectableMarkerQuestion?.id || current.maps.marker?.id;
               const markerData = _markerOptions?.find((mo) => mo?.id === mId);
-              setSelectableMarkerQuestion(markerData);
+              const defaultSelectable = markerData || _markerOptions.shift();
+              setSelectableMarkerQuestion(defaultSelectable);
             }
           }
           let shapeData = question.find((q) => q.id === shapeId);
           let option = [];
-          if (_.isNaN(shapeId)) {
+          if (typeof shapeId === 'string') {
             option =
               scores?.find(
                 (s) => s?.name?.toLowerCase() === shapeId?.toLowerCase()
@@ -502,6 +504,7 @@ const MainMaps = ({ question, current }) => {
         });
     }
     if (!preload && !loading && loadedFormId !== current?.formId) {
+      setShapeQuestion(null);
       setMarkerOptions([]);
       setSelectableMarkerQuestion({});
       setLoading(true);
@@ -515,6 +518,7 @@ const MainMaps = ({ question, current }) => {
     loading,
     loadedFormId,
     advanceSearchValue,
+    markerOptions,
     shapeQuestion,
     selectableMarkerQuestion,
   ]);
