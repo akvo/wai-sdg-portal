@@ -10,8 +10,7 @@
           "order": 1,
           "required": true,
           "type": "administration",
-          "meta": true,
-          "id": 563280072
+          "meta": true
         },
         {
           "id": 569320067,
@@ -45,18 +44,15 @@
           "options": [
             {
               "name": "Primary",
-              "color": null,
-              "id": 563362935
+              "color": null
             },
             {
               "name": "Secondary",
-              "color": null,
-              "id": 563308127
+              "color": null
             },
             {
               "name": "Madarsa",
-              "color": null,
-              "id": 563308165
+              "color": null
             }
           ]
         },
@@ -70,18 +66,15 @@
           "options": [
             {
               "name": "Girls Only",
-              "color": null,
-              "id": 563308206
+              "color": null
             },
             {
               "name": "Boys Only",
-              "color": null,
-              "id": 563362959
+              "color": null
             },
             {
               "name": "Co-education",
-              "color": null,
-              "id": 563362962
+              "color": null
             }
           ]
         },
@@ -149,13 +142,11 @@
           "options": [
             {
               "name": "Yes",
-              "color": null,
-              "id": 563308308
+              "color": null
             },
             {
               "name": "No",
-              "color": null,
-              "id": 563308332
+              "color": null
             }
           ]
         },
@@ -169,13 +160,11 @@
           "options": [
             {
               "name": "Yes",
-              "color": null,
-              "id": 563308366
+              "color": null
             },
             {
               "name": "No",
-              "color": null,
-              "id": 563308389
+              "color": null
             }
           ]
         },
@@ -196,8 +185,7 @@
             }
           ]
         }
-      ],
-      "id": 563280067
+      ]
     },
     {
       "question_group": "Core Drinking Water Questions",
@@ -213,91 +201,76 @@
             {
               "name": "Pipeline connection / Piped water into dwelling (into the building)",
               "color": "#70AD47",
-              "code": "W1",
-              "id": 563314305
+              "code": "W1"
             },
             {
               "name": "Protected well/spring",
               "color": "#4472C4",
-              "code": "W2",
-              "id": 563363574
+              "code": "W2"
             },
             {
               "name": "Deep tubewell/borehole",
               "color": "#70AD47",
-              "code": "W3",
-              "id": 563363577
+              "code": "W3"
             },
             {
               "name": "Shallow tubewell/borehole",
               "color": "#00B0F0",
-              "code": "W4",
-              "id": 563363580
+              "code": "W4"
             },
             {
               "name": "PSF (Pond Sand Filter)",
               "color": "#ED7D31",
-              "code": "W5",
-              "id": 563314464
+              "code": "W5"
             },
             {
               "name": "AIRP (Arsenic Iron Removable Plant)",
               "color": "#9C5CFF",
-              "code": "W6",
-              "id": 563363585
+              "code": "W6"
             },
             {
               "name": "Rainwater collection",
               "color": "#2F5496",
-              "code": "W7",
-              "id": 563314514
+              "code": "W7"
             },
             {
               "name": "Packaged bottled water",
               "color": "#FFD966",
-              "code": "W8",
-              "id": 563314538
+              "code": "W8"
             },
             {
               "name": "Bottled water",
               "color": "#4472C4",
-              "code": "W9",
-              "id": 563363592
+              "code": "W9"
             },
             {
               "name": "Student bring their own water",
               "color": "#C45911",
-              "code": "W10",
-              "id": 563314588
+              "code": "W10"
             },
             {
               "name": "Public Water Point /Public tap/standpipe",
-              "code": "W11",
-              "id": 563314612
+              "code": "W11"
             },
             {
               "name": "Tanker-truck or cart",
               "color": "#FF83B7",
-              "code": "W12",
-              "id": 563314636
+              "code": "W12"
             },
             {
               "name": "Unprotected well/spring",
               "color": "#806000",
-              "code": "W13",
-              "id": 563314662
+              "code": "W13"
             },
             {
               "name": "Surface water (lake, river, stream)",
               "color": "#FFC000",
-              "code": "W14",
-              "id": 563314686
+              "code": "W14"
             },
             {
               "name": "No water source",
               "color": "#FF0000",
-              "code": "W15",
-              "id": 563363607
+              "code": "W15"
             }
           ]
         },
@@ -311,13 +284,11 @@
           "options": [
             {
               "name": "Yes, running water",
-              "code": "WA2",
-              "id": 563314746
+              "code": "WA2"
             },
             {
               "name": "No",
-              "code": "WA1",
-              "id": 563314774
+              "code": "WA1"
             }
           ],
           "dependency": [
@@ -340,8 +311,7 @@
             }
           ]
         }
-      ],
-      "id": 563280079
+      ]
     },
     {
       "question_group": "Core Sanitation Questions",
@@ -356,13 +326,11 @@
           "options": [
             {
               "name": "Yes",
-              "code": "TP1",
-              "id": 563320508
+              "code": "TP1"
             },
             {
               "name": "No",
-              "code": "TP2",
-              "id": 563320587
+              "code": "TP2"
             }
           ]
         },
@@ -377,73 +345,61 @@
             {
               "name": "Toilet that flush/poor flush to piped sewer system",
               "color": "#70AD47",
-              "code": "T1",
-              "id": 563320632
+              "code": "T1"
             },
             {
               "name": "Toilet that flush/poor flush to septic tank",
               "color": "#C5E0B3",
-              "code": "T2",
-              "id": 563320663
+              "code": "T2"
             },
             {
               "name": "Toilet that flush/poor flush to elsewhere",
               "color": "#385623",
-              "code": "T3",
-              "id": 563320687
+              "code": "T3"
             },
             {
               "name": "Toilet that flush/poor flush but don't know where",
               "color": "#2F5496",
-              "code": "T4",
-              "id": 563320713
+              "code": "T4"
             },
             {
               "name": "Pit latrine with slab",
               "color": "#00B0F0",
-              "code": "T5",
-              "id": 563320740
+              "code": "T5"
             },
             {
               "name": "Ventilated Improved Pit latrine (VIP)",
               "color": "#00B050",
-              "code": "T6",
-              "id": 563320766
+              "code": "T6"
             },
             {
               "name": "Twinpit offset latrine",
               "color": "#BF8F00",
-              "code": "T7",
-              "id": 563364215
+              "code": "T7"
             },
             {
               "name": "Composting toilet",
               "color": "#ED7D31",
-              "code": "T8",
-              "id": 563320816
+              "code": "T8"
             },
             {
               "name": "Pit latrine without slab/open pit",
               "color": "#FF83B7",
-              "code": "T9",
-              "id": 563364220
+              "code": "T9"
             },
             {
               "name": "Hanging latrine",
               "color": "#44546A",
-              "code": "T10",
-              "id": 563320866
+              "code": "T10"
             },
             {
               "name": "Bucket latrine",
               "color": "#7030A0",
-              "code": "T11",
-              "id": 563320890
+              "code": "T11"
             },
             {
               "name": "No toilets or latrines",
-              "code": "T12",
-              "id": 563320916
+              "code": "T12"
             }
           ]
         },
@@ -480,13 +436,11 @@
           "options": [
             {
               "name": "Yes",
-              "code": "TS1",
-              "id": 563320954
+              "code": "TS1"
             },
             {
               "name": "No",
-              "code": "TS2",
-              "id": 563320983
+              "code": "TS2"
             }
           ],
           "dependency": [
@@ -521,18 +475,15 @@
           "options": [
             {
               "name": "Yes, all of them",
-              "code": "TM1",
-              "id": 563321016
+              "code": "TM1"
             },
             {
               "name": "Yes, but not all of them",
-              "code": "TM2",
-              "id": 563321042
+              "code": "TM2"
             },
             {
               "name": "No",
-              "code": "TM3",
-              "id": 563321069
+              "code": "TM3"
             }
           ],
           "dependency": [
@@ -591,13 +542,11 @@
           "options": [
             {
               "name": "Yes, at least one is accessible",
-              "code": "DT1",
-              "id": 563321104
+              "code": "DT1"
             },
             {
               "name": "No, the toilets are not accessible",
-              "code": "DT2",
-              "id": 563321128
+              "code": "DT2"
             }
           ],
           "dependency": [
@@ -626,18 +575,15 @@
           "options": [
             {
               "name": "Yes, all of them",
-              "code": "CL1",
-              "id": 563364252
+              "code": "CL1"
             },
             {
               "name": "Yes, but not all of them",
-              "code": "CL2",
-              "id": 563321188
+              "code": "CL2"
             },
             {
               "name": "No",
-              "code": "CL3",
-              "id": 563321214
+              "code": "CL3"
             }
           ],
           "dependency": [
@@ -656,8 +602,7 @@
             }
           ]
         }
-      ],
-      "id": 563280081
+      ]
     },
     {
       "question_group": "Core Hygiene Questions",
@@ -672,13 +617,11 @@
           "options": [
             {
               "name": "Yes",
-              "code": "HW1",
-              "id": 563326958
+              "code": "HW1"
             },
             {
               "name": "No",
-              "code": "HW2",
-              "id": 563327034
+              "code": "HW2"
             }
           ]
         },
@@ -692,23 +635,19 @@
           "options": [
             {
               "name": "Yes, water and soap",
-              "code": "SW1",
-              "id": 563327079
+              "code": "SW1"
             },
             {
               "name": "Only soap",
-              "code": "SW2",
-              "id": 563327105
+              "code": "SW2"
             },
             {
               "name": "Only water",
-              "code": "SW3",
-              "id": 563364849
+              "code": "SW3"
             },
             {
               "name": "Neither water nor soap",
-              "code": "SW4",
-              "id": 563327158
+              "code": "SW4"
             }
           ],
           "dependency": [
@@ -720,8 +659,7 @@
             }
           ]
         }
-      ],
-      "id": 563280089
+      ]
     }
   ]
 }

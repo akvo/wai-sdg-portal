@@ -10,11 +10,9 @@
           "order": 1,
           "required": true,
           "type": "administration",
-          "meta": true,
-          "id": 567420202
+          "meta": true
         }
-      ],
-      "id": 567420198
+      ]
     },
     {
       "question_group": "Village Information",
@@ -46,8 +44,7 @@
           "required": true,
           "options": null
         }
-      ],
-      "id": 567420199
+      ]
     },
     {
       "question_group": "CLTS Intervention Information",
@@ -62,18 +59,15 @@
           "options": [
             {
               "name": "Amref",
-              "color": null,
-              "id": 567483722
+              "color": null
             },
             {
               "name": "Amref and Local Government",
-              "color": null,
-              "id": 567483791
+              "color": null
             },
             {
               "name": "Other",
-              "color": null,
-              "id": 567483813
+              "color": null
             }
           ]
         },
@@ -105,13 +99,11 @@
           "options": [
             {
               "name": "Yes",
-              "color": null,
-              "id": 567483841
+              "color": null
             },
             {
               "name": "No",
-              "color": null,
-              "id": 567483855
+              "color": null
             }
           ]
         },
@@ -125,13 +117,11 @@
           "options": [
             {
               "name": "Yes",
-              "color": null,
-              "id": 567483872
+              "color": null
             },
             {
               "name": "No",
-              "color": null,
-              "id": 567483889
+              "color": null
             }
           ]
         },
@@ -145,13 +135,11 @@
           "options": [
             {
               "name": "Yes",
-              "color": null,
-              "id": 567446613
+              "color": null
             },
             {
               "name": "No",
-              "color": null,
-              "id": 567483922
+              "color": null
             }
           ]
         },
@@ -165,13 +153,11 @@
           "options": [
             {
               "name": "Yes",
-              "color": null,
-              "id": 567483939
+              "color": null
             },
             {
               "name": "No",
-              "color": null,
-              "id": 567483956
+              "color": null
             }
           ]
         },
@@ -185,13 +171,11 @@
           "options": [
             {
               "name": "Yes",
-              "color": null,
-              "id": 567483972
+              "color": null
             },
             {
               "name": "No",
-              "color": null,
-              "id": 567446621
+              "color": null
             }
           ]
         },
@@ -223,73 +207,59 @@
           "options": [
             {
               "name": "Bucket",
-              "color": null,
-              "id": 567446623
+              "color": null
             },
             {
               "name": "Container-based sanitation",
-              "color": null,
-              "id": 567484025
+              "color": null
             },
             {
               "name": "Flush/pour flush to piped sewer system",
-              "color": null,
-              "id": 567446626
+              "color": null
             },
             {
               "name": "Flush/pour flush to septic tank",
-              "color": null,
-              "id": 567484051
+              "color": null
             },
             {
               "name": "Flush/pour flush to pit latrine",
-              "color": null,
-              "id": 567484063
+              "color": null
             },
             {
               "name": "Flush/pour flush to open drain",
-              "color": null,
-              "id": 567484075
+              "color": null
             },
             {
               "name": "Hanging toilet/latrine",
-              "color": null,
-              "id": 567484089
+              "color": null
             },
             {
               "name": "Pit latrine with slab",
-              "color": null,
-              "id": 567484101
+              "color": null
             },
             {
               "name": "Pit latrine without slab/open pit",
-              "color": null,
-              "id": 567484113
+              "color": null
             },
             {
               "name": "Twin pit offset latrine",
-              "color": null,
-              "id": 567484130
+              "color": null
             },
             {
               "name": "Twin pit with latrine slab",
-              "color": null,
-              "id": 567484142
+              "color": null
             },
             {
               "name": "Twin pit without slab",
-              "color": null,
-              "id": 567446638
+              "color": null
             },
             {
               "name": "Ventilated improved pit latrine (VIP) with slab",
-              "color": null,
-              "id": 567446639
+              "color": null
             },
             {
               "name": "Other composting latrine",
-              "color": null,
-              "id": 567484180
+              "color": null
             }
           ]
         },
@@ -303,28 +273,23 @@
           "options": [
             {
               "name": "Open Defecation",
-              "color": null,
-              "id": 567484199
+              "color": null
             },
             {
               "name": "Triggered",
-              "color": null,
-              "id": 567484213
+              "color": null
             },
             {
               "name": "Declared ODF",
-              "color": null,
-              "id": 567446645
+              "color": null
             },
             {
               "name": "Verified ODF",
-              "color": null,
-              "id": 567484239
+              "color": null
             }
           ]
         }
-      ],
-      "id": 567420202
+      ]
     }
   ]
 }

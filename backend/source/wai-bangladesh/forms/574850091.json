@@ -10,8 +10,7 @@
           "order": 1,
           "required": true,
           "type": "administration",
-          "meta": true,
-          "id": 574850097
+          "meta": true
         },
         {
           "id": 569300134,
@@ -45,18 +44,15 @@
           "options": [
             {
               "name": "Male",
-              "color": null,
-              "id": 574856118
+              "color": null
             },
             {
               "name": "Female",
-              "color": null,
-              "id": 574856265
+              "color": null
             },
             {
               "name": "Other",
-              "color": null,
-              "id": 574856344
+              "color": null
             }
           ]
         },
@@ -79,13 +75,11 @@
           "options": [
             {
               "name": "Yes",
-              "color": null,
-              "id": 574856454
+              "color": null
             },
             {
               "name": "No",
-              "color": null,
-              "id": 574856523
+              "color": null
             }
           ]
         },
@@ -99,13 +93,11 @@
           "options": [
             {
               "name": "Yes",
-              "color": null,
-              "id": 574850842
+              "color": null
             },
             {
               "name": "No",
-              "color": null,
-              "id": 574850849
+              "color": null
             }
           ]
         },
@@ -119,23 +111,19 @@
           "options": [
             {
               "name": "Male Member",
-              "color": null,
-              "id": 574856785
+              "color": null
             },
             {
               "name": "Female Member",
-              "color": null,
-              "id": 574856854
+              "color": null
             },
             {
               "name": "Male Child Member",
-              "color": null,
-              "id": 574856923
+              "color": null
             },
             {
               "name": "Female Chid Member",
-              "color": null,
-              "id": 574856993
+              "color": null
             }
           ]
         },
@@ -148,8 +136,7 @@
           "required": true,
           "options": null
         }
-      ],
-      "id": 574850092
+      ]
     },
     {
       "question_group": "Core Drinking Water Questions",
@@ -165,98 +152,82 @@
             {
               "name": "Piped water into dwelling (household connection)",
               "color": "#70AD47",
-              "code": "W1",
-              "id": 574867342
+              "code": "W1"
             },
             {
               "name": "Piped water to yard/plot",
               "color": "#C5E0B3",
-              "code": "W2",
-              "id": 574867457
+              "code": "W2"
             },
             {
               "name": "Piped to neighbour",
               "color": "#385623",
-              "code": "W3",
-              "id": 574851933
+              "code": "W3"
             },
             {
               "name": "Deep tubewell/borehole",
               "color": "#00B050",
-              "code": "W4",
-              "id": 574867602
+              "code": "W4"
             },
             {
               "name": "Shallow tubewell/borehole",
               "color": "#00B0F0",
-              "code": "W5",
-              "id": 574851947
+              "code": "W5"
             },
             {
               "name": "Public tap/standpipe",
               "color": "#BF8F00",
-              "code": "W6",
-              "id": 574867738
+              "code": "W6"
             },
             {
               "name": "Pond sand filter (PSF)",
               "color": "#40FCFF",
-              "code": "W7",
-              "id": 574867807
+              "code": "W7"
             },
             {
               "name": "AIRP (Arsenic Iron Removal Plant)",
               "color": "#ED7D31",
-              "code": "W8",
-              "id": 574867874
+              "code": "W8"
             },
             {
               "name": "Protected spring",
               "color": "#9C5CFF",
-              "code": "W9",
-              "id": 574867943
+              "code": "W9"
             },
             {
               "name": "Rainwater collection",
               "color": "#2F5496",
-              "code": "W10",
-              "id": 574851981
+              "code": "W10"
             },
             {
               "name": "Tanker-truck",
               "color": "#FF83B7",
-              "code": "W11",
-              "id": 574851988
+              "code": "W11"
             },
             {
               "name": "Cart with small tank/drum",
               "color": "#FFFB00",
-              "code": "W12",
-              "id": 574868146
+              "code": "W12"
             },
             {
               "name": "Bottled water",
               "color": "#4472C4",
-              "code": "W13",
-              "id": 574868215
+              "code": "W13"
             },
             {
               "name": "Unprotected dug well",
               "color": "#806000",
-              "code": "W14",
-              "id": 574868284
+              "code": "W14"
             },
             {
               "name": "Unprotected spring",
               "color": "#C45911",
-              "code": "W15",
-              "id": 574852015
+              "code": "W15"
             },
             {
               "name": "Surface water",
               "color": "#FF0000",
-              "code": "W16",
-              "id": 574868418
+              "code": "W16"
             }
           ]
         },
@@ -270,23 +241,19 @@
           "options": [
             {
               "name": "Water is located on the premises /Less than 150 meters / Less than 150 meters/500 feet",
-              "code": "C1",
-              "id": 574868515
+              "code": "C1"
             },
             {
               "name": "Water is located Between 150 and 500 meters",
-              "code": "C2",
-              "id": 574868584
+              "code": "C2"
             },
             {
               "name": "More than 500 meters/1600 feet",
-              "code": "C3",
-              "id": 574852045
+              "code": "C3"
             },
             {
               "name": "Don't know",
-              "code": "C4",
-              "id": 574868716
+              "code": "C4"
             }
           ],
           "dependency": [
@@ -320,23 +287,19 @@
           "options": [
             {
               "name": "Water is located on the premises",
-              "code": "D1",
-              "id": 574868809
+              "code": "D1"
             },
             {
               "name": "Less than 30 minutes",
-              "code": "D2",
-              "id": 574868878
+              "code": "D2"
             },
             {
               "name": "More than 30 minutes",
-              "code": "D3",
-              "id": 574868944
+              "code": "D3"
             },
             {
               "name": "Don't know",
-              "code": "D4",
-              "id": 574869014
+              "code": "D4"
             }
           ],
           "dependency": [
@@ -370,18 +333,15 @@
           "options": [
             {
               "name": "Yes, at least once",
-              "code": "S2",
-              "id": 574869107
+              "code": "S2"
             },
             {
               "name": "No, always sufficient",
-              "code": "S1",
-              "id": 574869173
+              "code": "S1"
             },
             {
               "name": "Don't know",
-              "code": "S3",
-              "id": 574869238
+              "code": "S3"
             }
           ],
           "dependency": [
@@ -415,18 +375,15 @@
           "options": [
             {
               "name": "Free from feacal and prioirty chemical contamination",
-              "code": "F1",
-              "id": 574869333
+              "code": "F1"
             },
             {
               "name": "Contaminated",
-              "code": "F2",
-              "id": 574850392
+              "code": "F2"
             },
             {
               "name": "Don't know",
-              "code": "F3",
-              "id": 574852127
+              "code": "F3"
             }
           ],
           "dependency": [
@@ -450,8 +407,7 @@
             }
           ]
         }
-      ],
-      "id": 574850101
+      ]
     },
     {
       "question_group": "Core Sanitation Questions",
@@ -467,92 +423,77 @@
             {
               "name": "Flush/pour flush to piped sewer system",
               "color": "#70AD47",
-              "code": "T1",
-              "id": 574878693
+              "code": "T1"
             },
             {
               "name": "Flush/pour flush to septic tank",
               "color": "#C5E0B3",
-              "code": "T2",
-              "id": 574878796
+              "code": "T2"
             },
             {
               "name": "Flush/pour flush to pit latrine",
               "color": "#385623",
-              "code": "T3",
-              "id": 574878867
+              "code": "T3"
             },
             {
               "name": "Ventilated improved pit latrine (VIP) with slab",
               "color": "#00B050",
-              "code": "T4",
-              "id": 574878937
+              "code": "T4"
             },
             {
               "name": "Pit latrine with slab",
               "color": "#00B0F0",
-              "code": "T5",
-              "id": 574879003
+              "code": "T5"
             },
             {
               "name": "Twin pit offset latrine",
               "color": "#BF8F00",
-              "code": "T6",
-              "id": 574853087
+              "code": "T6"
             },
             {
               "name": "Twin pit with latrine slab",
               "color": "#40FCFF",
-              "code": "T7",
-              "id": 574853094
+              "code": "T7"
             },
             {
               "name": "Other composting latrine",
               "color": "#ED7D31",
-              "code": "T8",
-              "id": 574879204
+              "code": "T8"
             },
             {
               "name": "Flush/pour flush to open drain",
               "color": "#9C5CFF",
-              "code": "T9",
-              "id": 574879273
+              "code": "T9"
             },
             {
               "name": "Flush/pour flush to don't know where",
               "color": "#2F5496",
-              "code": "T10",
-              "id": 574853114
+              "code": "T10"
             },
             {
               "name": "Pit latrine without slab/open pit",
               "color": "#FF83B7",
-              "code": "T11",
-              "id": 574879409
+              "code": "T11"
             },
             {
               "name": "Twin pit without slab",
               "color": "#FFFB00",
-              "code": "T12",
-              "id": 574853128
+              "code": "T12"
             },
             {
               "name": "Bucket toilet",
               "color": "#F4B083",
-              "code": "T13",
-              "id": 574879547
+              "code": "T13"
             },
             {
               "name": "Hanging toilet",
               "color": "#F7CAAC",
-              "code": "T14",
-              "id": 574879616
+              "code": "T14"
             },
             {
               "name": "No facility",
               "color": "#FF0000",
-              "code": "T15",
-              "id": 574879683
+              "code": "T15"
             }
           ]
         },
@@ -566,13 +507,11 @@
           "options": [
             {
               "name": "Yes",
-              "code": "TS1",
-              "id": 574879778
+              "code": "TS1"
             },
             {
               "name": "No",
-              "code": "TS2",
-              "id": 574879847
+              "code": "TS2"
             }
           ],
           "dependency": [
@@ -603,18 +542,15 @@
           "options": [
             {
               "name": "In own dwelling",
-              "code": "TF1",
-              "id": 574879943
+              "code": "TF1"
             },
             {
               "name": "In own plot/yard",
-              "code": "TF2",
-              "id": 574853181
+              "code": "TF2"
             },
             {
               "name": "Elsewhere",
-              "code": "TF3",
-              "id": 574880079
+              "code": "TF3"
             }
           ],
           "dependency": [
@@ -645,28 +581,23 @@
           "options": [
             {
               "name": "Yes, but don't know when",
-              "code": "PE1",
-              "id": 574880172
+              "code": "PE1"
             },
             {
               "name": "Yes, within the last 5 years",
-              "code": "PE2",
-              "id": 574880238
+              "code": "PE2"
             },
             {
               "name": "Yes, more than 5 years ago",
-              "code": "PE3",
-              "id": 574880307
+              "code": "PE3"
             },
             {
               "name": "No, never emptied",
-              "code": "PE4",
-              "id": 574880374
+              "code": "PE4"
             },
             {
               "name": "Don't know",
-              "code": "PE5",
-              "id": 574880443
+              "code": "PE5"
             }
           ],
           "dependency": [
@@ -697,38 +628,31 @@
           "options": [
             {
               "name": "Removed by service provider to a treatment plant",
-              "code": "P1",
-              "id": 574880539
+              "code": "P1"
             },
             {
               "name": "Removed by service provider and buried in a covered pit",
-              "code": "P2",
-              "id": 574880606
+              "code": "P2"
             },
             {
               "name": "Removed by service provider to don't know where",
-              "code": "P3",
-              "id": 574880675
+              "code": "P3"
             },
             {
               "name": "Emptied by household and buried in a covered pit",
-              "code": "P4",
-              "id": 574880741
+              "code": "P4"
             },
             {
               "name": "Disposed by household to uncovered pit, open ground, waterbody or elsewhere",
-              "code": "P5",
-              "id": 574880808
+              "code": "P5"
             },
             {
               "name": "Don't Know",
-              "code": "P6",
-              "id": 574880877
+              "code": "P6"
             },
             {
               "name": "Other",
-              "code": "P7",
-              "id": 574880944
+              "code": "P7"
             }
           ],
           "dependency": [
@@ -742,8 +666,7 @@
             }
           ]
         }
-      ],
-      "id": 574850106
+      ]
     },
     {
       "question_group": "Core Hygiene Questions",
@@ -759,32 +682,27 @@
             {
               "name": "Fixed facility observed in dwelling",
               "color": "#FF83B7",
-              "code": "HW1",
-              "id": 574889937
+              "code": "HW1"
             },
             {
               "name": "Fixed facility observed in plot/yard",
               "color": "#70AD47",
-              "code": "HW2",
-              "id": 574890042
+              "code": "HW2"
             },
             {
               "name": "Mobile object observed (bucket, jug, kettle)",
               "color": "#A8D08D",
-              "code": "HW3",
-              "id": 574890114
+              "code": "HW3"
             },
             {
               "name": "No hand washing place available in dwelling/plot/yard/Tubewell/Pond",
               "color": "#FFC000",
-              "code": "HW4",
-              "id": 574854198
+              "code": "HW4"
             },
             {
               "name": "No permission to see",
               "color": "#FF0000",
-              "code": "HW5",
-              "id": 574854205
+              "code": "HW5"
             }
           ]
         },
@@ -798,13 +716,11 @@
           "options": [
             {
               "name": "Water is available",
-              "code": "WA1",
-              "id": 574890345
+              "code": "WA1"
             },
             {
               "name": "Water is not available",
-              "code": "WA2",
-              "id": 574890414
+              "code": "WA2"
             }
           ],
           "dependency": [
@@ -828,18 +744,15 @@
           "options": [
             {
               "name": "Yes, soap or detergent are present",
-              "code": "SA1",
-              "id": 574854231
+              "code": "SA1"
             },
             {
               "name": "Ash/mud is present",
-              "code": "SA2",
-              "id": 574890579
+              "code": "SA2"
             },
             {
               "name": "No, not present",
-              "code": "SA3",
-              "id": 574890645
+              "code": "SA3"
             }
           ],
           "dependency": [
@@ -853,8 +766,7 @@
             }
           ]
         }
-      ],
-      "id": 574850111
+      ]
     }
   ]
 }
