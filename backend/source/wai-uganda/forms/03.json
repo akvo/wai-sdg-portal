@@ -223,7 +223,7 @@
           "required": true,
           "options": [
             {
-              "name": "Ventilated Improved Pit latrine (VIP) / vip latrine",
+              "name": "Ventilated Improved Pit latrine (VIP) / VIP latrine",
               "code": "T1"
             },
             {
