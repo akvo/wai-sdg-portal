@@ -507,7 +507,7 @@
           "required": true,
           "options": [
             {
-              "name": "YES within 5 meters",
+              "name": "Yes within 5 meters",
               "code": "HW1"
             },
             {
@@ -549,7 +549,7 @@
             {
               "id": 569340080,
               "options": [
-                "YES within 5 meters",
+                "Yes within 5 meters",
                 "Yes but not within 5 meters"
               ]
             }

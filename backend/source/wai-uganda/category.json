@@ -526,7 +526,7 @@
                         "id": 31313131,
                         "text": "Separate Toilets for Staff",
                         "options": [
-                            "YES"
+                            "Yes"
                         ],
                         "else": {
                             "name": "Limited"

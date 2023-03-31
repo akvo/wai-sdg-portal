@@ -381,11 +381,11 @@
           "required": true,
           "options": [
             {
-              "name": "YES",
+              "name": "Yes",
               "code": "ST1"
             },
             {
-              "name": "NO",
+              "name": "No",
               "code": "ST2"
             },
             {
