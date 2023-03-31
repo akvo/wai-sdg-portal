@@ -23,7 +23,7 @@ for f in dump_files:
             data = json.load(json_file)
         form_dump = db_dump[db_dump["form"] == int(data.get("id"))]
         # question group
-        for qg in data.get("question_groups"):
+        for i, qg in enumerate(data.get("question_groups")):
             qgid = qg.get("id")
             qgid = int(qgid) if qgid else None
             qg_dump = form_dump[form_dump["question_group"] == qgid]
@@ -31,7 +31,11 @@ for f in dump_files:
                 continue
             qg_dump = form_dump[
                 form_dump["question_group_name"] == qg.get("question_group")]
-            if qgid and not len(qg_dump):
+            if qgid and not len(qg_dump.head()):
+                continue
+            if not len(qg_dump.head()):
+                # use latest group id on that dump + i
+                qg["id"] = int(db_dump.iloc[-1]["question_group"] + i)
                 continue
             qg["id"] = int(qg_dump.head().iloc[0]["question_group"])
             # question
@@ -42,10 +46,10 @@ for f in dump_files:
                 if qid and len(q_dump):
                     continue
                 q_dump = form_dump[form_dump["name"] == q.get("question")]
-                if qid and not len(q_dump):
+                if qid and not len(q_dump.head()):
                     continue
                 q["id"] = int(q_dump.head().iloc[0]["id"])
         # rewrite json
         with open(f'{file_path}{file}', 'w') as json_file:
             json.dump(data, json_file, indent=2)
-        print(f"Generating ID from dump Form: {data.get('form')}")
+        print(f"{source_path}: Generating ID Form: {data.get('form')}")

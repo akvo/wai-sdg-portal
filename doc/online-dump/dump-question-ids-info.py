@@ -30,6 +30,7 @@ for secret in instances:
         q.name, q.type FROM question q
         LEFT JOIN question_group qg
         ON q.question_group = qg.id
+        ORDER BY q.form, qg.order, q.order
         """
         df = pd.read_sql_query(sql_query, conn)
         filename = f"./{database[1]}_db-backup-{today}.csv"
