@@ -28,7 +28,7 @@ for f in dump_files:
         for i, qg in enumerate(data.get("question_groups")):
             # question
             for j, q in enumerate(qg.get("questions")):
-                qid = qg.get("id")
+                qid = q.get("id")
                 qid = int(qid) if qid else None
                 q_dump = form_dump[form_dump["question"] == qid]
                 if qid and len(q_dump):
@@ -37,7 +37,7 @@ for f in dump_files:
                     form_dump["question_name"] == q.get("question").lower()]
                 if qid and not len(q_dump.head()):
                     continue
-                if not len(q_dump.head()):
+                if not qid and not len(q_dump.head()):
                     # use latest question id on that dump + i
                     q["id"] = int(db_dump.iloc[-1]["question"] + i + j)
                     continue
@@ -53,7 +53,7 @@ for f in dump_files:
                     "question_group_name"] == qg.get("question_group").lower()]
             if qgid and not len(qg_dump.head()):
                 continue
-            if not len(qg_dump.head()):
+            if not qgid and not len(qg_dump.head()):
                 # use latest group id on that dump + i
                 qg["id"] = int(db_dump.iloc[-1]["question_group"] + i)
                 continue
