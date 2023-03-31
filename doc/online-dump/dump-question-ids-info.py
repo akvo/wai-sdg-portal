@@ -26,8 +26,10 @@ for secret in instances:
             password=database[2],
         )
         sql_query = """
-        SELECT q.id, q.question_group, q.form, qg.name as question_group_name,
-        q.name, q.type FROM question q
+        SELECT q.id as question, q.question_group, q.form,
+        qg.name as question_group_name,
+        q.name as question_name, q.type
+        FROM question q
         LEFT JOIN question_group qg
         ON q.question_group = qg.id
         ORDER BY q.form, qg.order, q.order
