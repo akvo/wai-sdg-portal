@@ -10,9 +10,11 @@
           "order": 1,
           "required": true,
           "type": "administration",
-          "meta": false
+          "meta": false,
+          "id": 1
         }
-      ]
+      ],
+      "id": 1
     },
     {
       "question_group": "Health Care Facility Information",
@@ -53,7 +55,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 2
     },
     {
       "question_group": "Water",
@@ -214,7 +217,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 3
     },
     {
       "question_group": "Sanitation",
@@ -447,7 +451,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 4
     },
     {
       "question_group": "Hygiene",
@@ -490,9 +495,7 @@
           "dependency": [
             {
               "id": 555940319,
-              "options": [
-                "Yes"
-              ]
+              "options": ["Yes"]
             }
           ]
         },
@@ -538,13 +541,12 @@
           "dependency": [
             {
               "id": 684884116,
-              "options": [
-                "Yes"
-              ]
+              "options": ["Yes"]
             }
           ]
         }
-      ]
+      ],
+      "id": 5
     },
     {
       "question_group": "Health Care Waste Management",
@@ -588,7 +590,7 @@
               "code": "WD1"
             },
             {
-              "name": "Incinerated (two chamber, 850-1000 °C incinerator)",
+              "name": "Incinerated (two chamber, 850-1000 \u00b0C incinerator)",
               "code": "WD2"
             },
             {
@@ -647,7 +649,7 @@
               "code": "WS1"
             },
             {
-              "name": "Incinerated (two chamber, 850-1000 °C incinerator)",
+              "name": "Incinerated (two chamber, 850-1000 \u00b0C incinerator)",
               "code": "WS2"
             },
             {
@@ -693,7 +695,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 6
     },
     {
       "question_group": "Environmental Cleaning",
@@ -750,7 +753,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 7
     }
   ]
 }
