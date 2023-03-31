@@ -29,11 +29,11 @@
                             "Tube well / Borehole",
                             "Protected dug well",
                             "Protected spring",
-                            "Rain water / Rainwater collection",
+                            "Rainwater harvesting",
                             "Tanker truck",
                             "Public tap/standpipe",
                             "Piped water to yard/plot",
-                            "water from nearby improved source- water vender"
+                            "Nearby improved source"
                         ],
                         "else": {
                             "name": "No Service"
@@ -418,18 +418,18 @@
                             "Piped water into dwelling (into the building)",
                             "Piped water to yard/plot",
                             "Deep tubewell/borehole",
-                            "They bring water from nearby improved source 7km public tap",
+                            "Nearby improved source",
                             "Pipeline connection",
                             "Protected well/spring",
                             "Shallow well fitted with pump / Shallow tubewell/borehole",
-                            "Rainwater / Roof catchment harvesting /Rainwater collection",
+                            "Rainwater harvesting",
                             "Packaged bottled water"
                         ],
                         "other": [
                             {
                                 "name": "Limited",
                                 "options": [
-                                    "Tanker-truck or cart /Cart with small tank/drum"
+                                    "Tanker-truck or cart /drum"
                                 ],
                                 "questions": []
                             }
@@ -669,7 +669,7 @@
                             "Sachet water",
                             "Others (specify)",
                             "Shallow tubewell/borehole",
-                            "rope and washer pump",
+                            "Rope and washer pump",
                             "Hand pump",
                             "Protected dug well"
                         ],

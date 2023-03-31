@@ -123,7 +123,7 @@
               "code": "W3"
             },
             {
-              "name": "Rainwater / Roof catchment harvesting /Rainwater collection",
+              "name": "Rainwater harvesting",
               "code": "W4"
             },
             {
@@ -131,7 +131,7 @@
               "code": "W5"
             },
             {
-              "name": "Tanker-truck or cart /Cart with small tank/drum",
+              "name": "Tanker-truck or cart /drum",
               "code": "W6"
             },
             {
@@ -143,7 +143,7 @@
               "code": "W8"
             },
             {
-              "name": "No water source / no water /No water at or to be used in the school",
+              "name": "No water source",
               "code": "W9"
             },
             {
@@ -159,7 +159,7 @@
               "code": "W12"
             },
             {
-              "name": "They bring water from nearby improved source 7km public tap",
+              "name": "Nearby improved source",
               "code": "W13"
             }
           ]
@@ -192,9 +192,9 @@
                 "Pipeline connection",
                 "Protected well/spring",
                 "Shallow well fitted with pump / Shallow tubewell/borehole",
-                "Rainwater / Roof catchment harvesting /Rainwater collection",
+                "Rainwater harvesting",
                 "Packaged bottled water",
-                "Tanker-truck or cart /Cart with small tank/drum",
+                "Tanker-truck or cart /drum",
                 "Piped water into dwelling (into the building)",
                 "Piped water to yard/plot",
                 "Deep tubewell/borehole"
