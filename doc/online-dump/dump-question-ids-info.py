@@ -17,7 +17,7 @@ for secret in instances:
     with open(f, "r") as file:
         database_url = file.read()
         database_url = re.split("\\//|@|:5432|:|\\/|\\?", database_url)
-        print(database_url)
+        # print(database_url)
         database = list(filter(lambda x: len(x) > 0, database_url))
         conn = psycopg2.connect(
             host=database[3],
@@ -32,5 +32,7 @@ for secret in instances:
         ON q.question_group = qg.id
         """
         df = pd.read_sql_query(sql_query, conn)
-        df.to_csv(f"./{database[1]}-db-backup-{today}.csv", index=False)
+        filename = f"./{database[1]}_db-backup-{today}.csv"
+        df.to_csv(filename, index=False)
+        print(filename)
         conn.close()
