@@ -523,7 +523,7 @@
                         "id": 573340125,
                         "name": "Drinking water quality from main source",
                         "options": [
-                            "Free from feacal and prioirty chemical contamination"
+                            "Free from feacal and priority chemical contamination"
                         ],
                         "else": {
                             "name": "Basic"

@@ -374,7 +374,7 @@
           "required": true,
           "options": [
             {
-              "name": "Free from feacal and prioirty chemical contamination",
+              "name": "Free from feacal and priority chemical contamination",
               "code": "F1"
             },
             {
