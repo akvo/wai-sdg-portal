@@ -10,7 +10,8 @@
           "order": 1,
           "required": true,
           "type": "administration",
-          "meta": true
+          "meta": true,
+          "id": 3
         },
         {
           "id": 573330119,
@@ -123,7 +124,8 @@
           "required": true,
           "options": null
         }
-      ]
+      ],
+      "id": 7
     },
     {
       "question_group": "Core Drinking Water Questions",
@@ -379,7 +381,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 8
     },
     {
       "question_group": "Core Sanitation Questions",
@@ -640,7 +643,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 9
     },
     {
       "question_group": "Core Hygiene Questions",
@@ -740,7 +744,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 10
     }
   ]
 }
