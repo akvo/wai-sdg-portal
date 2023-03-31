@@ -135,7 +135,7 @@
               "code": "W6"
             },
             {
-              "name": "Rain water",
+              "name": "Rainwater",
               "color": "#2F5496",
               "code": "W7"
             },
@@ -210,7 +210,7 @@
                 "Protected dug well",
                 "Protected spring",
                 "Bottled water",
-                "Rain water",
+                "Rainwater",
                 "Tanker truck",
                 "Piped water to yard/plot",
                 "Deep tubewell/borehole"
@@ -245,7 +245,7 @@
                 "Protected dug well",
                 "Protected spring",
                 "Bottled water",
-                "Rain water",
+                "Rainwater",
                 "Tanker truck",
                 "Piped water to yard/plot",
                 "Deep tubewell/borehole"
