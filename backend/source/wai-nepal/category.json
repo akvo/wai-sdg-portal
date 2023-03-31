@@ -481,10 +481,10 @@
 						"id": 567800082,
 						"text": "What type of student toilets are at the school? (Select the one that is most commonly used)",
 						"options": [
-							"Toilet that flush/pour flush to piped sewer system",
-							"Toilet that flush/pour flush to septic tank",
-							"Toilet that flush/pour flush to elsewhere",
-							"Toilet that flush/poor flush but don't know where",
+							"Flush/Pour flush to piped sewer system",
+							"Flush/Pour flush to septic tank",
+							"Flush/Pour flush to elsewhere",
+							"Flush/Pour flush but don't know where",
 							"Pit latrine with slab",
 							"Ventilated Improved Pit latrine (VIP)",
 							"Twinpit offset latrine",
@@ -770,7 +770,7 @@
 							"Other composting latrine",
 							"Flush/pour flush to open drain",
 							"Flush/pour flush to don't know where",
-							"bio gas toilet, buo gas, bio gas, with bio-gas latrine",
+							"Biogas toilet",
 							"Composting toilet (Ecosan)"
 						],
 						"other": [

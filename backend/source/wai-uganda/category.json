@@ -466,10 +466,10 @@
                         "text": "Type of Toilets",
                         "options": [
                             "Ventilated Improved Pit latrine (VIP) / vip latrine",
-                            "Ecosan Toilet /ecosan toilet (uddt)/ ecosan toilet uddt",
+                            "Ecosan Toilet",
                             "Pit latrine with slab",
-                            "traditional pit latrine",
-                            "pour flush toilet"
+                            "Traditional pit latrine",
+                            "Flush/pour flush toilets"
                         ],
                         "else": {
                             "name": "No Service"

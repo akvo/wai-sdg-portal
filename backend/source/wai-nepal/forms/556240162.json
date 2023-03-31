@@ -458,7 +458,7 @@
               "code": "T13"
             },
             {
-              "name": "bio gas toilet, buo gas, bio gas, with bio-gas latrine",
+              "name": "Biogas toilet",
               "code": "T14"
             },
             {
@@ -498,7 +498,7 @@
                 "Other composting latrine",
                 "Flush/pour flush to open drain",
                 "Flush/pour flush to don't know where",
-                "bio gas toilet, buo gas, bio gas, with bio-gas latrine",
+                "Biogas toilet",
                 "Composting toilet (Ecosan)"
               ]
             }
@@ -539,7 +539,7 @@
                 "Other composting latrine",
                 "Flush/pour flush to open drain",
                 "Flush/pour flush to don't know where",
-                "bio gas toilet, buo gas, bio gas, with bio-gas latrine",
+                "Biogas toilet",
                 "Composting toilet (Ecosan)"
               ]
             }
