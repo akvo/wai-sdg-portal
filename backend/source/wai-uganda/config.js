@@ -96,6 +96,50 @@ var page_config = {
       marker: { id: "Water", name: "Water Service Level" },
     },
     formId: 2,
+    selectableMarkerDropdown: [
+      {
+        id: "Water",
+        name: "Water Service Level",
+        hover: [
+          {
+            id: 10,
+            name: "Health Care Facility Name",
+          },
+          {
+            id: 13,
+            name: "Health Care Facility Type",
+          },
+        ],
+      },
+      {
+        id: "Sanitation",
+        name: "Sanitation Service Level",
+        hover: [
+          {
+            id: 10,
+            name: "Health Care Facility Name",
+          },
+          {
+            id: 13,
+            name: "Health Care Facility Type",
+          },
+        ],
+      },
+      {
+        id: "Hygiene",
+        name: "Hygiene Service Level",
+        hover: [
+          {
+            id: 10,
+            name: "Health Care Facility Name",
+          },
+          {
+            id: 13,
+            name: "Health Care Facility Type",
+          },
+        ],
+      },
+    ],
   },
   households: {
     title: "Households",
@@ -201,6 +245,50 @@ var page_config = {
       marker: { id: "Water", title: "Water Service Level" },
     },
     formId: 3,
+    selectableMarkerDropdown: [
+      {
+        id: "Water",
+        name: "Water service levels",
+        hover: [
+          {
+            id: 17,
+            name: "School Name",
+          },
+          {
+            id: 19,
+            name: "School Type",
+          },
+        ],
+      },
+      {
+        id: "Sanitation",
+        name: "Sanitation service levels",
+        hover: [
+          {
+            id: 17,
+            name: "School Name",
+          },
+          {
+            id: 19,
+            name: "School Type",
+          },
+        ],
+      },
+      {
+        id: "Hygiene",
+        name: "Hygiene service levels",
+        hover: [
+          {
+            id: 17,
+            name: "School Name",
+          },
+          {
+            id: 19,
+            name: "School Type",
+          },
+        ],
+      },
+    ],
   },
 };
 
