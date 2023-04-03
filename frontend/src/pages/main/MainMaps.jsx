@@ -449,13 +449,10 @@ const MainMaps = ({ question, current }) => {
             });
             setMarkerOptions(_markerOptions);
 
-            if (typeof selectableMarkerQuestion?.id === 'undefined') {
-              const mId =
-                selectableMarkerQuestion?.id || current.maps.marker?.id;
-              const markerData = _markerOptions?.find((mo) => mo?.id === mId);
-              const defaultSelectable = markerData || _markerOptions.shift();
-              setSelectableMarkerQuestion(defaultSelectable);
-            }
+            const mId = selectableMarkerQuestion?.id || current.maps.marker?.id;
+            const markerData = _markerOptions?.find((mo) => mo?.id === mId);
+            const defaultSelectable = markerData || _markerOptions.shift();
+            setSelectableMarkerQuestion(defaultSelectable);
           }
           let shapeData = question.find((q) => q.id === shapeId);
           let option = [];
