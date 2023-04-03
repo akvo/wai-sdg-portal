@@ -92,6 +92,7 @@ def group_children(p, data_source, labels):
             "category": d["category"] if "category" in d else None,
             "data": d["data"],
             "score": list(filter(lambda s: s["name"] == d["category"], labels))
+            if "category" in d else []
         }
         for d in data
     ]
