@@ -54,13 +54,15 @@ def get(
     req: Request,
     form_id: int,
     shape: Union[int, str],
-    marker: Optional[str] = None,
+    marker: Optional[Union[int, str]] = None,
     hover_ids: Optional[str] = None,
     q: Optional[List[str]] = Query(None),
     session: Session = Depends(get_session),
 ):
     options = check_query(q) if q else None
     question_ids = []
+    if marker and marker.isnumeric():
+        question_ids.append(int(marker))
     if isinstance(shape, int):
         question_ids.append(shape)
     hids = []
@@ -79,13 +81,15 @@ def get(
         hover_values = []
         fc = list(filter(lambda c: (c["data"] == d["id"]), categories))
         if len(fc):
-            if marker:
+            if marker and not marker.isnumeric():
                 fm = list(filter(lambda m: (m["name"] == marker), fc))
                 d.update({"marker": fm[0]["category"] if len(fm) else None})
             if isinstance(shape, str):
                 fs = list(filter(lambda m: (m["name"] == shape), fc))
                 d.update({"shape": fs[0]["category"] if len(fs) else None})
         for v in d["values"]:
+            if marker and marker.isnumeric() and v["question"] == int(marker):
+                d.update({"marker": v["value"] if v["value"] else None})
             if v["question"] == shape:
                 d.update({"shape": v["value"] if v["value"] else None})
             if v["question"] in hids:
