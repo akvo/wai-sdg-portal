@@ -24,9 +24,9 @@
 						"id": 552050126,
 						"text": "What is the main water supply for the facility?",
 						"options": [
-							"Piped supply inside the building /Piped water into dwelling (into the building)",
+							"Piped supply inside the building / Piped water into dwelling (into the building)",
 							"Piped supply outside the building / Public tap/standpipe",
-							"Tube well / Borehole /Shallow tubewell/borehole",
+							"Tube well / Borehole / Shallow tubewell/borehole",
 							"Protected dug well",
 							"Protected spring",
 							"Bottled water",
@@ -370,7 +370,7 @@
 						"id": 557990015,
 						"text": "Have all staff responsible for cleaning received training?",
 						"options": [
-							"Yes"
+							"Yes, all staff responsible for cleaning received training"
 						],
 						"other": [
 							{
@@ -417,7 +417,6 @@
 						"options": [
 							"Pipeline connection / Piped water to yard/plot",
 							"Protected well/spring",
-							"Piped to neighbour",
 							"Deep tubewell/borehole",
 							"Shallow tubewell/borehole",
 							"Rainwater collection",
@@ -607,7 +606,7 @@
 							}
 						],
 						"else": {
-							"name": "No Service"
+							"name": "No Facility"
 						}
 					}
 				]

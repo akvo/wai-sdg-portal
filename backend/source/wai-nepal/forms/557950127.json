@@ -105,7 +105,7 @@
           "required": true,
           "options": [
             {
-              "name": "Piped supply inside the building /Piped water into dwelling (into the building)",
+              "name": "Piped supply inside the building / Piped water into dwelling (into the building)",
               "color": "#385623",
               "code": "W1"
             },
@@ -115,7 +115,7 @@
               "code": "W2"
             },
             {
-              "name": "Tube well / Borehole /Shallow tubewell/borehole",
+              "name": "Tube well / Borehole / Shallow tubewell/borehole",
               "color": "#00B0F0",
               "code": "W3"
             },
@@ -204,9 +204,9 @@
             {
               "id": 552050126,
               "options": [
-                "Piped supply inside the building /Piped water into dwelling (into the building)",
+                "Piped supply inside the building / Piped water into dwelling (into the building)",
                 "Piped supply outside the building / Public tap/standpipe",
-                "Tube well / Borehole /Shallow tubewell/borehole",
+                "Tube well / Borehole / Shallow tubewell/borehole",
                 "Protected dug well",
                 "Protected spring",
                 "Bottled water",
@@ -239,9 +239,9 @@
             {
               "id": 552050126,
               "options": [
-                "Piped supply inside the building /Piped water into dwelling (into the building)",
+                "Piped supply inside the building / Piped water into dwelling (into the building)",
                 "Piped supply outside the building / Public tap/standpipe",
-                "Tube well / Borehole /Shallow tubewell/borehole",
+                "Tube well / Borehole / Shallow tubewell/borehole",
                 "Protected dug well",
                 "Protected spring",
                 "Bottled water",
