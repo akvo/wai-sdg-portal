@@ -238,7 +238,7 @@
               "color": null
             },
             {
-              "name": "rain water harvesting tank",
+              "name": "Rainwater harvesting tank",
               "color": null
             },
             {
@@ -302,7 +302,7 @@
         },
         {
           "order": 20,
-          "question": "rain water harvesting tank - volume (l)",
+          "question": "Rainwater harvesting tank - volume (l)",
           "type": "option",
           "meta": false,
           "required": true,

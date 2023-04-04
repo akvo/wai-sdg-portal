@@ -348,15 +348,15 @@
           "required": true,
           "options": [
             {
-              "name": "Toilet that flush/pour flush to piped sewer system",
+              "name": "Flush/Pour flush to piped sewer system",
               "code": "T1"
             },
             {
-              "name": "Toilet that flush/pour flush to septic tank",
+              "name": "Flush/Pour flush to septic tank",
               "code": "T2"
             },
             {
-              "name": "Toilet that flush/pour flush but don't know where / toilet that flush/pour flush to elsewhere",
+              "name": "Flush/Pour flush to don't know where",
               "code": "T3"
             },
             {
@@ -364,15 +364,15 @@
               "code": "T4"
             },
             {
-              "name": "pit lantrine with slab made of wood / pitlantrine slab with woods",
+              "name": "Pit latrine slab with wood",
               "code": "T5"
             },
             {
-              "name": "pit lantrine slab with wood and roofed with grass thatch",
+              "name": "Pit latrine slab with wood and roofed with grass thatch",
               "code": "T6"
             },
             {
-              "name": "apit lantrine covered with wood and roof is open",
+              "name": "Pit latrine covered with wood and roof is open",
               "code": "T7"
             },
             {
@@ -388,15 +388,15 @@
               "code": "T10"
             },
             {
-              "name": "Mobile toilet / mobile toilet / mobilet / Mobile latrine",
+              "name": "Mobile toilet",
               "code": "T11"
             },
             {
-              "name": "Pit latrine without slab/open pit",
+              "name": "Pit latrine without slab / open pit",
               "code": "T12"
             },
             {
-              "name": "Hanging toilet/hanging latrine",
+              "name": "Hanging toilet",
               "code": "T13"
             },
             {
@@ -444,13 +444,13 @@
             {
               "id": 675114085,
               "options": [
-                "Toilet that flush/pour flush to piped sewer system",
-                "Toilet that flush/pour flush to septic tank",
-                "Toilet that flush/pour flush but don't know where / toilet that flush/pour flush to elsewhere",
+                "Flush/Flush/Pour flush to piped sewer system",
+                "Flush/Pour flush to septic tank",
+                "Flush/Pour flush to don't know where",
                 "Pit latrine with slab",
-                "pit lantrine with slab made of wood / pitlantrine slab with woods",
-                "pit lantrine slab with wood and roofed with grass thatch",
-                "apit lantrine covered with wood and roof is open",
+                "Pit latrine slab with wood",
+                "Pit latrine slab with wood and roofed with grass thatch",
+                "Pit latrine covered with wood and roof is open",
                 "Traditional pit latrine",
                 "Ventilated Improved Pit latrine (VIP)",
                 "Composting toilet"
@@ -493,13 +493,13 @@
             {
               "id": 675114085,
               "options": [
-                "Toilet that flush/pour flush to piped sewer system",
-                "Toilet that flush/pour flush to septic tank",
-                "Toilet that flush/pour flush but don't know where / toilet that flush/pour flush to elsewhere",
+                "Flush/Flush/Pour flush to piped sewer system",
+                "Flush/Pour flush to septic tank",
+                "Flush/Pour flush to don't know where",
                 "Pit latrine with slab",
-                "pit lantrine with slab made of wood / pitlantrine slab with woods",
-                "pit lantrine slab with wood and roofed with grass thatch",
-                "apit lantrine covered with wood and roof is open",
+                "Pit latrine slab with wood",
+                "Pit latrine slab with wood and roofed with grass thatch",
+                "Pit latrine covered with wood and roof is open",
                 "Traditional pit latrine",
                 "Ventilated Improved Pit latrine (VIP)",
                 "Composting toilet"
@@ -546,13 +546,13 @@
             {
               "id": 675114085,
               "options": [
-                "Toilet that flush/pour flush to piped sewer system",
-                "Toilet that flush/pour flush to septic tank",
-                "Toilet that flush/pour flush but don't know where / toilet that flush/pour flush to elsewhere",
+                "Flush/Flush/Pour flush to piped sewer system",
+                "Flush/Pour flush to septic tank",
+                "Flush/Pour flush to don't know where",
                 "Pit latrine with slab",
-                "pit lantrine with slab made of wood / pitlantrine slab with woods",
-                "pit lantrine slab with wood and roofed with grass thatch",
-                "apit lantrine covered with wood and roof is open",
+                "Pit latrine slab with wood",
+                "Pit latrine slab with wood and roofed with grass thatch",
+                "Pit latrine covered with wood and roof is open",
                 "Traditional pit latrine",
                 "Ventilated Improved Pit latrine (VIP)",
                 "Composting toilet"
@@ -563,7 +563,7 @@
         {
           "id": 669614079,
           "order": 6,
-          "question": "Disposal of excreta from onite sanitation facilities",
+          "question": "Disposal of excreta from onsite sanitation facilities",
           "type": "option",
           "meta": false,
           "required": true,

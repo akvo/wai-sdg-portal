@@ -108,17 +108,17 @@
           "required": true,
           "options": [
             {
-              "name": "Piped supply inside the building /Piped water into dwelling (into the building)",
+              "name": "Piped supply inside the building / Piped water into dwelling (into the building)",
               "color": "#385623",
               "code": "W1"
             },
             {
-              "name": "Piped supply outside the building/ Public tap/standpipe",
+              "name": "Piped supply outside the building / Public tap/standpipe",
               "color": "#00B050",
               "code": "W2"
             },
             {
-              "name": "Tube well / Borehole /Shallow tubewell/borehole",
+              "name": "Tube well / Borehole / Shallow tubewell/borehole",
               "color": "#00B0F0",
               "code": "W3"
             },
@@ -138,7 +138,7 @@
               "code": "W6"
             },
             {
-              "name": "Rain water",
+              "name": "Rainwater",
               "color": "#2F5496",
               "code": "W7"
             },
@@ -163,7 +163,7 @@
               "code": "W11"
             },
             {
-              "name": "No water source /No water facilities",
+              "name": "No water source/facilities",
               "color": "#FF0000",
               "code": "W12"
             },
@@ -207,13 +207,13 @@
             {
               "id": 552050126,
               "options": [
-                "Piped supply inside the building /Piped water into dwelling (into the building)",
-                "Piped supply outside the building/ Public tap/standpipe",
-                "Tube well / Borehole /Shallow tubewell/borehole",
+                "Piped supply inside the building / Piped water into dwelling (into the building)",
+                "Piped supply outside the building / Public tap/standpipe",
+                "Tube well / Borehole / Shallow tubewell/borehole",
                 "Protected dug well",
                 "Protected spring",
                 "Bottled water",
-                "Rain water",
+                "Rainwater",
                 "Tanker truck",
                 "Piped water to yard/plot",
                 "Deep tubewell/borehole"
@@ -242,13 +242,13 @@
             {
               "id": 552050126,
               "options": [
-                "Piped supply inside the building /Piped water into dwelling (into the building)",
-                "Piped supply outside the building/ Public tap/standpipe",
-                "Tube well / Borehole /Shallow tubewell/borehole",
+                "Piped supply inside the building / Piped water into dwelling (into the building)",
+                "Piped supply outside the building / Public tap/standpipe",
+                "Tube well / Borehole / Shallow tubewell/borehole",
                 "Protected dug well",
                 "Protected spring",
                 "Bottled water",
-                "Rain water",
+                "Rainwater",
                 "Tanker truck",
                 "Piped water to yard/plot",
                 "Deep tubewell/borehole"
@@ -296,7 +296,7 @@
               "code": "T5"
             },
             {
-              "name": "Pit latrine without slab/open pit",
+              "name": "Pit latrine without slab / open pit",
               "color": "#FF83B7",
               "code": "T6"
             },
@@ -479,7 +479,7 @@
         },
         {
           "id": 569340079,
-          "question": "Is there a functional hand hygiene hygiene facility at points of care on the day of the survey?",
+          "question": "Is there a functional hand hygiene facility at points of care on the day of the survey?",
           "order": 2,
           "meta": false,
           "type": "option",
@@ -512,7 +512,7 @@
           "required": true,
           "options": [
             {
-              "name": "YES within 5 meters",
+              "name": "Yes within 5 meters",
               "code": "HW1"
             },
             {
@@ -554,7 +554,7 @@
             {
               "id": 569340080,
               "options": [
-                "YES within 5 meters",
+                "Yes within 5 meters",
                 "Yes but not within 5 meters"
               ]
             }

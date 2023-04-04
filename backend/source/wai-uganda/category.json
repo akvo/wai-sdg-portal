@@ -24,7 +24,7 @@
                         "id": 671424009,
                         "text": "Main water supply for the facility",
                         "options": [
-                            "rain water harvesting",
+                            "Rainwater harvesting",
                             "Deep tubewell/borehole",
                             "Piped water to yard/plot",
                             "Piped water into dwelling (into the building)"
@@ -465,11 +465,11 @@
                         "id": 671424025,
                         "text": "Type of Toilets",
                         "options": [
-                            "Ventilated Improved Pit latrine (VIP) / vip latrine",
-                            "Ecosan Toilet /ecosan toilet (uddt)/ ecosan toilet uddt",
+                            "Ventilated Improved Pit latrine (VIP) / VIP latrine",
+                            "Ecosan Toilet",
                             "Pit latrine with slab",
-                            "traditional pit latrine",
-                            "pour flush toilet"
+                            "Traditional pit latrine",
+                            "Flush/pour flush toilets"
                         ],
                         "else": {
                             "name": "No Service"
@@ -526,7 +526,7 @@
                         "id": 31313131,
                         "text": "Separate Toilets for Staff",
                         "options": [
-                            "YES"
+                            "Yes"
                         ],
                         "else": {
                             "name": "Limited"
@@ -792,13 +792,13 @@
                         "id": 675114085,
                         "text": "Type of Toilet Facility",
                         "options": [
-                            "Toilet that flush/pour flush to piped sewer system",
-                            "Toilet that flush/pour flush to septic tank",
-                            "Toilet that flush/pour flush but don't know where / toilet that flush/pour flush to elsewhere",
+                            "Flush/Pour flush to piped sewer system",
+                            "Flush/Pour flush to septic tank",
+                            "Flush/Pour flush to don't know where",
                             "Pit latrine with slab",
-                            "pit lantrine with slab made of wood / pitlantrine slab with woods",
-                            "pit lantrine slab with wood and roofed with grass thatch",
-                            "apit lantrine covered with wood and roof is open",
+                            "Pit latrine slab with wood",
+                            "Pit latrine slab with wood and roofed with grass thatch",
+                            "Pit latrine covered with wood and roof is open",
                             "Traditional pit latrine",
                             "Ventilated Improved Pit latrine (VIP)",
                             "Composting toilet"
@@ -851,7 +851,7 @@
                     },
                     {
                         "id": 669614079,
-                        "text": "Disposal of excreta from onite sanitation facilities",
+                        "text": "Disposal of excreta from onsite sanitation facilities",
                         "options": [
                             "By service provider to a treatment plant",
                             "By service provider buried in a covered pit",

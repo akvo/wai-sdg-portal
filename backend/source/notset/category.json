@@ -16,7 +16,7 @@
                             "Protected dug well",
                             "Protected spring",
                             "Bottled water",
-                            "Rain water",
+                            "Rainwater",
                             "Tanker truck"
                         ],
                         "else": {
@@ -523,7 +523,7 @@
                         "id": 573340125,
                         "name": "Drinking water quality from main source",
                         "options": [
-                            "Free from feacal and prioirty chemical contamination"
+                            "Free from fecal and priority chemical contamination"
                         ],
                         "else": {
                             "name": "Basic"

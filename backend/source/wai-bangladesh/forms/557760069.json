@@ -121,7 +121,7 @@
           "required": true,
           "options": [
             {
-              "name": "Piped supply inside the building/ Piped water into dwelling (into the building)",
+              "name": "Piped supply inside the building / Piped water into dwelling (into the building)",
               "color": "#70AD47",
               "code": "W1"
             },
@@ -145,7 +145,7 @@
               "code": "W5"
             },
             {
-              "name": "Rain water",
+              "name": "Rainwater",
               "color": "#2F5496",
               "code": "W6"
             },
@@ -222,12 +222,12 @@
             {
               "id": 571110060,
               "options": [
-                "Piped supply inside the building/ Piped water into dwelling (into the building)",
+                "Piped supply inside the building / Piped water into dwelling (into the building)",
                 "Piped supply outside the building",
                 "Deep tubewell/borehole",
                 "Protected dug well",
                 "Protected spring",
-                "Rain water",
+                "Rainwater",
                 "Tanker truck",
                 "Shallow tubewell/borehole",
                 "Piped water to yard/plot",
@@ -257,12 +257,12 @@
             {
               "id": 571110060,
               "options": [
-                "Piped supply inside the building/ Piped water into dwelling (into the building)",
+                "Piped supply inside the building / Piped water into dwelling (into the building)",
                 "Piped supply outside the building",
                 "Deep tubewell/borehole",
                 "Protected dug well",
                 "Protected spring",
-                "Rain water",
+                "Rainwater",
                 "Tanker truck",
                 "Shallow tubewell/borehole",
                 "Piped water to yard/plot",
@@ -300,12 +300,12 @@
             {
               "id": 571110060,
               "options": [
-                "Piped supply inside the building/ Piped water into dwelling (into the building)",
+                "Piped supply inside the building / Piped water into dwelling (into the building)",
                 "Piped supply outside the building",
                 "Deep tubewell/borehole",
                 "Protected dug well",
                 "Protected spring",
-                "Rain water",
+                "Rainwater",
                 "Tanker truck",
                 "Shallow tubewell/borehole",
                 "Piped water to yard/plot",
@@ -354,7 +354,7 @@
               "code": "T5"
             },
             {
-              "name": "Pit latrine without slab/open pit",
+              "name": "Pit latrine without slab / open pit",
               "color": "#FF83B7",
               "code": "T6"
             },
@@ -529,7 +529,7 @@
       "questions": [
         {
           "id": 544120053,
-          "question": "Is there a functional hand hygiene hygiene facility at points of care on the day of the survey?",
+          "question": "Is there a functional hand hygiene facility at points of care on the day of the survey?",
           "order": 1,
           "meta": false,
           "type": "option",

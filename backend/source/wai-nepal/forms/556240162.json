@@ -347,7 +347,7 @@
           "required": true,
           "options": [
             {
-              "name": "Free from feacal and prioirty chemical contamination",
+              "name": "Free from fecal and priority chemical contamination",
               "code": "F1"
             },
             {
@@ -446,7 +446,7 @@
               "code": "T10"
             },
             {
-              "name": "Pit latrine without slab/open pit",
+              "name": "Pit latrine without slab / open pit",
               "color": "#FF83B7",
               "code": "T11"
             },
@@ -461,7 +461,7 @@
               "code": "T13"
             },
             {
-              "name": "bio gas toilet, buo gas, bio gas, with bio-gas latrine",
+              "name": "Biogas toilet",
               "code": "T14"
             },
             {
@@ -501,7 +501,7 @@
                 "Other composting latrine",
                 "Flush/pour flush to open drain",
                 "Flush/pour flush to don't know where",
-                "bio gas toilet, buo gas, bio gas, with bio-gas latrine",
+                "Biogas toilet",
                 "Composting toilet (Ecosan)"
               ]
             }
@@ -542,7 +542,7 @@
                 "Other composting latrine",
                 "Flush/pour flush to open drain",
                 "Flush/pour flush to don't know where",
-                "bio gas toilet, buo gas, bio gas, with bio-gas latrine",
+                "Biogas toilet",
                 "Composting toilet (Ecosan)"
               ]
             }

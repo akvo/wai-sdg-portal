@@ -101,7 +101,7 @@
           "required": true,
           "options": [
             {
-              "name": "rain water harvesting",
+              "name": "Rainwater harvesting",
               "code": "W1"
             },
             {
@@ -147,7 +147,7 @@
             {
               "id": 671424009,
               "options": [
-                "rain water harvesting",
+                "Rainwater harvesting",
                 "Deep tubewell/borehole",
                 "Piped water into dwelling (into the building)",
                 "Piped water to yard/plot"
@@ -176,7 +176,7 @@
             {
               "id": 671424009,
               "options": [
-                "rain water harvesting",
+                "Rainwater harvesting",
                 "Deep tubewell/borehole",
                 "Piped water into dwelling (into the building)",
                 "Piped water to yard/plot"
@@ -213,7 +213,7 @@
             {
               "id": 671424009,
               "options": [
-                "rain water harvesting",
+                "Rainwater harvesting",
                 "Deep tubewell/borehole",
                 "Piped water into dwelling (into the building)",
                 "Piped water to yard/plot"
@@ -332,7 +332,7 @@
         {
           "id": 672344003,
           "order": 4,
-          "question": "Toilets have menstrual hygiene facilites?",
+          "question": "Toilets have menstrual hygiene facilities?",
           "type": "option",
           "meta": false,
           "required": true,
