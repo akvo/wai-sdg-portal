@@ -20,6 +20,7 @@ for f in dump_files:
     db_dump = pd.read_csv(f)
     db_dump["question_group_name"] = db_dump["question_group_name"].str.lower()
     db_dump["question_name"] = db_dump["question_name"].str.lower()
+    last_qid = 0
     for file in sorted(files):
         with open(f'{file_path}{file}') as json_file:
             data = json.load(json_file)
@@ -39,7 +40,7 @@ for f in dump_files:
                     continue
                 if not qid and not len(q_dump.head()):
                     # use latest question id on that dump + i
-                    q["id"] = int(db_dump.iloc[-1]["question"] + i + j)
+                    q["id"] = int(db_dump.iloc[-1]["question"] + i + j + 1)
                     continue
                 q["id"] = int(q_dump.head().iloc[0]["question"])
             # question group
@@ -55,7 +56,10 @@ for f in dump_files:
                 continue
             if not qgid and not len(qg_dump.head()):
                 # use latest group id on that dump + i
-                qg["id"] = int(db_dump.iloc[-1]["question_group"] + i)
+                last_qid = int(
+                    db_dump.iloc[-1]["question_group"] + 1
+                ) if not last_qid else last_qid + 1
+                qg["id"] = last_qid
                 continue
             qg["id"] = int(qg_dump.head().iloc[0]["question_group"])
         # rewrite json
