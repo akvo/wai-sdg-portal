@@ -223,11 +223,11 @@
           "required": true,
           "options": [
             {
-              "name": "Ventilated Improved Pit latrine (VIP) / vip latrine",
+              "name": "Ventilated Improved Pit latrine (VIP) / VIP latrine",
               "code": "T1"
             },
             {
-              "name": "Ecosan Toilet /ecosan toilet (uddt)/ ecosan toilet uddt",
+              "name": "Ecosan Toilet",
               "code": "T4"
             },
             {
@@ -235,11 +235,11 @@
               "code": "T5"
             },
             {
-              "name": "traditional pit latrine",
+              "name": "Traditional pit latrine",
               "code": "T2"
             },
             {
-              "name": "pour flush toilet",
+              "name": "Flush/pour flush toilets",
               "code": "T3"
             },
             {
@@ -283,10 +283,10 @@
             {
               "id": 671424025,
               "options": [
-                "Ventilated Improved Pit latrine (VIP) / vip latrine",
-                "traditional pit latrine",
-                "pour flush toilet",
-                "Ecosan Toilet /ecosan toilet (uddt)/ ecosan toilet uddt",
+                "Ventilated Improved Pit latrine (VIP) / VIP latrine",
+                "Traditional pit latrine",
+                "Flush/pour flush toilets",
+                "Ecosan Toilet",
                 "Pit latrine with slab"
               ]
             }
@@ -323,10 +323,10 @@
             {
               "id": 671424025,
               "options": [
-                "Ventilated Improved Pit latrine (VIP) / vip latrine",
-                "traditional pit latrine",
-                "pour flush toilet",
-                "Ecosan Toilet /ecosan toilet (uddt)/ ecosan toilet uddt",
+                "Ventilated Improved Pit latrine (VIP) / VIP latrine",
+                "Traditional pit latrine",
+                "Flush/pour flush toilets",
+                "Ecosan Toilet",
                 "Pit latrine with slab"
               ]
             }
@@ -363,10 +363,10 @@
             {
               "id": 671424025,
               "options": [
-                "Ventilated Improved Pit latrine (VIP) / vip latrine",
-                "traditional pit latrine",
-                "pour flush toilet",
-                "Ecosan Toilet /ecosan toilet (uddt)/ ecosan toilet uddt",
+                "Ventilated Improved Pit latrine (VIP) / VIP latrine",
+                "Traditional pit latrine",
+                "Flush/pour flush toilets",
+                "Ecosan Toilet",
                 "Pit latrine with slab"
               ]
             }
@@ -381,11 +381,11 @@
           "required": true,
           "options": [
             {
-              "name": "YES",
+              "name": "Yes",
               "code": "ST1"
             },
             {
-              "name": "NO",
+              "name": "No",
               "code": "ST2"
             },
             {
@@ -397,10 +397,10 @@
             {
               "id": 671424025,
               "options": [
-                "Ventilated Improved Pit latrine (VIP) / vip latrine",
-                "traditional pit latrine",
-                "pour flush toilet",
-                "Ecosan Toilet /ecosan toilet (uddt)/ ecosan toilet uddt",
+                "Ventilated Improved Pit latrine (VIP) / VIP latrine",
+                "Traditional pit latrine",
+                "Flush/pour flush toilets",
+                "Ecosan Toilet",
                 "Pit latrine with slab"
               ]
             }
@@ -441,10 +441,10 @@
             {
               "id": 671424025,
               "options": [
-                "Ventilated Improved Pit latrine (VIP) / vip latrine",
-                "traditional pit latrine",
-                "pour flush toilet",
-                "Ecosan Toilet /ecosan toilet (uddt)/ ecosan toilet uddt",
+                "Ventilated Improved Pit latrine (VIP) / VIP latrine",
+                "Traditional pit latrine",
+                "Flush/pour flush toilets",
+                "Ecosan Toilet",
                 "Pit latrine with slab"
               ]
             },
@@ -484,10 +484,10 @@
             {
               "id": 671424025,
               "options": [
-                "Ventilated Improved Pit latrine (VIP) / vip latrine",
-                "traditional pit latrine",
-                "pour flush toilet",
-                "Ecosan Toilet /ecosan toilet (uddt)/ ecosan toilet uddt",
+                "Ventilated Improved Pit latrine (VIP) / VIP latrine",
+                "Traditional pit latrine",
+                "Flush/pour flush toilets",
+                "Ecosan Toilet",
                 "Pit latrine with slab"
               ]
             }

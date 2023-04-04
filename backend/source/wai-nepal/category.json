@@ -24,13 +24,13 @@
 						"id": 552050126,
 						"text": "What is the main water supply for the facility?",
 						"options": [
-							"Piped supply inside the building /Piped water into dwelling (into the building)",
-							"Piped supply outside the building/ Public tap/standpipe",
-							"Tube well / Borehole /Shallow tubewell/borehole",
+							"Piped supply inside the building / Piped water into dwelling (into the building)",
+							"Piped supply outside the building / Public tap/standpipe",
+							"Tube well / Borehole / Shallow tubewell/borehole",
 							"Protected dug well",
 							"Protected spring",
 							"Bottled water",
-							"Rain water",
+							"Rainwater",
 							"Tanker truck",
 							"Piped water to yard/plot",
 							"Deep tubewell/borehole"
@@ -211,7 +211,7 @@
 						"id": 569340080,
 						"text": "Is there a functional handwashing facility at one or more toilets on the day of the survey?",
 						"options": [
-							"YES within 5 meters"
+							"Yes within 5 meters"
 						],
 						"other": [
 							{
@@ -370,7 +370,7 @@
 						"id": 557990015,
 						"text": "Have all staff responsible for cleaning received training?",
 						"options": [
-							"Yes"
+							"Yes, all staff responsible for cleaning received training"
 						],
 						"other": [
 							{
@@ -417,7 +417,6 @@
 						"options": [
 							"Pipeline connection / Piped water to yard/plot",
 							"Protected well/spring",
-							"Piped to neighbour",
 							"Deep tubewell/borehole",
 							"Shallow tubewell/borehole",
 							"Rainwater collection",
@@ -481,10 +480,10 @@
 						"id": 567800082,
 						"text": "What type of student toilets are at the school? (Select the one that is most commonly used)",
 						"options": [
-							"Toilet that flush/pour flush to piped sewer system",
-							"Toilet that flush/pour flush to septic tank",
-							"Toilet that flush/pour flush to elsewhere",
-							"Toilet that flush/poor flush but don't know where",
+							"Flush/Pour flush to piped sewer system",
+							"Flush/Pour flush to septic tank",
+							"Flush/Pour flush to elsewhere",
+							"Flush/Pour flush but don't know where",
 							"Pit latrine with slab",
 							"Ventilated Improved Pit latrine (VIP)",
 							"Twinpit offset latrine",
@@ -607,7 +606,7 @@
 							}
 						],
 						"else": {
-							"name": "No Service"
+							"name": "No Facility"
 						}
 					}
 				]
@@ -717,7 +716,7 @@
 						"id": 573340125,
 						"text": "Drinking water quality from main source",
 						"options": [
-							"Free from feacal and prioirty chemical contamination"
+							"Free from fecal and priority chemical contamination"
 						],
 						"else": {
 							"name": "Basic"
@@ -770,14 +769,14 @@
 							"Other composting latrine",
 							"Flush/pour flush to open drain",
 							"Flush/pour flush to don't know where",
-							"bio gas toilet, buo gas, bio gas, with bio-gas latrine",
+							"Biogas toilet",
 							"Composting toilet (Ecosan)"
 						],
 						"other": [
 							{
 								"name": "Unimproved",
 								"options": [
-									"Pit latrine without slab/open pit",
+									"Pit latrine without slab / open pit",
 									"Twin pit without slab"
 								],
 								"questions": []

@@ -230,7 +230,7 @@
           "required": false,
           "options": [
             {
-              "name": "Free from feacal and prioirty chemical contamination",
+              "name": "Free from fecal and priority chemical contamination",
               "color": null,
               "id": 567506738
             },
@@ -311,7 +311,7 @@
               "id": 567489243
             },
             {
-              "name": "Pit latrine without slab/open pit",
+              "name": "Pit latrine without slab / open pit",
               "color": null,
               "id": 567509961
             },

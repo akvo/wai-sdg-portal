@@ -87,7 +87,7 @@
               "code": "W5"
             },
             {
-              "name": "Rain water / Rainwater collection",
+              "name": "Rainwater harvesting",
               "code": "W6"
             },
             {
@@ -107,7 +107,7 @@
               "code": "W10"
             },
             {
-              "name": "No water source /No water facilities",
+              "name": "No water source/facilities",
               "code": "W11"
             },
             {
@@ -123,7 +123,7 @@
               "code": "W14"
             },
             {
-              "name": "water from nearby improved source- water vender",
+              "name": "Nearby improved source",
               "code": "W15"
             }
           ]
@@ -170,11 +170,11 @@
                 "Tube well / Borehole",
                 "Protected dug well",
                 "Protected spring",
-                "Rain water / Rainwater collection",
+                "Rainwater harvesting",
                 "Tanker truck",
                 "Public tap/standpipe",
                 "Piped water to yard/plot",
-                "water from nearby improved source- water vender"
+                "Nearby improved source"
               ]
             }
           ]
@@ -205,11 +205,11 @@
                 "Tube well / Borehole",
                 "Protected dug well",
                 "Protected spring",
-                "Rain water / Rainwater collection",
+                "Rainwater harvesting",
                 "Tanker truck",
                 "Public tap/standpipe",
                 "Piped water to yard/plot",
-                "water from nearby improved source- water vender"
+                "Nearby improved source"
               ]
             }
           ]
@@ -248,7 +248,7 @@
               "code": "T5"
             },
             {
-              "name": "Pit latrine without slab/open pit",
+              "name": "Pit latrine without slab / open pit",
               "code": "T6"
             },
             {
