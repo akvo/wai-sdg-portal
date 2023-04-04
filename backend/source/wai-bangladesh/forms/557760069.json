@@ -55,9 +55,7 @@
           "dependency": [
             {
               "id": 573100087,
-              "options": [
-                "Yes"
-              ]
+              "options": ["Yes"]
             }
           ]
         }
@@ -377,9 +375,7 @@
           "dependency": [
             {
               "id": 567530051,
-              "options": [
-                "Yes"
-              ]
+              "options": ["Yes"]
             }
           ]
         },
@@ -599,9 +595,7 @@
           "dependency": [
             {
               "id": 563460104,
-              "options": [
-                "Yes"
-              ]
+              "options": ["Yes"]
             }
           ]
         }
@@ -653,7 +647,7 @@
               "code": "WD1"
             },
             {
-              "name": "Incinerated (two chamber, 850-1000 \u00b0C incinerator)",
+              "name": "Incinerated (two chamber, 850-1000 °C incinerator)",
               "code": "WD2"
             },
             {
@@ -692,9 +686,7 @@
           "dependency": [
             {
               "id": 559910085,
-              "options": [
-                "Yes"
-              ]
+              "options": ["Yes"]
             }
           ]
         },
@@ -711,7 +703,7 @@
               "code": "WS1"
             },
             {
-              "name": "Incinerated (two chamber, 850-1000 \u00b0C incinerator)",
+              "name": "Incinerated (two chamber, 850-1000 °C incinerator)",
               "code": "WS2"
             },
             {
@@ -750,9 +742,7 @@
           "dependency": [
             {
               "id": 559910085,
-              "options": [
-                "Yes"
-              ]
+              "options": ["Yes"]
             }
           ]
         }
