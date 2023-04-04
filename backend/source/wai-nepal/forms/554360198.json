@@ -10,7 +10,8 @@
           "order": 1,
           "required": true,
           "type": "administration",
-          "meta": true
+          "meta": true,
+          "id": 2
         },
         {
           "id": 567820011,
@@ -180,7 +181,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 2
     },
     {
       "question_group": "Core Drinking Water Questions",
@@ -312,7 +314,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 3
     },
     {
       "question_group": "Core Sanitation Questions",
@@ -399,7 +402,7 @@
           ]
         },
         {
-          "id": 678864033,
+          "id": 567800080,
           "question": "How many student toilets are currently usable (accessible and functional and private)?",
           "order": 4,
           "meta": false,
@@ -619,7 +622,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 4
     },
     {
       "question_group": "Core Hygiene Questions",
@@ -676,7 +680,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 5
     }
   ]
 }

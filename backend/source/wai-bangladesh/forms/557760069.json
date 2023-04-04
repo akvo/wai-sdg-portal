@@ -10,7 +10,8 @@
           "order": 1,
           "required": true,
           "type": "administration",
-          "meta": true
+          "meta": true,
+          "id": 1
         },
         {
           "id": 556270052,
@@ -54,13 +55,12 @@
           "dependency": [
             {
               "id": 573100087,
-              "options": [
-                "Yes"
-              ]
+              "options": ["Yes"]
             }
           ]
         }
-      ]
+      ],
+      "id": 1
     },
     {
       "question_group": "Health Care Facility Information",
@@ -104,7 +104,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 2
     },
     {
       "question_group": "Core water questions",
@@ -311,7 +312,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 3
     },
     {
       "question_group": "Core sanitation questions",
@@ -373,9 +375,7 @@
           "dependency": [
             {
               "id": 567530051,
-              "options": [
-                "Yes"
-              ]
+              "options": ["Yes"]
             }
           ]
         },
@@ -517,7 +517,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 4
     },
     {
       "question_group": "Core hygiene questions",
@@ -594,13 +595,12 @@
           "dependency": [
             {
               "id": 563460104,
-              "options": [
-                "Yes"
-              ]
+              "options": ["Yes"]
             }
           ]
         }
-      ]
+      ],
+      "id": 5
     },
     {
       "question_group": "Core health care waste management questions",
@@ -647,7 +647,7 @@
               "code": "WD1"
             },
             {
-              "name": "Incinerated (two chamber, 850-1000 \u00b0C incinerator)",
+              "name": "Incinerated (two chamber, 850-1000 °C incinerator)",
               "code": "WD2"
             },
             {
@@ -686,9 +686,7 @@
           "dependency": [
             {
               "id": 559910085,
-              "options": [
-                "Yes"
-              ]
+              "options": ["Yes"]
             }
           ]
         },
@@ -705,7 +703,7 @@
               "code": "WS1"
             },
             {
-              "name": "Incinerated (two chamber, 850-1000 \u00b0C incinerator)",
+              "name": "Incinerated (two chamber, 850-1000 °C incinerator)",
               "code": "WS2"
             },
             {
@@ -744,13 +742,12 @@
           "dependency": [
             {
               "id": 559910085,
-              "options": [
-                "Yes"
-              ]
+              "options": ["Yes"]
             }
           ]
         }
-      ]
+      ],
+      "id": 6
     },
     {
       "question_group": "Core environmental cleaning questions",
@@ -811,7 +808,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 7
     }
   ]
 }

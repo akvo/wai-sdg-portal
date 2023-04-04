@@ -10,7 +10,8 @@
           "order": 1,
           "required": true,
           "type": "administration",
-          "meta": true
+          "meta": true,
+          "id": 4
         },
         {
           "id": 571300150,
@@ -47,7 +48,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 13
     },
     {
       "question_group": "Health Care Facility Information",
@@ -91,7 +93,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 14
     },
     {
       "question_group": "Core water questions",
@@ -253,7 +256,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 15
     },
     {
       "question_group": "Core sanitation questions",
@@ -449,7 +453,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 16
     },
     {
       "question_group": "Core hygiene questions",
@@ -555,7 +560,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 17
     },
     {
       "question_group": "Core health care waste management questions",
@@ -700,7 +706,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 18
     },
     {
       "question_group": "Core environmental cleaning questions",
@@ -761,7 +768,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 19
     }
   ]
 }
