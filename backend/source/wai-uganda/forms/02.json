@@ -231,7 +231,7 @@
           ]
         }
       ],
-      "id": 5
+      "id": 8
     },
     {
       "question_group": "Sanitation",
@@ -429,7 +429,7 @@
           ]
         }
       ],
-      "id": 6
+      "id": 9
     },
     {
       "question_group": "Hygiene",
@@ -505,7 +505,7 @@
           ]
         }
       ],
-      "id": 7
+      "id": 10
     },
     {
       "question_group": "Heath Care Waste",
@@ -552,7 +552,9 @@
           "dependency": [
             {
               "id": 569090293,
-              "options": ["Yes"]
+              "options": [
+                "Yes"
+              ]
             }
           ]
         },
@@ -569,7 +571,7 @@
               "color": null
             },
             {
-              "name": "Incinerated (two chamber, 850-1000 °C incinerator)",
+              "name": "Incinerated (two chamber, 850-1000 \u00b0C incinerator)",
               "color": null
             },
             {
@@ -604,12 +606,14 @@
           "dependency": [
             {
               "id": 569090293,
-              "options": ["Yes"]
+              "options": [
+                "Yes"
+              ]
             }
           ]
         }
       ],
-      "id": 8
+      "id": 11
     },
     {
       "question_group": "Environmental Cleaning",
@@ -659,7 +663,7 @@
           ]
         }
       ],
-      "id": 9
+      "id": 12
     }
   ]
 }
