@@ -172,10 +172,28 @@ def validate_option(options, answer):
     return False
 
 
-def validate_row_data(session, col, answer, question, adm):
+def validate_row_data(
+    session, col, answer, question, adm, valid_deps, answer_deps
+):
     default = {"error": ExcelError.value, "cell": col}
+    if (not answer != answer) and (
+        question.dependency and not valid_deps and answer_deps
+    ):
+        error_deps = [
+            (
+                f"question: {ad['id']} with {ad['answer']} in cell"
+                f" {ad['cell']}"
+            )
+            for ad in answer_deps
+        ]
+        error_msg = f"{question.name} should be empty because you answered "
+        error_msg += " and ".join(error_deps)
+        default.update({"error_message": error_msg})
+        return default
     if answer != answer:
-        if question.required:
+        if (question.required and not question.dependency) or (
+            question.required and question.dependency and valid_deps
+        ):
             default.update({
                 "error_message":
                 f"{question.name} {ValidationText.is_required.value}"
@@ -217,6 +235,22 @@ def validate_sheet_name(file: str):
     return xl.sheet_names
 
 
+def dependency_checker(qs: list, answered: list):
+    matched = []
+    ids = [q["id"] for q in qs]
+    answer_deps = list(filter(lambda a: a["id"] in ids, answered))
+    for fa in answer_deps:
+        fq = list(filter(lambda q: q["id"] == fa["id"], qs))
+        if len(fq):
+            intersection = list(
+                set([fa["answer"]]).intersection(fq[0]["options"])
+            )
+            if len(intersection):
+                matched.append(intersection[0])
+    valid_deps = (len(matched) == len(qs))
+    return valid_deps, answer_deps
+
+
 def validate(session: Session, form: int, administration: int, file: str):
     sheet_names = validate_sheet_name(file)
     template_sheets = ['data', 'definitions', 'administration']
@@ -250,6 +284,7 @@ def validate(session: Session, form: int, administration: int, file: str):
     adm = crud_administration.get_administration_by_id(session=session,
                                                        id=administration)
     adm = {"id": adm.id, "name": adm.name, "childs": childs}
+    answered = []
     for col in excel_head:
         header = excel_head[col]
         error = validate_header_names(header, f"{col}1", header_names)
@@ -261,8 +296,28 @@ def validate(session: Session, form: int, administration: int, file: str):
             answers = list(df[header])
             for i, answer in enumerate(answers):
                 ix = i + 2
-                error = validate_row_data(session, f"{col}{ix}", answer,
-                                          question, adm)
+                valid_deps = False
+                answer_deps = None
+                if not question.meta:
+                    answered.append({
+                        "id": question.id,
+                        "answer": answer,
+                        "cell": f"{col}{ix}"
+                    })
+                    if question.dependency:
+                        valid_deps, answer_deps = dependency_checker(
+                            qs=question.dependency,
+                            answered=answered
+                        )
+                error = validate_row_data(
+                    session,
+                    f"{col}{ix}",
+                    answer,
+                    question,
+                    adm,
+                    valid_deps,
+                    answer_deps
+                )
                 if error:
                     data_error.append(error)
     return header_error + data_error
