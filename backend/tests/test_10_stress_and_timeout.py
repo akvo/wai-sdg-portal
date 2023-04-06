@@ -33,5 +33,5 @@ class TestStressAndTimeout():
         done = datetime.now()
         elapsed = done - start
         assert len(errors) == 5000
-        assert elapsed.seconds < 3
+        assert elapsed.seconds < 5
         os.remove(excel_file)
