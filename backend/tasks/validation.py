@@ -176,9 +176,8 @@ def validate_row_data(
     session, col, answer, question, adm, valid_deps, answer_deps
 ):
     default = {"error": ExcelError.value, "cell": col}
-    if (not answer != answer) and (
-        question.dependency and not valid_deps and answer_deps
-    ):
+    invalid_deps = question.dependency and not valid_deps
+    if (answer == answer) and invalid_deps and answer_deps:
         error_deps = [
             (
                 f"question: {ad['id']} with {ad['answer']} in cell"
