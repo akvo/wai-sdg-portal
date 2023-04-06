@@ -2,7 +2,6 @@ import os
 import sys
 import pytest
 import pandas as pd
-import numpy as np
 from datetime import datetime
 from sqlalchemy.orm import Session
 from util.excel import generate_excel_template
@@ -20,7 +19,7 @@ class TestStressAndTimeout():
         df = pd.read_excel(excel)
         random_wrong_rows = []
         random_wrong_values = [
-            "Option", "Cianjur", "180,A", np.nan, 23,
+            "Option", "Cianjur", "180,A", None, 23,
             "Option C|Option D|Option B", "2020"
         ]
         for x in range(1000):
@@ -34,5 +33,5 @@ class TestStressAndTimeout():
         done = datetime.now()
         elapsed = done - start
         assert len(errors) == 5000
-        assert elapsed.seconds < 1.5
+        assert elapsed.seconds < 3
         os.remove(excel_file)

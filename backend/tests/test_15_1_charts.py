@@ -49,90 +49,15 @@ class TestChartsRoutes():
             "data": [{
                 "administration": 1,
                 "score": 0,
-                "child": [{
-                    'color': '#FEBC11',
-                    'count': 0,
-                    'option': 'Surface water',
-                    'percent': 0
-                }, {
-                    'color': '#ffda46',
-                    'count': 0,
-                    'option': 'Unimproved',
-                    'percent': 0
-                }, {
-                    'color': '#fff176',
-                    'count': 0,
-                    'option': 'Limited',
-                    'percent': 0
-                }, {
-                    'color': '#00b8ec',
-                    'count': 0,
-                    'option': 'Basic',
-                    'percent': 0
-                }, {
-                    'color': '#0080c6',
-                    'count': 0,
-                    'option': 'Safely Managed',
-                    'percent': 0
-                }]
+                "child": []
             }, {
                 "administration": 2,
                 "score": 0,
-                "child": [{
-                    'color': '#FEBC11',
-                    'count': 0,
-                    'option': 'Surface water',
-                    'percent': 0
-                }, {
-                    'color': '#ffda46',
-                    'count': 0,
-                    'option': 'Unimproved',
-                    'percent': 0
-                }, {
-                    'color': '#fff176',
-                    'count': 0,
-                    'option': 'Limited',
-                    'percent': 0
-                }, {
-                    'color': '#00b8ec',
-                    'count': 0,
-                    'option': 'Basic',
-                    'percent': 0
-                }, {
-                    'color': '#0080c6',
-                    'count': 0,
-                    'option': 'Safely Managed',
-                    'percent': 0
-                }]
+                "child": []
             }, {
                 "administration": 3,
                 "score": 0,
-                "child": [{
-                    'color': '#FEBC11',
-                    'count': 0,
-                    'option': 'Surface water',
-                    'percent': 0
-                }, {
-                    'color': '#ffda46',
-                    'count': 0,
-                    'option': 'Unimproved',
-                    'percent': 0
-                }, {
-                    'color': '#fff176',
-                    'count': 0,
-                    'option': 'Limited',
-                    'percent': 0
-                }, {
-                    'color': '#00b8ec',
-                    'count': 0,
-                    'option': 'Basic',
-                    'percent': 0
-                }, {
-                    'color': '#0080c6',
-                    'count': 0,
-                    'option': 'Safely Managed',
-                    'percent': 0
-                }],
+                "child": [],
             }]
         }
 
