@@ -147,7 +147,7 @@ class TestSubmissionRoutes():
             }]
         }
 
-    @pytest.mark.asynio
+    @pytest.mark.asyncio
     async def test_append_value_crud_answer_func(
             self, app: FastAPI, session: Session, client: AsyncClient) -> None:
         answer = Answer(question=1, created_by=1, created=None)

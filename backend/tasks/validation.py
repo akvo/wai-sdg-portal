@@ -234,16 +234,16 @@ def validate_sheet_name(file: str):
     return xl.sheet_names
 
 
-def dependency_checker(qs: list, answered: list):
+def dependency_checker(qs, answered, index):
     matched = []
-    ids = [q["id"] for q in qs]
-    answer_deps = list(filter(lambda a: a["id"] in ids, answered))
-    for fa in answer_deps:
-        fq = list(filter(lambda q: q["id"] == fa["id"], qs))
-        if len(fq):
-            intersection = list(
-                set([fa["answer"]]).intersection(fq[0]["options"])
-            )
+    answer_deps = []
+    for q in qs:
+        fa = list(filter(lambda a: a["id"] == q["id"] and a["index"] == index,
+                         answered))
+        if len(fa):
+            answer_deps.append(fa[0])
+            intersection = list(set([fa[0]["answer"]]).intersection(
+                q["options"]))
             if len(intersection):
                 matched.append(intersection[0])
     valid_deps = (len(matched) == len(qs))
@@ -297,17 +297,18 @@ def validate(session: Session, form: int, administration: int, file: str):
                 ix = i + 2
                 valid_deps = False
                 answer_deps = None
-                if not question.meta:
-                    answered.append({
-                        "id": question.id,
-                        "answer": answer,
-                        "cell": f"{col}{ix}"
-                    })
-                    if question.dependency:
-                        valid_deps, answer_deps = dependency_checker(
-                            qs=question.dependency,
-                            answered=answered
-                        )
+                answered.append({
+                    "id": question.id,
+                    "answer": answer,
+                    "cell": f"{col}{ix}",
+                    "index": ix
+                })
+                if question.dependency:
+                    valid_deps, answer_deps = dependency_checker(
+                        qs=question.dependency,
+                        answered=answered,
+                        index=ix
+                    )
                 error = validate_row_data(
                     session,
                     f"{col}{ix}",

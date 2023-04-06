@@ -10,6 +10,7 @@ from templates.main import template_route
 from models.jobs import JobStatus
 from db.crud_jobs import pending, update, on_progress, is_not_busy
 from tasks.main import do_task, force_remove_task
+from util.log import write_log
 
 worker = FastAPI(
     root_path="/worker",
@@ -30,7 +31,7 @@ worker.include_router(jobs_route)
 worker.include_router(template_route)
 Base.metadata.create_all(bind=engine)
 sessionmaker = FastAPISessionMaker(get_db_url())
-timeout = 30
+timeout = 60
 
 
 @worker.get("/", tags=["Dev"])
@@ -56,6 +57,7 @@ async def start() -> None:
             max_timeout = (datetime.now() - given_time).total_seconds() / 60.0
             if max_timeout > timeout:
                 force_remove_task(session=session, jobs=op_jobs.serialize)
+                write_log("ERROR", f"{op_jobs.id}: {op_jobs.type} is removed")
         if pending_jobs:
             jobs = update(session=session,
                           id=pending_jobs,
