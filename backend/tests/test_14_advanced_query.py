@@ -120,7 +120,7 @@ class TestAdvancedFilter():
             "id": 4,
             "loc": "Bantul",
             "geo": [-6.2, 106.81],
-            "name": "Bantul - Testing Data 2",
+            "name": "Bantul",
             "marker": "Option 2",
             "shape": 24.0,
             "marker_hover": [

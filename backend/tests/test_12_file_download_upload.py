@@ -3,6 +3,7 @@ import aiofiles
 import os
 import pytest
 import pandas as pd
+import numpy as np
 from fastapi import FastAPI
 from httpx import AsyncClient
 from tests.test_01_auth import Acc
@@ -77,10 +78,10 @@ class TestFileRoutes():
         original_filename = "1-test.xlsx"
         excel_file = f"./tmp/{original_filename}"
         right_data = [[
-            "Option 1", "Yogyakarta|Bantul", "-6.2,106.81", "Testing Data 1",
+            "Option 1", "Yogyakarta|Bantul", "-6.2,106.81", np.nan,
             20, "Option A", "2020-12-18"
         ], [
-            "Option 2", "Yogyakarta|Bantul", "-6.2,106.81", "Testing Data 2",
+            "Option 2", "Yogyakarta|Bantul", "-6.2,106.81", np.nan,
             23, "Option B", "2020-12-18"
         ]]
         columns = [

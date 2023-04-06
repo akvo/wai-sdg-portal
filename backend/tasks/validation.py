@@ -297,19 +297,18 @@ def validate(session: Session, form: int, administration: int, file: str):
                 ix = i + 2
                 valid_deps = False
                 answer_deps = None
-                if not question.meta:
-                    answered.append({
-                        "id": question.id,
-                        "answer": answer,
-                        "cell": f"{col}{ix}",
-                        "index": ix
-                    })
-                    if question.dependency:
-                        valid_deps, answer_deps = dependency_checker(
-                            qs=question.dependency,
-                            answered=answered,
-                            index=ix
-                        )
+                answered.append({
+                    "id": question.id,
+                    "answer": answer,
+                    "cell": f"{col}{ix}",
+                    "index": ix
+                })
+                if question.dependency:
+                    valid_deps, answer_deps = dependency_checker(
+                        qs=question.dependency,
+                        answered=answered,
+                        index=ix
+                    )
                 error = validate_row_data(
                     session,
                     f"{col}{ix}",
