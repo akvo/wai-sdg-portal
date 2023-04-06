@@ -234,22 +234,20 @@ def validate_sheet_name(file: str):
     return xl.sheet_names
 
 
-def dependency_checker(qs: list, answered: list, index: int) -> list:
+def dependency_checker(qs, answered, index):
     matched = []
     answer_deps = []
     for q in qs:
-        fa = list(filter(
-            lambda a: a["id"] == q["id"] and a["index"] == index, answered
-        ))
+        fa = list(filter(lambda a: a["id"] == q["id"] and a["index"] == index,
+                         answered))
         if len(fa):
             answer_deps.append(fa[0])
-            intersection = list(
-                set([fa[0]["answer"]]).intersection(q["options"])
-            )
+            intersection = list(set([fa[0]["answer"]]).intersection(
+                q["options"]))
             if len(intersection):
                 matched.append(intersection[0])
     valid_deps = (len(matched) == len(qs))
-    return [valid_deps, answer_deps]
+    return valid_deps, answer_deps
 
 
 def validate(session: Session, form: int, administration: int, file: str):
@@ -307,13 +305,11 @@ def validate(session: Session, form: int, administration: int, file: str):
                         "index": ix
                     })
                     if question.dependency:
-                        dep_results = dependency_checker(
+                        valid_deps, answer_deps = dependency_checker(
                             qs=question.dependency,
                             answered=answered,
                             index=ix
                         )
-                        valid_deps = dep_results[0]
-                        answer_deps = dep_results[1]
                 error = validate_row_data(
                     session,
                     f"{col}{ix}",
