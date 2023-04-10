@@ -172,27 +172,20 @@ def validate_option(options, answer):
     return False
 
 
-def validate_row_data(
-    session, col, answer, question, adm, valid_deps, answer_deps
-):
+def validate_row_data(session, col, answer, question, adm, valid_deps,
+                      answer_deps):
     default = {"error": ExcelError.value, "cell": col}
     invalid_deps = question.dependency and not valid_deps
     if (answer == answer) and invalid_deps and answer_deps:
-        error_deps = [
-            (
-                f"question: {ad['id']} with {ad['answer']} in cell"
-                f" {ad['cell']}"
-            )
-            for ad in answer_deps
-        ]
+        error_deps = [(f"question: {ad['id']} with {ad['answer']} in cell"
+                       f" {ad['cell']}") for ad in answer_deps]
         error_msg = f"{question.name} should be empty because you answered "
         error_msg += " and ".join(error_deps)
         default.update({"error_message": error_msg})
         return default
     if answer != answer:
         if (question.required and not question.dependency) or (
-            question.required and question.dependency and valid_deps
-        ):
+                question.required and question.dependency and valid_deps):
             default.update({
                 "error_message":
                 f"{question.name} {ValidationText.is_required.value}"
@@ -238,12 +231,13 @@ def dependency_checker(qs, answered, index):
     matched = []
     answer_deps = []
     for q in qs:
-        fa = list(filter(lambda a: a["id"] == q["id"] and a["index"] == index,
-                         answered))
+        fa = list(
+            filter(lambda a: a["id"] == q["id"] and a["index"] == index,
+                   answered))
         if len(fa):
             answer_deps.append(fa[0])
-            intersection = list(set([fa[0]["answer"]]).intersection(
-                q["options"]))
+            intersection = list(
+                set([fa[0]["answer"]]).intersection(q["options"]))
             if len(intersection):
                 matched.append(intersection[0])
     valid_deps = (len(matched) == len(qs))
@@ -251,73 +245,74 @@ def dependency_checker(qs, answered, index):
 
 
 def validate(session: Session, form: int, administration: int, file: str):
-    sheet_names = validate_sheet_name(file)
-    template_sheets = ['data', 'definitions', 'administration']
-    TESTING = os.environ.get("TESTING")
-    if TESTING:
-        template_sheets = ['data']
-    for sheet_tab in template_sheets:
-        if sheet_tab not in sheet_names:
+    try:
+        sheet_names = validate_sheet_name(file)
+        template_sheets = ['data', 'definitions', 'administration']
+        TESTING = os.environ.get("TESTING")
+        if TESTING:
+            template_sheets = ['data']
+        for sheet_tab in template_sheets:
+            if sheet_tab not in sheet_names:
+                return [{
+                    "error": ExcelError.sheet,
+                    "error_message": ValidationText.template_validation.value,
+                    "sheets": ",".join(sheet_names)
+                }]
+        questions = crud_question.get_excel_question(session=session,
+                                                     form=form)
+        header_names = [q.to_excel_header for q in questions.all()]
+        df = pd.read_excel(file, sheet_name='data')
+        if df.shape[0] == 0:
             return [{
-                "error": ExcelError.sheet,
-                "error_message": ValidationText.template_validation.value,
-                "sheets": ",".join(sheet_names)
+                "error":
+                ExcelError.sheet,
+                "error_message":
+                ValidationText.file_empty_validation.value,
             }]
-    questions = crud_question.get_excel_question(session=session, form=form)
-    header_names = [q.to_excel_header for q in questions.all()]
-    df = pd.read_excel(file, sheet_name='data')
-    if df.shape[0] == 0:
-        return [{
-            "error": ExcelError.sheet,
-            "error_message": ValidationText.file_empty_validation.value,
-        }]
-    excel_head = {}
-    excel_cols = list(itertools.islice(generate_excel_columns(), df.shape[1]))
-    for index, header in enumerate(list(df)):
-        excel_head.update({excel_cols[index]: header})
-    header_error = []
-    data_error = []
-    childs = crud_administration.get_all_childs(session=session,
-                                                parents=[administration],
-                                                current=[])
-    adm = crud_administration.get_administration_by_id(session=session,
-                                                       id=administration)
-    adm = {"id": adm.id, "name": adm.name, "childs": childs}
-    answered = []
-    for col in excel_head:
-        header = excel_head[col]
-        error = validate_header_names(header, f"{col}1", header_names)
-        if error:
-            header_error.append(error)
-        if not error:
-            qid = header.split("|")[0]
-            question = questions.filter(Question.id == int(qid)).first()
-            answers = list(df[header])
-            for i, answer in enumerate(answers):
-                ix = i + 2
-                valid_deps = False
-                answer_deps = None
-                answered.append({
-                    "id": question.id,
-                    "answer": answer,
-                    "cell": f"{col}{ix}",
-                    "index": ix
-                })
-                if question.dependency:
-                    valid_deps, answer_deps = dependency_checker(
-                        qs=question.dependency,
-                        answered=answered,
-                        index=ix
-                    )
-                error = validate_row_data(
-                    session,
-                    f"{col}{ix}",
-                    answer,
-                    question,
-                    adm,
-                    valid_deps,
-                    answer_deps
-                )
-                if error:
-                    data_error.append(error)
-    return header_error + data_error
+        excel_head = {}
+        excel_cols = list(
+            itertools.islice(generate_excel_columns(), df.shape[1]))
+        for index, header in enumerate(list(df)):
+            excel_head.update({excel_cols[index]: header})
+        header_error = []
+        data_error = []
+        childs = crud_administration.get_all_childs(session=session,
+                                                    parents=[administration],
+                                                    current=[])
+        adm = crud_administration.get_administration_by_id(session=session,
+                                                           id=administration)
+        adm = {"id": adm.id, "name": adm.name, "childs": childs}
+        answered = []
+        for col in excel_head:
+            header = excel_head[col]
+            error = validate_header_names(header, f"{col}1", header_names)
+            if error:
+                header_error.append(error)
+            if not error:
+                qid = header.split("|")[0]
+                question = questions.filter(Question.id == int(qid)).first()
+                answers = list(df[header])
+                for i, answer in enumerate(answers):
+                    ix = i + 2
+                    valid_deps = False
+                    answer_deps = None
+                    answered.append({
+                        "id": question.id,
+                        "answer": answer,
+                        "cell": f"{col}{ix}",
+                        "index": ix
+                    })
+                    if question.dependency:
+                        valid_deps, answer_deps = dependency_checker(
+                            qs=question.dependency,
+                            answered=answered,
+                            index=ix)
+                    error = validate_row_data(session, f"{col}{ix}", answer,
+                                              question, adm, valid_deps,
+                                              answer_deps)
+                    if error:
+                        data_error.append(error)
+        return header_error + data_error
+    except Exception as e:
+        print("VALIDATION ERROR", str(e))
+        return None

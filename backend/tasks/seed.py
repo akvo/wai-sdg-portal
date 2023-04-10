@@ -103,30 +103,34 @@ def save(session: Session, user: int, form: int, dp: dict, qs: dict):
 
 
 def seed(session: Session, file: str, user: int, form: int):
-    df = pd.read_excel(file, sheet_name="data")
-    questions = {}
-    columns = {}
-    for q in list(df):
-        id = q.split("|")[0]
-        columns.update({q: id})
-        question = crud_question.get_question_by_id(session=session, id=id)
-        questions.update({id: question})
-    df = df.rename(columns=columns)
-    datapoints = df.to_dict("records")
-    records = []
-    for datapoint in datapoints:
-        data = save(session=session,
-                    user=user,
-                    form=form,
-                    dp=datapoint,
-                    qs=questions)
-        records.append(data)
-    total_data = len(records)
-    del records
-    del questions
-    del columns
-    os.remove(file)
-    TESTING = os.environ.get("TESTING")
-    if not TESTING:
-        refresh_view(session=session)
-    return total_data
+    try:
+        df = pd.read_excel(file, sheet_name="data")
+        questions = {}
+        columns = {}
+        for q in list(df):
+            id = q.split("|")[0]
+            columns.update({q: id})
+            question = crud_question.get_question_by_id(session=session, id=id)
+            questions.update({id: question})
+        df = df.rename(columns=columns)
+        datapoints = df.to_dict("records")
+        records = []
+        for datapoint in datapoints:
+            data = save(session=session,
+                        user=user,
+                        form=form,
+                        dp=datapoint,
+                        qs=questions)
+            records.append(data)
+        total_data = len(records)
+        del records
+        del questions
+        del columns
+        os.remove(file)
+        TESTING = os.environ.get("TESTING")
+        if not TESTING:
+            refresh_view(session=session)
+        return total_data
+    except Exception as e:
+        print("SEEDER ERROR", str(e))
+        return None
