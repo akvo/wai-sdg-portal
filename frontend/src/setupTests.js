@@ -770,7 +770,7 @@ window.i18n = {
     updateSuccessText: 'Update process has been applied',
     userApprovedText: 'User approved',
     errorText: "Something wen't wrong",
-    statusWaitingValidationText: 'Waiting for validation',
+    statusWaitingValidationText: 'Waiting for Validation',
     statusFailedValidationText: 'Failed',
     statusSuccessValidationText: 'Submitted',
     loadingText: 'Loading...',
