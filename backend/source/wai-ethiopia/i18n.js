@@ -106,7 +106,7 @@ var i18n = {
 		updateSuccessText: "Update process has been applied",
 		userApprovedText: "User approved",
 		errorText: "Something wen't wrong",
-		statusWaitingValidationText: "Waiting for validation",
+		statusWaitingValidationText: "Validation in Progress",
 		statusFailedValidationText: "Failed",
 		statusSuccessValidationText: "Submitted",
 		loadingText: "Loading...",
