@@ -90,9 +90,7 @@ def group_children(p, data_source, labels):
     data = [
         {
             "category": d["category"] if "category" in d else None,
-            "data": d["data"],
-            "score": list(filter(lambda s: s["name"] == d["category"], labels))
-            if "category" in d else []
+            "data": d["data"]
         }
         for d in data
     ]
@@ -106,13 +104,13 @@ def group_children(p, data_source, labels):
                 counter[v["category"]] += 1
             else:
                 counter[v["category"]] = 1
-    score = sum(
-        [d["score"][0]["score"] if len(d["score"]) else 0 for d in data]
-    )
+    score = 0
     for lb in labels:
         label = lb["name"]
         count = counter[label] if label in counter else 0
-        percent = count / total * 100 if count > 0 else 0
+        percentage = count / total if count > 0 else 0
+        score += lb["score"] * percentage
+        percent = percentage * 100
         childs.append(
             {
                 "option": label,
