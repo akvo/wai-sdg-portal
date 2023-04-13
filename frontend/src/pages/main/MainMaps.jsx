@@ -28,39 +28,6 @@ const colorRange = ['#bbedda', '#a7e1cb', '#92d5bd', '#7dcaaf', '#67bea1'];
 const higlightColor = '#84b4cc';
 const noDataColor = '#d3d3d3';
 
-const fetchCustomColor = (question, selectableMarkerDropdown, qid) => {
-  const findQuestion = question.find((q) => q.id === qid);
-  // map color coded option from selectable marker option setting
-  if (selectableMarkerDropdown && findQuestion?.option) {
-    const findFromSetting = selectableMarkerDropdown?.find((x) => x.id === qid);
-    const options = findQuestion?.option?.map((opt) => {
-      let color = opt.color;
-      if (findFromSetting?.color) {
-        const findColor = findFromSetting.color?.find(
-          (x) => x.name.toLowerCase() === opt.name.toLowerCase()
-        );
-        color = findColor?.color;
-      }
-      return {
-        ...opt,
-        color: color,
-      };
-    });
-    if (findFromSetting?.hover) {
-      return {
-        ...findQuestion,
-        option: options,
-        hover: findFromSetting.hover,
-      };
-    }
-    return {
-      ...findQuestion,
-      option: options,
-    };
-  }
-  return findQuestion;
-};
-
 const Markers = ({
   data,
   colors,
@@ -407,14 +374,14 @@ const MainMaps = ({ question, current }) => {
   const [selectedShape, setSelectedShape] = useState(null);
   const [hoveredShape, setHoveredShape] = useState(null);
   const [shapeTooltip, setShapeTooltip] = useState('');
-
-  const shapeQuestion = question.find((q) => q.id === current.maps?.shape?.id);
+  const [shapeQuestion, setShapeQuestion] = useState({});
+  const [markerOptions, setMarkerOptions] = useState([]);
+  const [preload, setPreload] = useState(true);
 
   // use tile layer from config
   const baseMap = window?.features?.mapFeature?.baseMap || tileOSM;
 
   // support selectable marker question
-  const { selectableMarkerDropdown } = current;
   const [selectableMarkerQuestion, setSelectableMarkerQuestion] =
     useState(null);
 
@@ -426,34 +393,14 @@ const MainMaps = ({ question, current }) => {
     })
   );
 
-  // support selectable marker question
-  // filter option which has option color coded
-  let selectableMarkerDropdownOptionValues = [];
-  if (selectableMarkerDropdown) {
-    selectableMarkerDropdownOptionValues = question.filter((q) =>
-      selectableMarkerDropdown.find((x) => x.id === q.id)
-    );
-  }
-
   const handleOnChangeSelectableMarker = (qid) => {
-    const findQuestion = fetchCustomColor(
-      question,
-      selectableMarkerDropdown,
-      qid
-    );
+    const findQuestion = markerOptions?.find((o) => o?.id === qid);
     setSelectableMarkerQuestion(findQuestion);
-  };
-
-  useEffect(() => {
-    if (question.length && current?.maps?.marker?.id) {
-      const findQuestion = fetchCustomColor(
-        question,
-        selectableMarkerDropdown,
-        current?.maps?.marker?.id
-      );
-      setSelectableMarkerQuestion(findQuestion);
+    if (!preload && !loading) {
+      setPreload(true);
+      setLoading(true);
     }
-  }, [question, current, selectableMarkerDropdown]);
+  };
 
   useEffect(() => {
     if (
@@ -461,15 +408,16 @@ const MainMaps = ({ question, current }) => {
       current &&
       loadedFormId !== null &&
       loadedFormId === current?.formId &&
-      selectableMarkerQuestion?.id
+      loading &&
+      preload
     ) {
-      setLoading(true);
+      setPreload(false);
       let url = `maps/${current.formId}`;
       if (current.maps.shape) {
         url += `?shape=${current.maps.shape.id}`;
       }
-      if (current.maps.shape) {
-        url += `&marker=${selectableMarkerQuestion?.id}`;
+      if (current.maps.marker) {
+        url += `&marker=${current.maps.marker.id}`;
       }
       // custom hover
       if (selectableMarkerQuestion?.hover) {
@@ -482,28 +430,60 @@ const MainMaps = ({ question, current }) => {
       url = generateAdvanceFilterURL(advanceSearchValue, url);
       api
         .get(url)
-        .then((res) => {
-          const { option } = shapeQuestion;
-          const { calculatedBy } = current.maps.shape;
-          let data = res.data;
-          if (shapeQuestion?.type === 'option' && calculatedBy) {
-            // fetch option value to calculated from question options
+        .then(({ data }) => {
+          const { scores, data: apiData } = data;
+          const { calculatedBy, id: shapeId } = current.maps.shape;
+          const { selectableMarkerDropdown } = current;
+          if (selectableMarkerDropdown?.length) {
+            const _markerOptions = selectableMarkerDropdown?.map((md) => {
+              const findMarker =
+                typeof md?.id === 'string'
+                  ? scores?.find((s) => s?.name === md?.id)
+                  : question?.find((q) => q?.id === md?.id);
+              const markOptions = findMarker?.option || findMarker?.labels;
+              return {
+                ...findMarker,
+                ...md,
+                option: markOptions,
+              };
+            });
+            setMarkerOptions(_markerOptions);
+
+            const mId = selectableMarkerQuestion?.id || current.maps.marker?.id;
+            const markerData = _markerOptions?.find((mo) => mo?.id === mId);
+            const defaultSelectable = markerData || _markerOptions.shift();
+            setSelectableMarkerQuestion(defaultSelectable);
+          }
+          let shapeData = question.find((q) => q.id === shapeId);
+          let option = [];
+          if (typeof shapeId === 'string') {
+            option =
+              scores?.find(
+                (s) => s?.name?.toLowerCase() === shapeId?.toLowerCase()
+              )?.labels || [];
+            shapeData = {
+              ...shapeData,
+              option,
+              type: 'option',
+            };
+          }
+
+          setShapeQuestion(shapeData);
+          let _data = apiData;
+          if (calculatedBy) {
             const optionToCalculated =
               calculatedBy === 'all' || !calculatedBy.length
                 ? option
                 : option.filter((opt) =>
-                    calculatedBy.map((x) => x.id).includes(opt?.id)
+                    calculatedBy.map((x) => x.name).includes(opt?.name)
                   );
-            // transformed the data
-            data = data.map((d) => {
+            _data = apiData.map((d) => {
               // find the option by shape === option name from optionToCalculated
               const findOption = optionToCalculated.find(
                 (opt) => opt?.name?.toLowerCase() === d?.shape?.toLowerCase()
               );
               return {
                 ...d,
-                // replace shape value with option score, or
-                // replace with 0 if option answer is not in calculatedBy config
                 score: findOption
                   ? findOption?.score
                     ? findOption.score
@@ -512,7 +492,7 @@ const MainMaps = ({ question, current }) => {
               };
             });
           }
-          setData(data);
+          setData(_data);
           setLoading(false);
         })
         .catch(() => {
@@ -520,11 +500,22 @@ const MainMaps = ({ question, current }) => {
           setLoading(false);
         });
     }
+    if (!preload && !loading && loadedFormId !== current?.formId) {
+      setShapeQuestion(null);
+      setMarkerOptions([]);
+      setSelectableMarkerQuestion({});
+      setLoading(true);
+      setPreload(true);
+    }
   }, [
     user,
     current,
+    question,
+    preload,
+    loading,
     loadedFormId,
     advanceSearchValue,
+    markerOptions,
     shapeQuestion,
     selectableMarkerQuestion,
   ]);
@@ -755,13 +746,13 @@ const MainMaps = ({ question, current }) => {
         <>
           {/* support selectable marker question */}
           {/* Marker selectable dropdown */}
-          {!_.isEmpty(selectableMarkerDropdownOptionValues) && (
+          {!_.isEmpty(markerOptions) && (
             <div className="marker-dropdown-container">
               <Select
                 showSearch
                 placeholder="Select here..."
                 className="marker-select"
-                options={selectableMarkerDropdownOptionValues.map((q) => ({
+                options={markerOptions.map((q) => ({
                   label: q.name,
                   value: q.id,
                 }))}
@@ -790,9 +781,7 @@ const MainMaps = ({ question, current }) => {
             markerQuestion={selectableMarkerQuestion}
             filterMarker={filterMarker}
             setFilterMarker={setFilterMarker}
-            renderSelectableMarker={
-              !_.isEmpty(selectableMarkerDropdownOptionValues)
-            }
+            renderSelectableMarker={!_.isEmpty(markerOptions)}
           />
         </>
       )}

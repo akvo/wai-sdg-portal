@@ -5,15 +5,18 @@
 		"labels": [
 			{
 				"name": "Basic",
-				"color": "#00b8ec"
+				"color": "#00b8ec",
+                "score": 10
 			},
 			{
 				"name": "Limited",
-				"color": "#fff176"
+				"color": "#fff176",
+                "score": -1
 			},
 			{
 				"name": "No Service",
-				"color": "#FEBC11"
+				"color": "#FEBC11",
+                "score": -2
 			}
 		],
 		"categories": [
@@ -82,15 +85,18 @@
 		"labels": [
 			{
 				"name": "Basic",
-				"color": "#51B453"
+				"color": "#51B453",
+                "score": 10
 			},
 			{
 				"name": "Limited",
-				"color": "#fff176"
+				"color": "#fff176",
+                "score": -1
 			},
 			{
 				"name": "No Service",
-				"color": "#FEBC11"
+				"color": "#FEBC11",
+                "score": -2
 			}
 		],
 		"categories": [
@@ -172,15 +178,18 @@
 		"labels": [
 			{
 				"name": "Basic",
-				"color": "#ab47bc"
+				"color": "#ab47bc",
+                "score": 10
 			},
 			{
 				"name": "Limited",
-				"color": "#fff176"
+				"color": "#fff176",
+                "score": -1
 			},
 			{
 				"name": "No Facility",
-				"color": "#FEBC11"
+				"color": "#FEBC11",
+                "score": -2
 			}
 		],
 		"categories": [
@@ -256,15 +265,18 @@
 		"labels": [
 			{
 				"name": "Basic",
-				"color": "#EF414A"
+				"color": "#EF414A",
+                "score": 10
 			},
 			{
 				"name": "Limited",
-				"color": "#fff176"
+				"color": "#fff176",
+                "score": -1
 			},
 			{
 				"name": "No Facility",
-				"color": "#FEBC11"
+				"color": "#FEBC11",
+                "score": -2
 			}
 		],
 		"categories": [
@@ -332,15 +344,18 @@
 		"labels": [
 			{
 				"name": "Basic",
-				"color": "#ef5ba1"
+				"color": "#ef5ba1",
+                "score": 10
 			},
 			{
 				"name": "Limited",
-				"color": "#fff176"
+				"color": "#fff176",
+                "score": -1
 			},
 			{
 				"name": "No Service",
-				"color": "#FEBC11"
+				"color": "#FEBC11",
+                "score": -2
 			}
 		],
 		"categories": [
@@ -396,15 +411,18 @@
 		"labels": [
 			{
 				"name": "Basic",
-				"color": "#00b8ec"
+				"color": "#00b8ec",
+                "score": 10
 			},
 			{
 				"name": "Limited",
-				"color": "#fff176"
+				"color": "#fff176",
+                "score": -1
 			},
 			{
 				"name": "No Service",
-				"color": "#FEBC11"
+				"color": "#FEBC11",
+                "score": -2
 			}
 		],
 		"categories": [
@@ -451,15 +469,18 @@
 		"labels": [
 			{
 				"name": "Basic",
-				"color": "#51B453"
+				"color": "#51B453",
+                "score": 10
 			},
 			{
 				"name": "Limited",
-				"color": "#fff176"
+				"color": "#fff176",
+                "score": -1
 			},
 			{
 				"name": "No Service",
-				"color": "#FEBC11"
+				"color": "#FEBC11",
+                "score": -2
 			}
 		],
 		"categories": [
@@ -494,7 +515,7 @@
 						}
 					},
 					{
-						"id": 678864033,
+						"id": 567800080,
 						"text": "How many student toilets are currently usable (accessible and functional and private)?",
 						"number": {
 							"greater_than": 0
@@ -564,15 +585,18 @@
 		"labels": [
 			{
 				"name": "Basic",
-				"color": "#ab47bc"
+				"color": "#ab47bc",
+                "score": 10
 			},
 			{
 				"name": "Limited",
-				"color": "#fff176"
+				"color": "#fff176",
+                "score": -1
 			},
 			{
 				"name": "No Facility",
-				"color": "#FEBC11"
+				"color": "#FEBC11",
+                "score": -2
 			}
 		],
 		"categories": [
@@ -619,23 +643,33 @@
 		"labels": [
 			{
 				"name": "Surface water",
-				"color": "#FEBC11"
+				"color": "#FEBC11",
+                "order": 5,
+                "score": -2
 			},
 			{
 				"name": "Unimproved",
-				"color": "#ffda46"
+				"color": "#ffda46",
+                "order": 4,
+                "score": -1
 			},
 			{
 				"name": "Limited",
-				"color": "#fff176"
+				"color": "#fff176",
+                "order": 3,
+                "score": 1
 			},
 			{
 				"name": "Basic",
-				"color": "#00b8ec"
+				"color": "#00b8ec",
+                "order": 2,
+                "score": 10
 			},
 			{
 				"name": "Safely Managed",
-				"color": "#0080c6"
+				"color": "#0080c6",
+                "order": 1,
+                "score": 15
 			}
 		],
 		"categories": [
@@ -732,23 +766,33 @@
 		"labels": [
 			{
 				"name": "Open Defecation",
-				"color": "#FEBC11"
+				"color": "#FEBC11",
+                "order": 5,
+                "score": -3
 			},
 			{
 				"name": "Unimproved",
-				"color": "#ffda46"
+				"color": "#ffda46",
+                "order": 4,
+                "score": -2
 			},
 			{
 				"name": "Limited",
-				"color": "#fff176"
+				"color": "#fff176",
+                "order": 3,
+                "score": -1
 			},
 			{
 				"name": "Basic",
-				"color": "#51B453"
+				"color": "#51B453",
+                "order": 2,
+                "score": 10
 			},
 			{
 				"name": "Safely Managed",
-				"color": "#2E7D32"
+				"color": "#2E7D32",
+                "order": 1,
+                "score": 15
 			}
 		],
 		"categories": [
@@ -857,15 +901,18 @@
 		"labels": [
 			{
 				"name": "No Facility",
-				"color": "#FEBC11"
+				"color": "#FEBC11",
+                "score": -2
 			},
 			{
 				"name": "Limited",
-				"color": "#fff176"
+				"color": "#fff176",
+                "score": -1
 			},
 			{
 				"name": "Basic",
-				"color": "#ab47bc"
+				"color": "#ab47bc",
+                "score": 10
 			}
 		],
 		"categories": [

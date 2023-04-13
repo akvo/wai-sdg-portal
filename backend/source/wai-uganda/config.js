@@ -64,7 +64,7 @@ var page_config = {
     ],
     maps: {
       shape: { id: 180, title: "Monthly Tariff" },
-      marker: { id: 93, title: "Number of Water Point" },
+      marker: { id: "93", title: "Number of Water Point" },
     },
     formId: 4,
   },
@@ -93,9 +93,53 @@ var page_config = {
     ],
     maps: {
       shape: { id: 31, name: "Average number of patients per day" },
-      marker: { id: 32, name: "Water Service Level" },
+      marker: { id: "Water", name: "Water Service Level" },
     },
     formId: 2,
+    selectableMarkerDropdown: [
+      {
+        id: "Water",
+        name: "Water Service Level",
+        hover: [
+          {
+            id: 10,
+            name: "Health Care Facility Name",
+          },
+          {
+            id: 13,
+            name: "Health Care Facility Type",
+          },
+        ],
+      },
+      {
+        id: "Sanitation",
+        name: "Sanitation Service Level",
+        hover: [
+          {
+            id: 10,
+            name: "Health Care Facility Name",
+          },
+          {
+            id: 13,
+            name: "Health Care Facility Type",
+          },
+        ],
+      },
+      {
+        id: "Hygiene",
+        name: "Hygiene Service Level",
+        hover: [
+          {
+            id: 10,
+            name: "Health Care Facility Name",
+          },
+          {
+            id: 13,
+            name: "Health Care Facility Type",
+          },
+        ],
+      },
+    ],
   },
   households: {
     title: "Households",
@@ -122,7 +166,7 @@ var page_config = {
     ],
     maps: {
       shape: {
-        id: 14,
+        id: "Sanitation",
         name: "Sanitation Service Level (Basic or higher)",
         // set to true if title of shape legend by calculatedBy value
         isTitleByCalculated: false,
@@ -134,9 +178,44 @@ var page_config = {
         // describe the shape calculation type
         type: "percentage",
       },
-      marker: { id: 7, title: "Water Service Level" },
+      marker: { id: "Water", title: "Water Service Level" },
     },
     formId: 1,
+    selectableMarkerDropdown: [
+      {
+        id: "Water",
+        name: "Water Service Level",
+        hover: [
+          { id: 9, name: "Village Name" },
+          {
+            id: 6,
+            name: "Household Size",
+          },
+        ],
+      },
+      {
+        id: "Sanitation",
+        name: "Sanitation Service Level",
+        hover: [
+          { id: 9, name: "Village Name" },
+          {
+            id: 6,
+            name: "Household Size",
+          },
+        ],
+      },
+      {
+        id: "Hygiene",
+        name: "Hygiene Service Level",
+        hover: [
+          { id: 9, name: "Village Name" },
+          {
+            id: 6,
+            name: "Household Size",
+          },
+        ],
+      },
+    ],
   },
   schools: {
     title: "Schools Facility",
@@ -162,10 +241,54 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 62, name: "Number of School Staff" },
-      marker: { id: 63, title: "Water Service Level" },
+      shape: { id: 23, name: "Number of School Staff" },
+      marker: { id: "Water", title: "Water Service Level" },
     },
     formId: 3,
+    selectableMarkerDropdown: [
+      {
+        id: "Water",
+        name: "Water service levels",
+        hover: [
+          {
+            id: 17,
+            name: "School Name",
+          },
+          {
+            id: 19,
+            name: "School Type",
+          },
+        ],
+      },
+      {
+        id: "Sanitation",
+        name: "Sanitation service levels",
+        hover: [
+          {
+            id: 17,
+            name: "School Name",
+          },
+          {
+            id: 19,
+            name: "School Type",
+          },
+        ],
+      },
+      {
+        id: "Hygiene",
+        name: "Hygiene service levels",
+        hover: [
+          {
+            id: 17,
+            name: "School Name",
+          },
+          {
+            id: 19,
+            name: "School Type",
+          },
+        ],
+      },
+    ],
   },
 };
 

@@ -351,6 +351,7 @@
     z-index: 1;
     .marker-select {
       width: 100%;
+      min-width: 260px;
     }
     .ant-select-single.ant-select-show-arrow .ant-select-selection-item {
       width: 237px;

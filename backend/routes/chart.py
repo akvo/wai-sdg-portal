@@ -83,7 +83,9 @@ def get_aggregated_pie_chart_data(req: Request,
 
 def group_children(p, data_source, labels):
     data = list(
-        filter(lambda d: (d["administration"] in p["children"]), data_source)
+        filter(
+            lambda d: (d["administration"]["id"] in p["children"]), data_source
+        )
     )
     data = [
         {
@@ -102,10 +104,13 @@ def group_children(p, data_source, labels):
                 counter[v["category"]] += 1
             else:
                 counter[v["category"]] = 1
+    score = 0
     for lb in labels:
         label = lb["name"]
         count = counter[label] if label in counter else 0
-        percent = count / total * 100 if count > 0 else 0
+        percentage = count / total if count > 0 else 0
+        score += lb["score"] * percentage
+        percent = percentage * 100
         childs.append(
             {
                 "option": label,
@@ -114,7 +119,7 @@ def group_children(p, data_source, labels):
                 "color": lb["color"],
             }
         )
-    return {"administration": p["id"], "score": 0, "child": childs}
+    return {"administration": p["id"], "score": score, "child": childs}
 
 
 @chart_route.get(

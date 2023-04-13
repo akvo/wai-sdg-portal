@@ -81,7 +81,7 @@ var page_config = {
     ],
     selectableMarkerDropdown: [
       {
-        id: 527870065,
+        id: "Water",
         name: "Water Service Level",
         hover: [
           { id: 554190059, name: "Name of respondent" },
@@ -92,7 +92,7 @@ var page_config = {
         ],
       },
       {
-        id: 544110058,
+        id: "Sanitation",
         name: "Sanitation Service Level",
         hover: [
           { id: 554190059, name: "Name of respondent" },
@@ -103,7 +103,7 @@ var page_config = {
         ],
       },
       {
-        id: 569140059,
+        id: "Hygiene",
         name: "Hygiene Service Level",
         hover: [
           { id: 554190059, name: "Name of respondent" },
@@ -136,13 +136,13 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 563280074, name: "Sanitation" },
+      shape: { id: "Sanitation", name: "Sanitation" },
       marker: { id: 563280069, title: "Toilet" },
     },
     formId: 563280066,
     selectableMarkerDropdown: [
       {
-        id: 563280069,
+        id: "Water",
         name: "Water Service Level",
         hover: [
           { id: 569130080, name: "Name of school" },
@@ -153,7 +153,7 @@ var page_config = {
         ],
       },
       {
-        id: 578820058,
+        id: "Sanitation",
         name: "Sanitation Service Level",
         hover: [
           { id: 569130080, name: "Name of school" },
@@ -186,13 +186,13 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 559910088, name: "Water" },
+      shape: { id: "Water", name: "Water" },
       marker: { id: 567530047, name: "Toilet" },
     },
     formId: 557760069,
     selectableMarkerDropdown: [
       {
-        id: 571110060,
+        id: "Water",
         name: "Water Service Level",
         hover: [
           { id: 573100084, name: "Healthcare name" },
@@ -203,7 +203,7 @@ var page_config = {
         ],
       },
       {
-        id: 567530047,
+        id: "Sanitation",
         name: "Sanitation Service Level",
         hover: [
           { id: 573100084, name: "Healthcare name" },
@@ -214,19 +214,8 @@ var page_config = {
         ],
       },
       {
-        id: 559910085,
-        name: "Waste",
-        hover: [
-          { id: 573100084, name: "Healthcare name" },
-          {
-            id: 573100086,
-            name: "Type of health center",
-          },
-        ],
-      },
-      {
-        id: 557750067,
-        name: "Waste",
+        id: "Waste Management",
+        name: "Waste Management",
         hover: [
           { id: 573100084, name: "Healthcare name" },
           {

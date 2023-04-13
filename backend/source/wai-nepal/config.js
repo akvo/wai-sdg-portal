@@ -190,7 +190,7 @@ var page_config = {
 			},
 		],
 		maps: {
-			shape: { id: 573300191, name: "Water service level" },
+			shape: { id: "Water", name: "Water service level" },
 			marker: {
 				id: 580800138,
 				title:
@@ -247,7 +247,7 @@ var page_config = {
 			},
 		],
 		maps: {
-			shape: { id: 554400068, name: "Sanitation Service Levels" },
+			shape: { id: "Sanitation", name: "Sanitation Service Levels" },
 			marker: {
 				id: 552050126,
 				name: "What is the main water supply for the facility?",

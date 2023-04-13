@@ -94,37 +94,41 @@ class TestAdvancedFilter():
             })
         assert res.status_code == 200
         res = res.json()
-        assert res == [{
-            "id": 1,
-            "loc": "Garut",
-            "geo": [-7.836114, 110.331143],
-            "name": "Garut - Garut",
-            "marker": "Option 2",
-            "shape": 10.0,
-            "marker_hover": [
-                {"id": 2, "value": 10.0},
-                {"id": 1, "value": "Option 2"}
-            ],
-        }, {
-            "id": 2,
-            "loc": "Garut",
-            "geo": [-7.836114, 110.331143],
-            "name": "Garut",
-            "marker": "Option 2",
-            "shape": 10.0,
-            "marker_hover": [
-                {"id": 1, "value": "Option 2"},
-                {"id": 2, "value": 10.0}
-            ],
-        }, {
-            "id": 4,
-            "loc": "Bantul",
-            "geo": [-6.2, 106.81],
-            "name": "Bantul",
-            "marker": "Option 2",
-            "shape": 24.0,
-            "marker_hover": [
-                {"id": 1, "value": "Option 2"},
-                {"id": 2, "value": 24.0}
-            ],
-        }]
+        assert res["data"] == [
+            {
+                "id": 1,
+                "loc": "Garut",
+                "geo": [-7.836114, 110.331143],
+                "name": "Garut - Garut",
+                "marker": "Option 2",
+                "shape": 10.0,
+                "marker_hover": [
+                    {"id": 2, "value": 10.0},
+                    {"id": 1, "value": "Option 2"},
+                ],
+            },
+            {
+                "id": 2,
+                "loc": "Garut",
+                "geo": [-7.836114, 110.331143],
+                "name": "Garut",
+                "marker": "Option 2",
+                "shape": 10.0,
+                "marker_hover": [
+                    {"id": 1, "value": "Option 2"},
+                    {"id": 2, "value": 10.0},
+                ],
+            },
+            {
+                "id": 4,
+                "loc": "Bantul",
+                "geo": [-6.2, 106.81],
+                "name": "Bantul",
+                "marker": "Option 2",
+                "shape": 24.0,
+                "marker_hover": [
+                    {"id": 1, "value": "Option 2"},
+                    {"id": 2, "value": 24.0},
+                ],
+            },
+        ]
