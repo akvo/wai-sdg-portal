@@ -2,7 +2,6 @@ import pandas as pd
 import os
 import enum
 import itertools
-import gc
 from db import crud_question
 from db import crud_administration
 from datetime import datetime
@@ -11,7 +10,6 @@ from sqlalchemy.orm import Session
 from string import ascii_uppercase
 from util.helper import HText
 from util.i18n import ValidationText
-from util.log import write_log
 # from memory_profiler import profile as memory
 
 
@@ -51,78 +49,73 @@ def validate_header_names(header, col, header_names):
     return False
 
 
+def apply_numeric_rule(answer, rule, qname):
+    if "max" in rule and float(rule["max"]) < float(answer):
+        return {
+            "error_message":
+            ValidationText.numeric_max_rule.value.replace(
+                "--question--", qname).replace("--rule--", str(rule["max"]))
+        }
+    if "min" in rule and float(rule["min"]) > float(answer):
+        return {
+            "error_message":
+            ValidationText.numeric_min_rule.value.replace(
+                "--question--", qname).replace("--rule--", str(rule["min"]))
+        }
+    return False
+
+
 def validate_number(answer, question):
     try:
         answer = float(answer)
     except ValueError:
         return {"error_message": ValidationText.numeric_validation.value}
-    try:
-        if question.rule:
-            rule = question.rule
-            qname = question.name
-            for r in rule:
-                if r == "max" and float(rule[r]) < float(answer):
-                    return {
-                        "error_message":
-                        ValidationText.numeric_max_rule.value.replace(
-                            "--question--",
-                            qname).replace("--rule--", str(rule[r]))
-                    }
-                if r == "min" and float(rule[r]) > float(answer):
-                    return {
-                        "error_message":
-                        ValidationText.numeric_min_rule.value.replace(
-                            "--question--",
-                            qname).replace("--rule--", str(rule[r]))
-                    }
-    except Exception as e:
-        write_log("ERROR", e)
+    if question.rule:
+        error = apply_numeric_rule(answer, question.rule, question.name)
+        if error:
+            return error
     return False
+
+
+def parse_coordinates(answer):
+    answer = str(answer).replace("(", "").replace(")", "").strip()
+    parts = [float(a.strip()) for a in answer.split(",") if a.strip()]
+    if len(parts) != 2:
+        return None
+    return parts
 
 
 def validate_geo(answer):
-    answer = str(answer)
-    answer = answer.replace("(", "")
-    answer = answer.replace(")", "")
-    answer = answer.strip()
-    try:
-        for a in answer.split(","):
-            float(a.strip())
-    except ValueError:
+    parts = parse_coordinates(answer)
+    if not parts:
         return {"error_message": ValidationText.lat_long_validation.value}
-    if "," not in answer:
-        return {"error_message": ValidationText.lat_long_validation.value}
-    answer = answer.split(",")
-    if len(answer) != 2:
-        return {"error_message": ValidationText.lat_long_validation.value}
-    for a in answer:
-        try:
-            a = float(a.strip())
-        except ValueError:
-            return {"error_message": ValidationText.lat_long_validation.value}
     return False
 
 
+def get_child_administration(session, parent_id, child_name):
+    return crud_administration.get_administration_by_name(session=session,
+                                                          name=child_name,
+                                                          parent=parent_id)
+
+
 def validate_administration(session, answer, adm):
-    aw = answer.split("|")
-    name = adm["name"]
-    if len(aw) < 2:
+    parts = answer.split("|")
+    if len(parts) < 2:
         return {
             "error_message": ValidationText.administration_validation.value
         }
-    if aw[0] != adm["name"]:
+    name = adm["name"]
+    if parts[0] != name:
         return {
             "error_message":
             f"{ValidationText.administration_not_valid.value} {name}"
         }
-    children = crud_administration.get_administration_by_name(session=session,
-                                                              name=aw[-1],
-                                                              parent=adm["id"])
-    if not children:
+    child = get_child_administration(session, adm["id"], parts[1])
+    if not child:
         return {
             "error_message":
             ValidationText.administration_not_part_of.value.replace(
-                "--answer--", str(aw[-1])).replace("--administration--", name)
+                "--answer--", parts[1]).replace("--administration--", name)
         }
     return False
 
@@ -174,9 +167,9 @@ def validate_option(options, answer):
     return False
 
 
-def validate_row_data(session, col, answer, question, adm, valid_deps,
+def validate_row_data(session, cell, answer, question, adm, valid_deps,
                       answer_deps):
-    default = {"error": ExcelError.value, "cell": col}
+    default = {"error": ExcelError.value, "cell": cell}
     invalid_deps = question.dependency and not valid_deps
     if (answer == answer) and invalid_deps and answer_deps:
         error_deps = [(f"question: {ad['id']} with {ad['answer']} in cell"
@@ -272,11 +265,11 @@ def validate(session: Session, form: int, administration: int, file: str):
                 "error_message":
                 ValidationText.file_empty_validation.value,
             }]
-        excel_head = {}
-        excel_cols = list(
-            itertools.islice(generate_excel_columns(), df.shape[1]))
-        for index, header in enumerate(list(df)):
-            excel_head.update({excel_cols[index]: header})
+        excel_cols = itertools.islice(generate_excel_columns(), df.shape[1])
+        excel_head = {
+            col: header
+            for col, header in zip(excel_cols, df.columns)
+        }
         header_error = []
         data_error = []
         childs = crud_administration.get_all_childs(session=session,
@@ -285,50 +278,40 @@ def validate(session: Session, form: int, administration: int, file: str):
         adm = crud_administration.get_administration_by_id(session=session,
                                                            id=administration)
         adm = {"id": adm.id, "name": adm.name, "childs": childs}
+
         answered = []
-        for col in excel_head:
-            header = excel_head[col]
+        for col, header in excel_head.items():
             error = validate_header_names(header, f"{col}1", header_names)
             if error:
                 header_error.append(error)
-            if not error:
-                qid = header.split("|")[0]
-                question = questions.filter(Question.id == int(qid)).first()
-                answers = list(df[header])
-                for i, answer in enumerate(answers):
-                    ix = i + 2
-                    valid_deps = False
-                    answer_deps = None
-                    answered.append({
-                        "id": question.id,
-                        "answer": answer,
-                        "cell": f"{col}{ix}",
-                        "index": ix,
-                    })
-                    if question.dependency:
-                        valid_deps, answer_deps = dependency_checker(
-                            qs=question.dependency,
-                            answered=answered,
-                            index=ix)
+            else:
+                qid = int(header.split("|")[0])
+                question = questions.filter(Question.id == qid).first()
+                answers = df[header].tolist()
+                for i, answer in enumerate(answers, start=2):
+                    valid_deps, answer_deps = dependency_checker(
+                        qs=question.dependency,
+                        answered=answered,
+                        index=i,
+                    ) if question.dependency else (True, None)
                     error = validate_row_data(
-                        session,
-                        f"{col}{ix}",
-                        answer,
-                        question,
-                        adm,
-                        valid_deps,
-                        answer_deps,
+                        session=session,
+                        cell=f"{col}{i}",
+                        answer=answer,
+                        question=question,
+                        adm=adm,
+                        valid_deps=valid_deps,
+                        answer_deps=answer_deps,
                     )
                     if error:
                         data_error.append(error)
-                del question
-            del header
-            del error
-        del df
-        del adm
-        del excel_head
-        del answered
-        gc.collect()
+                    else:
+                        answered.append({
+                            "id": question.id,
+                            "answer": answer,
+                            "cell": f"{col}{i}",
+                            "index": i,
+                        })
         return header_error + data_error
     except Exception as e:
         print("VALIDATION ERROR", str(e))
