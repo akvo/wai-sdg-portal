@@ -9,7 +9,7 @@ from models.answer import Answer
 from datetime import datetime
 from util.helper import HText
 from AkvoResponseGrouper.views import refresh_view
-from memory_profiler import profile as memory
+# from memory_profiler import profile as memory
 
 
 def save(session: Session, user: int, form: int, dp: dict, qs: dict):
@@ -99,9 +99,10 @@ def save(session: Session, user: int, form: int, dp: dict, qs: dict):
                        answers=answerlist)
     del names
     del answerlist
+    return
 
 
-@memory
+# @memory
 def seed(session: Session, file: str, user: int, form: int):
     try:
         df = pd.read_excel(file, sheet_name="data")
