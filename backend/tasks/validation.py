@@ -2,6 +2,7 @@ import pandas as pd
 import os
 import enum
 import itertools
+import gc
 from db import crud_question
 from db import crud_administration
 from datetime import datetime
@@ -11,18 +12,19 @@ from string import ascii_uppercase
 from util.helper import HText
 from util.i18n import ValidationText
 from util.log import write_log
+# from memory_profiler import profile as memory
 
 
 class ExcelError(enum.Enum):
-    sheet = 'sheet_name'
-    header = 'header_name'
-    value = 'column_value'
+    sheet = "sheet_name"
+    header = "header_name"
+    value = "column_value"
 
 
 def generate_excel_columns():
     n = 1
     while True:
-        yield from (''.join(group)
+        yield from ("".join(group)
                     for group in itertools.product(ascii_uppercase, repeat=n))
         n += 1
 
@@ -240,28 +242,29 @@ def dependency_checker(qs, answered, index):
                 set([fa[0]["answer"]]).intersection(q["options"]))
             if len(intersection):
                 matched.append(intersection[0])
-    valid_deps = (len(matched) == len(qs))
+    valid_deps = len(matched) == len(qs)
     return valid_deps, answer_deps
 
 
+# @memory
 def validate(session: Session, form: int, administration: int, file: str):
     try:
         sheet_names = validate_sheet_name(file)
-        template_sheets = ['data', 'definitions', 'administration']
+        template_sheets = ["data", "definitions", "administration"]
         TESTING = os.environ.get("TESTING")
         if TESTING:
-            template_sheets = ['data']
+            template_sheets = ["data"]
         for sheet_tab in template_sheets:
             if sheet_tab not in sheet_names:
                 return [{
                     "error": ExcelError.sheet,
                     "error_message": ValidationText.template_validation.value,
-                    "sheets": ",".join(sheet_names)
+                    "sheets": ",".join(sheet_names),
                 }]
         questions = crud_question.get_excel_question(session=session,
                                                      form=form)
         header_names = [q.to_excel_header for q in questions.all()]
-        df = pd.read_excel(file, sheet_name='data')
+        df = pd.read_excel(file, sheet_name="data")
         if df.shape[0] == 0:
             return [{
                 "error":
@@ -300,18 +303,32 @@ def validate(session: Session, form: int, administration: int, file: str):
                         "id": question.id,
                         "answer": answer,
                         "cell": f"{col}{ix}",
-                        "index": ix
+                        "index": ix,
                     })
                     if question.dependency:
                         valid_deps, answer_deps = dependency_checker(
                             qs=question.dependency,
                             answered=answered,
                             index=ix)
-                    error = validate_row_data(session, f"{col}{ix}", answer,
-                                              question, adm, valid_deps,
-                                              answer_deps)
+                    error = validate_row_data(
+                        session,
+                        f"{col}{ix}",
+                        answer,
+                        question,
+                        adm,
+                        valid_deps,
+                        answer_deps,
+                    )
                     if error:
                         data_error.append(error)
+                del question
+            del header
+            del error
+        del df
+        del adm
+        del excel_head
+        del answered
+        gc.collect()
         return header_error + data_error
     except Exception as e:
         print("VALIDATION ERROR", str(e))
