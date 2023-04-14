@@ -9,6 +9,7 @@ from models.answer import Answer
 from datetime import datetime
 from util.helper import HText
 from AkvoResponseGrouper.views import refresh_view
+# from memory_profiler import profile as memory
 
 
 def save(session: Session, user: int, form: int, dp: dict, qs: dict):
@@ -79,8 +80,7 @@ def save(session: Session, user: int, form: int, dp: dict, qs: dict):
             if q.type == QuestionType.multiple_option:
                 answer.options = aw
             if q.type == QuestionType.answer_list:
-                parent = crud_data.get_data_by_name(session=session,
-                                                    name=aw)
+                parent = crud_data.get_data_by_name(session=session, name=aw)
                 parent_code = parent.name.split(" - ")[-1]
                 administration = parent.administration
                 answer.value = int(parent_code)
@@ -90,18 +90,19 @@ def save(session: Session, user: int, form: int, dp: dict, qs: dict):
     name = " - ".join([str(n) for n in names])
     if parent_code:
         name = f"{parent_code} - {name}"
-    data = crud_data.add_data(session=session,
-                              form=form,
-                              name=name,
-                              geo=geo,
-                              administration=administration,
-                              created_by=user,
-                              answers=answerlist)
+    crud_data.add_data(session=session,
+                       form=form,
+                       name=name,
+                       geo=geo,
+                       administration=administration,
+                       created_by=user,
+                       answers=answerlist)
     del names
     del answerlist
-    return data
+    return
 
 
+# @memory
 def seed(session: Session, file: str, user: int, form: int):
     try:
         df = pd.read_excel(file, sheet_name="data")
@@ -112,18 +113,16 @@ def seed(session: Session, file: str, user: int, form: int):
             columns.update({q: id})
             question = crud_question.get_question_by_id(session=session, id=id)
             questions.update({id: question})
-        df = df.rename(columns=columns)
-        datapoints = df.to_dict("records")
-        records = []
-        for datapoint in datapoints:
-            data = save(session=session,
-                        user=user,
-                        form=form,
-                        dp=datapoint,
-                        qs=questions)
-            records.append(data)
-        total_data = len(records)
-        del records
+        df = df.rename(columns=columns).to_dict("records")
+        total_data = 0
+        for datapoint in df:
+            save(session=session,
+                 user=user,
+                 form=form,
+                 dp=datapoint,
+                 qs=questions)
+            total_data += 1
+        del df
         del questions
         del columns
         os.remove(file)
