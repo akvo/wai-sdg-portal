@@ -87,6 +87,7 @@ def save(session: Session, user: int, form: int, dp: dict, qs: dict):
                 valid = True
             if valid:
                 answerlist.append(answer)
+        del aw
     name = " - ".join([str(n) for n in names])
     if parent_code:
         name = f"{parent_code} - {name}"
@@ -97,6 +98,9 @@ def save(session: Session, user: int, form: int, dp: dict, qs: dict):
                        administration=administration,
                        created_by=user,
                        answers=answerlist)
+    del parent_code
+    del geo
+    del administration
     del names
     del answerlist
     return
@@ -113,18 +117,20 @@ def seed(session: Session, file: str, user: int, form: int):
             columns.update({q: id})
             question = crud_question.get_question_by_id(session=session, id=id)
             questions.update({id: question})
+            del question
+            del id
+        total_data = df.shape[0]
         df = df.rename(columns=columns).to_dict("records")
-        total_data = 0
+        del columns
         for datapoint in df:
             save(session=session,
                  user=user,
                  form=form,
                  dp=datapoint,
                  qs=questions)
-            total_data += 1
+            del datapoint
         del df
         del questions
-        del columns
         os.remove(file)
         TESTING = os.environ.get("TESTING")
         if not TESTING:

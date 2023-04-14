@@ -7,6 +7,7 @@ image_url = f"{webdomain}/email-icons"
 
 class ValidationText(enum.Enum):
     header_name_missing = "Header name is missing"
+    header_is_wrong = "Header is wrong"
     header_no_question_id = "doesn't have question id"
     header_invalid_id = "has invalid id"
     numeric_validation = "Value should be numeric"
