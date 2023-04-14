@@ -79,8 +79,9 @@ def get(
     scores = [{"name": c["name"], "labels": c["labels"]} for c in config]
     for d in data:
         hover_values = []
-        fc = list(filter(lambda c: (c["data"] == d["id"]), categories))
-        if len(fc):
+        fd = list(filter(lambda c: (c["data"] == d["id"]), categories))
+        if len(fd):
+            fc = fd[0]["categories"] if "categories" in fd[0] else []
             if marker and not marker.isnumeric():
                 fm = list(filter(lambda m: (m["name"] == marker), fc))
                 d.update({"marker": fm[0]["category"] if len(fm) else None})
