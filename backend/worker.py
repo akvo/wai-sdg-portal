@@ -67,4 +67,4 @@ async def start() -> None:
 
 
 if __name__ == "__main__":
-    uvicorn.run(worker, host="0.0.0.0", port=5001)
+    uvicorn.run(worker, host="0.0.0.0", port=5001, reload=False)
