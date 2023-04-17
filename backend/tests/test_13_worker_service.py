@@ -45,7 +45,7 @@ class TestWorkerRoutes():
         current = crud_jobs.get_by_id(session=session, id=pending_jobs)
         assert current["available"] is None
         assert current["type"] is JobType.seed_data
-        assert current["status"] is JobStatus.done
+        assert current["status"] is JobStatus.pending
 
     @pytest.mark.asyncio
     async def test_execute_second_queue(self, worker: FastAPI,
