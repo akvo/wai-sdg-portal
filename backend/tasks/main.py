@@ -93,7 +93,7 @@ def run_validate(session: Session, jobs: dict):
         payload = error_file
         message = ValidationText.error_validation.value
     print(f"JOBS #{id} {message}")
-    status = JobStatus.failed if len(error) else None
+    status = JobStatus.failed if len(error) else JobStatus.pending
     time.sleep(3)
     jobs = crud.update(session=session,
                        id=jobs["id"],
@@ -108,7 +108,7 @@ def run_validate(session: Session, jobs: dict):
                       body=original_filename)
         email.send
         # end of email
-        run_seed(session=session, jobs=jobs)
+        # run_seed(session=session, jobs=jobs, init=True)
 
 
 def run_download(session: Session, jobs: dict):
