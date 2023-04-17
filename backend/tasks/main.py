@@ -1,5 +1,6 @@
 import pandas as pd
 import gc
+import time
 from sqlalchemy.orm import Session
 from datetime import timedelta
 from time import process_time
@@ -55,6 +56,7 @@ def run_seed(session: Session, jobs: dict):
                       type=MailTypeEnum.data_submission_failed,
                       body=body)
         email.send
+    time.sleep(3)
     jobs = crud.update(session=session,
                        id=jobs["id"],
                        status=status,
@@ -92,6 +94,7 @@ def run_validate(session: Session, jobs: dict):
         message = ValidationText.error_validation.value
     print(f"JOBS #{id} {message}")
     status = JobStatus.failed if len(error) else None
+    time.sleep(3)
     jobs = crud.update(session=session,
                        id=jobs["id"],
                        payload=payload,

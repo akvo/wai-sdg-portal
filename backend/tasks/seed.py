@@ -101,7 +101,6 @@ def save(session: Session, user: int, form: int, dp: dict, qs: dict):
                             created_by=user,
                             answers=answerlist)
     gc.collect()
-    time.sleep(0.5)
     return
 
 
@@ -117,12 +116,14 @@ def seed(session: Session, file: str, user: int, form: int):
         df = df.rename(columns={d: int(d.split("|")[0])
                                 for d in list(df.columns)})
         total_data = 0
-        for datapoint in df.to_dict("records"):
+        for i, datapoint in enumerate(df.to_dict("records")):
             save(session=session,
                  user=user,
                  form=form,
                  dp=datapoint,
                  qs=questions)
+            if i % 5 == 4:
+                time.sleep(1)
             total_data += 1
         gc.collect()
         os.remove(file)
