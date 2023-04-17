@@ -1,6 +1,7 @@
 import pandas as pd
 import gc
 import time
+from os import environ
 from sqlalchemy.orm import Session
 from datetime import timedelta
 from time import process_time
@@ -65,6 +66,7 @@ def run_seed(session: Session, jobs: dict):
 
 
 def run_validate(session: Session, jobs: dict):
+    TESTING = environ.get("TESTING")
     start_time = print_log_start(ValidationText.start_validation.value)
     original_filename = jobs["info"]["original_filename"]
     user = get_user_by_id(session=session, id=jobs["created_by"])
@@ -108,7 +110,8 @@ def run_validate(session: Session, jobs: dict):
                       body=original_filename)
         email.send
         # end of email
-        # run_seed(session=session, jobs=jobs, init=True)
+        if TESTING:
+            run_seed(session=session, jobs=jobs, init=True)
 
 
 def run_download(session: Session, jobs: dict):
