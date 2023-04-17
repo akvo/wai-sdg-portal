@@ -258,8 +258,8 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 569080377, name: "Water" },
-      marker: { id: 569080377, name: "Water Service Level" },
+      shape: { id: "Water", name: "Water" },
+      marker: { id: "Water", name: "Water Service Level" },
     },
     rows: [
       {

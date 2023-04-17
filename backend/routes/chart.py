@@ -89,8 +89,10 @@ def group_children(p, data_source, labels):
     )
     data = [
         {
-            "category": d["category"] if "category" in d else None,
-            "data": d["data"]
+            "category": d["categories"][0]["category"]
+            if "categories" in d and len(d["categories"])
+            else None,
+            "data": d["data"],
         }
         for d in data
     ]

@@ -382,20 +382,17 @@ const MainMaps = ({ question, current }) => {
   const baseMap = window?.features?.mapFeature?.baseMap || tileOSM;
 
   // support selectable marker question
-  const [selectableMarkerQuestion, setSelectableMarkerQuestion] =
-    useState(null);
+  const [markerQuestion, setMarkerQuestion] = useState(null);
 
   // support selectable marker question & custom color coded
-  const defaultMarkerColor = _.sortBy(selectableMarkerQuestion?.option)?.map(
-    (m, i) => ({
-      ...m,
-      color: m.color || Color.color[i],
-    })
-  );
+  const defaultMarkerColor = _.sortBy(markerQuestion?.option)?.map((m, i) => ({
+    ...m,
+    color: m.color || Color.color[i],
+  }));
 
   const handleOnChangeSelectableMarker = (qid) => {
     const findQuestion = markerOptions?.find((o) => o?.id === qid);
-    setSelectableMarkerQuestion(findQuestion);
+    setMarkerQuestion(findQuestion);
     if (!preload && !loading) {
       setPreload(true);
       setLoading(true);
@@ -416,14 +413,18 @@ const MainMaps = ({ question, current }) => {
       if (current.maps.shape) {
         url += `?shape=${current.maps.shape.id}`;
       }
-      if (current.maps.marker) {
-        url += `&marker=${current.maps.marker.id}`;
+      const { selectableMarkerDropdown, maps } = current || {};
+      const { marker, shape } = maps || {};
+      const mId = markerQuestion?.id || marker?.id;
+      if (mId) {
+        url += `&marker=${mId}`;
       }
-      // custom hover
-      if (selectableMarkerQuestion?.hover) {
-        const hoverIds = selectableMarkerQuestion.hover
-          ?.map((x) => x.id)
-          .join('|');
+      const mHovers =
+        markerQuestion?.hover || selectableMarkerDropdown?.length
+          ? selectableMarkerDropdown[0]?.hover
+          : [];
+      if (mHovers?.length) {
+        const hoverIds = mHovers?.map((x) => x.id).join('|');
         url += `&hover_ids=${hoverIds}`;
       }
       // advance search
@@ -432,27 +433,24 @@ const MainMaps = ({ question, current }) => {
         .get(url)
         .then(({ data }) => {
           const { scores, data: apiData } = data;
-          const { calculatedBy, id: shapeId } = current.maps.shape;
-          const { selectableMarkerDropdown } = current;
+          const { calculatedBy, id: shapeId } = shape || {};
           if (selectableMarkerDropdown?.length) {
             const _markerOptions = selectableMarkerDropdown?.map((md) => {
-              const findMarker =
+              const fm =
                 typeof md?.id === 'string'
                   ? scores?.find((s) => s?.name === md?.id)
                   : question?.find((q) => q?.id === md?.id);
-              const markOptions = findMarker?.option || findMarker?.labels;
+              const mOptions = fm?.option || fm?.labels;
               return {
-                ...findMarker,
+                ...fm,
                 ...md,
-                option: markOptions,
+                option: mOptions,
               };
             });
             setMarkerOptions(_markerOptions);
-
-            const mId = selectableMarkerQuestion?.id || current.maps.marker?.id;
             const markerData = _markerOptions?.find((mo) => mo?.id === mId);
             const defaultSelectable = markerData || _markerOptions.shift();
-            setSelectableMarkerQuestion(defaultSelectable);
+            setMarkerQuestion(defaultSelectable);
           }
           let shapeData = question.find((q) => q.id === shapeId);
           let option = [];
@@ -503,7 +501,7 @@ const MainMaps = ({ question, current }) => {
     if (!preload && !loading && loadedFormId !== current?.formId) {
       setShapeQuestion(null);
       setMarkerOptions([]);
-      setSelectableMarkerQuestion({});
+      setMarkerQuestion(null);
       setLoading(true);
       setPreload(true);
     }
@@ -517,7 +515,8 @@ const MainMaps = ({ question, current }) => {
     advanceSearchValue,
     markerOptions,
     shapeQuestion,
-    selectableMarkerQuestion,
+    markerQuestion?.hover,
+    markerQuestion?.id,
   ]);
 
   // shape config
@@ -760,7 +759,7 @@ const MainMaps = ({ question, current }) => {
                 filterOption={(input, option) =>
                   option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
                 }
-                value={selectableMarkerQuestion?.id}
+                value={markerQuestion?.id}
                 onChange={handleOnChangeSelectableMarker}
               />
             </div>
@@ -778,7 +777,7 @@ const MainMaps = ({ question, current }) => {
           />
           <MarkerLegend
             data={data}
-            markerQuestion={selectableMarkerQuestion}
+            markerQuestion={markerQuestion}
             filterMarker={filterMarker}
             setFilterMarker={setFilterMarker}
             renderSelectableMarker={!_.isEmpty(markerOptions)}
@@ -844,10 +843,10 @@ const MainMaps = ({ question, current }) => {
           {!loading && (
             <Markers
               data={data}
-              colors={selectableMarkerQuestion?.option}
+              colors={markerQuestion?.option}
               defaultColors={defaultMarkerColor}
               filterMarker={filterMarker}
-              customHover={selectableMarkerQuestion?.hover}
+              customHover={markerQuestion?.hover}
             />
           )}
         </MapContainer>

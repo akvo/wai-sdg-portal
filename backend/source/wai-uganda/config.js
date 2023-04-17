@@ -102,11 +102,11 @@ var page_config = {
         name: "Water Service Level",
         hover: [
           {
-            id: 10,
+            id: 27,
             name: "Health Care Facility Name",
           },
           {
-            id: 13,
+            id: 30,
             name: "Health Care Facility Type",
           },
         ],
@@ -116,11 +116,11 @@ var page_config = {
         name: "Sanitation Service Level",
         hover: [
           {
-            id: 10,
+            id: 27,
             name: "Health Care Facility Name",
           },
           {
-            id: 13,
+            id: 30,
             name: "Health Care Facility Type",
           },
         ],
@@ -130,11 +130,11 @@ var page_config = {
         name: "Hygiene Service Level",
         hover: [
           {
-            id: 10,
+            id: 27,
             name: "Health Care Facility Name",
           },
           {
-            id: 13,
+            id: 30,
             name: "Health Care Facility Type",
           },
         ],
@@ -186,9 +186,9 @@ var page_config = {
         id: "Water",
         name: "Water Service Level",
         hover: [
-          { id: 9, name: "Village Name" },
+          { id: 3, name: "Village Name" },
           {
-            id: 6,
+            id: 9,
             name: "Household Size",
           },
         ],
@@ -197,7 +197,7 @@ var page_config = {
         id: "Sanitation",
         name: "Sanitation Service Level",
         hover: [
-          { id: 9, name: "Village Name" },
+          { id: 3, name: "Village Name" },
           {
             id: 6,
             name: "Household Size",
@@ -208,7 +208,7 @@ var page_config = {
         id: "Hygiene",
         name: "Hygiene Service Level",
         hover: [
-          { id: 9, name: "Village Name" },
+          { id: 3, name: "Village Name" },
           {
             id: 6,
             name: "Household Size",
@@ -251,11 +251,11 @@ var page_config = {
         name: "Water service levels",
         hover: [
           {
-            id: 17,
+            id: 56,
             name: "School Name",
           },
           {
-            id: 19,
+            id: 58,
             name: "School Type",
           },
         ],
@@ -265,11 +265,11 @@ var page_config = {
         name: "Sanitation service levels",
         hover: [
           {
-            id: 17,
+            id: 56,
             name: "School Name",
           },
           {
-            id: 19,
+            id: 58,
             name: "School Type",
           },
         ],
@@ -279,11 +279,11 @@ var page_config = {
         name: "Hygiene service levels",
         hover: [
           {
-            id: 17,
+            id: 56,
             name: "School Name",
           },
           {
-            id: 19,
+            id: 58,
             name: "School Type",
           },
         ],

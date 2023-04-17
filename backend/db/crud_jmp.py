@@ -51,8 +51,7 @@ def get_jmp_overview(session: Session, form: int, name: str = None):
         gc = get_categories(session=session, form=form, name=name)
         for d in data:
             fc = list(filter(lambda c: (c["data"] == d["data"]), gc))
-            if len(fc):
-                d.update(fc[0])
+            d.update({"categories": fc})
         return data
     except Exception:
         return data
