@@ -1,4 +1,5 @@
 import pandas as pd
+import gc
 from sqlalchemy.orm import Session
 from datetime import timedelta
 from time import process_time
@@ -154,8 +155,10 @@ def do_task(session: Session, jobs):
     try:
         if jobs["type"] == JobType.validate_data:
             run_validate(session=session, jobs=jobs)
+            gc.collect()
         if jobs["type"] == JobType.seed_data:
             run_seed(session=session, jobs=jobs)
+            gc.collect()
         if jobs["type"] == JobType.download:
             run_download(session=session, jobs=jobs)
     except Exception as e:

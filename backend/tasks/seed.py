@@ -1,6 +1,7 @@
 import os
 import gc
 import pandas as pd
+import time
 from sqlalchemy.orm import Session
 from db import crud_question
 from db import crud_data
@@ -20,7 +21,9 @@ def save(session: Session, user: int, form: int, dp: dict, qs: dict):
     names = []
     parent_code = None
     for a in qs:
-        aw = dp[a]
+        aw = dp.get(a)
+        if not aw:
+            continue
         if aw != aw:
             continue
         if isinstance(aw, str):
@@ -98,6 +101,7 @@ def save(session: Session, user: int, form: int, dp: dict, qs: dict):
                             created_by=user,
                             answers=answerlist)
     gc.collect()
+    time.sleep(0.5)
     return
 
 
