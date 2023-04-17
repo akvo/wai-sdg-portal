@@ -19,7 +19,7 @@ def save(session: Session, user: int, form: int, dp: dict, qs: dict):
     answerlist = []
     names = []
     parent_code = None
-    for a in dp:
+    for a in qs:
         aw = dp[a]
         if aw != aw:
             continue
@@ -105,16 +105,15 @@ def save(session: Session, user: int, form: int, dp: dict, qs: dict):
 def seed(session: Session, file: str, user: int, form: int):
     try:
         df = pd.read_excel(file, sheet_name="data")
-        questions = {}
-        columns = {}
-        for q in list(df):
-            id = q.split("|")[0]
-            columns.update({q: id})
-            question = crud_question.get_question_by_id(session=session, id=id)
-            questions.update({id: question})
-        df = df.rename(columns=columns).to_dict("records")
+        questions = {
+            q.id: q
+            for q in crud_question.get_question_by_form_id(session=session,
+                                                           fid=form)
+        }
+        df = df.rename(columns={d: int(d.split("|")[0])
+                                for d in list(df.columns)})
         total_data = 0
-        for datapoint in df:
+        for datapoint in df.to_dict("records"):
             save(session=session,
                  user=user,
                  form=form,
