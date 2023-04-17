@@ -7,6 +7,7 @@ from db import crud_question
 from db import crud_data
 from db import crud_administration
 from models.question import QuestionType
+from models.data import Data
 from models.answer import Answer
 from datetime import datetime
 from util.helper import HText
@@ -15,11 +16,16 @@ from AkvoResponseGrouper.views import refresh_view
 
 
 def save(session: Session, user: int, form: int, dp: dict, qs: dict):
-    administration = None
-    geo = None
-    answerlist = []
     names = []
     parent_code = None
+    data = Data(name=None,
+                form=form,
+                administration=None,
+                geo=None,
+                created_by=user,
+                updated_by=None,
+                created=datetime.now(),
+                updated=None)
     for a in qs:
         aw = dp.get(a)
         if not aw:
@@ -28,7 +34,6 @@ def save(session: Session, user: int, form: int, dp: dict, qs: dict):
             continue
         if isinstance(aw, str):
             aw = HText(aw).clean
-        valid = True
         q = qs[a]
         answer = Answer(question=q.id, created_by=user, created=datetime.now())
         if q.type == QuestionType.administration:
@@ -44,11 +49,11 @@ def save(session: Session, user: int, form: int, dp: dict, qs: dict):
                     adm_list.append(
                         crud_administration.get_administration_by_name(
                             session, name=adm))
-            administration = adm_list[-1].id
-            answer.value = administration
+            data.administration = adm_list[-1].id
+            answer.value = data.administration
             if q.meta:
                 names.append(adm_list[-1].name)
-        if q.type == QuestionType.geo:
+        elif q.type == QuestionType.geo:
             if aw:
                 try:
                     aw = aw.replace("(", "")
@@ -56,51 +61,39 @@ def save(session: Session, user: int, form: int, dp: dict, qs: dict):
                 except Exception:
                     pass
                 geo = [float(g.strip()) for g in aw.split(",")]
+                data.geo = geo
                 answer.text = ("{}|{}").format(geo[0], geo[1])
             else:
-                valid = False
-        if q.type == QuestionType.text:
+                continue
+        elif q.type == QuestionType.text:
             answer.text = aw
             if q.meta:
                 names.append(aw)
-        if q.type == QuestionType.date:
-            if aw:
-                answer.text = aw
-            else:
-                valid = False
-        if q.type == QuestionType.number:
+        elif q.type == QuestionType.date:
+            answer.text = aw
+        elif q.type == QuestionType.number:
             try:
                 aw = float(aw)
-                valid = True
-            except ValueError:
-                valid = False
-            if valid:
                 answer.value = float(aw)
                 if q.meta:
                     names.append(str(int(aw)))
-        if q.type == QuestionType.option:
+            except ValueError:
+                continue
+        elif q.type == QuestionType.option:
             answer.options = [aw]
-        if q.type == QuestionType.multiple_option:
+        elif q.type == QuestionType.multiple_option:
             answer.options = aw
-        if q.type == QuestionType.answer_list:
+        elif q.type == QuestionType.answer_list:
             parent = crud_data.get_data_by_name(session=session, name=aw)
             parent_code = parent.name.split(" - ")[-1]
-            administration = parent.administration
+            data.administration = parent.administration
             answer.value = int(parent_code)
-            valid = True
-        if valid:
-            answerlist.append(answer)
+        data.answer.append(answer)
     name = " - ".join([str(n) for n in names])
     if parent_code:
         name = f"{parent_code} - {name}"
-    crud_data.bulk_add_data(session=session,
-                            form=form,
-                            name=name,
-                            geo=geo,
-                            administration=administration,
-                            created_by=user,
-                            answers=answerlist)
-    gc.collect()
+    data.name = name
+    session.add(data)
     return
 
 
@@ -123,6 +116,7 @@ def seed(session: Session, file: str, user: int, form: int):
                  dp=datapoint,
                  qs=questions)
             if i % 5 == 4:
+                session.commit()
                 time.sleep(1)
             total_data += 1
         gc.collect()
