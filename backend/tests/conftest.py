@@ -51,6 +51,7 @@ def app(apply_migrations: None) -> FastAPI:
 @pytest.fixture
 def worker(apply_migrations: None) -> FastAPI:
     from worker import worker
+    os.environ["TESTING"] = "1"
     engine = create_engine(get_db_url())
     Base.metadata.create_all(bind=engine)
     TestingSessionLocal = sessionmaker(autocommit=False,

@@ -1,4 +1,5 @@
 import uvicorn
+from os import environ
 from datetime import datetime, timedelta
 from db.connection import engine, Base
 from db.connection import get_db_url
@@ -12,6 +13,8 @@ from db.crud_jobs import pending, update, on_progress, is_not_busy
 # from tasks.main import do_task, force_remove_task
 from tasks.main import do_task
 from util.log import write_log
+
+TESTING = environ.get("TESTING")
 
 worker = FastAPI(
     root_path="/worker",
@@ -33,6 +36,7 @@ worker.include_router(template_route)
 Base.metadata.create_all(bind=engine)
 sessionmaker = FastAPISessionMaker(get_db_url())
 timeout = 60
+repeat_seconds = 10 if TESTING else 30
 
 
 @worker.get("/", tags=["Dev"])
