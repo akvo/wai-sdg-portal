@@ -81,7 +81,7 @@ var page_config = {
     ],
     selectableMarkerDropdown: [
       {
-        id: "Water",
+        id: 527870065,
         name: "Water Service Level",
         hover: [
           { id: 554190059, name: "Name of respondent" },
@@ -92,7 +92,7 @@ var page_config = {
         ],
       },
       {
-        id: "Sanitation",
+        id: 544110058,
         name: "Sanitation Service Level",
         hover: [
           { id: 554190059, name: "Name of respondent" },
@@ -103,7 +103,7 @@ var page_config = {
         ],
       },
       {
-        id: "Hygiene",
+        id: 569140059,
         name: "Hygiene Service Level",
         hover: [
           { id: 554190059, name: "Name of respondent" },
@@ -142,7 +142,7 @@ var page_config = {
     formId: 563280066,
     selectableMarkerDropdown: [
       {
-        id: "Water",
+        id: 563280069,
         name: "Water Service Level",
         hover: [
           { id: 569130080, name: "Name of school" },
@@ -153,7 +153,7 @@ var page_config = {
         ],
       },
       {
-        id: "Sanitation",
+        id: 578820058,
         name: "Sanitation Service Level",
         hover: [
           { id: 569130080, name: "Name of school" },
@@ -192,7 +192,7 @@ var page_config = {
     formId: 557760069,
     selectableMarkerDropdown: [
       {
-        id: "Water",
+        id: 571110060,
         name: "Water Service Level",
         hover: [
           { id: 573100084, name: "Healthcare name" },
@@ -203,7 +203,7 @@ var page_config = {
         ],
       },
       {
-        id: "Sanitation",
+        id: 567530047,
         name: "Sanitation Service Level",
         hover: [
           { id: 573100084, name: "Healthcare name" },
@@ -214,7 +214,7 @@ var page_config = {
         ],
       },
       {
-        id: "Waste Management",
+        id: 559910085,
         name: "Waste Management",
         hover: [
           { id: 573100084, name: "Healthcare name" },
