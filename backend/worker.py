@@ -9,7 +9,8 @@ from routes.jobs import jobs_route
 from templates.main import template_route
 from models.jobs import JobStatus
 from db.crud_jobs import pending, update, on_progress, is_not_busy
-from tasks.main import do_task, force_remove_task
+# from tasks.main import do_task, force_remove_task
+from tasks.main import do_task
 from util.log import write_log
 
 worker = FastAPI(
@@ -45,7 +46,7 @@ def health_check():
 
 
 @worker.on_event("startup")
-@repeat_every(seconds=10)
+@repeat_every(seconds=30)
 async def start() -> None:
     with sessionmaker.context_session() as session:
         pending_jobs = None
@@ -56,7 +57,7 @@ async def start() -> None:
             given_time = op_jobs.created + timedelta(minutes=timeout)
             max_timeout = (datetime.now() - given_time).total_seconds() / 60.0
             if max_timeout > timeout:
-                force_remove_task(session=session, jobs=op_jobs.serialize)
+                # force_remove_task(session=session, jobs=op_jobs.serialize)
                 write_log("ERROR", f"{op_jobs.id}: {op_jobs.type} is removed")
         if pending_jobs:
             jobs = update(session=session,

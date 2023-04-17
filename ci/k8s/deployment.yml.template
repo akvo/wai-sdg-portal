@@ -175,12 +175,12 @@ spec:
             httpGet:
               path: /health-check
               port: 5001
-            initialDelaySeconds: 30
+            initialDelaySeconds: 120
           livenessProbe:
             httpGet:
               path: /health-check
               port: 5001
-            initialDelaySeconds: 30
+            initialDelaySeconds: 120
           volumeMounts:
             - name: ${INSTANCE_NAME}-secrets
               mountPath: /secrets/credentials.json
