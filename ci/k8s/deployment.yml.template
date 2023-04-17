@@ -188,10 +188,10 @@ spec:
               readOnly: true
           resources:
             requests:
-              cpu: 500m
-              memory: 1Gi
+              cpu: 2
+              memory: 2Gi
             limits:
-              cpu: 750m
+              cpu: 2
               memory: 2Gi
       volumes:
         - name: ${INSTANCE_NAME}-secrets
