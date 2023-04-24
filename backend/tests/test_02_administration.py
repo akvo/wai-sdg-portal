@@ -7,7 +7,7 @@ from tests.test_01_auth import Acc
 from sqlalchemy.orm import Session
 from db import crud_administration as ca
 from models.administration import Administration
-from seeder.administration import get_parent_id, get_long_name
+from seeder.administration import get_long_name
 
 pytestmark = pytest.mark.asyncio
 sys.path.append("..")
