@@ -43,6 +43,10 @@ def get_administration_by_name(session: Session,
         Administration.name == name.strip()).first()
 
 
+def verify_administration(session: Session, long_name: str) -> Administration:
+    return session.query(Administration).filter_by(long_name=long_name).first()
+
+
 def get_administration_by_keyword(
         session: Session,
         name: str,

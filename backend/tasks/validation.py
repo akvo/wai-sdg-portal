@@ -104,25 +104,19 @@ def validate_geo(answer):
 
 
 def validate_administration(session, answer, adm):
-    aw = answer.split("|")
-    name = adm["name"]
-    if len(aw) < 2:
-        return {
-            "error_message": ValidationText.administration_validation.value
-        }
-    if aw[0] != adm["name"]:
-        return {
-            "error_message":
-            f"{ValidationText.administration_not_valid.value} {name}"
-        }
-    children = crud_administration.get_administration_by_name(session=session,
-                                                              name=aw[-1],
-                                                              parent=adm["id"])
-    if not children:
+    if adm["name"] not in answer:
         return {
             "error_message":
             ValidationText.administration_not_part_of.value.replace(
-                "--answer--", str(aw[-1])).replace("--administration--", name)
+                "--answer--", answer).replace("--administration--",
+                                              adm["name"])
+        }
+    adm_match = crud_administration.verify_administration(session=session,
+                                                          long_name=answer)
+    if not adm_match:
+        return {
+            "error_message":
+            f"{ValidationText.administration_not_valid.value} {answer}"
         }
     return False
 
