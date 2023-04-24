@@ -29,6 +29,8 @@ def get_parent_id(df, x):
 
 
 def get_long_name(df, row):
+    if row["parent"] is None:
+        return row["name"]
     if row["parent"] != row["parent"]:
         return row["name"]
     else:
