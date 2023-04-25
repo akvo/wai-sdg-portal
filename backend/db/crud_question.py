@@ -25,17 +25,17 @@ def get_last_question(session: Session, form: int, question_group: int):
 def generateOptionObj(obj: dict):
     opt = Option(name=obj["name"].strip())
     if "id" in obj:
-        opt.id = obj["id"]
+        opt.id = obj.get("id")
     if "order" in obj:
-        opt.order = obj["order"]
+        opt.order = obj.get("order")
     if "color" in obj:
-        opt.color = obj["color"].strip()
+        opt.color = obj.get("color")
     if "score" in obj:
-        opt.score = obj["score"]
+        opt.score = obj.get("score")
     if "code" in obj:
-        opt.code = obj["code"].strip()
+        opt.code = obj.get("code")
     if "translations" in obj:
-        opt.translations = obj["translations"]
+        opt.translations = obj.get("translations")
     return opt
 
 
