@@ -55,7 +55,7 @@
           {
             "id": 672374002,
             "text": "Is water available from the main water point at time of the survey?",
-            "options": ["Yes /available"],
+            "options": ["Yes/available"],
             "else": {
               "name": "Limited"
             }

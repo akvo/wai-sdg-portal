@@ -76,7 +76,7 @@
           "required": true,
           "options": [
             {
-              "name": "government health facility ",
+              "name": "government health facility",
               "color": null
             },
             {
@@ -173,11 +173,11 @@
           "required": true,
           "options": [
             {
-              "name": "Yes /available",
+              "name": "Yes/available",
               "code": "A1"
             },
             {
-              "name": "No /not avialable",
+              "name": "No/not available",
               "code": "A2"
             }
           ],
