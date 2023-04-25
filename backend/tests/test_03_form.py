@@ -66,7 +66,7 @@ class TestFormRoutes():
             },
             json={
                 "option": [{
-                    "name": "Option 1",
+                    "name": " Option 1 ", #strip option test
                     "color": "#333",
                     "order": 1,
                     "score": None,
