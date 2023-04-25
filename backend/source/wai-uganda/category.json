@@ -1,989 +1,877 @@
 [
-    {
-        "name": "Water",
-        "form": 2,
-        "labels": [
-            {
-                "name": "Basic",
-                "color": "#00b8ec",
-                "score": 10
-            },
-            {
+  {
+    "name": "Water",
+    "form": 2,
+    "labels": [
+      {
+        "name": "Basic",
+        "color": "#00b8ec",
+        "score": 10
+      },
+      {
+        "name": "Limited",
+        "color": "#fff176",
+        "score": -1
+      },
+      {
+        "name": "No Service",
+        "color": "#FEBC11",
+        "score": -2
+      }
+    ],
+    "categories": [
+      {
+        "name": "Basic",
+        "questions": [
+          {
+            "id": 671424009,
+            "text": "Main water supply for the facility",
+            "options": [
+              "Rainwater harvesting",
+              "Deep tubewell/borehole",
+              "Piped water to yard/plot",
+              "Piped water into dwelling (into the building)"
+            ],
+            "else": {
+              "name": "No Service",
+              "ignore": [668734002, 672374002]
+            }
+          },
+          {
+            "id": 668734002,
+            "text": "Distance of main water supply from facility?",
+            "options": ["On the premises of the health centre"],
+            "other": [
+              {
                 "name": "Limited",
-                "color": "#fff176",
-                "score": -1
-            },
-            {
-                "name": "No Service",
-                "color": "#FEBC11",
-                "score": -2
+                "options": ["Within 500 meter"],
+                "questions": []
+              }
+            ],
+            "else": {
+              "name": "No Service"
             }
-        ],
-        "categories": [
-            {
-                "name": "Basic",
-                "questions": [
-                    {
-                        "id": 671424009,
-                        "text": "Main water supply for the facility",
-                        "options": [
-                            "Rainwater harvesting",
-                            "Deep tubewell/borehole",
-                            "Piped water to yard/plot",
-                            "Piped water into dwelling (into the building)"
-                        ],
-                        "else": {
-                            "name": "No Service",
-                            "ignore": [
-                                668734002,
-                                672374002
-                            ]
-                        }
-                    },
-                    {
-                        "id": 668734002,
-                        "text": "Distance of main water supply from facility?",
-                        "options": [
-                            "On the premises of the health centre"
-                        ],
-                        "other": [
-                            {
-                                "name": "Limited",
-                                "options": [
-                                    "Within 500 meter"
-                                ],
-                                "questions": []
-                            }
-                        ],
-                        "else": {
-                            "name": "No Service"
-                        }
-                    },
-                    {
-                        "id": 672374002,
-                        "text": "Is water available from the main water point at time of the survey?",
-                        "options": [
-                            "Yes /available"
-                        ],
-                        "else": {
-                            "name": "Limited"
-                        }
-                    },
-                    {
-                        "id": 151515155,
-                        "text": "Functionality Status of Water Supply",
-                        "options": [
-                            "Functional"
-                        ],
-                        "other": [
-                            {
-                                "name": "Limited",
-                                "options": [
-                                    "Not functional",
-                                    "Data not collected"
-                                ],
-                                "questions": []
-                            }
-                        ],
-                        "else": {
-                            "name": "No Service"
-                        }
-                    }
-                ]
+          },
+          {
+            "id": 672374002,
+            "text": "Is water available from the main water point at time of the survey?",
+            "options": ["Yes /available"],
+            "else": {
+              "name": "Limited"
             }
-        ]
-    },
-    {
-        "name": "Sanitation",
-        "form": 2,
-        "labels": [
-            {
-                "name": "Basic",
-                "color": "#51B453",
-                "score": 10
-            },
-            {
+          },
+          {
+            "id": 151515155,
+            "text": "Functionality Status of Water Supply",
+            "options": ["Functional"],
+            "other": [
+              {
                 "name": "Limited",
-                "color": "#fff176",
-                "score": -1
-            },
-            {
-                "name": "No Service",
-                "color": "#FEBC11",
-                "score": -2
+                "options": ["Not functional", "Data not collected"],
+                "questions": []
+              }
+            ],
+            "else": {
+              "name": "No Service"
             }
-        ],
-        "categories": [
-            {
-                "name": "Basic",
-                "questions": [
-                    {
-                        "id": 668744002,
-                        "text": "Type of Toilets",
-                        "options": [
-                            "Ventilated Improved Pit latrine (VIP)"
-                        ],
-                        "other": [
-                            {
-                                "name": "Limited",
-                                "options": [
-                                    "Pit latrine with slab"
-                                ],
-                                "questions": []
-                            }
-                        ],
-                        "else": {
-                            "name": "No Service"
-                        }
-                    },
-                    {
-                        "id": 672344002,
-                        "text": "At Least One Toilet was Usable",
-                        "options": [
-                            "Yes"
-                        ],
-                        "else": {
-                            "name": "Limited"
-                        }
-                    },
-                    {
-                        "id": 672324012,
-                        "text": "Dedicated Toilets Available for Staff",
-                        "options": [
-                            "Yes"
-                        ],
-                        "else": {
-                            "name": "Limited"
-                        }
-                    },
-                    {
-                        "id": 669614002,
-                        "text": "Toilets are Sex-Separated",
-                        "options": [
-                            "Yes"
-                        ],
-                        "else": {
-                            "name": "Limited"
-                        }
-                    },
-                    {
-                        "id": 672344003,
-                        "text": "Toilets have Menstrual Hygiene Facilities",
-                        "options": [
-                            "Yes"
-                        ],
-                        "else": {
-                            "name": "Limited"
-                        }
-                    },
-                    {
-                        "id": 671454006,
-                        "text": "Toilets Accessible for People with Limited Mobility",
-                        "options": [
-                            "Yes"
-                        ],
-                        "else": {
-                            "name": "Limited"
-                        }
-                    },
-                    {
-                        "id": 16161616,
-                        "text": "General Conditions of the Toilets",
-                        "options": [
-                            "Clean"
-                        ],
-                        "else": {
-                            "name": "Limited"
-                        }
-                    }
-                ]
-            }
+          }
         ]
-    },
-    {
-        "name": "Hygiene",
-        "form": 2,
-        "labels": [
-            {
-                "name": "Basic",
-                "color": "#ab47bc",
-                "score": 10
-            },
-            {
+      }
+    ]
+  },
+  {
+    "name": "Sanitation",
+    "form": 2,
+    "labels": [
+      {
+        "name": "Basic",
+        "color": "#51B453",
+        "score": 10
+      },
+      {
+        "name": "Limited",
+        "color": "#fff176",
+        "score": -1
+      },
+      {
+        "name": "No Service",
+        "color": "#FEBC11",
+        "score": -2
+      }
+    ],
+    "categories": [
+      {
+        "name": "Basic",
+        "questions": [
+          {
+            "id": 668744002,
+            "text": "Type of Toilets",
+            "options": ["Ventilated Improved Pit latrine (VIP)"],
+            "other": [
+              {
                 "name": "Limited",
-                "color": "#fff176",
-                "score": -1
-            },
-            {
-                "name": "No Facility",
-                "color": "#FEBC11",
-                "score": -2
+                "options": ["Pit latrine with slab"],
+                "questions": []
+              }
+            ],
+            "else": {
+              "name": "No Service"
             }
-        ],
-        "categories": [
-            {
-                "name": "Basic",
-                "questions": [
-                    {
-                        "id": 668764007,
-                        "text": "Functioning Hand Hygiene Facility is Available at Points of Care",
-                        "options": [
-                            "Yes"
-                        ],
-                        "other": [
-                            {
-                                "name": "Limited",
-                                "options": [
-                                    "No, hand hygiene stations are available but not functional or lacking material"
-                                ],
-                                "questions": []
-                            }
-                        ],
-                        "else": {
-                            "name": "No Facility"
-                        }
-                    },
-                    {
-                        "id": 671464004,
-                        "text": "Functional handwashing facility at one or more toilets?",
-                        "options": [
-                            "Yes"
-                        ],
-                        "other": [
-                            {
-                                "name": "Limited",
-                                "options": [
-                                    "No, hand wash facilities are available but lacking soap and/or water"
-                                ],
-                                "questions": []
-                            }
-                        ],
-                        "else": {
-                            "name": "No Facility"
-                        }
-                    }
-                ]
+          },
+          {
+            "id": 672344002,
+            "text": "At Least One Toilet was Usable",
+            "options": ["Yes"],
+            "else": {
+              "name": "Limited"
             }
+          },
+          {
+            "id": 672324012,
+            "text": "Dedicated Toilets Available for Staff",
+            "options": ["Yes"],
+            "else": {
+              "name": "Limited"
+            }
+          },
+          {
+            "id": 669614002,
+            "text": "Toilets are Sex-Separated",
+            "options": ["Yes"],
+            "else": {
+              "name": "Limited"
+            }
+          },
+          {
+            "id": 672344003,
+            "text": "Toilets have Menstrual Hygiene Facilities",
+            "options": ["Yes"],
+            "else": {
+              "name": "Limited"
+            }
+          },
+          {
+            "id": 671454006,
+            "text": "Toilets Accessible for People with Limited Mobility",
+            "options": ["Yes"],
+            "else": {
+              "name": "Limited"
+            }
+          },
+          {
+            "id": 16161616,
+            "text": "General Conditions of the Toilets",
+            "options": ["Clean"],
+            "else": {
+              "name": "Limited"
+            }
+          }
         ]
-    },
-    {
-        "name": "Waste Management",
-        "form": 2,
-        "labels": [
-            {
-                "name": "Basic",
-                "color": "#EF414A",
-                "score": 10
-            },
-            {
+      }
+    ]
+  },
+  {
+    "name": "Hygiene",
+    "form": 2,
+    "labels": [
+      {
+        "name": "Basic",
+        "color": "#ab47bc",
+        "score": 10
+      },
+      {
+        "name": "Limited",
+        "color": "#fff176",
+        "score": -1
+      },
+      {
+        "name": "No Facility",
+        "color": "#FEBC11",
+        "score": -2
+      }
+    ],
+    "categories": [
+      {
+        "name": "Basic",
+        "questions": [
+          {
+            "id": 668764007,
+            "text": "Functioning Hand Hygiene Facility is Available at Points of Care",
+            "options": ["Yes"],
+            "other": [
+              {
                 "name": "Limited",
-                "color": "#fff176",
-                "score": -1
-            },
-            {
-                "name": "No Facility",
-                "color": "#FEBC11",
-                "score": -2
+                "options": [
+                  "No, hand hygiene stations are available but not functional or lacking material"
+                ],
+                "questions": []
+              }
+            ],
+            "else": {
+              "name": "No Facility"
             }
-        ],
-        "categories": [
-            {
-                "name": "Basic",
-                "questions": [
-                    {
-                        "id": 569090293,
-                        "text": "Waste Correctly Segregated into at Least 3 Labelled Bins in Consultation Area",
-                        "options": [
-                            "Yes"
-                        ],
-                        "else": {
-                            "name": "No Facility"
-                        }
-                    },
-                    {
-                        "id": 18181818,
-                        "text": "Main method for disposing infectious waste",
-                        "options": [
-                            "Incinerated"
-                        ],
-                        "else": {
-                            "name": "Limited"
-                        }
-                    },
-                    {
-                        "id": 19191919,
-                        "text": "Main method used for disposing sharp waste",
-                        "options": [
-                            "Autoclaved",
-                            "Incinerated (two chamber, 850-1000 °C incinerator)",
-                            "Incinerated (other)",
-                            "Burning in a protected pit"
-                        ],
-                        "other": [
-                            {
-                                "name": "Limited",
-                                "options": [
-                                    "Not treated, but buried in lined, protected pit",
-                                    "Not treated, but collected for medical waste disposal off-site",
-                                    "Open burning",
-                                    "Data not collected"
-                                ],
-                                "questions": []
-                            }
-                        ],
-                        "else": {
-                            "name": "No Facility"
-                        }
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "name": "Environmental Cleaning",
-        "form": 2,
-        "labels": [
-            {
-                "name": "Basic",
-                "color": "#ef5ba1",
-                "score": 10
-            },
-            {
+          },
+          {
+            "id": 671464004,
+            "text": "Functional handwashing facility at one or more toilets?",
+            "options": ["Yes"],
+            "other": [
+              {
                 "name": "Limited",
-                "color": "#fff176",
-                "score": -1
-            },
-            {
-                "name": "No Service",
-                "color": "#FEBC11",
-                "score": -2
+                "options": [
+                  "No, hand wash facilities are available but lacking soap and/or water"
+                ],
+                "questions": []
+              }
+            ],
+            "else": {
+              "name": "No Facility"
             }
-        ],
-        "categories": [
-            {
-                "name": "Basic",
-                "questions": [
-                    {
-                        "id": 20202020,
-                        "text": "Cleaning Protocols Available",
-                        "options": [
-                            "Yes"
-                        ],
-                        "else": {
-                            "name": "No Facility"
-                        }
-                    },
-                    {
-                        "id": 21212121,
-                        "text": "All staff responsible for cleaning received training",
-                        "options": [
-                            "Yes"
-                        ],
-                        "other": [
-                            {
-                                "name": "Limited",
-                                "options": [
-                                    "No",
-                                    "Data not collected"
-                                ],
-                                "questions": []
-                            }
-                        ],
-                        "else": {
-                            "name": "No Facility"
-                        }
-                    }
-                ]
-            }
+          }
         ]
-    },
-    {
-        "name": "Water",
-        "form": 3,
-        "labels": [
-            {
-                "name": "Basic",
-                "color": "#00b8ec",
-                "score": 10
-            },
-            {
+      }
+    ]
+  },
+  {
+    "name": "Waste Management",
+    "form": 2,
+    "labels": [
+      {
+        "name": "Basic",
+        "color": "#EF414A",
+        "score": 10
+      },
+      {
+        "name": "Limited",
+        "color": "#fff176",
+        "score": -1
+      },
+      {
+        "name": "No Facility",
+        "color": "#FEBC11",
+        "score": -2
+      }
+    ],
+    "categories": [
+      {
+        "name": "Basic",
+        "questions": [
+          {
+            "id": 569090293,
+            "text": "Waste Correctly Segregated into at Least 3 Labelled Bins in Consultation Area",
+            "options": ["Yes"],
+            "else": {
+              "name": "No Facility"
+            }
+          },
+          {
+            "id": 18181818,
+            "text": "Main method for disposing infectious waste",
+            "options": ["Incinerated"],
+            "else": {
+              "name": "Limited"
+            }
+          },
+          {
+            "id": 19191919,
+            "text": "Main method used for disposing sharp waste",
+            "options": [
+              "Autoclaved",
+              "Incinerated (two chamber, 850-1000 °C incinerator)",
+              "Incinerated (other)",
+              "Burning in a protected pit"
+            ],
+            "other": [
+              {
                 "name": "Limited",
-                "color": "#fff176",
-                "score": -1
-            },
-            {
-                "name": "No Service",
-                "color": "#FEBC11",
-                "score": -2
+                "options": [
+                  "Not treated, but buried in lined, protected pit",
+                  "Not treated, but collected for medical waste disposal off-site",
+                  "Open burning",
+                  "Data not collected"
+                ],
+                "questions": []
+              }
+            ],
+            "else": {
+              "name": "No Facility"
             }
-        ],
-        "categories": [
-            {
-                "name": "Basic",
-                "questions": [
-                    {
-                        "id": 673304016,
-                        "text": "What is the main source of drinking water provided by the school?",
-                        "options": [
-                            "Piped water into dwelling (into the building)",
-                            "Shallow tubewell/borehole",
-                            "Deep tubewell/borehole",
-                            "Tapstand"
-                        ],
-                        "else": {
-                            "name": "No Service"
-                        }
-                    },
-                    {
-                        "id": 673264019,
-                        "text": "Drinking Water Available at Time of Survey",
-                        "options": [
-                            "Yes, running water"
-                        ],
-                        "else": {
-                            "name": "Limited"
-                        }
-                    }
-                ]
-            }
+          }
         ]
-    },
-    {
-        "name": "Sanitation",
-        "form": 3,
-        "labels": [
-            {
-                "name": "Basic",
-                "color": "#51B453",
-                "score": 10
-            },
-            {
+      }
+    ]
+  },
+  {
+    "name": "Environmental Cleaning",
+    "form": 2,
+    "labels": [
+      {
+        "name": "Basic",
+        "color": "#ef5ba1",
+        "score": 10
+      },
+      {
+        "name": "Limited",
+        "color": "#fff176",
+        "score": -1
+      },
+      {
+        "name": "No Service",
+        "color": "#FEBC11",
+        "score": -2
+      }
+    ],
+    "categories": [
+      {
+        "name": "Basic",
+        "questions": [
+          {
+            "id": 20202020,
+            "text": "Cleaning Protocols Available",
+            "options": ["Yes"],
+            "else": {
+              "name": "No Facility"
+            }
+          },
+          {
+            "id": 21212121,
+            "text": "All staff responsible for cleaning received training",
+            "options": ["Yes"],
+            "other": [
+              {
                 "name": "Limited",
-                "color": "#fff176",
-                "score": -1
-            },
-            {
-                "name": "No Service",
-                "color": "#FEBC11",
-                "score": -2
+                "options": ["No", "Data not collected"],
+                "questions": []
+              }
+            ],
+            "else": {
+              "name": "No Facility"
             }
-        ],
-        "categories": [
-            {
-                "name": "Basic",
-                "questions": [
-                    {
-                        "id": 666914022,
-                        "text": "Does the school have any sanitation facilities?",
-                        "options": [
-                            "Yes"
-                        ],
-                        "else": {
-                            "name": "No Service"
-                        }
-                    },
-                    {
-                        "id": 671424025,
-                        "text": "Type of Toilets",
-                        "options": [
-                            "Ventilated Improved Pit latrine (VIP) / VIP latrine",
-                            "Ecosan Toilet",
-                            "Pit latrine with slab",
-                            "Traditional pit latrine",
-                            "Flush/pour flush toilets"
-                        ],
-                        "else": {
-                            "name": "No Service"
-                        }
-                    },
-                    {
-                        "id": 1490994052,
-                        "text": "Is this school Girls Only/Boys Only/Co-Education?",
-                        "options": [
-                            "Co-education"
-                        ],
-                        "else": {
-                            "ignore": [
-                                668754021,
-                                673274025
-                            ]
-                        }
-                    },
-                    {
-                        "id": 1490994052,
-                        "text": "Is this school Girls Only/Boys Only/Co-Education?",
-                        "options": [
-                            "Girls Only",
-                            "Co-education"
-                        ],
-                        "else": {
-                            "ignore": [
-                                673274025,
-                                668754021
-                            ]
-                        }
-                    },
-                    {
-                        "id": 668754021,
-                        "text": "Separate Toilets for Girls and Boys",
-                        "options": [
-                            "Yes"
-                        ],
-                        "else": {
-                            "name": "Limited"
-                        }
-                    },
-                    {
-                        "id": 673274025,
-                        "text": "Are the toilets for girls separated for MHM?",
-                        "options": [
-                            "Yes, all of them"
-                        ],
-                        "else": {
-                            "name": "Limited"
-                        }
-                    },
-                    {
-                        "id": 31313131,
-                        "text": "Separate Toilets for Staff",
-                        "options": [
-                            "Yes"
-                        ],
-                        "else": {
-                            "name": "Limited"
-                        }
-                    },
-                    {
-                        "id": 667814027,
-                        "text": "Toilets Available for the Disabled",
-                        "options": [
-                            "Yes, at least one is accessible"
-                        ],
-                        "else": {
-                            "name": "Limited"
-                        }
-                    }
-                ]
-            }
+          }
         ]
-    },
-    {
-        "name": "Hygiene",
-        "form": 3,
-        "labels": [
-            {
-                "name": "Basic",
-                "color": "#ab47bc",
-                "score": 10
-            },
-            {
+      }
+    ]
+  },
+  {
+    "name": "Water",
+    "form": 3,
+    "labels": [
+      {
+        "name": "Basic",
+        "color": "#00b8ec",
+        "score": 10
+      },
+      {
+        "name": "Limited",
+        "color": "#fff176",
+        "score": -1
+      },
+      {
+        "name": "No Service",
+        "color": "#FEBC11",
+        "score": -2
+      }
+    ],
+    "categories": [
+      {
+        "name": "Basic",
+        "questions": [
+          {
+            "id": 673304016,
+            "text": "What is the main source of drinking water provided by the school?",
+            "options": [
+              "Piped water into dwelling (into the building)",
+              "Shallow tubewell/borehole",
+              "Deep tubewell/borehole",
+              "Tapstand"
+            ],
+            "else": {
+              "name": "No Service"
+            }
+          },
+          {
+            "id": 673264019,
+            "text": "Drinking Water Available at Time of Survey",
+            "options": ["Yes, running water"],
+            "else": {
+              "name": "Limited"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Sanitation",
+    "form": 3,
+    "labels": [
+      {
+        "name": "Basic",
+        "color": "#51B453",
+        "score": 10
+      },
+      {
+        "name": "Limited",
+        "color": "#fff176",
+        "score": -1
+      },
+      {
+        "name": "No Service",
+        "color": "#FEBC11",
+        "score": -2
+      }
+    ],
+    "categories": [
+      {
+        "name": "Basic",
+        "questions": [
+          {
+            "id": 666914022,
+            "text": "Does the school have any sanitation facilities?",
+            "options": ["Yes"],
+            "else": {
+              "name": "No Service"
+            }
+          },
+          {
+            "id": 671424025,
+            "text": "Type of Toilets",
+            "options": [
+              "Ventilated Improved Pit latrine (VIP) / VIP latrine",
+              "Ecosan Toilet",
+              "Pit latrine with slab",
+              "Traditional pit latrine",
+              "Flush/pour flush toilets"
+            ],
+            "else": {
+              "name": "No Service"
+            }
+          },
+          {
+            "id": 1490994052,
+            "text": "Is this school Girls Only/Boys Only/Co-Education?",
+            "options": ["Co-education"],
+            "else": {
+              "ignore": [668754021, 673274025]
+            }
+          },
+          {
+            "id": 1490994052,
+            "text": "Is this school Girls Only/Boys Only/Co-Education?",
+            "options": ["Girls Only", "Co-education"],
+            "else": {
+              "ignore": [673274025, 668754021]
+            }
+          },
+          {
+            "id": 668754021,
+            "text": "Separate Toilets for Girls and Boys",
+            "options": ["Yes"],
+            "else": {
+              "name": "Limited"
+            }
+          },
+          {
+            "id": 673274025,
+            "text": "Are the toilets for girls separated for MHM?",
+            "options": ["Yes, all of them"],
+            "else": {
+              "name": "Limited"
+            }
+          },
+          {
+            "id": 31313131,
+            "text": "Separate Toilets for Staff",
+            "options": ["Yes"],
+            "else": {
+              "name": "Limited"
+            }
+          },
+          {
+            "id": 667814027,
+            "text": "Toilets Available for the Disabled",
+            "options": ["Yes, at least one is accessible"],
+            "else": {
+              "name": "Limited"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Hygiene",
+    "form": 3,
+    "labels": [
+      {
+        "name": "Basic",
+        "color": "#ab47bc",
+        "score": 10
+      },
+      {
+        "name": "Limited",
+        "color": "#fff176",
+        "score": -1
+      },
+      {
+        "name": "No Facility",
+        "color": "#FEBC11",
+        "score": -2
+      }
+    ],
+    "categories": [
+      {
+        "name": "Basic",
+        "questions": [
+          {
+            "id": 673274032,
+            "text": "Presence of Handwashing Facility",
+            "options": ["Yes"],
+            "else": {
+              "name": "No Facility"
+            }
+          },
+          {
+            "id": 672394024,
+            "text": "Availability of Soap and Water at the Handwashing Facilities",
+            "options": ["Both soap and water available"],
+            "other": [
+              {
                 "name": "Limited",
-                "color": "#fff176",
-                "score": -1
-            },
-            {
-                "name": "No Facility",
-                "color": "#FEBC11",
-                "score": -2
+                "options": ["Only water", "Only soap available"],
+                "questions": []
+              }
+            ],
+            "else": {
+              "name": "No Facility"
             }
-        ],
-        "categories": [
-            {
-                "name": "Basic",
-                "questions": [
-                    {
-                        "id": 673274032,
-                        "text": "Presence of Handwashing Facility",
-                        "options": [
-                            "Yes"
-                        ],
-                        "else": {
-                            "name": "No Facility"
-                        }
-                    },
-                    {
-                        "id": 672394024,
-                        "text": "Availability of Soap and Water at the Handwashing Facilities",
-                        "options": [
-                            "Both soap and water available"
-                        ],
-                        "other": [
-                            {
-                                "name": "Limited",
-                                "options": [
-                                    "Only water",
-                                    "Only soap available"
-                                ],
-                                "questions": []
-                            }
-                        ],
-                        "else": {
-                            "name": "No Facility"
-                        }
-                    }
-                ]
-            }
+          }
         ]
-    },
-    {
-        "name": "Water",
-        "form": 1,
-        "labels": [
-            {
-                "name": "Surface water",
-                "color": "#FEBC11",
-                "order": 5,
-                "score": -2
-            },
-            {
+      }
+    ]
+  },
+  {
+    "name": "Water",
+    "form": 1,
+    "labels": [
+      {
+        "name": "Surface water",
+        "color": "#FEBC11",
+        "order": 5,
+        "score": -2
+      },
+      {
+        "name": "Unimproved",
+        "color": "#ffda46",
+        "order": 4,
+        "score": -1
+      },
+      {
+        "name": "Limited",
+        "color": "#fff176",
+        "order": 3,
+        "score": 1
+      },
+      {
+        "name": "Basic",
+        "color": "#00b8ec",
+        "order": 2,
+        "score": 10
+      },
+      {
+        "name": "Safely Managed",
+        "color": "#0080c6",
+        "order": 1,
+        "score": 15
+      }
+    ],
+    "categories": [
+      {
+        "name": "Safely Managed",
+        "questions": [
+          {
+            "id": 667814066,
+            "text": "What is the main source of drinking water in the household?",
+            "options": [
+              "Public tap/standpipe",
+              "Piped water into dwelling (household connection)",
+              "Piped water to yard/plot",
+              "Tap",
+              "Deep tubewell/borehole",
+              "borehole",
+              "Shallow tubewell/borehole",
+              "Rainwater collection",
+              "Protected spring",
+              "Protected dug well",
+              "Bottled water",
+              "Cart with small tank/drum",
+              "Tanker-truck"
+            ],
+            "other": [
+              {
                 "name": "Unimproved",
-                "color": "#ffda46",
-                "order": 4,
-                "score": -1
-            },
-            {
+                "options": [
+                  "Unprotected dug well",
+                  "Unprotected spring",
+                  "Dam"
+                ],
+                "questions": []
+              }
+            ],
+            "else": {
+              "name": "Surface Water"
+            }
+          },
+          {
+            "id": 672324084,
+            "text": "Where is the water collected from?",
+            "options": ["Water is located on the premises"],
+            "other": [
+              {
+                "name": "Basic",
+                "options": ["Less than 150 meters"],
+                "questions": []
+              },
+              {
                 "name": "Limited",
-                "color": "#fff176",
-                "order": 3,
-                "score": 1
-            },
-            {
-                "name": "Basic",
-                "color": "#00b8ec",
-                "order": 2,
-                "score": 10
-            },
-            {
-                "name": "Safely Managed",
-                "color": "#0080c6",
-                "order": 1,
-                "score": 15
+                "options": ["More than 500 meters"],
+                "questions": []
+              }
+            ],
+            "else": {
+              "name": "Unimproved"
             }
-        ],
-        "categories": [
-            {
-                "name": "Safely Managed",
-                "questions": [
-                    {
-                        "id": 667814066,
-                        "text": "What is the main source of drinking water in the household?",
-                        "options": [
-                            "Public tap/standpipe",
-                            "Piped water into dwelling (household connection)",
-                            "Piped water to yard/plot",
-                            "Tap",
-                            "Deep tubewell/borehole",
-                            "borehole",
-                            "Shallow tubewell/borehole",
-                            "Rainwater collection",
-                            "Protected spring",
-                            "Protected dug well",
-                            "Bottled water",
-                            "Cart with small tank/drum",
-                            "Tanker-truck"
-                        ],
-                        "other": [
-                            {
-                                "name": "Unimproved",
-                                "options": [
-                                    "Unprotected dug well",
-                                    "Unprotected spring",
-                                    "Dam"
-                                ],
-                                "questions": []
-                            }
-                        ],
-                        "else": {
-                            "name": "Surface Water"
-                        }
-                    },
-                    {
-                        "id": 672324084,
-                        "text": "Where is the water collected from?",
-                        "options": [
-                            "Water is located on the premises"
-                        ],
-                        "other": [
-                            {
-                                "name": "Basic",
-                                "options": [
-                                    "Less than 150 meters"
-                                ],
-                                "questions": []
-                            },
-                            {
-                                "name": "Limited",
-                                "options": [
-                                    "More than 500 meters"
-                                ],
-                                "questions": []
-                            }
-                        ],
-                        "else": {
-                            "name": "Unimproved"
-                        }
-                    },
-                    {
-                        "id": 668774063,
-                        "text": "How long does it take to go there, get water, and come back?",
-                        "options": [
-                            "Water is located on the premises",
-                            "Less than 30 minutes"
-                        ],
-                        "other": [
-                            {
-                                "name": "Limited",
-                                "options": [
-                                    "More than 30 minutes"
-                                ],
-                                "questions": []
-                            }
-                        ],
-                        "else": {
-                            "name": "Unimproved"
-                        }
-                    },
-                    {
-                        "id": 671454067,
-                        "text": "In the last month, has there been any time when your household did not have sufficient quantities of drinking water when needed?",
-                        "options": [
-                            "No, always sufficient"
-                        ],
-                        "other": [
-                            {
-                                "name": "Limited",
-                                "options": [
-                                    "Yes, at least once"
-                                ],
-                                "questions": []
-                            }
-                        ],
-                        "else": {
-                            "name": "Unimproved"
-                        }
-                    },
-                    {
-                        "id": 672404080,
-                        "question": "Fecal and chemical levels acceptable",
-                        "options": [
-                            "Safe levels"
-                        ],
-                        "else": {
-                            "name": "Basic"
-                        }
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "name": "Sanitation",
-        "form": 1,
-        "labels": [
-            {
-                "name": "Open Defecation",
-                "color": "#FEBC11",
-                "order": 5,
-                "score": -3
-            },
-            {
-                "name": "Unimproved",
-                "color": "#ffda46",
-                "order": 4,
-                "score": -2
-            },
-            {
+          },
+          {
+            "id": 668774063,
+            "text": "How long does it take to go there, get water, and come back?",
+            "options": [
+              "Water is located on the premises",
+              "Less than 30 minutes"
+            ],
+            "other": [
+              {
                 "name": "Limited",
-                "color": "#fff176",
-                "order": 3,
-                "score": -1
-            },
-            {
-                "name": "Basic",
-                "color": "#51B453",
-                "order": 2,
-                "score": 10
-            },
-            {
-                "name": "Safely Managed",
-                "color": "#2E7D32",
-                "order": 1,
-                "score": 15
+                "options": ["More than 30 minutes"],
+                "questions": []
+              }
+            ],
+            "else": {
+              "name": "Unimproved"
             }
-        ],
-        "categories": [
-            {
-                "name": "Safely Managed",
-                "questions": [
-                    {
-                        "id": 671424081,
-                        "text": "Is a toilet facility used?",
-                        "options": [
-                            "Yes"
-                        ],
-                        "else": {
-                            "name": "Open Defecation",
-                            "ignore": [
-                                675114085,
-                                668864018,
-                                668864017,
-                                671454081,
-                                669614079
-                            ]
-                        }
-                    },
-                    {
-                        "id": 675114085,
-                        "text": "Type of Toilet Facility",
-                        "options": [
-                            "Flush/Pour flush to piped sewer system",
-                            "Flush/Pour flush to septic tank",
-                            "Flush/Pour flush to don't know where",
-                            "Pit latrine with slab",
-                            "Pit latrine slab with wood",
-                            "Pit latrine slab with wood and roofed with grass thatch",
-                            "Pit latrine covered with wood and roof is open",
-                            "Traditional pit latrine",
-                            "Ventilated Improved Pit latrine (VIP)",
-                            "Composting toilet"
-                        ],
-                        "else": {
-                            "name": "Unimproved"
-                        }
-                    },
-                    {
-                        "id": 668864018,
-                        "text": "Toilet Facility is Shared with Others Outside of Household",
-                        "options": [
-                            "No"
-                        ],
-                        "else": {
-                            "name": "Limited"
-                        }
-                    },
-                    {
-                        "id": 668864017,
-                        "text": "Where is the toilet facility located?",
-                        "options": [
-                            "Less than 10m"
-                        ],
-                        "other": [
-                            {
-                                "name": "Basic",
-                                "options": [
-                                    "15 metres",
-                                    "30 metres"
-                                ],
-                                "questions": []
-                            }
-                        ],
-                        "else": {
-                            "name": "Limited"
-                        }
-                    },
-                    {
-                        "id": 671454081,
-                        "text": "Emptying of On-Site Sanitation Facilities",
-                        "options": [
-                            "Yes, but don't know when",
-                            "Yes, within the last 5 years",
-                            "Yes, more than 5 years ago"
-                        ],
-                        "else": {
-                            "name": "Limited"
-                        }
-                    },
-                    {
-                        "id": 669614079,
-                        "text": "Disposal of excreta from onsite sanitation facilities",
-                        "options": [
-                            "By service provider to a treatment plant",
-                            "By service provider buried in a covered pit",
-                            "By household buried in a covered pit"
-                        ],
-                        "else": {
-                            "name": "Basic"
-                        }
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "name": "Hygiene",
-        "form": 1,
-        "labels": [
-            {
-                "name": "No Facility",
-                "color": "#FEBC11",
-                "score": -2
-            },
-            {
+          },
+          {
+            "id": 671454067,
+            "text": "In the last month, has there been any time when your household did not have sufficient quantities of drinking water when needed?",
+            "options": ["No, always sufficient"],
+            "other": [
+              {
                 "name": "Limited",
-                "color": "#fff176",
-                "score": -1
-            },
-            {
-                "name": "Basic",
-                "color": "#ab47bc",
-                "score": 10
+                "options": ["Yes, at least once"],
+                "questions": []
+              }
+            ],
+            "else": {
+              "name": "Unimproved"
             }
-        ],
-        "categories": [
-            {
-                "name": "Basic",
-                "questions": [
-                    {
-                        "id": 668734091,
-                        "text": "What type of handwashing facility used most often",
-                        "options": [
-                            "Fixed facility observed in dwelling",
-                            "Fixed facility observed in plot/yard"
-                        ],
-                        "other": [
-                            {
-                                "name": "Limited",
-                                "options": [
-                                    "Mobile object observed (bucket, jug, kettle)"
-                                ],
-                                "questions": []
-                            }
-                        ],
-                        "else": {
-                            "name": "No Facility"
-                        }
-                    },
-                    {
-                        "id": 670544075,
-                        "text": "Is water available at the hand washing facility?",
-                        "options": [
-                            "Water is available"
-                        ],
-                        "else": {
-                            "name": "Limited"
-                        }
-                    },
-                    {
-                        "id": 672354093,
-                        "text": "Soap is Available at Handwashing Facility",
-                        "options": [
-                            "Yes, soap or detergent are present"
-                        ],
-                        "other": [
-                            {
-                                "name": "Limited",
-                                "options": [
-                                    "Ash/mud/sand is present"
-                                ],
-                                "questions": []
-                            }
-                        ],
-                        "else": {
-                            "name": "No Facility"
-                        }
-                    }
-                ]
+          },
+          {
+            "id": 672404080,
+            "question": "Fecal and chemical levels acceptable",
+            "options": ["Safe levels"],
+            "else": {
+              "name": "Basic"
             }
+          }
         ]
-    }
+      }
+    ]
+  },
+  {
+    "name": "Sanitation",
+    "form": 1,
+    "labels": [
+      {
+        "name": "Open Defecation",
+        "color": "#FEBC11",
+        "order": 5,
+        "score": -3
+      },
+      {
+        "name": "Unimproved",
+        "color": "#ffda46",
+        "order": 4,
+        "score": -2
+      },
+      {
+        "name": "Limited",
+        "color": "#fff176",
+        "order": 3,
+        "score": -1
+      },
+      {
+        "name": "Basic",
+        "color": "#51B453",
+        "order": 2,
+        "score": 10
+      },
+      {
+        "name": "Safely Managed",
+        "color": "#2E7D32",
+        "order": 1,
+        "score": 15
+      }
+    ],
+    "categories": [
+      {
+        "name": "Safely Managed",
+        "questions": [
+          {
+            "id": 671424081,
+            "text": "Is a toilet facility used?",
+            "options": ["Yes"],
+            "else": {
+              "name": "Open Defecation",
+              "ignore": [675114085, 668864018, 668864017, 671454081, 669614079]
+            }
+          },
+          {
+            "id": 675114085,
+            "text": "Type of Toilet Facility",
+            "options": [
+              "Flush/Pour flush to piped sewer system",
+              "Flush/Pour flush to septic tank",
+              "Flush/Pour flush to don't know where",
+              "Pit latrine with slab",
+              "Pit latrine slab with wood",
+              "Pit latrine slab with wood and roofed with grass thatch",
+              "Pit latrine covered with wood and roof is open",
+              "Traditional pit latrine",
+              "Ventilated Improved Pit latrine (VIP)",
+              "Composting toilet"
+            ],
+            "else": {
+              "name": "Unimproved"
+            }
+          },
+          {
+            "id": 668864018,
+            "text": "Toilet Facility is Shared with Others Outside of Household",
+            "options": ["No"],
+            "else": {
+              "name": "Limited"
+            }
+          },
+          {
+            "id": 668864017,
+            "text": "Where is the toilet facility located?",
+            "options": ["Less than 10m"],
+            "other": [
+              {
+                "name": "Basic",
+                "options": ["15 metres", "30 metres"],
+                "questions": []
+              }
+            ],
+            "else": {
+              "name": "Limited"
+            }
+          },
+          {
+            "id": 671454081,
+            "text": "Emptying of On-Site Sanitation Facilities",
+            "options": [
+              "Yes, but don't know when",
+              "Yes, within the last 5 years",
+              "Yes, more than 5 years ago"
+            ],
+            "else": {
+              "name": "Limited"
+            }
+          },
+          {
+            "id": 669614079,
+            "text": "Disposal of excreta from onsite sanitation facilities",
+            "options": [
+              "By service provider to a treatment plant",
+              "By service provider buried in a covered pit",
+              "By household buried in a covered pit"
+            ],
+            "else": {
+              "name": "Basic"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Hygiene",
+    "form": 1,
+    "labels": [
+      {
+        "name": "No Facility",
+        "color": "#FEBC11",
+        "score": -2
+      },
+      {
+        "name": "Limited",
+        "color": "#fff176",
+        "score": -1
+      },
+      {
+        "name": "Basic",
+        "color": "#ab47bc",
+        "score": 10
+      }
+    ],
+    "categories": [
+      {
+        "name": "Basic",
+        "questions": [
+          {
+            "id": 668734091,
+            "text": "What type of handwashing facility used most often",
+            "options": [
+              "Fixed facility observed in dwelling",
+              "Fixed facility observed in plot/yard"
+            ],
+            "other": [
+              {
+                "name": "Limited",
+                "options": ["Mobile object observed (bucket, jug, kettle)"],
+                "questions": []
+              }
+            ],
+            "else": {
+              "name": "No Facility"
+            }
+          },
+          {
+            "id": 670544075,
+            "text": "Is water available at the hand washing facility?",
+            "options": ["Water is available"],
+            "else": {
+              "name": "Limited"
+            }
+          },
+          {
+            "id": 672354093,
+            "text": "Soap is Available at Handwashing Facility",
+            "options": ["Yes, soap or detergent are present"],
+            "other": [
+              {
+                "name": "Limited",
+                "options": ["Ash/mud/sand is present"],
+                "questions": []
+              }
+            ],
+            "else": {
+              "name": "No Facility"
+            }
+          }
+        ]
+      }
+    ]
+  }
 ]

@@ -419,9 +419,7 @@
           "dependency": [
             {
               "id": 671424081,
-              "options": [
-                "Yes"
-              ]
+              "options": ["Yes"]
             }
           ]
         },
@@ -445,9 +443,7 @@
           "dependency": [
             {
               "id": 671424081,
-              "options": [
-                "Yes"
-              ]
+              "options": ["Yes"]
             },
             {
               "id": 675114085,
@@ -494,9 +490,7 @@
           "dependency": [
             {
               "id": 671424081,
-              "options": [
-                "Yes"
-              ]
+              "options": ["Yes"]
             },
             {
               "id": 675114085,
@@ -547,9 +541,7 @@
           "dependency": [
             {
               "id": 671424081,
-              "options": [
-                "Yes"
-              ]
+              "options": ["Yes"]
             },
             {
               "id": 675114085,
