@@ -47,8 +47,13 @@ def cleanup_form(json_form, qids):
         if q.id not in qids:
             session.query(Question).filter(Question.id == q.id).delete()
             session.commit()
-            print_validation(json_form["id"], q.name, "question",
-                             "is removed from the database", False)
+            print_validation(
+                json_form["id"],
+                q.name,
+                "question",
+                "is removed from the database",
+                False,
+            )
 
 
 def validate_form(json_form):
@@ -57,8 +62,12 @@ def validate_form(json_form):
     qids = []
     for qg in json_form["question_groups"]:
         if not qg.get("id"):
-            print_validation(fid, qg["question_group"], "QUESTION GROUP",
-                             "ID is not defined in the json")
+            print_validation(
+                fid,
+                qg["question_group"],
+                "QUESTION GROUP",
+                "ID is not defined in the json",
+            )
             validated = False
         for q in qg["questions"]:
             if not q.get("id"):
@@ -70,7 +79,7 @@ def validate_form(json_form):
 
 
 for file in sorted(files):
-    with open(f'{file_path}{file}') as json_file:
+    with open(f"{file_path}{file}") as json_file:
         json_form = json.load(json_file)
     # check form exist
     valid, qids = validate_form(json_form)
@@ -88,10 +97,11 @@ for file in sorted(files):
             id=json_form["id"],
             name=json_form["form"],
             version=find_form.version + 1,
-            description=json_form.get('description'),
-            default_language=json_form.get('defaultLanguage'),
-            languages=json_form.get('languages'),
-            translations=json_form.get('translations'))
+            description=json_form.get("description"),
+            default_language=json_form.get("defaultLanguage"),
+            languages=json_form.get("languages"),
+            translations=json_form.get("translations"),
+        )
         print(f"Updating Form: {form.id} - {form.name}")
     # init
     if not updater or not find_form:
@@ -99,12 +109,13 @@ for file in sorted(files):
             session=session,
             name=json_form["form"],
             id=json_form["id"],
-            version=json_form.get('version')
-            if 'version' in json_form else 1.0,
-            description=json_form.get('description'),
-            default_language=json_form.get('defaultLanguage'),
-            languages=json_form.get('languages'),
-            translations=json_form.get('translations'))
+            version=json_form.get("version")
+            if "version" in json_form else 1.0,
+            description=json_form.get("description"),
+            default_language=json_form.get("defaultLanguage"),
+            languages=json_form.get("languages"),
+            translations=json_form.get("translations"),
+        )
         print(f"Added Form: {form.name}\n")
     for qg in json_form["question_groups"]:
         # check question group exist
@@ -118,10 +129,11 @@ for file in sorted(files):
                 form=form.id,
                 id=qg.get("id"),
                 order=qg.get("order"),
-                description=qg.get('description'),
-                repeatable=qg.get('repeatable'),
-                repeat_text=qg.get('repeatText'),
-                translations=qg.get('translations'))
+                description=qg.get("description"),
+                repeatable=qg.get("repeatable"),
+                repeat_text=qg.get("repeatText"),
+                translations=qg.get("translations"),
+            )
             print(f"\nAdded Question Group: {question_group.name}")
         # updater
         if updater and find_group:
@@ -135,22 +147,23 @@ for file in sorted(files):
                 id=find_group.id,
                 order=qg.get("order") or find_group.order
                 if find_group else None,
-                description=qg.get('description'),
-                repeatable=qg.get('repeatable'),
-                repeat_text=qg.get('repeatText'),
-                translations=qg.get('translations'))
+                description=qg.get("description"),
+                repeatable=qg.get("repeatable"),
+                repeat_text=qg.get("repeatText"),
+                translations=qg.get("translations"),
+            )
             if question_group.name != oname:
                 print(f"\nUpdated Group: {oname} -> {question_group.name}")
         for i, q in enumerate(qg["questions"]):
             # check question exist
             find_question = crud_question.get_question_by_id(session=session,
-                                                             id=q.get('id'))
+                                                             id=q.get("id"))
             # get addons
             addons = {}
             if "allowOther" in q:
-                addons.update({'allowOther': q.get('allowOther')})
+                addons.update({"allowOther": q.get("allowOther")})
             if "allowOtherText" in q:
-                addons.update({'allowOtherText': q.get('allowOtherText')})
+                addons.update({"allowOtherText": q.get("allowOtherText")})
             # add new question
             if not updater or not find_question:
                 question = crud_question.add_question(
@@ -162,14 +175,15 @@ for file in sorted(files):
                     type=q["type"],
                     meta=q["meta"],
                     order=q["order"],
-                    required=q["required"] if "required" in q else False,
-                    rule=q["rule"] if "rule" in q else None,
+                    required=q.get("required") if "required" in q else False,
+                    rule=q.get("rule"),
                     dependency=q["dependency"] if "dependency" in q else None,
-                    tooltip=q.get('tooltip'),
-                    translations=q.get('translations'),
-                    api=q.get('api'),
+                    tooltip=q.get("tooltip"),
+                    translations=q.get("translations"),
+                    api=q.get("api"),
                     addons=addons if addons else None,
-                    option=q["options"] if "options" in q else [])
+                    option=q["options"] if "options" in q else [],
+                )
                 print(f"Added: {question.id}|{question.name}")
             # updater
             if updater and find_question:
@@ -186,7 +200,7 @@ for file in sorted(files):
                     meta=q.get("meta"),
                     id=find_question.id,
                     order=q.get("order"),
-                    required=q.get("required"),
+                    required=q.get("required") if "required" in q else False,
                     rule=q.get("rule"),
                     dependency=q.get("dependency"),
                     tooltip=q.get("tooltip"),
@@ -194,7 +208,8 @@ for file in sorted(files):
                     api=q.get("api"),
                     addons=addons if addons else None,
                     option=q["options"] if "options" in q else [],
-                    clear_option=True)
+                    clear_option=True,
+                )
                 if question.name != oname:
                     print(f"Updated: {question.id}|{oname} -> {question.name}")
                 if question.type != otype:
