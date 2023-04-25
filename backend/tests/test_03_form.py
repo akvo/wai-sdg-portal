@@ -12,6 +12,7 @@ account = Acc(True)
 
 
 class TestFormRoutes():
+
     @pytest.mark.asyncio
     async def test_add_form(self, app: FastAPI, session: Session,
                             client: AsyncClient) -> None:
@@ -35,11 +36,16 @@ class TestFormRoutes():
         assert res.status_code == 200
         res = res.json()
         assert res == {
-            "id": 1,
-            "name": "test",
-            "version": 1.0,
-            "description": "test description",
-            "default_language": "en",
+            "id":
+            1,
+            "name":
+            "test",
+            "version":
+            1.0,
+            "description":
+            "test description",
+            "default_language":
+            "en",
             "languages": ["en", "id"],
             "translations": [{
                 "language": "id",
@@ -65,37 +71,41 @@ class TestFormRoutes():
                 "type": "option"
             },
             json={
-                "option": [{
-                    "name": " Option 1 ", #strip option test
-                    "color": "#333",
-                    "order": 1,
-                    "score": None,
-                    "code": "OP1",
-                    "translations": [{
-                        "language": "id",
-                        "name": "Pilihan 1",
-                    }]
-                }, {
-                    "name": "Option 2",
-                    "color": "#333",
-                    "order": 2,
-                    "score": 5,
-                    "code": "OP2",
-                    "translations": [{
-                        "language": "id",
-                        "name": "Pilihan 2",
-                    }]
-                }, {
-                    "name": "Option 3",
-                    "color": None,
-                    "order": None,
-                    "score": 10,
-                    "code": "OP3",
-                    "translations": [{
-                        "language": "id",
-                        "name": "Pilihan 3",
-                    }]
-                }]
+                "option": [
+                    {
+                        "name": " Option 1 ",  # strip option test
+                        "color": "#333",
+                        "order": 1,
+                        "score": None,
+                        "code": "OP1",
+                        "translations": [{
+                            "language": "id",
+                            "name": "Pilihan 1",
+                        }]
+                    },
+                    {
+                        "name": "Option 2",
+                        "color": "#333",
+                        "order": 2,
+                        "score": 5,
+                        "code": "OP2",
+                        "translations": [{
+                            "language": "id",
+                            "name": "Pilihan 2",
+                        }]
+                    },
+                    {
+                        "name": "Option 3",
+                        "color": None,
+                        "order": None,
+                        "score": 10,
+                        "code": "OP3",
+                        "translations": [{
+                            "language": "id",
+                            "name": "Pilihan 3",
+                        }]
+                    }
+                ]
             },
             headers={"Authorization": f"Bearer {account.token}"},
         )
@@ -109,34 +119,52 @@ class TestFormRoutes():
         assert res["meta"] is True
         assert res["type"] == "option"
         assert res["option"] == [{
-            "color": "#333",
-            "id": 1,
-            "order": 1,
-            "name": "Option 1",
-            "score": None,
-            "code": "OP1",
+            "color":
+            "#333",
+            "id":
+            1,
+            "order":
+            1,
+            "name":
+            "Option 1",
+            "score":
+            None,
+            "code":
+            "OP1",
             "translations": [{
                 "language": "id",
                 "name": "Pilihan 1",
             }]
         }, {
-            "color": "#333",
-            "id": 2,
-            "order": 2,
-            "name": "Option 2",
-            "score": 5,
-            "code": "OP2",
+            "color":
+            "#333",
+            "id":
+            2,
+            "order":
+            2,
+            "name":
+            "Option 2",
+            "score":
+            5,
+            "code":
+            "OP2",
             "translations": [{
                 "language": "id",
                 "name": "Pilihan 2",
             }]
         }, {
-            "color": None,
-            "id": 3,
-            "order": None,
-            "name": "Option 3",
-            "score": 10,
-            "code": "OP3",
+            "color":
+            None,
+            "id":
+            3,
+            "order":
+            None,
+            "name":
+            "Option 3",
+            "score":
+            10,
+            "code":
+            "OP3",
             "translations": [{
                 "language": "id",
                 "name": "Pilihan 3",
