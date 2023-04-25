@@ -552,9 +552,7 @@
           "dependency": [
             {
               "id": 569090293,
-              "options": [
-                "Yes"
-              ]
+              "options": ["Yes"]
             }
           ]
         },
@@ -571,7 +569,7 @@
               "color": null
             },
             {
-              "name": "Incinerated (two chamber, 850-1000 \u00b0C incinerator)",
+              "name": "Incinerated (two chamber, 850-1000 °C incinerator)",
               "color": null
             },
             {
@@ -601,14 +599,16 @@
             {
               "name": "Not treated and added to general waste",
               "color": null
+            },
+            {
+              "name": "Data not collected",
+              "code": null
             }
           ],
           "dependency": [
             {
               "id": 569090293,
-              "options": [
-                "Yes"
-              ]
+              "options": ["Yes"]
             }
           ]
         }
