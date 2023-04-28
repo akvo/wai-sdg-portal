@@ -188,18 +188,18 @@ const Main = ({ match }) => {
               const ans =
                 x.answer.find((a) => a.question === key) ||
                 x?.categories?.find((dc) => dc.key === key);
-              const q = current.columns.find((c) => {
-                if (c?.category) {
+              const column = current.columns.find((c) => {
+                if (c?.category && x?.categories?.length) {
                   return x.categories.find((dc) => dc.key === c.key);
                 }
                 return c.key === key;
               });
               let value = ans?.value;
-              const qtype = question.find((qs) => qs.id === q.key)?.type;
-              if (q?.fn && value) {
-                value = q.fn(value);
+              const qtype = question.find((qs) => qs.id === column?.key)?.type;
+              if (column?.fn && value) {
+                value = column.fn(value);
               }
-              if (!q?.fn && value) {
+              if (!column?.fn && value) {
                 value =
                   qtype !== 'date'
                     ? startCase(value)
