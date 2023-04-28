@@ -47,6 +47,7 @@
           "type": "geo",
           "meta": true,
           "options": null,
+          "required": true,
           "id": 89
         },
         {
@@ -54,7 +55,7 @@
           "question": "dwd number of water point",
           "type": "number",
           "meta": false,
-          "required": true,
+          "required": false,
           "options": null,
           "id": 90
         },
@@ -153,13 +154,17 @@
             {
               "name": "agriculture (crops or animals)",
               "color": null
+            },
+            {
+              "name": "other",
+              "color": null
             }
           ],
           "id": 94
         },
         {
           "order": 13,
-          "question": "what is the main purpose for which people use water from this water point?--other--",
+          "question": "Specify another purpose for which people use water from this water point",
           "type": "option",
           "meta": false,
           "required": true,
@@ -193,7 +198,15 @@
               "color": null
             }
           ],
-          "id": 95
+          "id": 95,
+          "dependency": [
+            {
+              "id": 94,
+              "options": [
+                "other"
+              ]
+            }
+          ]
         },
         {
           "order": 14,
@@ -297,7 +310,15 @@
               "color": null
             }
           ],
-          "id": 100
+          "id": 100,
+          "dependency": [
+            {
+              "id": 98,
+              "options": [
+                "public tapstand"
+              ]
+            }
+          ]
         },
         {
           "order": 19,
@@ -315,7 +336,15 @@
               "color": null
             }
           ],
-          "id": 101
+          "id": 101,
+          "dependency": [
+            {
+              "id": 98,
+              "options": [
+                "public tapstand"
+              ]
+            }
+          ]
         },
         {
           "order": 20,
@@ -396,7 +425,15 @@
           "meta": false,
           "required": true,
           "options": null,
-          "id": 106
+          "id": 106,
+          "dependency": [
+            {
+              "id": 98,
+              "options": [
+                "deep borehole"
+              ]
+            }
+          ]
         },
         {
           "order": 25,
@@ -405,7 +442,15 @@
           "meta": false,
           "required": true,
           "options": null,
-          "id": 107
+          "id": 107,
+          "dependency": [
+            {
+              "id": 98,
+              "options": [
+                "deep borehole"
+              ]
+            }
+          ]
         },
         {
           "order": 26,

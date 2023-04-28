@@ -188,7 +188,7 @@ var page_config = {
         hover: [
           { id: 3, name: "Village Name" },
           {
-            id: 9,
+            id: 6,
             name: "Household Size",
           },
         ],
