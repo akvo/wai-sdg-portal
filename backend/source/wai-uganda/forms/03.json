@@ -306,7 +306,7 @@
         {
           "id": 671434022,
           "order": 4,
-          "question": "How many functioning stances are for females?",
+          "question": "Are the toilets/latrine for girls clean?",
           "type": "option",
           "meta": false,
           "required": true,
@@ -346,7 +346,7 @@
         {
           "id": 672354017,
           "order": 5,
-          "question": "How many functioning stances are for boys?",
+          "question": "Are the toilets for boys clean?",
           "type": "option",
           "meta": false,
           "required": true,
