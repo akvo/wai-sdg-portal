@@ -106,8 +106,9 @@ def seed(session: Session, file: str, user: int, form: int):
             for q in crud_question.get_question_by_form_id(session=session,
                                                            fid=form)
         }
-        df = df.rename(columns={d: int(d.split("|")[0])
-                                for d in list(df.columns)})
+        df = df.rename(
+            columns={d: int(d.split("|")[0])
+                     for d in list(df.columns)})
         total_data = 0
         for i, datapoint in enumerate(df.to_dict("records")):
             save(session=session,
@@ -119,11 +120,14 @@ def seed(session: Session, file: str, user: int, form: int):
                 session.commit()
                 time.sleep(1)
             total_data += 1
-        gc.collect()
-        os.remove(file)
         TESTING = os.environ.get("TESTING")
+        session.commit()
         if not TESTING:
             refresh_view(session=session)
+            print("REFRESH DONE")
+            time.sleep(3)
+        gc.collect()
+        os.remove(file)
         return total_data
     except Exception as e:
         print("SEEDER ERROR", str(e))

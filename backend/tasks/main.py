@@ -1,7 +1,6 @@
 import pandas as pd
 import gc
 import time
-from os import environ
 from sqlalchemy.orm import Session
 from datetime import timedelta
 from time import process_time
@@ -66,14 +65,12 @@ def run_seed(session: Session, jobs: dict):
 
 
 def run_validate(session: Session, jobs: dict):
-    TESTING = environ.get("TESTING")
-    start_time = print_log_start(ValidationText.start_validation.value)
+    print_log_start(ValidationText.start_validation.value)
     original_filename = jobs["info"]["original_filename"]
     user = get_user_by_id(session=session, id=jobs["created_by"])
     info = jobs["info"]
     id = jobs["id"]
     message = ValidationText.successfully_validation.value
-    payload = None
     error = validation.validate(session=session,
                                 form=info["form_id"],
                                 administration=info["administration"],
@@ -92,26 +89,24 @@ def run_validate(session: Session, jobs: dict):
         email.send
         # end of email
         error_file = storage.upload(error_file, "error", public=True)
-        payload = error_file
         message = ValidationText.error_validation.value
-    print(f"JOBS #{id} {message}")
-    status = JobStatus.failed if len(error) else JobStatus.pending
-    time.sleep(3)
-    jobs = crud.update(session=session,
-                       id=jobs["id"],
-                       payload=payload,
-                       type=None if len(error) else JobType.seed_data,
-                       status=status)
-    print_log_done(f"VALIDATION {status}", start_time)
-    if len(error) == 0:
+        jobs = crud.update(session=session,
+                           id=id,
+                           payload=error_file,
+                           status=JobStatus.failed)
+    else:
         # success email
         email = Email(recipients=[user.recipient],
                       type=MailTypeEnum.data_validation_success,
                       body=original_filename)
         email.send
         # end of email
-        if TESTING:
-            run_seed(session=session, jobs=jobs, init=True)
+        time.sleep(3)
+        jobs = crud.update(session=session,
+                           id=id,
+                           type=JobType.seed_data,
+                           status=JobStatus.pending)
+    print(f"JOBS #{id} {message}")
 
 
 def run_download(session: Session, jobs: dict):
@@ -168,5 +163,8 @@ def do_task(session: Session, jobs):
         if jobs["type"] == JobType.download:
             run_download(session=session, jobs=jobs)
     except Exception as e:
+        jobs = crud.update(session=session,
+                           id=jobs["id"],
+                           status=JobStatus.failed)
         write_log("ERROR", str(e))
     return True
