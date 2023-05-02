@@ -10,6 +10,7 @@ import {
   Avatar,
   Space,
   Popover,
+  Tooltip,
 } from 'antd';
 import {
   MenuOutlined,
@@ -21,6 +22,8 @@ import {
   DownloadOutlined,
 } from '@ant-design/icons';
 import { UIState } from '../state/ui';
+
+const MAX_ITEMS = 5;
 
 const {
   noActivityText,
@@ -41,6 +44,17 @@ const IconList = ({ type }) => {
   return <CheckCircleTwoTone twoToneColor="#52c41a" />;
 };
 
+const LoadMoreButton = ({ items = [] }) => {
+  return items?.length > MAX_ITEMS ? (
+    <div className="activity-log-more">
+      <Button>Loading more</Button>
+    </div>
+  ) : null;
+};
+
+const ListTitle = ({ title }) =>
+  title?.length >= 30 ? <Tooltip title={title}>{title}</Tooltip> : title;
+
 const ActivityLog = () => {
   const { activityLog } = UIState.useState((c) => c);
   if (activityLog.length) {
@@ -49,27 +63,27 @@ const ActivityLog = () => {
         size="small"
         itemLayout="horizontal"
         dataSource={activityLog}
+        loadMore={<LoadMoreButton items={activityLog} />}
         renderItem={(item) => {
-          let desc = item.status;
+          const actions = [];
           if (item?.attachment) {
-            desc = (
-              <div>
-                {item.status}
-                <a
-                  className="attachment-badge"
-                  href={item.attachment}
-                >
-                  <DownloadOutlined /> {attachmentText}
-                </a>
-              </div>
+            actions.push(
+              <a
+                className="attachment-badge"
+                href={item.attachment}
+              >
+                <Tooltip title={attachmentText}>
+                  <DownloadOutlined />
+                </Tooltip>
+              </a>
             );
           }
           return (
-            <List.Item>
+            <List.Item actions={actions}>
               <List.Item.Meta
                 avatar={<IconList type={item.icon} />}
-                title={item.file}
-                description={desc}
+                title={<ListTitle title={item.file} />}
+                description={item.status}
               />
             </List.Item>
           );
@@ -119,6 +133,7 @@ const Header = ({ logout, loginWithPopup, isAuthenticated }) => {
               placement="bottom"
               content={<ActivityLog />}
               trigger="click"
+              overlayClassName="activity-log"
             >
               <Badge count={activityLog.length}>
                 <Button icon={<FieldTimeOutlined />}>{activityLogText}</Button>
