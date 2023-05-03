@@ -22,8 +22,8 @@ import {
   DownloadOutlined,
 } from '@ant-design/icons';
 import { UIState } from '../state/ui';
-
-const MAX_ITEMS = 5;
+import LoadMoreButton from './LoadMoreButton';
+import { getJobsApi } from '../util/endpoints';
 
 const {
   noActivityText,
@@ -33,6 +33,7 @@ const {
 } = window.i18n.header;
 
 const { loginText, logoutText } = window.i18n.navigation;
+const { loadingText } = window.i18n.notificationText;
 
 const IconList = ({ type }) => {
   if (type === 'warning') {
@@ -44,26 +45,25 @@ const IconList = ({ type }) => {
   return <CheckCircleTwoTone twoToneColor="#52c41a" />;
 };
 
-const LoadMoreButton = ({ items = [] }) => {
-  return items?.length > MAX_ITEMS ? (
-    <div className="activity-log-more">
-      <Button>Loading more</Button>
-    </div>
-  ) : null;
-};
-
 const ListTitle = ({ title }) =>
   title?.length >= 30 ? <Tooltip title={title}>{title}</Tooltip> : title;
 
 const ActivityLog = () => {
-  const { activityLog } = UIState.useState((c) => c);
+  const { activityData } = UIState.useState((c) => c);
+  const {
+    data: activityLog,
+    current: currPage,
+    total_page: totalPage,
+    loading: loadActivity,
+  } = activityData;
+  const reached = currPage === totalPage;
   if (activityLog.length) {
     return (
       <List
         size="small"
         itemLayout="horizontal"
         dataSource={activityLog}
-        loadMore={<LoadMoreButton items={activityLog} />}
+        loadMore={<LoadMoreButton reached={reached} />}
         renderItem={(item) => {
           const actions = [];
           if (item?.attachment) {
@@ -91,15 +91,28 @@ const ActivityLog = () => {
       />
     );
   }
-  return <Card>{noActivityText}</Card>;
+  return <Card>{loadActivity ? loadingText : noActivityText}</Card>;
 };
 
 const Header = ({ logout, loginWithPopup, isAuthenticated }) => {
-  const { user, activityLog } = UIState.useState((c) => c);
+  const { user, activityData } = UIState.useState((c) => c);
+  const { active } = activityData;
   const onOpen = () => {
     UIState.update((s) => {
       s.showNav = true;
     });
+  };
+  const handleOpenPopover = (open) => {
+    if (open) {
+      getJobsApi(1);
+    } else {
+      UIState.update((e) => {
+        e.activityData = {
+          ...e.activityData,
+          data: [],
+        };
+      });
+    }
   };
   return (
     <Row
@@ -134,8 +147,9 @@ const Header = ({ logout, loginWithPopup, isAuthenticated }) => {
               content={<ActivityLog />}
               trigger="click"
               overlayClassName="activity-log"
+              onOpenChange={handleOpenPopover}
             >
-              <Badge count={activityLog.length}>
+              <Badge dot={active}>
                 <Button icon={<FieldTimeOutlined />}>{activityLogText}</Button>
               </Badge>
             </Popover>
