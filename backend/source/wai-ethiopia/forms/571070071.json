@@ -6,7 +6,7 @@
       "question_group": "Location Demographics",
       "questions": [
         {
-          "question": "location",
+          "question": "Location",
           "order": 1,
           "required": true,
           "type": "administration",
@@ -216,6 +216,10 @@
             },
             {
               "name": "Manual operation",
+              "color": null
+            },
+            {
+              "name": "Solar",
               "color": null
             }
           ]
