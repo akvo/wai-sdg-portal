@@ -4,7 +4,7 @@ var i18n = {
 		noActivityText: "No Activity",
 		activityLogText: "Activity Log",
 		recentActivityLogText: "Recent Activity Log",
-		attachmentText: "Attachment",
+		attachmentText: "Download attachment",
 	},
 	navigation: {
 		adminText: "Admin",
@@ -170,6 +170,7 @@ var i18n = {
 		btnSave: "Save",
 		btnUndo: "Undo",
 		btnRemoveFilter: "Remove Filter",
+		btnLoadMore: "Load more...",
 	},
 	formText: {
 		labelName: "Name",
