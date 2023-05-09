@@ -83,9 +83,9 @@ const Markers = ({
     let fill = '#F00';
     const r = 3;
     const stroke = '#fff';
-    if (colors) {
+    if (marker && colors) {
       const option = colors.find(
-        (c) => c.name?.toLowerCase() === marker?.toLowerCase()
+        (c) => c?.name?.toLowerCase() === marker?.toLowerCase()
       );
       fill = option ? option.color : '#FF0';
       if (!fill) {
@@ -94,7 +94,7 @@ const Markers = ({
         )?.color;
       }
     }
-    if (filterMarker?.toLowerCase() === marker?.toLowerCase()) {
+    if (marker && filterMarker?.toLowerCase() === marker?.toLowerCase()) {
       hovered = true;
     }
     return (
