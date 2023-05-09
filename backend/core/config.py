@@ -19,7 +19,6 @@ from routes.file import file_route
 from routes.log import log_route
 from routes.option import option_route
 from routes.hint import hint_route
-from routes.jobs import jobs_route
 from source.geoconfig import GeoLevels
 from AkvoResponseGrouper.routes import collection_route
 
@@ -107,7 +106,6 @@ app.include_router(file_route)
 app.include_router(project_route)
 app.include_router(log_route)
 app.include_router(hint_route)
-app.include_router(jobs_route)
 app.include_router(collection_route)
 
 
