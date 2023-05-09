@@ -92,7 +92,7 @@ def validate_geo(answer):
         return {"error_message": ValidationText.lat_long_validation.value}
     if "," not in answer:
         return {"error_message": ValidationText.lat_long_validation.value}
-    answer = answer.split(",")
+    answer = str(answer).split(",")
     if len(answer) != 2:
         return {"error_message": ValidationText.lat_long_validation.value}
     for a in answer:
@@ -123,14 +123,11 @@ def validate_administration(session, answer, adm):
 
 def validate_date(answer):
     try:
-        answer = int(answer)
-        return {
-            "error_message":
-            f"Invalid date format: {answer}. It should be YYYY-MM-DD"
-        }
-    except ValueError:
-        pass
-    try:
+        answer = (
+            answer.strftime("%Y-%m-%d")
+            if isinstance(answer, pd.Timestamp)
+            else str(answer)
+        )
         answer = datetime.strptime(answer, "%Y-%m-%d")
     except ValueError:
         return {
@@ -326,4 +323,4 @@ def validate(session: Session, form: int, administration: int, file: str):
         return header_error + data_error
     except Exception as e:
         print("VALIDATION ERROR", str(e))
-        return None
+        return [{"error": str(e), "cell": None}]
