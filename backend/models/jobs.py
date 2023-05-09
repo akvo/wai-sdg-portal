@@ -2,7 +2,7 @@
 # Keep the code clean and CLEAR
 
 import enum
-from typing import Optional
+from typing import Optional, List
 from datetime import datetime
 from typing_extensions import TypedDict
 from pydantic import BaseModel
@@ -43,6 +43,13 @@ class JobsDict(TypedDict):
 class JobStatusResponse(TypedDict):
     status: JobStatus
     attachment: Optional[str] = None
+
+
+class JobsPaginateResponse(TypedDict):
+    current: int
+    data: List[JobsDict]
+    total: int
+    total_page: int
 
 
 class Jobs(Base):
