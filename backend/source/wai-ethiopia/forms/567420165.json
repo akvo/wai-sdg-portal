@@ -157,7 +157,7 @@
           "order": 2,
           "meta": false,
           "type": "option",
-          "required": false,
+          "required": true,
           "options": [
             {
               "name": "Between 150 and 500 meters",
@@ -211,7 +211,7 @@
           "order": 3,
           "meta": false,
           "type": "option",
-          "required": false,
+          "required": true,
           "options": [
             {
               "name": "Less than 30 minutes",
@@ -257,7 +257,7 @@
           "order": 4,
           "meta": false,
           "type": "option",
-          "required": false,
+          "required": true,
           "options": [
             {
               "name": "Yes, at least once",
@@ -459,7 +459,7 @@
           "order": 3,
           "meta": false,
           "type": "option",
-          "required": false,
+          "required": true,
           "options": [
             {
               "name": "Yes",
@@ -495,7 +495,7 @@
           "order": 4,
           "meta": false,
           "type": "option",
-          "required": false,
+          "required": true,
           "options": [
             {
               "name": "In own dwelling",
@@ -535,7 +535,7 @@
           "order": 5,
           "meta": false,
           "type": "option",
-          "required": false,
+          "required": true,
           "options": [
             {
               "name": "Yes, but don't know when",
@@ -583,7 +583,7 @@
           "order": 6,
           "meta": false,
           "type": "multiple_option",
-          "required": false,
+          "required": true,
           "options": [
             {
               "name": "Removed by service provider to a treatment plant",
@@ -679,7 +679,7 @@
           "order": 2,
           "meta": false,
           "type": "option",
-          "required": false,
+          "required": true,
           "options": [
             {
               "name": "Water is available",
@@ -707,7 +707,7 @@
           "order": 3,
           "meta": false,
           "type": "option",
-          "required": false,
+          "required": true,
           "options": [
             {
               "name": "Yes, soap or detergent are present",

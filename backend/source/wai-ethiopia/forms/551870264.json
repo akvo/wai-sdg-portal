@@ -173,7 +173,7 @@
           "order": 3,
           "meta": false,
           "type": "option",
-          "required": false,
+          "required": true,
           "options": [
             {
               "name": "Yes, running water",
@@ -444,7 +444,7 @@
           "order": 3,
           "meta": false,
           "type": "option",
-          "required": false,
+          "required": true,
           "options": [
             {
               "name": "Yes, water and soap",
