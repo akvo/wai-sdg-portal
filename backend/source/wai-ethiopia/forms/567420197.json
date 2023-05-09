@@ -206,7 +206,7 @@
           "order": 11,
           "meta": false,
           "type": "option",
-          "required": true,
+          "required": false,
           "options": [
             {
               "name": "Bucket",
