@@ -70,7 +70,11 @@ def save(session: Session, user: int, form: int, dp: dict, qs: dict):
             if q.meta:
                 names.append(aw)
         elif q.type == QuestionType.date:
-            answer.text = aw
+            answer.text = (
+                aw.strftime("%Y-%m-%d")
+                if isinstance(aw, pd.Timestamp)
+                else str(aw)
+            )
         elif q.type == QuestionType.number:
             try:
                 aw = float(aw)
