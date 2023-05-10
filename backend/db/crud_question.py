@@ -144,7 +144,7 @@ def update_question(
                     order=o.get("order"),
                     color=o.get("color"),
                     score=o.get("score"),
-                    code=str(o.get("code")).strip() if o.get("code") else None,
+                    code=o.get("code").strip() if o.get("code") else None,
                     translations=o.get("translations"),
                 )
     session.commit()
