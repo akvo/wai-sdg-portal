@@ -23,7 +23,7 @@ def get_last_question(session: Session, form: int, question_group: int):
 
 
 def generateOptionObj(obj: dict):
-    opt = Option(name=obj["name"].strip())
+    opt = Option(name=str(obj["name"]).strip())
     if "id" in obj:
         opt.id = obj.get("id")
     if "order" in obj:
@@ -140,7 +140,7 @@ def update_question(
                 crud_option.update_option(
                     session=session,
                     id=o.get("id"),
-                    name=o["name"].strip(),
+                    name=str(o["name"]).strip(),
                     order=o.get("order"),
                     color=o.get("color"),
                     score=o.get("score"),
