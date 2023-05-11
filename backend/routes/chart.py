@@ -134,7 +134,7 @@ def get_aggregated_jmp_chart_data(
     req: Request,
     form_id: int,
     type: str,
-    # administration: Optional[int] = None,
+    administration: Optional[int] = None,
     # q: Optional[List[str]] = Query(None),
     session: Session = Depends(get_session),
 ):
@@ -145,9 +145,16 @@ def get_aggregated_jmp_chart_data(
     parent_administration = [
         x.simplify_serialize_with_children for x in parent_administration
     ]
-    data = get_jmp_overview(
-        session=session, form=form_id, name=type
-    )
+    if administration:
+        fp = list(
+            filter(lambda a: administration == a["id"], parent_administration)
+        )
+        if len(fp):
+            parent_administration = [
+                {"id": cd, "children": [cd]}
+                for cd in fp[0]["children"]
+            ]
+    data = get_jmp_overview(session=session, form=form_id, name=type)
     configs = get_jmp_config_by_form(form=form_id)
     labels = get_jmp_labels(configs=configs, name=type)
     group = list(
