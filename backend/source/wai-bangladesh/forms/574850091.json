@@ -90,7 +90,7 @@
           "order": 7,
           "meta": false,
           "type": "option",
-          "required": true,
+          "required": false,
           "options": [
             {
               "name": "Yes",
