@@ -1,5 +1,6 @@
+from math import ceil
 from pydantic import BaseModel
-from fastapi import Depends, Request, APIRouter, Query
+from fastapi import Depends, Request, APIRouter, Query, HTTPException
 from fastapi.security import HTTPBearer
 from typing_extensions import TypedDict
 from typing import List, Optional, Any, Union
@@ -41,6 +42,9 @@ class ScoreDict(TypedDict):
 class MapResponse(TypedDict):
     scores: List[ScoreDict]
     data: List[MapsDict]
+    current: int
+    total: int
+    total_page: int
 
 
 @maps_route.get(
@@ -54,6 +58,8 @@ def get(
     req: Request,
     form_id: int,
     shape: Union[int, str],
+    page: int = 1,
+    perpage: int = 100,
     marker: Optional[Union[int, str]] = None,
     hover_ids: Optional[str] = None,
     q: Optional[List[str]] = Query(None),
@@ -71,22 +77,35 @@ def get(
             hids.append(int(h))
         for h in hids:
             question_ids.append(h)
-    data = crud.get_data(
-        session=session, form=form_id, question=question_ids, options=options
+    ds, count = crud.get_data(
+        session=session,
+        form=form_id,
+        skip=(perpage * (page - 1)),
+        perpage=perpage,
+        question=question_ids,
+        options=options,
     )
-    categories = get_jmp_overview(session=session, form=form_id)
+    data = get_jmp_overview(session=session, form=form_id, data=ds)
     config = get_jmp_config_by_form(form=form_id)
     scores = [{"name": c["name"], "labels": c["labels"]} for c in config]
     for d in data:
         hover_values = []
-        fd = list(filter(lambda c: (c["data"] == d["id"]), categories))
-        if len(fd):
-            fc = fd[0]["categories"] if "categories" in fd[0] else []
-            if marker and not marker.isnumeric():
-                fm = list(filter(lambda m: (m["name"] == marker), fc))
+        if len(d["categories"]):
+            if isinstance(marker, str):
+                fm = list(
+                    filter(
+                        lambda m: (str(m["name"]).lower() == marker.lower()),
+                        d["categories"],
+                    )
+                )
                 d.update({"marker": fm[0]["category"] if len(fm) else None})
             if isinstance(shape, str):
-                fs = list(filter(lambda m: (m["name"] == shape), fc))
+                fs = list(
+                    filter(
+                        lambda m: (str(m["name"]).lower() == shape.lower()),
+                        d["categories"],
+                    )
+                )
                 d.update({"shape": fs[0]["category"] if len(fs) else None})
         for v in d["values"]:
             if marker and marker.isnumeric() and v["question"] == int(marker):
@@ -103,4 +122,13 @@ def get(
         if hover_ids:
             d.update({"marker_hover": hover_values})
         del d["values"]
-    return {"scores": scores, "data": data}
+    total_page = ceil(count / perpage) if count > 0 else 0
+    if total_page < page:
+        raise HTTPException(status_code=404, detail="Not found")
+    return {
+        "scores": scores,
+        "data": data,
+        "current": page,
+        "total": count,
+        "total_page": total_page,
+    }
