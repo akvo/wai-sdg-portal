@@ -7,7 +7,6 @@ import { generateAdvanceFilterURL } from '../../../util/utils';
 import Chart from '../../../chart';
 import api from '../../../util/api';
 import takeRight from 'lodash/takeRight';
-import { titleCase } from 'title-case';
 
 const levels = window.map_config?.shapeLevels?.length;
 
@@ -22,11 +21,55 @@ const TabJMP = ({ formId, chartList, show }) => {
   const [chartData, setChartData] = useState([]);
   const [pageLoading, setPageLoading] = useState(false);
 
+  const administrationId =
+    selectedAdministration.length <= levels
+      ? takeRight(selectedAdministration)[0]
+      : selectedAdministration[levels - 1];
+  const administrationList = administration.filter(
+    (adm) => adm?.parent === (administrationId || null)
+  );
+  const PER_PAGE = 250;
+
   useEffect(() => {
     if (loadedFormId !== formId) {
       setChartData([]);
     }
   }, [formId, loadedFormId]);
+
+  const getApiUrl = (q) => {
+    let url = `chart/jmp-data/${formId}/${q}?administration=${
+      administrationId || 0
+    }`;
+    url = generateAdvanceFilterURL(advanceSearchValue, url); // advance search
+    return url;
+  };
+
+  const handleOnDataset = (dataset) => {
+    const data = administrationList.map((adm) => {
+      const findData = dataset?.find((d) => d.administration === adm.id);
+      const stack = findData?.child?.map((c, cx) => {
+        return {
+          id: cx,
+          name: c.option,
+          color: c.color,
+          order: cx + 1,
+          value: c.percent,
+        };
+      });
+      return {
+        ...adm,
+        score: findData?.score,
+        stack: stack,
+      };
+    });
+    return {
+      data,
+      selectedAdministration:
+        selectedAdministration.length <= levels
+          ? null
+          : takeRight(selectedAdministration)[0],
+    };
+  };
 
   useEffect(() => {
     if (
@@ -37,67 +80,26 @@ const TabJMP = ({ formId, chartList, show }) => {
       loadedFormId === formId
     ) {
       setPageLoading(true);
-      const administrationId =
-        selectedAdministration.length <= levels
-          ? takeRight(selectedAdministration)[0]
-          : selectedAdministration[levels - 1];
-
-      const administrationList = administration.filter(
-        (adm) => adm?.parent === (administrationId || null)
-      );
 
       const apiCall = chartList?.map((chart) => {
-        let url = `chart/jmp-data/${formId}/${chart?.question}`;
-        url += `?administration=${administrationId || 0}`;
-        // advance search
-        url = generateAdvanceFilterURL(advanceSearchValue, url);
-        return api.get(url);
+        const url = getApiUrl(chart?.question);
+        return api.get(`${url}&page=1&perpage=${PER_PAGE}`);
       });
       Promise.all(apiCall)
         .then((res) => {
-          const allData = res?.map((r) => {
-            const chartSetting = chartList?.find(
-              (c) => c.question === r?.data?.question
-            );
-            const data = administrationList.map((adm) => {
-              const findData = r?.data?.data?.find(
-                (d) => d.administration === adm.id
-              );
-              const stack = findData?.child?.map((c, cx) => {
-                return {
-                  id: cx,
-                  name: c.option,
-                  color: c.color,
-                  order: cx + 1,
-                  score: 0,
-                  code: null,
-                  translations: null,
-                  value: c.percent,
-                };
-              });
-              return {
-                ...adm,
-                score: findData?.score || null,
-                stack: stack,
-              };
-            });
-            return {
-              name: titleCase(r?.data?.question),
-              type: chartSetting?.type,
-              selectedAdministration:
-                selectedAdministration.length <= levels
-                  ? null
-                  : takeRight(selectedAdministration)[0],
-              data: data,
-            };
+          const allData = res?.map(({ data: apiData }) => {
+            const { data: dataset } = apiData;
+            return handleOnDataset(dataset);
           });
-          return allData;
+          setChartData(allData);
+          setPageLoading(false);
         })
-        .then((res) => {
-          setChartData(res);
+        .catch(() => {
+          setChartData([]);
           setPageLoading(false);
         });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     user,
     chartList,
