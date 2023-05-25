@@ -45,12 +45,38 @@ class TestChartsRoutes:
         assert res == {
             "current": 1,
             "data": [
-                {"administration": 1, "score": 0, "child": []},
-                {"administration": 2, "score": 0, "child": []},
-                {"administration": 3, "score": 0, "child": []},
+                {"administration": 1, "child": []},
+                {"administration": 2, "child": []},
+                {"administration": 3, "child": []},
             ],
             "total": 4,
             "total_page": 1,
+            "question": "water",
+            "scores": [],
+        }
+        res = await client.get(
+            app.url_path_for(
+                "charts:get_aggregated_jmp_chart_data",
+                form_id=1,
+                type_name="sanitation",
+            ),
+            params={"administration": 3},
+        )
+        assert res.status_code == 200
+        res = res.json()
+        assert res == {
+            "current": 1,
+            "data": [
+                {"administration": 22, "child": []},
+                {"administration": 23, "child": []},
+                {"administration": 24, "child": []},
+                {"administration": 25, "child": []},
+                {"administration": 26, "child": []},
+            ],
+            "total": 4,
+            "total_page": 1,
+            "question": "sanitation",
+            "scores": [],
         }
 
     @pytest.mark.asyncio
