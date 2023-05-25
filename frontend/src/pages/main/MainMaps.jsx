@@ -20,6 +20,7 @@ import _ from 'lodash';
 import { generateAdvanceFilterURL } from '../../util/utils';
 import { getBounds, geojson, tileOSM, defaultPos } from '../../util/geo-util';
 import { Color } from '../../chart/chart-style';
+import PaginationApi from '../../components/PaginationApi';
 
 const { shapeLevels } = window.map_config;
 const mapMaxZoom = 14;
@@ -377,6 +378,7 @@ const MainMaps = ({ question, current }) => {
   const [shapeQuestion, setShapeQuestion] = useState({});
   const [markerOptions, setMarkerOptions] = useState([]);
   const [preload, setPreload] = useState(true);
+  const [totalPages, setTotalPages] = useState(null);
 
   // use tile layer from config
   const baseMap = window?.features?.mapFeature?.baseMap || tileOSM;
@@ -399,6 +401,28 @@ const MainMaps = ({ question, current }) => {
     }
   };
 
+  const PER_PAGE = 250;
+  const { selectableMarkerDropdown, maps } = current || {};
+  const { marker, shape } = maps || {};
+  const mHovers =
+    markerQuestion?.hover || selectableMarkerDropdown?.length
+      ? selectableMarkerDropdown[0]?.hover
+      : [];
+  const mId = markerQuestion?.id || marker?.id;
+
+  let url = `maps/${current?.formId}`;
+  if (current?.maps?.shape) {
+    url += `?shape=${current.maps.shape.id}`;
+  }
+  if (mId) {
+    url += `&marker=${mId}`;
+  }
+  if (mHovers?.length) {
+    const hoverIds = mHovers?.map((x) => x.id).join('|');
+    url += `&hover_ids=${hoverIds}`;
+  }
+  url = generateAdvanceFilterURL(advanceSearchValue, url); // advance search
+
   useEffect(() => {
     if (
       user &&
@@ -409,30 +433,11 @@ const MainMaps = ({ question, current }) => {
       preload
     ) {
       setPreload(false);
-      let url = `maps/${current.formId}`;
-      if (current.maps.shape) {
-        url += `?shape=${current.maps.shape.id}`;
-      }
-      const { selectableMarkerDropdown, maps } = current || {};
-      const { marker, shape } = maps || {};
-      const mId = markerQuestion?.id || marker?.id;
-      if (mId) {
-        url += `&marker=${mId}`;
-      }
-      const mHovers =
-        markerQuestion?.hover || selectableMarkerDropdown?.length
-          ? selectableMarkerDropdown[0]?.hover
-          : [];
-      if (mHovers?.length) {
-        const hoverIds = mHovers?.map((x) => x.id).join('|');
-        url += `&hover_ids=${hoverIds}`;
-      }
-      // advance search
-      url = generateAdvanceFilterURL(advanceSearchValue, url);
       api
-        .get(url)
+        .get(`${url}&page=1&perpage=${PER_PAGE}`)
         .then(({ data }) => {
-          const { scores, data: apiData } = data;
+          const { scores, data: apiData, total_page } = data;
+          setTotalPages(total_page);
           const { calculatedBy, id: shapeId } = shape || {};
           if (selectableMarkerDropdown?.length) {
             const _markerOptions = selectableMarkerDropdown?.map((md) => {
@@ -517,6 +522,10 @@ const MainMaps = ({ question, current }) => {
     shapeQuestion,
     markerQuestion?.hover,
     markerQuestion?.id,
+    selectableMarkerDropdown,
+    shape,
+    url,
+    mId,
   ]);
 
   // shape config
@@ -850,6 +859,16 @@ const MainMaps = ({ question, current }) => {
             />
           )}
         </MapContainer>
+      )}
+      {api.token && totalPages && !loading && (
+        <PaginationApi
+          apiUrl={url}
+          totalPages={totalPages}
+          perPage={PER_PAGE}
+          callback={(res) => {
+            setData([...data, ...res]);
+          }}
+        />
       )}
     </div>
   );

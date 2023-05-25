@@ -27,7 +27,6 @@ class TestMapsRoutes:
                 "loc": "Garut",
                 "geo": [-7.836114, 110.331143],
                 "name": "Garut - Garut",
-                "marker": None,
                 "shape": 10.0,
             },
             {
@@ -35,7 +34,9 @@ class TestMapsRoutes:
                 "loc": "Garut",
                 "geo": [-7.836114, 110.331143],
                 "name": "Garut",
-                "marker": None,
                 "shape": 10.0,
             },
         ]
+        assert res["current"] == 1
+        assert res["total"] == 2
+        assert res["total_page"] == 1
