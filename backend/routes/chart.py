@@ -109,12 +109,15 @@ def group_children(p: dict, ds: list, labels: list):
                 counter[v["category"]] += 1
             else:
                 counter[v["category"]] = 1
-    score = 0
+
+    # score = 0
+    # because the graph uses pagination so the score needs
+    # to be calculated from the frontend
     for lb in labels:
         label = lb["name"]
         count = counter[label] if label in counter else 0
         percentage = count / total if count > 0 else 0
-        score += lb["score"] * percentage
+        # score += lb["score"] * percentage
         percent = percentage * 100
         childs.append(
             {
@@ -124,7 +127,7 @@ def group_children(p: dict, ds: list, labels: list):
                 "color": lb["color"],
             }
         )
-    return {"administration": p["id"], "score": score, "child": childs}
+    return {"administration": p["id"], "child": childs}
 
 
 @chart_route.get(
@@ -186,6 +189,7 @@ def get_aggregated_jmp_chart_data(
     ]
     configs = get_jmp_config_by_form(form=form_id)
     labels = get_jmp_labels(configs=configs, name=type_name)
+    scores = [(lb["name"], lb["score"]) for lb in labels]
     groups = list(
         map(
             lambda p: group_children(p, data, labels),
@@ -200,6 +204,8 @@ def get_aggregated_jmp_chart_data(
         "data": groups,
         "total": count,
         "total_page": total_page,
+        "question": type_name,
+        "scores": scores,
     }
 
 
