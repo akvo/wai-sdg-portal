@@ -73,7 +73,7 @@ class TestChartsRoutes:
                 {"administration": 25, "child": []},
                 {"administration": 26, "child": []},
             ],
-            "total": 4,
+            "total": 2,
             "total_page": 1,
             "question": "sanitation",
             "scores": [],

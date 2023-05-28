@@ -119,7 +119,6 @@ def get_data(
     if administration:
         data = data.filter(Data.administration.in_(administration))
     count = data.count()
-    # TODO: getting the score
     # if no question order data by id desc
     data = data.order_by(desc(Data.id))
 
