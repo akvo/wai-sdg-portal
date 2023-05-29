@@ -1,5 +1,5 @@
 import 'leaflet/dist/leaflet.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   MapContainer,
   TileLayer,
@@ -360,7 +360,6 @@ const MarkerLegend = ({
 
 const MainMaps = ({ question, current }) => {
   const {
-    user,
     administration,
     selectedAdministration,
     advanceSearchValue,
@@ -404,37 +403,39 @@ const MainMaps = ({ question, current }) => {
   const PER_PAGE = 250;
   const { selectableMarkerDropdown, maps } = current || {};
   const { marker, shape } = maps || {};
-  const mHovers =
-    markerQuestion?.hover || selectableMarkerDropdown?.length
-      ? selectableMarkerDropdown[0]?.hover
-      : [];
-  const mId = markerQuestion?.id || marker?.id;
+  const mHovers = useMemo(
+    () =>
+      markerQuestion?.hover || selectableMarkerDropdown?.length
+        ? selectableMarkerDropdown[0]?.hover
+        : [],
+    [markerQuestion, selectableMarkerDropdown]
+  );
+  const mId = useMemo(
+    () => markerQuestion?.id || marker?.id,
+    [markerQuestion, marker]
+  );
+  const endpointURL = useMemo(() => {
+    const form = loadedFormId || current?.formId;
+    let url = `maps/${form}`;
+    if (current?.maps?.shape) {
+      url += `?shape=${current.maps.shape.id}`;
+    }
 
-  let url = `maps/${current?.formId}`;
-  if (current?.maps?.shape) {
-    url += `?shape=${current.maps.shape.id}`;
-  }
-  if (mId) {
-    url += `&marker=${mId}`;
-  }
-  if (mHovers?.length) {
-    const hoverIds = mHovers?.map((x) => x.id).join('|');
-    url += `&hover_ids=${hoverIds}`;
-  }
-  url = generateAdvanceFilterURL(advanceSearchValue, url); // advance search
+    if (mId) {
+      url += `&marker=${mId}`;
+    }
+    if (mHovers?.length) {
+      const hoverIds = mHovers?.map((x) => x.id).join('|');
+      url += `&hover_ids=${hoverIds}`;
+    }
+    url = generateAdvanceFilterURL(advanceSearchValue, url); // advance search
+    return url;
+  }, [advanceSearchValue, loadedFormId, mHovers, mId, current]);
 
   useEffect(() => {
-    if (
-      user &&
-      current &&
-      loadedFormId !== null &&
-      loadedFormId === current?.formId &&
-      loading &&
-      preload
-    ) {
-      setPreload(false);
+    if (endpointURL) {
       api
-        .get(`${url}&page=1&perpage=${PER_PAGE}`)
+        .get(`${endpointURL}&page=1&perpage=${PER_PAGE}`)
         .then(({ data }) => {
           const { scores, data: apiData, total_page } = data;
           setTotalPages(total_page);
@@ -503,30 +504,8 @@ const MainMaps = ({ question, current }) => {
           setLoading(false);
         });
     }
-    if (!preload && !loading && loadedFormId !== current?.formId) {
-      setShapeQuestion(null);
-      setMarkerOptions([]);
-      setMarkerQuestion(null);
-      setLoading(true);
-      setPreload(true);
-    }
-  }, [
-    user,
-    current,
-    question,
-    preload,
-    loading,
-    loadedFormId,
-    advanceSearchValue,
-    markerOptions,
-    shapeQuestion,
-    markerQuestion?.hover,
-    markerQuestion?.id,
-    selectableMarkerDropdown,
-    shape,
-    url,
-    mId,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [endpointURL]);
 
   // shape config
   const shapeShadingType = current?.maps?.shape?.type;
@@ -862,7 +841,7 @@ const MainMaps = ({ question, current }) => {
       )}
       {api.token && totalPages && !loading && (
         <PaginationApi
-          apiUrl={url}
+          apiUrl={endpointURL}
           totalPages={totalPages}
           perPage={PER_PAGE}
           callback={(res) => {

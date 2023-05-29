@@ -24,14 +24,16 @@ const PaginationApi = ({
   useEffect(() => {
     if (preload) {
       setPreload(false);
-      fetchAllPages().then((res) => {
-        if (callback) {
-          callback(res);
-        }
-      });
+      if (totalPages > 1) {
+        fetchAllPages().then((res) => {
+          if (callback) {
+            callback(res);
+          }
+        });
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [preload]);
+  }, [preload, totalPages]);
 
   return <React.Fragment />;
 };

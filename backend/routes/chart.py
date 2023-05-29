@@ -143,8 +143,10 @@ def get_aggregated_jmp_chart_data(
     page: int = 1,
     perpage: int = 100,
     administration: Optional[int] = None,
+    q: Optional[List[str]] = Query(None),
     session: Session = Depends(get_session),
 ):
+    options = check_query(q) if q else None
     parent_administration = crud_administration.get_parent_administration(
         session=session
     )
@@ -159,9 +161,14 @@ def get_aggregated_jmp_chart_data(
             parent_administration = [
                 {"id": cd, "children": [cd]} for cd in fp[0]["children"]
             ]
+    adm_ids = (
+        [pa["id"] for pa in parent_administration] if administration else None
+    )
     paginated = get_data(
         session=session,
         form=form_id,
+        options=options,
+        administration=adm_ids,
         columns=[Data.id, Data.administration],
         skip=(perpage * (page - 1)),
         perpage=perpage,
