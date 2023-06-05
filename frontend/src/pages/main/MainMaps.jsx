@@ -376,6 +376,7 @@ const MainMaps = ({ question, current }) => {
   const [shapeTooltip, setShapeTooltip] = useState('');
   const [shapeQuestion, setShapeQuestion] = useState({});
   const [markerOptions, setMarkerOptions] = useState([]);
+  const [scoreOptions, setScoreOptions] = useState([]);
   const [preload, setPreload] = useState(true);
   const [totalPages, setTotalPages] = useState(null);
 
@@ -439,25 +440,8 @@ const MainMaps = ({ question, current }) => {
         .then(({ data }) => {
           const { scores, data: apiData, total_page } = data;
           setTotalPages(total_page);
+          setScoreOptions(scores);
           const { calculatedBy, id: shapeId } = shape || {};
-          if (selectableMarkerDropdown?.length) {
-            const _markerOptions = selectableMarkerDropdown?.map((md) => {
-              const fm =
-                typeof md?.id === 'string'
-                  ? scores?.find((s) => s?.name === md?.id)
-                  : question?.find((q) => q?.id === md?.id);
-              const mOptions = fm?.option || fm?.labels;
-              return {
-                ...fm,
-                ...md,
-                option: mOptions,
-              };
-            });
-            setMarkerOptions(_markerOptions);
-            const markerData = _markerOptions?.find((mo) => mo?.id === mId);
-            const defaultSelectable = markerData || _markerOptions.shift();
-            setMarkerQuestion(defaultSelectable);
-          }
           let shapeData = question.find((q) => q.id === shapeId);
           let option = [];
           if (typeof shapeId === 'string') {
@@ -686,6 +670,42 @@ const MainMaps = ({ question, current }) => {
       setShapeTooltip(tooltipElement);
     }
   }, [hoveredShape, data, shapeQuestion]);
+
+  useEffect(() => {
+    if (
+      selectableMarkerDropdown?.length &&
+      question?.length &&
+      scoreOptions?.length &&
+      markerOptions.length === 0
+    ) {
+      const _markerOptions = selectableMarkerDropdown?.map((md) => {
+        const fq = question?.find((q) => q?.id === md?.id);
+        if (!fq) {
+          const fs = scoreOptions?.find((s) => s?.name === md?.id);
+          return {
+            ...fs,
+            ...md,
+            option: fs?.labels || [],
+          };
+        }
+        return {
+          ...md,
+          ...fq,
+        };
+      });
+      setMarkerOptions(_markerOptions);
+      const markerData = _markerOptions?.find((mo) => mo?.id === mId);
+      const defaultSelectable = markerData || _markerOptions.shift();
+      setMarkerQuestion(defaultSelectable);
+    }
+  }, [
+    mId,
+    question,
+    selectableMarkerDropdown,
+    markerQuestion,
+    markerOptions,
+    scoreOptions,
+  ]);
 
   const geoStyle = (g) => {
     const gname = g.properties[shapeLevels[shapeLevels.length - 1]];
