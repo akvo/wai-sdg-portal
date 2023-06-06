@@ -777,22 +777,14 @@
 		],
 		"categories": [
 			{
-				"name": "Basic",
+				"name": "Safely Managed",
 				"questions": [
 					{
 						"id": 557970124,
 						"text": "What type of toilet do members of your household usually use?",
 						"options": [
-							"Flush/pour flush to pit latrine",
-							"Ventilated improved pit latrine (VIP) with slab",
-							"Pit latrine with slab",
-							"Twin pit offset latrine",
-							"Twin pit with latrine slab",
-							"Other composting latrine",
-							"Flush/pour flush to open drain",
-							"Flush/pour flush to don't know where",
-							"Biogas toilet",
-							"Composting toilet (Ecosan)"
+							"Flush/pour flush to piped sewer system",
+							"Flush/pour flush to septic tank"
 						],
 						"other": [
 							{
@@ -804,44 +796,28 @@
 								"questions": []
 							},
 							{
-								"name": "Safely Managed",
-								"options": [
-									"Flush/pour flush to piped sewer system",
-									"Flush/pour flush to septic tank"
+								"name": "Basic",
+								"options": [		
+									"Flush/pour flush to pit latrine",
+									"Ventilated improved pit latrine (VIP) with slab",
+									"Pit latrine with slab",
+									"Twin pit offset latrine",
+									"Twin pit with latrine slab",
+									"Other composting latrine",
+									"Flush/pour flush to open drain",
+									"Flush/pour flush to don't know where",
+									"Biogas toilet",
+									"Composting toilet (Ecosan)"
 								],
-								"questions": [
-									{
-										"id": 557970122,
-										"text": "Has your pit toilet or septic tank ever been emptied?",
-										"options": [
-											"Yes, but don't know when",
-											"Yes, within the last 5 years",
-											"Yes, more than 5 years ago"
-										],
-										"else": {
-											"name": "Basic",
-											"ignore": [
-												557970125
-											]
-										}
-									},
-									{
-										"id": 557970125,
-										"text": "How was the content of pit toilet or septic tank emptied or removed?",
-										"options": [
-											"Removed by service provider to a treatment plant",
-											"Removed by service provider and buried in a covered pit",
-											"Emptied by household and buried in a covered pit"
-										],
-										"else": {
-											"name": "Basic"
-										}
-									}
-								]
+								"questions": []
 							}
 						],
 						"else": {
-							"name": "Open Defecation"
+							"name": "Open Defecation",
+							"ignore": [
+								557970122,
+								557970125
+							]
 						}
 					},
 					{
@@ -863,6 +839,33 @@
 						],
 						"else": {
 							"name": "Limited"
+						}
+					},
+					{
+						"id": 557970122,
+						"text": "Has your pit toilet or septic tank ever been emptied?",
+						"options": [
+							"Yes, but don't know when",
+							"Yes, within the last 5 years",
+							"Yes, more than 5 years ago"
+						],
+						"else": {
+							"name": "Basic",
+							"ignore": [
+								557970125
+							]
+						}
+					},
+					{
+						"id": 557970125,
+						"text": "How was the content of pit toilet or septic tank emptied or removed?",
+						"options": [
+							"Removed by service provider to a treatment plant",
+							"Removed by service provider and buried in a covered pit",
+							"Emptied by household and buried in a covered pit"
+						],
+						"else": {
+							"name": "Basic"
 						}
 					}
 				]
