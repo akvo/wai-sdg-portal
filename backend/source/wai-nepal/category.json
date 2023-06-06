@@ -294,26 +294,6 @@
 						}
 					},
 					{
-						"id": 692994012,
-						"text": "How do you dispose degradable waste?",
-						"options": [
-							"Bury"
-						],
-						"else": {
-							"name": "Limited"
-						}
-					},
-					{
-						"id": 696744007,
-						"text": "How do you dispose non-hazardous non decomposible waste?",
-						"options": [
-							"Bury"
-						],
-						"else": {
-							"name": "Limited"
-						}
-					},
-					{
 						"id": 554350181,
 						"text": "How does this facility usually treat/dispose of infectious waste?",
 						"options": [
