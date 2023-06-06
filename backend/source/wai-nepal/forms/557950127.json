@@ -587,62 +587,6 @@
           ]
         },
         {
-          "id": 692994012,
-          "order": 2,
-          "question": "How do you dispose degradable waste?",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "Dump",
-              "code": "WD1"
-            },
-            {
-              "name": "Bury",
-              "code": "WD2"
-            }
-          ],
-          "dependency": [
-            {
-              "id": 554350179,
-              "options": [
-                "Yes"
-              ]
-            }
-          ]
-        },
-        {
-          "id": 696744007,
-          "order": 3,
-          "question": "How do you dispose non-hazardous non decomposible waste?",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "Burn",
-              "code": "WH1"
-            },
-            {
-              "name": "Bury",
-              "code": "WH2"
-            },
-            {
-              "name": "Garbage Tractor",
-              "code": "WH3"
-            }
-          ],
-          "dependency": [
-            {
-              "id": 554350179,
-              "options": [
-                "Yes"
-              ]
-            }
-          ]
-        },
-        {
           "id": 554350181,
           "question": "How does this facility usually treat/dispose of infectious waste?",
           "order": 2,
@@ -695,6 +639,10 @@
             {
               "name": "Garbage Tractor",
               "code": "WN3"
+            },
+            {
+              "name": "Burn",
+              "code": "WN4"
             }
           ],
           "dependency": [
