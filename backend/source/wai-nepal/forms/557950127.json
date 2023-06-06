@@ -575,70 +575,23 @@
           "required": true,
           "options": [
             {
-              "name": "Yes",
+              "name": "Yes, waste correctly segregated into at least three labelled bins in the consultation area",
               "color": "#70AD47",
-              "code": "WS1"
+              "code": "WB1"
             },
             {
-              "name": "No",
+              "name": "Bins are present but do not meet all requirements or waste is not correctly segragated",
+              "color": "#BF8F00",
+              "code": "WB2"
+            },
+            {
+              "name": "No, bins are not present",
               "color": "#FF0000",
-              "code": "WS2"
-            }
-          ]
-        },
-        {
-          "id": 692994012,
-          "order": 2,
-          "question": "How do you dispose degradable waste?",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "Dump",
-              "code": "WD1"
+              "code": "WB3"
             },
             {
-              "name": "Bury",
-              "code": "WD2"
-            }
-          ],
-          "dependency": [
-            {
-              "id": 554350179,
-              "options": [
-                "Yes"
-              ]
-            }
-          ]
-        },
-        {
-          "id": 696744007,
-          "order": 3,
-          "question": "How do you dispose non-hazardous non decomposible waste?",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "Burn",
-              "code": "WH1"
-            },
-            {
-              "name": "Bury",
-              "code": "WH2"
-            },
-            {
-              "name": "Garbage Tractor",
-              "code": "WH3"
-            }
-          ],
-          "dependency": [
-            {
-              "id": 554350179,
-              "options": [
-                "Yes"
-              ]
+              "name": "Do not know/No Data",
+              "code": "WB4"
             }
           ]
         },
@@ -651,27 +604,51 @@
           "required": true,
           "options": [
             {
-              "name": "Burn",
-              "code": "WB1"
+              "name": "Autoclaved",
+              "code": "WD1"
             },
             {
-              "name": "Bury",
-              "code": "WB2"
+              "name": "Incinerated (two chamber, 850-1000 °C incinerator)",
+              "code": "WD2"
             },
             {
-              "name": "Recycle",
-              "code": "WB3"
+              "name": "Incinerated (other)",
+              "code": "WD3"
             },
             {
-              "name": "Garbage Tractor",
-              "code": "WB4"
+              "name": "Burning in a protected pit",
+              "code": "WD4"
+            },
+            {
+              "name": "Not treated, but buried in lined, protected pit",
+              "code": "WD5"
+            },
+            {
+              "name": "Not treated, but collected for medical waste disposal off-site",
+              "code": "WD6"
+            },
+            {
+              "name": "Open dumping without treatment",
+              "code": "WD7"
+            },
+            {
+              "name": "Open burning",
+              "code": "WD8"
+            },
+            {
+              "name": "Not treated and added to general waste",
+              "code": "WD9"
+            },
+            {
+              "name": "Do not know/No Data",
+              "code": "WD10"
             }
           ],
           "dependency": [
             {
               "id": 554350179,
               "options": [
-                "Yes"
+                "Yes, waste correctly segregated into at least three labelled bins in the consultation area"
               ]
             }
           ]
@@ -685,23 +662,51 @@
           "required": true,
           "options": [
             {
-              "name": "Bury",
-              "code": "WN1"
+              "name": "Autoclaved",
+              "code": "WS1"
             },
             {
-              "name": "Incinerator",
-              "code": "WN2"
+              "name": "Incinerated (two chamber, 850-1000 °C incinerator)",
+              "code": "WS2"
             },
             {
-              "name": "Garbage Tractor",
-              "code": "WN3"
+              "name": "Incinerated (other)",
+              "code": "WS3"
+            },
+            {
+              "name": "Burning in a protected pit",
+              "code": "WS4"
+            },
+            {
+              "name": "Not treated, but buried in lined, protected pit",
+              "code": "WS5"
+            },
+            {
+              "name": "Not treated, but collected for medical waste disposal off-site",
+              "code": "WS6"
+            },
+            {
+              "name": "Open dumping without treatment",
+              "code": "WS7"
+            },
+            {
+              "name": "Open burning",
+              "code": "WS8"
+            },
+            {
+              "name": "Not treated and added to general waste",
+              "code": "WS9"
+            },
+            {
+              "name": "Do not know/No Data",
+              "code": "WS10"
             }
           ],
           "dependency": [
             {
               "id": 554350179,
               "options": [
-                "Yes"
+                "Yes, waste correctly segregated into at least three labelled bins in the consultation area"
               ]
             }
           ]
