@@ -274,7 +274,7 @@
                 "score": -1
 			},
 			{
-				"name": "No Facility",
+				"name": "No Service",
 				"color": "#FEBC11",
                 "score": -2
 			}
@@ -287,28 +287,33 @@
 						"id": 554350179,
 						"text": "Is waste correctly segregated into at least three labelled bins in the consultation area?",
 						"options": [
-							"Yes"
+							"Yes, waste correctly segregated into at least three labelled bins in the consultation area"
 						],
 						"else": {
-							"name": "No Facility"
+							"name": "No Service"
 						}
 					},
 					{
 						"id": 554350181,
 						"text": "How does this facility usually treat/dispose of infectious waste?",
 						"options": [
-							"Burn"
+							"Autoclaved",
+                            "Incinerated (two chamber, 850-1000 °C incinerator)",
+                            "Incinerated (other)",
+                            "Burning in a protected pit"
 						],
 						"else": {
-							"name": "No Facility"
+							"name": "Limited"
 						}
 					},
 					{
 						"id": 554350180,
 						"text": "How does this facility usually treat/dispose of sharps waste?",
 						"options": [
-							"Bury",
-							"Incinerator"
+							"Autoclaved",
+                            "Incinerated (two chamber, 850-1000 °C incinerator)",
+                            "Incinerated (other)",
+                            "Burning in a protected pit"
 						],
 						"else": {
 							"name": "Limited"
