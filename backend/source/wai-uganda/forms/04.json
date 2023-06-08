@@ -104,6 +104,40 @@
         },
         {
           "order": 9,
+          "question": "Type of water source",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "deep borehole",
+              "color": null
+            },
+            {
+              "name": "Rainwater harvesting tank",
+              "color": null
+            },
+            {
+              "name": "protected spring",
+              "color": null
+            },
+            {
+              "name": "shallow well",
+              "color": null
+            },
+            {
+              "name": "public tapstand",
+              "color": null
+            },
+            {
+              "name": "kiosk",
+              "color": null
+            }
+          ],
+          "id": 98
+        },
+        {
+          "order": 10,
           "question": "Is the water point currently functional?",
           "type": "option",
           "meta": false,
@@ -129,359 +163,65 @@
           "id": 111
         },
         {
-          "order": 10,
-          "question": "Type of water source",
+          "order": 11,
+          "question": "Please rate the level of functionality",
           "type": "option",
           "meta": false,
           "required": true,
           "options": [
             {
-              "name": "deep borehole",
+              "name": "fully functioning at 100%",
               "color": null
             },
             {
-              "name": "Rainwater harvesting tank",
+              "name": "partially functioning works with some issues/ difficulties",
               "color": null
             },
             {
-              "name": "protected spring",
-              "color": null
-            },
-            {
-              "name": "shallow well",
-              "color": null
-            },
-            {
-              "name": "public tap stand",
-              "color": null
-            },
-            {
-              "name": "kiosk",
+              "name": "barely functioning (almost not functioning)",
               "color": null
             }
           ],
-          "id": 98,
+          "id": 112,
           "dependency": [
             {
               "id": 111,
               "options": [
                 "functional in use",
-                "functional and not in use"
-              ]
-            }
-          ]
-        },
-        {
-          "order": 11,
-          "question": "Public tap stand - name of water scheme connected",
-          "type": "text",
-          "meta": true,
-          "options": null,
-          "id": 99,
-          "dependency": [
-            {
-              "id": 98,
-              "options": [
-                "public tap stand"
+                "functional and not in use",
+                "non-functional"
               ]
             }
           ]
         },
         {
           "order": 12,
-          "question": "Public tap stand with water meter",
+          "question": "Estimate the number of households who use this water point as their source of water",
           "type": "option",
           "meta": false,
-          "required": true,
+          "required": false,
           "options": [
             {
-              "name": "yes",
+              "name": "25-50",
               "color": null
             },
             {
-              "name": "no",
+              "name": "50-100",
+              "color": null
+            },
+            {
+              "name": "more than 100",
+              "color": null
+            },
+            {
+              "name": "less than 25",
               "color": null
             }
           ],
-          "id": 100,
-          "dependency": [
-            {
-              "id": 98,
-              "options": [
-                "public tap stand"
-              ]
-            }
-          ]
+          "id": 93
         },
         {
           "order": 13,
-          "question": "Water meter functioning",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "yes",
-              "color": null
-            },
-            {
-              "name": "no",
-              "color": null
-            }
-          ],
-          "id": 101,
-          "dependency": [
-            {
-              "id": 98,
-              "options": [
-                "yes"
-              ]
-            }
-          ]
-        },
-        {
-          "order": 14,
-          "question": "Rainwater harvesting tank - volume (l)",
-          "type": "option",
-          "meta": false,
-          "required": false,
-          "options": [
-            {
-              "name": "nan",
-              "color": null
-            },
-            {
-              "name": "13 liters",
-              "color": null
-            }
-          ],
-          "id": 102,
-          "dependency": [
-            {
-              "id": 98,
-              "options": [
-                "Rainwater harvesting tank"
-              ]
-            }
-          ]
-        },
-        {
-          "order": 15,
-          "question": "Number of taps\/spouts",
-          "type": "option",
-          "meta": false,
-          "required": false,
-          "options": [
-            {
-              "name": "one",
-              "color": null
-            },
-            {
-              "name": "more than one",
-              "color": null
-            }
-          ],
-          "id": 103,
-          "dependency": [
-            {
-              "id": 98,
-              "options": [
-                "deep borehole",
-                "public tap stand",
-                "shallow well"
-              ]
-            }
-          ]
-        },
-        {
-          "order": 16,
-          "question": "Protected spring type",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "ordinary",
-              "color": null
-            },
-            {
-              "name": "improved",
-              "color": null
-            }
-          ],
-          "id": 104,
-          "dependency": [
-            {
-              "id": 98,
-              "options": [
-                "protected spring"
-              ]
-            }
-          ]
-        },
-        {
-          "order": 17,
-          "question": "How many sprouts does it have?",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "one",
-              "color": null
-            },
-            {
-              "name": "more than one",
-              "color": null
-            }
-          ],
-          "id": 105,
-          "dependency": [
-            {
-              "id": 98,
-              "options": [
-                "protected spring"
-              ]
-            }
-          ]
-        },
-        {
-          "order": 18,
-          "question": "Borehole\/well depth (m)",
-          "type": "number",
-          "meta": false,
-          "required": true,
-          "options": null,
-          "id": 106,
-          "dependency": [
-            {
-              "id": 98,
-              "options": [
-                "deep borehole"
-              ]
-            }
-          ]
-        },
-        {
-          "order": 19,
-          "question": "Borehole\/well diameter (in)",
-          "type": "number",
-          "meta": false,
-          "required": true,
-          "options": null,
-          "id": 107,
-          "dependency": [
-            {
-              "id": 98,
-              "options": [
-                "deep borehole"
-              ]
-            }
-          ]
-        },
-        {
-          "order": 20,
-          "question": "Type of lifting device?",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "hand pump",
-              "color": null
-            },
-            {
-              "name": "rope pump",
-              "color": null
-            },
-            {
-              "name": "manual lifting rope",
-              "color": null
-            },
-            {
-              "name": "motorized pump",
-              "color": null
-            }
-          ],
-          "id": 108,
-          "dependency": [
-            {
-              "id": 98,
-              "options": [
-                "deep borehole"
-              ]
-            }
-          ]
-        },
-        {
-          "order": 21,
-          "question": "Hand Pump type",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "afridev",
-              "color": null
-            },
-            {
-              "name": "india mark",
-              "color": null
-            }
-          ],
-          "id": 109,
-          "dependency": [
-            {
-              "id": 108,
-              "options": [
-                "rope pump",
-                "motorized pump"
-              ]
-            }
-          ]
-        },
-        {
-          "order": 22,
-          "question": "What is the pipe material?",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "gi",
-              "color": null
-            },
-            {
-              "name": "pvc",
-              "color": null
-            },
-            {
-              "name": "i don't know",
-              "color": null
-            },
-            {
-              "name": "stainless steel",
-              "color": null
-            },
-            {
-              "name": "hdp",
-              "color": null
-            }
-          ],
-          "id": 110,
-          "dependency": [
-            {
-              "id": 98,
-              "options": [
-                "deep borehole",
-                "shallow well",
-                "protected spring"
-              ]
-            }
-          ]
-        },
-        {
-          "order": 23,
           "question": "What is the main purpose for which people use water from this water point?",
           "type": "option",
           "meta": false,
@@ -496,11 +236,11 @@
               "color": null
             },
             {
-              "name": "washing cars\/ motorcycles",
+              "name": "washing cars/ motorcycles",
               "color": null
             },
             {
-              "name": "institutional use (school or healthcare facility\/health center)",
+              "name": "institutional use (school or healthcare facility/ health centre)",
               "color": null
             },
             {
@@ -518,14 +258,14 @@
               "id": 111,
               "options": [
                 "functional in use",
-                "non-functional",
-                "functional and not in use"
+                "functional and not in use",
+                "non-functional"
               ]
             }
           ]
         },
         {
-          "order": 24,
+          "order": 14,
           "question": "Specify another purpose for which people use water from this water point",
           "type": "option",
           "meta": false,
@@ -571,8 +311,36 @@
           ]
         },
         {
-          "order": 25,
-          "question": "Is water used by vendors\/collected to sell other places?",
+          "order": 15,
+          "question": "Are their livestock drinking facilities at the water point?",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "no",
+              "color": null
+            },
+            {
+              "name": "yes",
+              "color": null
+            }
+          ],
+          "id": 97,
+          "dependency": [
+            {
+              "id": 111,
+              "options": [
+                "functional in use",
+                "functional and not in use",
+                "non-functional"
+              ]
+            }
+          ]
+        },
+        {
+          "order": 16,
+          "question": "Is water used by vendors/collected to sell other places?",
           "type": "option",
           "meta": false,
           "required": false,
@@ -600,100 +368,320 @@
               "id": 111,
               "options": [
                 "functional in use",
-                "non-functional",
-                "functional and not in use"
+                "functional and not in use",
+                "non-functional"
+              ]
+            }
+          ]
+        },
+        {
+          "order": 17,
+          "question": "Public tapstand - name of water scheme connected",
+          "type": "text",
+          "meta": true,
+          "options": null,
+          "id": 99,
+          "dependency": [
+            {
+              "id": 98,
+              "options": [
+                "public tap stand"
+              ]
+            }
+          ]
+        },
+        {
+          "order": 18,
+          "question": "Public tapstand with water meter",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "yes",
+              "color": null
+            },
+            {
+              "name": "no",
+              "color": null
+            }
+          ],
+          "id": 100,
+          "dependency": [
+            {
+              "id": 98,
+              "options": [
+                "public tapstand"
+              ]
+            }
+          ]
+        },
+        {
+          "order": 19,
+          "question": "Water meter functioning",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "yes",
+              "color": null
+            },
+            {
+              "name": "no",
+              "color": null
+            }
+          ],
+          "id": 101,
+          "dependency": [
+            {
+              "id": 100,
+              "options": [
+                "yes"
+              ]
+            }
+          ]
+        },
+        {
+          "order": 20,
+          "question": "Rainwater harvesting tank - volume (l)",
+          "type": "option",
+          "meta": false,
+          "required": false,
+          "options": [
+            {
+              "name": "nan",
+              "color": null
+            },
+            {
+              "name": "13 liters",
+              "color": null
+            }
+          ],
+          "id": 102,
+          "dependency": [
+            {
+              "id": 98,
+              "options": [
+                "Rainwater harvesting tank"
+              ]
+            }
+          ]
+        },
+        {
+          "order": 21,
+          "question": "Number of taps/spouts",
+          "type": "option",
+          "meta": false,
+          "required": false,
+          "options": [
+            {
+              "name": "one",
+              "color": null
+            },
+            {
+              "name": "more than one",
+              "color": null
+            }
+          ],
+          "id": 103,
+          "dependency": [
+            {
+              "id": 98,
+              "options": [
+                "deep borehole",
+                "public tap stand",
+                "shallow well"
+              ]
+            }
+          ]
+        },
+        {
+          "order": 22,
+          "question": "Protected spring type",
+          "type": "option",
+          "meta": false,
+          "required": false,
+          "options": [
+            {
+              "name": "ordinary",
+              "color": null
+            },
+            {
+              "name": "improved",
+              "color": null
+            }
+          ],
+          "id": 104,
+          "dependency": [
+            {
+              "id": 98,
+              "options": [
+                "protected spring"
+              ]
+            }
+          ]
+        },
+        {
+          "order": 23,
+          "question": "How many spouts does it have?",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "one",
+              "color": null
+            },
+            {
+              "name": "more than one",
+              "color": null
+            }
+          ],
+          "id": 105,
+          "dependency": [
+            {
+              "id": 98,
+              "options": [
+                "protected spring"
+              ]
+            }
+          ]
+        },
+        {
+          "order": 24,
+          "question": "Borehole/well depth (m)",
+          "type": "number",
+          "meta": false,
+          "required": true,
+          "options": null,
+          "id": 106,
+          "dependency": [
+            {
+              "id": 98,
+              "options": [
+                "deep borehole",
+                "shallow well"
+              ]
+            }
+          ]
+        },
+        {
+          "order": 25,
+          "question": "Borehole/well diameter (in)",
+          "type": "number",
+          "meta": false,
+          "required": true,
+          "options": null,
+          "id": 107,
+          "dependency": [
+            {
+              "id": 98,
+              "options": [
+                "deep borehole",
+                "shallow well"
               ]
             }
           ]
         },
         {
           "order": 26,
-          "question": "Are their livestock drinking facilities at the water point?",
+          "question": "Type of lifting device?",
           "type": "option",
           "meta": false,
           "required": true,
           "options": [
             {
-              "name": "no",
+              "name": "handpump",
               "color": null
             },
             {
-              "name": "yes",
+              "name": "rope pump",
+              "color": null
+            },
+            {
+              "name": "manual lifting rope",
+              "color": null
+            },
+            {
+              "name": "motorised pump",
               "color": null
             }
           ],
-          "id": 97,
+          "id": 108,
           "dependency": [
             {
-              "id": 111,
+              "id": 98,
               "options": [
-                "functional in use",
-                "functional and not in use"
+                "deep borehole",
+                "shallow well"
               ]
             }
           ]
         },
         {
           "order": 27,
-          "question": "Please rate the level of functionality",
+          "question": "Handpump type",
           "type": "option",
           "meta": false,
           "required": true,
           "options": [
             {
-              "name": "fully functioning at 100%",
+              "name": "afridev",
               "color": null
             },
             {
-              "name": "partially functioning works with some issues\/ difficulties",
-              "color": null
-            },
-            {
-              "name": "barely functioning (almost not functioning)",
+              "name": "india mark",
               "color": null
             }
           ],
-          "id": 112,
+          "id": 109,
           "dependency": [
             {
-              "id": 111,
+              "id": 108,
               "options": [
-                "functional in use",
-                "functional and not in use"
+                "rope pump",
+                "motorized pump"
               ]
             }
           ]
         },
         {
           "order": 28,
-          "question": "Estimate the number of households who use this water point as their source of water",
+          "question": "What is the pipe material?",
           "type": "option",
           "meta": false,
-          "required": false,
+          "required": true,
           "options": [
             {
-              "name": "25-50",
+              "name": "gi",
               "color": null
             },
             {
-              "name": "50-100",
+              "name": "pvc",
               "color": null
             },
             {
-              "name": "more than 100",
+              "name": "i don't know",
               "color": null
             },
             {
-              "name": "less than 25",
+              "name": "stainless steel",
+              "color": null
+            },
+            {
+              "name": "hdp",
               "color": null
             }
           ],
-          "id": 93,
+          "id": 110,
           "dependency": [
             {
-              "id": 112,
+              "id": 98,
               "options": [
-                "fully functioning at 100%"
+                "deep borehole",
+                "shallow well",
+                "protected spring"
               ]
             }
           ]
@@ -811,6 +799,10 @@
             {
               "name": "more than 16 hours",
               "color": null
+            },
+            {
+              "name": "unknown",
+              "color": null
             }
           ],
           "id": 116,
@@ -825,7 +817,7 @@
         },
         {
           "order": 33,
-          "question": "How many minutes does it take to fill a 20 liter jerry can?",
+          "question": "How many minutes does it take to fill a 20 litre jerry can?",
           "type": "option",
           "meta": false,
           "required": true,
@@ -921,11 +913,20 @@
               "color": null
             }
           ],
-          "id": 119
+          "id": 119,
+          "dependency": [
+            {
+              "id": 98,
+              "options": [
+                "deep borehole",
+                "shallow well"
+              ]
+            }
+          ]
         },
         {
           "order": 36,
-          "question": "Physical state of tap\/spouts",
+          "question": "Physical state of tap/spouts",
           "type": "option",
           "meta": false,
           "required": true,
@@ -964,10 +965,10 @@
         },
         {
           "order": 37,
-          "question": "Status of how the tap\/spout is currently being used",
+          "question": "Status of how the tap/spout is currently being used",
           "type": "option",
           "meta": false,
-          "required": true,
+          "required": false,
           "options": [
             {
               "name": "fair (moderate)",
@@ -990,38 +991,16 @@
               "color": null
             }
           ],
-          "id": 121,
-          "dependency": [
-            {
-              "id": 120,
-              "options": [
-                "excellent",
-                "fair (moderate)",
-                "poor",
-                "very poor"
-              ]
-            }
-          ]
+          "id": 121
         },
         {
           "order": 38,
-          "question": "Physical state of drainage channel and soak pit",
+          "question": "Physical state of drainage channel and soakpit",
           "type": "text",
           "meta": false,
-          "required": true,
+          "required": false,
           "options": null,
-          "id": 122,
-          "dependency": [
-            {
-              "id": 120,
-              "options": [
-                "excellent",
-                "fair (moderate)",
-                "poor",
-                "very poor"
-              ]
-            }
-          ]
+          "id": 122
         },
         {
           "order": 39,
@@ -1363,7 +1342,7 @@
               "color": null
             },
             {
-              "name": "present not is use, repair needed",
+              "name": "present -not is use, repair needed",
               "color": null
             },
             {
@@ -1409,17 +1388,7 @@
               "color": null
             }
           ],
-          "id": 134,
-          "dependency": [
-            {
-              "id": 133,
-              "options": [
-                "present and in use",
-                "present and not in use, repair needed",
-                "present not in use, not connected"
-              ]
-            }
-          ]
+          "id": 134
         },
         {
           "order": 51,
@@ -1480,7 +1449,7 @@
         },
         {
           "order": 53,
-          "question": "Are there any components of the well\/borehole that require total replacement?",
+          "question": "Are there any components of the well/borehole that require total replacement?",
           "type": "multiple_option",
           "meta": false,
           "required": true,
@@ -1494,7 +1463,7 @@
               "color": null
             },
             {
-              "name": "pump head",
+              "name": "pumphead",
               "color": null
             },
             {
@@ -1531,10 +1500,10 @@
         },
         {
           "order": 54,
-          "question": "Specify other components of the well\/borehole that require total replacement.",
+          "question": "Specify other components of the well/borehole that require total replacement.",
           "type": "text",
           "meta": false,
-          "required": true,
+          "required": false,
           "options": null,
           "id": 138,
           "dependency": [
@@ -1551,14 +1520,14 @@
           "question": "Are there any components of the protected spring that require total replacement?",
           "type": "multiple_option",
           "meta": false,
-          "required": true,
+          "required": false,
           "options": [
             {
               "name": "catchment protection or fence",
               "color": null
             },
             {
-              "name": "spouts\/ taps",
+              "name": "spouts/ taps",
               "color": null
             },
             {
@@ -1612,10 +1581,10 @@
         },
         {
           "order": 57,
-          "question": "Are there any components of the public tap stand that require total replacement?",
+          "question": "Are there any components of the public tapstand that require total replacement?",
           "type": "multiple_option",
           "meta": false,
-          "required": true,
+          "required": false,
           "options": [
             {
               "name": "meters",
@@ -1646,10 +1615,10 @@
         },
         {
           "order": 58,
-          "question": "Are there any components of the public tap stand that require total replacement?--other--",
+          "question": "Are there any components of the public tapstand that require total replacement?--other--",
           "type": "text",
           "meta": false,
-          "required": true,
+          "required": false,
           "options": null,
           "id": 142,
           "dependency": [
@@ -1666,7 +1635,7 @@
           "question": "Are there any components of the kiosk that require total replacement?",
           "type": "multiple_option",
           "meta": false,
-          "required": true,
+          "required": false,
           "options": [
             {
               "name": "drainage channel",
@@ -1692,7 +1661,7 @@
           "question": "Are there any components of the kiosk that require total replacement?--other--",
           "type": "number",
           "meta": false,
-          "required": true,
+          "required": false,
           "options": null,
           "id": 144,
           "dependency": [
@@ -1709,7 +1678,7 @@
           "question": "Are there any components of the rainwater harvesting system that require total replacement?",
           "type": "multiple_option",
           "meta": false,
-          "required": true,
+          "required": false,
           "options": [
             {
               "name": "drainage channel",
@@ -1755,7 +1724,7 @@
           "question": "Are there any components of the rainwater harvesting system that require total replacement?--other--",
           "type": "option",
           "meta": false,
-          "required": true,
+          "required": false,
           "options": [
             {
               "name": "all parts",
@@ -1797,7 +1766,7 @@
           "question": "Are there any potential sources of contamination within 10 meters of the water point?",
           "type": "option",
           "meta": false,
-          "required": true,
+          "required": false,
           "options": [
             {
               "name": "yes",
@@ -1823,7 +1792,7 @@
         {
           "order": 64,
           "question": "Is the catchment protected and are there any potential sources if contamination nearby?",
-          "type": "option",
+          "type": "multiple_option",
           "meta": false,
           "required": true,
           "options": [
@@ -1848,7 +1817,7 @@
               "color": null
             },
             {
-              "name": "agriculture\/ cultivation at the catchment",
+              "name": "agriculture/ cultivation at the catchment",
               "color": null
             },
             {
@@ -1962,7 +1931,7 @@
         },
         {
           "order": 68,
-          "question": "Are there any concerns about the color of the water?",
+          "question": "Are there any concerns about the colour of the water?",
           "type": "option",
           "meta": false,
           "required": false,
@@ -1976,7 +1945,7 @@
               "color": null
             },
             {
-              "name": "always - problems with color",
+              "name": "always - problems with colour",
               "color": null
             }
           ],
@@ -1993,7 +1962,7 @@
         },
         {
           "order": 69,
-          "question": "Are there any concerns about the odor\/smell of the water?",
+          "question": "Are there any concerns about the odour/smell of the water?",
           "type": "option",
           "meta": false,
           "required": false,
@@ -2003,7 +1972,7 @@
               "color": null
             },
             {
-              "name": "always - problems with odor",
+              "name": "always - problems with odour",
               "color": null
             },
             {
@@ -2142,7 +2111,7 @@
         },
         {
           "order": 75,
-          "question": "Is there a wuc\/wsc for this water point?",
+          "question": "Is there a wuc/wsc for this water point?",
           "type": "option",
           "meta": false,
           "required": true,
@@ -2162,7 +2131,8 @@
               "id": 111,
               "options": [
                 "functional in use",
-                "functional and not in use"
+                "functional and not in use",
+                "non-functional"
               ]
             }
           ]
@@ -2175,7 +2145,7 @@
           "required": true,
           "options": [
             {
-              "name": "wuc\/wsc",
+              "name": "wuc/wsc",
               "color": null
             },
             {
@@ -2195,11 +2165,11 @@
               "color": null
             },
             {
-              "name": "national water and sewerage corporation",
+              "name": "national water and sewerage cooperation",
               "color": null
             },
             {
-              "name": "ngo\/cso",
+              "name": "ngo/cso",
               "color": null
             }
           ],
@@ -2209,14 +2179,15 @@
               "id": 111,
               "options": [
                 "functional in use",
-                "functional and not in use"
+                "functional and not in use",
+                "non-functional"
               ]
             }
           ]
         },
         {
           "order": 77,
-          "question": "Is the wuc\/wsc currently active?",
+          "question": "Is the wuc/wsc currently active?",
           "type": "option",
           "meta": false,
           "required": true,
@@ -2242,7 +2213,7 @@
         },
         {
           "order": 78,
-          "question": "In the last year, has the wuc\/ wsc\/ management body organized any maintenance activities or repairs?",
+          "question": "In the last year, has the wuc/wsc/management body organised any maintenance activities or repairs?",
           "type": "option",
           "meta": false,
           "required": false,
@@ -2267,14 +2238,14 @@
               "options": [
                 "northern umbrella",
                 "national water and sewerage corporation",
-                "ngo\/cso"
+                "ngo/cso"
               ]
             }
           ]
         },
         {
           "order": 79,
-          "question": "In the last year,has the wuc\/wsc received any support or guidance from the sub-county or district government?",
+          "question": "In the last year,has the wuc/wsc received any support or guidance from the sub-county or district government?",
           "type": "option",
           "meta": false,
           "required": false,
@@ -2304,7 +2275,7 @@
         },
         {
           "order": 80,
-          "question": "Number of members of the wuc\/wsc",
+          "question": "Number of members of the wuc/wsc",
           "type": "number",
           "meta": false,
           "required": false,
@@ -2321,7 +2292,7 @@
         },
         {
           "order": 81,
-          "question": "Number of active members on the wuc\/wsc",
+          "question": "Number of active members on the wuc/wsc",
           "type": "number",
           "meta": false,
           "required": false,
@@ -2338,7 +2309,7 @@
         },
         {
           "order": 82,
-          "question": "Number of women on the wuc\/wsc",
+          "question": "Number of women on the wuc/wsc",
           "type": "number",
           "meta": false,
           "required": false,
@@ -2355,7 +2326,7 @@
         },
         {
           "order": 83,
-          "question": "Number of women in key positions on the wuc\/wsc (chair, secretary of finance)",
+          "question": "Number of women in key positions on the wuc/wsc (chair, secretary of finance)",
           "type": "number",
           "meta": false,
           "required": false,
@@ -2372,7 +2343,7 @@
         },
         {
           "order": 84,
-          "question": "Is the wuc\/wsc a member of the sub county water supply and sanitation board?",
+          "question": "Is the wuc/wsc a member of the sub county water supply and sanitation board?",
           "type": "option",
           "meta": false,
           "required": false,
@@ -2402,7 +2373,7 @@
         },
         {
           "order": 85,
-          "question": "Does the wuc\/wsc\/operator keep records of the water meter readings or amount of water collected?",
+          "question": "Does the wuc/wsc/operator keep records of the water meter readings or amount of water collected?",
           "type": "option",
           "meta": false,
           "required": false,
@@ -2432,7 +2403,7 @@
         },
         {
           "order": 86,
-          "question": "Does the wuc\/wsc\/operator keep financial records on income collected?",
+          "question": "Does the wuc/wsc/operator keep financial records on income collected?",
           "type": "option",
           "meta": false,
           "required": false,
@@ -2458,7 +2429,7 @@
         },
         {
           "order": 87,
-          "question": "Does the wuc\/wsc keep financial records on expenditure and\/or a record of repairs?",
+          "question": "Does the wuc/wsc keep financial records on expenditure and/or a record of repairs?",
           "type": "option",
           "meta": false,
           "required": false,
@@ -2484,7 +2455,7 @@
         },
         {
           "order": 88,
-          "question": "Does the wuc\/wsc have a bank account?",
+          "question": "Does the wuc/wsc have a bank account?",
           "type": "option",
           "meta": false,
           "required": false,
@@ -2557,7 +2528,7 @@
         },
         {
           "order": 90,
-          "question": "Does the operator keep financial records on expenditure and\/or a record of repairs?",
+          "question": "Does the operator keep financial records on expenditure and/or a record of repairs?",
           "type": "option",
           "meta": false,
           "required": false,
@@ -2584,7 +2555,7 @@
         },
         {
           "order": 91,
-          "question": "Has the wuc\/wsc received any support or training from the sub county or the district in the past year?",
+          "question": "Has the wuc/wsc received any support or training from the sub county or the district in the past year?",
           "type": "option",
           "meta": false,
           "required": false,
@@ -2675,11 +2646,11 @@
               "color": null
             },
             {
-              "name": "tariff per 20 liter jerry can",
+              "name": "tariff per 20 litre jerry can",
               "color": null
             },
             {
-              "name": "tariff per institution (schools, health centers, etc)",
+              "name": "tariff per institution (schools, health centres, etc)",
               "color": null
             },
             {
@@ -2784,7 +2755,7 @@
         },
         {
           "order": 100,
-          "question": "Are there any families or people in the village exempted from payment due to inability to pay?",
+          "question": "are there any families or people in the village exempted from payment due to inability to pay?",
           "type": "option",
           "meta": false,
           "required": false,
