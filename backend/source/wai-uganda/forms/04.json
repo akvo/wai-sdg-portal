@@ -501,7 +501,7 @@
           "question": "Protected spring type",
           "type": "option",
           "meta": false,
-          "required": true,
+          "required": false,
           "options": [
             {
               "name": "ordinary",
@@ -560,7 +560,8 @@
             {
               "id": 98,
               "options": [
-                "deep borehole"
+                "deep borehole",
+                "shallow well"
               ]
             }
           ]
@@ -577,7 +578,8 @@
             {
               "id": 98,
               "options": [
-                "deep borehole"
+                "deep borehole",
+                "shallow well"
               ]
             }
           ]
@@ -911,7 +913,16 @@
               "color": null
             }
           ],
-          "id": 119
+          "id": 119,
+          "dependency": [
+            {
+              "id": 98,
+              "options": [
+                "deep borehole",
+                "shallow well"
+              ]
+            }
+          ]
         },
         {
           "order": 36,
@@ -1492,7 +1503,7 @@
           "question": "Specify other components of the well/borehole that require total replacement.",
           "type": "text",
           "meta": false,
-          "required": true,
+          "required": false,
           "options": null,
           "id": 138,
           "dependency": [
@@ -1607,7 +1618,7 @@
           "question": "Are there any components of the public tapstand that require total replacement?--other--",
           "type": "text",
           "meta": false,
-          "required": true,
+          "required": false,
           "options": null,
           "id": 142,
           "dependency": [
@@ -1650,7 +1661,7 @@
           "question": "Are there any components of the kiosk that require total replacement?--other--",
           "type": "number",
           "meta": false,
-          "required": true,
+          "required": false,
           "options": null,
           "id": 144,
           "dependency": [
@@ -1667,7 +1678,7 @@
           "question": "Are there any components of the rainwater harvesting system that require total replacement?",
           "type": "multiple_option",
           "meta": false,
-          "required": true,
+          "required": false,
           "options": [
             {
               "name": "drainage channel",
@@ -1713,7 +1724,7 @@
           "question": "Are there any components of the rainwater harvesting system that require total replacement?--other--",
           "type": "option",
           "meta": false,
-          "required": true,
+          "required": false,
           "options": [
             {
               "name": "all parts",
