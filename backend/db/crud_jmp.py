@@ -1,14 +1,12 @@
 import json
 from sqlalchemy.orm import Session
 from AkvoResponseGrouper.views import get_categories
-from models.data import Data
 
 
 def get_jmp_table_view(session: Session, data: list, configs: list):
-    ids = [str(d["id"]) for d in data]
-    dts = ",".join(ids)
+    ids = [d["id"] for d in data]
     try:
-        gc = get_categories(session=session, data=dts)
+        gc = get_categories(session=session, data=ids)
     except Exception:
         gc = []
     for d in data:
@@ -36,21 +34,18 @@ def get_jmp_table_view(session: Session, data: list, configs: list):
     return data
 
 
-def get_jmp_overview(session: Session, form: int, name: str):
-    data = session.query(Data).filter(Data.form == form).all()
-    data = [
-        {"data": d.id, "administration": d.administration, "geo": d.geo}
-        for d in data
-    ]
+def get_jmp_overview(
+    session: Session, form: int, data: list, name: str = None
+):
     try:
-        gc = get_categories(session=session, form=form, name=name)
-        for d in data:
-            fc = list(filter(lambda c: (c["data"] == d["data"]), gc))
-            if len(fc):
-                d.update(fc[0])
-        return data
+        ids = [d["id"] for d in data]
+        gcs = get_categories(session=session, form=form, name=name, data=ids)
     except Exception:
-        return data
+        gcs = []
+    for d in data:
+        fc = list(filter(lambda c: (c["data"] == d["id"]), gcs))
+        d.update({"categories": fc})
+    return data
 
 
 def get_jmp_config_by_form(form: int) -> list:

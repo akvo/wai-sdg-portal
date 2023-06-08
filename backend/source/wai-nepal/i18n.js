@@ -4,7 +4,7 @@ var i18n = {
     noActivityText: "No Activity",
     activityLogText: "Activity Log",
     recentActivityLogText: "Recent Activity Log",
-    attachmentText: "Attachment",
+    attachmentText: "Download attachment",
   },
   navigation: {
     adminText: "Admin",
@@ -17,8 +17,8 @@ var i18n = {
     privacyPolicy: "Privacy Policy",
     termsOfService: "Terms of Service",
     documentation: {
-	rtd: "Documentation",
-	swagger: "Developer API",
+      rtd: "Documentation",
+      swagger: "Developer API",
     },
     dataTitle: "Data",
     dataText:
@@ -106,7 +106,7 @@ var i18n = {
     updateSuccessText: "Update process has been applied",
     userApprovedText: "User approved",
     errorText: "Something wen't wrong",
-    statusWaitingValidationText: "Waiting for validation",
+    statusWaitingValidationText: "Validation in Progress",
     statusFailedValidationText: "Failed",
     statusSuccessValidationText: "Submitted",
     loadingText: "Loading...",
@@ -123,6 +123,7 @@ var i18n = {
     ],
     registrationEmailVerifiedText:
       "We will review your sign-up request. Please, allow for 1 business day.",
+    btnLoadMore: "Load more...",
   },
   tableText: {
     manageUserTableText: {
@@ -170,6 +171,7 @@ var i18n = {
     btnSave: "Save",
     btnUndo: "Undo",
     btnRemoveFilter: "Remove Filter",
+    btnLoadMore: "Load more...",
   },
   formText: {
     labelName: "Name",

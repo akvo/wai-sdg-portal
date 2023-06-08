@@ -1,3 +1,4 @@
 *.min.js
 *.xlsx
 *cascade.csv
+*cascade-template.csv

@@ -8,6 +8,7 @@ from models.answer import Answer
 from models.history import History
 from models.views.view_data import ViewData
 from models.answer import AnswerBase
+
 # from models.views.view_data_score import ViewDataScore
 
 
@@ -16,21 +17,50 @@ class PaginatedData(TypedDict):
     count: int
 
 
-def add_data(session: Session,
-             name: str,
-             form: int,
-             administration: int,
-             created_by: int,
-             answers: List[AnswerBase],
-             geo: Optional[List[float]] = None) -> DataDict:
-    data = Data(name=name,
-                form=form,
-                administration=administration,
-                geo=geo,
-                created_by=created_by,
-                updated_by=None,
-                created=datetime.now(),
-                updated=None)
+def bulk_add_data(
+    session: Session,
+    name: str,
+    form: int,
+    administration: int,
+    created_by: int,
+    answers: List[AnswerBase],
+    geo: Optional[List[float]] = None,
+) -> None:
+    data = Data(
+        name=name,
+        form=form,
+        administration=administration,
+        geo=geo,
+        created_by=created_by,
+        updated_by=None,
+        created=datetime.now(),
+        updated=None,
+    )
+    for answer in answers:
+        data.answer.append(answer)
+    session.add(data)
+    session.commit()
+
+
+def add_data(
+    session: Session,
+    name: str,
+    form: int,
+    administration: int,
+    created_by: int,
+    answers: List[AnswerBase],
+    geo: Optional[List[float]] = None,
+) -> DataDict:
+    data = Data(
+        name=name,
+        form=form,
+        administration=administration,
+        geo=geo,
+        created_by=created_by,
+        updated_by=None,
+        created=datetime.now(),
+        updated=None,
+    )
     for answer in answers:
         data.answer.append(answer)
     session.add(data)
@@ -55,22 +85,30 @@ def delete_by_id(session: Session, id: int) -> None:
 
 
 def delete_bulk(session: Session, ids: List[int]) -> None:
-    session.query(History).filter(
-        History.data.in_(ids)).delete(synchronize_session='fetch')
-    session.query(Answer).filter(
-        Answer.data.in_(ids)).delete(synchronize_session='fetch')
-    session.query(Data).filter(
-        Data.id.in_(ids)).delete(synchronize_session='fetch')
+    session.query(History).filter(History.data.in_(ids)).delete(
+        synchronize_session="fetch"
+    )
+    session.query(Answer).filter(Answer.data.in_(ids)).delete(
+        synchronize_session="fetch"
+    )
+    session.query(Data).filter(Data.id.in_(ids)).delete(
+        synchronize_session="fetch"
+    )
     session.commit()
 
 
-def get_data(session: Session,
-             form: int,
-             skip: int,
-             perpage: int,
-             options: List[str] = None,
-             administration: List[int] = None) -> PaginatedData:
-    data = session.query(Data).filter(Data.form == form)
+def get_data(
+    session: Session,
+    form: int,
+    skip: int,
+    perpage: int,
+    columns: Optional[List] = None,
+    options: List[str] = None,
+    administration: List[int] = None,
+) -> PaginatedData:
+    columns = columns if columns else [Data]
+    data = session.query(*columns)
+    data = data.filter(Data.form == form)
     data_id = False
     if options:
         # support multiple select options filter
@@ -81,7 +119,6 @@ def get_data(session: Session,
     if administration:
         data = data.filter(Data.administration.in_(administration))
     count = data.count()
-    # TODO: getting the score
     # if no question order data by id desc
     data = data.order_by(desc(Data.id))
 
@@ -101,24 +138,31 @@ def get_data_name_by_id(session: Session, id: int) -> str:
     return session.query(Data).filter(Data.id == id).first().name
 
 
-def count(session: Session,
-          form: int,
-          options: List[str] = None,
-          administration: List[int] = None) -> int:
+def count(
+    session: Session,
+    form: int,
+    options: List[str] = None,
+    administration: List[int] = None,
+) -> int:
     data = session.query(Data).filter(Data.form == form)
     if options:
-        data_id = session.query(ViewData.data).filter(
-            ViewData.options.contains(options)).all()
+        data_id = (
+            session.query(ViewData.data)
+            .filter(ViewData.options.contains(options))
+            .all()
+        )
         data = data.filter(Data.id.in_([d.data for d in data_id]))
     if administration:
         data = data.filter(Data.administration.in_(administration))
     return data.group_by(Data.id).count()
 
 
-def get_last_submitted(session: Session,
-                       form: int,
-                       options: List[str] = None,
-                       administration: List[int] = None) -> DataDict:
+def get_last_submitted(
+    session: Session,
+    form: int,
+    options: List[str] = None,
+    administration: List[int] = None,
+) -> DataDict:
     data = session.query(Data).filter(Data.form == form)
     if options:
         # support multiple select options filter
@@ -131,14 +175,19 @@ def get_last_submitted(session: Session,
     return data.order_by(Data.id.desc()).first()
 
 
-def download(session: Session,
-             form: int,
-             options: List[str] = None,
-             administration: List[int] = None):
+def download(
+    session: Session,
+    form: int,
+    options: List[str] = None,
+    administration: List[int] = None,
+):
     data = session.query(Data).filter(Data.form == form)
     if options:
-        data_id = session.query(ViewData.data).filter(
-            ViewData.options.contains(options)).all()
+        data_id = (
+            session.query(ViewData.data)
+            .filter(ViewData.options.contains(options))
+            .all()
+        )
         data = data.filter(Data.id.in_([d.data for d in data_id]))
     if administration:
         data = data.filter(Data.administration.in_(administration))

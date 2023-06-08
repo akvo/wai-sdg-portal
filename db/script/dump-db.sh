@@ -2,7 +2,7 @@
 #shellcheck disable=SC2016
 
 set -eu
-DATABASES='wai_ethiopia'
+DATABASES='wai-ethiopia'
 
 for DB in ${DATABASES}
 do

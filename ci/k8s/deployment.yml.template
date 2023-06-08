@@ -115,16 +115,6 @@ spec:
               value: "TRUE"
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: /secrets/credentials.json
-          readinessProbe:
-            httpGet:
-              path: /health-check
-              port: 5000
-            initialDelaySeconds: 30
-          livenessProbe:
-            httpGet:
-              path: /health-check
-              port: 5000
-            initialDelaySeconds: 30
           volumeMounts:
             - name: ${INSTANCE_NAME}-secrets
               mountPath: /secrets/credentials.json
@@ -171,16 +161,6 @@ spec:
               value: "TRUE"
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: /secrets/credentials.json
-          readinessProbe:
-            httpGet:
-              path: /health-check
-              port: 5001
-            initialDelaySeconds: 30
-          livenessProbe:
-            httpGet:
-              path: /health-check
-              port: 5001
-            initialDelaySeconds: 30
           volumeMounts:
             - name: ${INSTANCE_NAME}-secrets
               mountPath: /secrets/credentials.json

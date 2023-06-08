@@ -6,11 +6,12 @@
       "question_group": "Location Demographics",
       "questions": [
         {
-          "question": "location",
+          "question": "Location",
           "order": 1,
           "required": true,
           "type": "administration",
-          "meta": true
+          "meta": true,
+          "id": 3
         },
         {
           "id": 573330119,
@@ -123,7 +124,8 @@
           "required": true,
           "options": null
         }
-      ]
+      ],
+      "id": 7
     },
     {
       "question_group": "Core Drinking Water Questions",
@@ -138,141 +140,85 @@
           "options": [
             {
               "name": "Piped water into dwelling (household connection)",
-              "color": "#70AD47"
+              "color": "#70AD47",
+              "code": "W1"
             },
             {
               "name": "Piped water to yard/plot",
-              "color": "#C5E0B3"
+              "color": "#C5E0B3",
+              "code": "W2"
             },
             {
               "name": "Piped to neighbour",
-              "color": "#385623"
+              "color": "#385623",
+              "code": "W3"
             },
             {
               "name": "Deep tubewell/borehole",
-              "color": "#00B050"
+              "color": "#00B050",
+              "code": "W4"
             },
             {
               "name": "Shallow tubewell/borehole",
-              "color": "#00B0F0"
+              "color": "#00B0F0",
+              "code": "W5"
             },
             {
               "name": "Public tap/standpipe",
-              "color": "#BF8F00"
+              "color": "#BF8F00",
+              "code": "W6"
             },
             {
               "name": "Protected spring",
-              "color": "#9C5CFF"
+              "color": "#9C5CFF",
+              "code": "W7"
             },
             {
               "name": "Rainwater collection",
-              "color": "#2F5496"
+              "color": "#2F5496",
+              "code": "W8"
             },
             {
               "name": "Tanker-truck",
-              "color": "#FF83B7"
+              "color": "#FF83B7",
+              "code": "W9"
             },
             {
               "name": "Cart with small tank/drum",
-              "color": "#FFFB00"
+              "color": "#FFFB00",
+              "code": "W10"
             },
             {
               "name": "Bottled water",
-              "color": "#4472C4"
+              "color": "#4472C4",
+              "code": "W11"
             },
             {
               "name": "Unprotected dug well",
-              "color": "#806000"
+              "color": "#806000",
+              "code": "W12"
             },
             {
               "name": "Unprotected spring",
-              "color": "#C45911"
+              "color": "#C45911",
+              "code": "W13"
             },
             {
               "name": "Surface water",
-              "color": "#FF0000"
-            }
-          ]
-        },
-        {
-          "id": 573340124,
-          "question": "What is the main source of water by members of your household for other purposes, such as cooking and handwashing?",
-          "order": 2,
-          "meta": false,
-          "type": "option",
-          "required": true,
-          "options": [
-            {
-              "name": "Piped water into dwelling (household connection)",
-              "color": null
-            },
-            {
-              "name": "Piped water to yard/plot",
-              "color": null
-            },
-            {
-              "name": "Piped to neighbour",
-              "color": null
-            },
-            {
-              "name": "Deep tubewell/borehole",
-              "color": null
-            },
-            {
-              "name": "Shallow tubewell/borehole",
-              "color": null
+              "color": "#FF0000",
+              "code": "W14"
             },
             {
               "name": "Public tap/standpipe",
-              "color": null
+              "code": "W15"
             },
             {
-              "name": "Pond sand filter (PSF)",
-              "color": null
+              "name": "Protected dug well",
+              "code": "W16"
             },
             {
-              "name": "AIRP (Arsenic Iron Removal Plant)",
-              "color": null
-            },
-            {
-              "name": "Protected spring",
-              "color": null
-            },
-            {
-              "name": "Rainwater collection",
-              "color": null
-            },
-            {
-              "name": "Tanker-truck",
-              "color": null
-            },
-            {
-              "name": "Cart with small tank/drum",
-              "color": null
-            },
-            {
-              "name": "Bottled water",
-              "color": null
-            },
-            {
-              "name": "Unprotected dug well",
-              "color": null
-            },
-            {
-              "name": "Unprotected spring",
-              "color": null
-            },
-            {
-              "name": "Surface water",
-              "color": null
-            }
-          ],
-          "dependency": [
-            {
-              "id": 573340127,
-              "options": [
-                "Bottled water"
-              ]
+              "name": "AIRP (arsenic iron removable plant)",
+              "code": "W17"
             }
           ]
         },
@@ -285,16 +231,45 @@
           "required": true,
           "options": [
             {
-              "name": "In own dwelling",
-              "color": null
+              "name": "Water is located on the premises",
+              "code": "C1"
             },
             {
-              "name": "In own yard / plot",
-              "color": null
+              "name": "Less than 150 meters/500 feet",
+              "code": "C2"
             },
             {
-              "name": "Elsewhere",
-              "color": null
+              "name": "Between 150 and 500 meters / between 500 and 1600 feet",
+              "code": "C3"
+            },
+            {
+              "name": "More than 500 meters/1600 feet",
+              "code": "C4"
+            },
+            {
+              "name": "Don't know",
+              "code": "C5"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 573340127,
+              "options": [
+                "Piped water into dwelling (household connection)",
+                "Piped water to yard/plot",
+                "Piped to neighbour",
+                "Deep tubewell/borehole",
+                "Shallow tubewell/borehole",
+                "Public tap/standpipe",
+                "Protected spring",
+                "Rainwater collection",
+                "Tanker-truck",
+                "Cart with small tank/drum",
+                "Bottled water",
+                "Public tap/standpipe",
+                "Protected dug well",
+                "AIRP (arsenic iron removable plant)"
+              ]
             }
           ]
         },
@@ -308,15 +283,15 @@
           "options": [
             {
               "name": "Less than 30 minutes",
-              "color": null
+              "code": "D1"
             },
             {
               "name": "More than 30 minutes",
-              "color": null
+              "code": "D2"
             },
             {
               "name": "Don't know",
-              "color": null
+              "code": "D3"
             }
           ]
         },
@@ -330,15 +305,36 @@
           "options": [
             {
               "name": "Yes, at least once",
-              "color": null
+              "code": "S2"
             },
             {
               "name": "No, always sufficient",
-              "color": null
+              "code": "S1"
             },
             {
               "name": "Don't know",
-              "color": null
+              "code": "S3"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 573340127,
+              "options": [
+                "Piped water into dwelling (household connection)",
+                "Piped water to yard/plot",
+                "Piped to neighbour",
+                "Deep tubewell/borehole",
+                "Shallow tubewell/borehole",
+                "Public tap/standpipe",
+                "Protected spring",
+                "Rainwater collection",
+                "Tanker-truck",
+                "Cart with small tank/drum",
+                "Bottled water",
+                "Public tap/standpipe",
+                "Protected dug well",
+                "AIRP (arsenic iron removable plant)"
+              ]
             }
           ]
         },
@@ -351,20 +347,42 @@
           "required": true,
           "options": [
             {
-              "name": "Free from feacal and prioirty chemical contamination",
-              "color": null
+              "name": "Free from fecal and priority chemical contamination",
+              "code": "F1"
             },
             {
               "name": "Contaminated",
-              "color": null
+              "code": "F2"
             },
             {
               "name": "Don't know",
-              "color": null
+              "code": "F3"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 573340127,
+              "options": [
+                "Piped water into dwelling (household connection)",
+                "Piped water to yard/plot",
+                "Piped to neighbour",
+                "Deep tubewell/borehole",
+                "Shallow tubewell/borehole",
+                "Public tap/standpipe",
+                "Protected spring",
+                "Rainwater collection",
+                "Tanker-truck",
+                "Cart with small tank/drum",
+                "Bottled water",
+                "Public tap/standpipe",
+                "Protected dug well",
+                "AIRP (arsenic iron removable plant)"
+              ]
             }
           ]
         }
-      ]
+      ],
+      "id": 8
     },
     {
       "question_group": "Core Sanitation Questions",
@@ -379,55 +397,76 @@
           "options": [
             {
               "name": "Flush/pour flush to piped sewer system",
-              "color": "#70AD47"
+              "color": "#70AD47",
+              "code": "T1"
             },
             {
               "name": "Flush/pour flush to septic tank",
-              "color": "#C5E0B3"
+              "color": "#C5E0B3",
+              "code": "T2"
             },
             {
               "name": "Flush/pour flush to pit latrine",
-              "color": "#385623"
+              "color": "#385623",
+              "code": "T3"
             },
             {
               "name": "Ventilated improved pit latrine (VIP) with slab",
-              "color": "#00B050"
+              "color": "#00B050",
+              "code": "T4"
             },
             {
               "name": "Pit latrine with slab",
-              "color": "#00B0F0"
+              "color": "#00B0F0",
+              "code": "T5"
             },
             {
               "name": "Twin pit offset latrine",
-              "color": "#BF8F00"
+              "color": "#BF8F00",
+              "code": "T6"
             },
             {
               "name": "Twin pit with latrine slab",
-              "color": "#40FCFF"
+              "color": "#40FCFF",
+              "code": "T7"
             },
             {
               "name": "Other composting latrine",
-              "color": "#ED7D31"
+              "color": "#ED7D31",
+              "code": "T8"
             },
             {
               "name": "Flush/pour flush to open drain",
-              "color": "#9C5CFF"
+              "color": "#9C5CFF",
+              "code": "T9"
             },
             {
               "name": "Flush/pour flush to don't know where",
-              "color": "#2F5496"
+              "color": "#2F5496",
+              "code": "T10"
             },
             {
-              "name": "Pit latrine without slab/open pit",
-              "color": "#FF83B7"
+              "name": "Pit latrine without slab / open pit",
+              "color": "#FF83B7",
+              "code": "T11"
             },
             {
               "name": "Twin pit without slab",
-              "color": "#FFFB00"
+              "color": "#FFFB00",
+              "code": "T12"
             },
             {
               "name": "No facility",
-              "color": "#FF0000"
+              "color": "#FF0000",
+              "code": "T13"
+            },
+            {
+              "name": "Biogas toilet",
+              "code": "T14"
+            },
+            {
+              "name": "Composting toilet (Ecosan)",
+              "code": "T15"
             }
           ]
         },
@@ -441,11 +480,11 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "code": "TS1"
             },
             {
               "name": "No",
-              "color": null
+              "code": "TS2"
             }
           ],
           "dependency": [
@@ -462,8 +501,8 @@
                 "Other composting latrine",
                 "Flush/pour flush to open drain",
                 "Flush/pour flush to don't know where",
-                "Pit latrine without slab/open pit",
-                "Twin pit without slab"
+                "Biogas toilet",
+                "Composting toilet (Ecosan)"
               ]
             }
           ]
@@ -478,15 +517,15 @@
           "options": [
             {
               "name": "In own dwelling",
-              "color": null
+              "code": "TF1"
             },
             {
               "name": "In own plot/yard",
-              "color": null
+              "code": "TF2"
             },
             {
               "name": "Elsewhere",
-              "color": null
+              "code": "TF3"
             }
           ],
           "dependency": [
@@ -503,8 +542,8 @@
                 "Other composting latrine",
                 "Flush/pour flush to open drain",
                 "Flush/pour flush to don't know where",
-                "Pit latrine without slab/open pit",
-                "Twin pit without slab"
+                "Biogas toilet",
+                "Composting toilet (Ecosan)"
               ]
             }
           ]
@@ -518,31 +557,36 @@
           "required": true,
           "options": [
             {
-              "name": "Yes emptied",
-              "color": null
+              "name": "No, new pit was constructed",
+              "code": "PE1"
             },
             {
-              "name": "Never emptied",
-              "color": null
+              "name": "Yes, but don't know when",
+              "code": "PE2"
             },
             {
               "name": "Don't know",
-              "color": null
+              "code": "PE3"
+            },
+            {
+              "name": "Yes, within the last 5 years",
+              "code": "PE4"
+            },
+            {
+              "name": "Yes, more than 5 years ago",
+              "code": "PE5"
+            },
+            {
+              "name": "No, never emptied",
+              "code": "PE6"
             }
           ],
           "dependency": [
             {
               "id": 557970124,
               "options": [
-                "Flush/pour flush to septic tank",
-                "Flush/pour flush to pit latrine",
-                "Ventilated improved pit latrine (VIP) with slab",
-                "Pit latrine with slab",
-                "Twin pit offset latrine",
-                "Twin pit with latrine slab",
-                "Other composting latrine",
-                "Pit latrine without slab/open pit",
-                "Twin pit without slab"
+                "Flush/pour flush to piped sewer system",
+                "Flush/pour flush to septic tank"
               ]
             }
           ]
@@ -557,43 +601,50 @@
           "options": [
             {
               "name": "Removed by service provider to a treatment plant",
-              "color": null
+              "code": "P1"
             },
             {
               "name": "Removed by service provider and buried in a covered pit",
-              "color": null
+              "code": "P2"
             },
             {
               "name": "Removed by service provider to don't know where",
-              "color": null
+              "code": "P3"
             },
             {
               "name": "Emptied by household and buried in a covered pit",
-              "color": null
+              "code": "P4"
             },
             {
               "name": "Disposed by household to uncovered pit, open ground, waterbody or elsewhere",
-              "color": null
+              "code": "P5"
             },
             {
               "name": "Don't Know",
-              "color": null
+              "code": "P6"
             },
             {
               "name": "Other",
-              "color": null
+              "code": "P7"
+            },
+            {
+              "name": "throw in the field . cultivating land",
+              "code": "P8"
             }
           ],
           "dependency": [
             {
               "id": 557970122,
               "options": [
-                "Yes emptied"
+                "Yes, but don't know when",
+                "Yes, within the last 5 years",
+                "Yes, more than 5 years ago"
               ]
             }
           ]
         }
-      ]
+      ],
+      "id": 9
     },
     {
       "question_group": "Core Hygiene Questions",
@@ -608,23 +659,28 @@
           "options": [
             {
               "name": "Fixed facility observed in dwelling",
-              "color": "#FF83B7"
+              "color": "#FF83B7",
+              "code": "HW1"
             },
             {
               "name": "Fixed facility observed in plot/yard",
-              "color": "#70AD47"
+              "color": "#70AD47",
+              "code": "HW2"
             },
             {
               "name": "Mobile object observed (bucket, jug, kettle)",
-              "color": "#A8D08D"
+              "color": "#A8D08D",
+              "code": "HW3"
             },
             {
               "name": "No hand washing place available in dwelling/plot/yard",
-              "color": "#FFC000"
+              "color": "#FFC000",
+              "code": "HW4"
             },
             {
               "name": "No permission to see",
-              "color": "#FF0000"
+              "color": "#FF0000",
+              "code": "HW5"
             }
           ]
         },
@@ -638,11 +694,11 @@
           "options": [
             {
               "name": "Water is available",
-              "color": null
+              "code": "WA1"
             },
             {
               "name": "Water is not available",
-              "color": null
+              "code": "WA2"
             }
           ],
           "dependency": [
@@ -665,12 +721,16 @@
           "required": true,
           "options": [
             {
-              "name": "Soap or detergent is available",
-              "color": null
+              "name": "Yes, soap or detergent are present",
+              "code": "SA1"
             },
             {
-              "name": "Soap or detergent is not available",
-              "color": null
+              "name": "Soap or detergent is not present",
+              "code": "SA2"
+            },
+            {
+              "name": "Ash/mud is present",
+              "code": "SA3"
             }
           ],
           "dependency": [
@@ -684,214 +744,8 @@
             }
           ]
         }
-      ]
-    },
-    {
-      "question_group": "Core Menstrual Hygiene Questions",
-      "questions": [
-        {
-          "id": 560160138,
-          "question": "During your last menstrual period were you able to wash and change in privacy while at home?",
-          "order": 1,
-          "meta": false,
-          "type": "option",
-          "required": true,
-          "options": [
-            {
-              "name": "Yes",
-              "color": null
-            },
-            {
-              "name": "No",
-              "color": null
-            }
-          ]
-        },
-        {
-          "id": 560160136,
-          "question": "During your last menstrual period, what hygiene materials did you use?",
-          "order": 2,
-          "meta": false,
-          "type": "option",
-          "required": true,
-          "options": [
-            {
-              "name": "Cloth/reusable sanitary pads",
-              "color": null
-            },
-            {
-              "name": "Disposable sanitary pads",
-              "color": null
-            },
-            {
-              "name": "Tampons",
-              "color": null
-            },
-            {
-              "name": "Menstrual cup",
-              "color": null
-            },
-            {
-              "name": "Toilet paper",
-              "color": null
-            },
-            {
-              "name": "Underwear alone",
-              "color": null
-            },
-            {
-              "name": "Other",
-              "color": null
-            }
-          ]
-        },
-        {
-          "id": 560160137,
-          "question": "During your last menstrual period, did you miss any of the following activities due to your period? Ask one by one:",
-          "order": 3,
-          "meta": false,
-          "type": "multiple_option",
-          "required": true,
-          "options": [
-            {
-              "name": "Attending to school",
-              "color": null
-            },
-            {
-              "name": "Paid work",
-              "color": null
-            },
-            {
-              "name": "Participating in social activities",
-              "color": null
-            },
-            {
-              "name": "Cooking food",
-              "color": null
-            },
-            {
-              "name": "Eating with others",
-              "color": null
-            },
-            {
-              "name": "Bathing in regular place",
-              "color": null
-            },
-            {
-              "name": "Did not miss any of the activities listed above",
-              "color": null
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "question_group": "Service Levels - Water, Sanitation, and Hygiene",
-      "questions": [
-        {
-          "id": 569340077,
-          "question": "Water Service Level",
-          "order": 1,
-          "meta": false,
-          "type": "option",
-          "required": true,
-          "options": [
-            {
-              "name": "Safely Managed",
-              "color": "#297EB5",
-              "order": 1,
-              "score": 15
-            },
-            {
-              "name": "Unimproved",
-              "color": "#FBD256",
-              "order": 4,
-              "score": -1
-            },
-            {
-              "name": "Basic",
-              "color": "#5EBADF",
-              "order": 2,
-              "score": 10
-            },
-            {
-              "name": "Limited",
-              "color": "#FDF177",
-              "order": 3,
-              "score": 1
-            },
-            {
-              "name": "Surface water",
-              "color": "#F1AC2A",
-              "order": 5,
-              "score": -2
-            }
-          ]
-        },
-        {
-          "id": 569340075,
-          "question": "Sanitation Service Level",
-          "order": 2,
-          "meta": false,
-          "type": "option",
-          "required": true,
-          "options": [
-            {
-              "name": "Safely Managed",
-              "color": "#368541",
-              "order": 1,
-              "score": 15
-            },
-            {
-              "name": "Basic",
-              "color": "#79BE7D",
-              "order": 2,
-              "score": 10
-            },
-            {
-              "name": "Limited",
-              "color": "#FDF177",
-              "order": 3,
-              "score": -1
-            },
-            {
-              "name": "Unimproved",
-              "color": "#FBD256",
-              "order": 4,
-              "score": -2
-            },
-            {
-              "name": "Open Defecation",
-              "color": null
-            }
-          ]
-        },
-        {
-          "id": 569340076,
-          "question": "Hygiene Service Level",
-          "order": 3,
-          "meta": false,
-          "type": "option",
-          "required": true,
-          "options": [
-            {
-              "name": "Basic",
-              "color": "#753780",
-              "score": 10
-            },
-            {
-              "name": "Limited",
-              "color": "#FDF177",
-              "score": -1
-            },
-            {
-              "name": "No facility",
-              "color": "#F1AC2A",
-              "score": -2
-            }
-          ]
-        }
-      ]
+      ],
+      "id": 10
     }
   ]
 }

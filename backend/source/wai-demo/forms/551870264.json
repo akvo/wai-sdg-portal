@@ -10,9 +10,11 @@
           "order": 1,
           "required": true,
           "type": "administration",
-          "meta": true
+          "meta": true,
+          "id": 2
         }
-      ]
+      ],
+      "id": 9
     },
     {
       "question_group": "School Information",
@@ -45,15 +47,18 @@
           "options": [
             {
               "name": "Primary 1 - 4",
-              "color": null
+              "color": null,
+              "id": 551874627
             },
             {
               "name": "Primary 1 - 8",
-              "color": null
+              "color": null,
+              "id": 551874679
             },
             {
               "name": "High school 9 - 10",
-              "color": null
+              "color": null,
+              "id": 551930789
             }
           ]
         },
@@ -75,7 +80,8 @@
           "required": false,
           "options": null
         }
-      ]
+      ],
+      "id": 10
     },
     {
       "question_group": "Drinking Water",
@@ -90,39 +96,48 @@
           "options": [
             {
               "name": "Pipeline connection",
-              "color": null
+              "color": null,
+              "id": 551877741
             },
             {
               "name": "Protected well/spring",
-              "color": null
+              "color": null,
+              "id": 551877781
             },
             {
               "name": "Shallow well fitted with pump",
-              "color": null
+              "color": null,
+              "id": 551877800
             },
             {
               "name": "Rainwater",
-              "color": null
+              "color": null,
+              "id": 551877812
             },
             {
               "name": "Unprotected well/spring",
-              "color": null
+              "color": null,
+              "id": 551931102
             },
             {
               "name": "Packaged bottled water",
-              "color": null
+              "color": null,
+              "id": 551877838
             },
             {
               "name": "Tanker-truck or cart",
-              "color": null
+              "color": null,
+              "id": 551877850
             },
             {
               "name": "Surface water (lake, river, stream)",
-              "color": null
+              "color": null,
+              "id": 551931106
             },
             {
               "name": "No water source",
-              "color": null
+              "color": null,
+              "id": 551931107
             }
           ]
         },
@@ -145,11 +160,13 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "color": null,
+              "id": 551931109
             },
             {
               "name": "No",
-              "color": null
+              "color": null,
+              "id": 551877910
             }
           ]
         },
@@ -163,15 +180,18 @@
           "options": [
             {
               "name": "Functional",
-              "color": "#91cc75"
+              "color": "#91cc75",
+              "id": 551877929
             },
             {
               "name": "Not functional",
-              "color": "#e39f00"
+              "color": "#e39f00",
+              "id": 551877943
             },
             {
               "name": "No water scheme",
-              "color": "#ee6666"
+              "color": "#ee6666",
+              "id": 551926431
             }
           ]
         },
@@ -184,7 +204,8 @@
           "required": false,
           "options": null
         }
-      ]
+      ],
+      "id": 11
     },
     {
       "question_group": "Sanitation",
@@ -199,31 +220,38 @@
           "options": [
             {
               "name": "Flush/Pour-flush toilets",
-              "color": null
+              "color": null,
+              "id": 551881048
             },
             {
               "name": "Pit latrines with slab",
-              "color": null
+              "color": null,
+              "id": 551931428
             },
             {
               "name": "Composting toilets",
-              "color": null
+              "color": null,
+              "id": 551881100
             },
             {
               "name": "Pit latrines without slab",
-              "color": null
+              "color": null,
+              "id": 551931431
             },
             {
               "name": "Hanging latrines",
-              "color": null
+              "color": null,
+              "id": 551881129
             },
             {
               "name": "Bucket latrines",
-              "color": null
+              "color": null,
+              "id": 551881138
             },
             {
               "name": "No toilets or latrines",
-              "color": null
+              "color": null,
+              "id": 551881150
             }
           ]
         },
@@ -237,15 +265,18 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "color": null,
+              "id": 551881171
             },
             {
               "name": "No",
-              "color": null
+              "color": null,
+              "id": 551881183
             },
             {
               "name": "No toilets at all",
-              "color": null
+              "color": null,
+              "id": 551881198
             }
           ]
         },
@@ -259,15 +290,18 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "color": null,
+              "id": 551931441
             },
             {
               "name": "No",
-              "color": null
+              "color": null,
+              "id": 551931442
             },
             {
               "name": "No toilets at all",
-              "color": null
+              "color": null,
+              "id": 551881238
             }
           ]
         },
@@ -290,11 +324,13 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "color": null,
+              "id": 551881257
             },
             {
               "name": "No",
-              "color": null
+              "color": null,
+              "id": 551881272
             }
           ]
         },
@@ -317,11 +353,13 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "color": null,
+              "id": 551881291
             },
             {
               "name": "No",
-              "color": null
+              "color": null,
+              "id": 551881303
             }
           ]
         },
@@ -344,15 +382,18 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "color": null,
+              "id": 551881322
             },
             {
               "name": "No",
-              "color": null
+              "color": null,
+              "id": 551931453
             },
             {
               "name": "No toilets at all",
-              "color": null
+              "color": null,
+              "id": 551881348
             }
           ]
         },
@@ -366,19 +407,23 @@
           "options": [
             {
               "name": "Dirty",
-              "color": null
+              "color": null,
+              "id": 551881362
             },
             {
               "name": "Clean",
-              "color": null
+              "color": null,
+              "id": 551881379
             },
             {
               "name": "No toilets",
-              "color": null
+              "color": null,
+              "id": 551881391
             }
           ]
         }
-      ]
+      ],
+      "id": 12
     },
     {
       "question_group": "Hygiene",
@@ -393,11 +438,13 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "color": null,
+              "id": 551931767
             },
             {
               "name": "No",
-              "color": null
+              "color": null,
+              "id": 551931771
             }
           ]
         },
@@ -411,11 +458,13 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "color": null,
+              "id": 551884538
             },
             {
               "name": "No",
-              "color": null
+              "color": null,
+              "id": 551884550
             }
           ]
         },
@@ -429,27 +478,33 @@
           "options": [
             {
               "name": "Yes, water and soap",
-              "color": null
+              "color": null,
+              "id": 551884569
             },
             {
               "name": "Water only",
-              "color": null
+              "color": null,
+              "id": 551884581
             },
             {
               "name": "Soap only",
-              "color": null
+              "color": null,
+              "id": 551884593
             },
             {
               "name": "Neither water or soap",
-              "color": null
+              "color": null,
+              "id": 551884607
             },
             {
               "name": "No handwashing facility",
-              "color": null
+              "color": null,
+              "id": 551884619
             }
           ]
         }
-      ]
+      ],
+      "id": 13
     },
     {
       "question_group": "WASH Service Levels",
@@ -465,17 +520,20 @@
             {
               "name": "Basic",
               "color": "#753780",
-              "score": 10
+              "score": 10,
+              "id": 551887640
             },
             {
               "name": "Limited",
               "color": "#FDF177",
-              "score": -1
+              "score": -1,
+              "id": 551887678
             },
             {
               "name": "No service",
               "color": "#F1AC2A",
-              "score": -2
+              "score": -2,
+              "id": 551887692
             }
           ]
         },
@@ -490,17 +548,20 @@
             {
               "name": "Basic",
               "color": "#753780",
-              "score": 10
+              "score": 10,
+              "id": 551887711
             },
             {
               "name": "Limited",
               "color": "#FDF177",
-              "score": -1
+              "score": -1,
+              "id": 551932092
             },
             {
               "name": "No service",
               "color": "#F1AC2A",
-              "score": -2
+              "score": -2,
+              "id": 551887738
             }
           ]
         },
@@ -515,21 +576,25 @@
             {
               "name": "Basic",
               "color": "#753780",
-              "score": 10
+              "score": 10,
+              "id": 551926529
             },
             {
               "name": "Limited",
               "color": "#FDF177",
-              "score": -1
+              "score": -1,
+              "id": 551887769
             },
             {
               "name": "No service",
               "color": "#F1AC2A",
-              "score": -2
+              "score": -2,
+              "id": 551887780
             }
           ]
         }
-      ]
+      ],
+      "id": 14
     }
   ]
 }

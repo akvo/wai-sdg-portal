@@ -11,6 +11,7 @@ services:
       - 5001:5001
   db:
     image: postgres:12-alpine
+    restart: unless-stopped
     container_name: db
     volumes:
       - ../db/docker-entrypoint-initdb.d/${INSTANCE_NAME}:/docker-entrypoint-initdb.d
@@ -32,6 +33,7 @@ services:
       context: ../backend
       dockerfile: Dockerfile
     container_name: backend
+    restart: unless-stopped
     working_dir: /usr/src/app
     command: ["./run.sh"]
     volumes:
@@ -57,6 +59,7 @@ services:
       context: ../backend
       dockerfile: Dockerfile.worker
     container_name: worker
+    restart: unless-stopped
     working_dir: /usr/src/app
     command: ["./run-worker.sh"]
     volumes:
@@ -121,6 +124,7 @@ services:
       context: ../frontend
       dockerfile: Dockerfile
     container_name: frontend
+    restart: unless-stopped
     environment:
       - INSTANCE_NAME=${INSTANCE_NAME}
     network_mode: service:mainnetwork
@@ -161,6 +165,35 @@ services:
     environment:
       - DOMAIN=${DOMAIN}
     network_mode: service:mainnetwork
+
+  frontend_build_cleanup:
+    image: akvo/akvo-node-18-alpine:20220923.084347.0558ee6
+    container_name: frontend_build_cleanup
+    working_dir: /app
+    command:
+      - /bin/bash
+      - -c
+      - |
+        rm -rf build yarn-error.log node_modules
+    volumes:
+      - ../frontend:/app:delegated
+    network_mode: service:mainnetwork
+
+  documentation_build_cleanup:
+    image: akvo/akvo-sphinx:20220525.082728.594558b
+    container_name: documentation_build_cleanup
+    working_dir: /app/docs/${INSTANCE_NAME}
+    command:
+      - /bin/bash
+      - -c
+      - |
+        rm -rf /app/frontend/build/docs/${INSTANCE_NAME}
+    volumes:
+      - ..:/app:delegated
+    environment:
+      - INSTANCE_NAME=${INSTANCE_NAME}
+    network_mode: service:mainnetwork
+
 
 volumes:
   pg-data:

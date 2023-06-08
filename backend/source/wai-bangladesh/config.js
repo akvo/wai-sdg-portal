@@ -136,7 +136,7 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 563280074, name: "Sanitation" },
+      shape: { id: "Sanitation", name: "Sanitation" },
       marker: { id: 563280069, title: "Toilet" },
     },
     formId: 563280066,
@@ -186,7 +186,7 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 559910088, name: "Water" },
+      shape: { id: "Water", name: "Water" },
       marker: { id: 567530047, name: "Toilet" },
     },
     formId: 557760069,
@@ -215,18 +215,7 @@ var page_config = {
       },
       {
         id: 559910085,
-        name: "Waste",
-        hover: [
-          { id: 573100084, name: "Healthcare name" },
-          {
-            id: 573100086,
-            name: "Type of health center",
-          },
-        ],
-      },
-      {
-        id: 557750067,
-        name: "Waste",
+        name: "Waste Management",
         hover: [
           { id: 573100084, name: "Healthcare name" },
           {

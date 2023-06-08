@@ -29,9 +29,18 @@ ssl_registration () {
 }
 
 
+cleanup_artifact () {
+    docker compose up --build documentation_build_cleanup
+    docker compose up --build frontend_build_cleanup
+    git checkout ../frontend/.env
+}
+
 # Start build application with docker compose
 start_build () {
 
+    cleanup_artifact
+
+    # start docker container
     docker compose up --build frontend_build
     docker compose up --build documentation_build
     docker compose up -d --build db
@@ -42,6 +51,8 @@ start_build () {
     else
         DOMAIN=${domain} docker compose up -d --build frontend_ssl
     fi
+
+    cleanup_artifact
 
 }
 

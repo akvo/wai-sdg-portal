@@ -146,11 +146,11 @@ class TestExcelValidation():
             "cell": "E1"
         }, {
             'error': ExcelError.value,
-            'error_message': "Wrong administration data for Jakarta",
+            'error_message': "Jawa Barat|Garut is not part of Jakarta",
             "cell": "B2"
         }, {
             'error': ExcelError.value,
-            'error_message': "Garut is not part of Jakarta",
+            'error_message': "Wrong administration data for Jakarta|Garut",
             "cell": "B3"
         }, {
             'error': ExcelError.value,
