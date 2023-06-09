@@ -216,7 +216,7 @@ docker compose exec backend ./test.sh
 
 ### JMP Logic implementation
 
-In order to implement JMP logic, you need to create a category.json inside the source folder and place it in a specific instance.
+JMP Logic implementation has been done by the [AkvoResponseGrouper](https://pypi.org/project/AkvoResponseGrouper/) library and we just need to create a category.json inside the source folder and place it in a specific instance.
 
 > For example, if we want to implement JMP logic on the Ethiopia instance, then category.json should be created on
 >
@@ -260,8 +260,8 @@ This section contains the properties that will be used in configuring the JMP lo
 **Else's fields**
 | Field | Type | Required | Description |
 | ------| -------- | ---- |--------------------- |
-| name | String | Yes | Category name |
-| ignore | Array of existing question IDs | Yes | Set list of question IDs that can be skipped based on the intersections in the options |
+| name | String | No | Category name |
+| ignore | Array of existing question IDs | No | Set list of question IDs that can be skipped based on the intersections in the options |
 
 To get an example of category.json you can find it in one of the instances, like the one in Ethiopia here:
 
