@@ -83,7 +83,7 @@ ignore          Array of
 Example
 =======
 
-In this section, we provide an example use case to demonstrate how to create category.json file based on the pr. Please note that the presented use case, "Sanitation," is intended for illustrative purposes only. While the example showcases the functionality and features of our library, it may not be an exact representation of real-world scenarios.
+In this section, we provide an example use case to demonstrate how to create a category.json file. Please note that the presented use case, "Sanitation," is intended for illustrative purposes only. While the example showcases the functionality and features of our library, it may not be an exact representation of real-world scenarios.
 
 Logic visualisation
 +++++++++++++++++++
