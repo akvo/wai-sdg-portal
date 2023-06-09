@@ -162,6 +162,17 @@ Assuming that you have **id-form_name.json** inside `./backend/source/{project_n
 docker compose exec backend python -m seeder.form
 ```
 
+You can also run the command above to updating the form.
+
+> **Note:**
+> Once you update the form then the version of the form will be automatically updated.
+
+Or, you need to truncate the existing form and replace it with a new one then the command to be executed becomes
+
+```bash
+docker compose exec backend python -m seeder.form --truncate
+```
+
 ##### Datapoint Seeder
 
 Assuming that you have **baseline.xlsx** inside `./backend/source` folder you should be able to run.
@@ -170,6 +181,21 @@ Assuming that you have **baseline.xlsx** inside `./backend/source` folder you sh
 docker compose exec backend python -m seeder.datapoint youremail@akvo.org
 ```
 
+This command also allows you to add new users to the portal with ease without providing parameters like before.
+
+```bash
+docker compose exec backend python -m seeder.user
+```
+
+Once the command is executed, then you will be asked to input these required fields.
+
+| Field                | Type                    | Description              |
+| -------------------- | ----------------------- | ------------------------ |
+| Full Name            | String                  | User's full name         |
+| Email Address        | String                  | User's email             |
+| Organisation Name    | String                  | User's organisation name |
+| Role [admin, editor] | enum: `admin`, `editor` | Set user's role          |
+
 ##### Run all the seeder in one command
 
 If you wish to run all the necessary seeder, you could also run
@@ -177,6 +203,14 @@ If you wish to run all the necessary seeder, you could also run
 ```
 docker compose exec backend ./seed.sh youremail@akvo.org "Your Name" Akvo
 ```
+
+#### Running Test
+
+```bash
+docker compose exec backend ./test.sh
+```
+
+---
 
 ### JMP Logic implementation
 
@@ -244,14 +278,6 @@ Assuming we will run the JMP logic in Ethiopia, then the command will be as foll
 ```bash
 docker compose exec backend akvo-responsegrouper --config ./source/wai-ethiopia/category.json
 ```
-
-#### Running Test
-
-```bash
-docker compose exec backend ./test.sh
-```
-
----
 
 ## Production
 
