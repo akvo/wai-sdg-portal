@@ -154,6 +154,23 @@ docker compose exec backend python -m seeder.admin youremail@akvo.org "Your Name
 docker compose exec backend python -m seeder.user <number_of_user> Akvo
 ```
 
+##### Add new User
+
+This command allows you to add new users to the portal with ease without providing parameters like before.
+
+```bash
+docker compose exec backend python -m seeder.user
+```
+
+Once the command is executed, then you will be asked to input these required fields.
+
+| Field                | Type                    | Description              |
+| -------------------- | ----------------------- | ------------------------ |
+| Full Name            | String                  | User's full name         |
+| Email Address        | String                  | User's email             |
+| Organisation Name    | String                  | User's organisation name |
+| Role [admin, editor] | enum: `admin`, `editor` | Set user's role          |
+
 ##### Form Seeder
 
 Assuming that you have **id-form_name.json** inside `./backend/source/{project_name}/forms/` folder you should be able to run.
@@ -180,21 +197,6 @@ Assuming that you have **baseline.xlsx** inside `./backend/source` folder you sh
 ```
 docker compose exec backend python -m seeder.datapoint youremail@akvo.org
 ```
-
-This command also allows you to add new users to the portal with ease without providing parameters like before.
-
-```bash
-docker compose exec backend python -m seeder.user
-```
-
-Once the command is executed, then you will be asked to input these required fields.
-
-| Field                | Type                    | Description              |
-| -------------------- | ----------------------- | ------------------------ |
-| Full Name            | String                  | User's full name         |
-| Email Address        | String                  | User's email             |
-| Organisation Name    | String                  | User's organisation name |
-| Role [admin, editor] | enum: `admin`, `editor` | Set user's role          |
 
 ##### Run all the seeder in one command
 
