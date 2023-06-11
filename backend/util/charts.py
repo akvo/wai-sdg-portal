@@ -45,38 +45,37 @@ class Charts(TypedDict):
         "question": "main source of drinking water",
         "form": "hh",
         "type": ChartType.stack,
-        "methood": ChartMethod.count
+        "methood": ChartMethod.count,
     }
     water_point_functionality = {
         "question": "Functionality Status",
         "form": "wp",
         "type": ChartType.stack,
-        "methood": ChartMethod.count
+        "methood": ChartMethod.count,
     }
     water_service_level_households = {
         "question": "water service level",
         "form": "hh",
         "type": ChartType.stack,
-        "methood": ChartMethod.count
+        "methood": ChartMethod.count,
     }
     water_service_level_health_facility = {
         "question": "water",
         "form": "health",
         "type": ChartType.stack,
-        "methood": ChartMethod.count
+        "methood": ChartMethod.count,
     }
     water_service_level_school = {
         "question": "water",
         "form": "school",
         "type": ChartType.stack,
-        "methood": ChartMethod.count
+        "methood": ChartMethod.count,
     }
     get = {
         "example_charts": example_charts,
         "water_point_functionality": water_point_functionality,
         "water_service_level_households": water_service_level_households,
-        "water_service_level_health_facility":
-        water_service_level_health_facility,
+        "water_service_level_health_facility": water_service_level_health_facility,
         "water_service_level_school": water_service_level_school,
     }
     list = list(get)
@@ -84,9 +83,9 @@ class Charts(TypedDict):
 
 def get_chart_value(session: Session, chart: ChartDict):
     form = get_form_by_name(session=session, name=chart["form"])
-    question = get_question_by_name(session=session,
-                                    form=form.id,
-                                    name=chart["question"])
+    question = get_question_by_name(
+        session=session, form=form.id, name=chart["question"]
+    )
     answer = get_answer_by_question(session=session, question=question.id)
     if question.type == QuestionType.option:
         answer_list = [a.only_value for a in answer]

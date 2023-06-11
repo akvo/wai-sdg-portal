@@ -25,7 +25,7 @@ def get_parent_id(df, x):
     return pid["id"]
 
 
-with open(source_file, 'r') as geo:
+with open(source_file, "r") as geo:
     geo = json.load(geo)
     ob = geo["objects"]
     ob_name = list(ob)[0]
@@ -52,14 +52,21 @@ with open(source_file, 'r') as geo:
     res = pd.DataFrame(res)
     res = res.dropna(subset=["name"]).reset_index()
     subset = ["name", "p", "l"]
-    res = res.drop_duplicates(subset=subset).sort_values(["l", "name"
-                                                          ]).reset_index()
+    res = (
+        res.drop_duplicates(subset=subset)
+        .sort_values(["l", "name"])
+        .reset_index()
+    )
     res = res[subset]
     res["id"] = res.index + 1
     res["parent"] = res.apply(lambda x: get_parent_id(res, x), axis=1)
     res = res[["id", "name", "parent"]]
     for adm in res.to_dict("records"):
         parent = adm["parent"] if adm["parent"] == adm["parent"] else None
-        add_administration(session=session, data=Administration(
-            id=int(adm["id"]), parent=parent, name=adm["name"]))
+        add_administration(
+            session=session,
+            data=Administration(
+                id=int(adm["id"]), parent=parent, name=adm["name"]
+            ),
+        )
     res.to_csv(f"./source/{source_path}/data/cascade.csv", index=False)

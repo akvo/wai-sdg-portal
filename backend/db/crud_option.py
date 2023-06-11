@@ -9,15 +9,17 @@ def get_option(session: Session) -> List[OptionDictWithId]:
     return session.query(Option).all()
 
 
-def add_option(session: Session,
-               question=int,
-               name=str,
-               id=Optional[int],
-               order=Optional[str],
-               score=Optional[str],
-               color=Optional[str],
-               code: Optional[str] = None,
-               translations: Optional[List[dict]] = None) -> OptionDictWithId:
+def add_option(
+    session: Session,
+    question=int,
+    name=str,
+    id=Optional[int],
+    order=Optional[str],
+    score=Optional[str],
+    color=Optional[str],
+    code: Optional[str] = None,
+    translations: Optional[List[dict]] = None,
+) -> OptionDictWithId:
     question = session.query(Question).filter(Question.id == question).first()
     option = Option(
         name=name,
@@ -25,7 +27,8 @@ def add_option(session: Session,
         color=color,
         score=score,
         code=code,
-        translations=translations)
+        translations=translations,
+    )
     question.option.append(option)
     session.flush()
     session.commit()
@@ -33,15 +36,16 @@ def add_option(session: Session,
     return option
 
 
-def update_option(session: Session,
-                  id: int,
-                  name: Optional[str] = None,
-                  order: Optional[str] = None,
-                  color: Optional[str] = None,
-                  score: Optional[str] = None,
-                  code: Optional[str] = None,
-                  translations: Optional[List[dict]] = None
-                  ) -> OptionDictWithId:
+def update_option(
+    session: Session,
+    id: int,
+    name: Optional[str] = None,
+    order: Optional[str] = None,
+    color: Optional[str] = None,
+    score: Optional[str] = None,
+    code: Optional[str] = None,
+    translations: Optional[List[dict]] = None,
+) -> OptionDictWithId:
     option = session.query(Option).filter(Option.id == id).first()
     option.order = order
     option.color = color
@@ -56,11 +60,16 @@ def update_option(session: Session,
     return option
 
 
-def get_option_by_question_and_name(session: Session,
-                                    name: str,
-                                    question: int) -> Option:
+def get_option_by_question_and_name(
+    session: Session, name: str, question: int
+) -> Option:
     if not question:
         return None
-    return session.query(Option).filter(
-        Option.question == question,
-        func.lower(Option.name) == name.lower().strip()).first()
+    return (
+        session.query(Option)
+        .filter(
+            Option.question == question,
+            func.lower(Option.name) == name.lower().strip(),
+        )
+        .first()
+    )

@@ -57,34 +57,43 @@ def get_location(sheet, x):
         parent_name = corrections[parent_name]
     if child_name in list(corrections):
         child_name = corrections[child_name]
-    parent = crud_administration.get_administration_by_name(session=session,
-                                                            name=parent_name)
+    parent = crud_administration.get_administration_by_name(
+        session=session, name=parent_name
+    )
     message = ""
     if not parent:
         message = "{}, {}, {} Not Found".format(sheet, x["ix"], parent_name)
         for pname in parent_name.split(" "):
             parent = crud_administration.get_administration_by_keyword(
-                session=session, name=pname)
+                session=session, name=pname
+            )
             if parent and not message:
                 message = "{}, {},{} Not Found, perhaps {} ?".format(
-                    sheet, x["ix"], parent_name,
-                    " / ".join([p.name for p in parent]))
+                    sheet,
+                    x["ix"],
+                    parent_name,
+                    " / ".join([p.name for p in parent]),
+                )
         # raise ValueError(message)
         # print(message)
         return None
-    children = crud_administration.get_administration_by_name(session=session,
-                                                              name=child_name,
-                                                              parent=parent.id)
+    children = crud_administration.get_administration_by_name(
+        session=session, name=child_name, parent=parent.id
+    )
     if children:
         return children.id
     message = ""
     for cname in child_name.split(" "):
         children = crud_administration.get_administration_by_keyword(
-            session=session, name=cname, parent=parent.id)
+            session=session, name=cname, parent=parent.id
+        )
         if children and not len(message):
             message = "{}, {}, {} Not Found, perhaps {} ?".format(
-                sheet, x["ix"], child_name,
-                " / ".join([c.name for c in children]))
+                sheet,
+                x["ix"],
+                child_name,
+                " / ".join([c.name for c in children]),
+            )
     if not len(message):
         message = "{}, {}, {} Not Found".format(sheet, x["ix"], child_name)
     # raise ValueError(message)
@@ -105,26 +114,28 @@ def record(answers, form, user):
             if "|" in qname:
                 # to handle flow data
                 qname = qname.split("|")[1]
-            q = crud_question.get_question_by_name(session=session,
-                                                   name=qname,
-                                                   form=form.id)
+            q = crud_question.get_question_by_name(
+                session=session, name=qname, form=form.id
+            )
             if not q:
                 print(a)
-            answer = Answer(question=q.id,
-                            created_by=user.id,
-                            created=datetime.now())
+            answer = Answer(
+                question=q.id, created_by=user.id, created=datetime.now()
+            )
             if q.type == QuestionType.administration:
                 administration = answers[a]
                 answer.value = answers[a]
                 if q.meta:
                     adm_name = crud_administration.get_administration_by_id(
-                        session, id=administration)
+                        session, id=administration
+                    )
                     names.append(adm_name.name)
             if q.type == QuestionType.geo:
                 if answers[a]:
                     geo = answers[a]
-                    answer.text = ("{}|{}").format(answers[a][0],
-                                                   answers[a][1])
+                    answer.text = ("{}|{}").format(
+                        answers[a][0], answers[a][1]
+                    )
                 else:
                     valid = False
             if q.type == QuestionType.text:
@@ -154,13 +165,15 @@ def record(answers, form, user):
             if valid:
                 answerlist.append(answer)
     name = " - ".join([str(n) for n in names])
-    data = crud_data.add_data(session=session,
-                              form=form.id,
-                              name=name,
-                              geo=geo,
-                              administration=administration,
-                              created_by=user.id,
-                              answers=answerlist)
+    data = crud_data.add_data(
+        session=session,
+        form=form.id,
+        name=name,
+        geo=geo,
+        administration=administration,
+        created_by=user.id,
+        answers=answerlist,
+    )
     return data
 
 
@@ -176,9 +189,9 @@ for sheet in sheets:
         rename_columns.update({adm: adm.lower()})
     data = data.rename(columns=rename_columns)
     data.dropna(subset=[a.lower() for a in administration_level], inplace=True)
-    data['ix'] = data.index + 1
-    data['location'] = data.apply(lambda x: get_location(sheet, x), axis=1)
-    data = data.drop(columns=['ix'], axis=1)
+    data["ix"] = data.index + 1
+    data["location"] = data.apply(lambda x: get_location(sheet, x), axis=1)
+    data = data.drop(columns=["ix"], axis=1)
     data = data.dropna(subset=["location"])
     if data.shape[0]:
         for adm in administration_level:
@@ -189,13 +202,15 @@ for sheet in sheets:
             if g not in list(data):
                 geo = False
         if geo:
-            data['geolocation'] = data.apply(
+            data["geolocation"] = data.apply(
                 lambda x: [x["latitude"], x["longitude"]]
-                if x["latitude"] == x["latitude"] and x["longitude"] == x[
-                    "longitude"] else None,
-                axis=1)
+                if x["latitude"] == x["latitude"]
+                and x["longitude"] == x["longitude"]
+                else None,
+                axis=1,
+            )
             data = data.drop(columns=lat_long, axis=1)
-        form_name = sheet.replace(source_path, '').strip()
+        form_name = sheet.replace(source_path, "").strip()
         form = crud_form.search_form_by_name(session=session, name=form_name)
         data = data.to_dict("records")
         for d in data:

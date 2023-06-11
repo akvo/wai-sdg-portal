@@ -9,9 +9,11 @@ from models.data import Data
 from models.question import QuestionType
 
 
-def append_value(answer: Answer, value: Union[int, float, str, bool, List[str],
-                                              List[int], List[float]],
-                 type: QuestionType) -> Answer:
+def append_value(
+    answer: Answer,
+    value: Union[int, float, str, bool, List[str], List[int], List[float]],
+    type: QuestionType,
+) -> Answer:
     if type == QuestionType.administration:
         answer.value = value
     if type == QuestionType.number:
@@ -30,8 +32,10 @@ def append_value(answer: Answer, value: Union[int, float, str, bool, List[str],
 
 
 def add_answer(
-    session: Session, answer: Answer, type: QuestionType,
-    value: Union[int, float, str, bool, List[str], List[int], List[float]]
+    session: Session,
+    answer: Answer,
+    type: QuestionType,
+    value: Union[int, float, str, bool, List[str], List[int], List[float]],
 ) -> AnswerDict:
     answer = append_value(answer, value, type)
     session.add(answer)
@@ -42,9 +46,12 @@ def add_answer(
 
 
 def update_answer(
-    session: Session, answer: Answer, history: History, user: int,
-    type: QuestionType, value: Union[int, float, str, bool, List[str],
-                                     List[int], List[float]]
+    session: Session,
+    answer: Answer,
+    history: History,
+    user: int,
+    type: QuestionType,
+    value: Union[int, float, str, bool, List[str], List[int], List[float]],
 ) -> AnswerDict:
     answer.updated_by = user
     answer.updated = datetime.now()
@@ -57,42 +64,67 @@ def update_answer(
 
 
 def get_answer_by_question(
-        session: Session,
-        question: int,
-        administrations: Optional[List[int]] = []) -> List[AnswerDict]:
+    session: Session, question: int, administrations: Optional[List[int]] = []
+) -> List[AnswerDict]:
     if len(administrations):
-        data = session.query(Data).filter(
-            Data.administration.in_(administrations)).options(
-                load_only("id")).all()
-        return session.query(Answer).filter(
-            and_(Answer.question == question,
-                 Answer.data.in_([d.id for d in data]))).all()
+        data = (
+            session.query(Data)
+            .filter(Data.administration.in_(administrations))
+            .options(load_only("id"))
+            .all()
+        )
+        return (
+            session.query(Answer)
+            .filter(
+                and_(
+                    Answer.question == question,
+                    Answer.data.in_([d.id for d in data]),
+                )
+            )
+            .all()
+        )
     return session.query(Answer).filter(Answer.question == question).all()
 
 
-def get_answer_by_data_and_question(session: Session, data: int,
-                                    questions: List[int]) -> List[AnswerBase]:
-    return session.query(Answer).filter(
-        and_(Answer.question.in_(questions), Answer.data == data)).all()
+def get_answer_by_data_and_question(
+    session: Session, data: int, questions: List[int]
+) -> List[AnswerBase]:
+    return (
+        session.query(Answer)
+        .filter(and_(Answer.question.in_(questions), Answer.data == data))
+        .all()
+    )
 
 
 def get_history(session: Session, data: int, question: int):
-    answer = session.query(Answer).filter(
-        and_(Answer.data == data, Answer.question == question)).first()
+    answer = (
+        session.query(Answer)
+        .filter(and_(Answer.data == data, Answer.question == question))
+        .first()
+    )
     answer = answer.simplified
-    history = session.query(History).filter(
-        and_(History.data == data,
-             History.question == question)).order_by(desc(History.id)).all()
+    history = (
+        session.query(History)
+        .filter(and_(History.data == data, History.question == question))
+        .order_by(desc(History.id))
+        .all()
+    )
     history = [h.simplified for h in history]
     return [answer] + history
 
 
 def get_project_count(session: Session, question: int, value: int) -> int:
-    return session.query(Answer).filter(
-        and_(Answer.question == question,
-             cast(Answer.value, Integer) == value)).count()
+    return (
+        session.query(Answer)
+        .filter(
+            and_(
+                Answer.question == question,
+                cast(Answer.value, Integer) == value,
+            )
+        )
+        .count()
+    )
 
 
 def count_answer_by_question(session: Session, question: int) -> int:
-    return session.query(Answer).filter(
-        Answer.question == question).count()
+    return session.query(Answer).filter(Answer.question == question).count()

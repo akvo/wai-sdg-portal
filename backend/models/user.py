@@ -16,9 +16,9 @@ from util.helper import TSVector
 
 
 class UserRole(enum.Enum):
-    user = 'user'
-    admin = 'admin'
-    editor = 'editor'
+    user = "user"
+    admin = "admin"
+    editor = "editor"
 
 
 class UserDict(TypedDict):
@@ -51,24 +51,30 @@ class User(Base):
     role = Column(Enum(UserRole))
     active = Column(Boolean, nullable=True, default=True)
     created = Column(DateTime, default=datetime.utcnow)
-    organisation = Column(Integer, ForeignKey('organisation.id'))
+    organisation = Column(Integer, ForeignKey("organisation.id"))
     manage_form_passcode = Column(Boolean, default=False)
     access = relationship(
-        "Access",
-        cascade="all, delete",
-        passive_deletes=True,
-        backref="access")
+        "Access", cascade="all, delete", passive_deletes=True, backref="access"
+    )
 
-    __ts_vector__ = Column(TSVector(), Computed(
-        "to_tsvector('english', name || ' ' || email)",
-        persisted=True))
-    __table_args__ = (Index('ix_user___ts_vector__',
-                            __ts_vector__, postgresql_using='gin'),)
+    __ts_vector__ = Column(
+        TSVector(),
+        Computed(
+            "to_tsvector('english', name || ' ' || email)", persisted=True
+        ),
+    )
+    __table_args__ = (
+        Index("ix_user___ts_vector__", __ts_vector__, postgresql_using="gin"),
+    )
 
     def __init__(
-        self, email: str, name: str, role: UserRole,
-        active: bool, organisation: int,
-        manage_form_passcode: Optional[bool] = False
+        self,
+        email: str,
+        name: str,
+        role: UserRole,
+        active: bool,
+        organisation: int,
+        manage_form_passcode: Optional[bool] = False,
     ):
         self.email = email
         self.name = name
@@ -90,15 +96,12 @@ class User(Base):
             "active": self.active,
             "access": [a.administration for a in self.access],
             "organisation": self.organisation,
-            "manage_form_passcode": self.manage_form_passcode
+            "manage_form_passcode": self.manage_form_passcode,
         }
 
     @property
     def recipient(self) -> UserRecipient:
-        return {
-            "Email": self.email,
-            "Name": self.name
-        }
+        return {"Email": self.email, "Name": self.name}
 
 
 class UserBase(BaseModel):

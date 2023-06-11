@@ -8,11 +8,13 @@ from models.jobs import Jobs, JobsBase
 from models.jobs import JobType, JobStatus, JobStatusResponse
 
 
-def add(session: Session,
-        payload: str,
-        type: JobType,
-        created_by: int,
-        info: Optional[TypedDict] = None) -> JobsBase:
+def add(
+    session: Session,
+    payload: str,
+    type: JobType,
+    created_by: int,
+    info: Optional[TypedDict] = None,
+) -> JobsBase:
     jobs = Jobs(payload=payload, type=type, info=info, created_by=created_by)
     session.add(jobs)
     session.commit()
@@ -31,12 +33,14 @@ def get_by_id(session: Session, id: int) -> Jobs:
     return jobs.serialize
 
 
-def update(session: Session,
-           id: int,
-           payload: Optional[str] = None,
-           status: Union[JobStatus] = None,
-           type: Optional[Union[JobType]] = None,
-           info: Optional[TypedDict] = None) -> JobsBase:
+def update(
+    session: Session,
+    id: int,
+    payload: Optional[str] = None,
+    status: Union[JobStatus] = None,
+    type: Optional[Union[JobType]] = None,
+    info: Optional[TypedDict] = None,
+) -> JobsBase:
     jobs = session.query(Jobs).filter(Jobs.id == id).first()
     if payload:
         jobs.payload = payload
@@ -57,12 +61,14 @@ def update(session: Session,
     return jobs.serialize
 
 
-def query(session: Session,
-          type: Optional[JobType] = None,
-          status: Optional[JobStatus] = None,
-          created_by: Optional[int] = None,
-          limit: Optional[int] = 5,
-          skip: Optional[int] = 0) -> JobsBase:
+def query(
+    session: Session,
+    type: Optional[JobType] = None,
+    status: Optional[JobStatus] = None,
+    created_by: Optional[int] = None,
+    limit: Optional[int] = 5,
+    skip: Optional[int] = 0,
+) -> JobsBase:
     jobs = session.query(Jobs)
     if type:
         jobs = jobs.filter(Jobs.type == type)
@@ -82,18 +88,29 @@ def status(session: Session, id: int) -> JobStatusResponse:
 
 
 def pending(session: Session) -> Union[int, bool]:
-    jobs = session.query(Jobs.id).filter(
-        Jobs.status == JobStatus.pending).order_by(asc(Jobs.created)).first()
+    jobs = (
+        session.query(Jobs.id)
+        .filter(Jobs.status == JobStatus.pending)
+        .order_by(asc(Jobs.created))
+        .first()
+    )
     return jobs.id if jobs else False
 
 
 def on_progress(session: Session) -> Union[JobsBase, bool]:
-    jobs = session.query(Jobs).filter(
-        Jobs.status == JobStatus.on_progress).order_by(asc(
-            Jobs.created)).first()
+    jobs = (
+        session.query(Jobs)
+        .filter(Jobs.status == JobStatus.on_progress)
+        .order_by(asc(Jobs.created))
+        .first()
+    )
     return jobs if jobs else False
 
 
 def is_not_busy(session: Session) -> bool:
-    return session.query(
-        Jobs.id).filter(Jobs.status == JobStatus.on_progress).first() is None
+    return (
+        session.query(Jobs.id)
+        .filter(Jobs.status == JobStatus.on_progress)
+        .first()
+        is None
+    )

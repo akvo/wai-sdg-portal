@@ -15,15 +15,15 @@ from models.option import OptionBase, OptionBaseWithId
 
 
 class QuestionType(enum.Enum):
-    text = 'text'
-    number = 'number'
-    option = 'option'
-    multiple_option = 'multiple_option'
-    photo = 'photo'
-    date = 'date'
-    geo = 'geo'
-    administration = 'administration'
-    answer_list = 'answer_list'
+    text = "text"
+    number = "number"
+    option = "option"
+    multiple_option = "multiple_option"
+    photo = "photo"
+    date = "date"
+    geo = "geo"
+    administration = "administration"
+    answer_list = "answer_list"
 
 
 class DependencyDict(TypedDict):
@@ -52,8 +52,8 @@ class QuestionDict(TypedDict):
 class Question(Base):
     __tablename__ = "question"
     id = Column(Integer, primary_key=True, index=True, nullable=True)
-    form = Column(Integer, ForeignKey('form.id'))
-    question_group = Column(Integer, ForeignKey('question_group.id'))
+    form = Column(Integer, ForeignKey("form.id"))
+    question_group = Column(Integer, ForeignKey("question_group.id"))
     name = Column(String)
     order = Column(Integer, nullable=True)
     meta = Column(Boolean, default=False)
@@ -67,17 +67,27 @@ class Question(Base):
     # addons column
     # save allowOther, allowOtherText etc extra params
     addons = Column(MutableDict.as_mutable(pg.JSONB), nullable=True)
-    option = relationship("Option",
-                          cascade="all, delete",
-                          passive_deletes=True,
-                          backref="option")
+    option = relationship(
+        "Option", cascade="all, delete", passive_deletes=True, backref="option"
+    )
 
-    def __init__(self, id: Optional[int], name: str, order: int, form: int,
-                 question_group: int, meta: bool, type: QuestionType,
-                 required: Optional[bool], rule: Optional[dict],
-                 dependency: Optional[List[dict]],
-                 tooltip: Optional[dict], translations: Optional[List[dict]],
-                 api: Optional[dict], addons: Optional[dict]):
+    def __init__(
+        self,
+        id: Optional[int],
+        name: str,
+        order: int,
+        form: int,
+        question_group: int,
+        meta: bool,
+        type: QuestionType,
+        required: Optional[bool],
+        rule: Optional[dict],
+        dependency: Optional[List[dict]],
+        tooltip: Optional[dict],
+        translations: Optional[List[dict]],
+        api: Optional[dict],
+        addons: Optional[dict],
+    ):
         self.id = id
         self.form = form
         self.order = order
@@ -122,8 +132,9 @@ class Question(Base):
 
     @property
     def to_definition(self):
-        options = [options.name
-                   for options in self.option] if self.option else False
+        options = (
+            [options.name for options in self.option] if self.option else False
+        )
         return {
             "id": self.id,
             "name": self.name,

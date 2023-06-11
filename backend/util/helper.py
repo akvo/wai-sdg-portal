@@ -19,19 +19,19 @@ def get_uuid():
 
 
 def contain_numbers(inputString):
-    return bool(re.search(r'\d', inputString))
+    return bool(re.search(r"\d", inputString))
 
 
 def hash_cipher(text: str, length: int = 4):
-    hash_result = hashlib.sha1(bytes(text, 'utf-8'))
+    hash_result = hashlib.sha1(bytes(text, "utf-8"))
     dig = hash_result.digest()
     res = ""
     for i in range(0, length):
         x = dig[i] % 52
         if x >= 26:
-            res += chr(ord('A') + x - 26)
+            res += chr(ord("A") + x - 26)
         else:
-            res += chr(ord('a') + x)
+            res += chr(ord("a") + x)
     return res
 
 
@@ -52,7 +52,7 @@ class TSVector(sa.types.TypeDecorator):
     impl = TSVECTOR
 
 
-class Cipher():
+class Cipher:
     def __init__(self, str_param):
         self.str_param = str_param
 
@@ -60,25 +60,32 @@ class Cipher():
         n = self.str_param.split("-")[1]
         n = functools.reduce(lambda a, b: int(a) + int(b), list(str(n)))
         n = str(n)[-1]
-        nab = "".join([
-            chars[-i if i + int(n) > an else int(n) + i - an]
-            for i, a in enumerate(chars)
-        ])
+        nab = "".join(
+            [
+                chars[-i if i + int(n) > an else int(n) + i - an]
+                for i, a in enumerate(chars)
+            ]
+        )
         ad = "".join(
-            [keys[nab.find(a)] if a in nab else a for a in self.str_param])
+            [keys[nab.find(a)] if a in nab else a for a in self.str_param]
+        )
         return f"{ad}{n}"
 
     def decode(self):
         n = int(self.str_param[-1])
-        nab = "".join([
-            chars[-i if i + int(n) > an else int(n) + i - an]
-            for i, a in enumerate(chars)
-        ])
+        nab = "".join(
+            [
+                chars[-i if i + int(n) > an else int(n) + i - an]
+                for i, a in enumerate(chars)
+            ]
+        )
         try:
-            ad = "".join([
-                nab[keys.find(a)] if a in keys else a
-                for a in self.str_param[:-1]
-            ])
+            ad = "".join(
+                [
+                    nab[keys.find(a)] if a in keys else a
+                    for a in self.str_param[:-1]
+                ]
+            )
             ad = ad.split("-")
             return ad[0], int(ad[1])
         except IndexError:

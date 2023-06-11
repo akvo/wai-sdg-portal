@@ -34,19 +34,21 @@ if random_point:
     sample_geo = pd.read_csv(random_point_file)
     sample_geo = sample_geo.sample(frac=1)
     sample_geo = sample_geo.rename(columns={levels[-1]: "name"})
-    sample_geo = sample_geo.to_dict('records')
+    sample_geo = sample_geo.to_dict("records")
 else:
     print(f"{random_point_file} is required")
     sys.exit()
 
-with open(source_geo, 'r') as geo:
+with open(source_geo, "r") as geo:
     geo = json.load(geo)
     ob = geo["objects"]
     ob_name = list(ob)[0]
-parent_administration = set([
-    d[levels[-2]]
-    for d in [p["properties"] for p in ob[ob_name]["geometries"]]
-])
+parent_administration = set(
+    [
+        d[levels[-2]]
+        for d in [p["properties"] for p in ob[ob_name]["geometries"]]
+    ]
+)
 forms = crud_form.get_form(session=session)
 forms = [f.id for f in forms]
 child_forms = []
@@ -91,10 +93,14 @@ fake = Faker()
 
 
 def get_random_administration(fake, session, adm_name=None):
-    fa = [adm_name] if adm_name else fake.random_choices(
-        elements=parent_administration, length=1)
+    fa = (
+        [adm_name]
+        if adm_name
+        else fake.random_choices(elements=parent_administration, length=1)
+    )
     administration = crud_administration.get_administration_by_name(
-        session=session, name=fa[0])
+        session=session, name=fa[0]
+    )
     if adm_name:
         return administration
     if not administration.children:
@@ -119,24 +125,29 @@ for form in forms:
     answer_options = []
     if form.id in child_forms:
         answer_options = crud_answer.get_answer_by_question(
-            session=session, question=1260775116)
+            session=session, question=1260775116
+        )
     for i in range(repeats):
         answers = []
         names = []
         iloc = i % (len(sample_geo) - 1)
         geo = sample_geo[iloc]
         administration = get_random_administration(
-            fake, session, adm_name=geo['name'])
+            fake, session, adm_name=geo["name"]
+        )
         project_id = None
         if form.id in child_forms:
             project_id = fake.random_choices(
-                elements=answer_options, length=1)[0]
+                elements=answer_options, length=1
+            )[0]
             administration = crud_data.get_data_by_id(
-                session=session, id=project_id.data)
+                session=session, id=project_id.data
+            )
             administration = crud_administration.get_administration_by_id(
-                session=session, id=administration.administration)
+                session=session, id=administration.administration
+            )
         if geo:
-            geo = [geo['lat'], geo['long']]
+            geo = [geo["lat"], geo["long"]]
         else:
             geo = None
         # For ODF
@@ -145,17 +156,19 @@ for form in forms:
         for qg in form.question_group:
             for q in qg.question:
                 value = False
-                answer = Answer(question=q.id,
-                                created_by=user.id,
-                                created=datetime.now())
+                answer = Answer(
+                    question=q.id, created_by=user.id, created=datetime.now()
+                )
                 if q.type in [
-                        QuestionType.option, QuestionType.multiple_option
+                    QuestionType.option,
+                    QuestionType.multiple_option,
                 ]:
                     fa = fake.random_int(min=0, max=len(q.option) - 1)
                     answer.options = [q.option[fa].name]
                     if q.id == 557700349:
                         answer.options = get_odf_value(
-                            status_verified, not_triggered)
+                            status_verified, not_triggered
+                        )
                     value = True
                 if q.type == QuestionType.answer_list:
                     answer.value = project_id.value
@@ -207,5 +220,6 @@ for form in forms:
             geo=geo,
             administration=administration,
             created_by=user.id,
-            answers=answers)
+            answers=answers,
+        )
     print(f"ADDED {repeats} datapoint to {form.name}")

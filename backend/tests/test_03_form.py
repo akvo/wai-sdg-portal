@@ -11,27 +11,31 @@ sys.path.append("..")
 account = Acc(True)
 
 
-class TestFormRoutes():
+class TestFormRoutes:
     @pytest.mark.asyncio
-    async def test_add_form(self, app: FastAPI, session: Session,
-                            client: AsyncClient) -> None:
+    async def test_add_form(
+        self, app: FastAPI, session: Session, client: AsyncClient
+    ) -> None:
         res = await client.post(
             app.url_path_for("form:create"),
             params={
                 "name": "test",
                 "description": "test description",
                 "default_language": "en",
-                "version": 1.0
+                "version": 1.0,
             },
             json={
                 "languages": ["en", "id"],
-                "translations": [{
-                    "language": "id",
-                    "name": "uji coba",
-                    "description": "deskripsi uji coba"
-                }]
+                "translations": [
+                    {
+                        "language": "id",
+                        "name": "uji coba",
+                        "description": "deskripsi uji coba",
+                    }
+                ],
             },
-            headers={"Authorization": f"Bearer {account.token}"})
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
         assert res.status_code == 200
         res = res.json()
         assert res == {
@@ -41,40 +45,48 @@ class TestFormRoutes():
             "description": "test description",
             "default_language": "en",
             "languages": ["en", "id"],
-            "translations": [{
-                "language": "id",
-                "name": "uji coba",
-                "description": "deskripsi uji coba"
-            }],
+            "translations": [
+                {
+                    "language": "id",
+                    "name": "uji coba",
+                    "description": "deskripsi uji coba",
+                }
+            ],
             "passcode": None,
         }
 
     @pytest.mark.asyncio
-    async def test_update_form_passcode(self, app: FastAPI, session: Session,
-                                        client: AsyncClient) -> None:
+    async def test_update_form_passcode(
+        self, app: FastAPI, session: Session, client: AsyncClient
+    ) -> None:
         # test no auth
         res = await client.put(
             app.url_path_for("form:update_passcode", id=1),
-            params={"passcode": "test@123"})
+            params={"passcode": "test@123"},
+        )
         assert res.status_code == 403
         # test normal admin
         normal_admin_acc = Acc(
-            verified=True, email="normal_admin@mail.com", name="Normal Admin")
+            verified=True, email="normal_admin@mail.com", name="Normal Admin"
+        )
         res = await client.put(
             app.url_path_for("form:update_passcode", id=1),
             params={"passcode": "test@123"},
-            headers={"Authorization": f"Bearer {normal_admin_acc.token}"})
+            headers={"Authorization": f"Bearer {normal_admin_acc.token}"},
+        )
         assert res.status_code == 403
         # test admin with manage form passcode
         res = await client.put(
             app.url_path_for("form:update_passcode", id=1),
             params={"passcode": "test@123"},
-            headers={"Authorization": f"Bearer {account.token}"})
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
         assert res.status_code == 204
 
     @pytest.mark.asyncio
-    async def test_add_option_question(self, app: FastAPI, session: Session,
-                                       client: AsyncClient) -> None:
+    async def test_add_option_question(
+        self, app: FastAPI, session: Session, client: AsyncClient
+    ) -> None:
         res = await client.get(app.url_path_for("form:get_by_id", id=1))
         assert res.status_code == 200
         res = res.json()
@@ -86,40 +98,50 @@ class TestFormRoutes():
                 "form": 1,
                 "question_group": "Test Question Group",
                 "meta": True,
-                "type": "option"
+                "type": "option",
             },
             json={
-                "option": [{
-                    "name": "Option 1",
-                    "color": "#333",
-                    "order": 1,
-                    "score": None,
-                    "code": "OP1",
-                    "translations": [{
-                        "language": "id",
-                        "name": "Pilihan 1",
-                    }]
-                }, {
-                    "name": "Option 2",
-                    "color": "#333",
-                    "order": 2,
-                    "score": 5,
-                    "code": "OP2",
-                    "translations": [{
-                        "language": "id",
-                        "name": "Pilihan 2",
-                    }]
-                }, {
-                    "name": "Option 3",
-                    "color": None,
-                    "order": None,
-                    "score": 10,
-                    "code": "OP3",
-                    "translations": [{
-                        "language": "id",
-                        "name": "Pilihan 3",
-                    }]
-                }]
+                "option": [
+                    {
+                        "name": "Option 1",
+                        "color": "#333",
+                        "order": 1,
+                        "score": None,
+                        "code": "OP1",
+                        "translations": [
+                            {
+                                "language": "id",
+                                "name": "Pilihan 1",
+                            }
+                        ],
+                    },
+                    {
+                        "name": "Option 2",
+                        "color": "#333",
+                        "order": 2,
+                        "score": 5,
+                        "code": "OP2",
+                        "translations": [
+                            {
+                                "language": "id",
+                                "name": "Pilihan 2",
+                            }
+                        ],
+                    },
+                    {
+                        "name": "Option 3",
+                        "color": None,
+                        "order": None,
+                        "score": 10,
+                        "code": "OP3",
+                        "translations": [
+                            {
+                                "language": "id",
+                                "name": "Pilihan 3",
+                            }
+                        ],
+                    },
+                ]
             },
             headers={"Authorization": f"Bearer {account.token}"},
         )
@@ -132,45 +154,55 @@ class TestFormRoutes():
         assert res["name"] == "Test Option Question"
         assert res["meta"] is True
         assert res["type"] == "option"
-        assert res["option"] == [{
-            "color": "#333",
-            "id": 1,
-            "order": 1,
-            "name": "Option 1",
-            "score": None,
-            "code": "OP1",
-            "translations": [{
-                "language": "id",
-                "name": "Pilihan 1",
-            }]
-        }, {
-            "color": "#333",
-            "id": 2,
-            "order": 2,
-            "name": "Option 2",
-            "score": 5,
-            "code": "OP2",
-            "translations": [{
-                "language": "id",
-                "name": "Pilihan 2",
-            }]
-        }, {
-            "color": None,
-            "id": 3,
-            "order": None,
-            "name": "Option 3",
-            "score": 10,
-            "code": "OP3",
-            "translations": [{
-                "language": "id",
-                "name": "Pilihan 3",
-            }]
-        }]
+        assert res["option"] == [
+            {
+                "color": "#333",
+                "id": 1,
+                "order": 1,
+                "name": "Option 1",
+                "score": None,
+                "code": "OP1",
+                "translations": [
+                    {
+                        "language": "id",
+                        "name": "Pilihan 1",
+                    }
+                ],
+            },
+            {
+                "color": "#333",
+                "id": 2,
+                "order": 2,
+                "name": "Option 2",
+                "score": 5,
+                "code": "OP2",
+                "translations": [
+                    {
+                        "language": "id",
+                        "name": "Pilihan 2",
+                    }
+                ],
+            },
+            {
+                "color": None,
+                "id": 3,
+                "order": None,
+                "name": "Option 3",
+                "score": 10,
+                "code": "OP3",
+                "translations": [
+                    {
+                        "language": "id",
+                        "name": "Pilihan 3",
+                    }
+                ],
+            },
+        ]
 
     @pytest.mark.asyncio
-    async def test_add_administration_question(self, app: FastAPI,
-                                               session: Session,
-                                               client: AsyncClient) -> None:
+    async def test_add_administration_question(
+        self, app: FastAPI, session: Session, client: AsyncClient
+    ) -> None:
         res = await client.post(
             app.url_path_for("question:create"),
             params={
@@ -178,7 +210,7 @@ class TestFormRoutes():
                 "form": 1,
                 "question_group": "Test Question Group",
                 "meta": True,
-                "type": "administration"
+                "type": "administration",
             },
             headers={"Authorization": f"Bearer {account.token}"},
         )
@@ -195,8 +227,9 @@ class TestFormRoutes():
         assert res["type"] == "administration"
 
     @pytest.mark.asyncio
-    async def test_add_geo_question(self, app: FastAPI, session: Session,
-                                    client: AsyncClient) -> None:
+    async def test_add_geo_question(
+        self, app: FastAPI, session: Session, client: AsyncClient
+    ) -> None:
         res = await client.post(
             app.url_path_for("question:create"),
             params={
@@ -204,7 +237,7 @@ class TestFormRoutes():
                 "form": 1,
                 "question_group": "Test Question Group",
                 "meta": True,
-                "type": "geo"
+                "type": "geo",
             },
             headers={"Authorization": f"Bearer {account.token}"},
         )
@@ -221,9 +254,9 @@ class TestFormRoutes():
         assert res["type"] == "geo"
 
     @pytest.mark.asyncio
-    async def test_datapoint_name_question(self, app: FastAPI,
-                                           session: Session,
-                                           client: AsyncClient) -> None:
+    async def test_datapoint_name_question(
+        self, app: FastAPI, session: Session, client: AsyncClient
+    ) -> None:
         res = await client.post(
             app.url_path_for("question:create"),
             params={
@@ -234,10 +267,14 @@ class TestFormRoutes():
                 "type": "text",
                 "required": False,
             },
-            json={"dependency": [{
-                "id": 1,
-                "options": ["Option 1"],
-            }]},
+            json={
+                "dependency": [
+                    {
+                        "id": 1,
+                        "options": ["Option 1"],
+                    }
+                ]
+            },
             headers={"Authorization": f"Bearer {account.token}"},
         )
         assert res.status_code == 200
@@ -251,7 +288,9 @@ class TestFormRoutes():
         assert res["required"] is False
         assert res["rule"] is None
         assert res["type"] == "text"
-        assert res["dependency"] == [{
-            "id": 1,
-            "options": ["Option 1"],
-        }]
+        assert res["dependency"] == [
+            {
+                "id": 1,
+                "options": ["Option 1"],
+            }
+        ]

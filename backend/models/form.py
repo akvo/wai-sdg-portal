@@ -48,8 +48,11 @@ class Form(Base):
     passcode = Column(String, nullable=True)
 
     question_group = relationship(
-        "QuestionGroup", cascade="all, delete",
-        passive_deletes=True, backref="question_group")
+        "QuestionGroup",
+        cascade="all, delete",
+        passive_deletes=True,
+        backref="question_group",
+    )
 
     def __init__(
         self,
@@ -60,7 +63,7 @@ class Form(Base):
         default_language: Optional[str] = None,
         languages: Optional[List[str]] = None,
         translations: Optional[List[dict]] = None,
-        passcode: Optional[str] = None
+        passcode: Optional[str] = None,
     ):
         self.id = id
         self.name = name
@@ -98,7 +101,7 @@ class Form(Base):
             "default_language": self.default_language,
             "languages": self.languages,
             "translations": self.translations,
-            "passcode": True if self.passcode else False
+            "passcode": True if self.passcode else False,
         }
 
     @property

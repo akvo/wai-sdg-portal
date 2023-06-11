@@ -15,36 +15,45 @@ account = Acc(True)
 administration_file = "./source/notset/data/administration.test.csv"
 
 
-class TestAdministrationRoute():
+class TestAdministrationRoute:
     @pytest.mark.asyncio
-    async def test_seed_administration(self, app: FastAPI, session: Session,
-                                       client: AsyncClient) -> None:
+    async def test_seed_administration(
+        self, app: FastAPI, session: Session, client: AsyncClient
+    ) -> None:
         data = pd.read_csv(administration_file)
-        parents = list(data['UNIT_TYPE'].unique())
-        parents = pd.DataFrame(parents, columns=['name'])
-        parents['parent'] = None
-        parents['id'] = parents.index + 1
-        data['parent'] = data['UNIT_TYPE'].apply(
-            lambda x: parents[parents['name'] == x].id.values[0])
-        data = data.rename(columns={'UNIT_NAME': 'name'})[['name', 'parent']]
-        results = parents[['name', 'parent'
-                           ]].append(data).reset_index()[['name', 'parent']]
-        results['id'] = results.index + 1
+        parents = list(data["UNIT_TYPE"].unique())
+        parents = pd.DataFrame(parents, columns=["name"])
+        parents["parent"] = None
+        parents["id"] = parents.index + 1
+        data["parent"] = data["UNIT_TYPE"].apply(
+            lambda x: parents[parents["name"] == x].id.values[0]
+        )
+        data = data.rename(columns={"UNIT_NAME": "name"})[["name", "parent"]]
+        results = (
+            parents[["name", "parent"]]
+            .append(data)
+            .reset_index()[["name", "parent"]]
+        )
+        results["id"] = results.index + 1
         for adm in results.to_dict("records"):
             parent = adm["parent"] if adm["parent"] == adm["parent"] else None
-            ca.add_administration(session=session, data=Administration(
-                id=int(adm["id"]), parent=parent, name=adm["name"]))
+            ca.add_administration(
+                session=session,
+                data=Administration(
+                    id=int(adm["id"]), parent=parent, name=adm["name"]
+                ),
+            )
         res = await client.get(app.url_path_for("administration:get"))
         assert res.status_code == 200
         res = res.json()
-        assert len(res) == len(results.to_dict('records'))
+        assert len(res) == len(results.to_dict("records"))
 
     @pytest.mark.asyncio
     async def test_cruds(self, session: Session) -> None:
         origin = pd.read_csv(administration_file)
-        origin["name"] = origin[['UNIT_NAME',
-                                 'UNIT_TYPE']].apply(lambda x: ', '.join(x),
-                                                     axis=1)
+        origin["name"] = origin[["UNIT_NAME", "UNIT_TYPE"]].apply(
+            lambda x: ", ".join(x), axis=1
+        )
         administration = ca.get_administration_name(session=session, id=2)
         assert administration == "Jawa Barat"
         administration = ca.get_administration_name(session=session, id=12)

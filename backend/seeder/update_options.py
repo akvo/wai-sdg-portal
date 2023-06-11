@@ -17,11 +17,10 @@ files = list(filter(lambda x: ".bak" not in x, os.listdir(file_path)))
 start_time = time.process_time()
 
 for file in sorted(files):
-    with open(f'{file_path}{file}') as json_file:
+    with open(f"{file_path}{file}") as json_file:
         json_form = json.load(json_file)
     # check form
-    form = crud_form.get_form_by_id(
-        session=session, id=json_form["id"])
+    form = crud_form.get_form_by_id(session=session, id=json_form["id"])
     if not form:
         continue
     print(f"Form: {form.name}")
@@ -37,7 +36,8 @@ for file in sorted(files):
                 opt = crud_option.get_option_by_question_and_name(
                     session=session,
                     name=str(o["name"]),
-                    question=q["id"] if "id" in q else None)
+                    question=q["id"] if "id" in q else None,
+                )
                 if not opt:
                     continue
                 # update
@@ -56,15 +56,19 @@ for file in sorted(files):
                 odorder = optDict["order"]
                 odcolor = optDict["color"]
                 odscore = optDict["score"]
-                if name != odname or order != odorder \
-                   or color != odcolor or score != odscore:
+                if (
+                    name != odname
+                    or order != odorder
+                    or color != odcolor
+                    or score != odscore
+                ):
                     option = crud_option.update_option(
                         session=session,
                         id=opt.id,
                         name=name,
                         order=order,
                         color=color,
-                        score=score
+                        score=score,
                     )
                     print(f"*** Option-{oi}.{o['name']}")
     print("------------------------------------------")

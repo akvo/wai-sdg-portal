@@ -32,7 +32,7 @@ class OptionDictWithId(TypedDict):
 class Option(Base):
     __tablename__ = "option"
     id = Column(Integer, primary_key=True, index=True, nullable=True)
-    question = Column(Integer, ForeignKey('question.id'))
+    question = Column(Integer, ForeignKey("question.id"))
     name = Column(String)
     order = Column(Integer, nullable=True)
     color = Column(String, nullable=True)
@@ -40,14 +40,16 @@ class Option(Base):
     code = Column(String, nullable=True)
     translations = Column(pg.ARRAY(pg.JSONB), nullable=True)
 
-    def __init__(self,
-                 name: str,
-                 id: Optional[int] = None,
-                 order: Optional[int] = None,
-                 color: Optional[str] = None,
-                 score: Optional[int] = None,
-                 code: Optional[str] = None,
-                 translations: Optional[List[dict]] = None):
+    def __init__(
+        self,
+        name: str,
+        id: Optional[int] = None,
+        order: Optional[int] = None,
+        color: Optional[str] = None,
+        score: Optional[int] = None,
+        code: Optional[str] = None,
+        translations: Optional[List[dict]] = None,
+    ):
         self.id = id
         self.name = name
         self.order = order
@@ -67,7 +69,7 @@ class Option(Base):
             "color": self.color,
             "score": self.score,
             "code": self.code,
-            "translations": self.translations
+            "translations": self.translations,
         }
 
     @property
@@ -79,7 +81,7 @@ class Option(Base):
             "color": self.color,
             "score": self.score,
             "code": self.code,
-            "translations": self.translations
+            "translations": self.translations,
         }
 
     @property
