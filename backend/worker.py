@@ -10,6 +10,7 @@ from routes.jobs import jobs_route
 from templates.main import template_route
 from models.jobs import JobStatus
 from db.crud_jobs import pending, update, on_progress, is_not_busy
+
 # from tasks.main import do_task, force_remove_task
 from tasks.main import do_task
 from util.log import write_log
@@ -64,9 +65,9 @@ async def start() -> None:
                 # force_remove_task(session=session, jobs=op_jobs.serialize)
                 write_log("ERROR", f"{op_jobs.id}: {op_jobs.type} is removed")
         if pending_jobs:
-            jobs = update(session=session,
-                          id=pending_jobs,
-                          status=JobStatus.on_progress)
+            jobs = update(
+                session=session, id=pending_jobs, status=JobStatus.on_progress
+            )
             do_task(session=session, jobs=jobs)
 
 

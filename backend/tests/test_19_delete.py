@@ -12,19 +12,22 @@ sys.path.append("..")
 account = Acc(True)
 
 
-class TestDeleteRoutes():
+class TestDeleteRoutes:
     @pytest.mark.asyncio
     async def test_delete_form(
-            self, app: FastAPI, session: Session, client: AsyncClient) -> None:
+        self, app: FastAPI, session: Session, client: AsyncClient
+    ) -> None:
         # with data
         data = session.query(Data).first()
         res = await client.delete(
             app.url_path_for("form:delete", id=data.form),
-            headers={"Authorization": f"Bearer {account.token}"})
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
         assert res.status_code == 400
         # no data
         form = session.query(Form).filter(Form.id != data.form).first()
         res = await client.delete(
             app.url_path_for("form:delete", id=form.id),
-            headers={"Authorization": f"Bearer {account.token}"})
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
         assert res.status_code == 204

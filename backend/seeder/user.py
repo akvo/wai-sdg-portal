@@ -4,20 +4,12 @@ from db.connection import Base, SessionLocal, engine
 import db.crud_user as crud
 import db.crud_organisation as crud_organisation
 
-inputs = [{
-    "value": "name",
-    "question": "Full Name"
-}, {
-    "value": "email",
-    "question": "Email Address"
-}, {
-    "value": "organisation",
-    "question": "Organisation Name"
-}, {
-    "value": "role",
-    "question": "Role",
-    "options": ["admin", "editor"]
-}]
+inputs = [
+    {"value": "name", "question": "Full Name"},
+    {"value": "email", "question": "Email Address"},
+    {"value": "organisation", "question": "Organisation Name"},
+    {"value": "role", "question": "Role", "options": ["admin", "editor"]},
+]
 
 payload = {}
 for i in inputs:
@@ -47,29 +39,34 @@ sys.path.append(BASE_DIR)
 
 Base.metadata.create_all(bind=engine)
 session = SessionLocal()
-org = crud_organisation.get_organisation_by_name(session=session,
-                                                 name=payload["organisation"])
+org = crud_organisation.get_organisation_by_name(
+    session=session, name=payload["organisation"]
+)
 if not org:
-    org = crud_organisation.add_organisation(session=session,
-                                             name=payload["organisation"],
-                                             type="iNGO")
+    org = crud_organisation.add_organisation(
+        session=session, name=payload["organisation"], type="iNGO"
+    )
     print("Organisation named {} created".format(payload["organisation"]))
 user = crud.get_user_by_email(session=session, email=payload["email"])
 if user:
-    user = crud.update_user_by_id(session=session,
-                                  id=user.id,
-                                  name=payload["name"],
-                                  role=payload["role"],
-                                  active=1,
-                                  organisation=org.id)
+    user = crud.update_user_by_id(
+        session=session,
+        id=user.id,
+        name=payload["name"],
+        role=payload["role"],
+        active=1,
+        organisation=org.id,
+    )
     print(f"{user.email} of {org.name} updated")
     session.close()
     sys.exit()
-user = crud.add_user(session=session,
-                     email=payload["email"],
-                     name=payload["name"],
-                     role=payload["role"],
-                     active=True,
-                     organisation=org.id)
+user = crud.add_user(
+    session=session,
+    email=payload["email"],
+    name=payload["name"],
+    role=payload["role"],
+    active=True,
+    organisation=org.id,
+)
 print(f"{user.email} of {org.name} added")
 session.close()

@@ -32,35 +32,40 @@ def run_seed(session: Session, jobs: dict):
     original_filename = jobs["info"]["original_filename"]
     user = get_user_by_id(session=session, id=jobs["created_by"])
     info = jobs["info"]
-    total_data = seed.seed(session=session,
-                           file=storage.download(jobs["payload"]),
-                           user=jobs["created_by"],
-                           form=info["form_id"])
+    total_data = seed.seed(
+        session=session,
+        file=storage.download(jobs["payload"]),
+        user=jobs["created_by"],
+        form=info["form_id"],
+    )
     status = JobStatus.done if total_data else JobStatus.failed
     if total_data:
         info.update({"records": total_data})
         # success email
         body = EmailText.data_upload_body.value.replace(
-            "--filename--",
-            str(original_filename)).replace("--total_records--",
-                                            str(total_data))
-        email = Email(recipients=[user.recipient],
-                      type=MailTypeEnum.data_submission_success,
-                      body=body)
+            "--filename--", str(original_filename)
+        ).replace("--total_records--", str(total_data))
+        email = Email(
+            recipients=[user.recipient],
+            type=MailTypeEnum.data_submission_success,
+            body=body,
+        )
         email.send
     else:
         # failed email
         body = EmailText.data_upload_body.value.replace(
-            "--filename--", str(original_filename))
-        email = Email(recipients=[user.recipient],
-                      type=MailTypeEnum.data_submission_failed,
-                      body=body)
+            "--filename--", str(original_filename)
+        )
+        email = Email(
+            recipients=[user.recipient],
+            type=MailTypeEnum.data_submission_failed,
+            body=body,
+        )
         email.send
     time.sleep(3)
-    jobs = crud.update(session=session,
-                       id=jobs["id"],
-                       status=status,
-                       info=info)
+    jobs = crud.update(
+        session=session, id=jobs["id"], status=status, info=info
+    )
     print_log_done(f"SEEDER: {status}", start_time)
 
 
@@ -71,63 +76,75 @@ def run_validate(session: Session, jobs: dict):
     info = jobs["info"]
     id = jobs["id"]
     message = ValidationText.successfully_validation.value
-    error = validation.validate(session=session,
-                                form=info["form_id"],
-                                administration=info["administration"],
-                                file=storage.download(jobs["payload"]))
+    error = validation.validate(
+        session=session,
+        form=info["form_id"],
+        administration=info["administration"],
+        file=storage.download(jobs["payload"]),
+    )
     if len(error):
         error_list = pd.DataFrame(error)
-        error_list = error_list[list(
-            filter(lambda x: x != "error", list(error_list)))]
+        error_list = error_list[
+            list(filter(lambda x: x != "error", list(error_list)))
+        ]
         error_file = f"./tmp/error-{id}.csv"
         error_list = error_list.to_csv(error_file, index=False)
         # error email
-        email = Email(recipients=[user.recipient],
-                      type=MailTypeEnum.data_validation_failed,
-                      attachment=error_file,
-                      body=original_filename)
+        email = Email(
+            recipients=[user.recipient],
+            type=MailTypeEnum.data_validation_failed,
+            attachment=error_file,
+            body=original_filename,
+        )
         email.send
         # end of email
         error_file = storage.upload(error_file, "error", public=True)
         message = ValidationText.error_validation.value
-        jobs = crud.update(session=session,
-                           id=id,
-                           payload=error_file,
-                           status=JobStatus.failed)
+        jobs = crud.update(
+            session=session, id=id, payload=error_file, status=JobStatus.failed
+        )
     else:
         # success email
-        email = Email(recipients=[user.recipient],
-                      type=MailTypeEnum.data_validation_success,
-                      body=original_filename)
+        email = Email(
+            recipients=[user.recipient],
+            type=MailTypeEnum.data_validation_success,
+            body=original_filename,
+        )
         email.send
         # end of email
         time.sleep(3)
-        jobs = crud.update(session=session,
-                           id=id,
-                           type=JobType.seed_data,
-                           status=JobStatus.pending)
+        jobs = crud.update(
+            session=session,
+            id=id,
+            type=JobType.seed_data,
+            status=JobStatus.pending,
+        )
     print(f"JOBS #{id} {message}")
 
 
 def run_download(session: Session, jobs: dict):
     start_time = print_log_start("DATA DOWNLOAD STARTED")
     out_file = jobs["payload"]
-    file, context = downloader.download(session=session,
-                                        jobs=jobs,
-                                        file=f"./tmp/{out_file}")
+    file, context = downloader.download(
+        session=session, jobs=jobs, file=f"./tmp/{out_file}"
+    )
     # set email payload
     user = get_user_by_id(session=session, id=jobs["created_by"])
-    email = Email(recipients=[user.recipient],
-                  type=MailTypeEnum.data_download_success,
-                  attachment=file,
-                  context=context.to_html())
+    email = Email(
+        recipients=[user.recipient],
+        type=MailTypeEnum.data_download_success,
+        attachment=file,
+        context=context.to_html(),
+    )
     sent = email.send
     if sent:
         output = storage.upload(file, "download", out_file)
-        jobs = crud.update(session=session,
-                           id=jobs["id"],
-                           payload=output.split("/")[1],
-                           status=JobStatus.done)
+        jobs = crud.update(
+            session=session,
+            id=jobs["id"],
+            payload=output.split("/")[1],
+            status=JobStatus.done,
+        )
         print_log_done(f"FILE CREATED {output}", start_time)
     else:
         print_log_done(f"FAILED TO CREATED {file}", start_time)
@@ -139,14 +156,18 @@ def force_remove_task(session: Session, jobs: dict):
         attachment = jobs.get("payload")
         if jobs["type"] == JobType.download:
             attachment = storage.download(attachment)
-        email = Email(recipients=[user.recipient],
-                      type=MailTypeEnum.data_submission_failed,
-                      attachment=attachment)
+        email = Email(
+            recipients=[user.recipient],
+            type=MailTypeEnum.data_submission_failed,
+            attachment=attachment,
+        )
         email.send
     except Exception as e:
         write_log("ERROR", str(e))
-        email = Email(recipients=[user.recipient],
-                      type=MailTypeEnum.data_submission_failed)
+        email = Email(
+            recipients=[user.recipient],
+            type=MailTypeEnum.data_submission_failed,
+        )
         email.send
     crud.update(session=session, id=jobs["id"], status=JobStatus.failed)
     print("Force removed jobs_id {} by {}".format(jobs["id"], user["email"]))
@@ -163,8 +184,8 @@ def do_task(session: Session, jobs):
         if jobs["type"] == JobType.download:
             run_download(session=session, jobs=jobs)
     except Exception as e:
-        jobs = crud.update(session=session,
-                           id=jobs["id"],
-                           status=JobStatus.failed)
+        jobs = crud.update(
+            session=session, id=jobs["id"], status=JobStatus.failed
+        )
         write_log("ERROR", str(e))
     return True

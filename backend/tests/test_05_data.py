@@ -12,13 +12,15 @@ account = Acc(True)
 today = datetime.today().strftime("%B %d, %Y")
 
 
-class TestDataRoutes():
+class TestDataRoutes:
     @pytest.mark.asyncio
-    async def test_get_data(self, app: FastAPI, session: Session,
-                            client: AsyncClient) -> None:
+    async def test_get_data(
+        self, app: FastAPI, session: Session, client: AsyncClient
+    ) -> None:
         res = await client.get(
             app.url_path_for("data:get", form_id=1),
-            headers={"Authorization": f"Bearer {account.token}"})
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
         assert res.status_code == 200
         res = res.json()
         assert res["current"] == 1
@@ -33,38 +35,31 @@ class TestDataRoutes():
             "created": today,
             "created_by": "Akvo Support",
             "form": 1,
-            "geo": {
-                "lat": -7.836114,
-                "long": 110.331143
-            },
+            "geo": {"lat": -7.836114, "long": 110.331143},
             "updated": None,
             "updated_by": None,
-            "answer": [{
-                "question": 1,
-                "value": "Option 1",
-                "history": False
-            }, {
-                "question": 2,
-                "value": 10,
-                "history": False
-            }, {
-                "question": 3, "value": "-7.836114|110.331143",
-                "history": False
-            }, {
-                "question": 4,
-                "value": "Garut",
-                "history": False
-            }],
-            "categories": []
+            "answer": [
+                {"question": 1, "value": "Option 1", "history": False},
+                {"question": 2, "value": 10, "history": False},
+                {
+                    "question": 3,
+                    "value": "-7.836114|110.331143",
+                    "history": False,
+                },
+                {"question": 4, "value": "Garut", "history": False},
+            ],
+            "categories": [],
         }
 
     @pytest.mark.asyncio
-    async def test_get_last_submitted(self, app: FastAPI, session: Session,
-                                      client: AsyncClient) -> None:
+    async def test_get_last_submitted(
+        self, app: FastAPI, session: Session, client: AsyncClient
+    ) -> None:
         res = await client.get(
             app.url_path_for("data:last-submitted"),
             params={"form_id": 1},
-            headers={"Authorization": f"Bearer {account.token}"})
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
         assert res.status_code == 200
         res = res.json()
         assert res == {"at": today, "by": account.decoded["name"]}

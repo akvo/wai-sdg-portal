@@ -15,15 +15,16 @@ data = pd.read_csv(source_file)
 data = data.to_dict("records")
 
 for d in data:
-    organisation = crud.get_organisation_by_id(session=session,
-                                               id=d.get("id"))
+    organisation = crud.get_organisation_by_id(session=session, id=d.get("id"))
     organisation_name = d.get("name")
     if organisation:
         print(f"{organisation_name} Exists")
     if not organisation:
         organisation_type = getattr(OrganisationType, d.get("type"))
-        crud.add_organisation(session=session,
-                              id=d.get("id"),
-                              name=organisation_name,
-                              type=organisation_type)
+        crud.add_organisation(
+            session=session,
+            id=d.get("id"),
+            name=organisation_name,
+            type=organisation_type,
+        )
         print(f"{organisation_name} Added")

@@ -41,8 +41,9 @@ def print_validation(fid, name, itype, message, is_error=True):
 
 
 def cleanup_form(json_form, qids):
-    questions = crud_question.get_question_by_form_id(session=session,
-                                                      fid=json_form["id"])
+    questions = crud_question.get_question_by_form_id(
+        session=session, fid=json_form["id"]
+    )
     for q in questions:
         if q.id not in qids:
             session.query(Question).filter(Question.id == q.id).delete()
@@ -71,8 +72,12 @@ def validate_form(json_form):
             validated = False
         for q in qg["questions"]:
             if not q.get("id"):
-                print_validation(fid, q["question"], "QUESTION",
-                                 "ID is not defined in the json")
+                print_validation(
+                    fid,
+                    q["question"],
+                    "QUESTION",
+                    "ID is not defined in the json",
+                )
                 validated = False
             qids.append(q.get("id"))
     return validated, qids
@@ -110,7 +115,8 @@ for file in sorted(files):
             name=json_form["form"],
             id=json_form["id"],
             version=json_form.get("version")
-            if "version" in json_form else 1.0,
+            if "version" in json_form
+            else 1.0,
             description=json_form.get("description"),
             default_language=json_form.get("defaultLanguage"),
             languages=json_form.get("languages"),
@@ -120,7 +126,8 @@ for file in sorted(files):
     for qg in json_form["question_groups"]:
         # check question group exist
         find_group = crud_question_group.get_question_group_by_id(
-            session=session, id=qg.get("id"))
+            session=session, id=qg.get("id")
+        )
         # add new question group
         if not updater or not find_group:
             question_group = crud_question_group.add_question_group(
@@ -137,8 +144,9 @@ for file in sorted(files):
             print(f"\nAdded Question Group: {question_group.name}")
         # updater
         if updater and find_group:
-            oqg = crud_question_group.get_question_group_by_id(session=session,
-                                                               id=qg.get("id"))
+            oqg = crud_question_group.get_question_group_by_id(
+                session=session, id=qg.get("id")
+            )
             oname = oqg.name
             question_group = crud_question_group.update_question_group(
                 session=session,
@@ -146,7 +154,8 @@ for file in sorted(files):
                 name=qg["question_group"],
                 id=find_group.id,
                 order=qg.get("order") or find_group.order
-                if find_group else None,
+                if find_group
+                else None,
                 description=qg.get("description"),
                 repeatable=qg.get("repeatable"),
                 repeat_text=qg.get("repeatText"),
@@ -156,8 +165,9 @@ for file in sorted(files):
                 print(f"\nUpdated Group: {oname} -> {question_group.name}")
         for i, q in enumerate(qg["questions"]):
             # check question exist
-            find_question = crud_question.get_question_by_id(session=session,
-                                                             id=q.get("id"))
+            find_question = crud_question.get_question_by_id(
+                session=session, id=q.get("id")
+            )
             # get addons
             addons = {}
             if "allowOther" in q:
@@ -188,7 +198,8 @@ for file in sorted(files):
             # updater
             if updater and find_question:
                 old_question = crud_question.get_question_by_id(
-                    session=session, id=q.get("id"))
+                    session=session, id=q.get("id")
+                )
                 oname = old_question.name
                 otype = old_question.type
                 question = crud_question.update_question(

@@ -15,17 +15,17 @@ from db.connection import Base
 
 
 class JobStatus(enum.Enum):
-    pending = 'pending'
-    on_progress = 'on_progress'
-    failed = 'failed'
-    done = 'done'
+    pending = "pending"
+    on_progress = "on_progress"
+    failed = "failed"
+    done = "done"
 
 
 class JobType(enum.Enum):
-    send_email = 'send_email'
-    validate_data = 'validate_data'
-    seed_data = 'seed_data'
-    download = 'download'
+    send_email = "send_email"
+    validate_data = "validate_data"
+    seed_data = "seed_data"
+    download = "download"
 
 
 class JobsDict(TypedDict):
@@ -64,14 +64,16 @@ class Jobs(Base):
     created = Column(DateTime, default=datetime.utcnow)
     available = Column(DateTime, nullable=True)
 
-    def __init__(self,
-                 created_by: int,
-                 payload: str,
-                 type: JobType,
-                 info: Optional[dict] = None,
-                 status: Optional[JobStatus] = None,
-                 attempt: Optional[int] = None,
-                 available: Optional[datetime] = None):
+    def __init__(
+        self,
+        created_by: int,
+        payload: str,
+        type: JobType,
+        info: Optional[dict] = None,
+        status: Optional[JobStatus] = None,
+        attempt: Optional[int] = None,
+        available: Optional[datetime] = None,
+    ):
         self.type = type
         self.info = info
         self.status = status

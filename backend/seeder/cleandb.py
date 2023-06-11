@@ -10,8 +10,17 @@ if SANDBOX_DATA_SOURCE:
 session = SessionLocal()
 
 tables = [
-    "history", "answer", "data", "option", "question", "question_group",
-    "form", "access", "public.user", "organisation", "administration"
+    "history",
+    "answer",
+    "data",
+    "option",
+    "question",
+    "question_group",
+    "form",
+    "access",
+    "public.user",
+    "organisation",
+    "administration",
 ]
 
 
