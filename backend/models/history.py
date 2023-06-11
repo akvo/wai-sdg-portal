@@ -93,7 +93,7 @@ class History(Base):
         return {
             "value": answer,
             "date": date.strftime("%B %d, %Y"),
-            "user": user.name
+            "user": user.name if user else ""
         }
 
 
