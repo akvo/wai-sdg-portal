@@ -5,6 +5,8 @@ set -exuo pipefail
 
 if [[ "${CI_BRANCH:=}" = "develop" ]]; then
 	INSTANCES="wai-demo"
+elif [[ "${CI_BRANCH:=}" = "sandbox" ]]; then
+        INSTANCES="wai-sandbox"
 else
 	INSTANCES="wai-ethiopia wai-uganda wai-bangladesh wai-nepal"
 fi
@@ -27,14 +29,13 @@ dci () {
 }
 
 documentation_build () {
-    for INSTANCE in ${INSTANCES}
+    for INSTANCE in "$@"
     do
         echo "Build ${INSTANCE} documentation"
         docker run -it --rm -v "$(pwd)/docs/${INSTANCE}:/docs" \
             akvo/akvo-sphinx:20220525.082728.594558b make html
         mkdir -p frontend/build/docs/${INSTANCE}
         cp -r docs/${INSTANCE}/build/html frontend/build/docs/${INSTANCE}
-
     done
 }
 
@@ -42,6 +43,8 @@ documentation_build () {
 frontend_build () {
 
     echo "PUBLIC_URL=/" > frontend/.env
+		echo "REACT_APP_AUTH0_DOMAIN=wai-ethiopia.eu.auth0.com" >> frontend/.env
+		echo "REACT_APP_AUTH0_CLIENT_ID=OlqShNF3knpLpwX7iPLUHFTr9BlrrkHF" >> frontend/.env
 
     sed 's/"warn"/"error"/g' < frontend/.eslintrc.json > frontend/.eslintrc.prod.json
 
@@ -51,7 +54,11 @@ frontend_build () {
        frontend \
        bash release.sh
 
-    documentation_build
+		if [[ ${INSTANCES} == "wai-sandbox" ]];then
+    	documentation_build "wai-demo"
+		else
+			documentation_build ${INSTANCES}
+		fi
 
     docker build \
         --tag "${image_prefix}/frontend:latest" \
