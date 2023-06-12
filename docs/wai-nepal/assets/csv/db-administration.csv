@@ -1,0 +1,4 @@
+pos,column_name,data_type,udt_name,column_default,is_nullable
+1,id,integer,int4,nextval('administration_id_seq'::regclass),NO
+2,parent,integer,int4,,YES
+3,name,character varying,varchar,,YES

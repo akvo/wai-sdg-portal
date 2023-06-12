@@ -1,130 +1,205 @@
-Getting Started
+##################
+Installation Guide
+##################
 
-Environment Setup:
-------------------
+.. warning:: Below step is for production-ready installation process. Please follow `Developer-Guide`_ to setup the development mode.
 
-.. code:: bash
+.. _developer-guide: /developer-install.html
 
-    export AUTH0_DOMAIN="string_url"
-    export AUTH0_CLIENT_ID="string"
-    export AUTH0_SECRET="string"
-    export AUTH0_AUDIENCE="string"
+*******************
+System Requirements
+*******************
 
-Start the App
---------------
+    :System Memory: 4 GiB
+    :CPU: 2 GHz Dual Core Processor
+    :Storage: 25 GiB or more Disk
+    :Operating System: Ubuntu Server 22.04
 
-Once you have all the required environment ready, then run the App using:
+**************************
 
-Running
-~~~~~~~
+************
+Prerequisite
+************
 
-.. code:: bash
+    :Docker Engine: 20.10 or above
+    :Git: 2.39 or above
+    :3rd Party Service Providers: - Auth0
+				  - Mailjet
 
-    export INSTANCE_NAME=<project-name>
-    docker-compose up -d
+***********
+Preparation
+***********
 
-Stop
-~~~~~
+.. note:: The following guide is an example installation on **Ubuntu and Debian based systems**. It has been with **Ubuntu 22.04**.
 
-.. code:: bash
+Install Docker Engine
+*********************
 
-    docker-compose down
+You need the latest Docker version installed. If you do not have it, please see the following installation guide to get it.
 
-Reset the app
-~~~~~~~~~~~~~~
+#. Update the apt package index and install packages to allow apt to use a repository over HTTPS:
 
-.. code:: bash
+   .. code:: bash
 
-    docker-compose down -v
+     sudo apt update
+     sudo apt install ca-certificates curl gnupg lsb-release
 
-Database Seeder
-----------------
+#. Add Docker’s official GPG key:
 
-Before you seed the baseline data, please make sure that you have all the required file in the following structure:
+   .. code:: bash
 
-Folder Path: /backend/source/
+     sudo mkdir -p /etc/apt/keyrings
+     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 
-.. code:: bash
+#. Use the following command to set up the repository:
 
-    /backend/source.
-    └── project-name
-        ├── config.js
-        ├── config.min.js
-        ├── data
-        │   └── organisation.csv
-        ├── forms
-        │   ├── 01-clts.json
-        │   ├── 02-health.json
-        │   ├── 03-hh.json
-        │   ├── 04-school.json
-        │   └── 05-wp.json
-        └── topojson.js
+   .. code:: bash
 
-Administration Level Seeder
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     echo \
+      "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+      $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-.. code:: bash
+#. Update the apt package index:
 
-    docker-compose exec backend python -m seeder.administration
+   .. code:: bash
 
-Organisation Seeder
-~~~~~~~~~~~~~~~~~~~~
+     sudo apt update
 
-.. code:: bash
+#. Install Docker Engine, containerd, and Docker Compose.
 
-    docker-compose exec backend python -m seeder.organisation
+   .. code:: bash
 
-Super Admin
-~~~~~~~~~~~
+     sudo apt-get install \
+      docker-ce docker-ce-cli \
+      containerd.io docker-compose-plugin
 
-.. code:: bash
+#. Manage Docker as a non-root user
 
-    docker-compose exec backend python -m seeder.admin youremail@akvo.org "Your Name" Akvo
+   .. code:: bash
 
-Seed Random User
-~~~~~~~~~~~~~~~~~
+    sudo groupadd docker
+    sudo usermod -aG docker $USER
+    newgrp docker
 
-.. code:: bash
-    
-    docker-compose exec backend python -m seeder.user <number_of_user> Akvo
+Install Git Version Control
+***************************
 
-Form Seeder
-~~~~~~~~~~~
+The WAI SDG Portal uses git as version control. Therefore it is better to install git to make it easier to retrieve updates instead download the repository zip.
 
 .. code:: bash
 
-    docker-compose exec backend python -m seeder.form
+ sudo apt install git
 
-Datapoint Seeder
-~~~~~~~~~~~~~~~~
+Auth0 Identity Providers
+************************
+
+This application **DO NOT** store directly any personal information. WAI SDG Portal uses `AUTH0`_ for a flexible solution to add authentication services.
+
+Please visit `AUTH0`_, then follow below guide:
+
+.. _AUTH0: https://auth0.com/
+
+.. toctree::
+   :maxdepth: 2
+
+   auth0
+
+
+Mailjet Service
+***************
+
+You need to have `MAILJET`_ account to manage the notification deliverability.
+
+.. _MAILJET: https://mailjet.com/
+
+.. toctree::
+   :maxdepth: 2
+
+   mailjet
+
+
+************
+Installation
+************
+
+Clone the Repository
+********************
+
+   .. code:: bash
+
+     git clone https://github.com/akvo/wai-sdg-portal.git
+
+Environment Variable Setup
+**************************
+
+   Install text editor to be able to edit `.env` file
+
+   .. code:: bash
+
+     sudo apt install nano
+
+   or
+
+   .. code:: bash
+
+     sudo apt install vim
+
+   Go to the repository directory, then edit the environment
+
+   .. code:: bash
+
+     cd wai-sdg-portal/deploy
+     vim .env
+
+   Example Environemnt:
+
+   .. code:: bash
+
+     POSTGRES_PASSWORD=postgres
+     WAI_DB_USER=yourname
+     WAI_DB_PASSWORD=sUpeRsTr0ngPa**word
+     INSTANCE_NAME=wai-uganda
+     AUTH0_DOMAIN=your-domain.eu.auth0.com
+     AUTH0_CLIENT_ID=acad34xxxxxxxx
+     AUTH0_SECRET=938axxxxxxxxxxx
+     AUTH0_AUDIENCE=cdary8xxxxxxxx
+     AUTH0_SPA_DOMAIN=5a2axxxxxxxxxxx
+     AUTH0_SPA_CLIENT_ID=b821y8xxxxxxxx
+     STORAGE_LOCATION=/data/storage
+     MAILJET_SECRET=093asbalxxxxxxxx
+     MAILJET_APIKEY=9acadlkbxxxxxxxx
+     WEBDOMAIN=https://your-domain.com
+
+   .. note::
+      - Use **Domain** and **Client ID** field from your **Auth0 SPA application** for ``AUTH_SPA_DOMAIN`` and ``AUTH_SPA_CLIENT_ID``
+      - Use **Domain**, **Secret** and **Client ID** field from your **Auth0 Backend application** for ``AUTH_DOMAIN``, ``AUTH_SECRET`` and ``AUTH_CLIENT_ID``.
+      - For ``AUTH0_AUDIENCE``, Go to your **Auth0 backend application**, click **APIs** Tab, expand **Auth0 Management API**. Use the **Grant ID** field.
+
+
+Run the Application
+*******************
+
+   .. code:: bash
+
+     ./install.sh
+
+Post-Installation
+*****************
+
+Once the app is started, we need to populate the database with the initial data set. The initial dataset are:
+
+- 1st Super Admin
+- 1st Organisation
+- Administration Levels Data
+
+Run the database seeder:
 
 .. code:: bash
 
-    docker-compose exec backend python -m seeder.datapoint youremail@akvo.org
+    docker compose exec backend ./seed.sh youremail@akvo.org "Your Full Name" "Your Organisation"
 
-Run all the seeder in one command
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code:: bash
-    
-    docker-compose exec backend ./seed.sh youremail@akvo.org "Your Name" Akvo
-
-Running Test
-~~~~~~~~~~~~
+Example:
 
 .. code:: bash
 
-    docker-compose exec backend ./test.sh
-
-Production
-----------
-
-export CI_COMMIT='local'
-./ci/build.sh
-This will generate two docker images with prefix eu.gcr.io/akvo-lumen/wai-sdg-portal for backend and frontend
-
-.. code:: bash
-    
-    docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d
-
-Then visit: localhost:8080. Any endpoints with prefix
+    docker compose exec backend ./seed.sh youremail@akvo.org "Your Name" Akvo

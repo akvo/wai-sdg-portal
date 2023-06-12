@@ -1,0 +1,6 @@
+pos,column_name,data_type,column_default,is_nullable
+1,id,integer,nextval('log_id_seq'::regclass),NO
+2,user,integer,,YES
+3,message,text,,YES
+4,at,timestamp without time zone,CURRENT_TIMESTAMP,YES
+5,jobs,integer,,YES

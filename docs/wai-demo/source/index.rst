@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Demo SDG Portal documentation!
-====================================
+Welcome to WAI SDG Portal documentation!
+========================================
 
 |Build Status| |Repo Size| |Languages| |Issues| |Last Commit| |Documentation Status|
 
@@ -16,27 +16,20 @@ Welcome to Demo SDG Portal documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Getting Started
+   :caption: User Guide
 
-   ethiopia/gettingStarted
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Datasets
-
-   ethiopia/datasets
+   user-guide
 
 .. toctree::
    :maxdepth: 2
-   :caption: Data
+   :caption: Developer Guide
 
-   ethiopia/data
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Admin
-
-   ethiopia/admin
+   developer-install
+   developer-database-seeder
+   developer-jmp-logic
+   tests
+   developer-database-schema
+   services
 
 .. |Build Status| image:: https://akvo.semaphoreci.com/badges/wai-sdg-portal/branches/main.svg?style=shields
    :target: https://akvo.semaphoreci.com/projects/wai-sdg-portal
