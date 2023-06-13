@@ -26,6 +26,7 @@ import RowContent from './rows';
 import startCase from 'lodash/startCase';
 import flatten from 'lodash/flatten';
 import isEmpty from 'lodash/isEmpty';
+import omit from 'lodash/omit';
 import config from '../../config';
 import moment from 'moment';
 
@@ -175,7 +176,7 @@ const Main = ({ match }) => {
       // advance search
       url = generateAdvanceFilterURL(advanceSearchValue, url);
       // send question id to get the data score
-      if (current?.values?.length) {
+      if (current?.values?.filter((v) => !isNaN(v))?.length) {
         const urlScore = current?.values?.map((v) => `question=${v}`).join('&');
         url += `&${urlScore}`;
       }
@@ -183,22 +184,29 @@ const Main = ({ match }) => {
         .get(url)
         .then((d) => {
           const tableData = d.data.data.map((x) => {
-            const values = current?.values?.reduce((o, key) => {
-              const ans = x.answer.find((a) => a.question === key);
-              const q = current.columns.find((c) => c.key === key);
+            let values = current?.values?.reduce((o, key) => {
+              const ans =
+                x.answer.find((a) => a.question === key) ||
+                x?.categories?.find((dc) => dc.key === key);
+              const column = current.columns.find((c) => {
+                if (c?.category && x?.categories?.length) {
+                  return x.categories.find((dc) => dc.key === c.key);
+                }
+                return c.key === key;
+              });
               let value = ans?.value;
-              const qtype = question.find((qs) => qs.id === q.key)?.type;
-              if (q?.fn && value) {
-                value = q.fn(value);
+              const qtype = question.find((qs) => qs.id === column?.key)?.type;
+              if (column?.fn && value) {
+                value = column.fn(value);
               }
-              if (!q?.fn && value) {
+              if (!column?.fn && value) {
                 value =
                   qtype !== 'date'
                     ? startCase(value)
                     : moment(value)?.format('DD MMM, Y');
               }
               const option = question.find((qs) => qs.id === key)?.option;
-              let color = null;
+              let color = ans?.color || null;
               if (!isEmpty(option)) {
                 color = option.find(
                   (opt) => opt.name?.toLowerCase() === value?.toLowerCase()
@@ -208,6 +216,7 @@ const Main = ({ match }) => {
                 [key]: { value: value, color: color },
               });
             }, {});
+            values = omit(values, ['name']);
             return {
               key: x.id,
               name: (

@@ -71,10 +71,23 @@ def generate_excel_template(session: Session, form: int):
     definitions.to_excel(writer, sheet_name="definitions", startrow=-1)
 
     source_path = os.environ["INSTANCE_NAME"]
+    SANDBOX_DATA_SOURCE = os.environ.get("SANDBOX_DATA_SOURCE")
+    if SANDBOX_DATA_SOURCE:
+        source_path = SANDBOX_DATA_SOURCE
     TESTING = os.environ.get("TESTING")
     if TESTING:
         source_path = "notset"
-    cascade = f"./source/{source_path}/data/cascade.csv"
+    # change cascade filename for excel template
+    # case: error
+    # - cascade.csv already created when we seed administration
+    # - administration parent on that cascade.csv is dtype('float64')
+    # - that give an error when we do
+    # - adm["parent"] + "|" + adm["name"] (float + str)
+    # solved by:
+    # - change cascade name for excel template into cascade-template.csv
+    # - if not found we will generate adm data with correct format
+    # - adm parent (str) and adm name (str)
+    cascade = f"./source/{source_path}/data/cascade-template.csv"
     if not os.path.exists(cascade):
         cascade_file = crud_administration.get_administration(session=session)
         cascade_file = pd.DataFrame(

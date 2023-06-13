@@ -12,19 +12,20 @@ const defaultUIState = {
   selectedAdministration: [null],
   reloadData: true,
   editedRow: {},
-  activityLog: [],
+  activityData: {
+    current: 1,
+    data: [],
+    total: 0,
+    total_page: 0,
+    active: false,
+    loading: false,
+  },
   advanceSearchValue: [],
   administrationByAccess: [],
   rowHovered: null,
   historyChart: {},
   loadedFormId: null,
   boundsAlignToRight: null,
-  webformLogin: {
-    submitter: null,
-    isLogin: false,
-    formValue: {},
-    complete: false,
-  },
 };
 
 export const UIState = new Store(defaultUIState);
