@@ -2,6 +2,12 @@
 
 set -euo pipefail
 
+echo "Migrating main schema"
+alembic upgrade head
+
+echo "Migrating DB From AkvoResponseGrouper Dependency"
+akvo-responsegrouper --config $(echo "./source/${INSTANCE_NAME}/category.json")
+
 echo "Running tests"
 COVERAGE_PROCESS_START=./.coveragerc \
   coverage run --parallel-mode --concurrency=thread,gevent --rcfile=./.coveragerc \

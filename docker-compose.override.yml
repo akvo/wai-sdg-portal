@@ -18,6 +18,12 @@ services:
     depends_on:
       - db
     network_mode: service:mainnetwork
+  frontend:
+    volumes:
+      - ./docs/$INSTANCE_NAME/build/html/:/app/public/documentation/:ro
+    environment:
+      - AUTH0_DOMAIN=$WAI_AUTH0_SPA_DOMAIN
+      - AUTH0_CLIENT_ID=$WAI_AUTH0_SPA_CLIENT_ID
   backend:
     volumes:
       - ./backend:/app:delegated

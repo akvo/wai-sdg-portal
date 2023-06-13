@@ -6,13 +6,15 @@
       "question_group": "Location",
       "questions": [
         {
-          "question": "location",
+          "question": "Location",
           "order": 1,
           "required": true,
           "type": "administration",
-          "meta": true
+          "meta": true,
+          "id": 2
         }
-      ]
+      ],
+      "id": 9
     },
     {
       "question_group": "School Information",
@@ -58,6 +60,28 @@
           ]
         },
         {
+          "id": 578820191,
+          "question": "Is this school Girls Only/Boys Only/Co-Education?",
+          "order": 4,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Girls Only",
+              "code": "TEMP1"
+            },
+            {
+              "name": "Boys Only",
+              "code": "TEMP2"
+            },
+            {
+              "name": "Co-education",
+              "code": "TEMP3"
+            }
+          ]
+        },
+        {
           "id": 546580257,
           "question": "Number of Male Pupils",
           "order": 4,
@@ -75,14 +99,15 @@
           "required": false,
           "options": null
         }
-      ]
+      ],
+      "id": 10
     },
     {
       "question_group": "Drinking Water",
       "questions": [
         {
           "id": 561200192,
-          "question": "Main Source of Drinking Water",
+          "question": "What is the main source of drinking water provided by the school? (select one - most frequently used)",
           "order": 1,
           "meta": false,
           "type": "option",
@@ -90,108 +115,105 @@
           "options": [
             {
               "name": "Pipeline connection",
-              "color": null
+              "code": "W1"
             },
             {
               "name": "Protected well/spring",
-              "color": null
+              "code": "W2"
             },
             {
-              "name": "Shallow well fitted with pump",
-              "color": null
+              "name": "Shallow well fitted with pump / Shallow tubewell/borehole",
+              "code": "W3"
             },
             {
-              "name": "Rainwater",
-              "color": null
-            },
-            {
-              "name": "Unprotected well/spring",
-              "color": null
+              "name": "Rainwater harvesting",
+              "code": "W4"
             },
             {
               "name": "Packaged bottled water",
-              "color": null
+              "code": "W5"
             },
             {
-              "name": "Tanker-truck or cart",
-              "color": null
+              "name": "Tanker-truck or cart /drum",
+              "code": "W6"
             },
             {
-              "name": "Surface water (lake, river, stream)",
-              "color": null
+              "name": "Surface water (lake, river, stream, pond, canal)",
+              "code": "W7"
+            },
+            {
+              "name": "Unprotected well/spring",
+              "code": "W8"
             },
             {
               "name": "No water source",
-              "color": null
+              "code": "W9"
+            },
+            {
+              "name": "Piped water into dwelling (into the building)",
+              "code": "W10"
+            },
+            {
+              "name": "Piped water to yard/plot",
+              "code": "W11"
+            },
+            {
+              "name": "Deep tubewell/borehole",
+              "code": "W12"
+            },
+            {
+              "name": "Nearby improved source",
+              "code": "W13"
             }
           ]
-        },
-        {
-          "id": 561200193,
-          "question": "Year Water Supply Commissioned",
-          "order": 2,
-          "meta": false,
-          "type": "number",
-          "required": false,
-          "options": null
         },
         {
           "id": 561200190,
-          "question": "Drinking Water Available at Time of Survey",
+          "question": "Is drinking water from the main source currently available at the school at the time of the survey?",
           "order": 3,
           "meta": false,
           "type": "option",
-          "required": false,
+          "required": true,
           "options": [
             {
-              "name": "Yes",
-              "color": null
+              "name": "Yes, running water",
+              "code": "WA1"
+            },
+            {
+              "name": "Yes, in containers, but no running water",
+              "code": "WA3"
             },
             {
               "name": "No",
-              "color": null
+              "code": "WA2"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 561200192,
+              "options": [
+                "Pipeline connection",
+                "Protected well/spring",
+                "Shallow well fitted with pump / Shallow tubewell/borehole",
+                "Rainwater harvesting",
+                "Packaged bottled water",
+                "Tanker-truck or cart /drum",
+                "Piped water into dwelling (into the building)",
+                "Piped water to yard/plot",
+                "Deep tubewell/borehole"
+              ]
             }
           ]
-        },
-        {
-          "id": 561200191,
-          "question": "Functionality Status of Water Supply",
-          "order": 4,
-          "meta": false,
-          "type": "option",
-          "required": false,
-          "options": [
-            {
-              "name": "Functional",
-              "color": "#91cc75"
-            },
-            {
-              "name": "Not functional",
-              "color": "#e39f00"
-            },
-            {
-              "name": "No water scheme",
-              "color": "#ee6666"
-            }
-          ]
-        },
-        {
-          "id": 561200194,
-          "question": "Water Yield (lpd)",
-          "order": 5,
-          "meta": false,
-          "type": "number",
-          "required": false,
-          "options": null
         }
-      ]
+      ],
+      "id": 11
     },
     {
       "question_group": "Sanitation",
       "questions": [
         {
           "id": 546630147,
-          "question": "Type of Toilets",
+          "question": "What type of student toilets are at the school? (Select the one that is most commonly used)",
           "order": 1,
           "meta": false,
           "type": "option",
@@ -199,37 +221,41 @@
           "options": [
             {
               "name": "Flush/Pour-flush toilets",
-              "color": null
+              "code": "T1"
             },
             {
               "name": "Pit latrines with slab",
-              "color": null
+              "code": "T2"
             },
             {
               "name": "Composting toilets",
-              "color": null
+              "code": "T3"
             },
             {
-              "name": "Pit latrines without slab",
-              "color": null
+              "name": "Pit latrines without slab/ open pit",
+              "code": "T4"
             },
             {
               "name": "Hanging latrines",
-              "color": null
+              "code": "T5"
             },
             {
               "name": "Bucket latrines",
-              "color": null
+              "code": "T6"
             },
             {
               "name": "No toilets or latrines",
-              "color": null
+              "code": "T7"
+            },
+            {
+              "name": "Ventilated Improved Pit latrine (VIP)",
+              "code": "T8"
             }
           ]
         },
         {
           "id": 557690281,
-          "question": "Separate Toilets for Girls and Boys",
+          "question": "Are the toilets/latrines separate for girls and boys?",
           "order": 2,
           "meta": false,
           "type": "option",
@@ -242,10 +268,24 @@
             {
               "name": "No",
               "color": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 578820191,
+              "options": [
+                "Co-education"
+              ]
             },
             {
-              "name": "No toilets at all",
-              "color": null
+              "id": 546630147,
+              "options": [
+                "Flush/Pour-flush toilets",
+                "Pit latrines with slab",
+                "Composting toilets",
+                "Pit latrines without slab/ open pit",
+                "Ventilated Improved Pit latrine (VIP)"
+              ]
             }
           ]
         },
@@ -259,126 +299,123 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "code": "ST1"
             },
             {
               "name": "No",
-              "color": null
-            },
+              "code": "ST2"
+            }
+          ],
+          "dependency": [
             {
-              "name": "No toilets at all",
-              "color": null
+              "id": 546630147,
+              "options": [
+                "Flush/Pour-flush toilets",
+                "Pit latrines with slab",
+                "Composting toilets",
+                "Pit latrines without slab/ open pit",
+                "Ventilated Improved Pit latrine (VIP)"
+              ]
             }
           ]
         },
         {
-          "id": 557690280,
-          "question": "Number of Usable Toilets for Boys",
+          "id": 343434343,
           "order": 4,
+          "question": "Are the toilets for girls separated for MHM?",
+          "type": "option",
           "meta": false,
-          "type": "number",
-          "required": false,
-          "options": null
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, all of them",
+              "code": "TM1"
+            },
+            {
+              "name": "Yes, but not all of them",
+              "code": "TM2"
+            },
+            {
+              "name": "No",
+              "code": "TM3"
+            },
+            {
+              "name": "Data not collected",
+              "code": "TM4"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 578820191,
+              "options": [
+                "Girls Only",
+                "Co-education"
+              ]
+            },
+            {
+              "id": 546630147,
+              "options": [
+                "Flush/Pour-flush toilets",
+                "Pit latrines with slab",
+                "Composting toilets",
+                "Pit latrines without slab/ open pit",
+                "Ventilated Improved Pit latrine (VIP)"
+              ]
+            }
+          ]
         },
         {
-          "id": 555930269,
-          "question": "Usable Urinals Available for Boys",
+          "id": 557690283,
+          "question": "Toilets Available for the Disabled",
           "order": 5,
           "meta": false,
           "type": "option",
           "required": false,
           "options": [
             {
-              "name": "Yes",
-              "color": null
+              "name": "Yes, at least one is accessible",
+              "code": "DT1"
             },
             {
-              "name": "No",
-              "color": null
+              "name": "No, the toilets are not accessible",
+              "code": "DT2"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 546630147,
+              "options": [
+                "Flush/Pour-flush toilets",
+                "Pit latrines with slab",
+                "Composting toilets",
+                "Pit latrines without slab/ open pit",
+                "Ventilated Improved Pit latrine (VIP)"
+              ]
             }
           ]
         },
         {
-          "id": 557690275,
-          "question": "Number of Usable Toilets for Girls",
+          "id": 684734697,
+          "question": "How many student toilets are currently usable (accessible, functional, private)?",
           "order": 6,
           "meta": false,
           "type": "number",
           "required": false,
-          "options": null
-        },
-        {
-          "id": 555950240,
-          "question": "Usable Urinals Available for Girls",
-          "order": 7,
-          "meta": false,
-          "type": "option",
-          "required": false,
-          "options": [
+          "dependency": [
             {
-              "name": "Yes",
-              "color": null
-            },
-            {
-              "name": "No",
-              "color": null
-            }
-          ]
-        },
-        {
-          "id": 557690278,
-          "question": "Number of Common Use Toilets",
-          "order": 8,
-          "meta": false,
-          "type": "number",
-          "required": false,
-          "options": null
-        },
-        {
-          "id": 557690283,
-          "question": "Toilets Available for the Disabled",
-          "order": 9,
-          "meta": false,
-          "type": "option",
-          "required": false,
-          "options": [
-            {
-              "name": "Yes",
-              "color": null
-            },
-            {
-              "name": "No",
-              "color": null
-            },
-            {
-              "name": "No toilets at all",
-              "color": null
-            }
-          ]
-        },
-        {
-          "id": 571070143,
-          "question": "General Conditions of the Toilets",
-          "order": 10,
-          "meta": false,
-          "type": "option",
-          "required": false,
-          "options": [
-            {
-              "name": "Dirty",
-              "color": null
-            },
-            {
-              "name": "Clean",
-              "color": null
-            },
-            {
-              "name": "No toilets",
-              "color": null
+              "id": 546630147,
+              "options": [
+                "Flush/Pour-flush toilets",
+                "Pit latrines with slab",
+                "Composting toilets",
+                "Pit latrines without slab/ open pit",
+                "Ventilated Improved Pit latrine (VIP)"
+              ]
             }
           ]
         }
-      ]
+      ],
+      "id": 12
     },
     {
       "question_group": "Hygiene",
@@ -393,29 +430,11 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "code": "H1"
             },
             {
               "name": "No",
-              "color": null
-            }
-          ]
-        },
-        {
-          "id": 546560285,
-          "question": "Handwashing Facilities Appear to be in Use",
-          "order": 2,
-          "meta": false,
-          "type": "option",
-          "required": false,
-          "options": [
-            {
-              "name": "Yes",
-              "color": null
-            },
-            {
-              "name": "No",
-              "color": null
+              "code": "H2"
             }
           ]
         },
@@ -425,111 +444,40 @@
           "order": 3,
           "meta": false,
           "type": "option",
-          "required": false,
+          "required": true,
           "options": [
             {
               "name": "Yes, water and soap",
-              "color": null
+              "code": "HW1"
             },
             {
               "name": "Water only",
-              "color": null
+              "color": "HW2"
             },
             {
               "name": "Soap only",
-              "color": null
+              "color": "HW3"
             },
             {
               "name": "Neither water or soap",
-              "color": null
+              "color": "HW4"
             },
             {
               "name": "No handwashing facility",
-              "color": null
+              "color": "HW5"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 567440264,
+              "options": [
+                "Yes"
+              ]
             }
           ]
         }
-      ]
-    },
-    {
-      "question_group": "WASH Service Levels",
-      "questions": [
-        {
-          "id": 559810275,
-          "question": "Water service levels",
-          "order": 1,
-          "meta": false,
-          "type": "option",
-          "required": true,
-          "options": [
-            {
-              "name": "Basic",
-              "color": "#753780",
-              "score": 10
-            },
-            {
-              "name": "Limited",
-              "color": "#FDF177",
-              "score": -1
-            },
-            {
-              "name": "No service",
-              "color": "#F1AC2A",
-              "score": -2
-            }
-          ]
-        },
-        {
-          "id": 571070148,
-          "question": "Sanitation service levels",
-          "order": 2,
-          "meta": false,
-          "type": "option",
-          "required": true,
-          "options": [
-            {
-              "name": "Basic",
-              "color": "#753780",
-              "score": 10
-            },
-            {
-              "name": "Limited",
-              "color": "#FDF177",
-              "score": -1
-            },
-            {
-              "name": "No service",
-              "color": "#F1AC2A",
-              "score": -2
-            }
-          ]
-        },
-        {
-          "id": 546580270,
-          "question": "Hygiene service levels",
-          "order": 3,
-          "meta": false,
-          "type": "option",
-          "required": true,
-          "options": [
-            {
-              "name": "Basic",
-              "color": "#753780",
-              "score": 10
-            },
-            {
-              "name": "Limited",
-              "color": "#FDF177",
-              "score": -1
-            },
-            {
-              "name": "No service",
-              "color": "#F1AC2A",
-              "score": -2
-            }
-          ]
-        }
-      ]
+      ],
+      "id": 13
     }
   ]
 }

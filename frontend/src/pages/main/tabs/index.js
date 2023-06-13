@@ -6,7 +6,6 @@ const TabContent = ({
   parentLoading,
   show,
   current,
-  question,
   self,
   data,
   page,
@@ -23,7 +22,6 @@ const TabContent = ({
           show={show}
           formId={formId}
           chartList={chartList}
-          question={question}
         />
       );
     case 'ODF-CHARTS':

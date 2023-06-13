@@ -6,11 +6,12 @@
       "question_group": "Location Demographics",
       "questions": [
         {
-          "question": "location",
+          "question": "Location",
           "order": 1,
           "required": true,
           "type": "administration",
-          "meta": true
+          "meta": true,
+          "id": 5
         },
         {
           "id": 563210188,
@@ -30,7 +31,8 @@
           "required": true,
           "options": null
         }
-      ]
+      ],
+      "id": 24
     },
     {
       "question_group": "Water System Information",
@@ -215,6 +217,10 @@
             {
               "name": "Manual operation",
               "color": null
+            },
+            {
+              "name": "Solar",
+              "color": null
             }
           ]
         },
@@ -335,7 +341,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 25
     }
   ]
 }
