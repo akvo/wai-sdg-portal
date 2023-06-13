@@ -383,7 +383,7 @@
             {
               "id": 98,
               "options": [
-                "public tap stand"
+                "public tapstand"
               ]
             }
           ]
@@ -488,7 +488,7 @@
               "id": 98,
               "options": [
                 "deep borehole",
-                "public tap stand",
+                "public tapstand",
                 "shallow well"
               ]
             }
@@ -679,7 +679,7 @@
               "options": [
                 "deep borehole",
                 "shallow well",
-                "protected spring"
+                "public tapstand"
               ]
             }
           ]
@@ -878,7 +878,7 @@
               "options": [
                 "deep borehole",
                 "shallow well",
-                "public tap stand"
+                "public tapstand"
               ]
             }
           ]
@@ -955,7 +955,7 @@
             {
               "id": 98,
               "options": [
-                "public tap stand",
+                "public tapstand",
                 "protected spring"
               ]
             }
@@ -1209,35 +1209,9 @@
         {
           "order": 46,
           "question": "How many rainwater harvesting tanks are in use?",
-          "type": "option",
+          "type": "number",
           "meta": false,
           "required": true,
-          "options": [
-            {
-              "name": "none",
-              "color": null
-            },
-            {
-              "name": "nan",
-              "color": null
-            },
-            {
-              "name": "oo",
-              "color": null
-            },
-            {
-              "name": "no one",
-              "color": null
-            },
-            {
-              "name": "all not in use",
-              "color": null
-            },
-            {
-              "name": "none.",
-              "color": null
-            }
-          ],
           "id": 130,
           "dependency": [
             {
@@ -1251,31 +1225,9 @@
         {
           "order": 47,
           "question": "What is the total storage volume of tanks in use?",
-          "type": "option",
+          "type": "number",
           "meta": false,
           "required": true,
-          "options": [
-            {
-              "name": "nan",
-              "color": null
-            },
-            {
-              "name": "no one is use",
-              "color": null
-            },
-            {
-              "name": "none",
-              "color": null
-            },
-            {
-              "name": "oo",
-              "color": null
-            },
-            {
-              "name": "none in use",
-              "color": null
-            }
-          ],
           "id": 131,
           "dependency": [
             {
@@ -1775,17 +1727,7 @@
               "color": null
             }
           ],
-          "id": 147,
-          "dependency": [
-            {
-              "id": 98,
-              "options": [
-                "deep borehole",
-                "shallow well",
-                "public tap stand"
-              ]
-            }
-          ]
+          "id": 147
         },
         {
           "order": 64,
@@ -2102,7 +2044,8 @@
             {
               "id": 156,
               "options": [
-                "caretaker"
+                "caretaker",
+                "water user committee"
               ]
             }
           ]
