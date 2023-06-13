@@ -13,7 +13,7 @@ def get_uuid():
 
 
 def contain_numbers(inputString):
-    return bool(re.search(r'\d', inputString))
+    return bool(re.search(r"\d", inputString))
 
 
 class HText(str):

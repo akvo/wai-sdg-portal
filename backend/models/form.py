@@ -44,8 +44,11 @@ class Form(Base):
     version = Column(Float, nullable=True, default=0.0)
 
     question_group = relationship(
-        "QuestionGroup", cascade="all, delete",
-        passive_deletes=True, backref="question_group")
+        "QuestionGroup",
+        cascade="all, delete",
+        passive_deletes=True,
+        backref="question_group",
+    )
 
     def __init__(
         self,
@@ -55,7 +58,7 @@ class Form(Base):
         description: Optional[str] = None,
         default_language: Optional[str] = None,
         languages: Optional[List[str]] = None,
-        translations: Optional[List[dict]] = None
+        translations: Optional[List[dict]] = None,
     ):
         self.id = id
         self.name = name

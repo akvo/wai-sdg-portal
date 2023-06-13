@@ -12,20 +12,23 @@ from models.answer import Answer
 from datetime import datetime
 from util.helper import HText
 from AkvoResponseGrouper.views import refresh_view
+
 # from memory_profiler import profile as memory
 
 
 def save(session: Session, user: int, form: int, dp: dict, qs: dict):
     names = []
     parent_code = None
-    data = Data(name=None,
-                form=form,
-                administration=None,
-                geo=None,
-                created_by=user,
-                updated_by=None,
-                created=datetime.now(),
-                updated=None)
+    data = Data(
+        name=None,
+        form=form,
+        administration=None,
+        geo=None,
+        created_by=user,
+        updated_by=None,
+        created=datetime.now(),
+        updated=None,
+    )
     for a in qs:
         aw = dp.get(a)
         if not aw:
@@ -44,11 +47,15 @@ def save(session: Session, user: int, form: int, dp: dict, qs: dict):
                     parent = adm_list[ix - 1]
                     adm_list.append(
                         crud_administration.get_administration_by_name(
-                            session, name=adm, parent=parent.id))
+                            session, name=adm, parent=parent.id
+                        )
+                    )
                 else:
                     adm_list.append(
                         crud_administration.get_administration_by_name(
-                            session, name=adm))
+                            session, name=adm
+                        )
+                    )
             data.administration = adm_list[-1].id
             answer.value = data.administration
             if q.meta:
@@ -107,19 +114,22 @@ def seed(session: Session, file: str, user: int, form: int):
         df = pd.read_excel(file, sheet_name="data")
         questions = {
             q.id: q
-            for q in crud_question.get_question_by_form_id(session=session,
-                                                           fid=form)
+            for q in crud_question.get_question_by_form_id(
+                session=session, fid=form
+            )
         }
         df = df.rename(
-            columns={d: int(d.split("|")[0])
-                     for d in list(df.columns)})
+            columns={d: int(d.split("|")[0]) for d in list(df.columns)}
+        )
         total_data = 0
         for i, datapoint in enumerate(df.to_dict("records")):
-            save(session=session,
-                 user=user,
-                 form=form,
-                 dp=datapoint,
-                 qs=questions)
+            save(
+                session=session,
+                user=user,
+                form=form,
+                dp=datapoint,
+                qs=questions,
+            )
             if i % 5 == 4:
                 session.commit()
                 time.sleep(1)

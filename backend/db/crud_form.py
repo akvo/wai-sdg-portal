@@ -12,15 +12,17 @@ def add_form(
     description: Optional[str] = None,
     default_language: Optional[str] = None,
     languages: Optional[List[str]] = None,
-    translations: Optional[List[dict]] = None
+    translations: Optional[List[dict]] = None,
 ) -> FormDict:
-    form = Form(id=id,
-                name=name,
-                version=version if version else 1.0,
-                description=description,
-                default_language=default_language,
-                languages=languages,
-                translations=translations)
+    form = Form(
+        id=id,
+        name=name,
+        version=version if version else 1.0,
+        description=description,
+        default_language=default_language,
+        languages=languages,
+        translations=translations,
+    )
     session.add(form)
     session.commit()
     session.flush()
@@ -64,7 +66,7 @@ def update_form(
     description: Optional[str] = None,
     default_language: Optional[str] = None,
     languages: Optional[List[str]] = None,
-    translations: Optional[List[dict]] = None
+    translations: Optional[List[dict]] = None,
 ) -> FormDict:
     form = session.query(Form).filter(Form.id == id).first()
     form.name = name

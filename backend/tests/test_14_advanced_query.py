@@ -13,11 +13,11 @@ account = Acc(True)
 today = datetime.today().strftime("%B %d, %Y")
 
 
-class TestAdvancedFilter():
+class TestAdvancedFilter:
     @pytest.mark.asyncio
-    async def test_get_data_with_query_option(self, app: FastAPI,
-                                              session: Session,
-                                              client: AsyncClient) -> None:
+    async def test_get_data_with_query_option(
+        self, app: FastAPI, session: Session, client: AsyncClient
+    ) -> None:
         data_view = session.query(ViewData).all()
         data_view = [d.raw for d in data_view]
         assert data_view == [
@@ -50,7 +50,8 @@ class TestAdvancedFilter():
         res = await client.get(
             app.url_path_for("data:get", form_id=1),
             params={"q": "1|option 1"},
-            headers={"Authorization": f"Bearer {account.token}"})
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
         assert res.status_code == 200
         res = res.json()
         assert res["current"] == 1
@@ -61,7 +62,8 @@ class TestAdvancedFilter():
         res = await client.get(
             app.url_path_for("data:get", form_id=1),
             # params={"q": "1|option 2"},
-            headers={"Authorization": f"Bearer {account.token}"})
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
         assert res.status_code == 200
         res = res.json()
         assert res["current"] == 1
@@ -72,7 +74,8 @@ class TestAdvancedFilter():
         res = await client.get(
             app.url_path_for("data:get", form_id=1),
             # params={"question": [1, 4], "administration": 10},
-            headers={"Authorization": f"Bearer {account.token}"})
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
         assert res.status_code == 200
         res = res.json()
         assert res["current"] == 1
@@ -81,17 +84,18 @@ class TestAdvancedFilter():
         assert len(res["data"]) == 4
 
     @pytest.mark.asyncio
-    async def test_get_maps_with_query_option(self, app: FastAPI,
-                                              session: Session,
-                                              client: AsyncClient) -> None:
+    async def test_get_maps_with_query_option(
+        self, app: FastAPI, session: Session, client: AsyncClient
+    ) -> None:
         res = await client.get(
             app.url_path_for("maps:get", form_id=1),
             params={
                 "marker": 1,
                 "shape": 2,
                 "hover_ids": "1|2",
-                "q": "1|option 2"
-            })
+                "q": "1|option 2",
+            },
+        )
         assert res.status_code == 200
         res = res.json()
         assert res["data"] == [

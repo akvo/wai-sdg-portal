@@ -12,34 +12,37 @@ pytestmark = pytest.mark.asyncio
 sys.path.append("..")
 
 account = Acc(True)
-ftype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+ftype = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 
 
-class TestWorkerRoutes():
+class TestWorkerRoutes:
     @pytest.mark.asyncio
-    async def test_get_data_before_recorded(self, app: FastAPI,
-                                            session: Session,
-                                            client: AsyncClient) -> None:
+    async def test_get_data_before_recorded(
+        self, app: FastAPI, session: Session, client: AsyncClient
+    ) -> None:
         res = await client.get(
             app.url_path_for("data:get", form_id=1),
-            headers={"Authorization": f"Bearer {account.token}"})
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
         assert res.status_code == 200
         res = res.json()
         assert res["total"] == 2
 
     @pytest.mark.asyncio
-    async def test_execute_first_queue(self, worker: FastAPI, session: Session,
-                                       worker_client: AsyncClient) -> None:
+    async def test_execute_first_queue(
+        self, worker: FastAPI, session: Session, worker_client: AsyncClient
+    ) -> None:
         pending_jobs = None
         if crud_jobs.is_not_busy(session=session):
             pending_jobs = crud_jobs.pending(session=session)
         if pending_jobs:
-            jobs = crud_jobs.update(session=session,
-                                    id=pending_jobs,
-                                    status=JobStatus.on_progress)
+            jobs = crud_jobs.update(
+                session=session, id=pending_jobs, status=JobStatus.on_progress
+            )
             do_task(session=session, jobs=jobs)
         res = await worker_client.get(
-            worker.url_path_for("jobs:status", id=pending_jobs))
+            worker.url_path_for("jobs:status", id=pending_jobs)
+        )
         res = res.json()
         assert res["status"] == "pending"
         current = crud_jobs.get_by_id(session=session, id=pending_jobs)
@@ -48,20 +51,21 @@ class TestWorkerRoutes():
         assert current["status"] is JobStatus.pending
 
     @pytest.mark.asyncio
-    async def test_execute_second_queue(self, worker: FastAPI,
-                                        session: Session,
-                                        worker_client: AsyncClient) -> None:
+    async def test_execute_second_queue(
+        self, worker: FastAPI, session: Session, worker_client: AsyncClient
+    ) -> None:
         pending_jobs = None
         pending_jobs = crud_jobs.pending(session=session)
         assert pending_jobs is False
 
     @pytest.mark.asyncio
-    async def test_get_data_after_recorded(self, app: FastAPI,
-                                           session: Session,
-                                           client: AsyncClient) -> None:
+    async def test_get_data_after_recorded(
+        self, app: FastAPI, session: Session, client: AsyncClient
+    ) -> None:
         res = await client.get(
             app.url_path_for("data:get", form_id=1),
-            headers={"Authorization": f"Bearer {account.token}"})
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
         assert res.status_code == 200
         res = res.json()
         assert res["total"] == 4

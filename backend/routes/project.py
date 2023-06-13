@@ -9,11 +9,13 @@ from models.data import Data
 project_route = APIRouter()
 
 
-@project_route.get("/project/{id:path}",
-                   response_model=List[ProjectBase],
-                   summary="get project by id",
-                   name="project:get_by_id",
-                   tags=["Custom"])
+@project_route.get(
+    "/project/{id:path}",
+    response_model=List[ProjectBase],
+    summary="get project by id",
+    name="project:get_by_id",
+    tags=["Custom"],
+)
 def get_by_id(req: Request, id: int, session: Session = Depends(get_session)):
     project = crud_answer.get_answer_by_question(session=session, question=id)
     result = [p.to_project for p in project]

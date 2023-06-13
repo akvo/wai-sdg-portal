@@ -4,10 +4,9 @@ from sqlalchemy import desc
 from models.log import Log, LogBase, LogDict
 
 
-def add(session: Session,
-        message: str,
-        user: int,
-        jobs: Optional[int] = None) -> LogBase:
+def add(
+    session: Session, message: str, user: int, jobs: Optional[int] = None
+) -> LogBase:
     log = Log(message=message, user=user, jobs=jobs)
     session.add(log)
     session.commit()
@@ -17,8 +16,12 @@ def add(session: Session,
 
 
 def get(session: Session, user: int) -> List[LogDict]:
-    log = session.query(Log).filter(Log.user == user).order_by(desc(
-        Log.id)).all()
+    log = (
+        session.query(Log)
+        .filter(Log.user == user)
+        .order_by(desc(Log.id))
+        .all()
+    )
     return [x.response for x in log]
 
 

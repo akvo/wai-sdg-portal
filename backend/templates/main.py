@@ -9,16 +9,20 @@ from util.mailer import Email, MailTypeEnum
 template_route = APIRouter()
 
 
-@template_route.get("/template/email",
-                    response_class=HTMLResponse,
-                    summary="get email template",
-                    name="template:email",
-                    tags=["Template"])
-def get_by_id(req: Request,
-              type: MailTypeEnum,
-              user: int,
-              send: Optional[bool] = False,
-              session: Session = Depends(get_session)):
+@template_route.get(
+    "/template/email",
+    response_class=HTMLResponse,
+    summary="get email template",
+    name="template:email",
+    tags=["Template"],
+)
+def get_by_id(
+    req: Request,
+    type: MailTypeEnum,
+    user: int,
+    send: Optional[bool] = False,
+    session: Session = Depends(get_session),
+):
     user = get_user_by_id(session=session, id=user)
     email = Email(recipients=[user.recipient], type=type)
     if send:
