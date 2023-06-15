@@ -102,7 +102,7 @@ const Export = () => {
         });
       }, 3000);
     }
-  }, [pendingFile, pending]);
+  }, [pendingFile, pending, fileList]);
 
   const handleDownload = (payload) => {
     setDownloading(payload);
