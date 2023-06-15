@@ -22,6 +22,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 Base.metadata.create_all(bind=engine)
 session = SessionLocal()
 source_path = os.environ["INSTANCE_NAME"]
+SANDBOX_DATA_SOURCE = os.environ.get("SANDBOX_DATA_SOURCE")
+if SANDBOX_DATA_SOURCE:
+    source_path = SANDBOX_DATA_SOURCE
 class_path = source_path.replace("-", "_")
 administration_level = [g["alias"] for g in GeoLevels[class_path].value]
 config = GeoLevels[class_path].value
@@ -152,17 +155,23 @@ for form in forms:
                 answer = Answer(
                     question=q.id, created_by=user.id, created=datetime.now()
                 )
-                if q.type in [QuestionType.option, QuestionType.multiple_option]:
+                if q.type in [
+                    QuestionType.option,
+                    QuestionType.multiple_option,
+                ]:
                     fa = fake.random_int(min=0, max=len(q.option) - 1)
                     answer.options = [q.option[fa].name]
                     if q.id == 557700349:
                         answer.options = get_odf_value(status_verified, not_triggered)
                     value = True
                 if q.type == QuestionType.answer_list:
+                    parent_data = crud_data.get_data_by_id(
+                        session=session, id=project_id.data
+                    )
                     answer.value = project_id.value
                     value = True
                     if q.meta:
-                        names.append(str(project_id.value))
+                        names.append(str(parent_data.name))
                 if q.type == QuestionType.number:
                     fa = fake.random_int(min=10, max=50)
                     answer.value = fa

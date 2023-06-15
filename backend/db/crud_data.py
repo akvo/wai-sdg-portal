@@ -2,18 +2,44 @@ from datetime import datetime
 from typing import List, Optional
 from typing_extensions import TypedDict
 from sqlalchemy.orm import Session
-from sqlalchemy import desc, func, case, or_
+from sqlalchemy import desc, or_
 from models.data import Data, DataDict
 from models.answer import Answer
 from models.history import History
 from models.views.view_data import ViewData
 from models.answer import AnswerBase
-from models.views.view_data_score import ViewDataScore
+
+# from models.views.view_data_score import ViewDataScore
 
 
 class PaginatedData(TypedDict):
     data: List[DataDict]
     count: int
+
+
+def bulk_add_data(
+    session: Session,
+    name: str,
+    form: int,
+    administration: int,
+    created_by: int,
+    answers: List[AnswerBase],
+    geo: Optional[List[float]] = None,
+) -> None:
+    data = Data(
+        name=name,
+        form=form,
+        administration=administration,
+        geo=geo,
+        created_by=created_by,
+        updated_by=None,
+        created=datetime.now(),
+        updated=None,
+    )
+    for answer in answers:
+        data.answer.append(answer)
+    session.add(data)
+    session.commit()
 
 
 def add_data(
@@ -76,11 +102,13 @@ def get_data(
     form: int,
     skip: int,
     perpage: int,
+    columns: Optional[List] = None,
     options: List[str] = None,
     administration: List[int] = None,
-    question: List[int] = None,
 ) -> PaginatedData:
-    data = session.query(Data).filter(Data.form == form)
+    columns = columns if columns else [Data]
+    data = session.query(*columns)
+    data = data.filter(Data.form == form)
     data_id = False
     if options:
         # support multiple select options filter
@@ -91,40 +119,8 @@ def get_data(
     if administration:
         data = data.filter(Data.administration.in_(administration))
     count = data.count()
-    # getting the score
-    if question:
-        data_score = (
-            session.query(
-                ViewDataScore.data, func.sum(ViewDataScore.score).label("score")
-            )
-            .filter(ViewDataScore.form == form)
-            .filter(ViewDataScore.question.in_(question))
-        )
-        if data_id:
-            data_score = data_score.filter(
-                ViewDataScore.data.in_([d.data for d in data_id])
-            )
-        data_score = data_score.group_by(ViewDataScore.data).all()
-        # if data have score
-        if len(data_score):
-            data_score_temp = []
-            for d in data_score:
-                data_score_temp.append({"data": d.data, "score": d.score})
-            data_score_temp.sort(key=lambda x: x["score"], reverse=True)
-            # order data by score
-            id_ordering = case(
-                {
-                    _id: index
-                    for index, _id in enumerate([d["data"] for d in data_score_temp])
-                },
-                value=Data.id,
-            )
-            data = data.order_by(id_ordering)
-        else:
-            data = data.order_by(desc(Data.id))
-    else:
-        # if no question order data by id desc
-        data = data.order_by(desc(Data.id))
+    # if no question order data by id desc
+    data = data.order_by(desc(Data.id))
 
     data = data.offset(skip).limit(perpage).all()
     return PaginatedData(data=data, count=count)

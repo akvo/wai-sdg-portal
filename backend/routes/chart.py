@@ -1,3 +1,5 @@
+from math import ceil
+from collections import defaultdict
 from typing import List, Optional
 from fastapi import Request, APIRouter, HTTPException, Query
 from fastapi import Depends
@@ -7,11 +9,22 @@ from util.charts import Charts
 from util.charts import get_chart_value
 import db.crud_charts as crud_charts
 import db.crud_administration as crud_administration
+from db.crud_data import get_data
+from models.data import Data
 from middleware import check_query
+from itertools import groupby
+from db.crud_jmp import (
+    get_jmp_overview,
+    get_jmp_config_by_form,
+    get_jmp_labels,
+)
 
 chart_route = APIRouter()
 
 
+@chart_route.get(
+    "/chart/", name="charts:get", summary="get chart list", tags=["Charts"]
+)
 @chart_route.get(
     "/chart/", name="charts:get", summary="get chart list", tags=["Charts"]
 )
@@ -52,6 +65,14 @@ def get_aggregated_chart_data(
         administration=administration_ids,
         options=options,
     )
+    value = crud_charts.get_chart_data(
+        session=session,
+        form=form_id,
+        question=question,
+        stack=stack,
+        administration=administration_ids,
+        options=options,
+    )
     return value
 
 
@@ -84,11 +105,51 @@ def get_aggregated_pie_chart_data(
         administration=administration_ids,
         options=options,
     )
+    value = crud_charts.get_pie_chart_data(
+        session=session,
+        form=form_id,
+        question=question_id,
+        administration=administration_ids,
+        options=options,
+    )
     return value
 
 
+def group_children(p: dict, ds: list, labels: list):
+    data = list(filter(lambda d: (d["administration"] in p["children"]), ds))
+    total = len(data)
+    childs = []
+    groups = groupby(data, key=lambda d: d["category"])
+    counter = defaultdict()
+    for k, values in groups:
+        for v in list(values):
+            if v["category"] in list(counter):
+                counter[v["category"]] += 1
+            else:
+                counter[v["category"]] = 1
+
+    # score = 0
+    # because the graph uses pagination so the score needs
+    # to be calculated from the frontend
+    for lb in labels:
+        label = lb["name"]
+        count = counter[label] if label in counter else 0
+        percentage = count / total if count > 0 else 0
+        # score += lb["score"] * percentage
+        percent = percentage * 100
+        childs.append(
+            {
+                "option": label,
+                "count": count,
+                "percent": percent,
+                "color": lb["color"],
+            }
+        )
+    return {"administration": p["id"], "child": childs}
+
+
 @chart_route.get(
-    "/chart/jmp-data/{form_id:path}/{question_id:path}",
+    "/chart/jmp-data/{form_id:path}/{type_name:path}",
     name="charts:get_aggregated_jmp_chart_data",
     summary="get jmp chart aggregate data",
     tags=["Charts"],
@@ -96,7 +157,9 @@ def get_aggregated_pie_chart_data(
 def get_aggregated_jmp_chart_data(
     req: Request,
     form_id: int,
-    question_id: int,
+    type_name: str,
+    page: int = 1,
+    perpage: int = 100,
     administration: Optional[int] = None,
     q: Optional[List[str]] = Query(None),
     session: Session = Depends(get_session),
@@ -108,23 +171,61 @@ def get_aggregated_jmp_chart_data(
     parent_administration = [
         x.simplify_serialize_with_children for x in parent_administration
     ]
-    administration_ids = crud_administration.get_all_childs(session=session)
     if administration:
-        parent_administration = False
-        administration_ids = crud_administration.get_all_childs(
-            session=session, parents=[administration], current=[]
-        )
-        if not len(administration_ids):
-            raise HTTPException(status_code=404, detail="Not found")
-    value = crud_charts.get_jmp_chart_data(
+        fp = list(filter(lambda a: administration == a["id"], parent_administration))
+        if len(fp):
+            parent_administration = [
+                {"id": cd, "children": [cd]} for cd in fp[0]["children"]
+            ]
+    adm_ids = [pa["id"] for pa in parent_administration] if administration else None
+    paginated = get_data(
         session=session,
         form=form_id,
-        question=question_id,
-        parent_administration=parent_administration,
-        administration=administration_ids,
         options=options,
+        administration=adm_ids,
+        columns=[Data.id, Data.administration],
+        skip=(perpage * (page - 1)),
+        perpage=perpage,
     )
-    return value
+    count = paginated["count"]
+    dataset = [
+        {
+            "id": d[0],
+            "administration": d[1],
+        }
+        for d in paginated["data"]
+    ]
+    data = get_jmp_overview(session=session, form=form_id, data=dataset, name=type_name)
+    data = [
+        {
+            "id": d["id"],
+            "administration": d["administration"],
+            "category": d["categories"][0]["category"]
+            if len(d["categories"])
+            else None,
+        }
+        for d in data
+    ]
+    configs = get_jmp_config_by_form(form=form_id)
+    labels = get_jmp_labels(configs=configs, name=type_name)
+    scores = [(lb["name"], lb["score"]) for lb in labels]
+    groups = list(
+        map(
+            lambda p: group_children(p, data, labels),
+            parent_administration,
+        )
+    )
+    total_page = ceil(count / perpage) if count > 0 else 0
+    if total_page < page:
+        raise HTTPException(status_code=404, detail="Not found")
+    return {
+        "current": page,
+        "data": groups,
+        "total": count,
+        "total_page": total_page,
+        "question": type_name,
+        "scores": scores,
+    }
 
 
 @chart_route.get(

@@ -41,4 +41,11 @@ def get(req: Request, question_id: int, session: Session = Depends(get_session))
         q3 = f"Third quantile value is {round(np.quantile(values, .75), 2)}"
         maxs = f"Maximum value is {max(values)}"
         mins = f"Minimum value is {min(values)}"
-    return {"mean": mean, "q1": q1, "q2": q2, "q3": q3, "max": maxs, "min": mins}
+    return {
+        "mean": mean,
+        "q1": q1,
+        "q2": q2,
+        "q3": q3,
+        "max": maxs,
+        "min": mins,
+    }

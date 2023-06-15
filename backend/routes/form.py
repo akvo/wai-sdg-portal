@@ -28,6 +28,9 @@ from util.helper import hash_cipher
 INSTANCE_NAME = os.environ["INSTANCE_NAME"]
 SOURCE_PATH = f"./source/{INSTANCE_NAME}"
 URL_FORM_CONFIG = f"{SOURCE_PATH}/form_url_dump.json"
+SANDBOX_DATA_SOURCE = os.environ.get("SANDBOX_DATA_SOURCE")
+if SANDBOX_DATA_SOURCE:
+    INSTANCE_NAME = SANDBOX_DATA_SOURCE
 class_path = INSTANCE_NAME.replace("-", "_")
 security = HTTPBearer()
 form_route = APIRouter()
@@ -38,7 +41,10 @@ geo_center = {"lat": geo_center[1], "lng": geo_center[0]}
 
 # PROJECT BASE
 def get_project_form(
-    session: Session, form: FormBase, project: QuestionDict, administrations: List[int]
+    session: Session,
+    form: FormBase,
+    project: QuestionDict,
+    administrations: List[int],
 ) -> FormBase:
     question_group = []
     for qg in form["question_group"]:
@@ -469,7 +475,11 @@ def get_webform_by_id(
     credentials: credentials = Depends(security),
 ):
     res = get_form_definition(
-        req=req, id=id, session=session, credentials=credentials, answer_check=edit
+        req=req,
+        id=id,
+        session=session,
+        credentials=credentials,
+        answer_check=edit,
     )
     return res
 

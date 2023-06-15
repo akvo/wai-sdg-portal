@@ -74,7 +74,10 @@ class Log(Base):
         attachment = None
         if self.jobs:
             status = self.jobs_detail.status
-            if self.jobs_detail.type in [JobType.validate_data, JobType.download]:
+            if self.jobs_detail.type in [
+                JobType.validate_data,
+                JobType.download,
+            ]:
                 attachment = self.jobs_detail.payload
         return {
             "id": self.id,

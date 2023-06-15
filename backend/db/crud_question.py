@@ -13,7 +13,12 @@ import db.crud_option as crud_option
 def get_last_question(session: Session, form: int, question_group: int):
     last_question = (
         session.query(Question)
-        .filter(and_(Question.form == form, Question.question_group == question_group))
+        .filter(
+            and_(
+                Question.form == form,
+                Question.question_group == question_group,
+            )
+        )
         .order_by(Question.order.desc())
         .first()
     )
@@ -25,19 +30,19 @@ def get_last_question(session: Session, form: int, question_group: int):
 
 
 def generateOptionObj(obj: dict):
-    opt = Option(name=obj["name"])
+    opt = Option(name=str(obj["name"]).strip())
     if "id" in obj:
-        opt.id = obj["id"]
+        opt.id = obj.get("id")
     if "order" in obj:
-        opt.order = obj["order"]
+        opt.order = obj.get("order")
     if "color" in obj:
-        opt.color = obj["color"]
+        opt.color = obj.get("color")
     if "score" in obj:
-        opt.score = obj["score"]
+        opt.score = obj.get("score")
     if "code" in obj:
-        opt.code = obj["code"]
+        opt.code = obj.get("code")
     if "translations" in obj:
-        opt.translations = obj["translations"]
+        opt.translations = obj.get("translations")
     return opt
 
 
@@ -99,6 +104,7 @@ def update_question(
     id: int,
     order: Optional[int] = None,
     option: Optional[List[OptionDict]] = None,
+    clear_option: Optional[bool] = False,
     required: Optional[bool] = True,
     rule: Optional[dict] = None,
     dependency: Optional[List[dict]] = None,
@@ -132,21 +138,23 @@ def update_question(
     question.translations = translations
     question.api = api
     question.addons = addons
+    if clear_option:
+        session.query(Option).filter(Option.question == question.id).delete()
     if option:
         for o in option:
-            find_option = session.query(Option).filter(Option.id == o["id"]).first()
+            find_option = session.query(Option).filter(Option.id == o.get("id")).first()
             if not find_option:
-                opt = opt = generateOptionObj(obj=o)
+                opt = generateOptionObj(obj=o)
                 question.option.append(opt)
             if find_option:
                 crud_option.update_option(
                     session=session,
                     id=o.get("id"),
-                    name=o.get("name"),
+                    name=str(o["name"]).strip(),
                     order=o.get("order"),
                     color=o.get("color"),
                     score=o.get("score"),
-                    code=o.get("code"),
+                    code=o.get("code").strip() if o.get("code") else None,
                     translations=o.get("translations"),
                 )
     session.commit()
@@ -177,6 +185,10 @@ def get_question_by_name(session: Session, form: int, name: str) -> QuestionDict
         .first()
     )
     return question
+
+
+def get_question_by_form_id(session: Session, fid: int) -> QuestionDict:
+    return session.query(Question).filter(Question.form == fid).all()
 
 
 def get_question_name(session: Session, id: int) -> str:
@@ -292,7 +304,10 @@ def validate_dependency(session: Session, dependency: List[dict]):
         question = get_question_by_id(session=session, id=qid)
         if not question:
             errors.append(f"Question {qid} not found")
-        if question.type not in [QuestionType.option, QuestionType.multiple_option]:
+        if question.type not in [
+            QuestionType.option,
+            QuestionType.multiple_option,
+        ]:
             errors.append(f"Question {qid} type should be option")
         options = [o.name for o in question.option]
         for o in opt:
@@ -304,7 +319,12 @@ def validate_dependency(session: Session, dependency: List[dict]):
 def get_project_question(session: Session, form: int) -> QuestionDict:
     return (
         session.query(Question)
-        .filter(and_(Question.form == form, Question.type == QuestionType.answer_list))
+        .filter(
+            and_(
+                Question.form == form,
+                Question.type == QuestionType.answer_list,
+            )
+        )
         .first()
     )
 

@@ -40,7 +40,8 @@ class PostQueryParams:
             default=True, description="Wether question is required or not"
         ),
         min: int = Query(
-            default=0, description="Minimum number for number question type, default: 0"
+            default=0,
+            description="Minimum number for number question type, default: 0",
         ),
         max: int = Query(None, description="Max number for number question type"),
         form: int = Query(

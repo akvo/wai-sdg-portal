@@ -1,4 +1,4 @@
-from os import environ
+import os
 from http import HTTPStatus
 from datetime import datetime
 from math import ceil
@@ -15,7 +15,6 @@ from db import crud_administration
 from db import crud_answer
 from db import crud_form
 from db import crud_user
-from db import crud_jmp_history
 from db import crud_jmp
 from models.user import User, UserRole
 from models.answer import Answer, AnswerDict
@@ -25,10 +24,20 @@ from db.connection import get_session
 from models.data import DataResponse, DataDict
 from models.data import DataDictWithHistory, SubmissionInfo
 from middleware import verify_user, verify_editor, check_query
+from db.crud_jmp import get_jmp_table_view, get_jmp_config_by_form
 from AkvoResponseGrouper.views import refresh_view
 
 security = HTTPBearer()
 data_route = APIRouter()
+
+
+def refresh_category_view(session: Session):
+    is_test = os.environ.get("TESTING")
+    if is_test:
+        sessionUsed = session
+    else:
+        sessionUsed = next(get_session())
+    refresh_view(session=sessionUsed)
 
 
 def check_access(adm, user) -> None:
@@ -41,13 +50,19 @@ def check_access(adm, user) -> None:
 
 # PROJECT BASE
 def check_project(
-    session: Session, data: List[DataDictWithHistory], question: List[int], form: int
+    session: Session,
+    data: List[DataDictWithHistory],
+    question: List[int],
+    form: int,
 ) -> List[DataDictWithHistory]:
     form_question = crud_question.get_question_ids(session=session, form=form)
     form_question = [fq.id for fq in form_question]
-    external = [q for q in question if q not in form_question] if question else []
+    external = []
+    if question:
+        external = [q for q in question if q not in form_question]
     if len(external):
-        question = crud_question.get_question_by_id(session=session, id=external[0])
+        question = crud_question.get_question_by_id(
+            session=session, id=external[0])
         if len(question.option):
             question = int(question.option[0].name)
             for d in data:
@@ -71,72 +86,6 @@ def check_project(
 # END PROJECT BASE
 
 
-def save_datapoint(
-    session: Session,
-    form_id: int,
-    answers: List[AnswerDict],
-    user: Optional[User] = None,
-    submitter: Optional[str] = None,
-) -> DataDict:
-    administration = None
-    geo = None
-    answerlist = []
-    names = []
-    parent_code = None
-    user_id = None if not user else user.id
-    for a in answers:
-        q = crud_question.get_question_by_id(session=session, id=a["question"])
-        answer = Answer(question=q.id, created_by=user_id, created=datetime.now())
-        if q.type == QuestionType.administration:
-            # check user access
-            if user:
-                check_access(a["value"][0], user)
-            if len(a["value"]):
-                administration = int(a["value"][-1])
-                answer.value = administration
-                if q.meta:
-                    adm_name = crud_administration.get_administration_by_id(
-                        session, id=administration
-                    )
-                    names.append(adm_name.name)
-        if q.type == QuestionType.geo:
-            if "lat" in a["value"] and "lng" in a["value"]:
-                geo = [a["value"]["lat"], a["value"]["lng"]]
-                answer.text = ("{}|{}").format(geo[0], geo[1])
-        if q.type in [QuestionType.text, QuestionType.date]:
-            answer.text = a["value"]
-            if q.meta:
-                names.append(a["value"])
-        if q.type == QuestionType.number:
-            answer.value = a["value"]
-            if q.meta:
-                names.append(str(a["value"]))
-        if q.type == QuestionType.option:
-            answer.options = [a["value"]]
-        if q.type == QuestionType.multiple_option:
-            answer.options = a["value"]
-        if q.type == QuestionType.answer_list:
-            parent = crud.get_data_by_name(session=session, name=a["value"])
-            parent_code = parent.name.split(" - ")[-1]
-            administration = parent.administration
-            answer.value = int(parent_code)
-        answerlist.append(answer)
-    name = " - ".join([str(n) for n in names])
-    if parent_code:
-        name = f"{parent_code} - {name}"
-    data = crud.add_data(
-        session=session,
-        form=form_id,
-        name=name,
-        geo=geo,
-        administration=administration,
-        created_by=user_id,
-        answers=answerlist,
-        submitter=submitter,
-    )
-    return data
-
-
 @data_route.get(
     "/data/form/{form_id:path}",
     response_model=DataResponse,
@@ -155,6 +104,49 @@ def get(
     session: Session = Depends(get_session),
     credentials: credentials = Depends(security),
 ):
+    options = check_query(q) if q else None
+    user = verify_user(req.state.authenticated, session)
+    administration_ids = False
+    if not administration:
+        administration_ids = crud_administration.get_all_childs(
+            session=session,
+            parents=[a.administration for a in user.access],
+            current=[],
+        )
+    if administration:
+        administration_ids = crud_administration.get_all_childs(
+            session=session, parents=[administration], current=[]
+        )
+        if not len(administration_ids):
+            raise HTTPException(status_code=404, detail="Not found")
+    data = crud.get_data(
+        session=session,
+        form=form_id,
+        administration=administration_ids,
+        # question=question,
+        options=options,
+        skip=(perpage * (page - 1)),
+        perpage=perpage,
+    )
+    if not data["count"]:
+        raise HTTPException(status_code=404, detail="Not found")
+    total_page = ceil(data["count"] / 10) if data["count"] > 0 else 0
+    if total_page < page:
+        raise HTTPException(status_code=404, detail="Not found")
+    count = data["count"]
+    configs = get_jmp_config_by_form(form=form_id)
+    data = [d.serialize for d in data["data"]]
+    data = get_jmp_table_view(session=session, data=data, configs=configs)
+    if question:
+        data = check_project(
+            session=session, data=data, question=question, form=form_id
+        )
+    return {
+        "current": page,
+        "data": data,
+        "total": count,
+        "total_page": total_page,
+    }
     options = check_query(q) if q else None
     user = verify_user(req.state.authenticated, session)
     administration_ids = False
@@ -208,15 +200,22 @@ def get(
     name="data:create",
     tags=["Data"],
 )
-def add(
+async def add(
     req: Request,
     form_id: int,
     answers: List[AnswerDict],
+    background_tasks: BackgroundTasks,
     session: Session = Depends(get_session),
     credentials: credentials = Depends(security),
 ):
     user = verify_editor(req.state.authenticated, session)
-    data = save_datapoint(session=session, form_id=form_id, answers=answers, user=user)
+    data = save_datapoint(
+        session=session,
+        form_id=form_id,
+        answers=answers,
+        user=user,
+        background_tasks=background_tasks
+    )
     return data.serialize
 
 
@@ -227,15 +226,20 @@ def add(
     name="data:create_form_standalone",
     tags=["Data"],
 )
-def add_form_standalone(
+async def add_form_standalone(
     req: Request,
     form_id: int,
     answers: List[AnswerDict],
+    background_tasks: BackgroundTasks,
     submitter: str = Query(default=Required),
     session: Session = Depends(get_session),
 ):
     data = save_datapoint(
-        session=session, form_id=form_id, answers=answers, submitter=submitter
+        session=session,
+        form_id=form_id,
+        answers=answers,
+        submitter=submitter,
+        background_tasks=background_tasks
     )
     return data.serialize
 
@@ -255,7 +259,10 @@ def get_by_id(
 ):
     data = crud.get_data_by_id(session=session, id=id)
     if not data:
-        raise HTTPException(status_code=404, detail="data {} is not found".format(id))
+        raise HTTPException(
+            status_code=404,
+            detail="data {} is not found".format(id)
+        )
     return data.serialize
 
 
@@ -270,11 +277,15 @@ def get_by_id(
 def delete(
     req: Request,
     id: int,
+    background_tasks: BackgroundTasks,
     session: Session = Depends(get_session),
     credentials: credentials = Depends(security),
 ):
     verify_editor(req.state.authenticated, session)
     crud.delete_by_id(session=session, id=id)
+    TESTING = os.environ.get("TESTING")
+    if not TESTING:
+        background_tasks.add_task(refresh_category_view, session=session)
     return Response(status_code=HTTPStatus.NO_CONTENT.value)
 
 
@@ -288,12 +299,16 @@ def delete(
 )
 def bulk_delete(
     req: Request,
+    background_tasks: BackgroundTasks,
     id: Optional[List[int]] = Query(None),
     session: Session = Depends(get_session),
     credentials: credentials = Depends(security),
 ):
     verify_editor(req.state.authenticated, session)
     crud.delete_bulk(session=session, ids=id)
+    TESTING = os.environ.get("TESTING")
+    if not TESTING:
+        background_tasks.add_task(refresh_view, session=session)
     return Response(status_code=HTTPStatus.NO_CONTENT.value)
 
 
@@ -304,11 +319,11 @@ def bulk_delete(
     name="data:update",
     tags=["Data"],
 )
-def update_by_id(
+async def update_by_id(
     req: Request,
     id: int,
-    background_tasks: BackgroundTasks,
     answers: List[AnswerDict],
+    background_tasks: BackgroundTasks,
     session: Session = Depends(get_session),
     credentials: credentials = Depends(security),
 ):
@@ -323,34 +338,35 @@ def update_by_id(
     [checked.update(a.dicted) for a in current_answers]
     for a in answers:
         execute = "update"
-        if a["question"] not in list(questions):
+        qid = a["question"]
+        if qid not in list(questions):
             raise HTTPException(
                 status_code=401,
-                detail="question {} is not part of this form".format(a["question"]),
+                detail="question {} is not part of this form".format(qid),
             )
         a.update({"type": questions[a["question"]]})
         if a["type"] == QuestionType.option:
             a.update({"value": [a["value"]]})
-        if a["question"] in list(checked):
+        if qid in list(checked):
             execute = "update"
         else:
             execute = "new"
-        if execute == "update" and a["value"] != checked[a["question"]]["value"]:
-            answer = checked[a["question"]]["data"]
+        if execute == "update" and a["value"] != checked[qid]["value"]:
+            answer = checked[qid]["data"]
             history = answer.serialize
             del history["id"]
             history = History(**history)
-            crud_jmp_history.add_history(session=session, history=history, data=data)
             a = crud_answer.update_answer(
                 session=session,
                 answer=answer,
+                history=history,
                 user=user.id,
-                type=questions[a["question"]],
+                type=questions[qid],
                 value=a["value"],
             )
         if execute == "new":
             answer = Answer(
-                question=a["question"],
+                question=qid,
                 data=data.id,
                 created_by=user.id,
                 created=datetime.now(),
@@ -358,18 +374,16 @@ def update_by_id(
             a = crud_answer.add_answer(
                 session=session,
                 answer=answer,
-                type=questions[a["question"]],
+                type=questions[qid],
                 value=a["value"],
             )
         if execute:
             data.updated_by = user.id
             data.updated = datetime.now()
             data = crud.update_data(session=session, data=data)
-    # refresh materialized view ar_category after updating datapoint
-    # TODO: Please check if data gets updated
-    TESTING = environ.get("TESTING")
+    TESTING = os.environ.get("TESTING")
     if not TESTING:
-        background_tasks.add_task(refresh_view, session)
+        background_tasks.add_task(refresh_category_view, session=session)
     return data.serialize
 
 
@@ -437,3 +451,75 @@ def get_history(
         session=session, data=data_id, question=question_id
     )
     return answer
+
+
+def save_datapoint(
+    session: Session,
+    form_id: int,
+    answers: List[AnswerDict],
+    background_tasks: BackgroundTasks,
+    user: Optional[User] = None,
+    submitter: Optional[str] = None,
+) -> DataDict:
+    administration = None
+    geo = None
+    answerlist = []
+    names = []
+    parent_code = None
+    user_id = None if not user else user.id
+    for a in answers:
+        q = crud_question.get_question_by_id(session=session, id=a["question"])
+        answer = Answer(question=q.id, created_by=user_id, created=datetime.now())
+        if q.type == QuestionType.administration:
+            # check user access
+            if user:
+                check_access(a["value"][0], user)
+            if len(a["value"]):
+                administration = int(a["value"][-1])
+                answer.value = administration
+                if q.meta:
+                    adm_name = crud_administration.get_administration_by_id(
+                        session, id=administration
+                    )
+                    names.append(adm_name.name)
+        if q.type == QuestionType.geo:
+            if "lat" in a["value"] and "lng" in a["value"]:
+                geo = [a["value"]["lat"], a["value"]["lng"]]
+                answer.text = ("{}|{}").format(geo[0], geo[1])
+        if q.type in [QuestionType.text, QuestionType.date]:
+            answer.text = a["value"]
+            if q.meta:
+                names.append(a["value"])
+        if q.type == QuestionType.number:
+            answer.value = a["value"]
+            if q.meta:
+                names.append(str(a["value"]))
+        if q.type == QuestionType.option:
+            answer.options = [a["value"]]
+        if q.type == QuestionType.multiple_option:
+            answer.options = a["value"]
+        if q.type == QuestionType.answer_list:
+            parent = crud.get_data_by_name(session=session, name=a["value"])
+            parent_code = parent.name.split(" - ")[-1]
+            administration = parent.administration
+            answer.value = int(parent_code)
+            if q.meta:
+                names.append(parent.name)
+        answerlist.append(answer)
+    name = " - ".join([str(n) for n in names])
+    if parent_code:
+        name = f"{parent_code} - {name}"
+    data = crud.add_data(
+        session=session,
+        form=form_id,
+        name=name,
+        geo=geo,
+        administration=administration,
+        created_by=user_id,
+        answers=answerlist,
+        submitter=submitter,
+    )
+    TESTING = os.environ.get("TESTING")
+    if not TESTING:
+        background_tasks.add_task(refresh_category_view, session=session)
+    return data

@@ -7,6 +7,7 @@ from tests.test_01_auth import Acc
 from sqlalchemy.orm import Session
 from db import crud_administration as ca
 from models.administration import Administration
+from seeder.administration import get_long_name
 
 pytestmark = pytest.mark.asyncio
 sys.path.append("..")
@@ -30,14 +31,24 @@ class TestAdministrationRoute:
         )
         data = data.rename(columns={"UNIT_NAME": "name"})[["name", "parent"]]
         results = (
-            parents[["name", "parent"]].append(data).reset_index()[["name", "parent"]]
+            parents[["name", "parent"]]
+            .append(data)
+            .reset_index()[["name", "parent"]]
         )
         results["id"] = results.index + 1
+        results["long_name"] = results.apply(
+            lambda x: get_long_name(results, x), axis=1
+        )
         for adm in results.to_dict("records"):
             parent = adm["parent"] if adm["parent"] == adm["parent"] else None
             ca.add_administration(
                 session=session,
-                data=Administration(id=int(adm["id"]), parent=parent, name=adm["name"]),
+                data=Administration(
+                    id=int(adm["id"]),
+                    parent=parent,
+                    name=adm["name"],
+                    long_name=adm["long_name"],
+                ),
             )
         res = await client.get(app.url_path_for("administration:get"))
         assert res.status_code == 200

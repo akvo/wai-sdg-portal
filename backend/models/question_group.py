@@ -33,7 +33,10 @@ class QuestionGroup(Base):
     repeat_text = Column(String, nullable=True)
     translations = Column(pg.ARRAY(pg.JSONB), nullable=True)
     question = relationship(
-        "Question", cascade="all, delete", passive_deletes=True, backref="question"
+        "Question",
+        cascade="all, delete",
+        passive_deletes=True,
+        backref="question",
     )
 
     def __init__(

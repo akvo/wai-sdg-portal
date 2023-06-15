@@ -5,7 +5,10 @@ from models.organisation import OrganisationDict, OrganisationType
 
 
 def add_organisation(
-    session: Session, name: str, type: OrganisationType, id: Optional[int] = None
+    session: Session,
+    name: str,
+    type: OrganisationType,
+    id: Optional[int] = None,
 ) -> OrganisationDict:
     organisation = Organisation(id=id, name=name, type=type)
     session.add(organisation)

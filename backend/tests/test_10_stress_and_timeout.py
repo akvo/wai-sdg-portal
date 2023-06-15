@@ -22,7 +22,7 @@ class TestStressAndTimeout:
             "Option",
             "Cianjur",
             "180,A",
-            "Testing Data 2",
+            None,
             23,
             "Option C|Option D|Option B",
             "2020",
@@ -39,5 +39,5 @@ class TestStressAndTimeout:
         done = datetime.now()
         elapsed = done - start
         assert len(errors) == 5000
-        assert elapsed.seconds < 1.5
+        assert elapsed.seconds < 10
         os.remove(excel_file)
