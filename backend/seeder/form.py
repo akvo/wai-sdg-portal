@@ -114,9 +114,7 @@ for file in sorted(files):
             session=session,
             name=json_form["form"],
             id=json_form["id"],
-            version=json_form.get("version")
-            if "version" in json_form
-            else 1.0,
+            version=json_form.get("version") if "version" in json_form else 1.0,
             description=json_form.get("description"),
             default_language=json_form.get("defaultLanguage"),
             languages=json_form.get("languages"),
@@ -153,9 +151,7 @@ for file in sorted(files):
                 form=form.id,
                 name=qg["question_group"],
                 id=find_group.id,
-                order=qg.get("order") or find_group.order
-                if find_group
-                else None,
+                order=qg.get("order") or find_group.order if find_group else None,
                 description=qg.get("description"),
                 repeatable=qg.get("repeatable"),
                 repeat_text=qg.get("repeatText"),

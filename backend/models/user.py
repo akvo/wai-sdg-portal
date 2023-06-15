@@ -59,9 +59,7 @@ class User(Base):
 
     __ts_vector__ = Column(
         TSVector(),
-        Computed(
-            "to_tsvector('english', name || ' ' || email)", persisted=True
-        ),
+        Computed("to_tsvector('english', name || ' ' || email)", persisted=True),
     )
     __table_args__ = (
         Index("ix_user___ts_vector__", __ts_vector__, postgresql_using="gin"),

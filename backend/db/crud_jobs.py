@@ -109,8 +109,6 @@ def on_progress(session: Session) -> Union[JobsBase, bool]:
 
 def is_not_busy(session: Session) -> bool:
     return (
-        session.query(Jobs.id)
-        .filter(Jobs.status == JobStatus.on_progress)
-        .first()
+        session.query(Jobs.id).filter(Jobs.status == JobStatus.on_progress).first()
         is None
     )

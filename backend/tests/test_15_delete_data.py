@@ -48,16 +48,12 @@ class TestFileRoutes:
         )
         deleted_data.status_code == 401
         for q in data["answer"]:
-            answer = get_answer_by_question(
-                session=session, question=q["question"]
-            )
+            answer = get_answer_by_question(session=session, question=q["question"])
             for a in answer:
                 assert a.data != 1
 
     @pytest.mark.asyncio
-    async def test_bulk_delete_data(
-        self, app: FastAPI, client: AsyncClient
-    ) -> None:
+    async def test_bulk_delete_data(self, app: FastAPI, client: AsyncClient) -> None:
         data = await client.get(
             app.url_path_for("data:get", form_id=1),
             headers={"Authorization": f"Bearer {account.token}"},

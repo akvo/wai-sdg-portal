@@ -108,9 +108,7 @@ def set_original(q, options, multiple_option):
 
 def set_answer_type_list(q):
     if q["id"] in [int(s) for s in skip_answer_list_type]:
-        option = list(
-            filter(lambda x: int(x["id"]) == q["id"], answer_list_type)
-        )
+        option = list(filter(lambda x: int(x["id"]) == q["id"], answer_list_type))
         return {
             "id": int(q["id"]),
             "question": q["question"],
@@ -130,9 +128,7 @@ def set_options(q):
         if "option" not in q["options"]:
             return [], False
         if type(q["options"]["option"]) == dict:
-            options.append(
-                {"name": str(q["options"]["option"]["text"]), "color": None}
-            )
+            options.append({"name": str(q["options"]["option"]["text"]), "color": None})
         else:
             for o in q["options"]["option"]:
                 options.append({"name": str(o["text"]), "color": None})
@@ -170,10 +166,7 @@ def generate_form(form, child=False):
             question = set_answer_type_list(question)
             # END NEPAL
             if adm:
-                if (
-                    q["id"] in source["administration"]
-                    or q["type"] == "cascade"
-                ):
+                if q["id"] in source["administration"] or q["type"] == "cascade":
                     administration.update(
                         {
                             "question": "location",

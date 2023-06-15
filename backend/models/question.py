@@ -132,9 +132,7 @@ class Question(Base):
 
     @property
     def to_definition(self):
-        options = (
-            [options.name for options in self.option] if self.option else False
-        )
+        options = [options.name for options in self.option] if self.option else False
         return {
             "id": self.id,
             "name": self.name,

@@ -17,7 +17,5 @@ class ViewData(Base):
         opt_data = []
         for o in opt:
             d = o.split("||")
-            opt_data.append(
-                {"id": self.data, "question": d[0], "answer": d[1]}
-            )
+            opt_data.append({"id": self.data, "question": d[0], "answer": d[1]})
         return opt_data

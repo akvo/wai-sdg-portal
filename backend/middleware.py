@@ -21,10 +21,12 @@ class CustomAuth0User(Auth0User):
     email: Optional[str] = Field(None, alias="grand-type")
 
 
-auth = Auth0(domain=AUTH0_DOMAIN,
-             api_audience=AUTH0_AUDIENCE,
-             auth0user_model=CustomAuth0User,
-             scopes={'read:email': 'test'})
+auth = Auth0(
+    domain=AUTH0_DOMAIN,
+    api_audience=AUTH0_AUDIENCE,
+    auth0user_model=CustomAuth0User,
+    scopes={"read:email": "test"},
+)
 
 
 def get_token(generate=False):

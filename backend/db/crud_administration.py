@@ -26,11 +26,7 @@ def get_parent_administration(
             )
             .all()
         )
-    return (
-        session.query(Administration)
-        .filter(Administration.parent.is_(None))
-        .all()
-    )
+    return session.query(Administration).filter(Administration.parent.is_(None)).all()
 
 
 def get_administration(session: Session) -> List[Administration]:
@@ -38,9 +34,7 @@ def get_administration(session: Session) -> List[Administration]:
 
 
 def get_administration_by_id(session: Session, id: int) -> Administration:
-    return (
-        session.query(Administration).filter(Administration.id == id).first()
-    )
+    return session.query(Administration).filter(Administration.id == id).first()
 
 
 def get_administration_by_name(
@@ -113,9 +107,7 @@ def get_administration_name(
     )
     name.append(administration.name)
     if administration.parent:
-        get_administration_name(
-            session=session, id=administration.parent, name=name
-        )
+        get_administration_name(session=session, id=administration.parent, name=name)
     return ", ".join(name)
 
 
@@ -148,9 +140,7 @@ def get_all_childs(
             if not has_childs and len(c.children):
                 has_childs = True
         if has_childs:
-            current = get_all_childs(
-                session=session, current=current, parents=current
-            )
+            current = get_all_childs(session=session, current=current, parents=current)
         else:
             current = parents + current
     return current

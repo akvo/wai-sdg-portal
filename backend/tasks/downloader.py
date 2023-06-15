@@ -42,9 +42,7 @@ def download(session: Session, jobs: dict, file: str):
         options=info["options"],
     )
     df = pd.DataFrame(data)
-    questions = crud_question.get_excel_headers(
-        session=session, form=info["form_id"]
-    )
+    questions = crud_question.get_excel_headers(session=session, form=info["form_id"])
     for q in questions:
         if q not in list(df):
             df[q] = ""
@@ -58,12 +56,8 @@ def download(session: Session, jobs: dict, file: str):
         {"context": "Administration", "value": administration_name},
     ]
     for inf in info["tags"]:
-        context.append(
-            {"context": "Filters", "value": inf["q"] + ": " + inf["o"]}
-        )
-    context = (
-        pd.DataFrame(context).groupby(["context", "value"], sort=False).first()
-    )
+        context.append({"context": "Filters", "value": inf["q"] + ": " + inf["o"]})
+    context = pd.DataFrame(context).groupby(["context", "value"], sort=False).first()
     context.to_excel(writer, sheet_name="context", startrow=0, header=False)
     workbook = writer.book
     worksheet = writer.sheets["context"]

@@ -34,9 +34,7 @@ def get_jmp_table_view(session: Session, data: list, configs: list):
     return data
 
 
-def get_jmp_overview(
-    session: Session, form: int, data: list, name: str = None
-):
+def get_jmp_overview(session: Session, form: int, data: list, name: str = None):
     try:
         ids = [d["id"] for d in data]
         gcs = get_categories(session=session, form=form, name=name, data=ids)

@@ -117,17 +117,11 @@ class Data(Base):
             "name": self.name,
             "form": self.form,
             "administration": self.administration,
-            "geo": {"lat": self.geo[0], "long": self.geo[1]}
-            if self.geo
-            else None,
+            "geo": {"lat": self.geo[0], "long": self.geo[1]} if self.geo else None,
             "created_by": self.created_by_user.name,
-            "updated_by": self.updated_by_user.name
-            if self.updated_by
-            else None,
+            "updated_by": self.updated_by_user.name if self.updated_by else None,
             "created": self.created.strftime("%B %d, %Y"),
-            "updated": self.updated.strftime("%B %d, %Y")
-            if self.updated
-            else None,
+            "updated": self.updated.strftime("%B %d, %Y") if self.updated else None,
             "answer": [a.formatted for a in self.answer],
         }
 
@@ -156,13 +150,9 @@ class Data(Base):
             "administration": self.administration_detail.name,
             "geolocation": f"{self.geo[0], self.geo[1]}" if self.geo else None,
             "created_by": self.created_by_user.name,
-            "updated_by": self.updated_by_user.name
-            if self.updated_by
-            else None,
+            "updated_by": self.updated_by_user.name if self.updated_by else None,
             "created_at": self.created.strftime("%B %d, %Y"),
-            "updated_at": self.updated.strftime("%B %d, %Y")
-            if self.updated
-            else None,
+            "updated_at": self.updated.strftime("%B %d, %Y") if self.updated else None,
         }
         for a in self.answer:
             data.update(a.to_data_frame)

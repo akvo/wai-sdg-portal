@@ -59,9 +59,7 @@ def check_project(
     if question:
         external = [q for q in question if q not in form_question]
     if len(external):
-        question = crud_question.get_question_by_id(
-            session=session, id=external[0]
-        )
+        question = crud_question.get_question_by_id(session=session, id=external[0])
         if len(question.option):
             question = int(question.option[0].name)
             for d in data:
@@ -170,9 +168,7 @@ async def add(
     names = []
     for a in answers:
         q = crud_question.get_question_by_id(session=session, id=a["question"])
-        answer = Answer(
-            question=q.id, created_by=user.id, created=datetime.now()
-        )
+        answer = Answer(question=q.id, created_by=user.id, created=datetime.now())
         if q.type == QuestionType.administration:
             check_access(a["value"][0], user)
             if len(a["value"]):
@@ -238,9 +234,7 @@ def get_by_id(
 ):
     data = crud.get_data_by_id(session=session, id=id)
     if not data:
-        raise HTTPException(
-            status_code=404, detail="data {} is not found".format(id)
-        )
+        raise HTTPException(status_code=404, detail="data {} is not found".format(id))
     return data.serialize
 
 

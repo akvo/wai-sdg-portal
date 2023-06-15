@@ -135,15 +135,11 @@ def get_form_definition(
         # order question by question order
         qg["question"] = sorted(qg["question"], key=lambda x: x["order"])
     # order question group by question group order
-    form["question_group"] = sorted(
-        form["question_group"], key=lambda x: x["order"]
-    )
+    form["question_group"] = sorted(form["question_group"], key=lambda x: x["order"])
     administration = crud_administration.get_parent_administration(
         session=session, access=None if user.role == UserRole.admin else access
     )
-    form.update(
-        {"cascade": {"administration": [a.cascade for a in administration]}}
-    )
+    form.update({"cascade": {"administration": [a.cascade for a in administration]}})
     return form
 
 
@@ -182,9 +178,7 @@ def transformJsonForm(session: Session, json_form: dict, edit: bool = False):
             prev_type = q.get("type")
             if edit:
                 find_q = (
-                    session.query(Question)
-                    .filter(Question.id == q.get("id"))
-                    .first()
+                    session.query(Question).filter(Question.id == q.get("id")).first()
                 )
                 is_new_question = False if find_q else True
                 prev_type = find_q.type.value if find_q else prev_type
@@ -216,9 +210,7 @@ def transformJsonForm(session: Session, json_form: dict, edit: bool = False):
             # hint
             if "hint" in q and q.get("hint"):
                 hint = q.get("hint")
-                endpoint = hint.get("endpoint").replace(
-                    str(curr_qid), str(qid)
-                )
+                endpoint = hint.get("endpoint").replace(str(curr_qid), str(qid))
                 hint.update({"endpoint": endpoint})
                 q.update({"hint": hint})
             question.append(q)
@@ -240,13 +232,9 @@ def save_webform(session: Session, json_form: dict, form_id: int = None):
     if form_id:
         # fetch group and question ids from db to detect which deleted
         question_groups = (
-            session.query(QuestionGroup)
-            .filter(QuestionGroup.form == form_id)
-            .all()
+            session.query(QuestionGroup).filter(QuestionGroup.form == form_id).all()
         )
-        questions = (
-            session.query(Question).filter(Question.form == form_id).all()
-        )
+        questions = session.query(Question).filter(Question.form == form_id).all()
         db_question_group_ids = [qg.id for qg in question_groups]
         db_question_ids = [q.id for q in questions]
     # add form
@@ -323,9 +311,7 @@ def save_webform(session: Session, json_form: dict, form_id: int = None):
                 q["type"] = QuestionType.administration
             if form_id:
                 find_q = (
-                    session.query(Question)
-                    .filter(Question.id == q.get("id"))
-                    .first()
+                    session.query(Question).filter(Question.id == q.get("id")).first()
                 )
                 if find_q:
                     question_ids.append(q.get("id"))
@@ -379,12 +365,12 @@ def save_webform(session: Session, json_form: dict, form_id: int = None):
             if qgid not in question_group_ids:
                 deleted_group.append(qgid)
         # delete
-        session.query(Question).filter(
-            Question.id.in_(deleted_question)
-        ).delete(synchronize_session="fetch")
-        session.query(QuestionGroup).filter(
-            QuestionGroup.id.in_(deleted_group)
-        ).delete(synchronize_session="fetch")
+        session.query(Question).filter(Question.id.in_(deleted_question)).delete(
+            synchronize_session="fetch"
+        )
+        session.query(QuestionGroup).filter(QuestionGroup.id.in_(deleted_group)).delete(
+            synchronize_session="fetch"
+        )
         session.commit()
         session.flush()
 
@@ -507,9 +493,7 @@ async def add_webform(
         if INSTANCE_NAME != "wai-demo":
             return Response(status_code=HTTPStatus.METHOD_NOT_ALLOWED.value)
         json_form = transformJsonForm(session=session, json_form=payload)
-    background_tasks.add_task(
-        save_webform, session=session, json_form=json_form
-    )
+    background_tasks.add_task(save_webform, session=session, json_form=json_form)
     return json_form
 
 
@@ -532,9 +516,7 @@ async def update_webform(
     else:
         if INSTANCE_NAME != "wai-demo":
             return Response(status_code=HTTPStatus.METHOD_NOT_ALLOWED.value)
-        json_form = transformJsonForm(
-            session=session, json_form=payload, edit=True
-        )
+        json_form = transformJsonForm(session=session, json_form=payload, edit=True)
     background_tasks.add_task(
         save_webform, session=session, json_form=json_form, form_id=id
     )

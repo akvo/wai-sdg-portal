@@ -47,10 +47,7 @@ with open(source_geo, "r") as geo:
     ob = geo["objects"]
     ob_name = list(ob)[0]
 parent_administration = set(
-    [
-        d[levels[-2]]
-        for d in [p["properties"] for p in ob[ob_name]["geometries"]]
-    ]
+    [d[levels[-2]] for d in [p["properties"] for p in ob[ob_name]["geometries"]]]
 )
 forms = crud_form.get_form(session=session)
 forms = [f.id for f in forms]
@@ -135,14 +132,10 @@ for form in forms:
         names = []
         iloc = i % (len(sample_geo) - 1)
         geo = sample_geo[iloc]
-        administration = get_random_administration(
-            fake, session, adm_name=geo["name"]
-        )
+        administration = get_random_administration(fake, session, adm_name=geo["name"])
         project_id = None
         if form.id in child_forms:
-            project_id = fake.random_choices(
-                elements=answer_options, length=1
-            )[0]
+            project_id = fake.random_choices(elements=answer_options, length=1)[0]
             administration = crud_data.get_data_by_id(
                 session=session, id=project_id.data
             )
@@ -169,9 +162,7 @@ for form in forms:
                     fa = fake.random_int(min=0, max=len(q.option) - 1)
                     answer.options = [q.option[fa].name]
                     if q.id == 557700349:
-                        answer.options = get_odf_value(
-                            status_verified, not_triggered
-                        )
+                        answer.options = get_odf_value(status_verified, not_triggered)
                     value = True
                 if q.type == QuestionType.answer_list:
                     parent_data = crud_data.get_data_by_id(

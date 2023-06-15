@@ -26,8 +26,7 @@ def generate_excel_columns():
     n = 1
     while True:
         yield from (
-            "".join(group)
-            for group in itertools.product(ascii_uppercase, repeat=n)
+            "".join(group) for group in itertools.product(ascii_uppercase, repeat=n)
         )
         n += 1
 
@@ -35,9 +34,7 @@ def generate_excel_columns():
 def validate_header_names(header, col, header_names):
     default = {"error": ExcelError.header, "cell": col}
     if "Unnamed:" in header:
-        default.update(
-            {"error_message": ValidationText.header_name_missing.value}
-        )
+        default.update({"error_message": ValidationText.header_name_missing.value})
         return default
     if "|" not in header:
         default.update(
@@ -71,17 +68,13 @@ def validate_number(answer, question):
                     return {
                         "error_message": ValidationText.numeric_max_rule.value.replace(
                             "--question--", qname
-                        ).replace(
-                            "--rule--", str(rule[r])
-                        )
+                        ).replace("--rule--", str(rule[r]))
                     }
                 if r == "min" and float(rule[r]) > float(answer):
                     return {
                         "error_message": ValidationText.numeric_min_rule.value.replace(
                             "--question--", qname
-                        ).replace(
-                            "--rule--", str(rule[r])
-                        )
+                        ).replace("--rule--", str(rule[r]))
                     }
     except Exception as e:
         write_log("ERROR", e)
@@ -116,9 +109,7 @@ def validate_administration(session, answer, adm):
         return {
             "error_message": ValidationText.administration_not_part_of.value.replace(
                 "--answer--", answer
-            ).replace(
-                "--administration--", adm["name"]
-            )
+            ).replace("--administration--", adm["name"])
         }
     adm_match = crud_administration.verify_administration(
         session=session, long_name=answer
@@ -173,17 +164,12 @@ def validate_option(options, answer):
     return False
 
 
-def validate_row_data(
-    session, col, answer, question, adm, valid_deps, answer_deps
-):
+def validate_row_data(session, col, answer, question, adm, valid_deps, answer_deps):
     default = {"error": ExcelError.value, "cell": col}
     invalid_deps = question.dependency and not valid_deps
     if (answer == answer) and invalid_deps and answer_deps:
         error_deps = [
-            (
-                f"question: {ad['id']} with {ad['answer']} in cell"
-                f" {ad['cell']}"
-            )
+            (f"question: {ad['id']} with {ad['answer']} in cell" f" {ad['cell']}")
             for ad in answer_deps
         ]
         error_msg = f"{question.name} should be empty because you answered "
@@ -195,9 +181,7 @@ def validate_row_data(
             question.required and question.dependency and valid_deps
         ):
             default.update(
-                {
-                    "error_message": f"{question.name} {ValidationText.is_required.value}"
-                }
+                {"error_message": f"{question.name} {ValidationText.is_required.value}"}
             )
             return default
         return False
@@ -241,15 +225,11 @@ def dependency_checker(qs, answered, index):
     answer_deps = []
     for q in qs:
         fa = list(
-            filter(
-                lambda a: a["id"] == q["id"] and a["index"] == index, answered
-            )
+            filter(lambda a: a["id"] == q["id"] and a["index"] == index, answered)
         )
         if len(fa):
             answer_deps.append(fa[0])
-            intersection = list(
-                set([fa[0]["answer"]]).intersection(q["options"])
-            )
+            intersection = list(set([fa[0]["answer"]]).intersection(q["options"]))
             if len(intersection):
                 matched.append(intersection[0])
     valid_deps = len(matched) == len(qs)
@@ -273,9 +253,7 @@ def validate(session: Session, form: int, administration: int, file: str):
                         "sheets": ",".join(sheet_names),
                     }
                 ]
-        questions = crud_question.get_excel_question(
-            session=session, form=form
-        )
+        questions = crud_question.get_excel_question(session=session, form=form)
         header_names = [q.to_excel_header for q in questions.all()]
         df = pd.read_excel(file, sheet_name="data")
         if df.shape[0] == 0:
@@ -286,9 +264,7 @@ def validate(session: Session, form: int, administration: int, file: str):
                 }
             ]
         excel_head = {}
-        excel_cols = list(
-            itertools.islice(generate_excel_columns(), df.shape[1])
-        )
+        excel_cols = list(itertools.islice(generate_excel_columns(), df.shape[1]))
         for index, header in enumerate(list(df)):
             excel_head.update({excel_cols[index]: header})
         header_error = []

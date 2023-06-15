@@ -63,9 +63,7 @@ def run_seed(session: Session, jobs: dict):
         )
         email.send
     time.sleep(3)
-    jobs = crud.update(
-        session=session, id=jobs["id"], status=status, info=info
-    )
+    jobs = crud.update(session=session, id=jobs["id"], status=status, info=info)
     print_log_done(f"SEEDER: {status}", start_time)
 
 
@@ -84,9 +82,7 @@ def run_validate(session: Session, jobs: dict):
     )
     if len(error):
         error_list = pd.DataFrame(error)
-        error_list = error_list[
-            list(filter(lambda x: x != "error", list(error_list)))
-        ]
+        error_list = error_list[list(filter(lambda x: x != "error", list(error_list)))]
         error_file = f"./tmp/error-{id}.csv"
         error_list = error_list.to_csv(error_file, index=False)
         # error email
@@ -184,8 +180,6 @@ def do_task(session: Session, jobs):
         if jobs["type"] == JobType.download:
             run_download(session=session, jobs=jobs)
     except Exception as e:
-        jobs = crud.update(
-            session=session, id=jobs["id"], status=JobStatus.failed
-        )
+        jobs = crud.update(session=session, id=jobs["id"], status=JobStatus.failed)
         write_log("ERROR", str(e))
     return True

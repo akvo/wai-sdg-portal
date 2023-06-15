@@ -24,9 +24,7 @@ def generate_administration_sheet(session: Session):
     df["path_id"] = df.id.apply(get_parent_id)
     df["parent"] = df.apply(
         lambda x: [
-            dict_name[id_]
-            for id_ in x.path_id
-            if not (id_ == x.id or id_ == 0)
+            dict_name[id_] for id_ in x.path_id if not (id_ == x.id or id_ == 0)
         ],
         axis=1,
     )
@@ -48,18 +46,14 @@ def generate_definition_sheet(session: Session, form: int):
 def generate_excel_template(session: Session, form: int):
     form = crud_form.get_form_by_id(session=session, id=form)
     questions = crud_question.get_excel_question(session=session, form=form.id)
-    data = pd.DataFrame(
-        columns=[q.to_excel_header for q in questions], index=[0]
-    )
+    data = pd.DataFrame(columns=[q.to_excel_header for q in questions], index=[0])
     form_name = humps.decamelize(form.name)
     filename = f"{form.id}-{form_name}"
     filepath = f"./tmp/{filename}.xlsx"
     if os.path.exists(filepath):
         os.remove(filepath)
     writer = pd.ExcelWriter(filepath, engine="xlsxwriter")
-    data.to_excel(
-        writer, sheet_name="data", startrow=1, header=False, index=False
-    )
+    data.to_excel(writer, sheet_name="data", startrow=1, header=False, index=False)
     workbook = writer.book
     worksheet = writer.sheets["data"]
     header_format = workbook.add_format(
@@ -90,9 +84,9 @@ def generate_excel_template(session: Session, form: int):
     cascade = f"./source/{source_path}/data/cascade-template.csv"
     if not os.path.exists(cascade):
         cascade_file = crud_administration.get_administration(session=session)
-        cascade_file = pd.DataFrame(
-            [c.with_parent_name for c in cascade_file]
-        ).to_csv(cascade, index=False)
+        cascade_file = pd.DataFrame([c.with_parent_name for c in cascade_file]).to_csv(
+            cascade, index=False
+        )
     administration = pd.read_csv(cascade)
     administration["administration"] = (
         administration["parent"] + "|" + administration["name"]

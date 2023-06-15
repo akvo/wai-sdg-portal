@@ -27,13 +27,9 @@ for file in sorted(files):
     df = df.replace(np.nan, None)
     qg_length = len(data.get("question_groups"))
     q_length = len(df.index)
-    opt_length = df["question_options"].apply(
-        lambda row: len(row) if row else 0
-    )
+    opt_length = df["question_options"].apply(lambda row: len(row) if row else 0)
     opt_length = sum(list(opt_length))
-    df["qgid"] = df.apply(
-        lambda row: int(row["id"]) + int(row.name) + 1, axis=1
-    )
+    df["qgid"] = df.apply(lambda row: int(row["id"]) + int(row.name) + 1, axis=1)
     df["qid"] = df.apply(
         lambda row: int(row["qgid"]) + int(row.name) + 1 + qg_length
         if not row["question_id"]
@@ -59,9 +55,7 @@ for file in sorted(files):
                     opt["id"] = opt_id
             if q.get("id"):
                 continue
-            find_q = df.loc[df["question_question"] == q.get("question")].head(
-                1
-            )
+            find_q = df.loc[df["question_question"] == q.get("question")].head(1)
             q["id"] = int(find_q["qid"].values[0])
     # write json
     with open(f"{file_path}{file}", "w") as json_file:

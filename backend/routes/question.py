@@ -43,9 +43,7 @@ class PostQueryParams:
             default=0,
             description="Minimum number for number question type, default: 0",
         ),
-        max: int = Query(
-            None, description="Max number for number question type"
-        ),
+        max: int = Query(None, description="Max number for number question type"),
         form: int = Query(
             None, description="Existing form id, create if you don't have one"
         ),
@@ -100,9 +98,7 @@ def add(
             session=session, dependency=dependency
         )
         if len(dependency_errors):
-            raise HTTPException(
-                status_code=404, detail=", ".join(dependency_errors)
-            )
+            raise HTTPException(status_code=404, detail=", ".join(dependency_errors))
     if params.type == QuestionType.number:
         if params.min is not None:
             has_rule = True

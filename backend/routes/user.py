@@ -65,9 +65,7 @@ def add(
         manage_form_passcode=manage_form_passcode,
     )
     # send email to admin
-    organisation = get_organisation_by_id(
-        session=session, id=user.organisation
-    )
+    organisation = get_organisation_by_id(session=session, id=user.organisation)
     context = f"""
                 <table border="1">
                     <tr>
@@ -81,9 +79,7 @@ def add(
                 </table>
             """
     recipient = crud.get_all_admin_recipient(session=session)
-    email = Email(
-        recipients=recipient, type=MailTypeEnum.user_reg_new, context=context
-    )
+    email = Email(recipients=recipient, type=MailTypeEnum.user_reg_new, context=context)
     email.send
     return user.serialize
 
@@ -191,9 +187,7 @@ def update_by_id(
     old_user = crud.get_user_by_id(session=session, id=id)
     old_active = old_user.active
     # get administration value
-    access_list = [
-        get_administration_by_id(session=session, id=a) for a in access
-    ]
+    access_list = [get_administration_by_id(session=session, id=a) for a in access]
     access_list = [a.name for a in access_list]
     user_access = ", ".join(access_list)
     name = ""

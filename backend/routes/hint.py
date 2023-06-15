@@ -29,16 +29,10 @@ class HintResponse(BaseModel):
     summary="get hint for requested question",
     tags=["Dev"],
 )
-def get(
-    req: Request, question_id: int, session: Session = Depends(get_session)
-):
+def get(req: Request, question_id: int, session: Session = Depends(get_session)):
     mean, q1, q2, q3, maxs, mins = None, None, None, None, None, None
-    question = (
-        session.query(Question).filter(Question.id == question_id).first()
-    )
-    answers = (
-        session.query(Answer).filter(Answer.question == question_id).all()
-    )
+    question = session.query(Question).filter(Question.id == question_id).first()
+    answers = session.query(Answer).filter(Answer.question == question_id).all()
     if question.type == QuestionType.number and answers:
         values = [answer.value for answer in answers]
         mean = f"Average value is {round(np.mean(values), 2)}"

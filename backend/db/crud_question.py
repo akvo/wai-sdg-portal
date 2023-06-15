@@ -142,9 +142,7 @@ def update_question(
         session.query(Option).filter(Option.question == question.id).delete()
     if option:
         for o in option:
-            find_option = (
-                session.query(Option).filter(Option.id == o.get("id")).first()
-            )
+            find_option = session.query(Option).filter(Option.id == o.get("id")).first()
             if not find_option:
                 opt = generateOptionObj(obj=o)
                 question.option.append(opt)
@@ -165,9 +163,7 @@ def update_question(
     return question
 
 
-def get_question(
-    session: Session, form: Optional[int] = None
-) -> List[QuestionDict]:
+def get_question(session: Session, form: Optional[int] = None) -> List[QuestionDict]:
     if form:
         return session.query(Question).filter(Question.form == form).all()
     return session.query(Question).all()
@@ -181,9 +177,7 @@ def get_question_by_id(session: Session, id: int) -> QuestionDict:
     return session.query(Question).filter(Question.id == id).first()
 
 
-def get_question_by_name(
-    session: Session, form: int, name: str
-) -> QuestionDict:
+def get_question_by_name(session: Session, form: int, name: str) -> QuestionDict:
     name = name.replace("_", " ").lower().strip()
     question = (
         session.query(Question)

@@ -14,9 +14,7 @@ sys.path.append("..")
 
 
 class Acc:
-    def __init__(
-        self, verified: bool = False, email: str = None, name: str = None
-    ):
+    def __init__(self, verified: bool = False, email: str = None, name: str = None):
         self.exp_date = (datetime.now() + timedelta(days=30)).timestamp()
         self.data = {
             "email": email if email else "support@akvo.org",
@@ -120,9 +118,7 @@ class TestAuthorizationSetup:
             }
         ]
         # register as new user
-        new_account = Acc(
-            verified=True, email="john_doe@mail.com", name="John Doe"
-        )
+        new_account = Acc(verified=True, email="john_doe@mail.com", name="John Doe")
         res = await client.post(
             app.url_path_for("user:register"),
             params={

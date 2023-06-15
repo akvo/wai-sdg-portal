@@ -45,9 +45,7 @@ def post(
     credentials: credentials = Depends(security),
 ):
     verify_admin(req.state.authenticated, session)
-    question = crud_question.get_question_by_id(
-        session=session, id=question_id
-    )
+    question = crud_question.get_question_by_id(session=session, id=question_id)
     if not question:
         raise HTTPException(
             status_code=404, detail=f"Question id {question_id} is not found"

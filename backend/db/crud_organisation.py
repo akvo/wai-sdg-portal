@@ -24,9 +24,7 @@ def update_organisation(
     name: Optional[str] = None,
     type: Optional[OrganisationType] = None,
 ) -> None:
-    organisation = (
-        session.query(Organisation).filter(Organisation.id == id).first()
-    )
+    organisation = session.query(Organisation).filter(Organisation.id == id).first()
     if name:
         organisation.name = name
     if type:

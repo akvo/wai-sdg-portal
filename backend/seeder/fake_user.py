@@ -17,13 +17,9 @@ if len(sys.argv) == 3:
     session = SessionLocal()
     crud_user.delete_non_admin_user(session=session)
     fake = Faker()
-    administration = crud_administration.get_parent_administration(
-        session=session
-    )
+    administration = crud_administration.get_parent_administration(session=session)
     administration = [a.id for a in administration]
-    org = crud_organisation.get_organisation_by_name(
-        session=session, name=sys.argv[2]
-    )
+    org = crud_organisation.get_organisation_by_name(session=session, name=sys.argv[2])
     if not org:
         org = crud_organisation.add_organisation(
             session=session, name=sys.argv[2], type="iNGO"
@@ -41,9 +37,7 @@ if len(sys.argv) == 3:
         )
         if active:
             access = []
-            admin_access = set(
-                fake.random_int(min=1, max=3) for i in administration
-            )
+            admin_access = set(fake.random_int(min=1, max=3) for i in administration)
             admin_access = list(admin_access)
             for a in admin_access:
                 access.append(Access(user=user.id, administration=a))

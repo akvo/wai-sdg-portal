@@ -154,16 +154,12 @@ def get_aggregated_jmp_chart_data(
         x.simplify_serialize_with_children for x in parent_administration
     ]
     if administration:
-        fp = list(
-            filter(lambda a: administration == a["id"], parent_administration)
-        )
+        fp = list(filter(lambda a: administration == a["id"], parent_administration))
         if len(fp):
             parent_administration = [
                 {"id": cd, "children": [cd]} for cd in fp[0]["children"]
             ]
-    adm_ids = (
-        [pa["id"] for pa in parent_administration] if administration else None
-    )
+    adm_ids = [pa["id"] for pa in parent_administration] if administration else None
     paginated = get_data(
         session=session,
         form=form_id,
@@ -181,9 +177,7 @@ def get_aggregated_jmp_chart_data(
         }
         for d in paginated["data"]
     ]
-    data = get_jmp_overview(
-        session=session, form=form_id, data=dataset, name=type_name
-    )
+    data = get_jmp_overview(session=session, form=form_id, data=dataset, name=type_name)
     data = [
         {
             "id": d["id"],
@@ -241,9 +235,7 @@ def get_overviews_chart_and_info_data(
     summary="get chart by name",
     tags=["Charts"],
 )
-def get_by_name(
-    req: Request, name: str, session: Session = Depends(get_session)
-):
+def get_by_name(req: Request, name: str, session: Session = Depends(get_session)):
     chart = Charts.get[name]
     value = get_chart_value(session=session, chart=chart)
     return value

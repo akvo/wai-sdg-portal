@@ -151,9 +151,7 @@ class TestWebformEditorRoutes:
                                     "text": "Pertanyaan ini akan untuk laki-laki",
                                 },
                             },
-                            "dependency": [
-                                {"id": 903430557, "options": ["Male"]}
-                            ],
+                            "dependency": [{"id": 903430557, "options": ["Male"]}],
                         },
                         {
                             "id": 903430561,
@@ -362,9 +360,7 @@ class TestWebformEditorRoutes:
                             "type": "text",
                             "required": False,
                             "rule": None,
-                            "dependency": [
-                                {"id": 903430557, "options": ["Male"]}
-                            ],
+                            "dependency": [{"id": 903430557, "options": ["Male"]}],
                             "tooltip": {
                                 "text": "This question is for male",
                                 "translations": {
@@ -508,9 +504,7 @@ class TestWebformEditorRoutes:
                             "name": "Name",
                             "type": "text",
                             "required": True,
-                            "translations": [
-                                {"language": "id", "name": "Nama"}
-                            ],
+                            "translations": [{"language": "id", "name": "Nama"}],
                         },
                         {
                             "id": 903430557,
@@ -673,9 +667,7 @@ class TestWebformEditorRoutes:
                             "rule": None,
                             "dependency": None,
                             "tooltip": None,
-                            "translations": [
-                                {"language": "id", "name": "Nama"}
-                            ],
+                            "translations": [{"language": "id", "name": "Nama"}],
                             "api": None,
                             "option": [],
                         },

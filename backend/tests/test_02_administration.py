@@ -31,9 +31,7 @@ class TestAdministrationRoute:
         )
         data = data.rename(columns={"UNIT_NAME": "name"})[["name", "parent"]]
         results = (
-            parents[["name", "parent"]]
-            .append(data)
-            .reset_index()[["name", "parent"]]
+            parents[["name", "parent"]].append(data).reset_index()[["name", "parent"]]
         )
         results["id"] = results.index + 1
         results["long_name"] = results.apply(

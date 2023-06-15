@@ -122,9 +122,7 @@ def record(answers, form, user):
             )
             if not q:
                 print(a)
-            answer = Answer(
-                question=q.id, created_by=user.id, created=datetime.now()
-            )
+            answer = Answer(question=q.id, created_by=user.id, created=datetime.now())
             if q.type == QuestionType.administration:
                 administration = answers[a]
                 answer.value = answers[a]
@@ -136,9 +134,7 @@ def record(answers, form, user):
             if q.type == QuestionType.geo:
                 if answers[a]:
                     geo = answers[a]
-                    answer.text = ("{}|{}").format(
-                        answers[a][0], answers[a][1]
-                    )
+                    answer.text = ("{}|{}").format(answers[a][0], answers[a][1])
                 else:
                     valid = False
             if q.type == QuestionType.text:
@@ -207,8 +203,7 @@ for sheet in sheets:
         if geo:
             data["geolocation"] = data.apply(
                 lambda x: [x["latitude"], x["longitude"]]
-                if x["latitude"] == x["latitude"]
-                and x["longitude"] == x["longitude"]
+                if x["latitude"] == x["latitude"] and x["longitude"] == x["longitude"]
                 else None,
                 axis=1,
             )

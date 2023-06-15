@@ -16,12 +16,7 @@ def add(
 
 
 def get(session: Session, user: int) -> List[LogDict]:
-    log = (
-        session.query(Log)
-        .filter(Log.user == user)
-        .order_by(desc(Log.id))
-        .all()
-    )
+    log = session.query(Log).filter(Log.user == user).order_by(desc(Log.id)).all()
     return [x.response for x in log]
 
 

@@ -52,9 +52,7 @@ def get_chart_data(
     if stack:
         type = "BARSTACK"
         answerStack = aliased(Answer)
-        answer = session.query(
-            Answer.options, answerStack.options, func.count()
-        )
+        answer = session.query(Answer.options, answerStack.options, func.count())
         # filter
         answer = answer.filter(Answer.data.in_(data))
         answer = answer.join((answerStack, Answer.data == answerStack.data))
@@ -74,10 +72,7 @@ def get_chart_data(
             counter = collections.Counter()
             for d in child:
                 counter.update(d)
-            child = [
-                {"name": key, "value": val}
-                for key, val in dict(counter).items()
-            ]
+            child = [{"name": key, "value": val} for key, val in dict(counter).items()]
             temp.append({"group": k, "child": child})
         answer = temp
     else:
@@ -148,9 +143,7 @@ def get_jmp_chart_data(
             )
         for c in child_group:
             percent = c["count"] / sum([x["count"] for x in list(child_group)])
-            this_score = list(
-                filter(lambda s: s["name"] == c["option"], scores)
-            )
+            this_score = list(filter(lambda s: s["name"] == c["option"], scores))
             if len(this_score):
                 score += this_score[0]["score"] * percent
             c.update({"percent": percent * 100})
@@ -200,9 +193,7 @@ def get_pie_chart_data(
             else None
         )
         option = list(
-            filter(
-                lambda x: x["name"].lower() == a.options[0].lower(), options
-            )
+            filter(lambda x: x["name"].lower() == a.options[0].lower(), options)
         )
         if len(option):
             if option[0]["color"]:
@@ -229,9 +220,7 @@ def get_overviews_visualization(
         .all()
     )
 
-    findQuestion = crud_question.get_question_by_id(
-        session=session, id=question
-    )
+    findQuestion = crud_question.get_question_by_id(session=session, id=question)
     options = (
         session.query(Option.name, Option.color)
         .filter(Option.question == question)
@@ -250,9 +239,7 @@ def get_overviews_visualization(
             if opt.lower() in default_color_config
             else None
         )
-        findOption = list(
-            filter(lambda x: x["name"].lower() == opt.lower(), options)
-        )
+        findOption = list(filter(lambda x: x["name"].lower() == opt.lower(), options))
         if len(findOption):
             if findOption[0]["color"]:
                 color = findOption[0]["color"]

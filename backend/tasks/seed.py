@@ -78,9 +78,7 @@ def save(session: Session, user: int, form: int, dp: dict, qs: dict):
                 names.append(aw)
         elif q.type == QuestionType.date:
             answer.text = (
-                aw.strftime("%Y-%m-%d")
-                if isinstance(aw, pd.Timestamp)
-                else str(aw)
+                aw.strftime("%Y-%m-%d") if isinstance(aw, pd.Timestamp) else str(aw)
             )
         elif q.type == QuestionType.number:
             try:
@@ -114,13 +112,9 @@ def seed(session: Session, file: str, user: int, form: int):
         df = pd.read_excel(file, sheet_name="data")
         questions = {
             q.id: q
-            for q in crud_question.get_question_by_form_id(
-                session=session, fid=form
-            )
+            for q in crud_question.get_question_by_form_id(session=session, fid=form)
         }
-        df = df.rename(
-            columns={d: int(d.split("|")[0]) for d in list(df.columns)}
-        )
+        df = df.rename(columns={d: int(d.split("|")[0]) for d in list(df.columns)})
         total_data = 0
         for i, datapoint in enumerate(df.to_dict("records")):
             save(

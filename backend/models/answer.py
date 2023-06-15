@@ -15,17 +15,13 @@ from db.connection import Base
 
 class AnswerDict(TypedDict):
     question: int
-    value: Union[
-        int, float, str, bool, dict, List[str], List[int], List[float], None
-    ]
+    value: Union[int, float, str, bool, dict, List[str], List[int], List[float], None]
 
 
 class AnswerDictWithHistory(TypedDict):
     history: bool
     question: int
-    value: Union[
-        int, str, bool, dict, List[str], List[int], List[float], float, None
-    ]
+    value: Union[int, str, bool, dict, List[str], List[int], List[float], float, None]
 
 
 class Answer(Base):
