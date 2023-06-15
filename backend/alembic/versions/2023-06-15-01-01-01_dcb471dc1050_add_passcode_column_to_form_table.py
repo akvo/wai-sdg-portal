@@ -1,8 +1,8 @@
 """add_passcode_column_to_form_table
 
 Revision ID: dcb471dc1050
-Revises: f2f0ac233521
-Create Date: 2023-01-05 08:34:18.990750
+Revises: 7402b7f0738c
+Create Date: 2023-06-15 01:01:01.00
 
 """
 from alembic import op
@@ -11,7 +11,7 @@ import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
 revision = 'dcb471dc1050'
-down_revision = 'f2f0ac233521'
+down_revision = '7402b7f0738c'
 branch_labels = None
 depends_on = None
 
