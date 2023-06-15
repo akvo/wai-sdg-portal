@@ -26,6 +26,7 @@ Welcome to WAI SDG Portal documentation!
 
    developer-install
    developer-database-seeder
+   developer-jmp-logic
    tests
    developer-database-schema
    services

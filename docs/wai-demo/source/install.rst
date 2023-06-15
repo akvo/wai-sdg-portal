@@ -158,7 +158,7 @@ Environment Variable Setup
      POSTGRES_PASSWORD=postgres
      WAI_DB_USER=yourname
      WAI_DB_PASSWORD=sUpeRsTr0ngPa**word
-     INSTANCE_NAME=wai-ethiopia
+     INSTANCE_NAME=wai-demo
      AUTH0_DOMAIN=your-domain.eu.auth0.com
      AUTH0_CLIENT_ID=acad34xxxxxxxx
      AUTH0_SECRET=938axxxxxxxxxxx

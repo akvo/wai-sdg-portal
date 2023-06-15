@@ -16,7 +16,7 @@ Environment Setup
     export WAI_AUTH0_SECRET="string"
     export WAI_AUTH0_SPA_DOMAIN="string_url"
     export WAI_AUTH0_SPA_CLIENT_ID="string"
-    export INSTANCE_NAME="wai-demo"
+    export INSTANCE_NAME="wai-ethiopia"
 
 =============
 Start the App
