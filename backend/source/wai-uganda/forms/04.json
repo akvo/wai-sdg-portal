@@ -1498,27 +1498,10 @@
         {
           "order": 56,
           "question": "Are there any components of the protected spring that require total replacement?--other--",
-          "type": "option",
+          "type": "text",
           "meta": false,
           "required": true,
-          "options": [
-            {
-              "name": "all parts",
-              "color": null
-            },
-            {
-              "name": "all parts apart",
-              "color": null
-            },
-            {
-              "name": "all parts has broken down",
-              "color": null
-            },
-            {
-              "name": "floor",
-              "color": null
-            }
-          ],
+          "options": null,
           "id": 140,
           "dependency": [
             {
@@ -1609,7 +1592,7 @@
         {
           "order": 60,
           "question": "Are there any components of the kiosk that require total replacement?--other--",
-          "type": "number",
+          "type": "text",
           "meta": false,
           "required": false,
           "options": null,
@@ -1672,35 +1655,10 @@
         {
           "order": 62,
           "question": "Are there any components of the rainwater harvesting system that require total replacement?--other--",
-          "type": "option",
+          "type": "text",
           "meta": false,
           "required": false,
-          "options": [
-            {
-              "name": "all parts",
-              "color": null
-            },
-            {
-              "name": "tank covers",
-              "color": null
-            },
-            {
-              "name": "gutters and taps should be installed",
-              "color": null
-            },
-            {
-              "name": "gutters & filtration system",
-              "color": null
-            },
-            {
-              "name": "filtration system & gutters",
-              "color": null
-            },
-            {
-              "name": "apron",
-              "color": null
-            }
-          ],
+          "options": null,
           "id": 146,
           "dependency": [
             {
