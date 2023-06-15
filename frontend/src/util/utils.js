@@ -56,3 +56,12 @@ export const query = (obj) =>
     }
     return a;
   }, {});
+
+export const sequentialPromise = async (promises) => {
+  const temp = [];
+  for (const promise of promises) {
+    const res = await promise;
+    temp.push(res);
+  }
+  return temp;
+};

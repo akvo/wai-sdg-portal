@@ -23,6 +23,9 @@ from source.geoconfig import GeoLevels
 from AkvoResponseGrouper.routes import collection_route
 
 INSTANCE_NAME = os.environ["INSTANCE_NAME"]
+SANDBOX_DATA_SOURCE = os.environ.get("SANDBOX_DATA_SOURCE")
+if SANDBOX_DATA_SOURCE:
+    INSTANCE_NAME = SANDBOX_DATA_SOURCE
 CONFIG_NAME = INSTANCE_NAME.replace("-", "_")
 SOURCE_PATH = f"./source/{INSTANCE_NAME}"
 JS_FILE = f"{SOURCE_PATH}/config"

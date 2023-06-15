@@ -7,6 +7,13 @@ pip -q install --cache-dir=.pip -r requirements.txt
 pip check
 
 alembic upgrade head
-akvo-responsegrouper --config "./source/${INSTANCE_NAME}/category.json" --database $(echo $DATABASE_URL | sed 's/-/_/g')
+
+CATEGORIES="./source/${INSTANCE_NAME}/category.json"
+
+if [ -f "${CATEGORIES}" ]; then
+  echo "${CATEGORIES} exists"
+	akvo-responsegrouper --config "./source/${INSTANCE_NAME}/category.json"
+	echo "done"
+fi
 
 uvicorn main:app --reload --port 5000

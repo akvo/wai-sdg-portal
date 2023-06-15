@@ -246,20 +246,20 @@ var page_config = {
       },
       {
         title: "Water",
-        key: 569080377,
+        key: "water",
       },
       {
         title: "Sanitation",
-        key: 569080376,
+        key: "sanitation",
       },
       {
         title: "Hygiene",
-        key: 569080380,
+        key: "hygiene",
       },
     ],
     maps: {
-      shape: { id: 569080377, name: "Water" },
-      marker: { id: 569080377, name: "Water Service Level" },
+      shape: { id: "Water", name: "Water" },
+      marker: { id: "Water", name: "Water Service Level" },
     },
     rows: [
       {
@@ -296,7 +296,7 @@ var page_config = {
     formId: 494780323,
     selectableMarkerDropdown: [
       {
-        id: 569080377,
+        id: "Water",
         name: "Water service level",
         hover: [
           {
@@ -310,7 +310,7 @@ var page_config = {
         ],
       },
       {
-        id: 569080376,
+        id: "Sanitation",
         name: "Sanitation service level",
         hover: [
           {
@@ -324,7 +324,7 @@ var page_config = {
         ],
       },
       {
-        id: 569080380,
+        id: "Hygiene",
         name: "Hygiene service level",
         hover: [
           {
@@ -338,7 +338,7 @@ var page_config = {
         ],
       },
       {
-        id: 569080379,
+        id: "Environmental Cleaning",
         name: "Environmental Cleaning service level",
         hover: [
           {
@@ -352,7 +352,7 @@ var page_config = {
         ],
       },
       {
-        id: 569080378,
+        id: "Waste Management",
         name: "Waste service level",
         hover: [
           {
@@ -376,20 +376,20 @@ var page_config = {
       },
       {
         title: "Water",
-        key: 573020156,
+        key: "water",
       },
       {
         title: "Sanitation",
-        key: 569090236,
+        key: "sanitation",
       },
       {
         title: "Hygiene",
-        key: 573010267,
+        key: "hygiene",
       },
     ],
     maps: {
       shape: {
-        id: 569090236,
+        id: "Sanitation",
         name: "Sanitation Service Level (Basic or higher)",
         // set to true if title of shape legend by calculatedBy value
         isTitleByCalculated: false,
@@ -407,7 +407,7 @@ var page_config = {
         // sanitation / water / hygiene / null (default)
         jmpType: null,
       },
-      marker: { id: 573020156, title: "Water Service Level" },
+      marker: { id: "Water", title: "Water Service Level" },
     },
     formId: 567420165,
     tabs: [
@@ -416,15 +416,15 @@ var page_config = {
         component: "JMP-CHARTS",
         selected: true,
         chartList: [
-          { question: 573020156, name: "Water Service Level" },
-          { question: 569090236, name: "Sanitation Service Level" },
-          { question: 573010267, name: "Hygiene Service Level" },
+          { question: "water", name: "Water Service Level" },
+          { question: "sanitation", name: "Sanitation Service Level" },
+          { question: "hygiene", name: "Hygiene Service Level" },
         ],
       },
     ],
     selectableMarkerDropdown: [
       {
-        id: 573020156,
+        id: "Water",
         name: "Water Service Level",
         hover: [
           { id: 554110154, name: "Village Name" },
@@ -435,7 +435,7 @@ var page_config = {
         ],
       },
       {
-        id: 569090236,
+        id: "Sanitation",
         name: "Sanitation Service Level",
         hover: [
           { id: 554110154, name: "Village Name" },
@@ -446,7 +446,7 @@ var page_config = {
         ],
       },
       {
-        id: 573010267,
+        id: "Hygiene",
         name: "Hygiene Service Level",
         hover: [
           { id: 554110154, name: "Village Name" },
@@ -467,20 +467,20 @@ var page_config = {
       },
       {
         title: "Water",
-        key: 559810275,
+        key: "water",
       },
       {
         title: "Sanitation",
-        key: 571070148,
+        key: "sanitation",
       },
       {
         title: "Hygiene",
-        key: 546580270,
+        key: "hygiene",
       },
     ],
     maps: {
       shape: { id: 561200194, name: "Water Yield" },
-      marker: { id: 559810275, title: "Water service levels" },
+      marker: { id: "Water", title: "Water service levels" },
     },
     rows: [
       {
@@ -517,7 +517,7 @@ var page_config = {
     formId: 551870264,
     selectableMarkerDropdown: [
       {
-        id: 559810275,
+        id: "Water",
         name: "Water service levels",
         hover: [
           {
@@ -531,7 +531,7 @@ var page_config = {
         ],
       },
       {
-        id: 571070148,
+        id: "Sanitation",
         name: "Sanitation service levels",
         hover: [
           {
@@ -545,7 +545,7 @@ var page_config = {
         ],
       },
       {
-        id: 546580270,
+        id: "Hygiene",
         name: "Hygiene service levels",
         hover: [
           {

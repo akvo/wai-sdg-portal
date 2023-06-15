@@ -7,47 +7,52 @@
       "questions": [
         {
           "order": 1,
-          "question": "location",
+          "question": "Location",
           "type": "administration",
           "meta": true,
           "required": true,
-          "options": null
+          "options": null,
+          "id": 24
         },
         {
           "order": 3,
-          "question": "parish",
+          "question": "Parish",
           "type": "text",
           "meta": false,
           "required": true,
-          "options": null
+          "options": null,
+          "id": 25
         },
         {
           "order": 4,
-          "question": "village",
+          "question": "Village",
           "type": "text",
           "meta": false,
           "required": true,
-          "options": null
+          "options": null,
+          "id": 26
         },
         {
           "order": 5,
-          "question": "name of health facility",
+          "question": "Name of health facility",
           "type": "text",
           "meta": true,
           "required": true,
-          "options": null
+          "options": null,
+          "id": 27
         },
         {
           "order": 6,
-          "question": "geolocation",
+          "question": "Geolocation",
           "type": "geo",
           "meta": true,
           "required": true,
-          "options": null
+          "options": null,
+          "id": 28
         },
         {
           "order": 8,
-          "question": "health facility level",
+          "question": "Health facility level",
           "type": "option",
           "meta": false,
           "required": true,
@@ -60,396 +65,605 @@
               "name": "hc ii",
               "color": null
             }
-          ]
+          ],
+          "id": 29
         },
         {
           "order": 9,
-          "question": "type of health facility",
+          "question": "Type of health facility",
           "type": "option",
           "meta": false,
           "required": true,
           "options": [
             {
-              "name": "government health facility ",
+              "name": "government health facility",
               "color": null
             },
             {
               "name": "private",
               "color": null
             }
-          ]
+          ],
+          "id": 30
         },
         {
           "order": 10,
-          "question": "average number of patients per day",
+          "question": "Average number of patients per day",
           "type": "number",
           "meta": false,
           "required": true,
-          "options": null
-        },
+          "options": null,
+          "id": 31
+        }
+      ],
+      "id": 2
+    },
+    {
+      "question_group": "Water",
+      "questions": [
         {
-          "order": 11,
-          "question": "water service level",
+          "id": 671424009,
+          "order": 1,
+          "question": "Main water supply for the facility",
           "type": "option",
           "meta": false,
           "required": true,
           "options": [
             {
-              "name": "basic ",
-              "color": null
+              "name": "Rainwater harvesting",
+              "code": "W1"
             },
             {
-              "name": "limited ",
-              "color": null
+              "name": "Deep tubewell/borehole",
+              "code": "W2"
             },
             {
-              "name": "no service ",
-              "color": null
+              "name": "No water source",
+              "code": "W3"
+            },
+            {
+              "name": "Piped water into dwelling (into the building)",
+              "code": "W4"
+            },
+            {
+              "name": "Piped water to yard/plot",
+              "code": "W5"
             }
           ]
         },
         {
-          "order": 12,
-          "question": "main water supply for the facility",
+          "id": 668734002,
+          "order": 2,
+          "question": "Distance of main water supply from facility?",
           "type": "option",
           "meta": false,
           "required": true,
           "options": [
             {
-              "name": "rain water harvesting",
-              "color": null
+              "name": "On the premises of the health centre",
+              "code": "D1"
             },
             {
-              "name": "deep borehole",
-              "color": null
+              "name": "Within 500 meter",
+              "code": "D2"
+            },
+            {
+              "name": "Further than 500 meter",
+              "code": "D3"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 671424009,
+              "options": [
+                "Rainwater harvesting",
+                "Deep tubewell/borehole",
+                "Piped water into dwelling (into the building)",
+                "Piped water to yard/plot"
+              ]
             }
           ]
         },
         {
-          "order": 13,
-          "question": "distance of main water supply from facility",
+          "id": 672374002,
+          "order": 3,
+          "question": "Water is available at the time of survey",
           "type": "option",
           "meta": false,
           "required": true,
           "options": [
             {
-              "name": "on premises",
-              "color": null
+              "name": "Yes/available",
+              "code": "A1"
             },
             {
-              "name": "up to 500 m",
-              "color": null
+              "name": "No/not available",
+              "code": "A2"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 671424009,
+              "options": [
+                "Rainwater harvesting",
+                "Deep tubewell/borehole",
+                "Piped water into dwelling (into the building)",
+                "Piped water to yard/plot"
+              ]
             }
           ]
         },
         {
-          "order": 14,
-          "question": "water is available at the time of survey",
+          "id": 151515155,
+          "order": 4,
+          "question": "Functionality Status of Water Supply",
           "type": "option",
           "meta": false,
           "required": true,
           "options": [
             {
-              "name": "yes",
-              "color": null
+              "name": "Functional",
+              "code": "F1"
             },
             {
-              "name": "no",
-              "color": null
+              "name": "Not functional",
+              "code": "F2"
+            },
+            {
+              "name": "No water supply",
+              "code": "F3"
+            },
+            {
+              "name": "Data not collected",
+              "code": "F4"
             }
-          ]
-        },
-        {
-          "order": 15,
-          "question": "sanitation service level",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
+          ],
+          "dependency": [
             {
-              "name": "limited ",
-              "color": null
-            },
-            {
-              "name": "basic",
-              "color": null
-            },
-            {
-              "name": "basic ",
-              "color": null
-            },
-            {
-              "name": "limited",
-              "color": null
-            }
-          ]
-        },
-        {
-          "order": 16,
-          "question": "is there an improved toilet with permanent superstructure (wall constructed of bricks with concrete floor slab and galvanised iron sheet roofing).",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "yes",
-              "color": null
-            },
-            {
-              "name": "no",
-              "color": null
-            }
-          ]
-        },
-        {
-          "order": 17,
-          "question": "type of toilet for patients",
-          "type": "number",
-          "meta": false,
-          "required": true,
-          "options": null
-        },
-        {
-          "order": 18,
-          "question": "at least one toilet is usable",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "yes",
-              "color": null
-            },
-            {
-              "name": "no",
-              "color": null
-            }
-          ]
-        },
-        {
-          "order": 19,
-          "question": "toilets dedicated for staff",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "no",
-              "color": null
-            },
-            {
-              "name": "yes",
-              "color": null
-            }
-          ]
-        },
-        {
-          "order": 20,
-          "question": "toilets are in sex-separated or gender-neutral rooms",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "yes",
-              "color": null
-            },
-            {
-              "name": "no",
-              "color": null
-            }
-          ]
-        },
-        {
-          "order": 21,
-          "question": "toilets have menstrual hygiene facilites",
-          "type": "number",
-          "meta": false,
-          "required": true,
-          "options": null
-        },
-        {
-          "order": 22,
-          "question": "toilets accessible for people with limited mobility",
-          "type": "number",
-          "meta": false,
-          "required": true,
-          "options": null
-        },
-        {
-          "order": 23,
-          "question": "hygiene service level",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "no service",
-              "color": null
-            },
-            {
-              "name": "basic ",
-              "color": null
-            },
-            {
-              "name": "no service ",
-              "color": null
-            },
-            {
-              "name": "basic",
-              "color": null
-            }
-          ]
-        },
-        {
-          "order": 24,
-          "question": "functional hand hygien facility at points of care",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "yes",
-              "color": null
-            },
-            {
-              "name": "no",
-              "color": null
-            }
-          ]
-        },
-        {
-          "order": 25,
-          "question": "functional handwashing facility at one or more toilets",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "no",
-              "color": null
-            },
-            {
-              "name": "yes",
-              "color": null
-            }
-          ]
-        },
-        {
-          "order": 26,
-          "question": "health care waste service level",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "basic",
-              "color": null
-            },
-            {
-              "name": "no service ",
-              "color": null
-            },
-            {
-              "name": "no service",
-              "color": null
-            }
-          ]
-        },
-        {
-          "order": 27,
-          "question": "waste is correctly segregated into at least three labelled bins in the consultation area",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "yes",
-              "color": null
-            },
-            {
-              "name": "no",
-              "color": null
-            }
-          ]
-        },
-        {
-          "order": 28,
-          "question": "main method for disposing infectious waste",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "incinerated",
-              "color": null
-            }
-          ]
-        },
-        {
-          "order": 29,
-          "question": "main method used for disposing sharps waste",
-          "type": "number",
-          "meta": false,
-          "required": true,
-          "options": null
-        },
-        {
-          "order": 30,
-          "question": "environmental cleaning service level",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "basic",
-              "color": null
-            },
-            {
-              "name": "no service",
-              "color": null
-            },
-            {
-              "name": "no service ",
-              "color": null
-            }
-          ]
-        },
-        {
-          "order": 31,
-          "question": "cleaning protocols are available",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "yes",
-              "color": null
-            },
-            {
-              "name": "no",
-              "color": null
-            }
-          ]
-        },
-        {
-          "order": 32,
-          "question": "all staff responsible for cleaning received training",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "yes",
-              "color": null
-            },
-            {
-              "name": "no",
-              "color": null
+              "id": 671424009,
+              "options": [
+                "Rainwater harvesting",
+                "Deep tubewell/borehole",
+                "Piped water into dwelling (into the building)",
+                "Piped water to yard/plot"
+              ]
             }
           ]
         }
-      ]
+      ],
+      "id": 8
+    },
+    {
+      "question_group": "Sanitation",
+      "questions": [
+        {
+          "id": 668744002,
+          "order": 1,
+          "question": "Type of toilet for patients",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "Ventilated Improved Pit latrine (VIP)",
+              "code": "T1"
+            },
+            {
+              "name": "Pit latrine with slab",
+              "code": "T2"
+            },
+            {
+              "name": "No toilet facitity",
+              "code": "T3"
+            }
+          ]
+        },
+        {
+          "id": 672344002,
+          "order": 2,
+          "question": "Is at least one toilet usable? (Available, functional, private)",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "code": "TU1"
+            },
+            {
+              "name": "No",
+              "code": "TU2"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 668744002,
+              "options": [
+                "Ventilated Improved Pit latrine (VIP)",
+                "Pit latrine with slab"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 672324012,
+          "order": 3,
+          "question": "Toilets dedicated for staff?",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "No",
+              "code": "TS1"
+            },
+            {
+              "name": "Yes",
+              "code": "TS2"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 668744002,
+              "options": [
+                "Ventilated Improved Pit latrine (VIP)",
+                "Pit latrine with slab"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 669614002,
+          "order": 4,
+          "question": "Toilets are in sex-separated or gender-neutral rooms?",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "No",
+              "code": "TW1"
+            },
+            {
+              "name": "Yes",
+              "code": "TW2"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 668744002,
+              "options": [
+                "Ventilated Improved Pit latrine (VIP)",
+                "Pit latrine with slab"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 672344003,
+          "order": 4,
+          "question": "Toilets have menstrual hygiene facilities?",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "No",
+              "code": "TM1"
+            },
+            {
+              "name": "Yes",
+              "code": "TM2"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 668744002,
+              "options": [
+                "Ventilated Improved Pit latrine (VIP)",
+                "Pit latrine with slab"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 671454006,
+          "order": 4,
+          "question": "Toilets accessible for people with limited mobility?",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "No",
+              "code": "TD1"
+            },
+            {
+              "name": "Yes",
+              "code": "TD2"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 668744002,
+              "options": [
+                "Ventilated Improved Pit latrine (VIP)",
+                "Pit latrine with slab"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 16161616,
+          "order": 5,
+          "question": "General condition of toilets?",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "Clean",
+              "code": "GC1"
+            },
+            {
+              "name": "Dirty but being used",
+              "code": "GC2"
+            },
+            {
+              "name": "Filthy and not used /No toilet facilities",
+              "code": "GC3"
+            },
+            {
+              "name": "Data not collected",
+              "code": "GC4"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 668744002,
+              "options": [
+                "Ventilated Improved Pit latrine (VIP)",
+                "Pit latrine with slab"
+              ]
+            }
+          ]
+        }
+      ],
+      "id": 9
+    },
+    {
+      "question_group": "Hygiene",
+      "questions": [
+        {
+          "id": 668764007,
+          "order": 1,
+          "question": "Functional hand hygiene facility at points of care?",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "code": "HH1"
+            },
+            {
+              "name": "No, hand hygiene stations are available but not functional or lacking material",
+              "code": "HH2"
+            },
+            {
+              "name": "No, no hand wash facilities are available",
+              "code": "HH3"
+            }
+          ]
+        },
+        {
+          "id": 671464004,
+          "order": 2,
+          "question": "Functional handwashing facility at one or more toilets?",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "code": "HW1"
+            },
+            {
+              "name": "No, hand wash facilities are available but lacking soap and/or water",
+              "code": "HW2"
+            },
+            {
+              "name": "No, no hand wash facilities are available",
+              "code": "HW3"
+            }
+          ]
+        },
+        {
+          "id": 17171717,
+          "order": 3,
+          "question": "Is there a functional handwashing facility at one or more toilets on the day of the survey?",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, there a functional handwashing facility at one or more toilets on the day of the survey",
+              "code": "HT1"
+            },
+            {
+              "name": "No, there are handwashing facilities near the toilet  but lack soap and/or water",
+              "code": "HT2"
+            },
+            {
+              "name": "No, no handwashing facilities near toilets (within 5 meters)",
+              "code": "HT3"
+            },
+            {
+              "name": "Data not collected",
+              "code": "HT4"
+            }
+          ]
+        }
+      ],
+      "id": 10
+    },
+    {
+      "question_group": "Heath Care Waste",
+      "questions": [
+        {
+          "id": 569090293,
+          "order": 1,
+          "question": "Waste is correctly segregated into at least three labelled bins in the consultation area",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "code": "WB1"
+            },
+            {
+              "name": "No",
+              "code": "WB2"
+            }
+          ]
+        },
+        {
+          "id": 18181818,
+          "order": 2,
+          "question": "Main method for disposing infectious waste",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "Incinerated",
+              "code": "WD1"
+            },
+            {
+              "name": "Not incinerated",
+              "code": "WD2"
+            },
+            {
+              "name": "Data not collected",
+              "code": "WD3"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 569090293,
+              "options": ["Yes"]
+            }
+          ]
+        },
+        {
+          "id": 19191919,
+          "order": 3,
+          "question": "Main method used for disposing sharp waste",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "Autoclaved",
+              "color": null
+            },
+            {
+              "name": "Incinerated (two chamber, 850-1000 °C incinerator)",
+              "color": null
+            },
+            {
+              "name": "Incinerated (other)",
+              "color": null
+            },
+            {
+              "name": "Burning in a protected pit",
+              "color": null
+            },
+            {
+              "name": "Not treated, but buried in lined, protected pit",
+              "color": null
+            },
+            {
+              "name": "Not treated, but collected for medical waste disposal off-site",
+              "color": null
+            },
+            {
+              "name": "Open dumping without treatment",
+              "color": null
+            },
+            {
+              "name": "Open burning",
+              "color": null
+            },
+            {
+              "name": "Not treated and added to general waste",
+              "color": null
+            },
+            {
+              "name": "Data not collected",
+              "code": null
+            }
+          ],
+          "dependency": [
+            {
+              "id": 569090293,
+              "options": ["Yes"]
+            }
+          ]
+        }
+      ],
+      "id": 11
+    },
+    {
+      "question_group": "Environmental Cleaning",
+      "questions": [
+        {
+          "id": 20202020,
+          "order": 1,
+          "question": "Cleaning protocols are available",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "code": "P1"
+            },
+            {
+              "name": "No",
+              "code": "P2"
+            },
+            {
+              "name": "Data not collected",
+              "code": "P3"
+            }
+          ]
+        },
+        {
+          "id": 21212121,
+          "order": 2,
+          "question": "All staff responsible for cleaning received training",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "code": "TR1"
+            },
+            {
+              "name": "No",
+              "code": "TR2"
+            },
+            {
+              "name": "Data not collected",
+              "code": "TR3"
+            }
+          ]
+        }
+      ],
+      "id": 12
     }
   ]
 }

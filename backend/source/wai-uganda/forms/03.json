@@ -7,523 +7,563 @@
       "questions": [
         {
           "order": 1,
-          "question": "location",
+          "question": "Location",
           "type": "administration",
           "meta": true,
-          "options": null
+          "options": null,
+          "id": 54
         },
         {
           "order": 3,
-          "question": "parish",
+          "question": "Parish",
           "type": "text",
           "meta": false,
           "required": true,
-          "options": null
+          "options": null,
+          "id": 55
         },
         {
           "order": 4,
-          "question": "school name",
+          "question": "School name",
           "type": "text",
           "meta": true,
           "required": true,
-          "options": null
+          "options": null,
+          "id": 56
         },
         {
           "order": 5,
-          "question": "geolocation",
+          "question": "Geolocation",
           "type": "geo",
           "meta": true,
           "required": true,
-          "options": null
+          "options": null,
+          "id": 57
         },
         {
           "order": 7,
-          "question": "school type",
+          "question": "School type",
           "type": "option",
           "meta": false,
           "required": true,
           "options": [
             {
-              "name": "primary",
+              "name": "Kindergarten",
               "color": null
             },
             {
-              "name": "primary ",
+              "name": "Primary / Eptedia",
               "color": null
             },
             {
-              "name": "secondary ",
+              "name": "Secondary / Dhakhil",
               "color": null
             },
             {
-              "name": "pirmary ",
-              "color": null
-            },
-            {
-              "name": "tertiary ",
-              "color": null
-            },
-            {
-              "name": "secondary",
+              "name": "Higher secondary / Alem",
               "color": null
             }
-          ]
+          ],
+          "id": 58
         },
         {
+          "id": 1490994052,
           "order": 8,
-          "question": "total number of boys enrolled in the school",
-          "type": "number",
+          "question": "Is this school Girls Only/Boys Only/Co-Education?",
+          "type": "option",
           "meta": false,
           "required": true,
-          "options": null
+          "options": [
+            {
+              "name": "Girls Only",
+              "code": "TEMP1"
+            },
+            {
+              "name": "Boys Only",
+              "code": "TEMP2"
+            },
+            {
+              "name": "Co-education",
+              "code": "TEMP3"
+            },
+            {
+              "name": "Data not collected",
+              "code": "TEMP4"
+            }
+          ]
         },
         {
           "order": 9,
-          "question": "total number of girls enrolled in the school",
+          "question": "Total number of boys enrolled in the school",
           "type": "number",
           "meta": false,
           "required": true,
-          "options": null
+          "options": null,
+          "id": 59
         },
         {
           "order": 10,
-          "question": "what is the total enrolment in the school?",
+          "question": "Total number of girls enrolled in the school",
           "type": "number",
           "meta": false,
           "required": true,
-          "options": null
+          "options": null,
+          "id": 60
         },
         {
           "order": 11,
-          "question": "what is the regular number of staff in the school?",
+          "question": "What is the total enrolment in the school?",
           "type": "number",
           "meta": false,
           "required": true,
-          "options": null
+          "options": null,
+          "id": 61
         },
         {
           "order": 12,
-          "question": "drinking water",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "basic",
-              "color": null
-            },
-            {
-              "name": "limited",
-              "color": null
-            },
-            {
-              "name": "no service",
-              "color": null
-            }
-          ]
-        },
-        {
-          "order": 13,
-          "question": "is there an improved water source that serves the school?",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "yes-school has its own improved water sources",
-              "color": null
-            },
-            {
-              "name": "yes-school shares with a community improved water source",
-              "color": null
-            },
-            {
-              "name": "no-school does not have access to an improved water source",
-              "color": null
-            }
-          ]
-        },
-        {
-          "order": 14,
-          "question": "what is the type of improved water source?",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "deep borehole",
-              "color": null
-            },
-            {
-              "name": "tapstand",
-              "color": null
-            }
-          ]
-        },
-        {
-          "order": 15,
-          "question": "what year was the water facility constructed?",
+          "question": "What is the regular number of staff in the school?",
           "type": "number",
           "meta": false,
           "required": true,
-          "options": null
-        },
+          "options": null,
+          "id": 62
+        }
+      ],
+      "id": 3
+    },
+    {
+      "question_group": "Water",
+      "questions": [
         {
-          "order": 16,
-          "question": "who funded the construction of the water point?",
+          "id": 673304016,
+          "order": 1,
+          "question": "What is the main source of drinking water provided by the school?",
           "type": "option",
           "meta": false,
           "required": true,
           "options": [
             {
-              "name": "government",
-              "color": null
+              "name": "Piped water into dwelling (into the building)",
+              "code": "W1"
             },
             {
-              "name": "ngo",
-              "color": null
+              "name": "Shallow tubewell/borehole",
+              "code": "W2"
             },
             {
-              "name": "school",
-              "color": null
+              "name": "Unprotected spring",
+              "code": "W3"
             },
             {
-              "name": "church",
-              "color": null
+              "name": "Deep tubewell/borehole",
+              "code": "W4"
             },
             {
-              "name": "politician (mp, lc)",
-              "color": null
+              "name": "Tapstand",
+              "code": "W5"
             }
           ]
         },
         {
-          "order": 17,
-          "question": "sanitation",
+          "id": 673264019,
+          "order": 2,
+          "question": "Is drinking water from the main source currently available at the school at the time of the survey?",
           "type": "option",
           "meta": false,
           "required": true,
           "options": [
             {
-              "name": "basic",
-              "color": null
+              "name": "No",
+              "code": "WA3"
             },
             {
-              "name": "limited",
-              "color": null
+              "name": "Yes, running water",
+              "code": "WA1"
             },
             {
-              "name": "no service",
-              "color": null
+              "name": "Yes, in containers, but no running water",
+              "code": "WA2"
+            },
+            {
+              "name": "Cannot check",
+              "code": "WA2"
             }
-          ]
-        },
-        {
-          "order": 18,
-          "question": "does the school have any sanitation facilities?",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
+          ],
+          "dependency": [
             {
-              "name": "yes",
-              "color": null
-            },
-            {
-              "name": "no",
-              "color": null
-            }
-          ]
-        },
-        {
-          "order": 19,
-          "question": "what type of sanitation facilities are present?",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "vip latrine",
-              "color": null
-            },
-            {
-              "name": "traditional pit latrine",
-              "color": null
-            },
-            {
-              "name": "pour flush toilet",
-              "color": null
-            },
-            {
-              "name": "ecosan toilet (uddt)",
-              "color": null
-            },
-            {
-              "name": "ecosan toilet uddt",
-              "color": null
-            }
-          ]
-        },
-        {
-          "order": 20,
-          "question": "in total, how many functioning stances are for females?",
-          "type": "number",
-          "meta": false,
-          "required": true,
-          "options": null
-        },
-        {
-          "order": 21,
-          "question": "in total, how many functioning stances are for males?",
-          "type": "number",
-          "meta": false,
-          "required": true,
-          "options": null
-        },
-        {
-          "order": 22,
-          "question": "is there a sanitation facility accessible to students with disabilities?",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "yes",
-              "color": null
-            },
-            {
-              "name": "no",
-              "color": null
-            }
-          ]
-        },
-        {
-          "order": 23,
-          "question": "in what year was the latest (most recent) sanitation facility constructed?",
-          "type": "number",
-          "meta": false,
-          "required": true,
-          "options": null
-        },
-        {
-          "order": 24,
-          "question": "condition of the superstructure, roof, walls, and doors",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "good and well-raised wall with roof and door",
-              "color": null
-            },
-            {
-              "name": "medium - walls are decent, semi permanent door and roof",
-              "color": null
-            },
-            {
-              "name": "poor - short wall, poor or no door",
-              "color": null
-            }
-          ]
-        },
-        {
-          "order": 25,
-          "question": "condition are the floor/slabs/platform",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "medium - some minor cracks",
-              "color": null
-            },
-            {
-              "name": "good - no cracks or gaps",
-              "color": null
-            },
-            {
-              "name": "bad - dangerous to stand on",
-              "color": null
-            }
-          ]
-        },
-        {
-          "order": 26,
-          "question": "latrines/cesspits last emptied?",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "never emptied",
-              "color": null
-            },
-            {
-              "name": "unknown",
-              "color": null
-            },
-            {
-              "name": "more than 3 years ago",
-              "color": null
-            },
-            {
-              "name": "less that 1 year ago",
-              "color": null
-            },
-            {
-              "name": "1 to 3 years ago",
-              "color": null
-            },
-            {
-              "name": "never empited",
-              "color": null
-            },
-            {
-              "name": "less than 1 year ago",
-              "color": null
-            }
-          ]
-        },
-        {
-          "order": 27,
-          "question": "who paid for the emptying service?",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "school",
-              "color": null
-            },
-            {
-              "name": "parents",
-              "color": null
-            }
-          ]
-        },
-        {
-          "order": 28,
-          "question": "hygiene",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "basic",
-              "color": null
-            },
-            {
-              "name": "no service",
-              "color": null
-            },
-            {
-              "name": "limited",
-              "color": null
-            }
-          ]
-        },
-        {
-          "order": 29,
-          "question": "is there a place for handwashing?",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "yes",
-              "color": null
-            },
-            {
-              "name": "no",
-              "color": null
-            }
-          ]
-        },
-        {
-          "order": 30,
-          "question": "is there water available at the handwashing station?",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "yes",
-              "color": null
-            },
-            {
-              "name": "no",
-              "color": null
-            }
-          ]
-        },
-        {
-          "order": 31,
-          "question": "is there soap at hand washing station?",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "yes",
-              "color": null
-            },
-            {
-              "name": "no",
-              "color": null
-            }
-          ]
-        },
-        {
-          "order": 32,
-          "question": "are there any abandoned or not in use sanitation facilities on the plot that pose a risk or threat to the safety of children?",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "yes- collapsed or partially collapsed latrines",
-              "color": null
-            },
-            {
-              "name": "none- no observable risk from out-of-service facilities",
-              "color": null
-            },
-            {
-              "name": "yes - open pits with feces and contents exposed",
-              "color": null
-            },
-            {
-              "name": "yes - construction materials pose a risk",
-              "color": null
-            }
-          ]
-        },
-        {
-          "order": 33,
-          "question": "do community members not attending the school ever come to use the sanitation facilities?",
-          "type": "option",
-          "meta": false,
-          "required": true,
-          "options": [
-            {
-              "name": "rarely",
-              "color": null
-            },
-            {
-              "name": "never",
-              "color": null
-            },
-            {
-              "name": "sometimes",
-              "color": null
-            },
-            {
-              "name": "often",
-              "color": null
+              "id": 673304016,
+              "options": [
+                "Piped water into dwelling (into the building)",
+                "Shallow tubewell/borehole",
+                "Unprotected spring",
+                "Tapstand"
+              ]
             }
           ]
         }
-      ]
+      ],
+      "id": 13
+    },
+    {
+      "question_group": "Sanitation",
+      "questions": [
+        {
+          "id": 666914022,
+          "order": 1,
+          "question": "Does the school have any sanitation facilities?",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "code": "TP1"
+            },
+            {
+              "name": "No",
+              "code": "TP2"
+            }
+          ]
+        },
+        {
+          "id": 671424025,
+          "order": 2,
+          "question": "What type of sanitation facilities are present?",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "Ventilated Improved Pit latrine (VIP) / VIP latrine",
+              "code": "T1"
+            },
+            {
+              "name": "Ecosan Toilet",
+              "code": "T4"
+            },
+            {
+              "name": "Pit latrine with slab",
+              "code": "T5"
+            },
+            {
+              "name": "Traditional pit latrine",
+              "code": "T2"
+            },
+            {
+              "name": "Flush/pour flush toilets",
+              "code": "T3"
+            },
+            {
+              "name": "Unimproved makeshift / hanging toilets / No toilets / Open defecation",
+              "code": "T6"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 666914022,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 668754021,
+          "order": 3,
+          "question": "Are the toilets/latrines separate for girls and boys? (Mark Yes if school is single gender)",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "code": "TS1"
+            },
+            {
+              "name": "No",
+              "code": "TS2"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 666914022,
+              "options": [
+                "Yes"
+              ]
+            },
+            {
+              "id": 671424025,
+              "options": [
+                "Ventilated Improved Pit latrine (VIP) / VIP latrine",
+                "Traditional pit latrine",
+                "Flush/pour flush toilets",
+                "Ecosan Toilet",
+                "Pit latrine with slab"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 671434022,
+          "order": 4,
+          "question": "Are the toilets/latrine for girls clean?",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, all of them",
+              "code": "TG1"
+            },
+            {
+              "name": "Yes, but not all of them",
+              "code": "TG2"
+            },
+            {
+              "name": "No",
+              "code": "TG3"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 666914022,
+              "options": [
+                "Yes"
+              ]
+            },
+            {
+              "id": 671424025,
+              "options": [
+                "Ventilated Improved Pit latrine (VIP) / VIP latrine",
+                "Traditional pit latrine",
+                "Flush/pour flush toilets",
+                "Ecosan Toilet",
+                "Pit latrine with slab"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 672354017,
+          "order": 5,
+          "question": "Are the toilets for boys clean?",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "Yes all are clean",
+              "code": "TB1"
+            },
+            {
+              "name": "Yes, but not all of them",
+              "code": "TB2"
+            },
+            {
+              "name": "No",
+              "code": "TB3"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 666914022,
+              "options": [
+                "Yes"
+              ]
+            },
+            {
+              "id": 671424025,
+              "options": [
+                "Ventilated Improved Pit latrine (VIP) / VIP latrine",
+                "Traditional pit latrine",
+                "Flush/pour flush toilets",
+                "Ecosan Toilet",
+                "Pit latrine with slab"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 31313131,
+          "order": 6,
+          "question": "Separate Toilets for Staff",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "code": "ST1"
+            },
+            {
+              "name": "No",
+              "code": "ST2"
+            },
+            {
+              "name": "Data not collected",
+              "code": "ST3"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 671424025,
+              "options": [
+                "Ventilated Improved Pit latrine (VIP) / VIP latrine",
+                "Traditional pit latrine",
+                "Flush/pour flush toilets",
+                "Ecosan Toilet",
+                "Pit latrine with slab"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 673274025,
+          "order": 7,
+          "question": "Are the toilets for girls separated for MHM?",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, all of them",
+              "code": "TM1"
+            },
+            {
+              "name": "Yes, but not all of them",
+              "code": "TM2"
+            },
+            {
+              "name": "No",
+              "code": "TM3"
+            },
+            {
+              "name": "Data not collected",
+              "code": "TM4"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 666914022,
+              "options": [
+                "Yes"
+              ]
+            },
+            {
+              "id": 671424025,
+              "options": [
+                "Ventilated Improved Pit latrine (VIP) / VIP latrine",
+                "Traditional pit latrine",
+                "Flush/pour flush toilets",
+                "Ecosan Toilet",
+                "Pit latrine with slab"
+              ]
+            },
+            {
+              "id": 1490994052,
+              "options": [
+                "Girls Only",
+                "Co-education"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 667814027,
+          "order": 7,
+          "question": "Is there a sanitation facility accessible to students with disabilities?",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, at least one is accessible",
+              "code": "TD1"
+            },
+            {
+              "name": "No, the toilets are not accessible",
+              "code": "TD2"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 666914022,
+              "options": [
+                "Yes"
+              ]
+            },
+            {
+              "id": 671424025,
+              "options": [
+                "Ventilated Improved Pit latrine (VIP) / VIP latrine",
+                "Traditional pit latrine",
+                "Flush/pour flush toilets",
+                "Ecosan Toilet",
+                "Pit latrine with slab"
+              ]
+            }
+          ]
+        }
+      ],
+      "id": 14
+    },
+    {
+      "question_group": "Hygiene",
+      "questions": [
+        {
+          "id": 673274032,
+          "order": 1,
+          "question": "Is there a place for handwashing?",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "Yes",
+              "code": "HW1"
+            },
+            {
+              "name": "No",
+              "code": "HW2"
+            }
+          ]
+        },
+        {
+          "id": 672394024,
+          "order": 2,
+          "question": "Are both soap and water available at the hand washing facility?",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "Neither water nor soap",
+              "code": "SW1"
+            },
+            {
+              "name": "Only water",
+              "code": "SW2"
+            },
+            {
+              "name": "Only soap available",
+              "code": "SW3"
+            },
+            {
+              "name": "Both soap and water available",
+              "code": "SW4"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 673274032,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        }
+      ],
+      "id": 15
     }
   ]
 }

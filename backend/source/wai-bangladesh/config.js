@@ -51,15 +51,15 @@ var page_config = {
       },
       {
         title: "Water",
-        key: 551910082,
+        key: "water",
       },
       {
         title: "Sanitation",
-        key: 551910081,
+        key: "sanitation",
       },
       {
         title: "Hygiene",
-        key: 551910083,
+        key: "hygiene",
       },
     ],
     maps: {
@@ -73,9 +73,9 @@ var page_config = {
         component: "JMP-CHARTS",
         selected: true,
         chartList: [
-          { question: 551910082, name: "Water" },
-          { question: 551910081, name: "Sanitation" },
-          { question: 551910083, name: "Hygiene" },
+          { question: "water", name: "Water" },
+          { question: "sanitation", name: "Sanitation" },
+          { question: "hygiene", name: "Hygiene" },
         ],
       },
     ],
@@ -124,19 +124,19 @@ var page_config = {
       },
       {
         title: "Water",
-        key: 563280073,
+        key: "water",
       },
       {
         title: "Sanitation",
-        key: 563280074,
+        key: "sanitation",
       },
       {
         title: "Hygiene",
-        key: 563280072,
+        key: "hygiene",
       },
     ],
     maps: {
-      shape: { id: 563280074, name: "Sanitation" },
+      shape: { id: "Sanitation", name: "Sanitation" },
       marker: { id: 563280069, title: "Toilet" },
     },
     formId: 563280066,
@@ -174,19 +174,19 @@ var page_config = {
       },
       {
         title: "Water",
-        key: 559910088,
+        key: "water",
       },
       {
         title: "Sanitation",
-        key: 559910089,
+        key: "sanitation",
       },
       {
         title: "Hygiene",
-        key: 559910090,
+        key: "hygiene",
       },
     ],
     maps: {
-      shape: { id: 559910088, name: "Water" },
+      shape: { id: "Water", name: "Water" },
       marker: { id: 567530047, name: "Toilet" },
     },
     formId: 557760069,
@@ -215,18 +215,7 @@ var page_config = {
       },
       {
         id: 559910085,
-        name: "Waste",
-        hover: [
-          { id: 573100084, name: "Healthcare name" },
-          {
-            id: 573100086,
-            name: "Type of health center",
-          },
-        ],
-      },
-      {
-        id: 557750067,
-        name: "Waste",
+        name: "Waste Management",
         hover: [
           { id: 573100084, name: "Healthcare name" },
           {

@@ -27,13 +27,15 @@ class Administration(Base):
     id = Column(Integer, primary_key=True, index=True, nullable=True)
     parent = Column(Integer, ForeignKey("administration.id"))
     name = Column(String)
+    long_name = Column(String, nullable=False, index=True)
     children = relationship("Administration")
     parent_detail = relationship("Administration", remote_side=[id])
 
-    def __init__(self, id: int, parent: int, name: str):
+    def __init__(self, id: int, parent: int, name: str, long_name: str):
         self.id = id
         self.parent = parent
         self.name = name
+        self.long_name = long_name
 
     def __repr__(self) -> int:
         return f"<Administration {self.id}>"

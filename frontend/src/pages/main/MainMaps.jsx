@@ -1,5 +1,5 @@
 import 'leaflet/dist/leaflet.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   MapContainer,
   TileLayer,
@@ -20,6 +20,7 @@ import _ from 'lodash';
 import { generateAdvanceFilterURL } from '../../util/utils';
 import { getBounds, geojson, tileOSM, defaultPos } from '../../util/geo-util';
 import { Color } from '../../chart/chart-style';
+import PaginationApi from '../../components/PaginationApi';
 
 const { shapeLevels } = window.map_config;
 const mapMaxZoom = 14;
@@ -27,39 +28,6 @@ const defPos = defaultPos();
 const colorRange = ['#bbedda', '#a7e1cb', '#92d5bd', '#7dcaaf', '#67bea1'];
 const higlightColor = '#84b4cc';
 const noDataColor = '#d3d3d3';
-
-const fetchCustomColor = (question, selectableMarkerDropdown, qid) => {
-  const findQuestion = question.find((q) => q.id === qid);
-  // map color coded option from selectable marker option setting
-  if (selectableMarkerDropdown && findQuestion?.option) {
-    const findFromSetting = selectableMarkerDropdown?.find((x) => x.id === qid);
-    const options = findQuestion?.option?.map((opt) => {
-      let color = opt.color;
-      if (findFromSetting?.color) {
-        const findColor = findFromSetting.color?.find(
-          (x) => x.name.toLowerCase() === opt.name.toLowerCase()
-        );
-        color = findColor?.color;
-      }
-      return {
-        ...opt,
-        color: color,
-      };
-    });
-    if (findFromSetting?.hover) {
-      return {
-        ...findQuestion,
-        option: options,
-        hover: findFromSetting.hover,
-      };
-    }
-    return {
-      ...findQuestion,
-      option: options,
-    };
-  }
-  return findQuestion;
-};
 
 const Markers = ({
   data,
@@ -116,9 +84,9 @@ const Markers = ({
     let fill = '#F00';
     const r = 3;
     const stroke = '#fff';
-    if (colors) {
+    if (marker && colors) {
       const option = colors.find(
-        (c) => c.name?.toLowerCase() === marker?.toLowerCase()
+        (c) => c?.name?.toLowerCase() === marker?.toLowerCase()
       );
       fill = option ? option.color : '#FF0';
       if (!fill) {
@@ -127,7 +95,7 @@ const Markers = ({
         )?.color;
       }
     }
-    if (filterMarker?.toLowerCase() === marker?.toLowerCase()) {
+    if (marker && filterMarker?.toLowerCase() === marker?.toLowerCase()) {
       hovered = true;
     }
     return (
@@ -392,7 +360,6 @@ const MarkerLegend = ({
 
 const MainMaps = ({ question, current }) => {
   const {
-    user,
     administration,
     selectedAdministration,
     advanceSearchValue,
@@ -407,103 +374,104 @@ const MainMaps = ({ question, current }) => {
   const [selectedShape, setSelectedShape] = useState(null);
   const [hoveredShape, setHoveredShape] = useState(null);
   const [shapeTooltip, setShapeTooltip] = useState('');
-
-  const shapeQuestion = question.find((q) => q.id === current.maps?.shape?.id);
+  const [shapeQuestion, setShapeQuestion] = useState({});
+  const [markerOptions, setMarkerOptions] = useState([]);
+  const [scoreOptions, setScoreOptions] = useState([]);
+  const [preload, setPreload] = useState(true);
+  const [totalPages, setTotalPages] = useState(null);
 
   // use tile layer from config
   const baseMap = window?.features?.mapFeature?.baseMap || tileOSM;
 
   // support selectable marker question
-  const { selectableMarkerDropdown } = current;
-  const [selectableMarkerQuestion, setSelectableMarkerQuestion] =
-    useState(null);
+  const [markerQuestion, setMarkerQuestion] = useState(null);
 
   // support selectable marker question & custom color coded
-  const defaultMarkerColor = _.sortBy(selectableMarkerQuestion?.option)?.map(
-    (m, i) => ({
-      ...m,
-      color: m.color || Color.color[i],
-    })
-  );
-
-  // support selectable marker question
-  // filter option which has option color coded
-  let selectableMarkerDropdownOptionValues = [];
-  if (selectableMarkerDropdown) {
-    selectableMarkerDropdownOptionValues = question.filter((q) =>
-      selectableMarkerDropdown.find((x) => x.id === q.id)
-    );
-  }
+  const defaultMarkerColor = _.sortBy(markerQuestion?.option)?.map((m, i) => ({
+    ...m,
+    color: m.color || Color.color[i],
+  }));
 
   const handleOnChangeSelectableMarker = (qid) => {
-    const findQuestion = fetchCustomColor(
-      question,
-      selectableMarkerDropdown,
-      qid
-    );
-    setSelectableMarkerQuestion(findQuestion);
+    const findQuestion = markerOptions?.find((o) => o?.id === qid);
+    setMarkerQuestion(findQuestion);
+    if (!preload && !loading) {
+      setPreload(true);
+      setLoading(true);
+    }
   };
 
-  useEffect(() => {
-    if (question.length && current?.maps?.marker?.id) {
-      const findQuestion = fetchCustomColor(
-        question,
-        selectableMarkerDropdown,
-        current?.maps?.marker?.id
-      );
-      setSelectableMarkerQuestion(findQuestion);
+  const PER_PAGE = 250;
+  const { selectableMarkerDropdown, maps } = current || {};
+  const { marker, shape } = maps || {};
+  const mHovers = useMemo(
+    () =>
+      markerQuestion?.hover || selectableMarkerDropdown?.length
+        ? selectableMarkerDropdown[0]?.hover
+        : [],
+    [markerQuestion, selectableMarkerDropdown]
+  );
+  const mId = useMemo(
+    () => markerQuestion?.id || marker?.id,
+    [markerQuestion, marker]
+  );
+  const endpointURL = useMemo(() => {
+    const form = loadedFormId || current?.formId;
+    let url = `maps/${form}`;
+    if (current?.maps?.shape) {
+      url += `?shape=${current.maps.shape.id}`;
     }
-  }, [question, current, selectableMarkerDropdown]);
+
+    if (mId) {
+      url += `&marker=${mId}`;
+    }
+    if (mHovers?.length) {
+      const hoverIds = mHovers?.map((x) => x.id).join('|');
+      url += `&hover_ids=${hoverIds}`;
+    }
+    url = generateAdvanceFilterURL(advanceSearchValue, url); // advance search
+    return url;
+  }, [advanceSearchValue, loadedFormId, mHovers, mId, current]);
 
   useEffect(() => {
-    if (
-      user &&
-      current &&
-      loadedFormId !== null &&
-      loadedFormId === current?.formId &&
-      selectableMarkerQuestion?.id
-    ) {
-      setLoading(true);
-      let url = `maps/${current.formId}`;
-      if (current.maps.shape) {
-        url += `?shape=${current.maps.shape.id}`;
-      }
-      if (current.maps.shape) {
-        url += `&marker=${selectableMarkerQuestion?.id}`;
-      }
-      // custom hover
-      if (selectableMarkerQuestion?.hover) {
-        const hoverIds = selectableMarkerQuestion.hover
-          ?.map((x) => x.id)
-          .join('|');
-        url += `&hover_ids=${hoverIds}`;
-      }
-      // advance search
-      url = generateAdvanceFilterURL(advanceSearchValue, url);
+    if (endpointURL) {
       api
-        .get(url)
-        .then((res) => {
-          const { option } = shapeQuestion;
-          const { calculatedBy } = current.maps.shape;
-          let data = res.data;
-          if (shapeQuestion?.type === 'option' && calculatedBy) {
-            // fetch option value to calculated from question options
+        .get(`${endpointURL}&page=1&perpage=${PER_PAGE}`)
+        .then(({ data }) => {
+          const { scores, data: apiData, total_page } = data;
+          setTotalPages(total_page);
+          setScoreOptions(scores);
+          const { calculatedBy, id: shapeId } = shape || {};
+          let shapeData = question.find((q) => q.id === shapeId);
+          let option = [];
+          if (typeof shapeId === 'string') {
+            option =
+              scores?.find(
+                (s) => s?.name?.toLowerCase() === shapeId?.toLowerCase()
+              )?.labels || [];
+            shapeData = {
+              ...shapeData,
+              option,
+              type: 'option',
+            };
+          }
+
+          setShapeQuestion(shapeData);
+          let _data = apiData;
+          if (calculatedBy) {
             const optionToCalculated =
               calculatedBy === 'all' || !calculatedBy.length
                 ? option
                 : option.filter((opt) =>
-                    calculatedBy.map((x) => x.id).includes(opt?.id)
+                    calculatedBy.map((x) => x.name).includes(opt?.name)
                   );
-            // transformed the data
-            data = data.map((d) => {
+            _data = apiData.map((d) => {
               // find the option by shape === option name from optionToCalculated
               const findOption = optionToCalculated.find(
                 (opt) => opt?.name?.toLowerCase() === d?.shape?.toLowerCase()
               );
               return {
                 ...d,
-                // replace shape value with option score, or
-                // replace with 0 if option answer is not in calculatedBy config
                 score: findOption
                   ? findOption?.score
                     ? findOption.score
@@ -512,7 +480,7 @@ const MainMaps = ({ question, current }) => {
               };
             });
           }
-          setData(data);
+          setData(_data);
           setLoading(false);
         })
         .catch(() => {
@@ -520,14 +488,8 @@ const MainMaps = ({ question, current }) => {
           setLoading(false);
         });
     }
-  }, [
-    user,
-    current,
-    loadedFormId,
-    advanceSearchValue,
-    shapeQuestion,
-    selectableMarkerQuestion,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [endpointURL]);
 
   // shape config
   const shapeShadingType = current?.maps?.shape?.type;
@@ -709,6 +671,42 @@ const MainMaps = ({ question, current }) => {
     }
   }, [hoveredShape, data, shapeQuestion]);
 
+  useEffect(() => {
+    if (
+      selectableMarkerDropdown?.length &&
+      question?.length &&
+      scoreOptions?.length &&
+      markerOptions.length === 0
+    ) {
+      const _markerOptions = selectableMarkerDropdown?.map((md) => {
+        const fq = question?.find((q) => q?.id === md?.id);
+        if (!fq) {
+          const fs = scoreOptions?.find((s) => s?.name === md?.id);
+          return {
+            ...fs,
+            ...md,
+            option: fs?.labels || [],
+          };
+        }
+        return {
+          ...md,
+          ...fq,
+        };
+      });
+      setMarkerOptions(_markerOptions);
+      const markerData = _markerOptions?.find((mo) => mo?.id === mId);
+      const defaultSelectable = markerData || _markerOptions.shift();
+      setMarkerQuestion(defaultSelectable);
+    }
+  }, [
+    mId,
+    question,
+    selectableMarkerDropdown,
+    markerQuestion,
+    markerOptions,
+    scoreOptions,
+  ]);
+
   const geoStyle = (g) => {
     const gname = g.properties[shapeLevels[shapeLevels.length - 1]];
     let sc = shapeColor.find((s) => s.name === gname);
@@ -755,13 +753,13 @@ const MainMaps = ({ question, current }) => {
         <>
           {/* support selectable marker question */}
           {/* Marker selectable dropdown */}
-          {!_.isEmpty(selectableMarkerDropdownOptionValues) && (
+          {!_.isEmpty(markerOptions) && (
             <div className="marker-dropdown-container">
               <Select
                 showSearch
                 placeholder="Select here..."
                 className="marker-select"
-                options={selectableMarkerDropdownOptionValues.map((q) => ({
+                options={markerOptions.map((q) => ({
                   label: q.name,
                   value: q.id,
                 }))}
@@ -769,7 +767,7 @@ const MainMaps = ({ question, current }) => {
                 filterOption={(input, option) =>
                   option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
                 }
-                value={selectableMarkerQuestion?.id}
+                value={markerQuestion?.id}
                 onChange={handleOnChangeSelectableMarker}
               />
             </div>
@@ -787,12 +785,10 @@ const MainMaps = ({ question, current }) => {
           />
           <MarkerLegend
             data={data}
-            markerQuestion={selectableMarkerQuestion}
+            markerQuestion={markerQuestion}
             filterMarker={filterMarker}
             setFilterMarker={setFilterMarker}
-            renderSelectableMarker={
-              !_.isEmpty(selectableMarkerDropdownOptionValues)
-            }
+            renderSelectableMarker={!_.isEmpty(markerOptions)}
           />
         </>
       )}
@@ -855,13 +851,23 @@ const MainMaps = ({ question, current }) => {
           {!loading && (
             <Markers
               data={data}
-              colors={selectableMarkerQuestion?.option}
+              colors={markerQuestion?.option}
               defaultColors={defaultMarkerColor}
               filterMarker={filterMarker}
-              customHover={selectableMarkerQuestion?.hover}
+              customHover={markerQuestion?.hover}
             />
           )}
         </MapContainer>
+      )}
+      {api.token && totalPages && !loading && (
+        <PaginationApi
+          apiUrl={endpointURL}
+          totalPages={totalPages}
+          perPage={PER_PAGE}
+          callback={(res) => {
+            setData([...data, ...res]);
+          }}
+        />
       )}
     </div>
   );
