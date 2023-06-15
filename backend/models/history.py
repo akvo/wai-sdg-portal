@@ -21,29 +21,31 @@ class HistoryDict(TypedDict):
 class History(Base):
     __tablename__ = "history"
     id = Column(Integer, primary_key=True, index=True, nullable=True)
-    question = Column(Integer, ForeignKey('question.id'))
-    data = Column(Integer, ForeignKey('data.id'))
+    question = Column(Integer, ForeignKey("question.id"))
+    data = Column(Integer, ForeignKey("data.id"))
     text = Column(Text, nullable=True)
     value = Column(Float, nullable=True)
     options = Column(pg.ARRAY(String), nullable=True)
-    created_by = Column(Integer, ForeignKey('user.id'))
-    updated_by = Column(Integer, ForeignKey('user.id'), nullable=True)
+    created_by = Column(Integer, ForeignKey("user.id"))
+    updated_by = Column(Integer, ForeignKey("user.id"), nullable=True)
     created = Column(DateTime, nullable=True)
     updated = Column(DateTime, nullable=True)
     created_by_user = relationship("User", foreign_keys=[created_by])
     updated_by_user = relationship("User", foreign_keys=[updated_by])
     question_detail = relationship("Question", foreign_keys=[question])
 
-    def __init__(self,
-                 question: int,
-                 created_by: int,
-                 created: datetime,
-                 data: Optional[int] = None,
-                 text: Optional[str] = None,
-                 value: Optional[float] = None,
-                 options: Optional[List[str]] = None,
-                 updated: Optional[datetime] = None,
-                 updated_by: Optional[int] = None):
+    def __init__(
+        self,
+        question: int,
+        created_by: int,
+        created: datetime,
+        data: Optional[int] = None,
+        text: Optional[str] = None,
+        value: Optional[float] = None,
+        options: Optional[List[str]] = None,
+        updated: Optional[datetime] = None,
+        updated_by: Optional[int] = None,
+    ):
         self.question = question
         self.data = data
         self.text = text
@@ -90,11 +92,7 @@ class History(Base):
             answer = self.options
         if type == QuestionType.photo:
             answer = self.text
-        return {
-            "value": answer,
-            "date": date.strftime("%B %d, %Y"),
-            "user": user.name
-        }
+        return {"value": answer, "date": date.strftime("%B %d, %Y"), "user": user.name}
 
 
 class HistoryBase(BaseModel):

@@ -25,7 +25,7 @@ class AdministrationCascade(BaseModel):
 class Administration(Base):
     __tablename__ = "administration"
     id = Column(Integer, primary_key=True, index=True, nullable=True)
-    parent = Column(Integer, ForeignKey('administration.id'))
+    parent = Column(Integer, ForeignKey("administration.id"))
     name = Column(String)
     children = relationship("Administration")
     parent_detail = relationship("Administration", remote_side=[id])
@@ -44,7 +44,7 @@ class Administration(Base):
             "id": self.id,
             "parent": self.parent,
             "name": self.name,
-            "children": self.children
+            "children": self.children,
         }
 
     @property
@@ -53,7 +53,7 @@ class Administration(Base):
             return {
                 "value": self.id,
                 "label": self.name,
-                "children": [c.cascade for c in self.children]
+                "children": [c.cascade for c in self.children],
             }
         return {
             "value": self.id,
@@ -65,7 +65,7 @@ class Administration(Base):
         return {
             "id": self.id,
             "parent": self.parent_detail.name if self.parent_detail else None,
-            "name": self.name
+            "name": self.name,
         }
 
     @property

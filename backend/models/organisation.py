@@ -13,9 +13,9 @@ from models.user import UserBase
 
 
 class OrganisationType(enum.Enum):
-    iNGO = 'iNGO'
-    Company = 'Company'
-    Government = 'Government'
+    iNGO = "iNGO"
+    Company = "Company"
+    Government = "Government"
 
 
 class OrganisationDict(TypedDict):
@@ -30,15 +30,11 @@ class Organisation(Base):
     id = Column(Integer, primary_key=True, index=True, nullable=True)
     name = Column(String, unique=True)
     type = Column(Enum(OrganisationType))
-    user = relationship("User",
-                        cascade="all, delete",
-                        passive_deletes=True,
-                        backref="user")
+    user = relationship(
+        "User", cascade="all, delete", passive_deletes=True, backref="user"
+    )
 
-    def __init__(self,
-                 name: str,
-                 type: OrganisationType,
-                 id: Optional[int] = None):
+    def __init__(self, name: str, type: OrganisationType, id: Optional[int] = None):
         self.id = id
         self.name = name
         self.type = type
@@ -48,12 +44,7 @@ class Organisation(Base):
 
     @property
     def serialize(self) -> OrganisationDict:
-        return {
-            "id": self.id,
-            "name": self.name,
-            "type": self.type,
-            "user": self.user
-        }
+        return {"id": self.id, "name": self.name, "type": self.type, "user": self.user}
 
 
 class OrganisationBase(BaseModel):

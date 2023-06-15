@@ -13,7 +13,7 @@ account = Acc(True)
 today = datetime.today().strftime("%B %d, %Y")
 
 
-class TestAdvancedFilter():
+class TestAdvancedFilter:
     @pytest.mark.asyncio
     async def test_get_data_with_query_option(
         self, app: FastAPI, session: Session, client: AsyncClient
@@ -51,7 +51,8 @@ class TestAdvancedFilter():
         res = await client.get(
             app.url_path_for("data:get", form_id=1),
             params={"q": "1|option 1"},
-            headers={"Authorization": f"Bearer {account.token}"})
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
         assert res.status_code == 200
         res = res.json()
         assert res["current"] == 1
@@ -62,7 +63,8 @@ class TestAdvancedFilter():
         res = await client.get(
             app.url_path_for("data:get", form_id=1),
             params={"q": "1|option 2"},
-            headers={"Authorization": f"Bearer {account.token}"})
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
         assert res.status_code == 200
         res = res.json()
         assert res["current"] == 1
@@ -73,7 +75,8 @@ class TestAdvancedFilter():
         res = await client.get(
             app.url_path_for("data:get", form_id=1),
             params={"question": [1, 4], "administration": 10},
-            headers={"Authorization": f"Bearer {account.token}"})
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
         assert res.status_code == 200
         res = res.json()
         assert res["current"] == 1
@@ -82,50 +85,50 @@ class TestAdvancedFilter():
         assert len(res["data"]) == 3
 
     @pytest.mark.asyncio
-    async def test_get_maps_with_query_option(self, app: FastAPI,
-                                              session: Session,
-                                              client: AsyncClient) -> None:
+    async def test_get_maps_with_query_option(
+        self, app: FastAPI, session: Session, client: AsyncClient
+    ) -> None:
         res = await client.get(
             app.url_path_for("maps:get", form_id=1),
-            params={
-                "marker": 1,
-                "shape": 2,
-                "hover_ids": "1|2",
-                "q": "1|option 2"
-            })
+            params={"marker": 1, "shape": 2, "hover_ids": "1|2", "q": "1|option 2"},
+        )
         assert res.status_code == 200
         res = res.json()
-        assert res == [{
-            "id": 1,
-            "loc": "Garut",
-            "geo": [-7.836114, 110.331143],
-            "name": "Garut - Garut",
-            "marker": "Option 2",
-            "shape": 10.0,
-            "marker_hover": [
-                {"id": 2, "value": 10.0},
-                {"id": 1, "value": "Option 2"}
-            ],
-        }, {
-            "id": 2,
-            "loc": "Garut",
-            "geo": [-7.836114, 110.331143],
-            "name": "Garut",
-            "marker": "Option 2",
-            "shape": 10.0,
-            "marker_hover": [
-                {"id": 1, "value": "Option 2"},
-                {"id": 2, "value": 10.0}
-            ],
-        }, {
-            "id": 5,
-            "loc": "Bantul",
-            "geo": [-6.2, 106.81],
-            "name": "Bantul - Testing Data 2",
-            "marker": "Option 2",
-            "shape": 24.0,
-            "marker_hover": [
-                {"id": 1, "value": "Option 2"},
-                {"id": 2, "value": 24.0}
-            ],
-        }]
+        assert res == [
+            {
+                "id": 1,
+                "loc": "Garut",
+                "geo": [-7.836114, 110.331143],
+                "name": "Garut - Garut",
+                "marker": "Option 2",
+                "shape": 10.0,
+                "marker_hover": [
+                    {"id": 2, "value": 10.0},
+                    {"id": 1, "value": "Option 2"},
+                ],
+            },
+            {
+                "id": 2,
+                "loc": "Garut",
+                "geo": [-7.836114, 110.331143],
+                "name": "Garut",
+                "marker": "Option 2",
+                "shape": 10.0,
+                "marker_hover": [
+                    {"id": 1, "value": "Option 2"},
+                    {"id": 2, "value": 10.0},
+                ],
+            },
+            {
+                "id": 5,
+                "loc": "Bantul",
+                "geo": [-6.2, 106.81],
+                "name": "Bantul - Testing Data 2",
+                "marker": "Option 2",
+                "shape": 24.0,
+                "marker_hover": [
+                    {"id": 1, "value": "Option 2"},
+                    {"id": 2, "value": 24.0},
+                ],
+            },
+        ]

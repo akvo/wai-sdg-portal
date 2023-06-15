@@ -6,10 +6,9 @@ from models.views.view_data import ViewData
 from models.answer import Answer
 
 
-def get_data(session: Session,
-             form: int,
-             question: List[int],
-             options: List[str] = None):
+def get_data(
+    session: Session, form: int, question: List[int], options: List[str] = None
+):
     data = session.query(Data).filter(Data.form == form)
     if options:
         # support multiple select options filter

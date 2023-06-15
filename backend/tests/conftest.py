@@ -31,11 +31,10 @@ def apply_migrations():
 @pytest.fixture
 def app(apply_migrations: None) -> FastAPI:
     from core.config import app
+
     engine = create_engine(get_db_url())
     Base.metadata.create_all(bind=engine)
-    TestingSessionLocal = sessionmaker(autocommit=False,
-                                       autoflush=False,
-                                       bind=engine)
+    TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
     def override_get_db():
         try:
@@ -51,11 +50,10 @@ def app(apply_migrations: None) -> FastAPI:
 @pytest.fixture
 def worker(apply_migrations: None) -> FastAPI:
     from worker import worker
+
     engine = create_engine(get_db_url())
     Base.metadata.create_all(bind=engine)
-    TestingSessionLocal = sessionmaker(autocommit=False,
-                                       autoflush=False,
-                                       bind=engine)
+    TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
     def override_get_db():
         try:
@@ -73,9 +71,7 @@ def worker(apply_migrations: None) -> FastAPI:
 def session() -> Session:
     engine = create_engine(get_db_url())
     Base.metadata.create_all(bind=engine)
-    TestingSessionLocal = sessionmaker(autocommit=False,
-                                       autoflush=False,
-                                       bind=engine)
+    TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
     return TestingSessionLocal()
 
@@ -84,8 +80,7 @@ def session() -> Session:
 @pytest.fixture
 async def client(app: FastAPI) -> AsyncClient:
     async with LifespanManager(app):
-        async with AsyncClient(app=app,
-                               base_url="http://testserver") as client:
+        async with AsyncClient(app=app, base_url="http://testserver") as client:
             yield client
 
 
@@ -93,6 +88,7 @@ async def client(app: FastAPI) -> AsyncClient:
 @pytest.fixture
 async def worker_client(worker: FastAPI) -> AsyncClient:
     async with LifespanManager(worker):
-        async with AsyncClient(app=worker,
-                               base_url="http://testworker") as worker_client:
+        async with AsyncClient(
+            app=worker, base_url="http://testworker"
+        ) as worker_client:
             yield worker_client

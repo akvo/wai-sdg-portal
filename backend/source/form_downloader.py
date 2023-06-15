@@ -9,57 +9,60 @@ source_path = os.environ["INSTANCE_NAME"]
 
 class SurveyList(enum.Enum):
     wai_nepal = {
-        'instances': [{
-            "domain": "pilots",
-            "forms": ['556240162', '554360198', '557950127']
-        }, {
-            "domain":
-            "wai",
-            "forms": [
-                '1323574110', '1322834054', '1260775092', '1327205184',
-                '1338414049'
-            ],
-        }],
-        'child_forms':
-        ['1322834054', '1260775092', '1327205184', '1338414049'],
-        'administration':
-        ['573330120', '567820007', '571300147', '1359274105'],
-        'answer_list_type': [{
-            'id': '1332184057',
-            'list_from': '1260775116'
-        }, {
-            'id': '1361834041',
-            'list_from': '1260775116'
-        }, {
-            'id': '1361884006',
-            'list_from': '1260775116'
-        }, {
-            'id': '1336894024',
-            'list_from': '1260775116'
-        }],
-        'skip_question': ['1260775107', '1260775115', '1260775108'],
+        "instances": [
+            {"domain": "pilots", "forms": ["556240162", "554360198", "557950127"]},
+            {
+                "domain": "wai",
+                "forms": [
+                    "1323574110",
+                    "1322834054",
+                    "1260775092",
+                    "1327205184",
+                    "1338414049",
+                ],
+            },
+        ],
+        "child_forms": ["1322834054", "1260775092", "1327205184", "1338414049"],
+        "administration": ["573330120", "567820007", "571300147", "1359274105"],
+        "answer_list_type": [
+            {"id": "1332184057", "list_from": "1260775116"},
+            {"id": "1361834041", "list_from": "1260775116"},
+            {"id": "1361884006", "list_from": "1260775116"},
+            {"id": "1336894024", "list_from": "1260775116"},
+        ],
+        "skip_question": ["1260775107", "1260775115", "1260775108"],
     }
     wai_bangladesh = {
-        'instances': [{
-            "domain":
-            "pilots",
-            "forms":
-            ['574850091', '557760069', '563280066'],
-        }],
-        'administration':
-        ['554180044', '567510081', '569130075'],
-        'skip_question': []
+        "instances": [
+            {
+                "domain": "pilots",
+                "forms": ["574850091", "557760069", "563280066"],
+            }
+        ],
+        "administration": ["554180044", "567510081", "569130075"],
+        "skip_question": [],
     }
     wai_ethiopia = {
-        'instances': [{
-            "domain":
-            "pilots",
-            "forms":
-            ['976564018', '952774024', '974754029', '962774003', '980804014'],
-        }],
-        'administration':
-        ['1084694626', '1260775107', '1260775115', '1260775108', '1084684623'],
-        'skip_question': []
+        "instances": [
+            {
+                "domain": "pilots",
+                "forms": [
+                    "976564018",
+                    "952774024",
+                    "974754029",
+                    "962774003",
+                    "980804014",
+                ],
+            }
+        ],
+        "administration": [
+            "1084694626",
+            "1260775107",
+            "1260775115",
+            "1260775108",
+            "1084684623",
+        ],
+        "skip_question": [],
     }
 
 
@@ -70,8 +73,9 @@ if not os.path.exists(dest_folder):
 class_path = source_path.replace("-", "_")
 source = SurveyList[class_path].value
 instances = source["instances"]
-answer_list_type = [] if not source.get(
-    "answer_list_type") else source["answer_list_type"]
+answer_list_type = (
+    [] if not source.get("answer_list_type") else source["answer_list_type"]
+)
 skip_answer_list_type = [x["id"] for x in answer_list_type]
 skip_question_id = source["skip_question"] + source["administration"]
 child_forms = source.get("child_forms") or []
@@ -85,14 +89,13 @@ def set_original(q, options, multiple_option):
         "meta": q["localeNameFlag"],
         "type": q["type"] if not multiple_option else "multiple_option",
         "required": q["mandatory"],
-        "options": options if len(options) else None
+        "options": options if len(options) else None,
     }
 
 
 def set_answer_type_list(q):
     if q["id"] in [int(s) for s in skip_answer_list_type]:
-        option = list(
-            filter(lambda x: int(x["id"]) == q["id"], answer_list_type))
+        option = list(filter(lambda x: int(x["id"]) == q["id"], answer_list_type))
         return {
             "id": int(q["id"]),
             "question": q["question"],
@@ -100,9 +103,7 @@ def set_answer_type_list(q):
             "meta": True,
             "required": True,
             "type": "answer_list",
-            "options": [{
-                "name": int(o["list_from"])
-            } for o in option]
+            "options": [{"name": int(o["list_from"])} for o in option],
         }
     return q
 
@@ -114,10 +115,7 @@ def set_options(q):
         if "option" not in q["options"]:
             return [], False
         if type(q["options"]["option"]) == dict:
-            options.append({
-                "name": str(q["options"]["option"]["text"]),
-                "color": None
-            })
+            options.append({"name": str(q["options"]["option"]["text"]), "color": None})
         else:
             for o in q["options"]["option"]:
                 options.append({"name": str(o["text"]), "color": None})
@@ -127,14 +125,16 @@ def set_options(q):
 
 def set_dependency(q, qs):
     if "dependency" in q:
-        qs.update({
-            "dependency": [{
-                "id":
-                int(q["dependency"]["question"]),
-                "options":
-                q["dependency"]["answer-value"].split("|")
-            }]
-        })
+        qs.update(
+            {
+                "dependency": [
+                    {
+                        "id": int(q["dependency"]["question"]),
+                        "options": q["dependency"]["answer-value"].split("|"),
+                    }
+                ]
+            }
+        )
     return qs
 
 
@@ -153,15 +153,16 @@ def generate_form(form, child=False):
             question = set_answer_type_list(question)
             # END NEPAL
             if adm:
-                if q["id"] in source["administration"] or q[
-                        "type"] == "cascade":
-                    administration.update({
-                        "question": "location",
-                        "order": int(q["order"]),
-                        "required": True,
-                        "type": "administration",
-                        "meta": True
-                    })
+                if q["id"] in source["administration"] or q["type"] == "cascade":
+                    administration.update(
+                        {
+                            "question": "location",
+                            "order": int(q["order"]),
+                            "required": True,
+                            "type": "administration",
+                            "meta": True,
+                        }
+                    )
                     question_group["questions"].append(administration)
                     adm = False
             if question["type"] == "free":
@@ -178,18 +179,15 @@ def generate_form(form, child=False):
             if len(list(rule)):
                 question.update({"rule": rule})
             if q["id"] not in skip_question_id and q["type"] not in [
-                    "cascade", "photo"
+                "cascade",
+                "photo",
             ]:
                 if q["type"] == "option" and len(options) == 0:
                     pass
                 else:
                     question_group["questions"].append(question)
         question_groups.append(question_group)
-    return {
-        "form": form_name,
-        "id": form_id,
-        "question_groups": question_groups
-    }
+    return {"form": form_name, "id": form_id, "question_groups": question_groups}
 
 
 for instance in instances:

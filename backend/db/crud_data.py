@@ -24,17 +24,19 @@ def add_data(
     created_by: int,
     answers: List[AnswerBase],
     geo: Optional[List[float]] = None,
-    submitter: Optional[str] = None
+    submitter: Optional[str] = None,
 ) -> DataDict:
-    data = Data(name=name,
-                form=form,
-                administration=administration,
-                geo=geo,
-                created_by=created_by,
-                updated_by=None,
-                created=datetime.now(),
-                updated=None,
-                submitter=submitter)
+    data = Data(
+        name=name,
+        form=form,
+        administration=administration,
+        geo=geo,
+        created_by=created_by,
+        updated_by=None,
+        created=datetime.now(),
+        updated=None,
+        submitter=submitter,
+    )
     for answer in answers:
         data.answer.append(answer)
     session.add(data)
@@ -59,22 +61,25 @@ def delete_by_id(session: Session, id: int) -> None:
 
 
 def delete_bulk(session: Session, ids: List[int]) -> None:
-    session.query(History).filter(
-        History.data.in_(ids)).delete(synchronize_session='fetch')
-    session.query(Answer).filter(
-        Answer.data.in_(ids)).delete(synchronize_session='fetch')
-    session.query(Data).filter(
-        Data.id.in_(ids)).delete(synchronize_session='fetch')
+    session.query(History).filter(History.data.in_(ids)).delete(
+        synchronize_session="fetch"
+    )
+    session.query(Answer).filter(Answer.data.in_(ids)).delete(
+        synchronize_session="fetch"
+    )
+    session.query(Data).filter(Data.id.in_(ids)).delete(synchronize_session="fetch")
     session.commit()
 
 
-def get_data(session: Session,
-             form: int,
-             skip: int,
-             perpage: int,
-             options: List[str] = None,
-             administration: List[int] = None,
-             question: List[int] = None) -> PaginatedData:
+def get_data(
+    session: Session,
+    form: int,
+    skip: int,
+    perpage: int,
+    options: List[str] = None,
+    administration: List[int] = None,
+    question: List[int] = None,
+) -> PaginatedData:
     data = session.query(Data).filter(Data.form == form)
     data_id = False
     if options:
@@ -87,18 +92,21 @@ def get_data(session: Session,
         data = data.filter(Data.administration.in_(administration))
     count = data.count()
     # getting the score
-    if (question):
-        data_score = session.query(
-            ViewDataScore.data,
-            func.sum(ViewDataScore.score).label('score')).filter(
-                ViewDataScore.form == form).filter(
-                    ViewDataScore.question.in_(question))
+    if question:
+        data_score = (
+            session.query(
+                ViewDataScore.data, func.sum(ViewDataScore.score).label("score")
+            )
+            .filter(ViewDataScore.form == form)
+            .filter(ViewDataScore.question.in_(question))
+        )
         if data_id:
             data_score = data_score.filter(
-                ViewDataScore.data.in_([d.data for d in data_id]))
+                ViewDataScore.data.in_([d.data for d in data_id])
+            )
         data_score = data_score.group_by(ViewDataScore.data).all()
         # if data have score
-        if (len(data_score)):
+        if len(data_score):
             data_score_temp = []
             for d in data_score:
                 data_score_temp.append({"data": d.data, "score": d.score})
@@ -107,10 +115,10 @@ def get_data(session: Session,
             id_ordering = case(
                 {
                     _id: index
-                    for index, _id in enumerate(
-                        [d["data"] for d in data_score_temp])
+                    for index, _id in enumerate([d["data"] for d in data_score_temp])
                 },
-                value=Data.id)
+                value=Data.id,
+            )
             data = data.order_by(id_ordering)
         else:
             data = data.order_by(desc(Data.id))
@@ -134,24 +142,31 @@ def get_data_name_by_id(session: Session, id: int) -> str:
     return session.query(Data).filter(Data.id == id).first().name
 
 
-def count(session: Session,
-          form: int,
-          options: List[str] = None,
-          administration: List[int] = None) -> int:
+def count(
+    session: Session,
+    form: int,
+    options: List[str] = None,
+    administration: List[int] = None,
+) -> int:
     data = session.query(Data).filter(Data.form == form)
     if options:
-        data_id = session.query(ViewData.data).filter(
-            ViewData.options.contains(options)).all()
+        data_id = (
+            session.query(ViewData.data)
+            .filter(ViewData.options.contains(options))
+            .all()
+        )
         data = data.filter(Data.id.in_([d.data for d in data_id]))
     if administration:
         data = data.filter(Data.administration.in_(administration))
     return data.group_by(Data.id).count()
 
 
-def get_last_submitted(session: Session,
-                       form: int,
-                       options: List[str] = None,
-                       administration: List[int] = None) -> DataDict:
+def get_last_submitted(
+    session: Session,
+    form: int,
+    options: List[str] = None,
+    administration: List[int] = None,
+) -> DataDict:
     data = session.query(Data).filter(Data.form == form)
     if options:
         # support multiple select options filter
@@ -164,14 +179,19 @@ def get_last_submitted(session: Session,
     return data.order_by(Data.id.desc()).first()
 
 
-def download(session: Session,
-             form: int,
-             options: List[str] = None,
-             administration: List[int] = None):
+def download(
+    session: Session,
+    form: int,
+    options: List[str] = None,
+    administration: List[int] = None,
+):
     data = session.query(Data).filter(Data.form == form)
     if options:
-        data_id = session.query(ViewData.data).filter(
-            ViewData.options.contains(options)).all()
+        data_id = (
+            session.query(ViewData.data)
+            .filter(ViewData.options.contains(options))
+            .all()
+        )
         data = data.filter(Data.id.in_([d.data for d in data_id]))
     if administration:
         data = data.filter(Data.administration.in_(administration))

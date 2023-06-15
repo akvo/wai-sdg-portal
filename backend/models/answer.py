@@ -15,50 +15,51 @@ from db.connection import Base
 
 class AnswerDict(TypedDict):
     question: int
-    value: Union[int, float, str, bool, dict, List[str], List[int],
-                 List[float], None]
+    value: Union[int, float, str, bool, dict, List[str], List[int], List[float], None]
 
 
 class AnswerDictWithHistory(TypedDict):
     history: bool
     question: int
-    value: Union[int, str, bool, dict, List[str], List[int],
-                 List[float], float, None]
+    value: Union[int, str, bool, dict, List[str], List[int], List[float], float, None]
 
 
 class Answer(Base):
     __tablename__ = "answer"
     id = Column(Integer, primary_key=True, index=True, nullable=True)
-    question = Column(Integer,
-                      ForeignKey('question.id',
-                                 onupdate="CASCADE",
-                                 ondelete="CASCADE"),
-                      primary_key=True)
-    data = Column(Integer,
-                  ForeignKey('data.id', onupdate="CASCADE",
-                             ondelete="CASCADE"),
-                  primary_key=True)
+    question = Column(
+        Integer,
+        ForeignKey("question.id", onupdate="CASCADE", ondelete="CASCADE"),
+        primary_key=True,
+    )
+    data = Column(
+        Integer,
+        ForeignKey("data.id", onupdate="CASCADE", ondelete="CASCADE"),
+        primary_key=True,
+    )
     text = Column(Text, nullable=True)
     value = Column(Float, nullable=True)
     options = Column(pg.ARRAY(String), nullable=True)
-    created_by = Column(Integer, ForeignKey('user.id'), nullable=True)
-    updated_by = Column(Integer, ForeignKey('user.id'), nullable=True)
+    created_by = Column(Integer, ForeignKey("user.id"), nullable=True)
+    updated_by = Column(Integer, ForeignKey("user.id"), nullable=True)
     created = Column(DateTime, nullable=True)
     updated = Column(DateTime, nullable=True)
     created_by_user = relationship("User", foreign_keys=[created_by])
     updated_by_user = relationship("User", foreign_keys=[updated_by])
     question_detail = relationship("Question", backref="answer")
 
-    def __init__(self,
-                 question: int,
-                 created_by: int,
-                 created: datetime,
-                 data: Optional[int] = None,
-                 text: Optional[str] = None,
-                 value: Optional[float] = None,
-                 options: Optional[List[str]] = None,
-                 updated: Optional[datetime] = None,
-                 updated_by: Optional[int] = None):
+    def __init__(
+        self,
+        question: int,
+        created_by: int,
+        created: datetime,
+        data: Optional[int] = None,
+        text: Optional[str] = None,
+        value: Optional[float] = None,
+        options: Optional[List[str]] = None,
+        updated: Optional[datetime] = None,
+        updated_by: Optional[int] = None,
+    ):
         self.question = question
         self.data = data
         self.text = text
@@ -91,12 +92,13 @@ class Answer(Base):
     def formatted(self) -> AnswerDictWithHistory:
         answer = {
             "question": self.question,
-            "history": True if self.updated_by else False
+            "history": True if self.updated_by else False,
         }
         type = self.question_detail.type
         if type in [
-                QuestionType.administration, QuestionType.number,
-                QuestionType.answer_list
+            QuestionType.administration,
+            QuestionType.number,
+            QuestionType.answer_list,
         ]:
             answer.update({"value": self.value})
         if type in [QuestionType.text, QuestionType.geo, QuestionType.date]:
@@ -114,7 +116,7 @@ class Answer(Base):
         return {
             self.question: {
                 "value": self.text or self.value or self.options,
-                "data": self
+                "data": self,
             }
         }
 
@@ -122,8 +124,9 @@ class Answer(Base):
     def only_value(self) -> List:
         type = self.question_detail.type
         if type in [
-                QuestionType.administration, QuestionType.number,
-                QuestionType.answer_list
+            QuestionType.administration,
+            QuestionType.number,
+            QuestionType.answer_list,
         ]:
             return self.value
         if type in [QuestionType.text, QuestionType.geo, QuestionType.date]:
@@ -145,8 +148,9 @@ class Answer(Base):
         type = self.question_detail.type
         answer = None
         if type in [
-                QuestionType.administration, QuestionType.number,
-                QuestionType.answer_list
+            QuestionType.administration,
+            QuestionType.number,
+            QuestionType.answer_list,
         ]:
             answer = self.value
         if type in [QuestionType.text, QuestionType.geo, QuestionType.date]:
@@ -157,19 +161,16 @@ class Answer(Base):
             answer = self.options
         if type == QuestionType.photo:
             answer = self.text
-        return {
-            "value": answer,
-            "date": date.strftime("%B %d, %Y"),
-            "user": user.name
-        }
+        return {"value": answer, "date": date.strftime("%B %d, %Y"), "user": user.name}
 
     @property
     def to_maps(self) -> List:
         answer = {"question": self.question, "data": self.data}
         type = self.question_detail.type
         if type in [
-                QuestionType.administration, QuestionType.number,
-                QuestionType.answer_list
+            QuestionType.administration,
+            QuestionType.number,
+            QuestionType.answer_list,
         ]:
             answer.update({"value": self.value})
         if type in [QuestionType.text, QuestionType.geo, QuestionType.date]:
@@ -188,8 +189,9 @@ class Answer(Base):
         q = self.question_detail
         qname = f"{self.question_detail.id}|{self.question_detail.name}"
         if q.type in [
-                QuestionType.administration, QuestionType.number,
-                QuestionType.answer_list
+            QuestionType.administration,
+            QuestionType.number,
+            QuestionType.answer_list,
         ]:
             answer = self.value
         if q.type in [QuestionType.text, QuestionType.geo, QuestionType.date]:

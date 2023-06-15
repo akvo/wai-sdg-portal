@@ -11,11 +11,12 @@ import db.crud_option as crud_option
 
 
 def get_last_question(session: Session, form: int, question_group: int):
-    last_question = session.query(Question).filter(
-        and_(
-            Question.form == form,
-            Question.question_group == question_group)).order_by(
-                Question.order.desc()).first()
+    last_question = (
+        session.query(Question)
+        .filter(and_(Question.form == form, Question.question_group == question_group))
+        .order_by(Question.order.desc())
+        .first()
+    )
     if last_question:
         last_question = last_question.order + 1
     else:
@@ -56,24 +57,27 @@ def add_question(
     tooltip: Optional[dict] = None,
     translations: Optional[List[dict]] = None,
     api: Optional[dict] = None,
-    addons: Optional[dict] = None
+    addons: Optional[dict] = None,
 ) -> QuestionBase:
     last_question = get_last_question(
-        session=session, form=form, question_group=question_group)
-    question = Question(id=id,
-                        name=name,
-                        order=order if order else last_question,
-                        form=form,
-                        meta=meta,
-                        question_group=question_group,
-                        type=type,
-                        required=required,
-                        rule=rule,
-                        dependency=dependency,
-                        tooltip=tooltip,
-                        translations=translations,
-                        api=api,
-                        addons=addons)
+        session=session, form=form, question_group=question_group
+    )
+    question = Question(
+        id=id,
+        name=name,
+        order=order if order else last_question,
+        form=form,
+        meta=meta,
+        question_group=question_group,
+        type=type,
+        required=required,
+        rule=rule,
+        dependency=dependency,
+        tooltip=tooltip,
+        translations=translations,
+        api=api,
+        addons=addons,
+    )
     if option:
         for o in option:
             opt = generateOptionObj(obj=o)
@@ -101,17 +105,21 @@ def update_question(
     tooltip: Optional[dict] = None,
     translations: Optional[List[dict]] = None,
     api: Optional[dict] = None,
-    addons: Optional[dict] = None
+    addons: Optional[dict] = None,
 ) -> QuestionBase:
     last_question = get_last_question(
-        session=session, form=form, question_group=question_group)
-    question = session.query(Question).filter(and_(
-        Question.form == form,
-        Question.id == id)).first()
+        session=session, form=form, question_group=question_group
+    )
+    question = (
+        session.query(Question)
+        .filter(and_(Question.form == form, Question.id == id))
+        .first()
+    )
     # clear option when question type change
     if question.type in [QuestionType.option, QuestionType.multiple_option]:
-        session.query(Option).filter(
-            Option.question == question.id).delete(synchronize_session='fetch')
+        session.query(Option).filter(Option.question == question.id).delete(
+            synchronize_session="fetch"
+        )
     question.name = name
     question.order = order if order else last_question
     question.meta = meta
@@ -126,29 +134,28 @@ def update_question(
     question.addons = addons
     if option:
         for o in option:
-            find_option = session.query(Option).filter(
-                Option.id == o['id']).first()
+            find_option = session.query(Option).filter(Option.id == o["id"]).first()
             if not find_option:
                 opt = opt = generateOptionObj(obj=o)
                 question.option.append(opt)
             if find_option:
                 crud_option.update_option(
                     session=session,
-                    id=o.get('id'),
-                    name=o.get('name'),
-                    order=o.get('order'),
-                    color=o.get('color'),
-                    score=o.get('score'),
-                    code=o.get('code'),
-                    translations=o.get('translations'))
+                    id=o.get("id"),
+                    name=o.get("name"),
+                    order=o.get("order"),
+                    color=o.get("color"),
+                    score=o.get("score"),
+                    code=o.get("code"),
+                    translations=o.get("translations"),
+                )
     session.commit()
     session.flush()
     session.refresh(question)
     return question
 
 
-def get_question(session: Session,
-                 form: Optional[int] = None) -> List[QuestionDict]:
+def get_question(session: Session, form: Optional[int] = None) -> List[QuestionDict]:
     if form:
         return session.query(Question).filter(Question.form == form).all()
     return session.query(Question).all()
@@ -162,11 +169,13 @@ def get_question_by_id(session: Session, id: int) -> QuestionDict:
     return session.query(Question).filter(Question.id == id).first()
 
 
-def get_question_by_name(session: Session, form: int,
-                         name: str) -> QuestionDict:
+def get_question_by_name(session: Session, form: int, name: str) -> QuestionDict:
     name = name.replace("_", " ").lower().strip()
-    question = session.query(Question).filter(
-        and_(Question.name == name, Question.form == form)).first()
+    question = (
+        session.query(Question)
+        .filter(and_(Question.name == name, Question.form == form))
+        .first()
+    )
     return question
 
 
@@ -178,19 +187,31 @@ def get_question_name(session: Session, id: int) -> str:
 
 
 def get_excel_headers(session: Session, form: int) -> List[str]:
-    questions = session.query(Question).join(QuestionGroup).filter(
-        Question.form == form).order_by(QuestionGroup.order, Question.order)
+    questions = (
+        session.query(Question)
+        .join(QuestionGroup)
+        .filter(Question.form == form)
+        .order_by(QuestionGroup.order, Question.order)
+    )
     return [q.to_excel_header for q in questions]
 
 
 def get_excel_question(session: Session, form: int) -> List[QuestionDict]:
-    return session.query(Question).join(QuestionGroup).filter(
-        Question.form == form).order_by(QuestionGroup.order, Question.order)
+    return (
+        session.query(Question)
+        .join(QuestionGroup)
+        .filter(Question.form == form)
+        .order_by(QuestionGroup.order, Question.order)
+    )
 
 
 def get_definition(session: Session, form: int):
-    questions = session.query(Question).join(QuestionGroup).filter(
-        Question.form == form).order_by(QuestionGroup.order, Question.order)
+    questions = (
+        session.query(Question)
+        .join(QuestionGroup)
+        .filter(Question.form == form)
+        .order_by(QuestionGroup.order, Question.order)
+    )
     framed = []
     for q in [qs.to_definition for qs in questions]:
         rule = ""
@@ -211,40 +232,52 @@ def get_definition(session: Session, form: int):
             dependency = "\n".join(dependency)
         if q["options"] and q["type"] != QuestionType.answer_list:
             for o in q["options"]:
-                framed.append({
-                    "id": q["id"],
-                    "question": q["name"],
-                    "type": q["type"],
-                    "option": o,
-                    "required": "YES" if q["required"] else "NO",
-                    "rule": rule,
-                    "dependency": dependency
-                })
+                framed.append(
+                    {
+                        "id": q["id"],
+                        "question": q["name"],
+                        "type": q["type"],
+                        "option": o,
+                        "required": "YES" if q["required"] else "NO",
+                        "rule": rule,
+                        "dependency": dependency,
+                    }
+                )
         if q["type"] == QuestionType.answer_list:
-            answer_data = session.query(Answer).filter(
-                Answer.question == int(q["options"][0])).all()
-            parent_data = session.query(Data).filter(
-                Data.id.in_([a.data for a in answer_data])).all()
+            answer_data = (
+                session.query(Answer)
+                .filter(Answer.question == int(q["options"][0]))
+                .all()
+            )
+            parent_data = (
+                session.query(Data)
+                .filter(Data.id.in_([a.data for a in answer_data]))
+                .all()
+            )
             for parent in parent_data:
-                framed.append({
+                framed.append(
+                    {
+                        "id": q["id"],
+                        "question": q["name"],
+                        "type": q["type"],
+                        "option": parent.name,
+                        "required": "YES" if q["required"] else "NO",
+                        "rule": rule,
+                        "dependency": dependency,
+                    }
+                )
+        else:
+            framed.append(
+                {
                     "id": q["id"],
                     "question": q["name"],
                     "type": q["type"],
-                    "option": parent.name,
+                    "option": "",
                     "required": "YES" if q["required"] else "NO",
                     "rule": rule,
-                    "dependency": dependency
-                })
-        else:
-            framed.append({
-                "id": q["id"],
-                "question": q["name"],
-                "type": q["type"],
-                "option": "",
-                "required": "YES" if q["required"] else "NO",
-                "rule": rule,
-                "dependency": dependency
-            })
+                    "dependency": dependency,
+                }
+            )
     return framed
 
 
@@ -259,9 +292,7 @@ def validate_dependency(session: Session, dependency: List[dict]):
         question = get_question_by_id(session=session, id=qid)
         if not question:
             errors.append(f"Question {qid} not found")
-        if question.type not in [
-                QuestionType.option, QuestionType.multiple_option
-        ]:
+        if question.type not in [QuestionType.option, QuestionType.multiple_option]:
             errors.append(f"Question {qid} type should be option")
         options = [o.name for o in question.option]
         for o in opt:
@@ -271,9 +302,11 @@ def validate_dependency(session: Session, dependency: List[dict]):
 
 
 def get_project_question(session: Session, form: int) -> QuestionDict:
-    return session.query(Question).filter(
-        and_(Question.form == form,
-             Question.type == QuestionType.answer_list)).first()
+    return (
+        session.query(Question)
+        .filter(and_(Question.form == form, Question.type == QuestionType.answer_list))
+        .first()
+    )
 
 
 def delete_by_form(session: Session, form: int) -> None:

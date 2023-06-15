@@ -14,8 +14,7 @@ sys.path.append("..")
 
 
 class Acc:
-    def __init__(
-            self, verified: bool = False, email: str = None, name: str = None):
+    def __init__(self, verified: bool = False, email: str = None, name: str = None):
         self.exp_date = (datetime.now() + timedelta(days=30)).timestamp()
         self.data = {
             "email": email if email else "support@akvo.org",
@@ -119,8 +118,7 @@ class TestAuthorizationSetup:
             }
         ]
         # register as new user
-        new_account = Acc(
-            verified=True, email="john_doe@mail.com", name="John Doe")
+        new_account = Acc(verified=True, email="john_doe@mail.com", name="John Doe")
         res = await client.post(
             app.url_path_for("user:register"),
             params={
@@ -158,24 +156,14 @@ class TestAuthorizationSetup:
         # get non active user with extra filter return 404
         res = await client.get(
             app.url_path_for("user:get"),
-            params={
-                "active": 0,
-                "search": "john",
-                "organisation": 1,
-                "role": "admin"
-            },
+            params={"active": 0, "search": "john", "organisation": 1, "role": "admin"},
             headers={"Authorization": f"Bearer {account.token}"},
         )
         assert res.status_code == 404
         # get non active user with extra filter return 200
         res = await client.get(
             app.url_path_for("user:get"),
-            params={
-                "active": 0,
-                "search": "john",
-                "organisation": 1,
-                "role": "user"
-            },
+            params={"active": 0, "search": "john", "organisation": 1, "role": "user"},
             headers={"Authorization": f"Bearer {account.token}"},
         )
         assert res.status_code == 200
@@ -200,12 +188,7 @@ class TestAuthorizationSetup:
         # full text search support
         res = await client.get(
             app.url_path_for("user:get"),
-            params={
-                "active": 0,
-                "search": "mail",
-                "organisation": 1,
-                "role": "user"
-            },
+            params={"active": 0, "search": "mail", "organisation": 1, "role": "user"},
             headers={"Authorization": f"Bearer {account.token}"},
         )
         assert res.status_code == 200
@@ -234,7 +217,7 @@ class TestAuthorizationSetup:
                 "active": 0,
                 "search": "John Doe",
                 "organisation": 1,
-                "role": "user"
+                "role": "user",
             },
             headers={"Authorization": f"Bearer {account.token}"},
         )
@@ -319,7 +302,8 @@ class TestAuthorizationSetup:
         }
         # register as new admin with no manage form passcode access
         new_account = Acc(
-            verified=True, email="normal_admin@mail.com", name="Normal Admin")
+            verified=True, email="normal_admin@mail.com", name="Normal Admin"
+        )
         res = await client.post(
             app.url_path_for("user:register"),
             params={

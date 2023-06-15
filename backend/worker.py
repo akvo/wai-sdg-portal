@@ -57,9 +57,9 @@ async def start() -> None:
             if max_timeout > timeout:
                 force_remove_task(session=session, jobs=op_jobs.serialize)
         if pending_jobs:
-            jobs = update(session=session,
-                          id=pending_jobs,
-                          status=JobStatus.on_progress)
+            jobs = update(
+                session=session, id=pending_jobs, status=JobStatus.on_progress
+            )
             do_task(session=session, jobs=jobs)
 
 

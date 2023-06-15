@@ -44,7 +44,7 @@ class ViewDataScore(Base):
             "form": self.form,
             "question": self.question,
             "option": self.option,
-            "score": self.score
+            "score": self.score,
         }
 
     @property
@@ -53,7 +53,7 @@ class ViewDataScore(Base):
             "data": self.data,
             "administration": self.administration_detail.parent,
             "option": self.option,
-            "score": self.score
+            "score": self.score,
         }
 
     @property
@@ -62,7 +62,7 @@ class ViewDataScore(Base):
             "data": self.data,
             "administration": self.administration,
             "option": self.option,
-            "score": self.score
+            "score": self.score,
         }
 
     def group_serialize(data) -> GroupByDict:

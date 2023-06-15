@@ -7,8 +7,8 @@ from models.access import Access, AccessDict
 
 
 def define_search_ts_vector(search: str):
-    if ' ' in search:
-        search = search.replace(' ', '&')
+    if " " in search:
+        search = search.replace(" ", "&")
     return search
 
 
@@ -19,7 +19,7 @@ def add_user(
     organisation: int,
     role: UserRole,
     active: bool = False,
-    manage_form_passcode: Optional[bool] = None
+    manage_form_passcode: Optional[bool] = None,
 ) -> UserDict:
     mfp = False
     if manage_form_passcode is not None:
@@ -30,7 +30,7 @@ def add_user(
         name=name,
         active=active,
         organisation=organisation,
-        manage_form_passcode=mfp
+        manage_form_passcode=mfp,
     )
     session.add(user)
     session.commit()
@@ -44,7 +44,7 @@ def count(
     active: int = 0,
     search: Optional[str] = None,
     organisation: Optional[int] = None,
-    role: Optional[UserRole] = None
+    role: Optional[UserRole] = None,
 ) -> int:
     count = session.query(User)
     if search:
@@ -65,7 +65,7 @@ def get_user(
     active: int = 0,
     search: Optional[str] = None,
     organisation: Optional[int] = None,
-    role: Optional[UserRole] = None
+    role: Optional[UserRole] = None,
 ) -> List[User]:
     users = session.query(User).filter(User.active == bool(active))
     if search:
@@ -75,8 +75,7 @@ def get_user(
         users = users.filter(User.organisation == organisation)
     if role:
         users = users.filter(User.role == role)
-    users = users.order_by(
-        desc(User.id)).offset(skip).limit(limit).all()
+    users = users.order_by(desc(User.id)).offset(skip).limit(limit).all()
     return users
 
 
@@ -87,7 +86,7 @@ def update_user_by_id(
     active: bool,
     name: Optional[str] = None,
     organisation: Optional[int] = None,
-    manage_form_passcode: Optional[bool] = None
+    manage_form_passcode: Optional[bool] = None,
 ) -> UserDict:
     user = session.query(User).filter(User.id == id).first()
     user.role = role
@@ -112,36 +111,28 @@ def get_user_by_email(session: Session, email: str) -> User:
     return session.query(User).filter(User.email == email).first()
 
 
-def add_access(
-    session: Session,
-    user: int,
-    access: List[Access]
-) -> List[AccessDict]:
+def add_access(session: Session, user: int, access: List[Access]) -> List[AccessDict]:
     curr = session.query(Access).filter(Access.user == user)
     if access:
         curr = curr.all()
-        access = [{
-            "user": a.user,
-            "administration": a.administration,
-            "new": True
-        } for a in access]
+        access = [
+            {"user": a.user, "administration": a.administration, "new": True}
+            for a in access
+        ]
         access = pd.DataFrame(access)
         if len(curr):
             curr = pd.DataFrame([c.serialize for c in curr])
-            access = curr.merge(access,
-                                on=['user', 'administration'],
-                                how='outer')
-            access['id'] = access['id'].fillna(0).astype(int)
-            to_be_deleted = access[access['new'] != access['new']]
-            access = access[access['id'] == 0]
-            for d in to_be_deleted.to_dict('records'):
-                session.query(Access).filter(Access.id == d['id']).delete()
+            access = curr.merge(access, on=["user", "administration"], how="outer")
+            access["id"] = access["id"].fillna(0).astype(int)
+            to_be_deleted = access[access["new"] != access["new"]]
+            access = access[access["id"] == 0]
+            for d in to_be_deleted.to_dict("records"):
+                session.query(Access).filter(Access.id == d["id"]).delete()
                 session.commit()
                 session.flush()
-        access = access.to_dict('records')
+        access = access.to_dict("records")
         for acc in access:
-            acc = Access(
-                user=acc["user"], administration=acc["administration"])
+            acc = Access(user=acc["user"], administration=acc["administration"])
             session.add(acc)
             session.commit()
             session.flush()
@@ -172,9 +163,12 @@ def get_all_admin_recipient(session: Session) -> User:
 
 
 def delete_user_by_id(session: Session, id: int) -> None:
-    data = session.query(User).filter(
-        User.role != UserRole.admin).filter(
-            User.id == id).one()
+    data = (
+        session.query(User)
+        .filter(User.role != UserRole.admin)
+        .filter(User.id == id)
+        .one()
+    )
     if data:
         session.delete(data)
         session.commit()

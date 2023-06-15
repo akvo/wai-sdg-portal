@@ -2,64 +2,31 @@ import enum
 
 
 class GeoLevels(enum.Enum):
-    notset = [{
-        "level": 0,
-        "name": "provinsi",
-        "alias": "Provinsi"
-    }, {
-        "level": 1,
-        "name": "kabkot",
-        "alias": "Kabupaten / Kota"
-    }]
-    wai_demo = [{
-        "level": 0,
-        "name": "DISTRICT",
-        "alias": "District"
-    }, {
-        "level": 1,
-        "name": "SUB_DIST",
-        "alias": "Sub-District"
-    }, {
-        "level": 2,
-        "name": "NAME",
-        "alias": "Village"
-    }]
-    wai_ethiopia = [{
-        "level": 0,
-        "name": "UNIT_TYPE",
-        "alias": "Woreda"
-    }, {
-        "level": 1,
-        "name": "UNIT_NAME",
-        "alias": "Kebele"
-    }]
-    wai_uganda = [{
-        "level": 0,
-        "name": "ADM2_EN",
-        "alias": "District"
-    }, {
-        "level": 1,
-        "name": "ADM4_EN",
-        "alias": "Sub-County"
-    }]
-    wai_bangladesh = [{
-        "level": 0,
-        "name": "ADM2_EN",
-        "alias": "District"
-    }, {
-        "level": 1,
-        "name": "ADM4_EN",
-        "alias": "Union / Municipality"
-    }]
-    wai_nepal = [{
-        "level": 0,
-        "name": "DISTRICT",
-        "alias": "District"
-    }, {
-        "level": 1,
-        "name": "UNIT_NAME",
-        "alias": "Municipality"
-    }]
+    notset = [
+        {"level": 0, "name": "provinsi", "alias": "Provinsi"},
+        {"level": 1, "name": "kabkot", "alias": "Kabupaten / Kota"},
+    ]
+    wai_demo = [
+        {"level": 0, "name": "DISTRICT", "alias": "District"},
+        {"level": 1, "name": "SUB_DIST", "alias": "Sub-District"},
+        {"level": 2, "name": "NAME", "alias": "Village"},
+    ]
+    wai_ethiopia = [
+        {"level": 0, "name": "UNIT_TYPE", "alias": "Woreda"},
+        {"level": 1, "name": "UNIT_NAME", "alias": "Kebele"},
+    ]
+    wai_uganda = [
+        {"level": 0, "name": "ADM2_EN", "alias": "District"},
+        {"level": 1, "name": "ADM4_EN", "alias": "Sub-County"},
+    ]
+    wai_bangladesh = [
+        {"level": 0, "name": "ADM2_EN", "alias": "District"},
+        {"level": 1, "name": "ADM4_EN", "alias": "Union / Municipality"},
+    ]
+    wai_nepal = [
+        {"level": 0, "name": "DISTRICT", "alias": "District"},
+        {"level": 1, "name": "UNIT_NAME", "alias": "Municipality"},
+    ]
 
 
 # Landing Page

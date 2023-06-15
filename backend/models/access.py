@@ -18,8 +18,8 @@ class AccessDict(TypedDict):
 class Access(Base):
     __tablename__ = "access"
     id = Column(Integer, primary_key=True, index=True, nullable=True)
-    user = Column(Integer, ForeignKey('user.id'))
-    administration = Column(Integer, ForeignKey('administration.id'))
+    user = Column(Integer, ForeignKey("user.id"))
+    administration = Column(Integer, ForeignKey("administration.id"))
 
     def __init__(self, user: int, administration: int):
         self.user = user
@@ -30,11 +30,7 @@ class Access(Base):
 
     @property
     def serialize(self) -> AccessDict:
-        return {
-            "id": self.id,
-            "user": self.user,
-            "administration": self.administration
-        }
+        return {"id": self.id, "user": self.user, "administration": self.administration}
 
 
 class AccessBase(BaseModel):

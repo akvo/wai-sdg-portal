@@ -7,11 +7,13 @@ from models.jobs import JobStatusResponse
 jobs_route = APIRouter()
 
 
-@jobs_route.get("/jobs/status/{id:path}",
-                response_model=JobStatusResponse,
-                summary="get jobs by id",
-                name="jobs:status",
-                tags=["Jobs"])
+@jobs_route.get(
+    "/jobs/status/{id:path}",
+    response_model=JobStatusResponse,
+    summary="get jobs by id",
+    name="jobs:status",
+    tags=["Jobs"],
+)
 def get_by_id(req: Request, id: int, session: Session = Depends(get_session)):
     jobs = crud.status(session=session, id=id)
     return jobs

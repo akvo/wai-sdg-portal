@@ -43,11 +43,13 @@ class Log(Base):
     at = Column(DateTime, default=datetime.utcnow)
     jobs_detail = relationship(Jobs, backref="jobs")
 
-    def __init__(self,
-                 message: str,
-                 user: int,
-                 jobs: Optional[int] = None,
-                 at: Optional[datetime] = None):
+    def __init__(
+        self,
+        message: str,
+        user: int,
+        jobs: Optional[int] = None,
+        at: Optional[datetime] = None,
+    ):
         self.message = message
         self.user = user
         self.jobs = jobs
@@ -72,9 +74,7 @@ class Log(Base):
         attachment = None
         if self.jobs:
             status = self.jobs_detail.status
-            if self.jobs_detail.type in [
-                    JobType.validate_data, JobType.download
-            ]:
+            if self.jobs_detail.type in [JobType.validate_data, JobType.download]:
                 attachment = self.jobs_detail.payload
         return {
             "id": self.id,

@@ -4,10 +4,9 @@ from models.organisation import Organisation
 from models.organisation import OrganisationDict, OrganisationType
 
 
-def add_organisation(session: Session,
-                     name: str,
-                     type: OrganisationType,
-                     id: Optional[int] = None) -> OrganisationDict:
+def add_organisation(
+    session: Session, name: str, type: OrganisationType, id: Optional[int] = None
+) -> OrganisationDict:
     organisation = Organisation(id=id, name=name, type=type)
     session.add(organisation)
     session.commit()
@@ -17,12 +16,12 @@ def add_organisation(session: Session,
 
 
 def update_organisation(
-        session: Session,
-        id: int,
-        name: Optional[str] = None,
-        type: Optional[OrganisationType] = None) -> None:
-    organisation = session.query(Organisation).filter(
-        Organisation.id == id).first()
+    session: Session,
+    id: int,
+    name: Optional[str] = None,
+    type: Optional[OrganisationType] = None,
+) -> None:
+    organisation = session.query(Organisation).filter(Organisation.id == id).first()
     if name:
         organisation.name = name
     if type:
@@ -41,5 +40,8 @@ def get_organisation_by_id(session: Session, id: int) -> Organisation:
 
 
 def get_organisation_by_name(session: Session, name: str) -> Organisation:
-    return session.query(Organisation).filter(
-        Organisation.name.ilike("%{}%".format(name.lower().strip()))).first()
+    return (
+        session.query(Organisation)
+        .filter(Organisation.name.ilike("%{}%".format(name.lower().strip())))
+        .first()
+    )

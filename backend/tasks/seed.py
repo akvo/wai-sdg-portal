@@ -23,9 +23,7 @@ def save(session: Session, user: int, form: int, dp: dict, qs: dict):
                 aw = HText(aw).clean
             valid = True
             q = qs[a]
-            answer = Answer(question=q.id,
-                            created_by=user,
-                            created=datetime.now())
+            answer = Answer(question=q.id, created_by=user, created=datetime.now())
             if q.type == QuestionType.administration:
                 adms = aw.split("|")
                 adm_list = []
@@ -34,11 +32,15 @@ def save(session: Session, user: int, form: int, dp: dict, qs: dict):
                         parent = adm_list[ix - 1]
                         adm_list.append(
                             crud_administration.get_administration_by_name(
-                                session, name=adm, parent=parent.id))
+                                session, name=adm, parent=parent.id
+                            )
+                        )
                     else:
                         adm_list.append(
                             crud_administration.get_administration_by_name(
-                                session, name=adm))
+                                session, name=adm
+                            )
+                        )
                 administration = adm_list[-1].id
                 answer.value = administration
                 if q.meta:
@@ -78,8 +80,7 @@ def save(session: Session, user: int, form: int, dp: dict, qs: dict):
             if q.type == QuestionType.multiple_option:
                 answer.options = aw
             if q.type == QuestionType.answer_list:
-                parent = crud_data.get_data_by_name(session=session,
-                                                    name=aw)
+                parent = crud_data.get_data_by_name(session=session, name=aw)
                 parent_code = parent.name.split(" - ")[-1]
                 administration = parent.administration
                 answer.value = int(parent_code)
@@ -89,13 +90,15 @@ def save(session: Session, user: int, form: int, dp: dict, qs: dict):
     name = " - ".join([str(n) for n in names])
     if parent_code:
         name = f"{parent_code} - {name}"
-    data = crud_data.add_data(session=session,
-                              form=form,
-                              name=name,
-                              geo=geo,
-                              administration=administration,
-                              created_by=user,
-                              answers=answerlist)
+    data = crud_data.add_data(
+        session=session,
+        form=form,
+        name=name,
+        geo=geo,
+        administration=administration,
+        created_by=user,
+        answers=answerlist,
+    )
     del names
     del answerlist
     return data
@@ -114,11 +117,7 @@ def seed(session: Session, file: str, user: int, form: int):
     datapoints = df.to_dict("records")
     records = []
     for datapoint in datapoints:
-        data = save(session=session,
-                    user=user,
-                    form=form,
-                    dp=datapoint,
-                    qs=questions)
+        data = save(session=session, user=user, form=form, dp=datapoint, qs=questions)
         records.append(data)
     total_data = len(records)
     del records

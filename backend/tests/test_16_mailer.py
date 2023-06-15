@@ -11,7 +11,7 @@ sys.path.append("..")
 account = Acc(True)
 
 
-class TestMailer():
+class TestMailer:
     @pytest.mark.asyncio
     async def test_email_recipient(self, session: Session) -> None:
         user = get_user_by_email(session=session, email=account.data["email"])
@@ -21,13 +21,13 @@ class TestMailer():
     @pytest.mark.asyncio
     async def test_email_data(self, session: Session) -> None:
         user = get_user_by_email(session=session, email=account.data["email"])
-        email = Email(recipients=[user.recipient],
-                      type=MailTypeEnum.data_validation_success)
+        email = Email(
+            recipients=[user.recipient], type=MailTypeEnum.data_validation_success
+        )
         data = email.data
-        assert data["Recipients"] == [{
-            "Email": "support@akvo.org",
-            "Name": "Akvo Support"
-        }]
+        assert data["Recipients"] == [
+            {"Email": "support@akvo.org", "Name": "Akvo Support"}
+        ]
         assert data["FromEmail"] == "noreply@akvo.org"
         assert data["Subject"] == "Data Validation"
         assert email.send is True

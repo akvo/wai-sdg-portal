@@ -61,9 +61,7 @@ for d in data:
         # 3. check if the defined options exist in the database
         for c in conditions:
             options = [o.replace("''", "'") for o in c["options"]]
-            fq = crud_question.get_question_by_id(
-                session=session, id=c["question"]
-            )
+            fq = crud_question.get_question_by_id(session=session, id=c["question"])
             if fq is None:
                 print(
                     "QUESTION ID NOT FOUND:",
