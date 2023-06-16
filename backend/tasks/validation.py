@@ -229,7 +229,8 @@ def dependency_checker(qs, answered, index):
         )
         if len(fa):
             answer_deps.append(fa[0])
-            intersection = list(set([fa[0]["answer"]]).intersection(q["options"]))
+            answers = str(fa[0]["answer"]).split("|")
+            intersection = list(set(answers).intersection(q["options"]))
             if len(intersection):
                 matched.append(intersection[0])
     valid_deps = len(matched) == len(qs)

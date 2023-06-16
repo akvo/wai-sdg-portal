@@ -66,7 +66,7 @@ const ActivityLog = () => {
         loadMore={<LoadMoreButton reached={reached} />}
         renderItem={(item) => {
           const actions = [];
-          if (item?.attachment) {
+          if (item?.attachment && item.icon !== 'warning') {
             actions.push(
               <a
                 className="attachment-badge"
@@ -82,7 +82,9 @@ const ActivityLog = () => {
             <List.Item actions={actions}>
               <List.Item.Meta
                 avatar={<IconList type={item.icon} />}
-                title={<ListTitle title={item.file} />}
+                title={
+                  <ListTitle title={item?.file || item?.attachment || ''} />
+                }
                 description={item.status}
               />
             </List.Item>
