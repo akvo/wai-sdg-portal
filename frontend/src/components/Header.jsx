@@ -62,7 +62,7 @@ const ActivityLog = () => {
       <List
         size="small"
         itemLayout="horizontal"
-        dataSource={activityLog.filter((a) => a.type !== 'download')}
+        dataSource={activityLog}
         loadMore={<LoadMoreButton reached={reached} />}
         renderItem={(item) => {
           const actions = [];
