@@ -3,11 +3,17 @@ import sys
 from main import app
 from util.helper import HText, UUID
 from fastapi.testclient import TestClient
+from core.config import write_form_url_config
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
 
 client = TestClient(app)
+
+
+def test_write_form_url_config():
+    path = write_form_url_config()
+    assert os.path.isfile(path) is True
 
 
 def test_read_main():

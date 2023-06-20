@@ -75,6 +75,7 @@ def write_form_url_config():
         open(URL_FORM_CONFIG, "w").write(json.dumps(configs))
     finally:
         session.close()
+    return URL_FORM_CONFIG
 
 
 class Settings(BaseSettings):
@@ -82,7 +83,7 @@ class Settings(BaseSettings):
     instance_name: str = INSTANCE_NAME
     source_path: str = SOURCE_PATH
     js_file: str = JS_FILE
-    form_url: dict = write_form_url_config()
+    form_url: str = write_form_url_config()
 
 
 settings = Settings()
