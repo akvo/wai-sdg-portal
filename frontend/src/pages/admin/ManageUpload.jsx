@@ -116,15 +116,7 @@ const ManageUpload = () => {
         e.activityData = {
           ...e.activityData,
           active: true,
-          data: [
-            {
-              ...jobState,
-              file: jobState?.info?.original_filename,
-              status: notificationText?.statusWaitingValidationText,
-              icon: 'warning',
-            },
-            ...activityData.data,
-          ],
+          data: activityData.data,
         };
       });
     }

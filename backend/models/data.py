@@ -66,10 +66,11 @@ class Data(Base):
     form = Column(Integer, ForeignKey(Form.id))
     administration = Column(Integer, ForeignKey(Administration.id))
     geo = Column(pg.ARRAY(Float), nullable=True)
-    created_by = Column(Integer, ForeignKey(User.id))
+    created_by = Column(Integer, ForeignKey(User.id), nullable=True)
     updated_by = Column(Integer, ForeignKey(User.id), nullable=True)
     created = Column(DateTime, nullable=True)
     updated = Column(DateTime, nullable=True)
+    submitter = Column(String, nullable=True)
     answer = relationship(
         Answer,
         cascade="all, delete",
@@ -97,6 +98,7 @@ class Data(Base):
         updated_by: int,
         updated: datetime,
         created: datetime,
+        submitter: Optional[str] = None,
     ):
         self.name = name
         self.form = form
@@ -106,19 +108,25 @@ class Data(Base):
         self.updated_by = updated_by
         self.updated = updated
         self.created = created
+        self.submitter = submitter
 
     def __repr__(self) -> int:
         return f"<Data {self.id}>"
 
     @property
     def serialize(self) -> DataDict:
+        created_by = None
+        if self.created_by:
+            created_by = self.created_by_user.name
+        if not self.created_by and self.submitter:
+            created_by = self.submitter
         return {
             "id": self.id,
             "name": self.name,
             "form": self.form,
             "administration": self.administration,
             "geo": {"lat": self.geo[0], "long": self.geo[1]} if self.geo else None,
-            "created_by": self.created_by_user.name,
+            "created_by": created_by,
             "updated_by": self.updated_by_user.name if self.updated_by else None,
             "created": self.created.strftime("%B %d, %Y"),
             "updated": self.updated.strftime("%B %d, %Y") if self.updated else None,
@@ -144,12 +152,17 @@ class Data(Base):
 
     @property
     def to_data_frame(self):
+        created_by = None
+        if self.created_by:
+            created_by = self.created_by_user.name
+        if not self.created_by and self.submitter:
+            created_by = self.submitter
         data = {
             "id": self.id,
             "datapoint_name": self.name,
             "administration": self.administration_detail.name,
             "geolocation": f"{self.geo[0], self.geo[1]}" if self.geo else None,
-            "created_by": self.created_by_user.name,
+            "created_by": created_by,
             "updated_by": self.updated_by_user.name if self.updated_by else None,
             "created_at": self.created.strftime("%B %d, %Y"),
             "updated_at": self.updated.strftime("%B %d, %Y") if self.updated else None,

@@ -30,7 +30,10 @@ class TestFileRoutes:
         assert res.status_code == 200
         headers = res.headers
         assert headers["content-type"] == ftype
-        assert headers["content-disposition"] == 'attachment; filename="1-test.xlsx"'
+        assert (
+            headers["content-disposition"]
+            == 'attachment; filename="1-test.xlsx"'
+        )
 
     @pytest.mark.asyncio
     async def test_queue_wrong_excel_data(
@@ -70,7 +73,9 @@ class TestFileRoutes:
         async with aiofiles.open(excel_file, "rb") as of:
             contents = await of.read()
         res = await client.post(
-            app.url_path_for("excel-template:post", form_id=1, administration=3),
+            app.url_path_for(
+                "excel-template:post", form_id=1, administration=3
+            ),
             files={"file": (fname, contents, ftype)},
             headers={"Authorization": f"Bearer {account.token}"},
         )

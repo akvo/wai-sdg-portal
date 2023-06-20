@@ -1,9 +1,12 @@
+import os
 import sys
 import pytest
 from fastapi import FastAPI
 from httpx import AsyncClient
 from tests.test_01_auth import Acc
 from sqlalchemy.orm import Session
+from util.helper import hash_cipher
+from core.config import write_form_url_config
 
 pytestmark = pytest.mark.asyncio
 sys.path.append("..")
@@ -235,6 +238,7 @@ class TestWebformEditorRoutes:
             "defaultLanguage": "en",
             "languages": ["en", "id"],
             "translations": None,
+            "passcode": None,
             "question_group": [
                 {
                     "id": 903430556,
@@ -479,7 +483,7 @@ class TestWebformEditorRoutes:
                 {
                     "language": "id",
                     "name": "Pembaharuan Formulir Uji Coba",
-                    "description": "Ini adalah formulir uji coba untuk webform",
+                    "description": "Lorem Ipsum is simply dummy text Description",
                 }
             ],
             "question_group": [
@@ -492,8 +496,8 @@ class TestWebformEditorRoutes:
                     "translations": [
                         {
                             "language": "id",
-                            "name": "Pendaftaran",
-                            "description": "Ini adalah bagian registrasi",
+                            "name": "Registrasi",
+                            "description": "Lorem Ipsum Registration Description",
                         }
                     ],
                     "question": [
@@ -635,9 +639,10 @@ class TestWebformEditorRoutes:
                 {
                     "language": "id",
                     "name": "Pembaharuan Formulir Uji Coba",
-                    "description": "Ini adalah formulir uji coba untuk webform",
+                    "description": "Lorem Ipsum is simply dummy text Description",
                 }
             ],
+            "passcode": None,
             "question_group": [
                 {
                     "id": 903430556,
@@ -649,8 +654,8 @@ class TestWebformEditorRoutes:
                     "translations": [
                         {
                             "language": "id",
-                            "name": "Pendaftaran",
-                            "description": "Ini adalah bagian registrasi",
+                            "name": "Registrasi",
+                            "description": "Lorem Ipsum Registration Description",
                         }
                     ],
                     "repeatText": None,
@@ -835,12 +840,15 @@ class TestWebformEditorRoutes:
             "cascade": cascade,
         }
 
+    @pytest.mark.asyncio
     async def test_get_all_form(
         self, app: FastAPI, session: Session, client: AsyncClient
     ) -> None:
         res = await client.get(app.url_path_for("form:get_all"))
         assert res.status_code == 200
         res = res.json()
+        url1 = hash_cipher(text="1")
+        url2 = hash_cipher(text="903430001")
         assert res == [
             {
                 "id": 1,
@@ -857,6 +865,8 @@ class TestWebformEditorRoutes:
                         "description": "deskripsi uji coba",
                     }
                 ],
+                "url": f"/webform?id={url1}",
+                "passcode": "pwd123",
             },
             {
                 "id": 903430001,
@@ -870,8 +880,69 @@ class TestWebformEditorRoutes:
                     {
                         "name": "Pembaharuan Formulir Uji Coba",
                         "language": "id",
-                        "description": "Ini adalah formulir uji coba untuk webform",
+                        "description": "Lorem Ipsum is simply dummy text Description",
                     }
                 ],
+                "url": f"/webform?id={url2}",
+                "passcode": None,
             },
         ]
+
+    @pytest.mark.asyncio
+    async def test_get_standalone_webform(
+        self, app: FastAPI, session: Session, client: AsyncClient
+    ) -> None:
+        # form url dump
+        path = write_form_url_config(session=session)
+        assert os.path.isfile(path) is True
+
+        url1 = hash_cipher(text="1")
+        url2 = hash_cipher(text="903430001")
+        # get form detail
+        res = await client.get(
+            app.url_path_for(
+                "form:get_standalone_form_detail", uuid="nk5_wvp57b5kz4r3g6d2y31"
+            )
+        )
+        assert res.status_code == 404
+        res = await client.get(
+            app.url_path_for("form:get_standalone_form_detail", uuid=url1)
+        )
+        assert res.status_code == 200
+        res = res.json()
+        assert res["id"] == 1
+        assert res["name"] == "test"
+        assert res["version"] == 1.0
+        assert "passcode" in res
+        # wrong passcode
+        res = await client.post(
+            app.url_path_for("webform:check_passcode"),
+            data={"uuid": url1, "passcode": "password"},
+        )
+        assert res.status_code == 403
+        # correct passcode
+        res = await client.post(
+            app.url_path_for("webform:check_passcode"),
+            data={"uuid": url1, "passcode": "pwd123"},
+        )
+        assert res.status_code == 200
+        res = res.json()
+        assert res == {"uuid": url1, "passcode": "pwd123"}
+        # get webform stand alone form definition
+        res = await client.get(
+            app.url_path_for("webform:get_standalone_form", uuid=url1)
+        )
+        assert res.status_code == 200
+        res = res.json()
+        assert res["id"] == 1
+        assert res["passcode"] == "pwd123"
+        assert len(res["question_group"]) > 0
+        assert res["cascade"] == cascade
+
+        res = await client.get(
+            app.url_path_for("webform:get_standalone_form", uuid=url2)
+        )
+        assert res.status_code == 200
+        res = res.json()
+        assert res["id"] == 903430001
+        assert res["passcode"] is None

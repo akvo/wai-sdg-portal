@@ -25,6 +25,9 @@ chart_route = APIRouter()
 @chart_route.get(
     "/chart/", name="charts:get", summary="get chart list", tags=["Charts"]
 )
+@chart_route.get(
+    "/chart/", name="charts:get", summary="get chart list", tags=["Charts"]
+)
 def get(req: Request, session: Session = Depends(get_session)) -> List[str]:
     return Charts.list
 
@@ -62,6 +65,14 @@ def get_aggregated_chart_data(
         administration=administration_ids,
         options=options,
     )
+    value = crud_charts.get_chart_data(
+        session=session,
+        form=form_id,
+        question=question,
+        stack=stack,
+        administration=administration_ids,
+        options=options,
+    )
     return value
 
 
@@ -87,6 +98,13 @@ def get_aggregated_pie_chart_data(
         )
         if not len(administration_ids):
             raise HTTPException(status_code=404, detail="Not found")
+    value = crud_charts.get_pie_chart_data(
+        session=session,
+        form=form_id,
+        question=question_id,
+        administration=administration_ids,
+        options=options,
+    )
     value = crud_charts.get_pie_chart_data(
         session=session,
         form=form_id,

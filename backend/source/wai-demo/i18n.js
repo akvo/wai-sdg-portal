@@ -17,8 +17,8 @@ var i18n = {
     privacyPolicy: "Privacy Policy",
     termsOfService: "Terms of Service",
     documentation: {
-	rtd: "Documentation",
-	swagger: "Developer API",
+      rtd: "Documentation",
+      swagger: "Developer API",
     },
     dataTitle: "Data",
     dataText:
@@ -44,6 +44,7 @@ var i18n = {
     tabDataUploadText: "Data Upload",
     tabManageUserText: "Manage Users",
     tabManageFormText: "Manage Forms",
+    tabManageFormPasscodeText: "Manage Form Passcode",
     modalEditUserTitle: "Edit User",
     modalApproveUserTitle: "Approve User",
     checkboxShowPendingUserText: "Show Pending Users",
@@ -131,6 +132,11 @@ var i18n = {
       colOrg: "Organisation",
       colRole: "Role",
     },
+    managePasscodeTableText: {
+      colName: "Form Name",
+      colUrl: "URL",
+      colPasscode: "Passcode",
+    },
     manageDataTableText: {
       colName: "Entry",
       colAdministration: "Region",
@@ -170,6 +176,9 @@ var i18n = {
     btnSave: "Save",
     btnUndo: "Undo",
     btnRemoveFilter: "Remove Filter",
+    btnPasscode: "Edit Passcode",
+    btnLogin: "Start",
+    btnAddNewSubmission: "Add New Submission",
     btnLoadMore: "Load more...",
   },
   formText: {
@@ -187,6 +196,15 @@ var i18n = {
     supportExcelFileText: "Supported filetypes: .xls and .xlsx.",
     validationNameRequiredText: "Please input your name!",
     validationAccessRequiredText: "Please select region!",
+    formSelectPlaceholder: "Select",
+    formSearchPlaceholder: "Search",
+    formPasscodePlaceholder: "Manage Form Passcode",
+    formPasscodeInfoText:
+      "This feature can only be enabled by users with form passcode management permission",
+    labelSubmitterName: "Submitter Name",
+    labelFormPasscode: "Form Passcode",
+    placeholderCaptcha: "Enter the sum",
+    savedSubmissionText: "Saved Submissions",
   },
   mainText: {
     noDataText: "No Data",

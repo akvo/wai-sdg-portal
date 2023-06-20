@@ -50,6 +50,7 @@ def add_data(
     created_by: int,
     answers: List[AnswerBase],
     geo: Optional[List[float]] = None,
+    submitter: Optional[str] = None,
 ) -> DataDict:
     data = Data(
         name=name,
@@ -60,6 +61,7 @@ def add_data(
         updated_by=None,
         created=datetime.now(),
         updated=None,
+        submitter=submitter,
     )
     for answer in answers:
         data.answer.append(answer)

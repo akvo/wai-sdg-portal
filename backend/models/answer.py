@@ -40,7 +40,7 @@ class Answer(Base):
     text = Column(Text, nullable=True)
     value = Column(Float, nullable=True)
     options = Column(pg.ARRAY(String), nullable=True)
-    created_by = Column(Integer, ForeignKey("user.id"))
+    created_by = Column(Integer, ForeignKey("user.id"), nullable=True)
     updated_by = Column(Integer, ForeignKey("user.id"), nullable=True)
     created = Column(DateTime, nullable=True)
     updated = Column(DateTime, nullable=True)

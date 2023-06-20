@@ -286,3 +286,23 @@
   height: 65%;
   width: 92%;
 }
+
+.passcode-wrapper {
+  .ant-space-item {
+    &:first-child {
+      flex: 1;
+    }
+  }
+}
+
+.passcode-item {
+  .ant-form-item-control-input-content {
+    display: flex;
+    align-items: center;
+  }
+  .anticon-info-circle {
+    font-size: 18px;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,894 @@
+[
+    {
+        "name": "Sanitation",
+        "form": 494780323,
+        "categories": [
+            {
+                "name": "Basic",
+                "and": [
+                    {
+                        "question": 559830324,
+                        "options": [
+                            "Flush / Pour-flush toilet",
+                            "VIP latrine",
+                            "Pit latrine",
+                            "Composting toilet"
+                        ]
+                    },
+                    {
+                        "question": 559830321,
+                        "options": [
+                            "Yes"
+                        ]
+                    },
+                    {
+                        "question": 559830322,
+                        "options": [
+                            "Yes"
+                        ]
+                    },
+                    {
+                        "question": 559830320,
+                        "options": [
+                            "Yes"
+                        ]
+                    },
+                    {
+                        "question": 559830318,
+                        "options": [
+                            "Yes"
+                        ]
+                    },
+                    {
+                        "question": 559830319,
+                        "options": [
+                            "Yes"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Limited",
+                "and": [
+                    {
+                        "question": 559830324,
+                        "options": [
+                            "Flush / Pour-flush toilet",
+                            "VIP latrine",
+                            "Pit latrine",
+                            "Composting toilet"
+                        ]
+                    },
+                    {
+                        "question": 559830321,
+                        "options": [
+                            "Yes"
+                        ]
+                    },
+                    {
+                        "question": 559830322,
+                        "options": [
+                            "No"
+                        ]
+                    },
+                    {
+                        "question": 559830320,
+                        "options": [
+                            "No"
+                        ]
+                    },
+                    {
+                        "question": 559830318,
+                        "options": [
+                            "No"
+                        ]
+                    },
+                    {
+                        "question": 559830319,
+                        "options": [
+                            "No"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "No service",
+                "and": [
+                    {
+                        "question": 559830321,
+                        "options": [
+                            "No"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Hygiene",
+        "form": 494780323,
+        "categories": [
+            {
+                "name": "Basic",
+                "and": [
+                    {
+                        "question": 555940319,
+                        "options": [
+                            "Yes"
+                        ]
+                    },
+                    {
+                        "question": 561220158,
+                        "options": [
+                            "Yes"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Limited",
+                "and": [
+                    {
+                        "question": 555940319,
+                        "options": [
+                            "No, hand hygienes present but not functional"
+                        ]
+                    },
+                    {
+                        "question": 561220158,
+                        "options": [
+                            "Yes"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "No service",
+                "and": [
+                    {
+                        "question": 555940319,
+                        "options": [
+                            "No, hand hygienes present but not functional",
+                            "No hand hygiene facilities at points of care"
+                        ]
+                    },
+                    {
+                        "question": 561220158,
+                        "options": [
+                            "No, handwashing facilities are near the toilets but lacking soap and/or water",
+                            "No, no handwashing facilities near toilets (within 5 m)"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Health Care Waste Management",
+        "form": 494780323,
+        "categories": [
+            {
+                "name": "Basic",
+                "and": [
+                    {
+                        "question": 569090293,
+                        "options": [
+                            "Yes"
+                        ]
+                    },
+                    {
+                        "question": 569090295,
+                        "options": [
+                            "Autoclaved",
+                            "Incinerated (other)",
+                            "Not treated, but buried in lined, protected pit",
+                            "Not treated, but collected for medical waste disposal off-site"
+                        ]
+                    },
+                    {
+                        "question": 569090294,
+                        "options": [
+                            "Autoclaved",
+                            "Incinerated (other)",
+                            "Not treated, but buried in lined, protected pit",
+                            "Not treated, but collected for medical waste disposal off-site"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Limited",
+                "and": [
+                    {
+                        "question": 569090293,
+                        "options": [
+                            "No, bins did not meet all requirements"
+                        ]
+                    },
+                    {
+                        "question": 569090295,
+                        "options": [
+                            "Autoclaved",
+                            "Incinerated (other)",
+                            "Not treated, but buried in lined, protected pit",
+                            "Not treated, but collected for medical waste disposal off-site"
+                        ]
+                    },
+                    {
+                        "question": 569090294,
+                        "options": [
+                            "Autoclaved",
+                            "Incinerated (other)",
+                            "Not treated, but buried in lined, protected pit",
+                            "Not treated, but collected for medical waste disposal off-site"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "No service",
+                "and": [
+                    {
+                        "question": 569090293,
+                        "options": [
+                            "No bins were present"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Environmental Cleaning",
+        "form": 494780323,
+        "categories": [
+            {
+                "name": "Basic",
+                "and": [
+                    {
+                        "question": 571050236,
+                        "options": [
+                            "Yes"
+                        ]
+                    },
+                    {
+                        "question": 571050237,
+                        "options": [
+                            "Yes"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Limited",
+                "and": [
+                    {
+                        "question": 571050236,
+                        "options": [
+                            "Yes"
+                        ]
+                    },
+                    {
+                        "question": 571050237,
+                        "options": [
+                            "No, some but not all have been trained"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "No service",
+                "and": [
+                    {
+                        "question": 571050236,
+                        "options": [
+                            "Yes"
+                        ]
+                    },
+                    {
+                        "question": 571050237,
+                        "options": [
+                            "No, none have been trained",
+                            "No staff were responsible for cleaning"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Water",
+        "form": "551870264",
+        "categories": [
+            {
+                "name": "Basic",
+                "and": [
+                    {
+                        "question": 561200192,
+                        "options": [
+                            "Pipeline connection",
+                            "Protected well/spring",
+                            "Rainwater",
+                            "Unprotected well/spring",
+                            "Packaged bottled water"
+                        ]
+                    },
+                    {
+                        "question": 561200190,
+                        "options": [
+                            "Yes"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Limited",
+                "and": [
+                    {
+                        "question": 561200192,
+                        "options": [
+                            "Pipeline connection",
+                            "Protected well/spring",
+                            "Rainwater",
+                            "Unprotected well/spring",
+                            "Packaged bottled water"
+                        ]
+                    },
+                    {
+                        "question": 561200190,
+                        "options": [
+                            "No"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "No Service",
+                "or": [
+                    {
+                        "question": 561200192,
+                        "options": [
+                            "Tanker-truck or cart",
+                            "Surface water (lake, river, stream)",
+                            "No water source"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Sanitation",
+        "form": "551870264",
+        "categories": [
+            {
+                "name": "Basic",
+                "and": [
+                    {
+                        "question": 546630147,
+                        "options": [
+                            "Flush/Pour-flush toilets",
+                            "Pit latrines with slab",
+                            "Composting toilets"
+                        ]
+                    },
+                    {
+                        "question": 557690281,
+                        "options": [
+                            "Yes"
+                        ]
+                    },
+                    {
+                        "question": 557690277,
+                        "options": [
+                            "Yes"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Limited",
+                "and": [
+                    {
+                        "question": 546630147,
+                        "options": [
+                            "Flush/Pour-flush toilets",
+                            "Pit latrines with slab",
+                            "Composting toilets"
+                        ]
+                    },
+                    {
+                        "question": 557690281,
+                        "options": [
+                            "No"
+                        ]
+                    },
+                    {
+                        "question": 557690277,
+                        "options": [
+                            "Yes"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "No Service",
+                "and": [
+                    {
+                        "question": 546630147,
+                        "options": [
+                            "Pit latrines with slab",
+                            "Hanging latrines",
+                            "Bucket latrines",
+                            "No toilets or latrines"
+                        ]
+                    },
+                    {
+                        "question": 557690281,
+                        "options": [
+                            "No"
+                        ]
+                    },
+                    {
+                        "question": 557690277,
+                        "options": [
+                            "No"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Hygiene",
+        "form": "551870264",
+        "categories": [
+            {
+                "name": "Basic",
+                "and": [
+                    {
+                        "question": 567440264,
+                        "options": [
+                            "Yes"
+                        ]
+                    },
+                    {
+                        "question": 567440263,
+                        "options": [
+                            "Yes, water and soap"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Limited",
+                "and": [
+                    {
+                        "question": 567440264,
+                        "options": [
+                            "Yes"
+                        ]
+                    },
+                    {
+                        "question": 567440263,
+                        "options": [
+                            "Water only"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "No Service",
+                "and": [
+                    {
+                        "question": 567440264,
+                        "options": [
+                            "No"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Water",
+        "form": "567420165",
+        "categories": [
+            {
+                "name": "Surface Water",
+                "and": [
+                    {
+                        "question": 555960185,
+                        "options": [
+                            "Surface water"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Unimproved",
+                "and": [
+                    {
+                        "question": 555960185,
+                        "options": [
+                            "Bottled water",
+                            "Unprotected spring",
+                            "Unprotected dug well"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Limited",
+                "and": [
+                    {
+                        "question": 555960185,
+                        "options": [
+                            "Public tap/standpipe",
+                            "Piped water into dwelling (household connection)",
+                            "Piped to neighbour",
+                            "Piped water to yard/plot",
+                            "Protected spring",
+                            "Deep tubewell/borehole"
+                        ]
+                    },
+                    {
+                        "question": 567410256,
+                        "options": [
+                            "More than 30 minutes"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Basic",
+                "and": [
+                    {
+                        "question": 555960185,
+                        "options": [
+                            "Public tap/standpipe",
+                            "Piped water into dwelling (household connection)",
+                            "Piped to neighbour",
+                            "Piped water to yard/plot",
+                            "Protected spring",
+                            "Deep tubewell/borehole"
+                        ]
+                    },
+                    {
+                        "question": 567410256,
+                        "options": [
+                            "Less than 30 minutes",
+                            "Don''t know"
+                        ]
+                    },
+                    {
+                        "question": 563190256,
+                        "options": [
+                            "Yes, at least once",
+                            "Don''t know"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Basic",
+                "and": [
+                    {
+                        "question": 555960185,
+                        "options": [
+                            "Public tap/standpipe",
+                            "Piped water into dwelling (household connection)",
+                            "Piped to neighbour",
+                            "Piped water to yard/plot",
+                            "Protected spring",
+                            "Deep tubewell/borehole"
+                        ]
+                    },
+                    {
+                        "question": 567410256,
+                        "options": [
+                            "Less than 30 minutes",
+                            "Don''t know"
+                        ]
+                    },
+                    {
+                        "question": 573020153,
+                        "options": [
+                            "Contaminated"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Safely Managed",
+                "and": [
+                    {
+                        "question": 555960185,
+                        "options": [
+                            "Public tap/standpipe",
+                            "Piped water into dwelling (household connection)",
+                            "Piped to neighbour",
+                            "Piped water to yard/plot",
+                            "Protected spring",
+                            "Deep tubewell/borehole"
+                        ]
+                    },
+                    {
+                        "question": 567410256,
+                        "options": [
+                            "Less than 30 minutes",
+                            "Don''t know"
+                        ]
+                    },
+                    {
+                        "question": 563190256,
+                        "options": [
+                            "No, always sufficient"
+                        ]
+                    },
+                    {
+                        "question": 573020153,
+                        "options": [
+                            "Free from feacal and prioirty chemical contamination"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Sanitation",
+        "form": "567420165",
+        "categories": [
+            {
+                "name": "Safely managed",
+                "and": [
+                    {
+                        "question": 557710109,
+                        "options": [
+                            "Flush/pour flush to pit latrine",
+                            "Flush/pour flush to septic tank",
+                            "Pit latrine with slab",
+                            "Other composting latrine",
+                            "Twin pit with latrine slab"
+                        ]
+                    },
+                    {
+                        "question": 557710113,
+                        "options": [
+                            "No"
+                        ]
+                    },
+                    {
+                        "question": 567420264,
+                        "options": [
+                            "No, never emptied"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Safely managed",
+                "and": [
+                    {
+                        "question": 557710109,
+                        "options": [
+                            "Flush/pour flush to pit latrine",
+                            "Flush/pour flush to septic tank",
+                            "Pit latrine with slab",
+                            "Other composting latrine",
+                            "Twin pit with latrine slab"
+                        ]
+                    },
+                    {
+                        "question": 557710113,
+                        "options": [
+                            "No"
+                        ]
+                    },
+                    {
+                        "question": 557970125,
+                        "options": [
+                            "Emptied by household and buried in a covered pit",
+                            "Removed by service provider and buried in a covered pit",
+                            "Removed by service provider to a treatment plant"
+                        ]
+                    },
+                    {
+                        "question": 567420264,
+                        "options": [
+                            "Yes, but don''t know when"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Basic",
+                "and": [
+                    {
+                        "question": 557710109,
+                        "options": [
+                            "Flush/pour flush to pit latrine",
+                            "Flush/pour flush to septic tank",
+                            "Pit latrine with slab",
+                            "Other composting latrine",
+                            "Twin pit with latrine slab"
+                        ]
+                    },
+                    {
+                        "question": 557710113,
+                        "options": [
+                            "No"
+                        ]
+                    },
+                    {
+                        "question": 567420264,
+                        "options": [
+                            "Don''t know"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Basic",
+                "and": [
+                    {
+                        "question": 557710109,
+                        "options": [
+                            "Flush/pour flush to pit latrine",
+                            "Flush/pour flush to septic tank",
+                            "Pit latrine with slab",
+                            "Other composting latrine",
+                            "Twin pit with latrine slab"
+                        ]
+                    },
+                    {
+                        "question": 557710113,
+                        "options": [
+                            "No"
+                        ]
+                    },
+                    {
+                        "question": 557970125,
+                        "options": [
+                            "Disposed by household to uncovered pit, open ground, waterbody or elsewhere",
+                            "Don''t know",
+                            "Removed by service provider to don''t know where"
+                        ]
+                    },
+                    {
+                        "question": 567420264,
+                        "options": [
+                            "Yes, but don''t know when"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Limited",
+                "and": [
+                    {
+                        "question": 557710109,
+                        "options": [
+                            "Flush/pour flush to pit latrine",
+                            "Flush/pour flush to septic tank",
+                            "Pit latrine with slab",
+                            "Other composting latrine",
+                            "Twin pit with latrine slab"
+                        ]
+                    },
+                    {
+                        "question": 557710113,
+                        "options": [
+                            "Yes"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Unimproved",
+                "and": [
+                    {
+                        "question": 557710109,
+                        "options": [
+                            "Flush/pour flush to don''t know where",
+                            "Pit latrine without slab/open pit"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Open Defecation",
+                "and": [
+                    {
+                        "question": 557710109,
+                        "options": [
+                            "No facility"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Hygiene",
+        "form": "567420165",
+        "categories": [
+            {
+                "name": "Basic",
+                "and": [
+                    {
+                        "question": 573020044,
+                        "options": [
+                            "Fixed facility observed in dwelling",
+                            "Fixed facility observed in plot/yard",
+                            "Mobile object observed (bucket, jug, kettle)"
+                        ]
+                    },
+                    {
+                        "question": 573020043,
+                        "options": [
+                            "Water is available"
+                        ]
+                    },
+                    {
+                        "question": 559820263,
+                        "options": [
+                            "Soap or detergent is available"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Limited",
+                "and": [
+                    {
+                        "question": 573020044,
+                        "options": [
+                            "Fixed facility observed in dwelling",
+                            "Fixed facility observed in plot/yard",
+                            "Mobile object observed (bucket, jug, kettle)"
+                        ]
+                    },
+                    {
+                        "question": 573020043,
+                        "options": [
+                            "Water is not available"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Limited",
+                "and": [
+                    {
+                        "question": 573020044,
+                        "options": [
+                            "Fixed facility observed in dwelling",
+                            "Fixed facility observed in plot/yard",
+                            "Mobile object observed (bucket, jug, kettle)"
+                        ]
+                    },
+                    {
+                        "question": 559820263,
+                        "options": [
+                            "No, not present"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "No facility",
+                "and": [
+                    {
+                        "question": 573020044,
+                        "options": [
+                            "No handwashing place available in dwelling/plot/yard",
+                            "Don''t know"
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

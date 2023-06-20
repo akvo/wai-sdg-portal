@@ -20,6 +20,8 @@ function App() {
   const { isAuthenticated, loginWithPopup, logout, user, getIdTokenClaims } =
     useAuth0();
   const { registrationPopup } = UIState.useState((s) => s);
+  const isWebformStandalone =
+    window.location.pathname.split('/')?.[1] === 'webform';
 
   useEffect(() => {
     (async function () {
@@ -98,18 +100,21 @@ function App() {
       <div className="App">
         <Navigation />
         <Layout theme="light">
-          <Layout.Header>
+          <Layout.Header
+            className={isWebformStandalone ? 'webform-standalone' : ''}
+          >
             <Header
               loginWithPopup={loginWithPopup}
               isAuthenticated={isAuthenticated}
               logout={logout}
+              isWebformStandalone={isWebformStandalone}
             />
           </Layout.Header>
           <Layout.Content>
             <Content />
           </Layout.Content>
           <Layout.Footer>
-            <Footer />
+            <Footer isWebformStandalone={isWebformStandalone} />
           </Layout.Footer>
         </Layout>
       </div>

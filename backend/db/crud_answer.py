@@ -110,6 +110,10 @@ def get_history(session: Session, data: int, question: int):
         .all()
     )
     history = [h.simplified for h in history]
+    for h in history:
+        if not h["user"]:
+            data_detail = session.query(Data).filter(Data.id == data).first()
+            h.update({"user": data_detail.submitter})
     return [answer] + history
 
 

@@ -285,7 +285,7 @@ def get_by_current_user(
     limit = 5
     jobs = (
         session.query(Jobs)
-        .filter(Jobs.created_by == user.id)
+        .filter(Jobs.created_by == user.id, Jobs.type != 'download')
         .order_by(desc(Jobs.created))
     )
     total = jobs.count()

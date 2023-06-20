@@ -1,5 +1,5 @@
 from typing import List, Optional
-from sqlalchemy import func
+from sqlalchemy import func, or_
 from sqlalchemy.orm import Session
 from models.option import Option, OptionDictWithId
 from models.question import Question
@@ -68,8 +68,19 @@ def get_option_by_question_and_name(
     return (
         session.query(Option)
         .filter(
-            Option.question == question,
-            func.lower(Option.name) == name.lower().strip(),
+            Option.question == question, func.lower(Option.name) == name.lower().strip()
         )
         .first()
+    )
+
+
+def get_options_if_exists(session: Session, names: List[str], question: int):
+    return (
+        session.query(Option.name, func.count(Option.name))
+        .filter(
+            Option.question == question,
+            or_(*[Option.name.ilike(name) for name in names]),
+        )
+        .group_by(Option.name)
+        .all()
     )

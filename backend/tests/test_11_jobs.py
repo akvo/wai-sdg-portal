@@ -30,7 +30,9 @@ class TestsJobs:
         assert new_task["available"] is None
 
     @pytest.mark.asyncio
-    async def test_for_worker_checking_a_pending_jobs(self, session: Session) -> None:
+    async def test_for_worker_checking_a_pending_jobs(
+        self, session: Session
+    ) -> None:
         new_task = jobs.pending(session=session)
         assert new_task == 1
         new_task = jobs.update(
@@ -38,10 +40,14 @@ class TestsJobs:
         )
 
     @pytest.mark.asyncio
-    async def test_web_check_worker_availability(self, session: Session) -> None:
+    async def test_web_check_worker_availability(
+        self, session: Session
+    ) -> None:
         availability = jobs.is_not_busy(session=session)
         assert availability is False
-        current_task = jobs.update(session=session, id=1, status=JobStatus.done)
+        current_task = jobs.update(
+            session=session, id=1, status=JobStatus.done
+        )
         assert current_task["available"].strftime("%B %d, %Y") == today
         availability = jobs.is_not_busy(session=session)
         assert availability is True

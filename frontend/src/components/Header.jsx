@@ -66,7 +66,7 @@ const ActivityLog = () => {
         loadMore={<LoadMoreButton reached={reached} />}
         renderItem={(item) => {
           const actions = [];
-          if (item?.attachment) {
+          if (item?.attachment && item.icon !== 'warning') {
             actions.push(
               <a
                 className="attachment-badge"
@@ -82,7 +82,9 @@ const ActivityLog = () => {
             <List.Item actions={actions}>
               <List.Item.Meta
                 avatar={<IconList type={item.icon} />}
-                title={<ListTitle title={item.file} />}
+                title={
+                  <ListTitle title={item?.file || item?.attachment || ''} />
+                }
                 description={item.status}
               />
             </List.Item>
@@ -94,7 +96,12 @@ const ActivityLog = () => {
   return <Card>{loadActivity ? loadingText : noActivityText}</Card>;
 };
 
-const Header = ({ logout, loginWithPopup, isAuthenticated }) => {
+const Header = ({
+  logout,
+  loginWithPopup,
+  isAuthenticated,
+  isWebformStandalone,
+}) => {
   const { user, activityData } = UIState.useState((c) => c);
   const { active } = activityData;
   const onOpen = () => {
@@ -121,7 +128,7 @@ const Header = ({ logout, loginWithPopup, isAuthenticated }) => {
       wrap={true}
     >
       <Col
-        span={8}
+        span={isWebformStandalone ? 24 : 8}
         className="header-logo"
       >
         <Link to="/">
@@ -134,64 +141,68 @@ const Header = ({ logout, loginWithPopup, isAuthenticated }) => {
           </Space>
         </Link>
       </Col>
-      <Col
-        span={8}
-        className="header-menu"
-      >
-        <Space size={20}>
-          {/* Activity Log  */}
-          {user && (
-            <Popover
-              title={recentActivityLogText}
-              placement="bottom"
-              content={<ActivityLog />}
-              trigger="click"
-              overlayClassName="activity-log"
-              onOpenChange={handleOpenPopover}
-            >
-              <Badge dot={active}>
-                <Button icon={<FieldTimeOutlined />}>{activityLogText}</Button>
-              </Badge>
-            </Popover>
-          )}
-          {/* Login, Sign-up - Logout button */}
-          {!isAuthenticated ? (
-            <Button
-              icon={<UserOutlined />}
-              onClick={loginWithPopup}
-            >
-              {loginText}
-            </Button>
-          ) : (
-            <Button
-              icon={<UserOutlined />}
-              onClick={() => logout({ returnTo: window.location.origin })}
-            >
-              {logoutText}
-            </Button>
-          )}
-          {/* User profile button */}
-          {user && user?.picture ? (
-            <Avatar
-              src={`${user.picture}#${window.location.origin}/img.jpg`}
-              alt="user-avatar"
-            />
-          ) : user ? (
-            user(
-              <Avatar
+      {!isWebformStandalone && (
+        <Col
+          span={8}
+          className="header-menu"
+        >
+          <Space size={20}>
+            {/* Activity Log  */}
+            {user && (
+              <Popover
+                title={recentActivityLogText}
+                placement="bottom"
+                content={<ActivityLog />}
+                trigger="click"
+                overlayClassName="activity-log"
+                onOpenChange={handleOpenPopover}
+              >
+                <Badge dot={active}>
+                  <Button icon={<FieldTimeOutlined />}>
+                    {activityLogText}
+                  </Button>
+                </Badge>
+              </Popover>
+            )}
+            {/* Login, Sign-up - Logout button */}
+            {!isAuthenticated ? (
+              <Button
                 icon={<UserOutlined />}
+                onClick={loginWithPopup}
+              >
+                {loginText}
+              </Button>
+            ) : (
+              <Button
+                icon={<UserOutlined />}
+                onClick={() => logout({ returnTo: window.location.origin })}
+              >
+                {logoutText}
+              </Button>
+            )}
+            {/* User profile button */}
+            {user && user?.picture ? (
+              <Avatar
+                src={`${user.picture}#${window.location.origin}/img.jpg`}
                 alt="user-avatar"
               />
-            )
-          ) : (
-            ''
-          )}
-          <MenuOutlined
-            onClick={onOpen}
-            className="menu-outlined"
-          />
-        </Space>
-      </Col>
+            ) : user ? (
+              user(
+                <Avatar
+                  icon={<UserOutlined />}
+                  alt="user-avatar"
+                />
+              )
+            ) : (
+              ''
+            )}
+            <MenuOutlined
+              onClick={onOpen}
+              className="menu-outlined"
+            />
+          </Space>
+        </Col>
+      )}
     </Row>
   );
 };

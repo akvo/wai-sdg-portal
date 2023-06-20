@@ -1,5 +1,6 @@
 import os
 import jwt
+import json
 from jsmin import jsmin
 from functools import lru_cache
 from pydantic import BaseSettings
@@ -21,6 +22,11 @@ from routes.option import option_route
 from routes.hint import hint_route
 from source.geoconfig import GeoLevels
 from AkvoResponseGrouper.routes import collection_route
+from db.crud_form import get_form
+from db.connection import SessionLocal
+from util.helper import hash_cipher
+from typing import Optional
+from sqlalchemy.orm import Session
 
 INSTANCE_NAME = os.environ["INSTANCE_NAME"]
 SANDBOX_DATA_SOURCE = os.environ.get("SANDBOX_DATA_SOURCE")
@@ -33,6 +39,7 @@ JS_FILE = jsmin(open(f"{JS_FILE}.js").read())
 GEO_CONFIG = GeoLevels[CONFIG_NAME].value
 JS_i18n_FILE = f"{SOURCE_PATH}/i18n"
 JS_i18n_FILE = jsmin(open(f"{JS_i18n_FILE}.js").read())
+URL_FORM_CONFIG = f"{SOURCE_PATH}/form_url_dump.json"
 
 MINJS = jsmin(
     "".join(
@@ -53,11 +60,33 @@ JS_FILE = f"{SOURCE_PATH}/config.min.js"
 open(JS_FILE, "w").write(MINJS)
 
 
+def write_form_url_config(session: Optional[Session] = None):
+    if not os.path.isfile(URL_FORM_CONFIG):
+        # File doesn't exist, create it
+        with open(URL_FORM_CONFIG, 'w') as file:
+            json.dump({}, file)
+    session = SessionLocal() if not session else session
+    try:
+        form = get_form(session=session)
+        configs = {}
+        for fr in [f.serialize for f in form]:
+            form_id = fr.get("id")
+            hash_survey_id = hash_cipher(text=str(form_id))
+            configs.update({hash_survey_id: form_id})
+        # write forms value as a config file
+        print(configs)
+        open(URL_FORM_CONFIG, "w").write(json.dumps(configs))
+    finally:
+        session.close()
+    return URL_FORM_CONFIG
+
+
 class Settings(BaseSettings):
     domain: str = os.environ["WEBDOMAIN"]
     instance_name: str = INSTANCE_NAME
     source_path: str = SOURCE_PATH
     js_file: str = JS_FILE
+    form_url: str = write_form_url_config()
 
 
 settings = Settings()

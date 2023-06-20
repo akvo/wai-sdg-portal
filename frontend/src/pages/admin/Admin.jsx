@@ -6,6 +6,7 @@ import ManageData from './ManageData';
 import ManageUser from './ManageUser';
 import ManageUpload from './ManageUpload';
 import ManageForm from './ManageForm';
+import ManagePasscode from './ManagePasscode';
 import Export from './Export';
 import { useHistory } from 'react-router-dom';
 import './admin.scss';
@@ -33,6 +34,7 @@ const Admin = ({ match }) => {
     tabDataUploadText,
     tabManageUserText,
     tabManageFormText,
+    tabManageFormPasscodeText,
   } = adminText;
   const [page, setPage] = useState(match?.params?.page);
   const history = useHistory();
@@ -102,6 +104,16 @@ const Admin = ({ match }) => {
                 key="manage-form"
               />
             )}
+            {user?.role === 'admin' && user?.manage_form_passcode && (
+              <TabPane
+                tab={
+                  <div className="tab-pane-text">
+                    {tabManageFormPasscodeText}
+                  </div>
+                }
+                key="manage-passcode"
+              />
+            )}
           </Tabs>
         </div>
         <div className="card-content-container">
@@ -115,6 +127,9 @@ const Admin = ({ match }) => {
           {page === 'data-upload' && <ManageUpload />}
           {user?.role === 'admin' && page === 'manage-users' && <ManageUser />}
           {user?.role === 'admin' && page === 'manage-form' && <ManageForm />}
+          {user?.role === 'admin' &&
+            user?.manage_form_passcode &&
+            page === 'manage-passcode' && <ManagePasscode />}
         </div>
       </Col>
     </Row>

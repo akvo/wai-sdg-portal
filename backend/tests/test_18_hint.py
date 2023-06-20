@@ -23,7 +23,9 @@ class TestHintRoutes:
         question = get_question_by_id(session=session, id=5)
         question = question.serialize
         assert question["type"] == QuestionType.number
-        res = await client.get(app.url_path_for("hint:get", question_id=question["id"]))
+        res = await client.get(
+            app.url_path_for("hint:get", question_id=question["id"])
+        )
         assert res.status_code == 200
         res = res.json()
         assert res == {
@@ -92,7 +94,9 @@ class TestHintRoutes:
         )
         assert res.status_code == 200
         # get hint
-        res = await client.get(app.url_path_for("hint:get", question_id=question["id"]))
+        res = await client.get(
+            app.url_path_for("hint:get", question_id=question["id"])
+        )
         assert res.status_code == 200
         res = res.json()
         assert res == {

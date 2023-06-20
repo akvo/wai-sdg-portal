@@ -3,18 +3,20 @@ from http import HTTPStatus
 from datetime import datetime
 from math import ceil
 from fastapi import Depends, Request, Response, APIRouter, HTTPException, Query
+from fastapi import BackgroundTasks
 from fastapi.security import HTTPBearer
 from fastapi.security import HTTPBasicCredentials as credentials
-from fastapi import BackgroundTasks
 from typing import List, Optional
 from sqlalchemy.orm import Session
+from pydantic import Required
 import db.crud_data as crud
 from db import crud_question
 from db import crud_administration
 from db import crud_answer
 from db import crud_form
 from db import crud_user
-from models.user import UserRole
+from db import crud_jmp
+from models.user import User, UserRole
 from models.answer import Answer, AnswerDict
 from models.question import QuestionType
 from models.history import History
@@ -59,7 +61,8 @@ def check_project(
     if question:
         external = [q for q in question if q not in form_question]
     if len(external):
-        question = crud_question.get_question_by_id(session=session, id=external[0])
+        question = crud_question.get_question_by_id(
+            session=session, id=external[0])
         if len(question.option):
             question = int(question.option[0].name)
             for d in data:
@@ -144,6 +147,50 @@ def get(
         "total": count,
         "total_page": total_page,
     }
+    options = check_query(q) if q else None
+    user = verify_user(req.state.authenticated, session)
+    administration_ids = False
+    if not administration:
+        administration_ids = crud_administration.get_all_childs(
+            session=session, parents=[a.administration for a in user.access], current=[]
+        )
+    if administration:
+        administration_ids = crud_administration.get_all_childs(
+            session=session, parents=[administration], current=[]
+        )
+        if not len(administration_ids):
+            raise HTTPException(status_code=404, detail="Not found")
+    res = crud.get_data(
+        session=session,
+        form=form_id,
+        administration=administration_ids,
+        question=question,
+        options=options,
+        skip=(perpage * (page - 1)),
+        perpage=perpage,
+    )
+    if not res["count"]:
+        raise HTTPException(status_code=404, detail="Not found")
+    total_page = ceil(res["count"] / 10) if res["count"] > 0 else 0
+    if total_page < page:
+        raise HTTPException(status_code=404, detail="Not found")
+    count = res["count"]
+    data = [d.serialize for d in res["data"]]
+    ids = [d["id"] for d in data]
+    categories = crud_jmp.get_categories_by_data_ids(
+        session=session, form=form_id, ids=ids
+    )
+    if question:
+        data = check_project(
+            session=session, data=data, question=question, form=form_id
+        )
+    return {
+        "current": page,
+        "data": data,
+        "total": count,
+        "total_page": total_page,
+        "categories": categories,
+    }
 
 
 @data_route.post(
@@ -162,60 +209,38 @@ async def add(
     credentials: credentials = Depends(security),
 ):
     user = verify_editor(req.state.authenticated, session)
-    administration = None
-    geo = None
-    answerlist = []
-    names = []
-    for a in answers:
-        q = crud_question.get_question_by_id(session=session, id=a["question"])
-        answer = Answer(question=q.id, created_by=user.id, created=datetime.now())
-        if q.type == QuestionType.administration:
-            check_access(a["value"][0], user)
-            if len(a["value"]):
-                administration = int(a["value"][-1])
-                answer.value = administration
-                if q.meta:
-                    adm_name = crud_administration.get_administration_by_id(
-                        session, id=administration
-                    )
-                    names.append(adm_name.name)
-        if q.type == QuestionType.geo:
-            if "lat" in a["value"] and "lng" in a["value"]:
-                geo = [a["value"]["lat"], a["value"]["lng"]]
-                answer.text = ("{}|{}").format(geo[0], geo[1])
-        if q.type in [QuestionType.text, QuestionType.date]:
-            answer.text = a["value"]
-            if q.meta:
-                names.append(a["value"])
-        if q.type == QuestionType.number:
-            answer.value = a["value"]
-            if q.meta:
-                names.append(str(a["value"]))
-        if q.type == QuestionType.option:
-            answer.options = [a["value"]]
-        if q.type == QuestionType.multiple_option:
-            answer.options = a["value"]
-        if q.type == QuestionType.answer_list:
-            parent = crud.get_data_by_name(session=session, name=a["value"])
-            parent_code = parent.name.split(" - ")[-1]
-            administration = parent.administration
-            answer.value = int(parent_code)
-            if q.meta:
-                names.append(parent.name)
-        answerlist.append(answer)
-    name = " - ".join([str(n) for n in names])
-    data = crud.add_data(
+    data = save_datapoint(
         session=session,
-        form=form_id,
-        name=name,
-        geo=geo,
-        administration=administration,
-        created_by=user.id,
-        answers=answerlist,
+        form_id=form_id,
+        answers=answers,
+        user=user,
+        background_tasks=background_tasks
     )
-    TESTING = os.environ.get("TESTING")
-    if not TESTING:
-        background_tasks.add_task(refresh_category_view, session=session)
+    return data.serialize
+
+
+@data_route.post(
+    "/data/form-standalone/{form_id:path}",
+    response_model=DataDict,
+    summary="add new data for standalone form",
+    name="data:create_form_standalone",
+    tags=["Data"],
+)
+async def add_form_standalone(
+    req: Request,
+    form_id: int,
+    answers: List[AnswerDict],
+    background_tasks: BackgroundTasks,
+    submitter: str = Query(default=Required),
+    session: Session = Depends(get_session),
+):
+    data = save_datapoint(
+        session=session,
+        form_id=form_id,
+        answers=answers,
+        submitter=submitter,
+        background_tasks=background_tasks
+    )
     return data.serialize
 
 
@@ -234,7 +259,10 @@ def get_by_id(
 ):
     data = crud.get_data_by_id(session=session, id=id)
     if not data:
-        raise HTTPException(status_code=404, detail="data {} is not found".format(id))
+        raise HTTPException(
+            status_code=404,
+            detail="data {} is not found".format(id)
+        )
     return data.serialize
 
 
@@ -391,15 +419,16 @@ def get_last_submission(
     )
     if not last_submitted:
         raise HTTPException(status_code=404, detail="Not found")
+    submitter = last_submitted.submitter
     last_submitted = last_submitted.submission_info
-    last_submitted_user = crud_user.get_user_by_id(
-        session=session, id=last_submitted["by"]
-    )
+    last_submitted_user = submitter
+    if last_submitted["by"]:
+        last_submitted_user = crud_user.get_user_by_id(
+            session=session, id=last_submitted["by"]
+        )
+        last_submitted_user = last_submitted_user.name
     last_submitted.update(
-        {
-            "by": last_submitted_user.name,
-            "at": last_submitted["at"].strftime("%B %d, %Y"),
-        }
+        {"by": last_submitted_user, "at": last_submitted["at"].strftime("%B %d, %Y")}
     )
     return last_submitted
 
@@ -422,3 +451,75 @@ def get_history(
         session=session, data=data_id, question=question_id
     )
     return answer
+
+
+def save_datapoint(
+    session: Session,
+    form_id: int,
+    answers: List[AnswerDict],
+    background_tasks: BackgroundTasks,
+    user: Optional[User] = None,
+    submitter: Optional[str] = None,
+) -> DataDict:
+    administration = None
+    geo = None
+    answerlist = []
+    names = []
+    parent_code = None
+    user_id = None if not user else user.id
+    for a in answers:
+        q = crud_question.get_question_by_id(session=session, id=a["question"])
+        answer = Answer(question=q.id, created_by=user_id, created=datetime.now())
+        if q.type == QuestionType.administration:
+            # check user access
+            if user:
+                check_access(a["value"][0], user)
+            if len(a["value"]):
+                administration = int(a["value"][-1])
+                answer.value = administration
+                if q.meta:
+                    adm_name = crud_administration.get_administration_by_id(
+                        session, id=administration
+                    )
+                    names.append(adm_name.name)
+        if q.type == QuestionType.geo:
+            if "lat" in a["value"] and "lng" in a["value"]:
+                geo = [a["value"]["lat"], a["value"]["lng"]]
+                answer.text = ("{}|{}").format(geo[0], geo[1])
+        if q.type in [QuestionType.text, QuestionType.date]:
+            answer.text = a["value"]
+            if q.meta:
+                names.append(a["value"])
+        if q.type == QuestionType.number:
+            answer.value = a["value"]
+            if q.meta:
+                names.append(str(a["value"]))
+        if q.type == QuestionType.option:
+            answer.options = [a["value"]]
+        if q.type == QuestionType.multiple_option:
+            answer.options = a["value"]
+        if q.type == QuestionType.answer_list:
+            parent = crud.get_data_by_name(session=session, name=a["value"])
+            parent_code = parent.name.split(" - ")[-1]
+            administration = parent.administration
+            answer.value = int(parent_code)
+            if q.meta:
+                names.append(parent.name)
+        answerlist.append(answer)
+    name = " - ".join([str(n) for n in names])
+    if parent_code:
+        name = f"{parent_code} - {name}"
+    data = crud.add_data(
+        session=session,
+        form=form_id,
+        name=name,
+        geo=geo,
+        administration=administration,
+        created_by=user_id,
+        answers=answerlist,
+        submitter=submitter,
+    )
+    TESTING = os.environ.get("TESTING")
+    if not TESTING:
+        background_tasks.add_task(refresh_category_view, session=session)
+    return data

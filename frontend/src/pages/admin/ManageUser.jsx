@@ -12,9 +12,16 @@ import {
   Modal,
   Select,
   Input,
+  Empty,
   Switch,
+  Tooltip,
 } from 'antd';
-import { EditOutlined, CheckOutlined, DeleteOutlined } from '@ant-design/icons';
+import {
+  EditOutlined,
+  CheckOutlined,
+  DeleteOutlined,
+  InfoCircleOutlined,
+} from '@ant-design/icons';
 import api from '../../util/api';
 import { query } from '../../util/utils';
 import capitalize from 'lodash/capitalize';
@@ -271,6 +278,15 @@ const ManageUser = () => {
     setSelectedValue({ ...selectedValue, access: value });
   };
 
+  const locale = {
+    emptyText: (
+      <Empty
+        image={Empty.PRESENTED_IMAGE_SIMPLE}
+        description={<span>No User Found</span>}
+      />
+    ),
+  };
+
   const onPasscodeChange = (value) => {
     form.setFieldsValue({ manage_form_passcode: value });
     setSelectedValue({ ...selectedValue, manage_form_passcode: value });
@@ -296,7 +312,7 @@ const ManageUser = () => {
             >
               <Input
                 value={searchValue?.search}
-                placeholder="Search by Name, Email"
+                placeholder={`${formText?.formSearchPlaceholder} ${adminText?.lastSubmittedByText} ${formText?.labelName} ${formText?.labelEmail}`}
                 onChange={(e) => {
                   form.setFieldsValue({ search: e.target.value });
                   setSearchValue({ ...searchValue, search: e.target.value });
@@ -328,7 +344,7 @@ const ManageUser = () => {
                   (x) => x === '' || x === null || typeof x === 'undefined'
                 )}
               >
-                Search
+                {formText?.formSearchPlaceholder}
               </Button>
               {Object.values(searchValue).length > 0 &&
                 Object.values(searchValue).every(
@@ -339,7 +355,7 @@ const ManageUser = () => {
                     onClick={onReset}
                     style={{ marginLeft: '10px' }}
                   >
-                    Reset
+                    {buttonText?.btnResetAll}
                   </Button>
                 )}
             </Form.Item>
@@ -377,6 +393,7 @@ const ManageUser = () => {
             current: paginate.current,
             total: paginate.total,
           }}
+          locale={locale}
         />
       </div>
 
@@ -534,15 +551,24 @@ const ManageUser = () => {
               getFieldValue('role') === 'admin' ? (
                 <Form.Item
                   key="manage_form_passcode"
-                  label="Manage Form Passcode"
+                  label={formText?.formPasscodePlaceholder}
                   valuePropName="manage_form_passcode"
                   name="manage_form_passcode"
+                  className="passcode-item"
                 >
                   <Switch
                     onChange={onPasscodeChange}
                     checked={selectedValue?.manage_form_passcode}
                     disabled={!user?.manage_form_passcode}
                   />
+                  {!user?.manage_form_passcode && (
+                    <Tooltip
+                      placement="top"
+                      title={formText?.formPasscodeInfoText}
+                    >
+                      <InfoCircleOutlined />
+                    </Tooltip>
+                  )}
                 </Form.Item>
               ) : null
             }
@@ -571,9 +597,10 @@ const UserRole = ({ onRoleChange, selectedValue, label, style }) => {
     >
       <Select
         style={style}
-        placeholder="Select role"
+        placeholder={`${formText?.formSelectPlaceholder} ${formText?.labelRole}`}
         onChange={onRoleChange}
         value={selectedValue?.role}
+        allowClear
       >
         <Select.Option
           key="opt-admin"
@@ -616,12 +643,13 @@ const UserOrganisation = ({
         style={style}
         showSearch
         onChange={onOrganisationChange}
-        placeholder="Select organisation"
+        placeholder={`${formText?.formSelectPlaceholder} ${formText?.labelOrg}`}
         options={organisations.map((x) => ({
           label: x.name,
           value: x.id,
         }))}
         value={selectedValue?.organisation}
+        allowClear
       />
     </Form.Item>
   );

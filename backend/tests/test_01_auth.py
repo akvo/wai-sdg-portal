@@ -14,7 +14,9 @@ sys.path.append("..")
 
 
 class Acc:
-    def __init__(self, verified: bool = False, email: str = None, name: str = None):
+    def __init__(
+        self, verified: bool = False, email: str = None, name: str = None
+    ):
         self.exp_date = (datetime.now() + timedelta(days=30)).timestamp()
         self.data = {
             "email": email if email else "support@akvo.org",
@@ -118,7 +120,9 @@ class TestAuthorizationSetup:
             }
         ]
         # register as new user
-        new_account = Acc(verified=True, email="john_doe@mail.com", name="John Doe")
+        new_account = Acc(
+            verified=True, email="john_doe@mail.com", name="John Doe"
+        )
         res = await client.post(
             app.url_path_for("user:register"),
             params={
@@ -314,6 +318,45 @@ class TestAuthorizationSetup:
             "access": [],
             "organisation": 1,
             "manage_form_passcode": True,
+        }
+        # register as new admin with no manage form passcode access
+        new_account = Acc(
+            verified=True, email="normal_admin@mail.com", name="Normal Admin"
+        )
+        res = await client.post(
+            app.url_path_for("user:register"),
+            params={
+                "first_name": "Normal",
+                "last_name": "Admin",
+                "organisation": 1,
+            },
+            headers={"Authorization": f"Bearer {new_account.token}"},
+        )
+        assert res.status_code == 200
+        # update Normal Admin
+        res = await client.put(
+            app.url_path_for("user:update", id=3),
+            params={
+                "active": True,
+                "role": "admin",
+                "first_name": "Normal",
+                "last_name": "Admin",
+                "organisation": 1,
+                "manage_form_passcode": False,
+            },
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
+        assert res.status_code == 200
+        res = res.json()
+        assert res == {
+            "id": 3,
+            "email": "normal_admin@mail.com",
+            "name": "Normal Admin",
+            "role": "admin",
+            "active": True,
+            "access": [],
+            "organisation": 1,
+            "manage_form_passcode": False,
         }
 
         @pytest.mark.asyncio
