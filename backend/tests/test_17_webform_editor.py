@@ -1,3 +1,4 @@
+import os
 import sys
 import pytest
 from fastapi import FastAPI
@@ -5,6 +6,7 @@ from httpx import AsyncClient
 from tests.test_01_auth import Acc
 from sqlalchemy.orm import Session
 from util.helper import hash_cipher
+from core.config import write_form_url_config
 
 pytestmark = pytest.mark.asyncio
 sys.path.append("..")
@@ -838,6 +840,7 @@ class TestWebformEditorRoutes:
             "cascade": cascade,
         }
 
+    @pytest.mark.asyncio
     async def test_get_all_form(
         self, app: FastAPI, session: Session, client: AsyncClient
     ) -> None:
@@ -885,9 +888,14 @@ class TestWebformEditorRoutes:
             },
         ]
 
+    @pytest.mark.asyncio
     async def test_get_standalone_webform(
         self, app: FastAPI, session: Session, client: AsyncClient
     ) -> None:
+        # form url dump
+        path = write_form_url_config(session=session)
+        assert os.path.isfile(path) is True
+
         url1 = hash_cipher(text="1")
         url2 = hash_cipher(text="903430001")
         # get form detail
