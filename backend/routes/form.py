@@ -406,7 +406,6 @@ def get_form_id_from_url_config(uuid: str):
 def get(req: Request, session: Session = Depends(get_session)):
     form = crud.get_form(session=session)
     forms = []
-    configs = {}
     for fr in [f.serialize for f in form]:
         form_id = fr.get("id")
         if "question_group" in fr:
@@ -417,9 +416,6 @@ def get(req: Request, session: Session = Depends(get_session)):
         fr.update({"disableDelete": True if data else False})
         fr.update({"url": url or None})
         forms.append(fr)
-        configs.update({hash_survey_id: form_id})
-    # write forms value as a config file
-    open(URL_FORM_CONFIG, "w").write(json.dumps(configs))
     return forms
 
 
