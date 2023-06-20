@@ -26,11 +26,11 @@ from datetime import datetime
 from util.helper import hash_cipher
 
 INSTANCE_NAME = os.environ["INSTANCE_NAME"]
-SOURCE_PATH = f"./source/{INSTANCE_NAME}"
-URL_FORM_CONFIG = f"{SOURCE_PATH}/form_url_dump.json"
 SANDBOX_DATA_SOURCE = os.environ.get("SANDBOX_DATA_SOURCE")
 if SANDBOX_DATA_SOURCE:
     INSTANCE_NAME = SANDBOX_DATA_SOURCE
+SOURCE_PATH = f"./source/{INSTANCE_NAME}"
+URL_FORM_CONFIG = f"{SOURCE_PATH}/form_url_dump.json"
 
 class_path = INSTANCE_NAME.replace("-", "_")
 security = HTTPBearer()
