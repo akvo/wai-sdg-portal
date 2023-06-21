@@ -48,6 +48,7 @@ if not org:
     )
     print("Organisation named {} created".format(payload["organisation"]))
 user = crud.get_user_by_email(session=session, email=payload["email"])
+manage_form_passcode = True if payload["role"] == "admin" else False
 if user:
     user = crud.update_user_by_id(
         session=session,
@@ -56,6 +57,7 @@ if user:
         role=payload["role"],
         active=1,
         organisation=org.id,
+        manage_form_passcode=manage_form_passcode
     )
     print(f"{user.email} of {org.name} updated")
     session.close()
@@ -67,6 +69,7 @@ user = crud.add_user(
     role=payload["role"],
     active=True,
     organisation=org.id,
+    manage_form_passcode=manage_form_passcode
 )
 print(f"{user.email} of {org.name} added")
 session.close()

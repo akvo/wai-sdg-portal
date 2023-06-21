@@ -10,6 +10,7 @@ import {
   Avatar,
   Space,
   Popover,
+  Tooltip,
 } from 'antd';
 import {
   MenuOutlined,
@@ -21,6 +22,8 @@ import {
   DownloadOutlined,
 } from '@ant-design/icons';
 import { UIState } from '../state/ui';
+import LoadMoreButton from './LoadMoreButton';
+import { getJobsApi } from '../util/endpoints';
 
 const {
   noActivityText,
@@ -30,6 +33,7 @@ const {
 } = window.i18n.header;
 
 const { loginText, logoutText } = window.i18n.navigation;
+const { loadingText } = window.i18n.notificationText;
 
 const IconList = ({ type }) => {
   if (type === 'warning') {
@@ -41,35 +45,47 @@ const IconList = ({ type }) => {
   return <CheckCircleTwoTone twoToneColor="#52c41a" />;
 };
 
+const ListTitle = ({ title }) =>
+  title?.length >= 30 ? <Tooltip title={title}>{title}</Tooltip> : title;
+
 const ActivityLog = () => {
-  const { activityLog } = UIState.useState((c) => c);
+  const { activityData } = UIState.useState((c) => c);
+  const {
+    data: activityLog,
+    current: currPage,
+    total_page: totalPage,
+    loading: loadActivity,
+  } = activityData;
+  const reached = currPage === totalPage;
   if (activityLog.length) {
     return (
       <List
         size="small"
         itemLayout="horizontal"
         dataSource={activityLog}
+        loadMore={<LoadMoreButton reached={reached} />}
         renderItem={(item) => {
-          let desc = item.status;
-          if (item?.attachment) {
-            desc = (
-              <div>
-                {item.status}
-                <a
-                  className="attachment-badge"
-                  href={item.attachment}
-                >
-                  <DownloadOutlined /> {attachmentText}
-                </a>
-              </div>
+          const actions = [];
+          if (item?.attachment && item.icon !== 'warning') {
+            actions.push(
+              <a
+                className="attachment-badge"
+                href={item.attachment}
+              >
+                <Tooltip title={attachmentText}>
+                  <DownloadOutlined />
+                </Tooltip>
+              </a>
             );
           }
           return (
-            <List.Item>
+            <List.Item actions={actions}>
               <List.Item.Meta
                 avatar={<IconList type={item.icon} />}
-                title={item.file}
-                description={desc}
+                title={
+                  <ListTitle title={item?.file || item?.attachment || ''} />
+                }
+                description={item.status}
               />
             </List.Item>
           );
@@ -77,7 +93,7 @@ const ActivityLog = () => {
       />
     );
   }
-  return <Card>{noActivityText}</Card>;
+  return <Card>{loadActivity ? loadingText : noActivityText}</Card>;
 };
 
 const Header = ({
@@ -86,11 +102,24 @@ const Header = ({
   isAuthenticated,
   isWebformStandalone,
 }) => {
-  const { user, activityLog } = UIState.useState((c) => c);
+  const { user, activityData } = UIState.useState((c) => c);
+  const { active } = activityData;
   const onOpen = () => {
     UIState.update((s) => {
       s.showNav = true;
     });
+  };
+  const handleOpenPopover = (open) => {
+    if (open) {
+      getJobsApi(1);
+    } else {
+      UIState.update((e) => {
+        e.activityData = {
+          ...e.activityData,
+          data: [],
+        };
+      });
+    }
   };
   return (
     <Row
@@ -125,8 +154,10 @@ const Header = ({
                 placement="bottom"
                 content={<ActivityLog />}
                 trigger="click"
+                overlayClassName="activity-log"
+                onOpenChange={handleOpenPopover}
               >
-                <Badge count={activityLog.length}>
+                <Badge dot={active}>
                   <Button icon={<FieldTimeOutlined />}>
                     {activityLogText}
                   </Button>

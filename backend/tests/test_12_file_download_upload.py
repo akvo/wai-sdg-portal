@@ -30,7 +30,10 @@ class TestFileRoutes:
         assert res.status_code == 200
         headers = res.headers
         assert headers["content-type"] == ftype
-        assert headers["content-disposition"] == 'attachment; filename="1-test.xlsx"'
+        assert (
+            headers["content-disposition"]
+            == 'attachment; filename="1-test.xlsx"'
+        )
 
     @pytest.mark.asyncio
     async def test_queue_wrong_excel_data(
@@ -39,8 +42,22 @@ class TestFileRoutes:
         original_filename = "1-test.xlsx"
         excel_file = f"./tmp/{original_filename}"
         wrong_data = [
-            ["Option 4", "23,23", "Testing Data 1", 20, "Option A", "2020-12-18"],
-            ["Option 2", "24,24", "Testing Data 2", 23, "Option B", "2020-12-18"],
+            [
+                "Option 4",
+                "23,23",
+                "Testing Data 1",
+                20,
+                "Option A",
+                "2020-12-18",
+            ],
+            [
+                "Option 2",
+                "24,24",
+                "Testing Data 2",
+                23,
+                "Option B",
+                "2020-12-18",
+            ],
         ]
         columns = [
             "2|Test Option Question",
@@ -56,7 +73,9 @@ class TestFileRoutes:
         async with aiofiles.open(excel_file, "rb") as of:
             contents = await of.read()
         res = await client.post(
-            app.url_path_for("excel-template:post", form_id=1, administration=3),
+            app.url_path_for(
+                "excel-template:post", form_id=1, administration=3
+            ),
             files={"file": (fname, contents, ftype)},
             headers={"Authorization": f"Bearer {account.token}"},
         )
@@ -84,7 +103,7 @@ class TestFileRoutes:
                 "Option 1",
                 "Yogyakarta|Bantul",
                 "-6.2,106.81",
-                "Testing Data 1",
+                None,
                 20,
                 "Option A",
                 "2020-12-18",
@@ -93,7 +112,7 @@ class TestFileRoutes:
                 "Option 2",
                 "Yogyakarta|Bantul",
                 "-6.2,106.81",
-                "Testing Data 2",
+                None,
                 23,
                 "Option B",
                 "2020-12-18",
@@ -118,7 +137,9 @@ class TestFileRoutes:
         )
         res = await client.post(
             app.url_path_for(
-                "excel-template:post", form_id=1, administration=administration_id
+                "excel-template:post",
+                form_id=1,
+                administration=administration_id,
             ),
             files={"file": (fname, contents, ftype)},
             headers={"Authorization": f"Bearer {account.token}"},

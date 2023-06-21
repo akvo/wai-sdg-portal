@@ -6,11 +6,12 @@
       "question_group": "Location details",
       "questions": [
         {
-          "question": "location",
+          "question": "Location",
           "order": 1,
           "required": true,
           "type": "administration",
-          "meta": true
+          "meta": true,
+          "id": 4
         },
         {
           "id": 571300150,
@@ -47,7 +48,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 13
     },
     {
       "question_group": "Health Care Facility Information",
@@ -91,7 +93,8 @@
             }
           ]
         }
-      ]
+      ],
+      "id": 14
     },
     {
       "question_group": "Core water questions",
@@ -105,56 +108,77 @@
           "required": true,
           "options": [
             {
-              "name": "Piped supply inside the building",
-              "color": "#385623"
+              "name": "Piped supply inside the building / Piped water into dwelling (into the building)",
+              "color": "#385623",
+              "code": "W1"
             },
             {
-              "name": "Piped supply outside the building",
-              "color": "#00B050"
+              "name": "Piped supply outside the building / Public tap/standpipe",
+              "color": "#00B050",
+              "code": "W2"
             },
             {
-              "name": "Tube well / Borehole",
-              "color": "#00B0F0"
+              "name": "Tube well / Borehole / Shallow tubewell/borehole",
+              "color": "#00B0F0",
+              "code": "W3"
             },
             {
               "name": "Protected dug well",
-              "color": "#4472C4"
+              "color": "#4472C4",
+              "code": "W4"
             },
             {
               "name": "Protected spring",
-              "color": "#40FCFF"
-            },
-            {
-              "name": "Unprotected dug well",
-              "color": "#806000"
-            },
-            {
-              "name": "Unprotected spring",
-              "color": "#C45911"
-            },
-            {
-              "name": "Rain water",
-              "color": "#2F5496"
-            },
-            {
-              "name": "Tanker truck",
-              "color": "#FF83B7"
-            },
-            {
-              "name": "Surface water (river/dam/lake/pond)",
-              "color": "#9CC2E5"
+              "color": "#40FCFF",
+              "code": "W5"
             },
             {
               "name": "Bottled water",
-              "color": "#4472C4"
+              "color": "#4472C4",
+              "code": "W6"
+            },
+            {
+              "name": "Rainwater",
+              "color": "#2F5496",
+              "code": "W7"
+            },
+            {
+              "name": "Tanker truck",
+              "color": "#FF83B7",
+              "code": "W8"
+            },
+            {
+              "name": "Unprotected dug well",
+              "color": "#806000",
+              "code": "W9"
+            },
+            {
+              "name": "Unprotected spring",
+              "color": "#C45911",
+              "code": "W10"
+            },
+            {
+              "name": "Surface water (river/dam/lake/pond)",
+              "color": "#9CC2E5",
+              "code": "W11"
+            },
+            {
+              "name": "No water source/facilities",
+              "color": "#FF0000",
+              "code": "W12"
             },
             {
               "name": "Don\u2019t know",
-              "color": "#FFC000"
+              "color": "#FFC000",
+              "code": "W13"
             },
             {
-              "name": "No water source",
-              "color": "#FF0000"
+              "name": "Piped water to yard/plot",
+              "code": "W14"
+            },
+            {
+              "name": "Deep tubewell/borehole",
+              "code": "W15"
             }
           ]
         },
@@ -168,30 +192,31 @@
           "options": [
             {
               "name": "On premises",
-              "color": null
+              "code": "D1"
             },
             {
               "name": "Up to 500 m",
-              "color": null
+              "code": "D2"
             },
             {
               "name": "500 m or further",
-              "color": null
+              "code": "D3"
             }
           ],
           "dependency": [
             {
               "id": 552050126,
               "options": [
-                "Piped supply outside the building",
-                "Tube well / Borehole",
+                "Piped supply inside the building / Piped water into dwelling (into the building)",
+                "Piped supply outside the building / Public tap/standpipe",
+                "Tube well / Borehole / Shallow tubewell/borehole",
                 "Protected dug well",
                 "Protected spring",
-                "Unprotected dug well",
-                "Unprotected spring",
-                "Rain water",
+                "Bottled water",
+                "Rainwater",
                 "Tanker truck",
-                "Surface water (river/dam/lake/pond)"
+                "Piped water to yard/plot",
+                "Deep tubewell/borehole"
               ]
             }
           ]
@@ -206,33 +231,33 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "code": "WA1"
             },
             {
               "name": "No",
-              "color": null
+              "code": "WA2"
             }
           ],
           "dependency": [
             {
               "id": 552050126,
               "options": [
-                "Piped supply inside the building",
-                "Piped supply outside the building",
-                "Tube well / Borehole",
+                "Piped supply inside the building / Piped water into dwelling (into the building)",
+                "Piped supply outside the building / Public tap/standpipe",
+                "Tube well / Borehole / Shallow tubewell/borehole",
                 "Protected dug well",
                 "Protected spring",
-                "Unprotected dug well",
-                "Unprotected spring",
-                "Rain water",
+                "Bottled water",
+                "Rainwater",
                 "Tanker truck",
-                "Surface water (river/dam/lake/pond)",
-                "Bottled water"
+                "Piped water to yard/plot",
+                "Deep tubewell/borehole"
               ]
             }
           ]
         }
-      ]
+      ],
+      "id": 15
     },
     {
       "question_group": "Core sanitation questions",
@@ -240,68 +265,67 @@
         {
           "id": 554400068,
           "question": "What type of toilets are at the facility for patients?",
-          "order": 1,
-          "meta": false,
-          "type": "option",
-          "required": true,
-          "options": [
-            {
-              "name": "Flush/Pour-flush toilet to sewer connection",
-              "color": "#70AD47"
-            },
-            {
-              "name": "Flush/Pour-flush toilet to tank or pit",
-              "color": "#C5E0B3"
-            },
-            {
-              "name": "Pit latrine with slab",
-              "color": "#00B0F0"
-            },
-            {
-              "name": "Composting toilet",
-              "color": "#ED7D31"
-            },
-            {
-              "name": "Flush/Pour-flush toilet to open drain",
-              "color": "#385623"
-            },
-            {
-              "name": "Pit latrine without slab/open pit",
-              "color": "#FF83B7"
-            },
-            {
-              "name": "No toilet/latrine",
-              "color": "#FF0000"
-            }
-          ]
-        },
-        {
-          "id": 554400065,
-          "question": "Is at least one toilet usable? (Available, functional, private)",
           "order": 2,
           "meta": false,
           "type": "option",
           "required": true,
           "options": [
             {
+              "name": "Flush/Pour-flush toilet to sewer connection",
+              "color": "#70AD47",
+              "code": "T1"
+            },
+            {
+              "name": "Flush/Pour-flush toilet to tank or pit / pour flush to a septic tank",
+              "color": "#C5E0B3",
+              "code": "T2"
+            },
+            {
+              "name": "Pit latrine with slab",
+              "color": "#00B0F0",
+              "code": "T3"
+            },
+            {
+              "name": "Composting toilet",
+              "color": "#ED7D31",
+              "code": "T4"
+            },
+            {
+              "name": "Flush/Pour-flush toilet to open drain / dont know where",
+              "color": "#385623",
+              "code": "T5"
+            },
+            {
+              "name": "Pit latrine without slab / open pit",
+              "color": "#FF83B7",
+              "code": "T6"
+            },
+            {
+              "name": "No toilet/latrine",
+              "color": "#FF0000",
+              "code": "T7"
+            },
+            {
+              "name": "Ventilated Improved Pit latrine (VIP)",
+              "code": "T8"
+            }
+          ]
+        },
+        {
+          "id": 554400065,
+          "question": "Is at least one toilet usable? (Available, functional, private)",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
               "name": "Yes",
-              "color": null
+              "code": "TU1"
             },
             {
               "name": "No",
-              "color": null
-            }
-          ],
-          "dependency": [
-            {
-              "id": 554400068,
-              "options": [
-                "Flush/Pour-flush toilet to sewer connection",
-                "Flush/Pour-flush toilet to tank or pit",
-                "Pit latrine with slab",
-                "Composting toilet",
-                "Pit latrine without slab/open pit"
-              ]
+              "code": "TU2"
             }
           ]
         },
@@ -315,11 +339,11 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "code": "TS1"
             },
             {
               "name": "No",
-              "color": null
+              "code": "TS2"
             }
           ],
           "dependency": [
@@ -327,11 +351,11 @@
               "id": 554400068,
               "options": [
                 "Flush/Pour-flush toilet to sewer connection",
-                "Flush/Pour-flush toilet to tank or pit",
+                "Flush/Pour-flush toilet to tank or pit / pour flush to a septic tank",
                 "Pit latrine with slab",
                 "Composting toilet",
-                "Flush/Pour-flush toilet to open drain",
-                "Pit latrine without slab/open pit"
+                "Flush/Pour-flush toilet to open drain / dont know where",
+                "Ventilated Improved Pit latrine (VIP)"
               ]
             }
           ]
@@ -346,11 +370,11 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "code": "TG1"
             },
             {
               "name": "No",
-              "color": null
+              "code": "TG2"
             }
           ],
           "dependency": [
@@ -358,11 +382,11 @@
               "id": 554400068,
               "options": [
                 "Flush/Pour-flush toilet to sewer connection",
-                "Flush/Pour-flush toilet to tank or pit",
+                "Flush/Pour-flush toilet to tank or pit / pour flush to a septic tank",
                 "Pit latrine with slab",
                 "Composting toilet",
-                "Flush/Pour-flush toilet to open drain",
-                "Pit latrine without slab/open pit"
+                "Flush/Pour-flush toilet to open drain / dont know where",
+                "Ventilated Improved Pit latrine (VIP)"
               ]
             }
           ]
@@ -377,11 +401,11 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "code": "TM1"
             },
             {
               "name": "No",
-              "color": null
+              "code": "TM2"
             }
           ],
           "dependency": [
@@ -389,11 +413,11 @@
               "id": 554400068,
               "options": [
                 "Flush/Pour-flush toilet to sewer connection",
-                "Flush/Pour-flush toilet to tank or pit",
+                "Flush/Pour-flush toilet to tank or pit / pour flush to a septic tank",
                 "Pit latrine with slab",
                 "Composting toilet",
-                "Flush/Pour-flush toilet to open drain",
-                "Pit latrine without slab/open pit"
+                "Flush/Pour-flush toilet to open drain / dont know where",
+                "Ventilated Improved Pit latrine (VIP)"
               ]
             }
           ]
@@ -408,11 +432,11 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "code": "TD1"
             },
             {
               "name": "No",
-              "color": null
+              "code": "TD2"
             }
           ],
           "dependency": [
@@ -420,49 +444,42 @@
               "id": 554400068,
               "options": [
                 "Flush/Pour-flush toilet to sewer connection",
-                "Flush/Pour-flush toilet to tank or pit",
+                "Flush/Pour-flush toilet to tank or pit / pour flush to a septic tank",
                 "Pit latrine with slab",
                 "Composting toilet",
-                "Flush/Pour-flush toilet to open drain",
-                "Pit latrine without slab/open pit"
+                "Flush/Pour-flush toilet to open drain / dont know where",
+                "Ventilated Improved Pit latrine (VIP)"
               ]
             }
           ]
         }
-      ]
+      ],
+      "id": 16
     },
     {
       "question_group": "Core hygiene questions",
       "questions": [
         {
-          "id": 569340079,
-          "question": "Is there a functional hand hygiene hygiene facility at points of care on the day of the survey?",
+          "id": 682564015,
           "order": 1,
-          "meta": false,
+          "question": "Are hand hygiene stataions available at selected points of care?",
           "type": "option",
+          "meta": false,
           "required": true,
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "code": "HH1"
             },
             {
-              "name": "No, there are hand hygienes facilities present at points of care but not functional or lack soap and water or ABHR",
-              "color": null
-            },
-            {
-              "name": "No hand hygiene facilities at points of care",
-              "color": null
-            },
-            {
-              "name": "No hand hygiene facilities at the health facility",
-              "color": null
+              "name": "No",
+              "code": "HH2"
             }
           ]
         },
         {
-          "id": 569340080,
-          "question": "Is there a functional handwashing facility at one or more toilets on the day of the survey?",
+          "id": 569340079,
+          "question": "Is there a functional hand hygiene facility at points of care on the day of the survey?",
           "order": 2,
           "meta": false,
           "type": "option",
@@ -470,19 +487,81 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "code": "HF1"
             },
             {
-              "name": "No, there are handwashing facilities near the toilet but lack soap and/or water",
-              "color": null
+              "name": "No",
+              "code": "HF2"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 682564015,
+              "options": [
+                "Yes"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 569340080,
+          "question": "Is there a functional handwashing facility at one or more toilets on the day of the survey?",
+          "order": 3,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Yes within 5 meters",
+              "code": "HW1"
             },
             {
-              "name": "No, no handwashing facilities near toilets (within 5 meters)",
-              "color": null
+              "name": "Yes but not within 5 meters",
+              "code": "HW2"
+            },
+            {
+              "name": "No hand washing facilities",
+              "code": "HW3"
+            }
+          ]
+        },
+        {
+          "id": 681724027,
+          "order": 4,
+          "question": "Are soap and water available at these handwashing facilities (within 5 meter from toilet) on the day of the survey",
+          "type": "option",
+          "meta": false,
+          "required": true,
+          "options": [
+            {
+              "name": "Yes, water and soap are available",
+              "code": "WS1"
+            },
+            {
+              "name": "No, only water is available",
+              "code": "WS2"
+            },
+            {
+              "name": "No, only soap is available",
+              "code": "WS3"
+            },
+            {
+              "name": "Neither water nor soap available",
+              "code": "WS4"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 569340080,
+              "options": [
+                "Yes within 5 meters",
+                "Yes but not within 5 meters"
+              ]
             }
           ]
         }
-      ]
+      ],
+      "id": 17
     },
     {
       "question_group": "Core health care waste management questions",
@@ -496,16 +575,23 @@
           "required": true,
           "options": [
             {
-              "name": "Yes",
-              "color": "#70AD47"
+              "name": "Yes, waste correctly segregated into at least three labelled bins in the consultation area",
+              "color": "#70AD47",
+              "code": "WB1"
             },
             {
-              "name": "No, bins are present but do not meet all requirements or waste is not correctly segragated",
-              "color": "#BF8F00"
+              "name": "Bins are present but do not meet all requirements or waste is not correctly segragated",
+              "color": "#BF8F00",
+              "code": "WB2"
             },
             {
               "name": "No, bins are not present",
-              "color": "#FF0000"
+              "color": "#FF0000",
+              "code": "WB3"
+            },
+            {
+              "name": "Do not know/No Data",
+              "code": "WB4"
             }
           ]
         },
@@ -519,43 +605,51 @@
           "options": [
             {
               "name": "Autoclaved",
-              "color": null
+              "code": "WD1"
             },
             {
-              "name": "Incinerated (two chamber, 850-1000 \u00b0C incinerator)",
-              "color": null
+              "name": "Incinerated (two chamber, 850-1000 °C incinerator)",
+              "code": "WD2"
             },
             {
               "name": "Incinerated (other)",
-              "color": null
+              "code": "WD3"
             },
             {
               "name": "Burning in a protected pit",
-              "color": null
+              "code": "WD4"
             },
             {
               "name": "Not treated, but buried in lined, protected pit",
-              "color": null
+              "code": "WD5"
             },
             {
               "name": "Not treated, but collected for medical waste disposal off-site",
-              "color": null
+              "code": "WD6"
             },
             {
               "name": "Open dumping without treatment",
-              "color": null
+              "code": "WD7"
             },
             {
               "name": "Open burning",
-              "color": null
+              "code": "WD8"
             },
             {
               "name": "Not treated and added to general waste",
-              "color": null
+              "code": "WD9"
             },
             {
-              "name": "Other",
-              "color": null
+              "name": "Do not know/No Data",
+              "code": "WD10"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 554350179,
+              "options": [
+                "Yes, waste correctly segregated into at least three labelled bins in the consultation area"
+              ]
             }
           ]
         },
@@ -569,47 +663,56 @@
           "options": [
             {
               "name": "Autoclaved",
-              "color": null
+              "code": "WS1"
             },
             {
-              "name": "Incinerated (two chamber, 850-1000 \u00b0C incinerator)",
-              "color": null
+              "name": "Incinerated (two chamber, 850-1000 °C incinerator)",
+              "code": "WS2"
             },
             {
               "name": "Incinerated (other)",
-              "color": null
+              "code": "WS3"
             },
             {
               "name": "Burning in a protected pit",
-              "color": null
+              "code": "WS4"
             },
             {
               "name": "Not treated, but buried in lined, protected pit",
-              "color": null
+              "code": "WS5"
             },
             {
               "name": "Not treated, but collected for medical waste disposal off-site",
-              "color": null
+              "code": "WS6"
             },
             {
               "name": "Open dumping without treatment",
-              "color": null
+              "code": "WS7"
             },
             {
               "name": "Open burning",
-              "color": null
+              "code": "WS8"
             },
             {
               "name": "Not treated and added to general waste",
-              "color": null
+              "code": "WS9"
             },
             {
-              "name": "Other",
-              "color": null
+              "name": "Do not know/No Data",
+              "code": "WS10"
+            }
+          ],
+          "dependency": [
+            {
+              "id": 554350179,
+              "options": [
+                "Yes, waste correctly segregated into at least three labelled bins in the consultation area"
+              ]
             }
           ]
         }
-      ]
+      ],
+      "id": 18
     },
     {
       "question_group": "Core environmental cleaning questions",
@@ -624,11 +727,15 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "code": "CP1"
             },
             {
               "name": "No",
-              "color": null
+              "code": "CP2"
+            },
+            {
+              "name": "Data not collected",
+              "code": "CP3"
             }
           ]
         },
@@ -641,139 +748,33 @@
           "required": true,
           "options": [
             {
-              "name": "Yes",
-              "color": "#70AD47"
+              "name": "Yes, all staff responsible for cleaning received training",
+              "color": "#70AD47",
+              "code": "ST1"
             },
             {
               "name": "No, some but not all have been trained",
-              "color": "#FFFB00"
+              "color": "#FFFB00",
+              "code": "ST2"
             },
             {
               "name": "No, none have been trained",
-              "color": "#BF8F00"
+              "color": "#BF8F00",
+              "code": "ST3"
             },
             {
               "name": "No, there are no staff responsible for cleaning",
-              "color": "#FF0000"
+              "color": "#FF0000",
+              "code": "ST4"
+            },
+            {
+              "name": "Data not collected",
+              "code": "ST5"
             }
           ]
         }
-      ]
-    },
-    {
-      "question_group": "Service levels for Water, Sanitation, Hygiene, Waste, and Environmental Cleaning",
-      "questions": [
-        {
-          "id": 578820188,
-          "question": "Water service level",
-          "order": 1,
-          "meta": false,
-          "type": "option",
-          "required": true,
-          "options": [
-            {
-              "name": "Basic",
-              "color": "#67B769"
-            },
-            {
-              "name": "Limited",
-              "color": "#FDF177"
-            },
-            {
-              "name": "No Service",
-              "color": "#F9CA29"
-            }
-          ]
-        },
-        {
-          "id": 578820187,
-          "question": "Sanitation service level",
-          "order": 2,
-          "meta": false,
-          "type": "option",
-          "required": true,
-          "options": [
-            {
-              "name": "Basic",
-              "color": "#67B769"
-            },
-            {
-              "name": "Limited",
-              "color": "#FDF177"
-            },
-            {
-              "name": "No Service",
-              "color": "#F9CA29"
-            }
-          ]
-        },
-        {
-          "id": 578820186,
-          "question": "Hygiene service level",
-          "order": 3,
-          "meta": false,
-          "type": "option",
-          "required": true,
-          "options": [
-          {
-            "name": "Basic",
-            "color": "#753780"
-          },
-          {
-            "name": "Limited",
-            "color": "#FDF177"
-          },
-          {
-            "name": "No Service",
-            "color": "#F9CA29"
-          }
-          ]
-        },
-        {
-          "id": 578820189,
-          "question": "Waste service level",
-          "order": 4,
-          "meta": false,
-          "type": "option",
-          "required": true,
-          "options": [
-            {
-              "name": "Basic",
-              "color": "#67B769"
-            },
-            {
-              "name": "Limited",
-              "color": "#FDF177"
-            },
-            {
-              "name": "No Service",
-              "color": "#F9CA29"
-            }
-          ]
-        },
-        {
-          "id": 578820190,
-          "question": "Environmental Cleaning service level",
-          "order": 5,
-          "meta": false,
-          "type": "option",
-          "required": true,
-          "options": [
-            {
-              "name": "Basic",
-              "color": null
-            },
-            {
-              "name": "Limited",
-              "color": null
-            },
-            {
-              "name": "No service",
-              "color": null
-            }
-          ]
-        }
-      ]
+      ],
+      "id": 19
     }
   ]
 }

@@ -3,15 +3,19 @@ import { Col, Spin } from 'antd';
 
 import '../main.scss';
 import { UIState } from '../../../state/ui';
-import { generateAdvanceFilterURL } from '../../../util/utils';
+import {
+  generateAdvanceFilterURL,
+  sequentialPromise,
+} from '../../../util/utils';
 import Chart from '../../../chart';
+import PaginationApi from '../../../components/PaginationApi';
 import api from '../../../util/api';
 import takeRight from 'lodash/takeRight';
 import { titleCase } from 'title-case';
 
 const levels = window.map_config?.shapeLevels?.length;
 
-const TabJMP = ({ formId, chartList, question, show }) => {
+const TabJMP = ({ formId, chartList, show }) => {
   const {
     user,
     selectedAdministration,
@@ -21,6 +25,16 @@ const TabJMP = ({ formId, chartList, question, show }) => {
   } = UIState.useState((s) => s);
   const [chartData, setChartData] = useState([]);
   const [pageLoading, setPageLoading] = useState(false);
+  const [chartScores, setChartScores] = useState([]);
+
+  const administrationId =
+    selectedAdministration.length <= levels
+      ? takeRight(selectedAdministration)[0]
+      : selectedAdministration[levels - 1];
+  const administrationList = administration.filter(
+    (adm) => adm?.parent === (administrationId || null)
+  );
+  const PER_PAGE = 250;
 
   useEffect(() => {
     if (loadedFormId !== formId) {
@@ -28,80 +42,155 @@ const TabJMP = ({ formId, chartList, question, show }) => {
     }
   }, [formId, loadedFormId]);
 
+  const getApiUrl = (q) => {
+    let url = `chart/jmp-data/${formId}/${q}?administration=${
+      administrationId || 0
+    }`;
+    url = generateAdvanceFilterURL(advanceSearchValue, url); // advance search
+    return url;
+  };
+
+  const handleOnDataset = (dataset, question, totalPages = 1) => {
+    const data = administrationList.map((adm) => {
+      const findData = dataset?.find((d) => d.administration === adm.id);
+      const stack = findData?.child?.map((c, cx) => {
+        return {
+          id: cx,
+          name: c.option,
+          color: c.color,
+          order: cx + 1,
+          value: c.percent,
+        };
+      });
+      return {
+        ...adm,
+        score: null,
+        stack: stack,
+      };
+    });
+    return {
+      data,
+      question,
+      totalPages,
+      name: titleCase(question),
+      selectedAdministration:
+        selectedAdministration.length <= levels
+          ? null
+          : takeRight(selectedAdministration)[0],
+    };
+  };
+
+  const handleOnSumScores = (data) => {
+    const sumScores = {};
+    for (let i = 0; i < data.length; i++) {
+      const { administration, child } = data[i];
+      if (!sumScores.hasOwnProperty.call(administration)) {
+        sumScores[administration] = {
+          percentSum: {},
+          percentByStatus: {},
+          score: 0,
+        };
+      }
+      for (let j = 0; j < child.length; j++) {
+        const { option, percent } = child[j];
+        if (!sumScores[administration].percentSum.hasOwnProperty.call(option)) {
+          sumScores[administration].percentSum[option] = 0;
+        }
+        sumScores[administration].percentSum[option] += percent;
+      }
+    }
+    // Calculate the percentage of each option within each administration
+    for (const administration in sumScores) {
+      const totalPercent = Object.values(
+        sumScores[administration].percentSum
+      ).reduce((total, percent) => total + percent, 0);
+
+      for (const option in sumScores[administration].percentSum) {
+        const percent =
+          (sumScores[administration].percentSum[option] / totalPercent) * 100;
+        sumScores[administration].percentByStatus[option] = percent;
+      }
+    }
+    // Calculate the scores of each option within each administration
+    const sc = {};
+    for (const administration in sumScores) {
+      sc[administration] = 0;
+      for (const option in sumScores[administration].percentByStatus) {
+        const scValue = chartScores[option] || 0;
+        const prValue = parseFloat(
+          sumScores[administration].percentByStatus[option],
+          10
+        );
+        sc[administration] += (scValue * prValue) / 100;
+      }
+      sumScores[administration].score = sc[administration];
+    }
+    return sumScores;
+  };
+
+  const getAllPaginatedData = (question, allData) => {
+    const sumScores = handleOnSumScores(allData);
+    const _chartData = chartData?.map((c) =>
+      c.question === question
+        ? {
+            ...c,
+            data: c.data.map((d) => ({
+              ...d,
+              score: sumScores[d.id]?.score || d?.score,
+              stack: d?.stack?.map((st) => ({
+                ...st,
+                value: sumScores[d.id]?.percentByStatus[st?.name] || st?.value,
+              })),
+            })),
+          }
+        : c
+    );
+    setChartData(_chartData);
+  };
+
   useEffect(() => {
     if (
       user &&
       chartList?.length &&
       administration.length &&
-      question.length &&
       loadedFormId !== null &&
       loadedFormId === formId
     ) {
       setPageLoading(true);
-      const administrationId =
-        selectedAdministration.length <= levels
-          ? takeRight(selectedAdministration)[0]
-          : selectedAdministration[levels - 1];
-
-      const administrationList = administration.filter(
-        (adm) => adm?.parent === (administrationId || null)
-      );
 
       const apiCall = chartList?.map((chart) => {
-        let url = `chart/jmp-data/${formId}/${chart?.question}`;
-        url += `?administration=${administrationId || 0}`;
-        // advance search
-        url = generateAdvanceFilterURL(advanceSearchValue, url);
-        return api.get(url);
+        const url = getApiUrl(chart?.question);
+        return api.get(`${url}&page=1&perpage=${PER_PAGE}`);
       });
-      Promise.all(apiCall)
+      sequentialPromise(apiCall)
         .then((res) => {
-          const allData = res?.map((r) => {
-            const selectedQuestion = question.find(
-              (q) => q.id === r?.data?.question
-            );
-            const chartSetting = chartList?.find(
-              (c) => c.question === r?.data?.question
-            );
-            const data = administrationList.map((adm) => {
-              const findData = r?.data?.data?.find(
-                (d) => d.administration === adm.id
-              );
-              let stack = [];
-              stack = selectedQuestion?.option?.map((opt) => {
-                const findStack = findData?.child?.find(
-                  (c) => c?.option?.toLowerCase() === opt?.name?.toLowerCase()
-                );
-                return {
-                  ...opt,
-                  value: findStack?.percent || 0,
-                };
-              });
-              return {
-                ...adm,
-                score: findData?.score || null,
-                stack: stack,
-              };
-            });
-            return {
-              name: selectedQuestion?.name
-                ? titleCase(selectedQuestion.name)
-                : '',
-              type: chartSetting?.type,
-              selectedAdministration:
-                selectedAdministration.length <= levels
-                  ? null
-                  : takeRight(selectedAdministration)[0],
-              data: data,
-            };
+          const allData = res?.map(({ data: apiData }, rx) => {
+            const { data: dataset, question, total_page, scores } = apiData;
+            if (rx === 0) {
+              const _scores = scores
+                .map((s) => {
+                  const [key, value] = s;
+                  return { [key]: value };
+                })
+                .reduce((acc, item) => {
+                  const key = Object.keys(item)[0];
+                  const value = item[key];
+                  acc[key] = value;
+                  return acc;
+                }, {});
+              setChartScores(_scores);
+            }
+            return handleOnDataset(dataset, question, total_page);
           });
-          return allData;
+          setChartData(allData);
+          setPageLoading(false);
         })
-        .then((res) => {
-          setChartData(res);
+        .catch(() => {
+          setChartData([]);
           setPageLoading(false);
         });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     user,
     chartList,
@@ -109,7 +198,6 @@ const TabJMP = ({ formId, chartList, question, show }) => {
     loadedFormId,
     administration,
     selectedAdministration,
-    question,
     advanceSearchValue,
   ]);
 
@@ -144,6 +232,12 @@ const TabJMP = ({ formId, chartList, question, show }) => {
                 key={`jmp-chart-row-${ci}`}
                 span={24}
               >
+                <PaginationApi
+                  apiUrl={getApiUrl(c.question)}
+                  totalPages={c.totalPages}
+                  perPage={PER_PAGE}
+                  callback={(res) => getAllPaginatedData(c.question, res)}
+                />
                 <div className="jmp-chart">
                   <Chart
                     title=""

@@ -16,7 +16,6 @@ from .user import User
 from .answer import Answer
 from .administration import Administration
 from .views.view_data import ViewData
-from AkvoResponseGrouper.models import CategoryResponse
 
 
 class GeoData(BaseModel):
@@ -37,8 +36,15 @@ class DataDict(TypedDict):
     answer: List[AnswerDict]
 
 
+class CategoryWithColor(TypedDict):
+    key: str
+    value: str
+    color: Optional[str] = None
+
+
 class DataDictWithHistory(DataDict):
     answer: List[AnswerDictWithHistory]
+    categories: List[CategoryWithColor]
 
 
 class SubmissionInfo(TypedDict):
@@ -47,7 +53,6 @@ class SubmissionInfo(TypedDict):
 
 
 class DataResponse(BaseModel):
-    categories: List[CategoryResponse]
     current: int
     data: List[DataDictWithHistory]
     total: int
@@ -77,7 +82,10 @@ class Data(Base):
     updated_by_user = relationship(User, foreign_keys=[updated_by])
     administration_detail = relationship(Administration, backref="data")
     views = relationship(
-        ViewData, primaryjoin=ViewData.data == id, foreign_keys=id, viewonly=True
+        ViewData,
+        primaryjoin=ViewData.data == id,
+        foreign_keys=id,
+        viewonly=True,
     )
 
     def __init__(

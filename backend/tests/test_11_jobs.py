@@ -1,5 +1,7 @@
 import sys
 import pytest
+from fastapi import FastAPI
+from httpx import AsyncClient
 from datetime import datetime
 from tests.test_01_auth import Acc
 from sqlalchemy.orm import Session
@@ -28,7 +30,9 @@ class TestsJobs:
         assert new_task["available"] is None
 
     @pytest.mark.asyncio
-    async def test_for_worker_checking_a_pending_jobs(self, session: Session) -> None:
+    async def test_for_worker_checking_a_pending_jobs(
+        self, session: Session
+    ) -> None:
         new_task = jobs.pending(session=session)
         assert new_task == 1
         new_task = jobs.update(
@@ -36,10 +40,40 @@ class TestsJobs:
         )
 
     @pytest.mark.asyncio
-    async def test_web_check_worker_availability(self, session: Session) -> None:
+    async def test_web_check_worker_availability(
+        self, session: Session
+    ) -> None:
         availability = jobs.is_not_busy(session=session)
         assert availability is False
-        current_task = jobs.update(session=session, id=1, status=JobStatus.done)
+        current_task = jobs.update(
+            session=session, id=1, status=JobStatus.done
+        )
         assert current_task["available"].strftime("%B %d, %Y") == today
         availability = jobs.is_not_busy(session=session)
         assert availability is True
+
+    @pytest.mark.asyncio
+    async def test_get_jobs_by_current_user(
+        self, app: FastAPI, session: Session, client: AsyncClient
+    ) -> None:
+        res = await client.get(
+            app.url_path_for("jobs:get_by_current_user"),
+            params={
+                "page": 1,
+            },
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
+        assert res.status_code == 200
+        res = res.json()
+        assert res["current"] == 1
+        assert len(res["data"]) > 0
+        assert res["data"][0]["created_by"] == 1
+        assert res["data"][0]["status"] == "done"
+        res404 = await client.get(
+            app.url_path_for("jobs:get_by_current_user"),
+            params={
+                "page": 2,
+            },
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
+        assert res404.status_code == 404

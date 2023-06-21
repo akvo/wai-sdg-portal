@@ -48,6 +48,7 @@ def add_answer(
 def update_answer(
     session: Session,
     answer: Answer,
+    history: History,
     user: int,
     type: QuestionType,
     value: Union[int, float, str, bool, List[str], List[int], List[float]],
@@ -55,6 +56,7 @@ def update_answer(
     answer.updated_by = user
     answer.updated = datetime.now()
     answer = append_value(answer, value, type)
+    session.add(history)
     session.commit()
     session.flush()
     session.refresh(answer)
@@ -74,7 +76,10 @@ def get_answer_by_question(
         return (
             session.query(Answer)
             .filter(
-                and_(Answer.question == question, Answer.data.in_([d.id for d in data]))
+                and_(
+                    Answer.question == question,
+                    Answer.data.in_([d.id for d in data]),
+                )
             )
             .all()
         )
@@ -105,13 +110,22 @@ def get_history(session: Session, data: int, question: int):
         .all()
     )
     history = [h.simplified for h in history]
+    for h in history:
+        if not h["user"]:
+            data_detail = session.query(Data).filter(Data.id == data).first()
+            h.update({"user": data_detail.submitter})
     return [answer] + history
 
 
 def get_project_count(session: Session, question: int, value: int) -> int:
     return (
         session.query(Answer)
-        .filter(and_(Answer.question == question, cast(Answer.value, Integer) == value))
+        .filter(
+            and_(
+                Answer.question == question,
+                cast(Answer.value, Integer) == value,
+            )
+        )
         .count()
     )
 

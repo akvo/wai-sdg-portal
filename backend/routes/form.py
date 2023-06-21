@@ -28,6 +28,10 @@ from util.helper import hash_cipher
 INSTANCE_NAME = os.environ["INSTANCE_NAME"]
 SOURCE_PATH = f"./source/{INSTANCE_NAME}"
 URL_FORM_CONFIG = f"{SOURCE_PATH}/form_url_dump.json"
+SANDBOX_DATA_SOURCE = os.environ.get("SANDBOX_DATA_SOURCE")
+if SANDBOX_DATA_SOURCE:
+    INSTANCE_NAME = SANDBOX_DATA_SOURCE
+
 class_path = INSTANCE_NAME.replace("-", "_")
 security = HTTPBearer()
 form_route = APIRouter()
@@ -38,7 +42,10 @@ geo_center = {"lat": geo_center[1], "lng": geo_center[0]}
 
 # PROJECT BASE
 def get_project_form(
-    session: Session, form: FormBase, project: QuestionDict, administrations: List[int]
+    session: Session,
+    form: FormBase,
+    project: QuestionDict,
+    administrations: List[int],
 ) -> FormBase:
     question_group = []
     for qg in form["question_group"]:
@@ -380,17 +387,6 @@ def save_webform(session: Session, json_form: dict, form_id: int = None):
         session.flush()
 
 
-def write_form_url_config(session: Session):
-    form = crud.get_form(session=session)
-    configs = {}
-    for fr in [f.serialize for f in form]:
-        form_id = fr.get("id")
-        hash_survey_id = hash_cipher(text=str(form_id))
-        configs.update({hash_survey_id: form_id})
-    # write forms value as a config file
-    open(URL_FORM_CONFIG, "w").write(json.dumps(configs))
-
-
 def get_form_id_from_url_config(uuid: str):
     with open(URL_FORM_CONFIG, "r") as j:
         configs = json.loads(j.read())
@@ -469,7 +465,11 @@ def get_webform_by_id(
     credentials: credentials = Depends(security),
 ):
     res = get_form_definition(
-        req=req, id=id, session=session, credentials=credentials, answer_check=edit
+        req=req,
+        id=id,
+        session=session,
+        credentials=credentials,
+        answer_check=edit,
     )
     return res
 
@@ -623,8 +623,6 @@ def delete(
 def get_standalone_form_detail_by_uuid(
     req: Request, uuid: str, session: Session = Depends(get_session)
 ):
-    # write config
-    write_form_url_config(session=session)
     # get form id by uuid
     form_id = get_form_id_from_url_config(uuid=uuid)
     form = crud.get_form_by_id(session=session, id=form_id)
@@ -665,8 +663,6 @@ def form_standalone_login(
 def get_standalone_webform_by_uuid(
     req: Request, uuid: str, session: Session = Depends(get_session)
 ):
-    # get form id by uuid# write config
-    write_form_url_config(session=session)
     # get form id by uuid
     form_id = get_form_id_from_url_config(uuid=uuid)
     form = crud.get_form_by_id(session=session, id=form_id)

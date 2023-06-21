@@ -3,11 +3,13 @@ set -exuo pipefail
 
 if [[ "${CI_BRANCH:=}" = "develop" ]]; then
 	INSTANCES="wai-demo"
+elif [[ "${CI_BRANCH:=}" = "sandbox" ]]; then
+        INSTANCES="wai-sandbox"
 else
 	INSTANCES="wai-ethiopia wai-uganda wai-bangladesh wai-nepal"
 fi
 
-[[ "${CI_BRANCH}" !=  "main" && "${CI_BRANCH}" !=  "develop" && ! "${CI_TAG:=}" =~ promote.* ]] && { echo "Branch different than main, develop and not a tag. Skip deploy"; exit 0; }
+[[ "${CI_BRANCH}" !=  "main" && "${CI_BRANCH}" !=  "develop" && "${CI_BRANCH}" !=  "sandbox" && ! "${CI_TAG:=}" =~ promote.* ]] && { echo "Branch different than main, develop and not a tag. Skip deploy"; exit 0; }
 [[ "${CI_PULL_REQUEST}" ==  "true" ]] && { echo "Pull request. Skip deploy"; exit 0; }
 
 auth () {

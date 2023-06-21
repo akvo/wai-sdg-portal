@@ -86,29 +86,23 @@ const Export = () => {
   const pending = fileList.filter((item) => item.status !== 'done');
 
   useEffect(() => {
-    if (pending.length && !pendingFile) {
+    if (
+      (pending.length && !pendingFile) ||
+      (pendingFile && pendingFile?.status !== 'done')
+    ) {
       setTimeout(() => {
         api.get(`download/status?id=${pending?.[0]?.id}`).then((res) => {
+          setPendingFile(res.data);
           if (res?.data?.status === 'done') {
-            setPendingFile(res.data);
+            const fl = fileList.map((f) =>
+              f.id === res.data?.id ? res.data : f
+            );
+            setFileList(fl);
           }
         });
       }, 3000);
     }
-  }, [pendingFile, pending]);
-
-  useEffect(() => {
-    if (pendingFile) {
-      const currentList = fileList.map((x) => {
-        if (pendingFile.id === x.id) {
-          return pendingFile;
-        }
-        return x;
-      });
-      setFileList(currentList);
-      setPendingFile(null);
-    }
-  }, [pendingFile, fileList]);
+  }, [pendingFile, pending, fileList]);
 
   const handleDownload = (payload) => {
     setDownloading(payload);

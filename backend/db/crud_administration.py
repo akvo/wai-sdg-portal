@@ -19,7 +19,10 @@ def get_parent_administration(
         return (
             session.query(Administration)
             .filter(
-                and_(Administration.parent.is_(None), Administration.id.in_(access))
+                and_(
+                    Administration.parent.is_(None),
+                    Administration.id.in_(access),
+                )
             )
             .all()
         )
@@ -42,7 +45,8 @@ def get_administration_by_name(
             session.query(Administration)
             .filter(
                 and_(
-                    Administration.parent == parent, Administration.name == name.strip()
+                    Administration.parent == parent,
+                    Administration.name == name.strip(),
                 )
             )
             .first()
@@ -52,6 +56,10 @@ def get_administration_by_name(
         .filter(Administration.name == name.strip())
         .first()
     )
+
+
+def verify_administration(session: Session, long_name: str) -> Administration:
+    return session.query(Administration).filter_by(long_name=long_name).first()
 
 
 def get_administration_by_keyword(
@@ -88,7 +96,9 @@ def get_administration_id_by_keyword(
 
 
 def get_administration_name(
-    session: Session, id: Optional[int] = None, name: Optional[List[str]] = None
+    session: Session,
+    id: Optional[int] = None,
+    name: Optional[List[str]] = None,
 ) -> str:
     if not name:
         name = []

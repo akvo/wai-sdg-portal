@@ -24,7 +24,7 @@ class TestChartsRoutes:
         assert res == {
             "type": "BAR",
             "data": [
-                {"name": "option 1", "value": 2},
+                {"name": "option 1", "value": 1},
                 {"name": "option 2", "value": 3},
             ],
         }
@@ -35,26 +35,48 @@ class TestChartsRoutes:
     ) -> None:
         res = await client.get(
             app.url_path_for(
-                "charts:get_aggregated_jmp_chart_data", form_id=1, question_id=1
+                "charts:get_aggregated_jmp_chart_data",
+                form_id=1,
+                type_name="water",
             )
         )
         assert res.status_code == 200
         res = res.json()
         assert res == {
-            "form": 1,
-            "question": 1,
+            "current": 1,
             "data": [
-                {
-                    "administration": 2,
-                    "child": [{"count": 2, "option": "Option 2", "percent": 100.00}],
-                    "score": 5.0,
-                },
-                {
-                    "administration": 3,
-                    "child": [{"count": 1, "option": "Option 2", "percent": 100.00}],
-                    "score": 5.0,
-                },
+                {"administration": 1, "child": []},
+                {"administration": 2, "child": []},
+                {"administration": 3, "child": []},
             ],
+            "total": 4,
+            "total_page": 1,
+            "question": "water",
+            "scores": [],
+        }
+        res = await client.get(
+            app.url_path_for(
+                "charts:get_aggregated_jmp_chart_data",
+                form_id=1,
+                type_name="sanitation",
+            ),
+            params={"administration": 3},
+        )
+        assert res.status_code == 200
+        res = res.json()
+        assert res == {
+            "current": 1,
+            "data": [
+                {"administration": 22, "child": []},
+                {"administration": 23, "child": []},
+                {"administration": 24, "child": []},
+                {"administration": 25, "child": []},
+                {"administration": 26, "child": []},
+            ],
+            "total": 2,
+            "total_page": 1,
+            "question": "sanitation",
+            "scores": [],
         }
 
     @pytest.mark.asyncio
@@ -63,7 +85,9 @@ class TestChartsRoutes:
     ) -> None:
         res = await client.get(
             app.url_path_for(
-                "charts:get_aggregated_pie_chart_data", form_id=1, question_id=1
+                "charts:get_aggregated_pie_chart_data",
+                form_id=1,
+                question_id=1,
             )
         )
         assert res.status_code == 200
@@ -73,18 +97,18 @@ class TestChartsRoutes:
             "question": 1,
             "data": [
                 {
-                    "count": 2,
+                    "count": 1,
                     "itemStyle": {"color": "#333"},
                     "name": "Option 1",
-                    "total": 5,
-                    "value": 40.0,
+                    "total": 4,
+                    "value": 25.0,
                 },
                 {
                     "count": 3,
                     "itemStyle": {"color": "#333"},
                     "name": "Option 2",
-                    "total": 5,
-                    "value": 60.0,
+                    "total": 4,
+                    "value": 75.0,
                 },
             ],
         }
@@ -113,26 +137,26 @@ class TestChartsRoutes:
                         "itemStyle": {"color": "#333"},
                         "count": 3,
                         "name": "Option 2",
-                        "total": 5,
-                        "value": 60.0,
+                        "total": 4,
+                        "value": 75.0,
                     },
                     "type": "info",
                 },
                 {
                     "data": [
                         {
-                            "count": 2,
+                            "count": 1,
                             "itemStyle": {"color": "#333"},
                             "name": "Option 1",
-                            "total": 5,
-                            "value": 40.0,
+                            "total": 4,
+                            "value": 25.0,
                         },
                         {
                             "count": 3,
                             "itemStyle": {"color": "#333"},
                             "name": "Option 2",
-                            "total": 5,
-                            "value": 60.0,
+                            "total": 4,
+                            "value": 75.0,
                         },
                     ],
                     "type": "chart",

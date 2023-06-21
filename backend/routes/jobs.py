@@ -3,7 +3,9 @@ from sqlalchemy.orm import Session
 import db.crud_jobs as crud
 from db.connection import get_session
 from models.jobs import JobStatusResponse
+from fastapi.security import HTTPBearer
 
+security = HTTPBearer()
 jobs_route = APIRouter()
 
 

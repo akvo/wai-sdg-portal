@@ -161,7 +161,11 @@ class Answer(Base):
             answer = self.options
         if type == QuestionType.photo:
             answer = self.text
-        return {"value": answer, "date": date.strftime("%B %d, %Y"), "user": user.name}
+        return {
+            "value": answer,
+            "date": date.strftime("%B %d, %Y"),
+            "user": user.name,
+        }
 
     @property
     def to_maps(self) -> List:

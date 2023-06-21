@@ -16,36 +16,27 @@ class TestMapsRoutes:
         self, app: FastAPI, session: Session, client: AsyncClient
     ) -> None:
         res = await client.get(
-            app.url_path_for("maps:get", form_id=1), params={"marker": 1, "shape": 2}
+            app.url_path_for("maps:get", form_id=1),
+            params={"marker": "Water", "shape": 2},
         )
         assert res.status_code == 200
         res = res.json()
-        assert res == [
+        assert res["data"] == [
             {
                 "id": 1,
+                "loc": "Garut",
                 "geo": [-7.836114, 110.331143],
                 "name": "Garut - Garut",
-                "loc": "Garut",
-                "marker": "Option 1",
-                "marker_hover": None,
                 "shape": 10.0,
             },
             {
                 "id": 2,
+                "loc": "Garut",
                 "geo": [-7.836114, 110.331143],
                 "name": "Garut",
-                "loc": "Garut",
-                "marker": "Option 2",
-                "marker_hover": None,
-                "shape": 10.0,
-            },
-            {
-                "id": 3,
-                "geo": [-7.836114, 110.331143],
-                "name": "Garut - Garut",
-                "loc": "Garut",
-                "marker": "Option 1",
-                "marker_hover": None,
                 "shape": 10.0,
             },
         ]
+        assert res["current"] == 1
+        assert res["total"] == 2
+        assert res["total_page"] == 1

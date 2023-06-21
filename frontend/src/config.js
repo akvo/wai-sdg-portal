@@ -19,7 +19,7 @@ const mapColumns = (values) => {
 
 const mapValues = (values) => {
   return values?.columns
-    ?.filter((val) => !isNaN(val.key))
+    ?.filter((val) => val.key !== 'name')
     ?.map((val) => {
       return val.key;
     });

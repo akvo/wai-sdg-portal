@@ -22,7 +22,8 @@ class TestMailer:
     async def test_email_data(self, session: Session) -> None:
         user = get_user_by_email(session=session, email=account.data["email"])
         email = Email(
-            recipients=[user.recipient], type=MailTypeEnum.data_validation_success
+            recipients=[user.recipient],
+            type=MailTypeEnum.data_validation_success,
         )
         data = email.data
         assert data["Recipients"] == [

@@ -42,7 +42,10 @@ def get_chart_data(
     options: List[str] = None,
 ):
     data = filter_datapoint(
-        session=session, form=form, administration=administration, options=options
+        session=session,
+        form=form,
+        administration=administration,
+        options=options,
     )
     # chart query
     type = "BAR"
@@ -96,7 +99,10 @@ def get_jmp_chart_data(
     options: List[str] = None,
 ):
     data = filter_datapoint(
-        session=session, form=form, administration=administration, options=options
+        session=session,
+        form=form,
+        administration=administration,
+        options=options,
     )
     result = (
         session.query(
@@ -160,7 +166,10 @@ def get_pie_chart_data(
     options: List[str] = None,
 ):
     data = filter_datapoint(
-        session=session, form=form, administration=administration, options=options
+        session=session,
+        form=form,
+        administration=administration,
+        options=options,
     )
     answer = (
         session.query(Answer.options, func.count(Answer.id).label("count"))
@@ -247,7 +256,10 @@ def get_overviews_visualization(
         if opt.lower().strip() == option.lower().strip():
             info_data = value
         chart_data.append(value)
-    data = [{"type": "info", "data": info_data}, {"type": "chart", "data": chart_data}]
+    data = [
+        {"type": "info", "data": info_data},
+        {"type": "chart", "data": chart_data},
+    ]
     return {
         "form": form,
         "question": question,

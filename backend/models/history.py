@@ -92,7 +92,11 @@ class History(Base):
             answer = self.options
         if type == QuestionType.photo:
             answer = self.text
-        return {"value": answer, "date": date.strftime("%B %d, %Y"), "user": user.name}
+        return {
+            "value": answer,
+            "date": date.strftime("%B %d, %Y"),
+            "user": user.name if user else None,
+        }
 
 
 class HistoryBase(BaseModel):

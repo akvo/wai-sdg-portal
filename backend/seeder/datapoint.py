@@ -22,6 +22,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 Base.metadata.create_all(bind=engine)
 session = SessionLocal()
 source_path = os.environ["INSTANCE_NAME"]
+SANDBOX_DATA_SOURCE = os.environ.get("SANDBOX_DATA_SOURCE")
+if SANDBOX_DATA_SOURCE:
+    source_path = SANDBOX_DATA_SOURCE
 class_path = source_path.replace("-", "_")
 source_file = "./source/baseline.xlsx"
 all_sheets = load_workbook(source_file, read_only=True).sheetnames
@@ -69,7 +72,10 @@ def get_location(sheet, x):
             )
             if parent and not message:
                 message = "{}, {},{} Not Found, perhaps {} ?".format(
-                    sheet, x["ix"], parent_name, " / ".join([p.name for p in parent])
+                    sheet,
+                    x["ix"],
+                    parent_name,
+                    " / ".join([p.name for p in parent]),
                 )
         # raise ValueError(message)
         # print(message)
@@ -86,7 +92,10 @@ def get_location(sheet, x):
         )
         if children and not len(message):
             message = "{}, {}, {} Not Found, perhaps {} ?".format(
-                sheet, x["ix"], child_name, " / ".join([c.name for c in children])
+                sheet,
+                x["ix"],
+                child_name,
+                " / ".join([c.name for c in children]),
             )
     if not len(message):
         message = "{}, {}, {} Not Found".format(sheet, x["ix"], child_name)

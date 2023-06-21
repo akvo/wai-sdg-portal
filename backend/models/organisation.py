@@ -44,7 +44,12 @@ class Organisation(Base):
 
     @property
     def serialize(self) -> OrganisationDict:
-        return {"id": self.id, "name": self.name, "type": self.type, "user": self.user}
+        return {
+            "id": self.id,
+            "name": self.name,
+            "type": self.type,
+            "user": self.user,
+        }
 
 
 class OrganisationBase(BaseModel):

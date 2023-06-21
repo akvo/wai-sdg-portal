@@ -10,7 +10,10 @@ source_path = os.environ["INSTANCE_NAME"]
 class SurveyList(enum.Enum):
     wai_nepal = {
         "instances": [
-            {"domain": "pilots", "forms": ["556240162", "554360198", "557950127"]},
+            {
+                "domain": "pilots",
+                "forms": ["556240162", "554360198", "557950127"],
+            },
             {
                 "domain": "wai",
                 "forms": [
@@ -22,8 +25,18 @@ class SurveyList(enum.Enum):
                 ],
             },
         ],
-        "child_forms": ["1322834054", "1260775092", "1327205184", "1338414049"],
-        "administration": ["573330120", "567820007", "571300147", "1359274105"],
+        "child_forms": [
+            "1322834054",
+            "1260775092",
+            "1327205184",
+            "1338414049",
+        ],
+        "administration": [
+            "573330120",
+            "567820007",
+            "571300147",
+            "1359274105",
+        ],
         "answer_list_type": [
             {"id": "1332184057", "list_from": "1260775116"},
             {"id": "1361834041", "list_from": "1260775116"},
@@ -187,7 +200,11 @@ def generate_form(form, child=False):
                 else:
                     question_group["questions"].append(question)
         question_groups.append(question_group)
-    return {"form": form_name, "id": form_id, "question_groups": question_groups}
+    return {
+        "form": form_name,
+        "id": form_id,
+        "question_groups": question_groups,
+    }
 
 
 for instance in instances:

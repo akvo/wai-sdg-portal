@@ -23,7 +23,7 @@ class CustomAuth0User(Auth0User):
 
 auth = Auth0(
     domain=AUTH0_DOMAIN,
-    api_audience="wai-ethiopia-backend",
+    api_audience=AUTH0_AUDIENCE,
     auth0user_model=CustomAuth0User,
     scopes={"read:email": "test"},
 )
@@ -87,7 +87,8 @@ def verify_admin(authenticated, session):
     user = verify_user(authenticated, session)
     if user.role != UserRole.admin:
         raise HTTPException(
-            status_code=403, detail="You don't have data access, please contact admin"
+            status_code=403,
+            detail="You don't have data access, please contact admin",
         )
     return user
 
@@ -96,7 +97,8 @@ def verify_editor(authenticated, session):
     user = verify_user(authenticated, session)
     if user.role not in [UserRole.admin, UserRole.editor]:
         raise HTTPException(
-            status_code=403, detail="You don't have data access, please contact admin"
+            status_code=403,
+            detail="You don't have data access, please contact admin",
         )
     return user
 

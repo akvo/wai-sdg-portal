@@ -1,5 +1,5 @@
 *.min.js
 *.xlsx
 *cascade.csv
-
+*cascade-template.csv
 *form_url_dump.json

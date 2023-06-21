@@ -16,7 +16,6 @@ import moment from 'moment';
 import { UIState } from '../../state/ui';
 import { DropdownNavigation } from '../../components/common';
 import api from '../../util/api';
-import axios from 'axios';
 import config from '../../config';
 
 const { Dragger } = Upload;
@@ -31,55 +30,8 @@ const formIdsFromConfig = Object.keys(window.page_config).map(
   (key) => window.page_config?.[key]?.formId
 );
 
-const checkJobs = (id, filename) => {
-  axios.get(`/worker/jobs/status/${id}`).then((res) => {
-    const status = res.data.status;
-    if (status === 'on_progress' || status === 'pending') {
-      UIState.update((e) => {
-        e.activityLog = [
-          {
-            id: id,
-            file: filename,
-            status: notificationText?.statusWaitingValidationText,
-            icon: 'warning',
-          },
-          ...e.activityLog.filter((x) => x.id !== id),
-        ];
-      });
-      setTimeout(() => {
-        checkJobs(id, filename);
-      }, 10000);
-    } else if (status === 'failed') {
-      UIState.update((e) => {
-        e.activityLog = [
-          {
-            id: id,
-            file: filename,
-            status: notificationText?.statusFailedValidationText,
-            icon: 'danger',
-            attachment: res.data.attachment,
-          },
-          ...e.activityLog,
-        ];
-      });
-    } else {
-      UIState.update((e) => {
-        e.activityLog = [
-          {
-            id: id,
-            file: filename,
-            status: notificationText?.statusSuccessValidationText,
-            icon: 'success',
-          },
-          ...e.activityLog,
-        ];
-      });
-    }
-  });
-};
-
 const ManageUpload = () => {
-  const { user, administration, activityLog, administrationByAccess } =
+  const { user, administration, activityData, administrationByAccess } =
     UIState.useState((s) => s);
   const [form, setForm] = useState(Object.keys(window.page_config)[0]);
   const [fileName, setFileName] = useState(null);
@@ -87,6 +39,7 @@ const ManageUpload = () => {
   const [uploadState, setUploadState] = useState(null);
   const [jobState, setJobState] = useState(null);
   const [allForm, setAllForm] = useState([]);
+  const [uploading, setUploading] = useState(false);
 
   const key = 'updatable';
 
@@ -107,6 +60,7 @@ const ManageUpload = () => {
   const { formId } = config?.[form] || { formId: form };
 
   const onChange = (info) => {
+    setUploading(true);
     const nextState = {};
     switch (info.file.status) {
       case 'uploading':
@@ -156,13 +110,17 @@ const ManageUpload = () => {
   }, [user, selectedAdm, formId]);
 
   useEffect(() => {
-    if (jobState && uploadState?.selectedFile?.status === 'done') {
-      const op = activityLog.find((x) => x.id === jobState.id);
-      if (!op) {
-        checkJobs(jobState.id, uploadState.selectedFile.name);
-      }
+    if (uploading && jobState && uploadState?.selectedFile?.status === 'done') {
+      setUploading(false);
+      UIState.update((e) => {
+        e.activityData = {
+          ...e.activityData,
+          active: true,
+          data: activityData.data,
+        };
+      });
     }
-  }, [activityLog, jobState, uploadState]);
+  }, [activityData, jobState, uploadState, uploading]);
 
   useEffect(() => {
     if (user && administration.length) {

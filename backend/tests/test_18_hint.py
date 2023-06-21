@@ -23,7 +23,9 @@ class TestHintRoutes:
         question = get_question_by_id(session=session, id=5)
         question = question.serialize
         assert question["type"] == QuestionType.number
-        res = await client.get(app.url_path_for("hint:get", question_id=question["id"]))
+        res = await client.get(
+            app.url_path_for("hint:get", question_id=question["id"])
+        )
         assert res.status_code == 200
         res = res.json()
         assert res == {
@@ -40,7 +42,10 @@ class TestHintRoutes:
             json=[
                 {"question": 1, "value": "Option 1"},
                 {"question": 2, "value": [2, 10]},
-                {"question": 3, "value": {"lat": -7.836114, "lng": 110.331143}},
+                {
+                    "question": 3,
+                    "value": {"lat": -7.836114, "lng": 110.331143},
+                },
                 {"question": 4, "value": "Hint Test"},
                 {"question": 5, "value": 45},
                 {"question": 6, "value": ["Option A", "Option B"]},
@@ -51,7 +56,7 @@ class TestHintRoutes:
         assert res.status_code == 200
         res = res.json()
         assert res == {
-            "id": 6,
+            "id": 5,
             "name": "Garut - Hint Test",
             "administration": 10,
             "created": today,
@@ -76,7 +81,10 @@ class TestHintRoutes:
             json=[
                 {"question": 1, "value": "Option 2"},
                 {"question": 2, "value": [2, 10]},
-                {"question": 3, "value": {"lat": -7.836114, "lng": 110.331143}},
+                {
+                    "question": 3,
+                    "value": {"lat": -7.836114, "lng": 110.331143},
+                },
                 {"question": 4, "value": "Hint Test"},
                 {"question": 5, "value": 55},
                 {"question": 6, "value": ["Option B"]},
@@ -86,7 +94,9 @@ class TestHintRoutes:
         )
         assert res.status_code == 200
         # get hint
-        res = await client.get(app.url_path_for("hint:get", question_id=question["id"]))
+        res = await client.get(
+            app.url_path_for("hint:get", question_id=question["id"])
+        )
         assert res.status_code == 200
         res = res.json()
         assert res == {

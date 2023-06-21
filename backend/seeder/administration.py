@@ -9,6 +9,9 @@ from source.geoconfig import GeoLevels
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 source_path = os.environ["INSTANCE_NAME"]
+SANDBOX_DATA_SOURCE = os.environ.get("SANDBOX_DATA_SOURCE")
+if SANDBOX_DATA_SOURCE:
+    source_path = SANDBOX_DATA_SOURCE
 session = SessionLocal()
 class_path = source_path.replace("-", "_")
 source_file = f"./source/{source_path}/topojson.json"
@@ -23,6 +26,16 @@ def get_parent_id(df, x):
     pid = df[(df["l"] == parent_level) & (df["name"] == x["p"])]
     pid = pid.to_dict("records")[0]
     return pid["id"]
+
+
+def get_long_name(df, row):
+    if row["parent"] is None:
+        return row["name"]
+    if row["parent"] != row["parent"]:
+        return row["name"]
+    else:
+        parent_row = df.loc[df["id"] == row["parent"]].iloc[0]
+        return get_long_name(df, parent_row) + "|" + row["name"]
 
 
 with open(source_file, "r") as geo:
@@ -54,11 +67,17 @@ with open(source_file, "r") as geo:
     res = res[subset]
     res["id"] = res.index + 1
     res["parent"] = res.apply(lambda x: get_parent_id(res, x), axis=1)
-    res = res[["id", "name", "parent"]]
+    res["long_name"] = res.apply(lambda x: get_long_name(res, x), axis=1)
+    res = res[["id", "name", "parent", "long_name"]]
     for adm in res.to_dict("records"):
         parent = adm["parent"] if adm["parent"] == adm["parent"] else None
         add_administration(
             session=session,
-            data=Administration(id=int(adm["id"]), parent=parent, name=adm["name"]),
+            data=Administration(
+                id=int(adm["id"]),
+                parent=parent,
+                name=adm["name"],
+                long_name=adm["long_name"],
+            ),
         )
     res.to_csv(f"./source/{source_path}/data/cascade.csv", index=False)

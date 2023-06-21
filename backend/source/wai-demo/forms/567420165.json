@@ -10,7 +10,8 @@
           "order": 1,
           "required": true,
           "type": "administration",
-          "meta": true
+          "meta": true,
+          "id": 3
         },
         {
           "id": 554110154,
@@ -30,7 +31,8 @@
           "required": true,
           "options": null
         }
-      ]
+      ],
+      "id": 15
     },
     {
       "question_group": "Household Information",
@@ -53,7 +55,8 @@
           "required": false,
           "options": null
         }
-      ]
+      ],
+      "id": 16
     },
     {
       "question_group": "Drinking Water",
@@ -68,63 +71,78 @@
           "options": [
             {
               "name": "Piped water into dwelling (household connection)",
-              "color": null
+              "color": null,
+              "id": 567506368
             },
             {
               "name": "Piped water to yard/plot",
-              "color": null
+              "color": null,
+              "id": 567506418
             },
             {
               "name": "Piped to neighbour",
-              "color": null
+              "color": null,
+              "id": 567488892
             },
             {
               "name": "Deep tubewell/borehole",
-              "color": null
+              "color": null,
+              "id": 567506452
             },
             {
               "name": "Public tap/standpipe",
-              "color": null
+              "color": null,
+              "id": 567506464
             },
             {
               "name": "Protected spring",
-              "color": null
+              "color": null,
+              "id": 567477138
             },
             {
               "name": "Rainwater collection",
-              "color": null
+              "color": null,
+              "id": 567506488
             },
             {
               "name": "Tanker-truck",
-              "color": null
+              "color": null,
+              "id": 567506500
             },
             {
               "name": "Cart with small tank/drum",
-              "color": null
+              "color": null,
+              "id": 567506511
             },
             {
               "name": "Water kiosk",
-              "color": null
+              "color": null,
+              "id": 567488901
             },
             {
               "name": "Bottled water",
-              "color": null
+              "color": null,
+              "id": 567506538
             },
             {
               "name": "Sachet water",
-              "color": null
+              "color": null,
+              "id": 567506550
             },
             {
               "name": "Unprotected dug well",
-              "color": null
+              "color": null,
+              "id": 567506564
             },
             {
               "name": "Unprotected spring",
-              "color": null
+              "color": null,
+              "id": 567477139
             },
             {
               "name": "Surface water",
-              "color": null
+              "color": null,
+              "id": 567488907
             }
           ]
         },
@@ -138,15 +156,18 @@
           "options": [
             {
               "name": "In own dwelling",
-              "color": null
+              "color": null,
+              "id": 567506609
             },
             {
               "name": "In own yard / plot",
-              "color": null
+              "color": null,
+              "id": 567506621
             },
             {
               "name": "Elsewhere",
-              "color": null
+              "color": null,
+              "id": 567488912
             }
           ]
         },
@@ -160,15 +181,18 @@
           "options": [
             {
               "name": "Less than 30 minutes",
-              "color": null
+              "color": null,
+              "id": 567506652
             },
             {
               "name": "More than 30 minutes",
-              "color": null
+              "color": null,
+              "id": 567488915
             },
             {
               "name": "Don't know",
-              "color": null
+              "color": null,
+              "id": 567506678
             }
           ]
         },
@@ -182,15 +206,18 @@
           "options": [
             {
               "name": "Yes, at least once",
-              "color": null
+              "color": null,
+              "id": 567506697
             },
             {
               "name": "No, always sufficient",
-              "color": null
+              "color": null,
+              "id": 567506709
             },
             {
               "name": "Don't know",
-              "color": null
+              "color": null,
+              "id": 567506719
             }
           ]
         },
@@ -203,20 +230,24 @@
           "required": false,
           "options": [
             {
-              "name": "Free from feacal and prioirty chemical contamination",
-              "color": null
+              "name": "Free from fecal and priority chemical contamination",
+              "color": null,
+              "id": 567506738
             },
             {
               "name": "Contaminated",
-              "color": null
+              "color": null,
+              "id": 567506750
             },
             {
               "name": "Don't know",
-              "color": null
+              "color": null,
+              "id": 567506759
             }
           ]
         }
-      ]
+      ],
+      "id": 17
     },
     {
       "question_group": "Sanitation",
@@ -231,63 +262,78 @@
           "options": [
             {
               "name": "Flush/pour flush to piped sewer system",
-              "color": null
+              "color": null,
+              "id": 567509799
             },
             {
               "name": "Flush/pour flush to septic tank",
-              "color": null
+              "color": null,
+              "id": 567509840
             },
             {
               "name": "Flush/pour flush to pit latrine",
-              "color": null
+              "color": null,
+              "id": 567489234
             },
             {
               "name": "Ventilated improved pit latrine (VIP) with slab",
-              "color": null
+              "color": null,
+              "id": 567509868
             },
             {
               "name": "Pit latrine with slab",
-              "color": null
+              "color": null,
+              "id": 567509883
             },
             {
               "name": "Twin pit offset latrine",
-              "color": null
+              "color": null,
+              "id": 567489238
             },
             {
               "name": "Twin pit with latrine slab",
-              "color": null
+              "color": null,
+              "id": 567509909
             },
             {
               "name": "Other composting latrine",
-              "color": null
+              "color": null,
+              "id": 567509923
             },
             {
               "name": "Contain-based sanitation",
-              "color": null
+              "color": null,
+              "id": 567489242
             },
             {
               "name": "Flush/pour flush to open drain",
-              "color": null
+              "color": null,
+              "id": 567489243
             },
             {
-              "name": "Pit latrine without slab/open pit",
-              "color": null
+              "name": "Pit latrine without slab / open pit",
+              "color": null,
+              "id": 567509961
             },
             {
               "name": "Twin pit without slab",
-              "color": null
+              "color": null,
+              "id": 567509973
             },
             {
               "name": "Bucket",
-              "color": null
+              "color": null,
+              "id": 567489247
             },
             {
               "name": "Hanging toilet/latrine",
-              "color": null
+              "color": null,
+              "id": 567489248
             },
             {
               "name": "No facility",
-              "color": null
+              "color": null,
+              "id": 567510009
             }
           ]
         },
@@ -301,15 +347,18 @@
           "options": [
             {
               "name": "Yes",
-              "color": null
+              "color": null,
+              "id": 567510030
             },
             {
               "name": "No",
-              "color": null
+              "color": null,
+              "id": 567510042
             },
             {
               "name": "Not Applicable",
-              "color": null
+              "color": null,
+              "id": 567510054
             }
           ]
         },
@@ -323,19 +372,23 @@
           "options": [
             {
               "name": "In own dwelling",
-              "color": null
+              "color": null,
+              "id": 567510073
             },
             {
               "name": "In own plot/yard",
-              "color": null
+              "color": null,
+              "id": 567489257
             },
             {
               "name": "Elsewhere",
-              "color": null
+              "color": null,
+              "id": 567510100
             },
             {
               "name": "Not Applicable",
-              "color": null
+              "color": null,
+              "id": 567510112
             }
           ]
         },
@@ -349,19 +402,23 @@
           "options": [
             {
               "name": "Yes, but don't know when",
-              "color": null
+              "color": null,
+              "id": 567510131
             },
             {
               "name": "No, never emptied",
-              "color": null
+              "color": null,
+              "id": 567510143
             },
             {
               "name": "Don't know",
-              "color": null
+              "color": null,
+              "id": 567510154
             },
             {
               "name": "Not applicable",
-              "color": null
+              "color": null,
+              "id": 567489265
             }
           ]
         },
@@ -375,31 +432,38 @@
           "options": [
             {
               "name": "Removed by service provider to a treatment plant",
-              "color": null
+              "color": null,
+              "id": 567510183
             },
             {
               "name": "Removed by service provider and buried in a covered pit",
-              "color": null
+              "color": null,
+              "id": 567489268
             },
             {
               "name": "Removed by service provider to don't know where",
-              "color": null
+              "color": null,
+              "id": 567510209
             },
             {
               "name": "Buried by household in covered pit",
-              "color": null
+              "color": null,
+              "id": 567510221
             },
             {
               "name": "Disposed by household to uncovered pit or environment",
-              "color": null
+              "color": null,
+              "id": 567489272
             },
             {
               "name": "Not applicable",
-              "color": null
+              "color": null,
+              "id": 567489273
             }
           ]
         }
-      ]
+      ],
+      "id": 18
     },
     {
       "question_group": "Hygiene",
@@ -414,23 +478,28 @@
           "options": [
             {
               "name": "Fixed facility observed in dwelling",
-              "color": null
+              "color": null,
+              "id": 567489578
             },
             {
               "name": "Fixed facility observed in plot/yard",
-              "color": null
+              "color": null,
+              "id": 567513337
             },
             {
               "name": "Mobile object observed (bucket, jug, kettle)",
-              "color": null
+              "color": null,
+              "id": 567513352
             },
             {
               "name": "No handwashing place available in dwelling/plot/yard",
-              "color": null
+              "color": null,
+              "id": 567513368
             },
             {
               "name": "Don't know",
-              "color": null
+              "color": null,
+              "id": 567513378
             }
           ]
         },
@@ -444,15 +513,18 @@
           "options": [
             {
               "name": "Water is available",
-              "color": null
+              "color": null,
+              "id": 567513402
             },
             {
               "name": "Water is not available",
-              "color": null
+              "color": null,
+              "id": 567513414
             },
             {
               "name": "Not applicable",
-              "color": null
+              "color": null,
+              "id": 567489591
             }
           ]
         },
@@ -466,133 +538,28 @@
           "options": [
             {
               "name": "Yes, soap or detergent are present",
-              "color": null
+              "color": null,
+              "id": 567489593
             },
             {
               "name": "Ash/mud/sand is present",
-              "color": null
+              "color": null,
+              "id": 567513459
             },
             {
               "name": "No, not present",
-              "color": null
+              "color": null,
+              "id": 567513473
             },
             {
               "name": "Not applicable",
-              "color": null
+              "color": null,
+              "id": 567489597
             }
           ]
         }
-      ]
-    },
-    {
-      "question_group": "WASH Service Levels",
-      "questions": [
-        {
-          "id": 573020156,
-          "question": "Water Service Level",
-          "order": 1,
-          "meta": false,
-          "type": "option",
-          "required": false,
-          "options": [
-            {
-              "name": "Safely Managed",
-              "color": "#297EB5",
-              "order": 1,
-              "score": 15
-            },
-            {
-              "name": "Basic",
-              "color": "#5EBADF",
-              "order": 2,
-              "score": 10
-            },
-            {
-              "name": "Limited",
-              "color": "#FDF177",
-              "order": 3,
-              "score": 1
-            },
-            {
-              "name": "Unimproved",
-              "color": "#FBD256",
-              "order": 4,
-              "score": -1
-            },
-            {
-              "name": "Surface water",
-              "color": "#F1AC2A",
-              "order": 5,
-              "score": -2
-            }
-          ]
-        },
-        {
-          "id": 569090236,
-          "question": "Sanitation Service Level",
-          "order": 2,
-          "meta": false,
-          "type": "option",
-          "required": true,
-          "options": [
-            {
-              "name": "Safely Managed",
-              "color": "#368541",
-              "order": 1,
-              "score": 15
-            },
-            {
-              "name": "Basic",
-              "color": "#79BE7D",
-              "order": 2,
-              "score": 10
-            },
-            {
-              "name": "Limited",
-              "color": "#FDF177",
-              "order": 3,
-              "score": -1
-            },
-            {
-              "name": "Unimproved",
-              "color": "#FBD256",
-              "order": 4,
-              "score": -2
-            },
-            {
-              "name": "Open Defecation",
-              "color": "#F1AC2A",
-              "order": 5,
-              "score": -3
-            }
-          ]
-        },
-        {
-          "id": 573010267,
-          "question": "Hygiene Service Level",
-          "order": 3,
-          "meta": false,
-          "type": "option",
-          "required": false,
-          "options": [
-            {
-              "name": "Basic",
-              "color": "#753780",
-              "score": 10
-            },
-            {
-              "name": "Limited",
-              "color": "#FDF177",
-              "score": -1
-            },
-            {
-              "name": "No Facility",
-              "color": "#F1AC2A",
-              "score": -2
-            }
-          ]
-        }
-      ]
+      ],
+      "id": 19
     }
   ]
 }

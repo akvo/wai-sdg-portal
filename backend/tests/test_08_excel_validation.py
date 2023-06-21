@@ -37,7 +37,10 @@ class TestExcelValidation:
             meta=False,
             type="multiple_option",
             required=True,
-            option=[{"name": "Option A", "order": 1}, {"name": "Option B", "order": 2}],
+            option=[
+                {"name": "Option A", "order": 1},
+                {"name": "Option B", "order": 2},
+            ],
         )
         crud_question.add_question(
             session=session,
@@ -190,12 +193,12 @@ class TestExcelValidation:
             },
             {
                 "error": ExcelError.value,
-                "error_message": "Wrong administration data for Jakarta",
+                "error_message": "Jawa Barat|Garut is not part of Jakarta",
                 "cell": "B2",
             },
             {
                 "error": ExcelError.value,
-                "error_message": "Garut is not part of Jakarta",
+                "error_message": "Wrong administration data for Jakarta|Garut",
                 "cell": "B3",
             },
             {

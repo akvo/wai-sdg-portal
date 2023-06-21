@@ -30,7 +30,11 @@ class Access(Base):
 
     @property
     def serialize(self) -> AccessDict:
-        return {"id": self.id, "user": self.user, "administration": self.administration}
+        return {
+            "id": self.id,
+            "user": self.user,
+            "administration": self.administration,
+        }
 
 
 class AccessBase(BaseModel):
