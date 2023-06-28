@@ -197,6 +197,10 @@
             {
               "name": "No",
               "code": "WA2"
+            },
+            {
+              "name": "Data not collected",
+              "code": "WA3"
             }
           ],
           "dependency": [
