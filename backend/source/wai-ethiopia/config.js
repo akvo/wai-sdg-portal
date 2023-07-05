@@ -212,16 +212,20 @@ var page_config = {
         ],
       },
       {
-        id: 569090299,
-        name: "Presence of Handwashing Facility with Water and Soap",
+        id: 494780324,
+        name: "Implementing partner",
         color: [
           {
-            name: "Yes",
+            name: "Amref",
             color: "#9FE07F",
           },
           {
-            name: "No",
+            name: "Amref and Local Government",
             color: "#F67070",
+          },
+          {
+            name: "Other",
+            color: "fee08f",
           },
         ],
         hover: [
