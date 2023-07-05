@@ -715,7 +715,6 @@ const MainMaps = ({ question, current }) => {
         _.pick(o, ['id', 'name'])
       );
       if (!_.isEqual(opts1, opts2)) {
-        setLoading(true);
         setMarkerOptions([]);
       }
     }
