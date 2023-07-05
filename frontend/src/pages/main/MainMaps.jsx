@@ -557,7 +557,7 @@ const MainMaps = ({ question, current }) => {
   );
 
   const fillColor = (v) => {
-    const color = v === 0 ? '#FFF' : colorScale(v);
+    const color = v === 0 ? colorRange[0] : colorScale(v);
     if (
       (!shapeLegendType || shapeLegendType !== 'slider') &&
       filterColor !== null
@@ -702,7 +702,7 @@ const MainMaps = ({ question, current }) => {
         const fs = scoreOptions.find((s) => s?.name === o?.id);
         return {
           ...o,
-          option: fs?.labels || [],
+          option: fs?.labels,
         };
       });
       setMarkerOptions(mo);
