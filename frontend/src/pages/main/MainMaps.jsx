@@ -675,18 +675,12 @@ const MainMaps = ({ question, current }) => {
     if (
       selectableMarkerDropdown?.length &&
       question?.length &&
-      scoreOptions?.length &&
       markerOptions.length === 0
     ) {
       const _markerOptions = selectableMarkerDropdown?.map((md) => {
         const fq = question?.find((q) => q?.id === md?.id);
         if (!fq) {
-          const fs = scoreOptions?.find((s) => s?.name === md?.id);
-          return {
-            ...fs,
-            ...md,
-            option: fs?.labels || [],
-          };
+          return md;
         }
         return {
           ...md,
@@ -698,6 +692,33 @@ const MainMaps = ({ question, current }) => {
       const defaultSelectable = markerData || _markerOptions.shift();
       setMarkerQuestion(defaultSelectable);
     }
+
+    if (
+      scoreOptions?.length &&
+      markerOptions?.length &&
+      !markerQuestion?.option
+    ) {
+      const mo = markerOptions.map((o) => {
+        const fs = scoreOptions.find((s) => s?.name === o?.id);
+        return {
+          ...o,
+          option: fs?.labels || [],
+        };
+      });
+      setMarkerOptions(mo);
+      setMarkerQuestion(mo[0]);
+    }
+
+    if (markerOptions?.length && loadedFormId === current?.formId) {
+      const opts1 = _.map(markerOptions, (o) => _.pick(o, ['id', 'name']));
+      const opts2 = _.map(selectableMarkerDropdown, (o) =>
+        _.pick(o, ['id', 'name'])
+      );
+      if (!_.isEqual(opts1, opts2)) {
+        setLoading(true);
+        setMarkerOptions([]);
+      }
+    }
   }, [
     mId,
     question,
@@ -705,6 +726,8 @@ const MainMaps = ({ question, current }) => {
     markerQuestion,
     markerOptions,
     scoreOptions,
+    loadedFormId,
+    current,
   ]);
 
   const geoStyle = (g) => {
