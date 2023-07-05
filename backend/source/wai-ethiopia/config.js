@@ -258,7 +258,25 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: "Water", name: "Water" },
+      shape: {
+        id: "Water",
+        name: "Water Service Level",
+        // set to true if title of shape legend by calculatedBy value
+        isTitleByCalculated: false,
+        // describe option value will be included for the calculation
+        calculatedBy: [
+          { id: 235, name: "Basic" },
+          { id: 236, name: "Limited" },
+        ],
+        // describe the shape calculation type
+        type: "percentage",
+        // shape legend type, slider or null (default)
+        legend: null,
+        // color range for shape shading, jmp or null (default)
+        color: "jmp",
+        // sanitation / water / hygiene / null (default)
+        jmpType: null,
+      },
       marker: { id: "Water", name: "Water Service Level" },
     },
     rows: [
@@ -488,7 +506,6 @@ var page_config = {
         calculatedBy: [
           { id: 235, name: "Basic" },
           { id: 236, name: "Limited" },
-          { id: 237, name: "No Service" },
         ],
         // describe the shape calculation type
         type: "percentage",
