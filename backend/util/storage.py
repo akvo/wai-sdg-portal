@@ -61,7 +61,9 @@ def download(url):
     TESTING = os.environ.get("TESTING")
     STORAGE_LOCATION = os.environ.get("STORAGE_LOCATION")
     if TESTING or STORAGE_LOCATION:
-        return url
+        tmp_file = url.split("/")[-1]
+        tmp_file = f"./tmp/{tmp_file}"
+        return tmp_file
     storage_client = storage.Client()
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.blob(url)

@@ -1,4 +1,5 @@
 import pandas as pd
+import os
 import gc
 import time
 from sqlalchemy.orm import Session
@@ -135,14 +136,24 @@ def run_download(session: Session, jobs: dict):
     sent = email.send
     if sent:
         output = storage.upload(file, "download", out_file)
+        STORAGE_LOCATION = os.environ.get("STORAGE_LOCATION")
+        payload = output.split("/")[1]
+        if STORAGE_LOCATION:
+            payload = output
         jobs = crud.update(
             session=session,
             id=jobs["id"],
-            payload=output.split("/")[1],
+            payload=payload,
             status=JobStatus.done,
         )
         print_log_done(f"FILE CREATED {output}", start_time)
     else:
+        jobs = crud.update(
+            session=session,
+            id=jobs["id"],
+            payload=output.split("/")[1],
+            status=JobStatus.failed,
+        )
         print_log_done(f"FAILED TO CREATED {file}", start_time)
 
 
