@@ -699,7 +699,9 @@ const MainMaps = ({ question, current }) => {
       !markerQuestion?.option
     ) {
       const mo = markerOptions.map((o) => {
-        const fs = scoreOptions.find((s) => s?.name === o?.id);
+        const fs = scoreOptions.find(
+          (s) => s?.name?.toLowerCase() === o?.id?.toLowerCase()
+        );
         return {
           ...o,
           option: fs?.labels,

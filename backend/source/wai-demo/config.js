@@ -351,7 +351,7 @@ var page_config = {
         ],
       },
       {
-        id: 569080379,
+        id: "Environmental Cleaning",
         name: "Environmental Cleaning service level",
         hover: [
           {
@@ -365,7 +365,7 @@ var page_config = {
         ],
       },
       {
-        id: 569080378,
+        id: "Waste Management",
         name: "Waste service level",
         hover: [
           {
