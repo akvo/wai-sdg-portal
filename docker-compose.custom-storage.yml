@@ -1,0 +1,52 @@
+---
+version: "3.9"
+services:
+  mainnetwork:
+    ports:
+      - 3000:3000
+      - 8000:8000
+      - 5050:5050
+  pgadmin:
+    image: dpage/pgadmin4:5.7
+    environment:
+      - PGADMIN_LISTEN_PORT=5050
+      - PGADMIN_DEFAULT_EMAIL=dev@akvo.org
+      - PGADMIN_DEFAULT_PASSWORD=password
+    volumes:
+      - ./pgadmin4/servers.json:/pgadmin4/servers.json
+      - pg-admin-data:/var/lib/pgadmin
+    depends_on:
+      - db
+    network_mode: service:mainnetwork
+  frontend:
+    volumes:
+      - ./docs/$INSTANCE_NAME/build/html/:/app/public/documentation/:ro
+    environment:
+      - AUTH0_DOMAIN=$WAI_AUTH0_SPA_DOMAIN
+      - AUTH0_CLIENT_ID=$WAI_AUTH0_SPA_CLIENT_ID
+  backend:
+    volumes:
+      - ./backend:/app:delegated
+      - ./data:${STORAGE_LOCATION}
+    environment:
+      - AUTH0_DOMAIN=$WAI_AUTH0_DOMAIN
+      - AUTH0_CLIENT_ID=$WAI_AUTH0_CLIENT_ID
+      - AUTH0_AUDIENCE=$WAI_AUTH0_AUDIENCE
+      - AUTH0_SECRET=$WAI_AUTH0_SECRET
+      - MAILJET_SECRET=$MAILJET_SECRET
+      - MAILJET_APIKEY=$MAILJET_APIKEY
+      - WEBDOMAIN=$INSTANCE_NAME.akvotest.org
+      - STORAGE_LOCATION=${STORAGE_LOCATION}
+  worker:
+    volumes:
+      - ./backend:/app:delegated
+      - ./data:${STORAGE_LOCATION}
+    environment:
+      - MAILJET_SECRET=$MAILJET_SECRET
+      - MAILJET_APIKEY=$MAILJET_APIKEY
+      - WEBDOMAIN=$INSTANCE_NAME.akvotest.org
+      - STORAGE_LOCATION=${STORAGE_LOCATION}
+    depends_on:
+      - backend
+volumes:
+  pg-admin-data:
