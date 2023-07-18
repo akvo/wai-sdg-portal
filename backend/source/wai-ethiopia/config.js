@@ -212,16 +212,20 @@ var page_config = {
         ],
       },
       {
-        id: 569090299,
-        name: "Presence of Handwashing Facility with Water and Soap",
+        id: 494780324,
+        name: "Implementing partner",
         color: [
           {
-            name: "Yes",
+            name: "Amref",
             color: "#9FE07F",
           },
           {
-            name: "No",
+            name: "Amref and Local Government",
             color: "#F67070",
+          },
+          {
+            name: "Other",
+            color: "fee08f",
           },
         ],
         hover: [
@@ -258,7 +262,25 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: "Water", name: "Water" },
+      shape: {
+        id: "Water",
+        name: "Water Service Level",
+        // set to true if title of shape legend by calculatedBy value
+        isTitleByCalculated: false,
+        // describe option value will be included for the calculation
+        calculatedBy: [
+          { id: 235, name: "Basic" },
+          { id: 236, name: "Limited" },
+        ],
+        // describe the shape calculation type
+        type: "percentage",
+        // shape legend type, slider or null (default)
+        legend: null,
+        // color range for shape shading, jmp or null (default)
+        color: "jmp",
+        // sanitation / water / hygiene / null (default)
+        jmpType: null,
+      },
       marker: { id: "Water", name: "Water Service Level" },
     },
     rows: [
@@ -479,7 +501,25 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 561200194, name: "Water Yield" },
+      shape: {
+        id: "Water",
+        name: "Water service Level",
+        // set to true if title of shape legend by calculatedBy value
+        isTitleByCalculated: false,
+        // describe option value will be included for the calculation
+        calculatedBy: [
+          { id: 235, name: "Basic" },
+          { id: 236, name: "Limited" },
+        ],
+        // describe the shape calculation type
+        type: "percentage",
+        // shape legend type, slider or null (default)
+        legend: null,
+        // color range for shape shading, jmp or null (default)
+        color: "jmp",
+        // sanitation / water / hygiene / null (default)
+        jmpType: null,
+      },
       marker: { id: "Water", title: "Water service levels" },
     },
     rows: [

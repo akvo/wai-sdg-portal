@@ -93,7 +93,7 @@ async def upload(
 
 @file_route.get(
     "/download/file/{file_name:path}",
-    summary="get excel template for ",
+    summary="get file",
     name="excel-data:download",
     tags=["File"],
 )
@@ -101,9 +101,7 @@ async def download(
     req: Request,
     file_name: str,
     session: Session = Depends(get_session),
-    credentials: credentials = Depends(security),
 ):
-    verify_editor(req.state.authenticated, session)
     filepath = storage.download(f"download/{file_name}")
     return FileResponse(path=filepath, filename=file_name, media_type=ftype)
 
