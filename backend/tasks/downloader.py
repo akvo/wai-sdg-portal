@@ -26,7 +26,6 @@ def download(session: Session, jobs: dict, file: str):
     info = jobs["info"]
     if os.path.exists(file):
         os.remove(file)
-    open(file, 'a').close()
     administration_ids = False
     administration_name = "All Administration Level"
     if info["administration"]:

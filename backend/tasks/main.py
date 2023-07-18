@@ -16,6 +16,9 @@ from util.mailer import Email, MailTypeEnum
 from util.log import write_log
 from util.i18n import ValidationText, EmailText
 
+STORAGE_LOCATION = os.environ.get("STORAGE_LOCATION")
+desired_path = "/api/download/file/"
+
 
 def print_log_start(message):
     print(message)
@@ -64,7 +67,11 @@ def run_seed(session: Session, jobs: dict):
         )
         email.send
     time.sleep(3)
-    jobs = crud.update(session=session, id=jobs["id"], status=status, info=info)
+    payload = jobs["payload"]
+    if STORAGE_LOCATION:
+        payload = payload.split("/")[-1]
+        payload = desired_path + payload
+    jobs = crud.update(session=session, id=jobs["id"], payload=payload, status=status, info=info)
     print_log_done(f"SEEDER: {status}", start_time)
 
 
@@ -97,6 +104,10 @@ def run_validate(session: Session, jobs: dict):
         # end of email
         error_file = storage.upload(error_file, "error", public=True)
         message = ValidationText.error_validation.value
+        if STORAGE_LOCATION:
+            # Extract the file name from the original path
+            file_name = error_file.split("/")[-1]
+            error_file = desired_path + file_name
         jobs = crud.update(
             session=session, id=id, payload=error_file, status=JobStatus.failed
         )
@@ -136,10 +147,7 @@ def run_download(session: Session, jobs: dict):
     sent = email.send
     if sent:
         output = storage.upload(file, "download", out_file)
-        STORAGE_LOCATION = os.environ.get("STORAGE_LOCATION")
-        payload = output.split("/")[1]
-        if STORAGE_LOCATION:
-            payload = output
+        payload = output.split("/")[-1]
         jobs = crud.update(
             session=session,
             id=jobs["id"],

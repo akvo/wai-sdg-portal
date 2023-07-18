@@ -247,23 +247,19 @@ def validate(session: Session, form: int, administration: int, file: str):
             template_sheets = ["data"]
         for sheet_tab in template_sheets:
             if sheet_tab not in sheet_names:
-                return [
-                    {
-                        "error": ExcelError.sheet,
-                        "error_message": ValidationText.template_validation.value,
-                        "sheets": ",".join(sheet_names),
-                    }
-                ]
+                return [{
+                    "error": ExcelError.sheet,
+                    "error_message": ValidationText.template_validation.value,
+                    "sheets": ",".join(sheet_names),
+                }]
         questions = crud_question.get_excel_question(session=session, form=form)
         header_names = [q.to_excel_header for q in questions.all()]
         df = pd.read_excel(file, sheet_name="data")
         if df.shape[0] == 0:
-            return [
-                {
-                    "error": ExcelError.sheet,
-                    "error_message": ValidationText.file_empty_validation.value,
-                }
-            ]
+            return [{
+                "error": ExcelError.sheet,
+                "error_message": ValidationText.file_empty_validation.value,
+            }]
         excel_head = {}
         excel_cols = list(itertools.islice(generate_excel_columns(), df.shape[1]))
         for index, header in enumerate(list(df)):
