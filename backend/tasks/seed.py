@@ -135,7 +135,7 @@ def seed(session: Session, file: str, user: int, form: int):
             print("REFRESH DONE")
             time.sleep(3)
         gc.collect()
-        os.remove(file)
+        # os.remove(file)
         return total_data
     except Exception as e:
         print("SEEDER ERROR", str(e))

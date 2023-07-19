@@ -4,13 +4,13 @@ from google.cloud import storage
 import shutil
 
 bucket_name = os.environ["INSTANCE_NAME"]
+STORAGE_LOCATION = os.environ.get("STORAGE_LOCATION")
 
 
 def upload(file: str, folder: str, filename: str = None, public: bool = False):
     if not filename:
         filename = file.split("/")[-1]
     TESTING = os.environ.get("TESTING")
-    STORAGE_LOCATION = os.environ.get("STORAGE_LOCATION")
     if TESTING:
         fake_location = f"./tmp/fake-storage/{filename}"
         shutil.copy2(file, fake_location)
@@ -35,7 +35,6 @@ def delete(url: str):
     file = url.split("/")[-1]
     folder = url.split("/")[-2]
     TESTING = os.environ.get("TESTING")
-    STORAGE_LOCATION = os.environ.get("STORAGE_LOCATION")
     if TESTING or STORAGE_LOCATION:
         os.remove(url)
         return url
@@ -48,7 +47,6 @@ def delete(url: str):
 
 def check(url: str):
     TESTING = os.environ.get("TESTING")
-    STORAGE_LOCATION = os.environ.get("STORAGE_LOCATION")
     if TESTING or STORAGE_LOCATION:
         path = Path(url)
         return path.is_file()
@@ -59,9 +57,13 @@ def check(url: str):
 
 def download(url):
     TESTING = os.environ.get("TESTING")
-    STORAGE_LOCATION = os.environ.get("STORAGE_LOCATION")
-    if TESTING or STORAGE_LOCATION:
-        return url
+    if TESTING:
+        tmp_file = url.split("/")[-1]
+        tmp_file = f"./tmp/{tmp_file}"
+        return tmp_file
+    if STORAGE_LOCATION:
+        original_filename = url.split("/")[-1]
+        return f"{STORAGE_LOCATION}/{original_filename}"
     storage_client = storage.Client()
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.blob(url)
