@@ -37,7 +37,7 @@ services:
     working_dir: /usr/src/app
     command: ["./run.sh"]
     volumes:
-      - ./data:${STORAGE_LOCATION}
+      - file-upload:${STORAGE_LOCATION}
     environment:
       - DATABASE_URL=postgresql://${WAI_DB_USER}:${WAI_DB_PASSWORD}@db:5432/${INSTANCE_NAME}
       - INSTANCE_NAME=${INSTANCE_NAME}
@@ -63,7 +63,7 @@ services:
     working_dir: /usr/src/app
     command: ["./run-worker.sh"]
     volumes:
-      - ./data:${STORAGE_LOCATION}
+      - file-upload:${STORAGE_LOCATION}
     environment:
       - DATABASE_URL=postgresql://${WAI_DB_USER}:${WAI_DB_PASSWORD}@db:5432/${INSTANCE_NAME}
       - INSTANCE_NAME=${INSTANCE_NAME}
@@ -83,6 +83,7 @@ services:
   frontend_build:
     image: akvo/akvo-node-18-alpine:20220923.084347.0558ee6
     container_name: frontend_build
+    profiles: ["tools"]
     working_dir: /app
     command:
       - /bin/bash
@@ -105,6 +106,7 @@ services:
   documentation_build:
     image: akvo/akvo-sphinx:20220525.082728.594558b
     container_name: documentation_build
+    profiles: ["tools"]
     working_dir: /app/docs/${INSTANCE_NAME}
     command:
       - /bin/bash
@@ -147,6 +149,7 @@ services:
   certbot:
     image: certbot/certbot:latest
     container_name: certbot
+    profiles: ["tools"]
     volumes:
       - ./certbot/www/:/var/www/certbot/:rw
       - ./certbot/conf/:/etc/letsencrypt/:rw
@@ -158,6 +161,7 @@ services:
   nginx_certbot:
     image: nginx:1.21.0-alpine
     container_name: nginx_certbot
+    profiles: ["tools"]
     volumes:
       - ./certbot/www:/var/www/certbot/:rw
       - ./certbot/conf/:/etc/nginx/ssl/:rw
@@ -169,6 +173,7 @@ services:
   frontend_build_cleanup:
     image: akvo/akvo-node-18-alpine:20220923.084347.0558ee6
     container_name: frontend_build_cleanup
+    profiles: ["tools"]
     working_dir: /app
     command:
       - /bin/bash
@@ -182,6 +187,7 @@ services:
   documentation_build_cleanup:
     image: akvo/akvo-sphinx:20220525.082728.594558b
     container_name: documentation_build_cleanup
+    profiles: ["tools"]
     working_dir: /app/docs/${INSTANCE_NAME}
     command:
       - /bin/bash
@@ -194,6 +200,11 @@ services:
       - INSTANCE_NAME=${INSTANCE_NAME}
     network_mode: service:mainnetwork
 
+  db_backup:
+    image: postgres:12-alpine
+    container_name: db_backup
+    profiles: ["tools"]
 
 volumes:
   pg-data:
+  file-upload:
