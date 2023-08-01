@@ -712,10 +712,8 @@ const MainMaps = ({ question, current }) => {
     }
 
     if (markerOptions?.length && loadedFormId === current?.formId) {
-      const opts1 = _.map(markerOptions, (o) => _.pick(o, ['id', 'name']));
-      const opts2 = _.map(selectableMarkerDropdown, (o) =>
-        _.pick(o, ['id', 'name'])
-      );
+      const opts1 = _.map(markerOptions, (o) => ({ id: o.id }));
+      const opts2 = _.map(selectableMarkerDropdown, (o) => ({ id: o.id }));
       if (!_.isEqual(opts1, opts2)) {
         setMarkerOptions([]);
       }

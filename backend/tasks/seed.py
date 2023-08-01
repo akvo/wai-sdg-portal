@@ -93,14 +93,17 @@ def save(session: Session, user: int, form: int, dp: dict, qs: dict):
         elif q.type == QuestionType.multiple_option:
             answer.options = aw
         elif q.type == QuestionType.answer_list:
-            parent = crud_data.get_data_by_name(session=session, name=aw)
-            parent_code = parent.name.split(" - ")[-1]
-            data.administration = parent.administration
-            answer.value = int(parent_code)
+            parent_code = aw
+            parent = crud_data.get_data_by_name(session=session, name=str(aw))
+            if parent:
+                parent_code = parent.name.split(" - ")[-1]
+                data.administration = parent.administration
+            if parent_code:
+                answer.value = int(parent_code)
         data.answer.append(answer)
-    name = " - ".join([str(n) for n in names])
     if parent_code:
-        name = f"{parent_code} - {name}"
+        names.insert(0, parent_code)
+    name = " - ".join([str(n) for n in names])
     data.name = name
     session.add(data)
     return

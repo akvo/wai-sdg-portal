@@ -12,7 +12,7 @@ fi
 
 if [ -f "${CATEGORIES}" ]; then
   echo "${CATEGORIES} exists"
-	akvo-responsegrouper -c ${CATEGORIES}
+	akvo-responsegrouper -c "${CATEGORIES}"
 	echo "done"
 fi
 

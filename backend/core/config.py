@@ -25,6 +25,8 @@ from AkvoResponseGrouper.routes import collection_route
 from db.crud_form import get_form
 from db.connection import SessionLocal
 from util.helper import hash_cipher
+from typing import Optional
+from sqlalchemy.orm import Session
 
 INSTANCE_NAME = os.environ["INSTANCE_NAME"]
 SANDBOX_DATA_SOURCE = os.environ.get("SANDBOX_DATA_SOURCE")
@@ -58,12 +60,12 @@ JS_FILE = f"{SOURCE_PATH}/config.min.js"
 open(JS_FILE, "w").write(MINJS)
 
 
-def write_form_url_config():
+def write_form_url_config(session: Optional[Session] = None):
     if not os.path.isfile(URL_FORM_CONFIG):
         # File doesn't exist, create it
         with open(URL_FORM_CONFIG, 'w') as file:
             json.dump({}, file)
-    session = SessionLocal()
+    session = SessionLocal() if not session else session
     try:
         form = get_form(session=session)
         configs = {}
@@ -72,9 +74,11 @@ def write_form_url_config():
             hash_survey_id = hash_cipher(text=str(form_id))
             configs.update({hash_survey_id: form_id})
         # write forms value as a config file
+        print(configs)
         open(URL_FORM_CONFIG, "w").write(json.dumps(configs))
     finally:
         session.close()
+    return URL_FORM_CONFIG
 
 
 class Settings(BaseSettings):
@@ -82,7 +86,7 @@ class Settings(BaseSettings):
     instance_name: str = INSTANCE_NAME
     source_path: str = SOURCE_PATH
     js_file: str = JS_FILE
-    form_url: dict = write_form_url_config()
+    form_url: str = write_form_url_config()
 
 
 settings = Settings()

@@ -26,11 +26,11 @@ from datetime import datetime
 from util.helper import hash_cipher
 
 INSTANCE_NAME = os.environ["INSTANCE_NAME"]
-SOURCE_PATH = f"./source/{INSTANCE_NAME}"
-URL_FORM_CONFIG = f"{SOURCE_PATH}/form_url_dump.json"
 SANDBOX_DATA_SOURCE = os.environ.get("SANDBOX_DATA_SOURCE")
 if SANDBOX_DATA_SOURCE:
     INSTANCE_NAME = SANDBOX_DATA_SOURCE
+SOURCE_PATH = f"./source/{INSTANCE_NAME}"
+URL_FORM_CONFIG = f"{SOURCE_PATH}/form_url_dump.json"
 
 class_path = INSTANCE_NAME.replace("-", "_")
 security = HTTPBearer()
@@ -406,7 +406,6 @@ def get_form_id_from_url_config(uuid: str):
 def get(req: Request, session: Session = Depends(get_session)):
     form = crud.get_form(session=session)
     forms = []
-    configs = {}
     for fr in [f.serialize for f in form]:
         form_id = fr.get("id")
         if "question_group" in fr:
@@ -417,9 +416,6 @@ def get(req: Request, session: Session = Depends(get_session)):
         fr.update({"disableDelete": True if data else False})
         fr.update({"url": url or None})
         forms.append(fr)
-        configs.update({hash_survey_id: form_id})
-    # write forms value as a config file
-    open(URL_FORM_CONFIG, "w").write(json.dumps(configs))
     return forms
 
 
