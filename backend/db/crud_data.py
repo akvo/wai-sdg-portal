@@ -131,7 +131,7 @@ def get_data_by_id(session: Session, id: int) -> DataDict:
 
 
 def get_data_by_name(session: Session, name: str) -> DataDict:
-    return session.query(Data).filter(Data.name == name).first()
+    return session.query(Data).filter(Data.name.ilike(f"%{name}%")).first()
 
 
 def get_data_name_by_id(session: Session, id: int) -> str:
