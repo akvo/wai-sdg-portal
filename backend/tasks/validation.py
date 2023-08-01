@@ -5,6 +5,7 @@ import itertools
 import gc
 from db import crud_question
 from db import crud_administration
+from db import crud_data
 from datetime import datetime
 from models.question import Question, QuestionType
 from sqlalchemy.orm import Session
@@ -211,6 +212,15 @@ def validate_row_data(session, col, answer, question, adm, valid_deps, answer_de
         err = validate_option(question.option, answer)
         if err:
             default.update(err)
+            return default
+    if question.type == QuestionType.answer_list:
+        aw_text = str(int(answer))
+        parent = crud_data.get_data_by_name(session=session, name=aw_text)
+        if not parent:
+            default.update(
+                {"error_message": f"{question.name} Invalid project code"}
+            )
+            print("default", default)
             return default
     return False
 
