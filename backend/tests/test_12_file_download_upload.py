@@ -63,9 +63,9 @@ class TestFileRoutes:
             "2|Test Option Question",
             "3|Test Geo Question",
             "4|Test Datapoint Text Question",
-            "5|Test Number Question",
-            "6|Test Multiple Option Question",
-            "7|Test Date Question",
+            "6|Test Number Question",
+            "7|Test Multiple Option Question",
+            "8|Test Date Question",
         ]
         df = pd.DataFrame(wrong_data, columns=columns)
         df.to_excel(excel_file, index=False, sheet_name="data")
@@ -123,9 +123,9 @@ class TestFileRoutes:
             "2|Test Administration Question",
             "3|Test Geo Question",
             "4|Test Datapoint Text Question",
-            "5|Test Number Question",
-            "6|Test Multiple Option Question",
-            "7|Test Date Question",
+            "6|Test Number Question",
+            "7|Test Multiple Option Question",
+            "8|Test Date Question",
         ]
         df = pd.DataFrame(right_data, columns=columns)
         df.to_excel(excel_file, index=False, sheet_name="data")
