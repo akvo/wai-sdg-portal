@@ -22,6 +22,7 @@ class ValidationText(enum.Enum):
     start_validation = "DATA VALIDATION STARTED"
     successfully_validation = "IS SUCCESSFULY VALIDATED"
     error_validation = "VALIDATION ERROR"
+    invalid_project_code = "Invalid project code"
 
 
 class EmailText(enum.Enum):

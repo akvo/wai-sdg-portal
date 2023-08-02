@@ -848,7 +848,8 @@ class TestWebformEditorRoutes:
         assert res.status_code == 200
         res = res.json()
         url1 = hash_cipher(text="1")
-        url2 = hash_cipher(text="903430001")
+        url2 = hash_cipher(text="2")
+        url3 = hash_cipher(text="903430001")
         assert res == [
             {
                 "id": 1,
@@ -869,6 +870,18 @@ class TestWebformEditorRoutes:
                 "passcode": "pwd123",
             },
             {
+                "id": 2,
+                "name": "Child form 1",
+                "disableDelete": False,
+                "version": 1.0,
+                "description": "child form 1 description",
+                "default_language": "en",
+                "languages": ["en"],
+                "translations": [],
+                "url": f"/webform?id={url2}",
+                "passcode": None,
+            },
+            {
                 "id": 903430001,
                 "name": "Test Form Updated",
                 "disableDelete": False,
@@ -883,7 +896,7 @@ class TestWebformEditorRoutes:
                         "description": "Lorem Ipsum is simply dummy text Description",
                     }
                 ],
-                "url": f"/webform?id={url2}",
+                "url": f"/webform?id={url3}",
                 "passcode": None,
             },
         ]
