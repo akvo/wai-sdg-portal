@@ -274,3 +274,32 @@ class TestExcelValidation:
             },
         ]
         os.remove(excel_file)
+
+    @pytest.mark.asyncio
+    async def test_validate_excel_file_for_header_id(self, session: Session) -> None:
+        excel_file = "./tmp/2-test.xlsx"
+        wrong_data = [
+            [
+                "123456",
+            ],
+        ]
+        columns = [
+            "88|Project Text Question",
+        ]
+        # Invalid header id Error
+        df = pd.DataFrame(wrong_data, columns=columns)
+        df.to_excel(excel_file, index=False, sheet_name="data")
+        errors = validation.validate(
+            session=session, form=1, administration=1, file=excel_file
+        )
+        assert errors == [
+            {
+                "cell": "A1",
+                "error": ExcelError.header,
+                "error_message": f"88|Project Text Question {ValidationText.header_invalid_id.value}",
+            }
+        ]
+        columns = [
+            "5|Project Text Question",
+        ]
+        os.remove(excel_file)
