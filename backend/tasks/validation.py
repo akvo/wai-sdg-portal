@@ -218,9 +218,8 @@ def validate_row_data(session, col, answer, question, adm, valid_deps, answer_de
         parent = crud_data.get_data_by_name(session=session, name=aw_text)
         if not parent:
             default.update(
-                {"error_message": f"{question.name} Invalid project code"}
+                {"error_message": ValidationText.invalid_project_code}
             )
-            print("default", default)
             return default
     return False
 
