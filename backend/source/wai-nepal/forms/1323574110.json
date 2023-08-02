@@ -79,6 +79,14 @@
             {
               "name": "Mixed",
               "color": "#FFE599"
+            },
+            {
+              "name": "Electricity Lifting",
+              "color": null
+            },
+            {
+              "name": "Ground Water System",
+              "color": null
             }
           ]
         },
@@ -88,7 +96,7 @@
           "order": 9,
           "meta": false,
           "type": "number",
-          "required": true,
+          "required": false,
           "options": null
         },
         {
@@ -209,7 +217,7 @@
           "order": 12,
           "meta": false,
           "type": "number",
-          "required": true,
+          "required": false,
           "options": null
         },
         {
