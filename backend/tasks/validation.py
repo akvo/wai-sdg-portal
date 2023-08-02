@@ -217,10 +217,11 @@ def validate_row_data(session, col, answer, question, adm, valid_deps, answer_de
         aw_text = str(int(answer))
         parent = crud_data.get_data_by_name(session=session, name=aw_text)
         if not parent:
-            default.update(
-                {"error_message": ValidationText.invalid_project_code}
-            )
-            return default
+            return {
+                "error": ExcelError.value,
+                "cell": col,
+                "error_message": ValidationText.invalid_project_code.value,
+            }
     return False
 
 

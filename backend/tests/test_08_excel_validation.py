@@ -248,7 +248,7 @@ class TestExcelValidation:
             },
         ]
         os.remove(excel_file)
-    
+
     @pytest.mark.asyncio
     async def test_validate_excel_file_for_answer_list(self, session: Session) -> None:
         excel_file = "./tmp/2-test.xlsx"
@@ -269,7 +269,7 @@ class TestExcelValidation:
         assert errors == [
             {
                 "error": ExcelError.value,
-                "error_message": ValidationText.invalid_project_code,
+                "error_message": ValidationText.invalid_project_code.value,
                 "cell": "A2",
             },
         ]
