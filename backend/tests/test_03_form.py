@@ -294,3 +294,62 @@ class TestFormRoutes:
                 "options": ["Option 1"],
             }
         ]
+
+    @pytest.mark.asyncio
+    async def test_add_child_form(
+        self, app: FastAPI, session: Session, client: AsyncClient
+    ) -> None:
+        res = await client.post(
+            app.url_path_for("form:create"),
+            params={
+                "name": "Child form 1",
+                "description": "child form 1 description",
+                "default_language": "en",
+                "version": 1.0,
+            },
+            json={
+                "languages": ["en"],
+                "translations": [],
+            },
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
+        assert res.status_code == 200
+        res = res.json()
+        assert res == {
+            "id": 2,
+            "name": "Child form 1",
+            "version": 1.0,
+            "description": "child form 1 description",
+            "default_language": "en",
+            "languages": ["en"],
+            "translations": [],
+            "passcode": None,
+        }
+
+    @pytest.mark.asyncio
+    async def test_answer_list_question(
+        self, app: FastAPI, session: Session, client: AsyncClient
+    ) -> None:
+        res = await client.post(
+            app.url_path_for("question:create"),
+            params={
+                "name": "Project Text Question",
+                "form": 2,
+                "question_group": "Child Question Group 1",
+                "meta": True,
+                "type": "answer_list",
+                "required": True,
+            },
+            json={"options": [{"name": 4}]},
+            headers={"Authorization": f"Bearer {account.token}"},
+        )
+        assert res.status_code == 200
+        res = res.json()
+        assert res["id"] == 5
+        assert res["form"] == 2
+        assert res["question_group"] == 2
+        assert res["name"] == "Project Text Question"
+        assert res["meta"] is True
+        assert res["required"] is True
+        assert res["rule"] is None
+        assert res["type"] == "answer_list"
