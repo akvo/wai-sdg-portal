@@ -143,10 +143,11 @@ class Data(Base):
 
     @property
     def to_maps(self):
+        loc = self.administration_detail.name if self.administration_detail else ""
         return {
             "id": self.id,
             "name": self.name,
-            "loc": self.administration_detail.name,
+            "loc": loc,
             "geo": self.geo if self.geo else None,
         }
 

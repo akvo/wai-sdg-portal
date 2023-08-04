@@ -58,9 +58,9 @@ class TestExcelValidation:
             "2|Test Administration Question",
             "3|Test Geo Question",
             "4|Test Datapoint Text Question",
-            "5|Test Number Question",
-            "6|Test Multiple Option Question",
-            "7|Test Date Question",
+            "6|Test Number Question",
+            "7|Test Multiple Option Question",
+            "8|Test Date Question",
         ]
         os.remove(excel_file)
 
@@ -140,9 +140,9 @@ class TestExcelValidation:
             "3|Test Geo Question",
             "Test Datapoint Text Question",
             "",
-            "5|Test Number Question",
-            "6|Test Multiple Option Question",
-            "7|Test Date Question",
+            "6|Test Number Question",
+            "7|Test Multiple Option Question",
+            "8|Test Date Question",
         ]
         # Sheet Name Error
         df = pd.DataFrame(wrong_data, columns=columns)
@@ -246,5 +246,60 @@ class TestExcelValidation:
                 "error_message": "Invalid date format: 2020. It should be YYYY-MM-DD",
                 "cell": "H3",
             },
+        ]
+        os.remove(excel_file)
+
+    @pytest.mark.asyncio
+    async def test_validate_excel_file_for_answer_list(self, session: Session) -> None:
+        excel_file = "./tmp/2-test.xlsx"
+        wrong_data = [
+            [
+                "123456",
+            ],
+        ]
+        columns = [
+            "5|Project Text Question",
+        ]
+        # Value Error
+        df = pd.DataFrame(wrong_data, columns=columns)
+        df.to_excel(excel_file, index=False, sheet_name="data")
+        errors = validation.validate(
+            session=session, form=2, administration=1, file=excel_file
+        )
+        assert errors == [
+            {
+                "error": ExcelError.value,
+                "error_message": ValidationText.invalid_project_code.value,
+                "cell": "A2",
+            },
+        ]
+        os.remove(excel_file)
+
+    @pytest.mark.asyncio
+    async def test_validate_excel_file_for_header_id(self, session: Session) -> None:
+        excel_file = "./tmp/2-test.xlsx"
+        wrong_data = [
+            [
+                "123456",
+            ],
+        ]
+        columns = [
+            "88|Project Text Question",
+        ]
+        # Invalid header id Error
+        df = pd.DataFrame(wrong_data, columns=columns)
+        df.to_excel(excel_file, index=False, sheet_name="data")
+        errors = validation.validate(
+            session=session, form=1, administration=1, file=excel_file
+        )
+        assert errors == [
+            {
+                "cell": "A1",
+                "error": ExcelError.header,
+                "error_message": f"88|Project Text Question {ValidationText.header_invalid_id.value}",
+            }
+        ]
+        columns = [
+            "5|Project Text Question",
         ]
         os.remove(excel_file)

@@ -44,9 +44,9 @@ class TestDependencyCheckerUnit:
         )
         assert res.status_code == 200
         assert res.json() == {
-            "id": 8,
+            "id": 9,
             "form": 1,
-            "question_group": 2,
+            "question_group": 3,
             "name": "Specify other water source",
             "order": 1,
             "meta": False,
@@ -71,7 +71,7 @@ class TestDependencyCheckerUnit:
                 "index": index,
             }
         ]
-        question = session.query(Question).filter(Question.id == 8).first()
+        question = session.query(Question).filter(Question.id == 9).first()
         valid_deps, answer_deps = dependency_checker(
             qs=question.dependency, answered=answered, index=index
         )
@@ -89,7 +89,7 @@ class TestDependencyCheckerUnit:
                 "index": index,
             }
         ]
-        question = session.query(Question).filter(Question.id == 8).first()
+        question = session.query(Question).filter(Question.id == 9).first()
         valid_deps, answer_deps = dependency_checker(
             qs=question.dependency, answered=answered, index=index
         )
@@ -107,7 +107,7 @@ class TestDependencyCheckerUnit:
                 "index": index,
             }
         ]
-        question = session.query(Question).filter(Question.id == 8).first()
+        question = session.query(Question).filter(Question.id == 9).first()
         valid_deps, answer_deps = dependency_checker(
             qs=question.dependency, answered=answered, index=index
         )

@@ -20,7 +20,7 @@ class TestHintRoutes:
         self, app: FastAPI, session: Session, client: AsyncClient
     ) -> None:
         # get hint when no data
-        question = get_question_by_id(session=session, id=5)
+        question = get_question_by_id(session=session, id=6)
         question = question.serialize
         assert question["type"] == QuestionType.number
         res = await client.get(
@@ -47,9 +47,9 @@ class TestHintRoutes:
                     "value": {"lat": -7.836114, "lng": 110.331143},
                 },
                 {"question": 4, "value": "Hint Test"},
-                {"question": 5, "value": 45},
-                {"question": 6, "value": ["Option A", "Option B"]},
-                {"question": 7, "value": "2021-12-21"},
+                {"question": 6, "value": 45},
+                {"question": 7, "value": ["Option A", "Option B"]},
+                {"question": 8, "value": "2021-12-21"},
             ],
             headers={"Authorization": f"Bearer {account.token}"},
         )
@@ -70,9 +70,9 @@ class TestHintRoutes:
                 {"question": 2, "value": 10},
                 {"question": 3, "value": "-7.836114|110.331143"},
                 {"question": 4, "value": "Hint Test"},
-                {"question": 5, "value": 45},
-                {"question": 6, "value": ["Option A", "Option B"]},
-                {"question": 7, "value": "2021-12-21"},
+                {"question": 6, "value": 45},
+                {"question": 7, "value": ["Option A", "Option B"]},
+                {"question": 8, "value": "2021-12-21"},
             ],
         }
         # assert second data
@@ -86,9 +86,9 @@ class TestHintRoutes:
                     "value": {"lat": -7.836114, "lng": 110.331143},
                 },
                 {"question": 4, "value": "Hint Test"},
-                {"question": 5, "value": 55},
-                {"question": 6, "value": ["Option B"]},
-                {"question": 7, "value": "2022-10-10"},
+                {"question": 6, "value": 55},
+                {"question": 7, "value": ["Option B"]},
+                {"question": 8, "value": "2022-10-10"},
             ],
             headers={"Authorization": f"Bearer {account.token}"},
         )

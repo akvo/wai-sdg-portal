@@ -50,6 +50,14 @@
             {
               "name": "Source in private land & obstructed by owner",
               "color": null
+            },
+            {
+              "name": "Source registered & no obstruction",
+              "color": null
+            },
+            {
+              "name": "Source registered, in public land & obstructed by local community",
+              "color": null
             }
           ]
         },
