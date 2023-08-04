@@ -97,11 +97,18 @@ def validate_geo(answer):
     answer = str(answer).split(",")
     if len(answer) != 2:
         return {"error_message": ValidationText.lat_long_validation.value}
-    for a in answer:
+    errors = []
+    for ax, a in enumerate(answer):
         try:
             a = float(a.strip())
+            if (ax == 0 and a > 90):
+                errors.append(ValidationText.lat_validation.value)
+            if (ax == 1 and a > 180):
+                errors.append(ValidationText.long_validation.value)
         except ValueError:
             return {"error_message": ValidationText.lat_long_validation.value}
+    if len(errors):
+        return {"error_message": ", ".join(errors)}
     return False
 
 
@@ -197,6 +204,7 @@ def validate_row_data(session, col, answer, question, adm, valid_deps, answer_de
         err = validate_geo(answer)
         if err:
             default.update(err)
+            print("default::", default)
             return default
     if question.type == QuestionType.number:
         err = validate_number(answer, question)

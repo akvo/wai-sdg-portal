@@ -23,6 +23,14 @@ class ValidationText(enum.Enum):
     successfully_validation = "IS SUCCESSFULY VALIDATED"
     error_validation = "VALIDATION ERROR"
     invalid_project_code = "Invalid project code"
+    lat_validation = (
+        "Latitude should be greater than or equal to -90 and less than or"
+        " equal to 90"
+    )
+    long_validation = (
+        "Longitude should be greater than or equal to -180 and less than or"
+        " equal to 180"
+    )
 
 
 class EmailText(enum.Enum):
