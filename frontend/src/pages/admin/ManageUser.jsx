@@ -99,7 +99,7 @@ const ManageUser = () => {
   const onSearch = ({ search, organisation, role }) => {
     const values = Object.fromEntries(
       Object.entries({ search, organisation, role }).filter(
-        ([key, value]) => key && value
+        ([key, value]) => value // eslint-disable-line no-unused-vars
       )
     );
     const searchParams = new URLSearchParams();
@@ -320,7 +320,7 @@ const ManageUser = () => {
   const canReset =
     Object.keys(
       Object.fromEntries(
-        Object.entries(searchValue).filter(([key, value]) => key && value)
+        Object.entries(searchValue).filter(([key, value]) => value) // eslint-disable-line no-unused-vars
       )
     ).length > 0;
 
