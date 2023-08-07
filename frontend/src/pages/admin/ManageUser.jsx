@@ -36,6 +36,7 @@ const ManageUser = () => {
   const { manageUserTableText } = tableText;
   const { organisations, administration, user } = UIState.useState((s) => s);
   const [form] = Form.useForm();
+  const [searchForm] = Form.useForm();
   const [showPendingUser, setShowPendingUser] = useState(true);
   const [tableLoading, setTableLoading] = useState(false);
   const [users, setUsers] = useState([]);
@@ -95,7 +96,12 @@ const ManageUser = () => {
       });
   };
 
-  const onSearch = (values) => {
+  const onSearch = ({ search, organisation, role }) => {
+    const values = Object.fromEntries(
+      Object.entries({ search, organisation, role }).filter(
+        ([key, value]) => key && value
+      )
+    );
     const searchParams = new URLSearchParams();
     const params = query(values);
     Object.keys(params).forEach((key) => searchParams.append(key, params[key]));
@@ -103,8 +109,12 @@ const ManageUser = () => {
   };
 
   const onReset = () => {
-    form.resetFields();
-    form.setFieldsValue({ search: '' });
+    searchForm.resetFields();
+    searchForm.setFieldsValue({
+      search: null,
+      organisation: null,
+      manage_form_passcode: null,
+    });
     setSearchValue({});
     getUsers(active);
   };
@@ -292,6 +302,28 @@ const ManageUser = () => {
     setSelectedValue({ ...selectedValue, manage_form_passcode: value });
   };
 
+  const handleOnCloseUserModal = () => {
+    form.resetFields();
+    form.setFieldsValue({
+      access: [],
+      email: null,
+      name: null,
+      role: null,
+      search: null,
+      organisation: null,
+      manage_form_passcode: null,
+    });
+    setSelectedValue({});
+    setIsUserModalVisible(false);
+  };
+
+  const canReset =
+    Object.keys(
+      Object.fromEntries(
+        Object.entries(searchValue).filter(([key, value]) => key && value)
+      )
+    ).length > 0;
+
   return (
     <>
       <Row
@@ -300,7 +332,7 @@ const ManageUser = () => {
       >
         <Col span={20}>
           <Form
-            form={form}
+            form={searchForm}
             name="search-form"
             initialValues={searchValue}
             onFinish={onSearch}
@@ -314,7 +346,7 @@ const ManageUser = () => {
                 value={searchValue?.search}
                 placeholder={`${formText?.formSearchPlaceholder} ${adminText?.lastSubmittedByText} ${formText?.labelName} ${formText?.labelEmail}`}
                 onChange={(e) => {
-                  form.setFieldsValue({ search: e.target.value });
+                  searchForm.setFieldsValue({ search: e.target.value });
                   setSearchValue({ ...searchValue, search: e.target.value });
                 }}
               />
@@ -322,7 +354,7 @@ const ManageUser = () => {
             <UserRole
               style={{ width: '150px' }}
               onRoleChange={(value) => {
-                form.setFieldsValue({ role: value });
+                searchForm.setFieldsValue({ role: value });
                 setSearchValue({ ...searchValue, role: value });
               }}
               selectedValue={searchValue}
@@ -330,7 +362,7 @@ const ManageUser = () => {
             <UserOrganisation
               style={{ width: '200px' }}
               onOrganisationChange={(value) => {
-                form.setFieldsValue({ organisation: value });
+                searchForm.setFieldsValue({ organisation: value });
                 setSearchValue({ ...searchValue, organisation: value });
               }}
               selectedValue={searchValue}
@@ -346,18 +378,15 @@ const ManageUser = () => {
               >
                 {formText?.formSearchPlaceholder}
               </Button>
-              {Object.values(searchValue).length > 0 &&
-                Object.values(searchValue).every(
-                  (x) => typeof x !== 'undefined'
-                ) && (
-                  <Button
-                    htmlType="button"
-                    onClick={onReset}
-                    style={{ marginLeft: '10px' }}
-                  >
-                    {buttonText?.btnResetAll}
-                  </Button>
-                )}
+              {canReset && (
+                <Button
+                  htmlType="button"
+                  onClick={onReset}
+                  style={{ marginLeft: '10px' }}
+                >
+                  {buttonText?.btnResetAll}
+                </Button>
+              )}
             </Form.Item>
           </Form>
         </Col>
@@ -408,7 +437,7 @@ const ManageUser = () => {
         footer={[
           <Button
             key="button-cancel"
-            onClick={() => setIsUserModalVisible(false)}
+            onClick={handleOnCloseUserModal}
           >
             {buttonText?.btnCancel}
           </Button>,
@@ -439,7 +468,7 @@ const ManageUser = () => {
               : buttonText?.btnApprove}
           </Button>,
         ]}
-        onCancel={() => setIsUserModalVisible(false)}
+        onCancel={handleOnCloseUserModal}
       >
         <Form
           form={form}
