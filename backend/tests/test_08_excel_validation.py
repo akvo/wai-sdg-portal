@@ -303,3 +303,72 @@ class TestExcelValidation:
             "5|Project Text Question",
         ]
         os.remove(excel_file)
+
+    @pytest.mark.asyncio
+    async def test_validate_excel_file_for_geo(self, session: Session) -> None:
+        excel_file = "./tmp/3-test.xlsx"
+        wrong_geo_data = [
+            [
+                "Option 1",
+                "Jakarta|Jakarta Pusat",
+                "91.2,181.81",
+                "Testing Data 1",
+                "11",
+                "Option B|Option A",
+                "2021-11-10"
+            ],
+            [
+                "Option 2",
+                "Jakarta|Jakarta Timur",
+                "180.1,160.11",
+                "",
+                "12",
+                "Option A",
+                "2021-11-11"
+            ],
+            [
+                "Option 2",
+                "Jakarta|Jakarta Barat",
+                "47.18,281.11",
+                "",
+                "13",
+                "Option B",
+                "2021-11-12"
+            ]
+        ]
+        columns = [
+            "1|Test Option Question",
+            "2|Test Administration Question",
+            "3|Test Geo Question",
+            "4|Test Datapoint Text Question",
+            "6|Test Number Question",
+            "7|Test Multiple Option Question",
+            "8|Test Date Question",
+        ]
+        # Header and Value Error
+        df = pd.DataFrame(wrong_geo_data, columns=columns)
+        df.to_excel(excel_file, index=False, sheet_name="data")
+        errors = validation.validate(
+            session=session, form=1, administration=1, file=excel_file
+        )
+        assert errors == [
+            {
+                "error": ExcelError.value,
+                "error_message": (
+                    f"{ValidationText.lat_validation.value},"
+                    f" {ValidationText.long_validation.value}"
+                ),
+                "cell": "C2",
+            },
+            {
+                "error": ExcelError.value,
+                "error_message": f"{ValidationText.lat_validation.value}",
+                "cell": "C3",
+            },
+            {
+                "error": ExcelError.value,
+                "error_message": f"{ValidationText.long_validation.value}",
+                "cell": "C4",
+            }
+        ]
+        os.remove(excel_file)
