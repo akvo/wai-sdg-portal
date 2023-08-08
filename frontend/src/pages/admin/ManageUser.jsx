@@ -36,6 +36,7 @@ const ManageUser = () => {
   const { manageUserTableText } = tableText;
   const { organisations, administration, user } = UIState.useState((s) => s);
   const [form] = Form.useForm();
+  const [searchForm] = Form.useForm();
   const [showPendingUser, setShowPendingUser] = useState(true);
   const [tableLoading, setTableLoading] = useState(false);
   const [users, setUsers] = useState([]);
@@ -49,6 +50,7 @@ const ManageUser = () => {
   const [isUserModalVisible, setIsUserModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isInformUser, setIsInformUser] = useState(false);
+  const [preload, setPreload] = useState(true);
 
   //ConfirmationModal state
   const [confirmationModal, setConfirmationModal] = useState({
@@ -95,18 +97,40 @@ const ManageUser = () => {
       });
   };
 
-  const onSearch = (values) => {
+  const filterObjValues = (values) =>
+    Object.fromEntries(Object.entries(values).filter(([_, value]) => value));
+
+  const setSearchParams = useCallback((data) => {
+    const values = filterObjValues(data);
     const searchParams = new URLSearchParams();
     const params = query(values);
     Object.keys(params).forEach((key) => searchParams.append(key, params[key]));
-    getUsers(active, 1, 10, searchParams.toString());
+    return searchParams.toString();
+  }, []);
+
+  const onSearch = ({ search, organisation, role }, isPending) => {
+    getUsers(isPending, 1, 10, { search, organisation, role });
   };
 
-  const onReset = () => {
-    form.resetFields();
-    form.setFieldsValue({ search: '' });
-    setSearchValue({});
-    getUsers(active);
+  const onReset = (fieldName = null) => {
+    searchForm.resetFields();
+    if (fieldName) {
+      searchForm.setFieldValue(fieldName, null);
+      const searchValues = searchForm.getFieldsValue(true);
+      getUsers(active, 1, 10, {
+        ...searchValues,
+        [fieldName]: null,
+      });
+    } else {
+      const emptyValues = {
+        search: null,
+        role: null,
+        organisation: null,
+      };
+      searchForm.setFieldsValue(emptyValues);
+      setSearchValue(emptyValues);
+      getUsers(active, 1, 10, emptyValues);
+    }
   };
 
   const fetchUserDetail = (id) => {
@@ -234,29 +258,38 @@ const ManageUser = () => {
     },
   ];
 
-  const getUsers = useCallback((active, page = 1, pageSize = 10, query) => {
-    setTableLoading(true);
-    api
-      .get(`/user?active=${active}&page=${page}${query ? `&${query}` : ''}`)
-      .then((res) => {
-        setUsers(res.data?.data);
-        setPaginate({
-          current: res.data.current,
-          total: res.data.total,
-          pageSize: pageSize,
+  const getUsers = useCallback(
+    (active, page = 1, pageSize = 10, query = {}) => {
+      const params = Object.keys(query).length
+        ? `&${setSearchParams(query)}`
+        : '';
+      setTableLoading(true);
+      api
+        .get(`/user?active=${active}&page=${page}${params}`)
+        .then((res) => {
+          setUsers(res.data?.data);
+          setPaginate({
+            current: res.data.current,
+            total: res.data.total,
+            pageSize: pageSize,
+          });
+        })
+        .catch(() => {
+          setUsers([]);
+        })
+        .finally(() => {
+          setTableLoading(false);
         });
-      })
-      .catch(() => {
-        setUsers([]);
-      })
-      .finally(() => {
-        setTableLoading(false);
-      });
-  }, []);
+    },
+    [setSearchParams]
+  );
 
   useEffect(() => {
-    !isEmpty(organisations) && getUsers(active);
-  }, [getUsers, active, organisations]);
+    if (preload) {
+      setPreload(false);
+      getUsers(active, 1, 10, searchValue);
+    }
+  }, [getUsers, active, searchValue, preload]);
 
   const handleTableChange = (pagination) => {
     const { current, pageSize } = pagination;
@@ -292,6 +325,29 @@ const ManageUser = () => {
     setSelectedValue({ ...selectedValue, manage_form_passcode: value });
   };
 
+  const handleOnCloseUserModal = () => {
+    form.resetFields();
+    form.setFieldsValue({
+      access: [],
+      email: null,
+      name: null,
+      role: null,
+      search: null,
+      organisation: null,
+      manage_form_passcode: null,
+    });
+    setSelectedValue({});
+    setIsUserModalVisible(false);
+  };
+
+  const handleOnChecked = (isPending) => {
+    setShowPendingUser(isPending);
+    const pendingValue = isPending ? 0 : 1;
+    getUsers(pendingValue, 1, 10, searchValue);
+  };
+
+  const canReset = Object.keys(filterObjValues(searchValue)).length > 0;
+
   return (
     <>
       <Row
@@ -300,10 +356,10 @@ const ManageUser = () => {
       >
         <Col span={20}>
           <Form
-            form={form}
+            form={searchForm}
             name="search-form"
             initialValues={searchValue}
-            onFinish={onSearch}
+            onFinish={(values) => onSearch(values, active)}
             layout="inline"
           >
             <Form.Item
@@ -314,24 +370,34 @@ const ManageUser = () => {
                 value={searchValue?.search}
                 placeholder={`${formText?.formSearchPlaceholder} ${adminText?.lastSubmittedByText} ${formText?.labelName} ${formText?.labelEmail}`}
                 onChange={(e) => {
-                  form.setFieldsValue({ search: e.target.value });
+                  searchForm.setFieldsValue({ search: e.target.value });
                   setSearchValue({ ...searchValue, search: e.target.value });
+                  if (!e.target.value) {
+                    onReset('search');
+                  }
                 }}
+                allowClear
               />
             </Form.Item>
             <UserRole
               style={{ width: '150px' }}
               onRoleChange={(value) => {
-                form.setFieldsValue({ role: value });
+                searchForm.setFieldsValue({ role: value });
                 setSearchValue({ ...searchValue, role: value });
+                if (!value) {
+                  onReset('role');
+                }
               }}
               selectedValue={searchValue}
             />
             <UserOrganisation
               style={{ width: '200px' }}
               onOrganisationChange={(value) => {
-                form.setFieldsValue({ organisation: value });
+                searchForm.setFieldsValue({ organisation: value });
                 setSearchValue({ ...searchValue, organisation: value });
+                if (!value) {
+                  onReset('organisation');
+                }
               }}
               selectedValue={searchValue}
               organisations={organisations}
@@ -346,18 +412,15 @@ const ManageUser = () => {
               >
                 {formText?.formSearchPlaceholder}
               </Button>
-              {Object.values(searchValue).length > 0 &&
-                Object.values(searchValue).every(
-                  (x) => typeof x !== 'undefined'
-                ) && (
-                  <Button
-                    htmlType="button"
-                    onClick={onReset}
-                    style={{ marginLeft: '10px' }}
-                  >
-                    {buttonText?.btnResetAll}
-                  </Button>
-                )}
+              {canReset && (
+                <Button
+                  htmlType="button"
+                  onClick={() => onReset()}
+                  style={{ marginLeft: '10px' }}
+                >
+                  {buttonText?.btnResetAll}
+                </Button>
+              )}
             </Form.Item>
           </Form>
         </Col>
@@ -369,13 +432,13 @@ const ManageUser = () => {
             <Button
               className="checkbox-label"
               type="link"
-              onClick={() => setShowPendingUser(!showPendingUser)}
+              onClick={() => handleOnChecked(!showPendingUser)}
             >
               {adminText?.checkboxShowPendingUserText}
             </Button>
             <Checkbox
               className="checkbox-input"
-              onChange={(e) => setShowPendingUser(e.target.checked)}
+              onChange={(e) => handleOnChecked(e.target.checked)}
               checked={showPendingUser}
               disabled={isEmpty(organisations) || tableLoading}
             />
@@ -408,7 +471,7 @@ const ManageUser = () => {
         footer={[
           <Button
             key="button-cancel"
-            onClick={() => setIsUserModalVisible(false)}
+            onClick={handleOnCloseUserModal}
           >
             {buttonText?.btnCancel}
           </Button>,
@@ -439,7 +502,7 @@ const ManageUser = () => {
               : buttonText?.btnApprove}
           </Button>,
         ]}
-        onCancel={() => setIsUserModalVisible(false)}
+        onCancel={handleOnCloseUserModal}
       >
         <Form
           form={form}
