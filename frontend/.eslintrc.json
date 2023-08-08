@@ -5,21 +5,12 @@
       "version": "detect"
     }
   },
-  "plugins": [
-    "react",
-    "react-hooks",
-    "import",
-    "export",
-    "jest",
-    "jsx-a11y"
-  ],
+  "plugins": ["react", "react-hooks", "import", "export", "jest", "jsx-a11y"],
   "parserOptions": {
     "requireConfigFile": false,
     "sourceType": "module",
     "babelOptions": {
-      "presets": [
-        "@babel/preset-react"
-      ]
+      "presets": ["@babel/preset-react"]
     }
   },
   "rules": {
@@ -27,15 +18,17 @@
     "no-console": [
       "warn",
       {
-        "allow": [
-          "error",
-          "info"
-        ]
+        "allow": ["error", "info"]
       }
     ],
     "no-undef": "warn",
     "no-else-return": "warn",
-    "no-unused-vars": "warn",
+    "no-unused-vars": [
+      "warn",
+      {
+        "argsIgnorePattern": "^_"
+      }
+    ],
     "no-undefined": "warn",
     "no-unreachable": "warn",
     "no-extra-semi": "warn",
@@ -60,10 +53,7 @@
     "react/jsx-filename-extension": [
       "error",
       {
-        "extensions": [
-          ".js",
-          ".jsx"
-        ]
+        "extensions": [".js", ".jsx"]
       }
     ],
     "curly": "error"
