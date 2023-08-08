@@ -99,7 +99,7 @@ const ManageUser = () => {
   const onSearch = ({ search, organisation, role }) => {
     const values = Object.fromEntries(
       Object.entries({ search, organisation, role }).filter(
-        ([key, value]) => value // eslint-disable-line no-unused-vars
+        ([_, value]) => value
       )
     );
     const searchParams = new URLSearchParams();
