@@ -112,15 +112,25 @@ const ManageUser = () => {
     getUsers(isPending, 1, 10, { search, organisation, role });
   };
 
-  const onReset = () => {
+  const onReset = (fieldName = null) => {
     searchForm.resetFields();
-    searchForm.setFieldsValue({
-      search: null,
-      organisation: null,
-      manage_form_passcode: null,
-    });
-    setSearchValue({});
-    getUsers(active);
+    if (fieldName) {
+      searchForm.setFieldValue(fieldName, null);
+      const searchValues = searchForm.getFieldsValue(true);
+      getUsers(active, 1, 10, {
+        ...searchValues,
+        [fieldName]: null,
+      });
+    } else {
+      const emptyValues = {
+        search: null,
+        role: null,
+        organisation: null,
+      };
+      searchForm.setFieldsValue(emptyValues);
+      setSearchValue(emptyValues);
+      getUsers(active, 1, 10, emptyValues);
+    }
   };
 
   const fetchUserDetail = (id) => {
@@ -362,7 +372,11 @@ const ManageUser = () => {
                 onChange={(e) => {
                   searchForm.setFieldsValue({ search: e.target.value });
                   setSearchValue({ ...searchValue, search: e.target.value });
+                  if (!e.target.value) {
+                    onReset('search');
+                  }
                 }}
+                allowClear
               />
             </Form.Item>
             <UserRole
@@ -370,6 +384,9 @@ const ManageUser = () => {
               onRoleChange={(value) => {
                 searchForm.setFieldsValue({ role: value });
                 setSearchValue({ ...searchValue, role: value });
+                if (!value) {
+                  onReset('role');
+                }
               }}
               selectedValue={searchValue}
             />
@@ -378,6 +395,9 @@ const ManageUser = () => {
               onOrganisationChange={(value) => {
                 searchForm.setFieldsValue({ organisation: value });
                 setSearchValue({ ...searchValue, organisation: value });
+                if (!value) {
+                  onReset('organisation');
+                }
               }}
               selectedValue={searchValue}
               organisations={organisations}
@@ -395,7 +415,7 @@ const ManageUser = () => {
               {canReset && (
                 <Button
                   htmlType="button"
-                  onClick={onReset}
+                  onClick={() => onReset()}
                   style={{ marginLeft: '10px' }}
                 >
                   {buttonText?.btnResetAll}
