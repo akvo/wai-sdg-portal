@@ -279,7 +279,7 @@ const ManageUser = () => {
       setPreload(false);
       getUsers(active, 1, 10, searchValue);
     }
-  }, [active, searchValue, preload]);
+  }, [getUsers, active, searchValue, preload]);
 
   const handleTableChange = (pagination) => {
     const { current, pageSize } = pagination;
