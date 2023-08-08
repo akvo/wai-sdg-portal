@@ -1,6 +1,5 @@
 import React from 'react';
 import { Row, Col } from 'antd';
-import { FacebookFilled, TwitterOutlined } from '@ant-design/icons';
 import { UIState } from '../state/ui';
 import { Link } from 'react-router-dom';
 
@@ -30,19 +29,8 @@ const FooterEnd = ({ isWebformStandalone }) => {
       align="space-between"
     >
       <Col
-        span={8}
+        span={16}
         className="start"
-      >
-        <Link to="/facebook">
-          <FacebookFilled />
-        </Link>
-        <Link to="/twitter">
-          <TwitterOutlined />
-        </Link>
-      </Col>
-      <Col
-        span={8}
-        className="middle"
       >
         © 2021
       </Col>
