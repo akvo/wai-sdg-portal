@@ -50,6 +50,7 @@ const ManageUser = () => {
   const [isUserModalVisible, setIsUserModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isInformUser, setIsInformUser] = useState(false);
+  const [preload, setPreload] = useState(true);
 
   //ConfirmationModal state
   const [confirmationModal, setConfirmationModal] = useState({
@@ -99,13 +100,13 @@ const ManageUser = () => {
   const filterObjValues = (values) =>
     Object.fromEntries(Object.entries(values).filter(([_, value]) => value));
 
-  const setSearchParams = (data) => {
+  const setSearchParams = useCallback((data) => {
     const values = filterObjValues(data);
     const searchParams = new URLSearchParams();
     const params = query(values);
     Object.keys(params).forEach((key) => searchParams.append(key, params[key]));
     return searchParams.toString();
-  };
+  }, []);
 
   const onSearch = ({ search, organisation, role }, isPending) => {
     getUsers(isPending, 1, 10, { search, organisation, role });
@@ -269,14 +270,16 @@ const ManageUser = () => {
         .finally(() => {
           setTableLoading(false);
         });
-    }, // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    },
+    [setSearchParams]
   );
 
   useEffect(() => {
-    getUsers(active, 1, 10, searchValue);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (preload) {
+      setPreload(false);
+      getUsers(active, 1, 10, searchValue);
+    }
+  }, [active, searchValue, preload]);
 
   const handleTableChange = (pagination) => {
     const { current, pageSize } = pagination;
