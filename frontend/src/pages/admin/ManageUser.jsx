@@ -96,16 +96,19 @@ const ManageUser = () => {
       });
   };
 
-  const onSearch = ({ search, organisation, role }) => {
-    const values = Object.fromEntries(
-      Object.entries({ search, organisation, role }).filter(
-        ([_, value]) => value
-      )
-    );
+  const filterObjValues = (values) =>
+    Object.fromEntries(Object.entries(values).filter(([_, value]) => value));
+
+  const setSearchParams = (data) => {
+    const values = filterObjValues(data);
     const searchParams = new URLSearchParams();
     const params = query(values);
     Object.keys(params).forEach((key) => searchParams.append(key, params[key]));
-    getUsers(active, 1, 10, searchParams.toString());
+    return searchParams.toString();
+  };
+
+  const onSearch = ({ search, organisation, role }, isPending) => {
+    getUsers(isPending, 1, 10, { search, organisation, role });
   };
 
   const onReset = () => {
@@ -244,29 +247,36 @@ const ManageUser = () => {
     },
   ];
 
-  const getUsers = useCallback((active, page = 1, pageSize = 10, query) => {
-    setTableLoading(true);
-    api
-      .get(`/user?active=${active}&page=${page}${query ? `&${query}` : ''}`)
-      .then((res) => {
-        setUsers(res.data?.data);
-        setPaginate({
-          current: res.data.current,
-          total: res.data.total,
-          pageSize: pageSize,
+  const getUsers = useCallback(
+    (active, page = 1, pageSize = 10, query = {}) => {
+      const params = Object.keys(query).length
+        ? `&${setSearchParams(query)}`
+        : '';
+      setTableLoading(true);
+      api
+        .get(`/user?active=${active}&page=${page}${params}`)
+        .then((res) => {
+          setUsers(res.data?.data);
+          setPaginate({
+            current: res.data.current,
+            total: res.data.total,
+            pageSize: pageSize,
+          });
+        })
+        .catch(() => {
+          setUsers([]);
+        })
+        .finally(() => {
+          setTableLoading(false);
         });
-      })
-      .catch(() => {
-        setUsers([]);
-      })
-      .finally(() => {
-        setTableLoading(false);
-      });
-  }, []);
+    }, // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   useEffect(() => {
-    !isEmpty(organisations) && getUsers(active);
-  }, [getUsers, active, organisations]);
+    getUsers(active, 1, 10, searchValue);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleTableChange = (pagination) => {
     const { current, pageSize } = pagination;
@@ -317,12 +327,13 @@ const ManageUser = () => {
     setIsUserModalVisible(false);
   };
 
-  const canReset =
-    Object.keys(
-      Object.fromEntries(
-        Object.entries(searchValue).filter(([key, value]) => value) // eslint-disable-line no-unused-vars
-      )
-    ).length > 0;
+  const handleOnChecked = (isPending) => {
+    setShowPendingUser(isPending);
+    const pendingValue = isPending ? 0 : 1;
+    getUsers(pendingValue, 1, 10, searchValue);
+  };
+
+  const canReset = Object.keys(filterObjValues(searchValue)).length > 0;
 
   return (
     <>
@@ -335,7 +346,7 @@ const ManageUser = () => {
             form={searchForm}
             name="search-form"
             initialValues={searchValue}
-            onFinish={onSearch}
+            onFinish={(values) => onSearch(values, active)}
             layout="inline"
           >
             <Form.Item
@@ -398,13 +409,13 @@ const ManageUser = () => {
             <Button
               className="checkbox-label"
               type="link"
-              onClick={() => setShowPendingUser(!showPendingUser)}
+              onClick={() => handleOnChecked(!showPendingUser)}
             >
               {adminText?.checkboxShowPendingUserText}
             </Button>
             <Checkbox
               className="checkbox-input"
-              onChange={(e) => setShowPendingUser(e.target.checked)}
+              onChange={(e) => handleOnChecked(e.target.checked)}
               checked={showPendingUser}
               disabled={isEmpty(organisations) || tableLoading}
             />
