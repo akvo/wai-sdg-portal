@@ -63,8 +63,8 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 180, title: "Monthly Tariff" },
-      marker: { id: "93", title: "Number of Water Point" },
+      shape: { id: 96, title: "Monthly Tariff" },
+      marker: { id: 90, title: "Number of Water Point" },
     },
     formId: 4,
   },
