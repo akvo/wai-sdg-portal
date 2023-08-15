@@ -63,10 +63,22 @@ var page_config = {
       },
     ],
     maps: {
-      shape: { id: 180, title: "Monthly Tariff" },
-      marker: { id: "93", title: "Number of Water Point" },
+      shape: { id: 96, title: "Monthly Tariff" },
+      marker: { id: 111, title: "Functionality Status" },
     },
     formId: 4,
+    selectableMarkerDropdown: [
+      {
+        id: 111,
+        name: "Functionality Status",
+        hover: [
+          {
+            name: "Water point name",
+            id: 85,
+          },
+        ],
+      },
+    ],
   },
   health: {
     title: "Health Facility",
