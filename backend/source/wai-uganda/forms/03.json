@@ -49,19 +49,23 @@
           "options": [
             {
               "name": "Kindergarten",
-              "color": null
+              "color": null,
+              "id": 60416
             },
             {
               "name": "Primary / Eptedia",
-              "color": null
+              "color": null,
+              "id": 66119
             },
             {
               "name": "Secondary / Dhakhil",
-              "color": null
+              "color": null,
+              "id": 60485
             },
             {
               "name": "Higher secondary / Alem",
-              "color": null
+              "color": null,
+              "id": 60497
             }
           ],
           "id": 58
@@ -76,19 +80,23 @@
           "options": [
             {
               "name": "Girls Only",
-              "code": "TEMP1"
+              "code": "TEMP1",
+              "id": 60509
             },
             {
               "name": "Boys Only",
-              "code": "TEMP2"
+              "code": "TEMP2",
+              "id": 60518
             },
             {
               "name": "Co-education",
-              "code": "TEMP3"
+              "code": "TEMP3",
+              "id": 60528
             },
             {
               "name": "Data not collected",
-              "code": "TEMP4"
+              "code": "TEMP4",
+              "id": 60535
             }
           ]
         },
@@ -129,7 +137,7 @@
           "id": 62
         }
       ],
-      "id": 3
+      "id": 4
     },
     {
       "question_group": "Water",
@@ -144,23 +152,33 @@
           "options": [
             {
               "name": "Piped water into dwelling (into the building)",
-              "code": "W1"
+              "code": "W1",
+              "id": 62213
             },
             {
               "name": "Shallow tubewell/borehole",
-              "code": "W2"
+              "code": "W2",
+              "id": 62232
             },
             {
               "name": "Unprotected spring",
-              "code": "W3"
+              "code": "W3",
+              "id": 62242
             },
             {
               "name": "Deep tubewell/borehole",
-              "code": "W4"
+              "code": "W4",
+              "id": 66297
             },
             {
               "name": "Tapstand",
-              "code": "W5"
+              "code": "W5",
+              "id": 66298
+            },
+            {
+              "name": "Rainwater Harvesting Tank",
+              "code": "W6",
+              "id": 66299
             }
           ]
         },
@@ -174,19 +192,23 @@
           "options": [
             {
               "name": "No",
-              "code": "WA3"
+              "code": "WA3",
+              "id": 86702
             },
             {
               "name": "Yes, running water",
-              "code": "WA1"
+              "code": "WA1",
+              "id": 62287
             },
             {
               "name": "Yes, in containers, but no running water",
-              "code": "WA2"
+              "code": "WA2",
+              "id": 66302
             },
             {
               "name": "Cannot check",
-              "code": "WA2"
+              "code": "WA2",
+              "id": 62306
             }
           ],
           "dependency": [
@@ -196,13 +218,15 @@
                 "Piped water into dwelling (into the building)",
                 "Shallow tubewell/borehole",
                 "Unprotected spring",
-                "Tapstand"
+                "Tapstand",
+                "Deep tubewell/borehole",
+                "Rainwater Harvesting Tank"
               ]
             }
           ]
         }
       ],
-      "id": 13
+      "id": 14
     },
     {
       "question_group": "Sanitation",
@@ -217,11 +241,13 @@
           "options": [
             {
               "name": "Yes",
-              "code": "TP1"
+              "code": "TP1",
+              "id": 66434
             },
             {
               "name": "No",
-              "code": "TP2"
+              "code": "TP2",
+              "id": 63637
             }
           ]
         },
@@ -235,27 +261,33 @@
           "options": [
             {
               "name": "Ventilated Improved Pit latrine (VIP) / VIP latrine",
-              "code": "T1"
+              "code": "T1",
+              "id": 63653
             },
             {
               "name": "Ecosan Toilet",
-              "code": "T4"
+              "code": "T4",
+              "id": 66438
             },
             {
               "name": "Pit latrine with slab",
-              "code": "T5"
+              "code": "T5",
+              "id": 66439
             },
             {
               "name": "Traditional pit latrine",
-              "code": "T2"
+              "code": "T2",
+              "id": 63677
             },
             {
               "name": "Flush/pour flush toilets",
-              "code": "T3"
+              "code": "T3",
+              "id": 63687
             },
             {
               "name": "Unimproved makeshift / hanging toilets / No toilets / Open defecation",
-              "code": "T6"
+              "code": "T6",
+              "id": 63696
             }
           ],
           "dependency": [
@@ -277,11 +309,13 @@
           "options": [
             {
               "name": "Yes",
-              "code": "TS1"
+              "code": "TS1",
+              "id": 63706
             },
             {
               "name": "No",
-              "code": "TS2"
+              "code": "TS2",
+              "id": 63718
             }
           ],
           "dependency": [
@@ -304,8 +338,62 @@
           ]
         },
         {
-          "id": 671434022,
           "order": 4,
+          "question": "How many functioning stances are for females?",
+          "type": "number",
+          "meta": false,
+          "required": false,
+          "options": null,
+          "dependency": [
+            {
+              "id": 666914022,
+              "options": [
+                "Yes"
+              ]
+            },
+            {
+              "id": 671424025,
+              "options": [
+                "Ventilated Improved Pit latrine (VIP) / VIP latrine",
+                "Traditional pit latrine",
+                "Flush/pour flush toilets",
+                "Ecosan Toilet",
+                "Pit latrine with slab"
+              ]
+            }
+          ],
+          "id": 39
+        },
+        {
+          "order": 5,
+          "question": "How many functioning stances are for boys?",
+          "type": "number",
+          "meta": false,
+          "required": false,
+          "options": null,
+          "dependency": [
+            {
+              "id": 666914022,
+              "options": [
+                "Yes"
+              ]
+            },
+            {
+              "id": 671424025,
+              "options": [
+                "Ventilated Improved Pit latrine (VIP) / VIP latrine",
+                "Traditional pit latrine",
+                "Flush/pour flush toilets",
+                "Ecosan Toilet",
+                "Pit latrine with slab"
+              ]
+            }
+          ],
+          "id": 41
+        },
+        {
+          "id": 671434022,
+          "order": 6,
           "question": "Are the toilets/latrine for girls clean?",
           "type": "option",
           "meta": false,
@@ -313,15 +401,18 @@
           "options": [
             {
               "name": "Yes, all of them",
-              "code": "TG1"
+              "code": "TG1",
+              "id": 66445
             },
             {
               "name": "Yes, but not all of them",
-              "code": "TG2"
+              "code": "TG2",
+              "id": 63737
             },
             {
               "name": "No",
-              "code": "TG3"
+              "code": "TG3",
+              "id": 63746
             }
           ],
           "dependency": [
@@ -345,7 +436,7 @@
         },
         {
           "id": 672354017,
-          "order": 5,
+          "order": 7,
           "question": "Are the toilets for boys clean?",
           "type": "option",
           "meta": false,
@@ -353,15 +444,18 @@
           "options": [
             {
               "name": "Yes all are clean",
-              "code": "TB1"
+              "code": "TB1",
+              "id": 63758
             },
             {
               "name": "Yes, but not all of them",
-              "code": "TB2"
+              "code": "TB2",
+              "id": 63765
             },
             {
               "name": "No",
-              "code": "TB3"
+              "code": "TB3",
+              "id": 63772
             }
           ],
           "dependency": [
@@ -385,7 +479,7 @@
         },
         {
           "id": 31313131,
-          "order": 6,
+          "order": 8,
           "question": "Separate Toilets for Staff",
           "type": "option",
           "meta": false,
@@ -393,15 +487,18 @@
           "options": [
             {
               "name": "Yes",
-              "code": "ST1"
+              "code": "ST1",
+              "id": 63782
             },
             {
               "name": "No",
-              "code": "ST2"
+              "code": "ST2",
+              "id": 63794
             },
             {
               "name": "Data not collected",
-              "code": "ST3"
+              "code": "ST3",
+              "id": 66452
             }
           ],
           "dependency": [
@@ -419,7 +516,7 @@
         },
         {
           "id": 673274025,
-          "order": 7,
+          "order": 9,
           "question": "Are the toilets for girls separated for MHM?",
           "type": "option",
           "meta": false,
@@ -427,19 +524,23 @@
           "options": [
             {
               "name": "Yes, all of them",
-              "code": "TM1"
+              "code": "TM1",
+              "id": 63813
             },
             {
               "name": "Yes, but not all of them",
-              "code": "TM2"
+              "code": "TM2",
+              "id": 63823
             },
             {
               "name": "No",
-              "code": "TM3"
+              "code": "TM3",
+              "id": 63832
             },
             {
               "name": "Data not collected",
-              "code": "TM4"
+              "code": "TM4",
+              "id": 66456
             }
           ],
           "dependency": [
@@ -470,7 +571,7 @@
         },
         {
           "id": 667814027,
-          "order": 7,
+          "order": 10,
           "question": "Is there a sanitation facility accessible to students with disabilities?",
           "type": "option",
           "meta": false,
@@ -478,11 +579,13 @@
           "options": [
             {
               "name": "Yes, at least one is accessible",
-              "code": "TD1"
+              "code": "TD1",
+              "id": 63849
             },
             {
               "name": "No, the toilets are not accessible",
-              "code": "TD2"
+              "code": "TD2",
+              "id": 63858
             }
           ],
           "dependency": [
@@ -505,7 +608,7 @@
           ]
         }
       ],
-      "id": 14
+      "id": 16
     },
     {
       "question_group": "Hygiene",
@@ -520,11 +623,13 @@
           "options": [
             {
               "name": "Yes",
-              "code": "HW1"
+              "code": "HW1",
+              "id": 65131
             },
             {
               "name": "No",
-              "code": "HW2"
+              "code": "HW2",
+              "id": 65148
             }
           ]
         },
@@ -538,19 +643,23 @@
           "options": [
             {
               "name": "Neither water nor soap",
-              "code": "SW1"
+              "code": "SW1",
+              "id": 66588
             },
             {
               "name": "Only water",
-              "code": "SW2"
+              "code": "SW2",
+              "id": 65167
             },
             {
               "name": "Only soap available",
-              "code": "SW3"
+              "code": "SW3",
+              "id": 65177
             },
             {
               "name": "Both soap and water available",
-              "code": "SW4"
+              "code": "SW4",
+              "id": 65186
             }
           ],
           "dependency": [
@@ -563,7 +672,7 @@
           ]
         }
       ],
-      "id": 15
+      "id": 26
     }
   ]
 }
