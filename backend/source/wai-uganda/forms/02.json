@@ -59,11 +59,13 @@
           "options": [
             {
               "name": "hc iii",
-              "color": null
+              "color": null,
+              "id": 49285
             },
             {
               "name": "hc ii",
-              "color": null
+              "color": null,
+              "id": 49545
             }
           ],
           "id": 29
@@ -77,11 +79,13 @@
           "options": [
             {
               "name": "government health facility",
-              "color": null
+              "color": null,
+              "id": 49568
             },
             {
               "name": "private",
-              "color": null
+              "color": null,
+              "id": 75049
             }
           ],
           "id": 30
@@ -96,7 +100,7 @@
           "id": 31
         }
       ],
-      "id": 2
+      "id": 3
     },
     {
       "question_group": "Water",
@@ -111,23 +115,28 @@
           "options": [
             {
               "name": "Rainwater harvesting",
-              "code": "W1"
+              "code": "W1",
+              "id": 52098
             },
             {
               "name": "Deep tubewell/borehole",
-              "code": "W2"
+              "code": "W2",
+              "id": 52119
             },
             {
               "name": "No water source",
-              "code": "W3"
+              "code": "W3",
+              "id": 52129
             },
             {
               "name": "Piped water into dwelling (into the building)",
-              "code": "W4"
+              "code": "W4",
+              "id": 52139
             },
             {
               "name": "Piped water to yard/plot",
-              "code": "W5"
+              "code": "W5",
+              "id": 52148
             }
           ]
         },
@@ -141,15 +150,18 @@
           "options": [
             {
               "name": "On the premises of the health centre",
-              "code": "D1"
+              "code": "D1",
+              "id": 52158
             },
             {
               "name": "Within 500 meter",
-              "code": "D2"
+              "code": "D2",
+              "id": 52165
             },
             {
               "name": "Further than 500 meter",
-              "code": "D3"
+              "code": "D3",
+              "id": 75308
             }
           ],
           "dependency": [
@@ -174,11 +186,13 @@
           "options": [
             {
               "name": "Yes/available",
-              "code": "A1"
+              "code": "A1",
+              "id": 52184
             },
             {
               "name": "No/not available",
-              "code": "A2"
+              "code": "A2",
+              "id": 52193
             }
           ],
           "dependency": [
@@ -203,19 +217,23 @@
           "options": [
             {
               "name": "Functional",
-              "code": "F1"
+              "code": "F1",
+              "id": 52203
             },
             {
               "name": "Not functional",
-              "code": "F2"
+              "code": "F2",
+              "id": 75312
             },
             {
               "name": "No water supply",
-              "code": "F3"
+              "code": "F3",
+              "id": 52220
             },
             {
               "name": "Data not collected",
-              "code": "F4"
+              "code": "F4",
+              "id": 52227
             }
           ],
           "dependency": [
@@ -231,7 +249,7 @@
           ]
         }
       ],
-      "id": 8
+      "id": 11
     },
     {
       "question_group": "Sanitation",
@@ -246,15 +264,18 @@
           "options": [
             {
               "name": "Ventilated Improved Pit latrine (VIP)",
-              "code": "T1"
+              "code": "T1",
+              "id": 53893
             },
             {
               "name": "Pit latrine with slab",
-              "code": "T2"
+              "code": "T2",
+              "id": 75482
             },
             {
               "name": "No toilet facitity",
-              "code": "T3"
+              "code": "T3",
+              "id": 75483
             }
           ]
         },
@@ -268,11 +289,13 @@
           "options": [
             {
               "name": "Yes",
-              "code": "TU1"
+              "code": "TU1",
+              "id": 53934
             },
             {
               "name": "No",
-              "code": "TU2"
+              "code": "TU2",
+              "id": 75485
             }
           ],
           "dependency": [
@@ -295,11 +318,13 @@
           "options": [
             {
               "name": "No",
-              "code": "TS1"
+              "code": "TS1",
+              "id": 53953
             },
             {
               "name": "Yes",
-              "code": "TS2"
+              "code": "TS2",
+              "id": 53962
             }
           ],
           "dependency": [
@@ -322,11 +347,13 @@
           "options": [
             {
               "name": "No",
-              "code": "TW1"
+              "code": "TW1",
+              "id": 75488
             },
             {
               "name": "Yes",
-              "code": "TW2"
+              "code": "TW2",
+              "id": 75489
             }
           ],
           "dependency": [
@@ -349,11 +376,13 @@
           "options": [
             {
               "name": "No",
-              "code": "TM1"
+              "code": "TM1",
+              "id": 53993
             },
             {
               "name": "Yes",
-              "code": "TM2"
+              "code": "TM2",
+              "id": 54003
             }
           ],
           "dependency": [
@@ -376,11 +405,13 @@
           "options": [
             {
               "name": "No",
-              "code": "TD1"
+              "code": "TD1",
+              "id": 54012
             },
             {
               "name": "Yes",
-              "code": "TD2"
+              "code": "TD2",
+              "id": 75493
             }
           ],
           "dependency": [
@@ -403,19 +434,23 @@
           "options": [
             {
               "name": "Clean",
-              "code": "GC1"
+              "code": "GC1",
+              "id": 54034
             },
             {
               "name": "Dirty but being used",
-              "code": "GC2"
+              "code": "GC2",
+              "id": 75495
             },
             {
               "name": "Filthy and not used /No toilet facilities",
-              "code": "GC3"
+              "code": "GC3",
+              "id": 75496
             },
             {
               "name": "Data not collected",
-              "code": "GC4"
+              "code": "GC4",
+              "id": 75497
             }
           ],
           "dependency": [
@@ -429,7 +464,7 @@
           ]
         }
       ],
-      "id": 9
+      "id": 15
     },
     {
       "question_group": "Hygiene",
@@ -444,15 +479,18 @@
           "options": [
             {
               "name": "Yes",
-              "code": "HH1"
+              "code": "HH1",
+              "id": 55383
             },
             {
               "name": "No, hand hygiene stations are available but not functional or lacking material",
-              "code": "HH2"
+              "code": "HH2",
+              "id": 97654
             },
             {
               "name": "No, no hand wash facilities are available",
-              "code": "HH3"
+              "code": "HH3",
+              "id": 55410
             }
           ]
         },
@@ -466,15 +504,18 @@
           "options": [
             {
               "name": "Yes",
-              "code": "HW1"
+              "code": "HW1",
+              "id": 75633
             },
             {
               "name": "No, hand wash facilities are available but lacking soap and/or water",
-              "code": "HW2"
+              "code": "HW2",
+              "id": 55429
             },
             {
               "name": "No, no hand wash facilities are available",
-              "code": "HW3"
+              "code": "HW3",
+              "id": 55438
             }
           ]
         },
@@ -488,24 +529,28 @@
           "options": [
             {
               "name": "Yes, there a functional handwashing facility at one or more toilets on the day of the survey",
-              "code": "HT1"
+              "code": "HT1",
+              "id": 75636
             },
             {
               "name": "No, there are handwashing facilities near the toilet  but lack soap and/or water",
-              "code": "HT2"
+              "code": "HT2",
+              "id": 55460
             },
             {
               "name": "No, no handwashing facilities near toilets (within 5 meters)",
-              "code": "HT3"
+              "code": "HT3",
+              "id": 55467
             },
             {
               "name": "Data not collected",
-              "code": "HT4"
+              "code": "HT4",
+              "id": 55474
             }
           ]
         }
       ],
-      "id": 10
+      "id": 22
     },
     {
       "question_group": "Heath Care Waste",
@@ -520,11 +565,13 @@
           "options": [
             {
               "name": "Yes",
-              "code": "WB1"
+              "code": "WB1",
+              "id": 56933
             },
             {
               "name": "No",
-              "code": "WB2"
+              "code": "WB2",
+              "id": 56952
             }
           ]
         },
@@ -538,21 +585,26 @@
           "options": [
             {
               "name": "Incinerated",
-              "code": "WD1"
+              "code": "WD1",
+              "id": 56964
             },
             {
               "name": "Not incinerated",
-              "code": "WD2"
+              "code": "WD2",
+              "id": 56974
             },
             {
               "name": "Data not collected",
-              "code": "WD3"
+              "code": "WD3",
+              "id": 75789
             }
           ],
           "dependency": [
             {
               "id": 569090293,
-              "options": ["Yes"]
+              "options": [
+                "Yes"
+              ]
             }
           ]
         },
@@ -566,54 +618,66 @@
           "options": [
             {
               "name": "Autoclaved",
-              "color": null
+              "color": null,
+              "id": 56993
             },
             {
-              "name": "Incinerated (two chamber, 850-1000 °C incinerator)",
-              "color": null
+              "name": "Incinerated (two chamber, 850-1000 \u00b0C incinerator)",
+              "color": null,
+              "id": 97670
             },
             {
               "name": "Incinerated (other)",
-              "color": null
+              "color": null,
+              "id": 75792
             },
             {
               "name": "Burning in a protected pit",
-              "color": null
+              "color": null,
+              "id": 57019
             },
             {
               "name": "Not treated, but buried in lined, protected pit",
-              "color": null
+              "color": null,
+              "id": 57028
             },
             {
               "name": "Not treated, but collected for medical waste disposal off-site",
-              "color": null
+              "color": null,
+              "id": 57033
             },
             {
               "name": "Open dumping without treatment",
-              "color": null
+              "color": null,
+              "id": 57045
             },
             {
               "name": "Open burning",
-              "color": null
+              "color": null,
+              "id": 57052
             },
             {
               "name": "Not treated and added to general waste",
-              "color": null
+              "color": null,
+              "id": 57059
             },
             {
               "name": "Data not collected",
-              "code": null
+              "code": null,
+              "id": 57067
             }
           ],
           "dependency": [
             {
               "id": 569090293,
-              "options": ["Yes"]
+              "options": [
+                "Yes"
+              ]
             }
           ]
         }
       ],
-      "id": 11
+      "id": 25
     },
     {
       "question_group": "Environmental Cleaning",
@@ -628,15 +692,18 @@
           "options": [
             {
               "name": "Yes",
-              "code": "P1"
+              "code": "P1",
+              "id": 58385
             },
             {
               "name": "No",
-              "code": "P2"
+              "code": "P2",
+              "id": 58399
             },
             {
               "name": "Data not collected",
-              "code": "P3"
+              "code": "P3",
+              "id": 58409
             }
           ]
         },
@@ -650,20 +717,23 @@
           "options": [
             {
               "name": "Yes",
-              "code": "TR1"
+              "code": "TR1",
+              "id": 58418
             },
             {
               "name": "No",
-              "code": "TR2"
+              "code": "TR2",
+              "id": 75934
             },
             {
               "name": "Data not collected",
-              "code": "TR3"
+              "code": "TR3",
+              "id": 58438
             }
           ]
         }
       ],
-      "id": 12
+      "id": 28
     }
   ]
 }
