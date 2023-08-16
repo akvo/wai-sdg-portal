@@ -77,27 +77,33 @@
           "options": [
             {
               "name": "government",
-              "color": null
+              "color": null,
+              "id": 19384
             },
             {
               "name": "private",
-              "color": null
+              "color": null,
+              "id": 19438
             },
             {
               "name": "ngo",
-              "color": null
+              "color": null,
+              "id": 42270
             },
             {
               "name": "religious institutions",
-              "color": null
+              "color": null,
+              "id": 19457
             },
             {
               "name": "community",
-              "color": null
+              "color": null,
+              "id": 19469
             },
             {
               "name": "politician",
-              "color": null
+              "color": null,
+              "id": 19477
             }
           ],
           "id": 92
@@ -111,27 +117,33 @@
           "options": [
             {
               "name": "deep borehole",
-              "color": null
+              "color": null,
+              "id": 19488
             },
             {
               "name": "Rainwater harvesting tank",
-              "color": null
+              "color": null,
+              "id": 42275
             },
             {
               "name": "protected spring",
-              "color": null
+              "color": null,
+              "id": 19508
             },
             {
               "name": "shallow well",
-              "color": null
+              "color": null,
+              "id": 19515
             },
             {
               "name": "public tapstand",
-              "color": null
+              "color": null,
+              "id": 42277
             },
             {
               "name": "kiosk",
-              "color": null
+              "color": null,
+              "id": 19534
             }
           ],
           "id": 98
@@ -145,19 +157,23 @@
           "options": [
             {
               "name": "functional in use",
-              "color": null
+              "color": null,
+              "id": 19543
             },
             {
               "name": "non-functional",
-              "color": null
+              "color": null,
+              "id": 19553
             },
             {
               "name": "functional and not in use",
-              "color": null
+              "color": null,
+              "id": 34553
             },
             {
               "name": "decommissioned",
-              "color": null
+              "color": null,
+              "id": 19570
             }
           ],
           "id": 111
@@ -171,15 +187,18 @@
           "options": [
             {
               "name": "fully functioning at 100%",
-              "color": null
+              "color": null,
+              "id": 19579
             },
             {
               "name": "partially functioning works with some issues/ difficulties",
-              "color": null
+              "color": null,
+              "id": 19589
             },
             {
               "name": "barely functioning (almost not functioning)",
-              "color": null
+              "color": null,
+              "id": 19596
             }
           ],
           "id": 112,
@@ -202,19 +221,23 @@
           "options": [
             {
               "name": "25-50",
-              "color": null
+              "color": null,
+              "id": 19608
             },
             {
               "name": "50-100",
-              "color": null
+              "color": null,
+              "id": 19615
             },
             {
               "name": "more than 100",
-              "color": null
+              "color": null,
+              "id": 19624
             },
             {
               "name": "less than 25",
-              "color": null
+              "color": null,
+              "id": 42288
             }
           ],
           "id": 93
@@ -228,27 +251,33 @@
           "options": [
             {
               "name": "water for other household and domestic use",
-              "color": null
+              "color": null,
+              "id": 19643
             },
             {
               "name": "drinking water",
-              "color": null
+              "color": null,
+              "id": 19653
             },
             {
               "name": "washing cars/ motorcycles",
-              "color": null
+              "color": null,
+              "id": 34554
             },
             {
               "name": "institutional use (school or healthcare facility/ health centre)",
-              "color": null
+              "color": null,
+              "id": 19670
             },
             {
               "name": "agriculture (crops or animals)",
-              "color": null
+              "color": null,
+              "id": 19679
             },
             {
               "name": "other",
-              "color": null
+              "color": null,
+              "id": 19686
             }
           ],
           "id": 94,
@@ -272,31 +301,38 @@
           "options": [
             {
               "name": "none",
-              "color": null
+              "color": null,
+              "id": 19696
             },
             {
               "name": "for drinking but not always because it is not clean",
-              "color": null
+              "color": null,
+              "id": 19708
             },
             {
               "name": "laying bricks",
-              "color": null
+              "color": null,
+              "id": 19715
             },
             {
               "name": "not in use",
-              "color": null
+              "color": null,
+              "id": 42297
             },
             {
               "name": "washing",
-              "color": null
+              "color": null,
+              "id": 19729
             },
             {
               "name": "brick laying",
-              "color": null
+              "color": null,
+              "id": 42299
             },
             {
               "name": "bricks laying",
-              "color": null
+              "color": null,
+              "id": 19748
             }
           ],
           "id": 95,
@@ -318,11 +354,13 @@
           "options": [
             {
               "name": "no",
-              "color": null
+              "color": null,
+              "id": 19758
             },
             {
               "name": "yes",
-              "color": null
+              "color": null,
+              "id": 19765
             }
           ],
           "id": 97,
@@ -345,19 +383,23 @@
           "options": [
             {
               "name": "never",
-              "color": null
+              "color": null,
+              "id": 19777
             },
             {
               "name": "rarely",
-              "color": null
+              "color": null,
+              "id": 19784
             },
             {
               "name": "sometimes",
-              "color": null
+              "color": null,
+              "id": 19794
             },
             {
               "name": "often",
-              "color": null
+              "color": null,
+              "id": 42305
             }
           ],
           "id": 96,
@@ -397,11 +439,13 @@
           "options": [
             {
               "name": "yes",
-              "color": null
+              "color": null,
+              "id": 19815
             },
             {
               "name": "no",
-              "color": null
+              "color": null,
+              "id": 19822
             }
           ],
           "id": 100,
@@ -423,11 +467,13 @@
           "options": [
             {
               "name": "yes",
-              "color": null
+              "color": null,
+              "id": 42308
             },
             {
               "name": "no",
-              "color": null
+              "color": null,
+              "id": 19844
             }
           ],
           "id": 101,
@@ -449,11 +495,13 @@
           "options": [
             {
               "name": "nan",
-              "color": null
+              "color": null,
+              "id": 19853
             },
             {
               "name": "13 liters",
-              "color": null
+              "color": null,
+              "id": 34556
             }
           ],
           "id": 102,
@@ -475,11 +523,13 @@
           "options": [
             {
               "name": "one",
-              "color": null
+              "color": null,
+              "id": 42312
             },
             {
               "name": "more than one",
-              "color": null
+              "color": null,
+              "id": 19879
             }
           ],
           "id": 103,
@@ -503,11 +553,13 @@
           "options": [
             {
               "name": "ordinary",
-              "color": null
+              "color": null,
+              "id": 42314
             },
             {
               "name": "improved",
-              "color": null
+              "color": null,
+              "id": 19899
             }
           ],
           "id": 104,
@@ -529,11 +581,13 @@
           "options": [
             {
               "name": "one",
-              "color": null
+              "color": null,
+              "id": 19908
             },
             {
               "name": "more than one",
-              "color": null
+              "color": null,
+              "id": 19918
             }
           ],
           "id": 105,
@@ -591,19 +645,23 @@
           "options": [
             {
               "name": "handpump",
-              "color": null
+              "color": null,
+              "id": 19930
             },
             {
               "name": "rope pump",
-              "color": null
+              "color": null,
+              "id": 19937
             },
             {
               "name": "manual lifting rope",
-              "color": null
+              "color": null,
+              "id": 19944
             },
             {
               "name": "motorised pump",
-              "color": null
+              "color": null,
+              "id": 19953
             }
           ],
           "id": 108,
@@ -626,11 +684,13 @@
           "options": [
             {
               "name": "afridev",
-              "color": null
+              "color": null,
+              "id": 19965
             },
             {
               "name": "india mark",
-              "color": null
+              "color": null,
+              "id": 19972
             }
           ],
           "id": 109,
@@ -653,23 +713,28 @@
           "options": [
             {
               "name": "gi",
-              "color": null
+              "color": null,
+              "id": 19984
             },
             {
               "name": "pvc",
-              "color": null
+              "color": null,
+              "id": 42324
             },
             {
               "name": "i don't know",
-              "color": null
+              "color": null,
+              "id": 42325
             },
             {
               "name": "stainless steel",
-              "color": null
+              "color": null,
+              "id": 20008
             },
             {
               "name": "hdp",
-              "color": null
+              "color": null,
+              "id": 20018
             }
           ],
           "id": 110,
@@ -710,27 +775,33 @@
           "options": [
             {
               "name": "more than one year",
-              "color": null
+              "color": null,
+              "id": 20030
             },
             {
               "name": "1 to 5 days",
-              "color": null
+              "color": null,
+              "id": 20037
             },
             {
               "name": "6 to 10 days",
-              "color": null
+              "color": null,
+              "id": 20044
             },
             {
               "name": "more than 20 days but less than one year",
-              "color": null
+              "color": null,
+              "id": 20054
             },
             {
               "name": "unknown",
-              "color": null
+              "color": null,
+              "id": 34558
             },
             {
               "name": "11 to 20 days",
-              "color": null
+              "color": null,
+              "id": 20068
             }
           ],
           "id": 114,
@@ -752,19 +823,23 @@
           "options": [
             {
               "name": "more than 3 weeks total",
-              "color": null
+              "color": null,
+              "id": 20080
             },
             {
               "name": "it was never broken down",
-              "color": null
+              "color": null,
+              "id": 20089
             },
             {
               "name": "unknown",
-              "color": null
+              "color": null,
+              "id": 20096
             },
             {
               "name": "about 1 week in total",
-              "color": null
+              "color": null,
+              "id": 20104
             }
           ],
           "id": 115,
@@ -788,19 +863,23 @@
           "options": [
             {
               "name": "8-16 hours",
-              "color": null
+              "color": null,
+              "id": 20113
             },
             {
               "name": "more than 8",
-              "color": null
+              "color": null,
+              "id": 20125
             },
             {
               "name": "more than 16 hours",
-              "color": null
+              "color": null,
+              "id": 20132
             },
             {
               "name": "unknown",
-              "color": null
+              "color": null,
+              "id": 20139
             }
           ],
           "id": 116,
@@ -822,15 +901,18 @@
           "options": [
             {
               "name": "1-3 minutes",
-              "color": null
+              "color": null,
+              "id": 20149
             },
             {
               "name": "more than 3 minutes",
-              "color": null
+              "color": null,
+              "id": 20158
             },
             {
               "name": "less than 1 minute",
-              "color": null
+              "color": null,
+              "id": 20166
             }
           ],
           "id": 117,
@@ -852,23 +934,28 @@
           "options": [
             {
               "name": "good",
-              "color": null
+              "color": null,
+              "id": 20177
             },
             {
               "name": "fair (moderate)",
-              "color": null
+              "color": null,
+              "id": 20185
             },
             {
               "name": "poor",
-              "color": null
+              "color": null,
+              "id": 20194
             },
             {
               "name": "excellent",
-              "color": null
+              "color": null,
+              "id": 42345
             },
             {
               "name": "very poor",
-              "color": null
+              "color": null,
+              "id": 20208
             }
           ],
           "id": 118,
@@ -892,23 +979,28 @@
           "options": [
             {
               "name": "good",
-              "color": null
+              "color": null,
+              "id": 20218
             },
             {
               "name": "fair (moderate)",
-              "color": null
+              "color": null,
+              "id": 42348
             },
             {
               "name": "excellent",
-              "color": null
+              "color": null,
+              "id": 20237
             },
             {
               "name": "very poor",
-              "color": null
+              "color": null,
+              "id": 20244
             },
             {
               "name": "poor",
-              "color": null
+              "color": null,
+              "id": 42350
             }
           ],
           "id": 119,
@@ -931,23 +1023,28 @@
           "options": [
             {
               "name": "fair (moderate)",
-              "color": null
+              "color": null,
+              "id": 20263
             },
             {
               "name": "poor",
-              "color": null
+              "color": null,
+              "id": 42352
             },
             {
               "name": "very poor",
-              "color": null
+              "color": null,
+              "id": 42353
             },
             {
               "name": "good",
-              "color": null
+              "color": null,
+              "id": 20287
             },
             {
               "name": "excellent",
-              "color": null
+              "color": null,
+              "id": 20297
             }
           ],
           "id": 120,
@@ -970,23 +1067,28 @@
           "options": [
             {
               "name": "fair (moderate)",
-              "color": null
+              "color": null,
+              "id": 20306
             },
             {
               "name": "poor",
-              "color": null
+              "color": null,
+              "id": 20313
             },
             {
               "name": "very poor",
-              "color": null
+              "color": null,
+              "id": 42357
             },
             {
               "name": "good",
-              "color": null
+              "color": null,
+              "id": 42358
             },
             {
               "name": "excellent",
-              "color": null
+              "color": null,
+              "id": 20340
             }
           ],
           "id": 121
@@ -1009,23 +1111,28 @@
           "options": [
             {
               "name": "good",
-              "color": null
+              "color": null,
+              "id": 20349
             },
             {
               "name": "poor",
-              "color": null
+              "color": null,
+              "id": 20356
             },
             {
               "name": "excellent",
-              "color": null
+              "color": null,
+              "id": 20366
             },
             {
               "name": "fair (moderate)",
-              "color": null
+              "color": null,
+              "id": 20375
             },
             {
               "name": "very poor",
-              "color": null
+              "color": null,
+              "id": 20383
             }
           ],
           "id": 123,
@@ -1048,23 +1155,28 @@
           "options": [
             {
               "name": "good",
-              "color": null
+              "color": null,
+              "id": 20394
             },
             {
               "name": "poor",
-              "color": null
+              "color": null,
+              "id": 20404
             },
             {
               "name": "excellent",
-              "color": null
+              "color": null,
+              "id": 42366
             },
             {
               "name": "very poor",
-              "color": null
+              "color": null,
+              "id": 20418
             },
             {
               "name": "fair (moderate)",
-              "color": null
+              "color": null,
+              "id": 20428
             }
           ],
           "id": 124,
@@ -1087,23 +1199,28 @@
           "options": [
             {
               "name": "good",
-              "color": null
+              "color": null,
+              "id": 20440
             },
             {
               "name": "very poor",
-              "color": null
+              "color": null,
+              "id": 20447
             },
             {
               "name": "poor",
-              "color": null
+              "color": null,
+              "id": 20454
             },
             {
               "name": "fair (moderate)",
-              "color": null
+              "color": null,
+              "id": 34562
             },
             {
               "name": "excellent",
-              "color": null
+              "color": null,
+              "id": 42372
             }
           ],
           "id": 125,
@@ -1125,11 +1242,13 @@
           "options": [
             {
               "name": "poor",
-              "color": null
+              "color": null,
+              "id": 20483
             },
             {
               "name": "good",
-              "color": null
+              "color": null,
+              "id": 42374
             }
           ],
           "id": 126,
@@ -1151,15 +1270,18 @@
           "options": [
             {
               "name": "very poor",
-              "color": null
+              "color": null,
+              "id": 20499
             },
             {
               "name": "good",
-              "color": null
+              "color": null,
+              "id": 20509
             },
             {
               "name": "fair (moderate)",
-              "color": null
+              "color": null,
+              "id": 20518
             }
           ],
           "id": 127,
@@ -1247,23 +1369,28 @@
           "options": [
             {
               "name": "very poor",
-              "color": null
+              "color": null,
+              "id": 20533
             },
             {
               "name": "good",
-              "color": null
+              "color": null,
+              "id": 20542
             },
             {
               "name": "poor",
-              "color": null
+              "color": null,
+              "id": 20549
             },
             {
               "name": "fair (moderate)",
-              "color": null
+              "color": null,
+              "id": 20557
             },
             {
               "name": "excellent",
-              "color": null
+              "color": null,
+              "id": 20566
             }
           ],
           "id": 132,
@@ -1285,19 +1412,23 @@
           "options": [
             {
               "name": "no filtration system exists",
-              "color": null
+              "color": null,
+              "id": 20578
             },
             {
               "name": "present and in use",
-              "color": null
+              "color": null,
+              "id": 20585
             },
             {
               "name": "present -not is use, repair needed",
-              "color": null
+              "color": null,
+              "id": 20592
             },
             {
               "name": "present not in use, not connected",
-              "color": null
+              "color": null,
+              "id": 20599
             }
           ],
           "id": 133,
@@ -1319,23 +1450,28 @@
           "options": [
             {
               "name": "good",
-              "color": null
+              "color": null,
+              "id": 42386
             },
             {
               "name": "very poor",
-              "color": null
+              "color": null,
+              "id": 20619
             },
             {
               "name": "poor",
-              "color": null
+              "color": null,
+              "id": 20626
             },
             {
               "name": "excellent",
-              "color": null
+              "color": null,
+              "id": 20633
             },
             {
               "name": "fair (moderate)",
-              "color": null
+              "color": null,
+              "id": 20645
             }
           ],
           "id": 134
@@ -1349,23 +1485,28 @@
           "options": [
             {
               "name": "fair (moderate)",
-              "color": null
+              "color": null,
+              "id": 20654
             },
             {
               "name": "good",
-              "color": null
+              "color": null,
+              "id": 34564
             },
             {
               "name": "poor",
-              "color": null
+              "color": null,
+              "id": 20669
             },
             {
               "name": "very poor",
-              "color": null
+              "color": null,
+              "id": 42393
             },
             {
               "name": "excellent",
-              "color": null
+              "color": null,
+              "id": 20688
             }
           ],
           "id": 135,
@@ -1406,35 +1547,43 @@
           "options": [
             {
               "name": "none",
-              "color": null
+              "color": null,
+              "id": 20697
             },
             {
               "name": "drainage channel",
-              "color": null
+              "color": null,
+              "id": 20707
             },
             {
               "name": "pumphead",
-              "color": null
+              "color": null,
+              "id": 20716
             },
             {
               "name": "handle",
-              "color": null
+              "color": null,
+              "id": 20723
             },
             {
               "name": "pedestal",
-              "color": null
+              "color": null,
+              "id": 42398
             },
             {
               "name": "apron",
-              "color": null
+              "color": null,
+              "id": 20738
             },
             {
               "name": "spout",
-              "color": null
+              "color": null,
+              "id": 20747
             },
             {
               "name": "other",
-              "color": null
+              "color": null,
+              "id": 20754
             }
           ],
           "id": 137,
@@ -1474,23 +1623,28 @@
           "options": [
             {
               "name": "catchment protection or fence",
-              "color": null
+              "color": null,
+              "id": 20766
             },
             {
               "name": "spouts/ taps",
-              "color": null
+              "color": null,
+              "id": 20774
             },
             {
               "name": "landing and steps",
-              "color": null
+              "color": null,
+              "id": 20785
             },
             {
               "name": "none",
-              "color": null
+              "color": null,
+              "id": 20793
             },
             {
               "name": "other",
-              "color": null
+              "color": null,
+              "id": 20800
             }
           ],
           "id": 139
@@ -1521,27 +1675,33 @@
           "options": [
             {
               "name": "meters",
-              "color": null
+              "color": null,
+              "id": 20809
             },
             {
               "name": "tap",
-              "color": null
+              "color": null,
+              "id": 42407
             },
             {
               "name": "none",
-              "color": null
+              "color": null,
+              "id": 20828
             },
             {
               "name": "drainage channel",
-              "color": null
+              "color": null,
+              "id": 20836
             },
             {
               "name": "apron",
-              "color": null
+              "color": null,
+              "id": 20843
             },
             {
               "name": "other",
-              "color": null
+              "color": null,
+              "id": 20852
             }
           ],
           "id": 141
@@ -1572,19 +1732,23 @@
           "options": [
             {
               "name": "drainage channel",
-              "color": null
+              "color": null,
+              "id": 34566
             },
             {
               "name": "none",
-              "color": null
+              "color": null,
+              "id": 42412
             },
             {
               "name": "taps",
-              "color": null
+              "color": null,
+              "id": 20878
             },
             {
               "name": "other",
-              "color": null
+              "color": null,
+              "id": 20888
             }
           ],
           "id": 143
@@ -1615,31 +1779,38 @@
           "options": [
             {
               "name": "drainage channel",
-              "color": null
+              "color": null,
+              "id": 20898
             },
             {
               "name": "none",
-              "color": null
+              "color": null,
+              "id": 20907
             },
             {
               "name": "taps",
-              "color": null
+              "color": null,
+              "id": 20914
             },
             {
               "name": "filtration system",
-              "color": null
+              "color": null,
+              "id": 20924
             },
             {
               "name": "gutters",
-              "color": null
+              "color": null,
+              "id": 42418
             },
             {
               "name": "tank",
-              "color": null
+              "color": null,
+              "id": 20938
             },
             {
               "name": "other",
-              "color": null
+              "color": null,
+              "id": 20945
             }
           ],
           "id": 145,
@@ -1678,11 +1849,13 @@
           "options": [
             {
               "name": "yes",
-              "color": null
+              "color": null,
+              "id": 20957
             },
             {
               "name": "no",
-              "color": null
+              "color": null,
+              "id": 20967
             }
           ],
           "id": 147
@@ -1696,31 +1869,38 @@
           "options": [
             {
               "name": "clothes washing in the catchment",
-              "color": null
+              "color": null,
+              "id": 21098
             },
             {
               "name": "animal at the catchment",
-              "color": null
+              "color": null,
+              "id": 21110
             },
             {
               "name": "children playing",
-              "color": null
+              "color": null,
+              "id": 21119
             },
             {
               "name": "no fence",
-              "color": null
+              "color": null,
+              "id": 21129
             },
             {
               "name": "none -no contamination risk observed",
-              "color": null
+              "color": null,
+              "id": 21136
             },
             {
               "name": "agriculture/ cultivation at the catchment",
-              "color": null
+              "color": null,
+              "id": 21143
             },
             {
               "name": "livelihood activities at the catchment (e.g. brickmaking)",
-              "color": null
+              "color": null,
+              "id": 42440
             }
           ],
           "id": 148,
@@ -1742,19 +1922,23 @@
           "options": [
             {
               "name": "none-no contamination risks observed",
-              "color": null
+              "color": null,
+              "id": 34569
             },
             {
               "name": "gutter channels are collecting dirty water",
-              "color": null
+              "color": null,
+              "id": 42442
             },
             {
               "name": "entry points or openings to the tank are not properly covered",
-              "color": null
+              "color": null,
+              "id": 21179
             },
             {
               "name": "visible contamination on roof catchment area (plants, dirt, excreta)",
-              "color": null
+              "color": null,
+              "id": 21186
             }
           ],
           "id": 149,
@@ -1776,27 +1960,33 @@
           "options": [
             {
               "name": "no concern- water is clean",
-              "color": null
+              "color": null,
+              "id": 21198
             },
             {
               "name": "contamination from animals or human feces (e.g. latrines or od)",
-              "color": null
+              "color": null,
+              "id": 21207
             },
             {
               "name": "contamination from soil or metals",
-              "color": null
+              "color": null,
+              "id": 21215
             },
             {
               "name": "contamination from industry or chemicals",
-              "color": null
+              "color": null,
+              "id": 42447
             },
             {
               "name": "contamination from pesticides or herbicides (agriculture)",
-              "color": null
+              "color": null,
+              "id": 42448
             },
             {
               "name": "other",
-              "color": null
+              "color": null,
+              "id": 21238
             }
           ],
           "id": 150,
@@ -1836,15 +2026,18 @@
           "options": [
             {
               "name": "sometimes",
-              "color": null
+              "color": null,
+              "id": 21248
             },
             {
               "name": "never",
-              "color": null
+              "color": null,
+              "id": 21258
             },
             {
               "name": "always - problems with colour",
-              "color": null
+              "color": null,
+              "id": 21267
             }
           ],
           "id": 152,
@@ -1867,15 +2060,18 @@
           "options": [
             {
               "name": "never",
-              "color": null
+              "color": null,
+              "id": 21277
             },
             {
               "name": "always - problems with odour",
-              "color": null
+              "color": null,
+              "id": 21284
             },
             {
               "name": "sometimes",
-              "color": null
+              "color": null,
+              "id": 42454
             }
           ],
           "id": 153,
@@ -1898,15 +2094,18 @@
           "options": [
             {
               "name": "rarely",
-              "color": null
+              "color": null,
+              "id": 21303
             },
             {
               "name": "sometimes",
-              "color": null
+              "color": null,
+              "id": 42456
             },
             {
               "name": "always - problems with taste",
-              "color": null
+              "color": null,
+              "id": 21317
             }
           ],
           "id": 154,
@@ -1947,19 +2146,23 @@
           "options": [
             {
               "name": "caretaker",
-              "color": null
+              "color": null,
+              "id": 21329
             },
             {
               "name": "private operator",
-              "color": null
+              "color": null,
+              "id": 21339
             },
             {
               "name": "water user committee",
-              "color": null
+              "color": null,
+              "id": 21346
             },
             {
               "name": "other",
-              "color": null
+              "color": null,
+              "id": 21353
             }
           ],
           "id": 156
@@ -1990,11 +2193,13 @@
           "options": [
             {
               "name": "unpaid",
-              "color": null
+              "color": null,
+              "id": 21365
             },
             {
               "name": "paid",
-              "color": null
+              "color": null,
+              "id": 21374
             }
           ],
           "id": 158,
@@ -2017,11 +2222,13 @@
           "options": [
             {
               "name": "yes",
-              "color": null
+              "color": null,
+              "id": 21384
             },
             {
               "name": "no",
-              "color": null
+              "color": null,
+              "id": 21393
             }
           ],
           "id": 159,
@@ -2045,31 +2252,38 @@
           "options": [
             {
               "name": "wuc/wsc",
-              "color": null
+              "color": null,
+              "id": 21405
             },
             {
               "name": "no management",
-              "color": null
+              "color": null,
+              "id": 21413
             },
             {
               "name": "unknown",
-              "color": null
+              "color": null,
+              "id": 21420
             },
             {
               "name": "private operator",
-              "color": null
+              "color": null,
+              "id": 21429
             },
             {
               "name": "northern umbrella",
-              "color": null
+              "color": null,
+              "id": 21436
             },
             {
               "name": "national water and sewerage cooperation",
-              "color": null
+              "color": null,
+              "id": 21446
             },
             {
               "name": "ngo/cso",
-              "color": null
+              "color": null,
+              "id": 21453
             }
           ],
           "id": 160,
@@ -2093,11 +2307,13 @@
           "options": [
             {
               "name": "yes",
-              "color": null
+              "color": null,
+              "id": 21463
             },
             {
               "name": "no",
-              "color": null
+              "color": null,
+              "id": 21470
             }
           ],
           "id": 161,
@@ -2119,15 +2335,18 @@
           "options": [
             {
               "name": "no",
-              "color": null
+              "color": null,
+              "id": 21484
             },
             {
               "name": "unknown",
-              "color": null
+              "color": null,
+              "id": 42474
             },
             {
               "name": "yes",
-              "color": null
+              "color": null,
+              "id": 21498
             }
           ],
           "id": 162,
@@ -2151,15 +2370,18 @@
           "options": [
             {
               "name": "no",
-              "color": null
+              "color": null,
+              "id": 42476
             },
             {
               "name": "yes",
-              "color": null
+              "color": null,
+              "id": 21517
             },
             {
               "name": "unknown",
-              "color": null
+              "color": null,
+              "id": 21525
             }
           ],
           "id": 163,
@@ -2249,15 +2471,18 @@
           "options": [
             {
               "name": "unknown",
-              "color": null
+              "color": null,
+              "id": 42479
             },
             {
               "name": "no",
-              "color": null
+              "color": null,
+              "id": 42480
             },
             {
               "name": "yes",
-              "color": null
+              "color": null,
+              "id": 21558
             }
           ],
           "id": 168,
@@ -2279,15 +2504,18 @@
           "options": [
             {
               "name": "no",
-              "color": null
+              "color": null,
+              "id": 21567
             },
             {
               "name": "yes",
-              "color": null
+              "color": null,
+              "id": 21575
             },
             {
               "name": "unknown",
-              "color": null
+              "color": null,
+              "id": 21587
             }
           ],
           "id": 169,
@@ -2309,11 +2537,13 @@
           "options": [
             {
               "name": "yes",
-              "color": null
+              "color": null,
+              "id": 21596
             },
             {
               "name": "no",
-              "color": null
+              "color": null,
+              "id": 21603
             }
           ],
           "id": 170,
@@ -2335,11 +2565,13 @@
           "options": [
             {
               "name": "yes",
-              "color": null
+              "color": null,
+              "id": 21615
             },
             {
               "name": "no",
-              "color": null
+              "color": null,
+              "id": 21622
             }
           ],
           "id": 171,
@@ -2361,15 +2593,18 @@
           "options": [
             {
               "name": "no",
-              "color": null
+              "color": null,
+              "id": 42488
             },
             {
               "name": "yes",
-              "color": null
+              "color": null,
+              "id": 42489
             },
             {
               "name": "unknown",
-              "color": null
+              "color": null,
+              "id": 42490
             }
           ],
           "id": 172,
@@ -2391,27 +2626,33 @@
           "options": [
             {
               "name": "1 to 5 years ago",
-              "color": null
+              "color": null,
+              "id": 34574
             },
             {
               "name": "3 months to 1 year ago",
-              "color": null
+              "color": null,
+              "id": 21668
             },
             {
               "name": "less than 3 months ago",
-              "color": null
+              "color": null,
+              "id": 21675
             },
             {
               "name": "unknown",
-              "color": null
+              "color": null,
+              "id": 21684
             },
             {
               "name": "never",
-              "color": null
+              "color": null,
+              "id": 21694
             },
             {
               "name": "during construction of the water source",
-              "color": null
+              "color": null,
+              "id": 42495
             }
           ],
           "id": 173,
@@ -2434,11 +2675,13 @@
           "options": [
             {
               "name": "no",
-              "color": null
+              "color": null,
+              "id": 42496
             },
             {
               "name": "yes",
-              "color": null
+              "color": null,
+              "id": 42497
             }
           ],
           "id": 174,
@@ -2461,15 +2704,18 @@
           "options": [
             {
               "name": "no",
-              "color": null
+              "color": null,
+              "id": 21730
             },
             {
               "name": "yes",
-              "color": null
+              "color": null,
+              "id": 21737
             },
             {
               "name": "unknown",
-              "color": null
+              "color": null,
+              "id": 21746
             }
           ],
           "id": 175,
@@ -2491,15 +2737,18 @@
           "options": [
             {
               "name": "yes",
-              "color": null
+              "color": null,
+              "id": 21758
             },
             {
               "name": "no",
-              "color": null
+              "color": null,
+              "id": 21806
             },
             {
               "name": "users contribute fees only when repair is needed",
-              "color": null
+              "color": null,
+              "id": 21813
             }
           ],
           "id": 176,
@@ -2538,23 +2787,28 @@
           "options": [
             {
               "name": "fixed tariff per month",
-              "color": null
+              "color": null,
+              "id": 21827
             },
             {
               "name": "fixed tariff per year",
-              "color": null
+              "color": null,
+              "id": 21835
             },
             {
               "name": "tariff per 20 litre jerry can",
-              "color": null
+              "color": null,
+              "id": 42509
             },
             {
               "name": "tariff per institution (schools, health centres, etc)",
-              "color": null
+              "color": null,
+              "id": 42510
             },
             {
               "name": "other",
-              "color": null
+              "color": null,
+              "id": 34576
             }
           ],
           "id": 178,
@@ -2661,11 +2915,13 @@
           "options": [
             {
               "name": "yes",
-              "color": null
+              "color": null,
+              "id": 21875
             },
             {
               "name": "no",
-              "color": null
+              "color": null,
+              "id": 42513
             }
           ],
           "id": 184,
@@ -2679,7 +2935,7 @@
           ]
         }
       ],
-      "id": 4
+      "id": 5
     }
   ]
 }

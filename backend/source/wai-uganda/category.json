@@ -383,7 +383,8 @@
               "Piped water into dwelling (into the building)",
               "Shallow tubewell/borehole",
               "Deep tubewell/borehole",
-              "Tapstand"
+              "Tapstand",
+              "Rainwater Harvesting Tank"
             ],
             "else": {
               "name": "No Service"
