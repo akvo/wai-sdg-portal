@@ -23,26 +23,12 @@ class TestAdvancedFilter:
         assert data_view == [
             [
                 {"id": 4, "question": "1", "answer": "option 2"},
-                {"id": 4, "question": "7", "answer": "o"},
-                {"id": 4, "question": "7", "answer": "p"},
-                {"id": 4, "question": "7", "answer": "t"},
-                {"id": 4, "question": "7", "answer": "i"},
-                {"id": 4, "question": "7", "answer": "o"},
-                {"id": 4, "question": "7", "answer": "n"},
-                {"id": 4, "question": "7", "answer": " "},
-                {"id": 4, "question": "7", "answer": "b"},
+                {"id": 4, "question": "7", "answer": "option b"}
             ],
             [{"id": 2, "question": "1", "answer": "option 2"}],
             [
                 {"id": 3, "question": "1", "answer": "option 1"},
-                {"id": 3, "question": "7", "answer": "o"},
-                {"id": 3, "question": "7", "answer": "p"},
-                {"id": 3, "question": "7", "answer": "t"},
-                {"id": 3, "question": "7", "answer": "i"},
-                {"id": 3, "question": "7", "answer": "o"},
-                {"id": 3, "question": "7", "answer": "n"},
-                {"id": 3, "question": "7", "answer": " "},
-                {"id": 3, "question": "7", "answer": "a"},
+                {"id": 3, "question": "7", "answer": "option a"}
             ],
             [{"id": 1, "question": "1", "answer": "option 2"}],
         ]
