@@ -91,6 +91,7 @@ def save(session: Session, user: int, form: int, dp: dict, qs: dict):
         elif q.type == QuestionType.option:
             answer.options = [aw]
         elif q.type == QuestionType.multiple_option:
+            aw = str(aw).split("|")
             answer.options = aw
         elif q.type == QuestionType.answer_list:
             parent_code = aw
