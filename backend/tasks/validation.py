@@ -204,7 +204,7 @@ def validate_row_data(session, col, answer, question, adm, valid_deps, answer_de
         err = validate_geo(answer)
         if err:
             default.update(err)
-            print("default::", default)
+            # print("default::", default)
             return default
     if question.type == QuestionType.number:
         err = validate_number(answer, question)
