@@ -169,7 +169,7 @@ var page_config = {
     title: "Health Facility",
     columns: [
       {
-        title: "Facilty Name",
+        title: "Health Care Facilty Name",
         key: "name",
       },
       {
