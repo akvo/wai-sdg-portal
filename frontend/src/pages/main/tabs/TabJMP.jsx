@@ -34,7 +34,7 @@ const TabJMP = ({ formId, chartList, show }) => {
   const administrationList = administration.filter(
     (adm) => adm?.parent === (administrationId || null)
   );
-  const PER_PAGE = 250;
+  const PER_PAGE = 2000;
 
   useEffect(() => {
     if (loadedFormId !== formId) {
@@ -157,7 +157,6 @@ const TabJMP = ({ formId, chartList, show }) => {
       loadedFormId === formId
     ) {
       setPageLoading(true);
-
       const apiCall = chartList?.map((chart) => {
         const url = getApiUrl(chart?.question);
         return api.get(`${url}&page=1&perpage=${PER_PAGE}`);
