@@ -1,113 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Spin } from 'antd';
-import uniq from 'lodash/uniq';
-import sum from 'lodash/sum';
 import '../main.scss';
 import { UIState } from '../../../state/ui';
 import {
   generateAdvanceFilterURL,
   sequentialPromise,
 } from '../../../util/utils';
-import Chart from '../../../chart';
-import PaginationApi from '../../../components/PaginationApi';
 import api from '../../../util/api';
 import takeRight from 'lodash/takeRight';
 import { titleCase } from 'title-case';
+import StackBarChart from './StackBarChart';
 
 const levels = window.map_config?.shapeLevels?.length;
 const PER_PAGE = 250;
-
-const getAdmScores = (chartScores, data) => {
-  // Initial value of each option within each administration
-  const statusValues = {};
-  const statusPercentages = {};
-  const scoreValues = {};
-  uniq(data.map((d) => d?.administration))?.forEach((d) => {
-    const dataItems = data?.[0]?.child?.map((c) => ({
-      [c?.option]: 0,
-    }));
-    const initialValues = Object.assign({}, ...dataItems);
-    statusValues[d] = initialValues;
-    statusPercentages[d] = initialValues;
-    scoreValues[d] = [];
-  });
-  for (let i = 0; i < data.length; i++) {
-    const { administration, child } = data[i];
-    for (let j = 0; j < child.length; j++) {
-      const { option, percent } = child[j];
-      statusValues[administration][option] += percent;
-    }
-  }
-  // Calculate the percentage of each option within each administration
-  for (const administration in statusValues) {
-    const totalPercent = Object.values(statusValues[administration]).reduce(
-      (total, percent) => total + percent,
-      0
-    );
-    for (const option in statusValues[administration]) {
-      const percent =
-        (statusValues[administration][option] / totalPercent) * 100;
-      const score = chartScores[option] || 0;
-      scoreValues[administration].push((score * percent) / 100);
-      statusPercentages[administration][option] = percent;
-    }
-  }
-  return {
-    statusPercentages,
-    scoreValues,
-  };
-};
-
-const ChartItem = ({
-  apiUrl,
-  height,
-  chartScores,
-  totalPages,
-  data,
-  selectedAdministration,
-}) => {
-  const [chartValues, setChartValues] = useState(data);
-
-  const paginationCallback = (allData) => {
-    const { statusPercentages, scoreValues } = getAdmScores(
-      chartScores,
-      allData
-    );
-    const _chartValues = data.map((d) => ({
-      ...d,
-      score: sum(scoreValues?.[d.id]),
-      stack: d?.stack?.map((st) => ({
-        ...st,
-        value: statusPercentages?.[d.id]?.[st?.name],
-      })),
-    }));
-    setChartValues(_chartValues);
-  };
-
-  return (
-    <>
-      <PaginationApi
-        apiUrl={apiUrl}
-        totalPages={totalPages}
-        perPage={PER_PAGE}
-        callback={paginationCallback}
-      />
-      <div className="jmp-chart">
-        <Chart
-          title=""
-          subTitle=""
-          type={'JMP-BARSTACK'}
-          data={chartValues}
-          wrapper={false}
-          height={height < 320 ? 320 : height}
-          extra={{
-            selectedAdministration,
-          }}
-        />
-      </div>
-    </>
-  );
-};
 
 const TabJMP = ({ formId, chartList, show }) => {
   const {
@@ -256,7 +161,7 @@ const TabJMP = ({ formId, chartList, show }) => {
                 key={`jmp-chart-row-${ci}`}
                 span={24}
               >
-                <ChartItem
+                <StackBarChart
                   {...{ ...c, height, chartScores }}
                   apiUrl={getApiUrl(c.question)}
                 />
