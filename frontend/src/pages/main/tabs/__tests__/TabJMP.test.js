@@ -77,6 +77,7 @@ jest.mock('../../../../util/api', () => {
 });
 
 const mockStackBar = jest.fn();
+// eslint-disable-next-line react/display-name
 jest.mock('../StackBarChart', () => (props) => {
   mockStackBar(props);
   return <mock-stackBarComponent />;
@@ -134,7 +135,7 @@ describe('TabJMP', () => {
       )
     );
     const api = {
-      get: jest.fn((url) => Promise.resolve({ data: chartData })),
+      get: jest.fn(() => Promise.resolve({ data: chartData })),
     };
     const apiURL =
       '/api/chart/jmp-data/1/water?administration=0&page=1&perpage=250';

@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { render, screen, waitFor, act } from '@testing-library/react';
+import { render, waitFor, act } from '@testing-library/react';
 import { unmountComponentAtNode } from 'react-dom';
 import 'jest-canvas-mock';
 import StackBarChart from '../StackBarChart';
@@ -130,6 +130,7 @@ jest.mock('../../../../util/api', () => {
 });
 
 const mockChartComponent = jest.fn();
+// eslint-disable-next-line react/display-name
 jest.mock('../../../../chart', () => (props) => {
   mockChartComponent(props);
   return <mock-chartComponent />;
