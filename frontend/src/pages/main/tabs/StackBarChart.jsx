@@ -57,8 +57,9 @@ const StackBarChart = ({
   data,
   selectedAdministration,
 }) => {
+  const initLoading = totalPages > 1 ? true : false;
   const [chartValues, setChartValues] = useState(data);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(initLoading);
 
   const paginationCallback = (allData) => {
     const { statusPercentages, scoreValues } = getAdmScores(
