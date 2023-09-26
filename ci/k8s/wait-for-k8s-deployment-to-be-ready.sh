@@ -4,9 +4,9 @@ starttime=`date +%s`
 
 while [ $(( $(date +%s) - 300 )) -lt ${starttime} ]; do
 
-    consumer_status=`kubectl get pods -l "$1-version=$CI_COMMIT,run=$1" -o jsonpath='{range .items[*].status.containerStatuses[*]}{@.name}{" ready="}{@.ready}{"\n"}{end}'`
+    consumer_status=`kubectl get pods -l "$1-version=$CI_COMMIT-${CI_BRANCH:=},run=$1" -o jsonpath='{range .items[*].status.containerStatuses[*]}{@.name}{" ready="}{@.ready}{"\n"}{end}'`
 
-    old_consumer_status=`kubectl get pods -l "$1-version!=$CI_COMMIT,run=$1" -o jsonpath='{range .items[*].status.containerStatuses[*]}{@.name}{" ready="}{@.ready}{"\n"}{end}'`
+    old_consumer_status=`kubectl get pods -l "$1-version!=$CI_COMMIT-${CI_BRANCH:=},run=$1" -o jsonpath='{range .items[*].status.containerStatuses[*]}{@.name}{" ready="}{@.ready}{"\n"}{end}'`
 
     if [[ ${consumer_status} =~ "ready=true" ]] && ! [[ ${old_consumer_status} =~ "ready" ]]; then
         exit 0
