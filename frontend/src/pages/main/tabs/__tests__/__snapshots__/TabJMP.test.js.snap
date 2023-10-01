@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TabJMP should render correctly & match snapshot 1`] = `
+<div
+  className="container chart-container"
+>
+  <div
+    className="ant-col ant-col-24"
+    style={Object {}}
+  />
+</div>
+`;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import api from '../util/api';
 
 const PaginationApi = ({
@@ -9,31 +9,40 @@ const PaginationApi = ({
 }) => {
   const [preload, setPreload] = useState(true);
 
-  const fetchAllPages = async (page = 2) => {
-    const prefixUrl = apiUrl.includes('?') ? '&' : '?';
-    const response = await api.get(
-      `${apiUrl}${prefixUrl}page=${page}&perpage=${perPage}`
-    );
-    const { data: apiData } = response.data;
-    if (page < totalPages) {
-      return apiData?.concat(await fetchAllPages(page + 1));
-    }
-    return apiData;
-  };
+  const fetchAllPages = useCallback(
+    async (page = 2) => {
+      const prefixUrl = apiUrl.includes('?') ? '&' : '?';
+      const response = await api.get(
+        `${apiUrl}${prefixUrl}page=${page}&perpage=${perPage}`
+      );
+      const { data: apiData } = response.data;
+      if (page < totalPages) {
+        return apiData?.concat(await fetchAllPages(page + 1));
+      }
+      return apiData;
+    },
+    [apiUrl, perPage, totalPages]
+  );
+
+  const allCallbacks = useCallback(
+    (res) => {
+      if (callback) {
+        callback(res);
+      }
+    },
+    [callback]
+  );
 
   useEffect(() => {
     if (preload) {
       setPreload(false);
       if (totalPages > 1) {
         fetchAllPages().then((res) => {
-          if (callback) {
-            callback(res);
-          }
+          allCallbacks(res);
         });
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [preload, totalPages]);
+  }, [preload, totalPages, fetchAllPages, allCallbacks]);
 
   return <React.Fragment />;
 };
