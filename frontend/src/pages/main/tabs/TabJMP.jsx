@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Spin } from 'antd';
-
 import '../main.scss';
 import { UIState } from '../../../state/ui';
 import {
   generateAdvanceFilterURL,
   sequentialPromise,
 } from '../../../util/utils';
-import Chart from '../../../chart';
-import PaginationApi from '../../../components/PaginationApi';
 import api from '../../../util/api';
 import takeRight from 'lodash/takeRight';
 import { titleCase } from 'title-case';
+import StackBarChart from './StackBarChart';
 
 const levels = window.map_config?.shapeLevels?.length;
+const PER_PAGE = 250;
 
 const TabJMP = ({ formId, chartList, show }) => {
   const {
@@ -34,7 +33,6 @@ const TabJMP = ({ formId, chartList, show }) => {
   const administrationList = administration.filter(
     (adm) => adm?.parent === (administrationId || null)
   );
-  const PER_PAGE = 2000;
 
   useEffect(() => {
     if (loadedFormId !== formId) {
@@ -78,74 +76,6 @@ const TabJMP = ({ formId, chartList, show }) => {
           ? null
           : takeRight(selectedAdministration)[0],
     };
-  };
-
-  const handleOnSumScores = (data) => {
-    const sumScores = {};
-    for (let i = 0; i < data.length; i++) {
-      const { administration, child } = data[i];
-      if (!sumScores.hasOwnProperty.call(administration)) {
-        sumScores[administration] = {
-          percentSum: {},
-          percentByStatus: {},
-          score: 0,
-        };
-      }
-      for (let j = 0; j < child.length; j++) {
-        const { option, percent } = child[j];
-        if (!sumScores[administration].percentSum.hasOwnProperty.call(option)) {
-          sumScores[administration].percentSum[option] = 0;
-        }
-        sumScores[administration].percentSum[option] += percent;
-      }
-    }
-    // Calculate the percentage of each option within each administration
-    for (const administration in sumScores) {
-      const totalPercent = Object.values(
-        sumScores[administration].percentSum
-      ).reduce((total, percent) => total + percent, 0);
-
-      for (const option in sumScores[administration].percentSum) {
-        const percent =
-          (sumScores[administration].percentSum[option] / totalPercent) * 100;
-        sumScores[administration].percentByStatus[option] = percent;
-      }
-    }
-    // Calculate the scores of each option within each administration
-    const sc = {};
-    for (const administration in sumScores) {
-      sc[administration] = 0;
-      for (const option in sumScores[administration].percentByStatus) {
-        const scValue = chartScores[option] || 0;
-        const prValue = parseFloat(
-          sumScores[administration].percentByStatus[option],
-          10
-        );
-        sc[administration] += (scValue * prValue) / 100;
-      }
-      sumScores[administration].score = sc[administration];
-    }
-    return sumScores;
-  };
-
-  const getAllPaginatedData = (question, allData) => {
-    const sumScores = handleOnSumScores(allData);
-    const _chartData = chartData?.map((c) =>
-      c.question === question
-        ? {
-            ...c,
-            data: c.data.map((d) => ({
-              ...d,
-              score: sumScores[d.id]?.score || d?.score,
-              stack: d?.stack?.map((st) => ({
-                ...st,
-                value: sumScores[d.id]?.percentByStatus[st?.name] || st?.value,
-              })),
-            })),
-          }
-        : c
-    );
-    setChartData(_chartData);
   };
 
   useEffect(() => {
@@ -231,25 +161,10 @@ const TabJMP = ({ formId, chartList, show }) => {
                 key={`jmp-chart-row-${ci}`}
                 span={24}
               >
-                <PaginationApi
+                <StackBarChart
+                  {...{ ...c, height, chartScores }}
                   apiUrl={getApiUrl(c.question)}
-                  totalPages={c.totalPages}
-                  perPage={PER_PAGE}
-                  callback={(res) => getAllPaginatedData(c.question, res)}
                 />
-                <div className="jmp-chart">
-                  <Chart
-                    title=""
-                    subTitle=""
-                    type={'JMP-BARSTACK'}
-                    data={c?.data}
-                    wrapper={false}
-                    height={height < 320 ? 320 : height}
-                    extra={{
-                      selectedAdministration: c?.selectedAdministration,
-                    }}
-                  />
-                </div>
               </Col>,
             ];
           })}
