@@ -152,6 +152,16 @@ spec:
                 secretKeyRef:
                   name: ${INSTANCE_NAME}
                   key: webdomain
+            - name: SANDBOX_STATUS
+              valueFrom:
+                secretKeyRef:
+                  name: ${INSTANCE_NAME}
+                  key: sandbox-status
+            - name: SANDBOX_DATA_SOURCE
+              valueFrom:
+                secretKeyRef:
+                  name: ${INSTANCE_NAME}
+                  key: sandbox-data-source
             - name: INSTANCE_NAME
               valueFrom:
                 secretKeyRef:

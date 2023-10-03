@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
-set -eu
+CATEGORIES="./source/${INSTANCE_NAME}/category.json"
+
+if [ "${SANDBOX_STATUS}" = "true" ]; then
+	echo "This is sandbox"
+	echo "${SANDBOX_DATA_SOURCE}"
+	CATEGORIES="./source/${SANDBOX_DATA_SOURCE}/category.json"
+fi
+
+# Copy the content of $CATEGORIES to "./.category.json"
+cat "$CATEGORIES" > ./.category.json
 
 python worker.py
