@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -eu
-
 CATEGORIES="./source/${INSTANCE_NAME}/category.json"
 
 if [ "${SANDBOX_STATUS}" = "true" ]; then
