@@ -23,7 +23,7 @@ auth () {
 
 push_image () {
     prefix="eu.gcr.io/akvo-lumen/wai-sdg-portal"
-    docker push "${prefix}/${1}:${CI_COMMIT}-${CI_BRANCH:=}"
+    docker push "${prefix}/${1}:${CI_COMMIT}-${CI_BRANCH//\//-}"
 }
 
 prepare_deployment () {
@@ -35,7 +35,7 @@ prepare_deployment () {
 
     gcloud container clusters get-credentials "${cluster}"
 
-    sed -e "s/\${CI_COMMIT}/${CI_COMMIT}-${CI_BRANCH:=}/g;" \
+    sed -e "s/\${CI_COMMIT}/${CI_COMMIT}-${CI_BRANCH//\//-}/g;" \
         ci/k8s/deployment.yml.template > ci/k8s/template.yml
     for INSTANCE in ${INSTANCES}
     do

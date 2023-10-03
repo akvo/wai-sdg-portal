@@ -32,9 +32,9 @@ import moment from 'moment';
 
 const { mainText } = window.i18n;
 
-const NameWithInfo = ({ record, current, question }) => {
+const NameWithInfo = ({ record, title = null, current, question }) => {
   const { id, name, created_by, created, updated, updated_by, answer } = record;
-  let tmpName = name;
+  let tmpName = title ? title.toString() : name;
   if (tmpName) {
     tmpName = tmpName.split(' - ');
     tmpName = tmpName.map((n) => startCase(n));
@@ -218,6 +218,15 @@ const Main = ({ match }) => {
             }, {});
             values = omit(values, ['name']);
             return {
+              ...values,
+              id: (
+                <NameWithInfo
+                  record={x}
+                  title={x.id}
+                  current={current}
+                  question={question}
+                />
+              ),
               key: x.id,
               name: (
                 <NameWithInfo
@@ -227,7 +236,6 @@ const Main = ({ match }) => {
                 />
               ),
               detail: x.answer,
-              ...values,
             };
           });
           setData(tableData);

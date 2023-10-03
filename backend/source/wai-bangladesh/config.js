@@ -46,8 +46,8 @@ var page_config = {
     title: "Households",
     columns: [
       {
-        title: "Name",
-        key: "name",
+        title: "ID",
+        key: "id",
       },
       {
         title: "Water",

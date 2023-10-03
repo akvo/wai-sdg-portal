@@ -62,14 +62,14 @@ frontend_build () {
 
     docker build \
         --tag "${image_prefix}/frontend:latest" \
-        --tag "${image_prefix}/frontend:${CI_COMMIT}-${CI_BRANCH:=}" frontend
+        --tag "${image_prefix}/frontend:${CI_COMMIT}-${CI_BRANCH//\//-}" frontend
 }
 
 backend_build () {
 
     docker build \
         --tag "${image_prefix}/backend:latest" \
-        --tag "${image_prefix}/backend:${CI_COMMIT}-${CI_BRANCH:=}" backend
+        --tag "${image_prefix}/backend:${CI_COMMIT}-${CI_BRANCH//\//-}" backend
 
     # Test and Code Quality
     dc -f docker-compose.test.yml \
@@ -82,7 +82,7 @@ worker_build () {
 
     docker build \
         --tag "${image_prefix}/worker:latest" \
-        --tag "${image_prefix}/worker:${CI_COMMIT}-${CI_BRANCH:=}" backend -f ./backend/Dockerfile.worker
+        --tag "${image_prefix}/worker:${CI_COMMIT}-${CI_BRANCH//\//-}" backend -f ./backend/Dockerfile.worker
 
 }
 

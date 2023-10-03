@@ -105,7 +105,7 @@ const MainTable = ({
                 color: getLuma(text?.color),
               },
             },
-            children: textValue,
+            children: textValue || text,
           };
         },
       };
