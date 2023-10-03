@@ -3,11 +3,12 @@ import pandas as pd
 from db import crud_administration
 from db import crud_data
 from db import crud_question
+from db import crud_jmp
 from sqlalchemy.orm import Session
 from util.helper import HText
 
 
-def rearange_columns(col_names: list):
+def rearange_columns(col_names: list, jmp_category_columns: list = []):
     col_question = list(filter(lambda x: HText(x).hasnum, col_names))
     col_names = [
         "id",
@@ -18,12 +19,15 @@ def rearange_columns(col_names: list):
         "datapoint_name",
         "administration",
         "geolocation",
-    ] + col_question
+    ] + jmp_category_columns + col_question
     return col_names
 
 
 def download(session: Session, jobs: dict, file: str):
     info = jobs["info"]
+    # get JMP config
+    jmp_config = crud_jmp.get_jmp_config_by_form(form=info["form_id"])
+    jmp_category_names = [jc["name"] for jc in jmp_config]
     if os.path.exists(file):
         os.remove(file)
     administration_ids = False
@@ -41,12 +45,25 @@ def download(session: Session, jobs: dict, file: str):
         administration=administration_ids,
         options=info["options"],
     )
+    # add JMP values to data
+    for jc in jmp_category_names:
+        data = crud_jmp.get_jmp_overview(
+            session=session, form=info["form_id"], data=data, name=jc.lower())
+        for d in data:
+            if len(d["categories"]):
+                d[jc] = d["categories"][0]["category"]
+            else:
+                d[jc] = ""
+            d.pop("categories")
+    # transform to pandas df
     df = pd.DataFrame(data)
-    questions = crud_question.get_excel_headers(session=session, form=info["form_id"])
+    questions = crud_question.get_excel_headers(
+        session=session, form=info["form_id"])
     for q in questions:
         if q not in list(df):
             df[q] = ""
-    col_names = rearange_columns(questions)
+    col_names = rearange_columns(
+        col_names=questions, jmp_category_columns=jmp_category_names)
     df = df[col_names]
     writer = pd.ExcelWriter(file, engine="xlsxwriter")
     df.to_excel(writer, sheet_name="data", index=False)
