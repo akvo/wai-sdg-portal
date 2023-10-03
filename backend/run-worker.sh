@@ -9,6 +9,6 @@ if [ "${SANDBOX_STATUS}" = "true" ]; then
 fi
 
 # Copy the content of $CATEGORIES to "./.category.json"
-echo "$(<"$CATEGORIES")" > "./.category.json"
+cat "$CATEGORIES" > ./.category.json
 
 python worker.py
