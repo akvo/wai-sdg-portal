@@ -34,7 +34,7 @@ const { mainText } = window.i18n;
 
 const NameWithInfo = ({ record, title = null, current, question }) => {
   const { id, name, created_by, created, updated, updated_by, answer } = record;
-  let tmpName = title.toString() || name;
+  let tmpName = title ? title.toString() : name;
   if (tmpName) {
     tmpName = tmpName.split(' - ');
     tmpName = tmpName.map((n) => startCase(n));
