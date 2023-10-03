@@ -14,7 +14,7 @@ if [ "${SANDBOX_STATUS}" = "true" ]; then
 	CATEGORIES="./source/${SANDBOX_DATA_SOURCE}/category.json"
 fi
 
-# Copy the content of $CATEGORIES to "./category.json"
-echo "$(<"$CATEGORIES")" > "./category.json"
+# Copy the content of $CATEGORIES to "./.category.json"
+echo "$(<"$CATEGORIES")" > "./.category.json"
 
 uvicorn worker:worker --reload --port 5001
