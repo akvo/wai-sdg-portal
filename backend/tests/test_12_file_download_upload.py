@@ -3,6 +3,7 @@ import aiofiles
 import os
 import pytest
 import pandas as pd
+import json
 from fastapi import FastAPI
 from httpx import AsyncClient
 from tests.test_01_auth import Acc
@@ -186,4 +187,57 @@ class TestFileRoutes:
         except (OSError, IOError) as e:
             print(e)
         assert success is True
+        # check JMP service ladder
+        jmp_categories_name = ["water", "sanitation", "hygiene"]
+        df = pd.read_excel(file)
+        df_columns = [v.lower() for v in list(df)]
+        for jn in jmp_categories_name:
+            assert jn.lower() not in df_columns
+        os.remove(file)
+
+    @pytest.mark.asyncio
+    async def test_download_excel_data_with_JMP_service_ladder(
+        self, session: Session
+    ) -> None:
+        # get from JMP config
+        try:
+            with open("./.category.json", "r") as categories:
+                json_config = json.load(categories)
+        except Exception:
+            json_config = []
+        form_id = json_config[0]["form"]
+        jmp_categories_name = list(set([jc["name"] for jc in json_config]))
+        # start download
+        filename = "download.xlsx"
+        jobs = {
+            "id": 2,
+            "type": "download",
+            "status": "pending",
+            "payload": filename,
+            "info": {
+                "tags": [],
+                "form_id": form_id,
+                "options": None,
+                "form_name": "test",
+                "administration": None,
+            },
+            "created_by": 1,
+            "created": datetime.now().strftime("%B %d, %Y at %I:%M %p"),
+        }
+        file, context = downloader.download(
+            session=session, jobs=jobs, file=f"./tmp/{filename}"
+        )
+        assert file == f"./tmp/{filename}"
+        success = False
+        try:
+            open(file, "r")
+            success = True
+        except (OSError, IOError) as e:
+            print(e)
+        assert success is True
+        # check JMP service ladder
+        df = pd.read_excel(file)
+        df_columns = [v.lower() for v in list(df)]
+        for jn in jmp_categories_name:
+            assert jn.lower() in df_columns
         os.remove(file)
