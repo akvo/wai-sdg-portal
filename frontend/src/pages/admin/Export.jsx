@@ -179,7 +179,7 @@ const Export = () => {
                       }}
                     />
                   }
-                  title={<a href={item?.payload}>{filename}</a>}
+                  title={filename}
                   description={
                     <ItemDescription
                       created={item.created}
