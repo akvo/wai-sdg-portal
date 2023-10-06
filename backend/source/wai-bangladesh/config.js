@@ -1,7 +1,7 @@
 /* eslint-disable */
 var site_name = "WAI Bangladesh";
-var AUTH0_DOMAIN = "https://wai-ethiopia.eu.auth0.com";
-var AUTH0_CLIENT_ID = "OlqShNF3knpLpwX7iPLUHFTr9BlrrkHF";
+var AUTH0_DOMAIN = "https://wai-bangladesh.eu.auth0.com";
+var AUTH0_CLIENT_ID = "KsXzEv44hzuEKPSRCowXOJS8CqxsvUpt";
 
 /*
  * position for landing page
