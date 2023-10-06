@@ -8,8 +8,8 @@ import registerServiceWorker from './serviceWorkerDev';
 
 ReactDOM.render(
   <Auth0Provider
-    domain={process.env.REACT_APP_AUTH0_DOMAIN}
-    clientId={process.env.REACT_APP_AUTH0_CLIENT_ID}
+    domain={window.AUTH0_DOMAIN}
+    clientId={window.AUTH0_CLIENT_ID}
     redirectUri={window.location.origin}
     cacheLocation="localstorage"
   >
