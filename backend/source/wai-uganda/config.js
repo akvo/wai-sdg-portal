@@ -1,7 +1,7 @@
 /* eslint-disable */
 var site_name = "WAI Uganda";
-var AUTH0_DOMAIN = "https://wai-ethiopia.eu.auth0.com";
-var AUTH0_CLIENT_ID = "OlqShNF3knpLpwX7iPLUHFTr9BlrrkHF";
+var AUTH0_DOMAIN = "https://wai-uganda.eu.auth0.com";
+var AUTH0_CLIENT_ID = "9N7pL6UiEHbQb3sxUbeopEfACg6acmNq";
 
 var features = {
   chartFeature: {

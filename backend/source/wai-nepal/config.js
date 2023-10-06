@@ -1,5 +1,7 @@
 /* eslint-disable */
 var site_name = "WAI Nepal";
+var AUTH0_DOMAIN = "https://wai-nepal.eu.auth0.com";
+var AUTH0_CLIENT_ID = "FffYIrCQzbD765zw3SbVNJRlpzUxFGF3";
 
 var features = {
 	chartFeature: {
