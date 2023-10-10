@@ -193,6 +193,18 @@ var page_config = {
       marker: { id: "Water", title: "Water Service Level" },
     },
     formId: 1,
+    tabs: [
+      {
+        name: "JMP",
+        component: "JMP-CHARTS",
+        selected: true,
+        chartList: [
+          { question: "water", name: "Water Service Level" },
+          { question: "sanitation", name: "Sanitation Service Level" },
+          { question: "hygiene", name: "Hygiene Service Level" },
+        ],
+      },
+    ],
     selectableMarkerDropdown: [
       {
         id: "Water",
