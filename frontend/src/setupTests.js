@@ -14,9 +14,6 @@ window.map_config = {
 };
 
 window.features = {
-  chartFeature: {
-    stack: false,
-  },
   advancedFilterFeature: {
     isMultiSelect: true,
   },

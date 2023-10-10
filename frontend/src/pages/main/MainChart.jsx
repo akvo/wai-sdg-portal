@@ -11,7 +11,6 @@ import isEmpty from 'lodash/isEmpty';
 import takeRight from 'lodash/takeRight';
 import reverse from 'lodash/reverse';
 
-const { chartFeature } = window.features;
 const levels = window.map_config?.shapeLevels?.length;
 const { mainText, chartText } = window.i18n;
 
@@ -187,7 +186,7 @@ const MainChart = ({ current, question }) => {
               align="middle"
               gutter={[24, 24]}
             >
-              <Col span={chartFeature?.stack ? 12 : 24}>
+              <Col span={12}>
                 <Select
                   allowClear
                   showSearch
@@ -207,32 +206,27 @@ const MainChart = ({ current, question }) => {
                   value={isEmpty(selectedQuestion) ? [] : [selectedQuestion.id]}
                 />
               </Col>
-              {chartFeature?.stack && (
-                <Col span={12}>
-                  <Select
-                    allowClear
-                    showSearch
-                    placeholder={
-                      mainText?.mainChartStackSelectOptionPlaceholder
-                    }
-                    style={{ width: '100%' }}
-                    options={question
-                      ?.filter((q) => q.id !== selectedQuestion?.id)
-                      ?.map((q) => ({
-                        label: upperFirst(q.name),
-                        value: q.id,
-                      }))}
-                    optionFilterProp="label"
-                    filterOption={(input, option) =>
-                      option.label.toLowerCase().indexOf(input.toLowerCase()) >=
-                      0
-                    }
-                    onChange={handleOnChangeChartStack}
-                    value={isEmpty(selectedStack) ? [] : [selectedStack.id]}
-                    disabled={isEmpty(selectedQuestion)}
-                  />
-                </Col>
-              )}
+              <Col span={12}>
+                <Select
+                  allowClear
+                  showSearch
+                  placeholder={mainText?.mainChartStackSelectOptionPlaceholder}
+                  style={{ width: '100%' }}
+                  options={question
+                    ?.filter((q) => q.id !== selectedQuestion?.id)
+                    ?.map((q) => ({
+                      label: upperFirst(q.name),
+                      value: q.id,
+                    }))}
+                  optionFilterProp="label"
+                  filterOption={(input, option) =>
+                    option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                  }
+                  onChange={handleOnChangeChartStack}
+                  value={isEmpty(selectedStack) ? [] : [selectedStack.id]}
+                  disabled={isEmpty(selectedQuestion)}
+                />
+              </Col>
             </Row>
             <div className="chart-container">
               {!isEmpty(chartData) && !loadingChartData ? (
