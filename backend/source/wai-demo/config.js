@@ -8,9 +8,6 @@ var site_name = "JMP Explorer";
 var landing_map_pos = 4.25;
 
 var features = {
-  chartFeature: {
-    stack: false,
-  },
   advancedFilterFeature: {
     isMultiSelect: true,
   },

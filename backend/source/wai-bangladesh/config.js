@@ -8,9 +8,6 @@ var site_name = "WAI Bangladesh";
 var landing_map_pos = 1.2;
 
 var features = {
-  chartFeature: {
-    stack: false,
-  },
   advancedFilterFeature: {
     isMultiSelect: true,
   },
