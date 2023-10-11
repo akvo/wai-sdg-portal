@@ -48,7 +48,7 @@ export const TextStyle = {
 
 export const AxisLabelFormatter = {
   formatter: function (params) {
-    return formatAndCapitalizeNames(params);
+    return formatAndCapitalizeNames(params, 2);
   },
 };
 

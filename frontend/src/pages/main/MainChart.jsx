@@ -10,9 +10,25 @@ import upperFirst from 'lodash/upperFirst';
 import isEmpty from 'lodash/isEmpty';
 import takeRight from 'lodash/takeRight';
 import reverse from 'lodash/reverse';
+import sumBy from 'lodash/sumBy';
 
 const levels = window.map_config?.shapeLevels?.length;
 const { mainText, chartText } = window.i18n;
+
+const findLatestChildIds = (data, parentToFind) => {
+  const latestChildren = [];
+  data.forEach((item) => {
+    if (item.parent === parentToFind) {
+      const children = findLatestChildIds(data, item.id);
+      if (children.length > 0) {
+        latestChildren.push(...children);
+      } else {
+        latestChildren.push(item.id);
+      }
+    }
+  });
+  return latestChildren;
+};
 
 const MainChart = ({ current, question }) => {
   const { user, selectedAdministration, advanceSearchValue, administration } =
@@ -47,7 +63,7 @@ const MainChart = ({ current, question }) => {
       label: upperFirst(q.name),
       value: q.id,
     }));
-  }, [questionOption, selectedQuestion]);
+  }, [question, questionOption, selectedQuestion]);
 
   const revertChart = () => {
     setSelectedQuestion({});
@@ -134,20 +150,52 @@ const MainChart = ({ current, question }) => {
               const group = res.data.data.find(
                 (d) => d.group.toLowerCase() === opt.name.toLowerCase()
               );
-              const child = group?.child.length
-                ? selectedStack.option.map((sopt) => {
-                    const val = group.child.find(
-                      (c) => c.name.toLowerCase() === sopt.name.toLowerCase()
-                    );
-                    return {
-                      ...sopt,
-                      value: val?.value || 0,
-                    };
-                  })
-                : selectedStack.option.map((sopt) => ({ ...sopt, value: 0 }));
+              // handle if selected stack is administration question
+              const isAdministrationQuestionSelected =
+                selectedStack?.type === 'administration';
+              let stack = group?.child || [];
+              // map the stack with administration values
+              if (isAdministrationQuestionSelected) {
+                let admTmp = administration.filter((adm) =>
+                  adminId ? adm.parent === adminId : !adm.parent
+                );
+                if (!admTmp.length && adminId) {
+                  admTmp = administration.filter((adm) => adm.id === adminId);
+                }
+                admTmp = admTmp.map((adm) => ({
+                  ...adm,
+                  child_ids: findLatestChildIds(administration, adm.id),
+                }));
+                // agregate stack value by admin
+                stack = admTmp.map((adm) => {
+                  const val = group?.child?.filter((c) =>
+                    adm.child_ids.length
+                      ? adm.child_ids.includes(c.name)
+                      : adm.id === c.name
+                  );
+                  return {
+                    ...val,
+                    name: adm.name,
+                    value: sumBy(val, 'value'),
+                  };
+                });
+              }
+              if (!isAdministrationQuestionSelected) {
+                stack = group?.child?.length
+                  ? selectedStack.option.map((sopt) => {
+                      const val = group.child.find(
+                        (c) => c.name.toLowerCase() === sopt.name.toLowerCase()
+                      );
+                      return {
+                        ...sopt,
+                        value: val?.value || 0,
+                      };
+                    })
+                  : selectedStack.option.map((sopt) => ({ ...sopt, value: 0 }));
+              }
               return {
                 ...opt,
-                stack: child,
+                stack: stack,
               };
             });
           }
