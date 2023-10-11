@@ -38,6 +38,8 @@ const MainChart = ({ current, question }) => {
   const [selectedQuestion, setSelectedQuestion] = useState({});
   const [selectedStack, setSelectedStack] = useState({});
   const [chartTitle, setChartTitle] = useState(null);
+  const [showEmptyValueOnStackedChart, setShowEmptyValueOnStackedChart] =
+    useState(false);
 
   // Get question option only to use on Main Chart
   const questionOption = question?.filter((q) => q.type === 'option');
@@ -85,6 +87,38 @@ const MainChart = ({ current, question }) => {
       revertChart();
     }
   }, [user, current]);
+
+  // filter stack chart data by show empty value checkbox
+  const filteredChartData = useMemo(() => {
+    if (isEmpty(chartData)) {
+      return chartData;
+    }
+    if (showEmptyValueOnStackedChart) {
+      return chartData;
+    }
+    // filter empty value
+    let dataFilterTmp = [];
+    if (chartData.type === 'BAR') {
+      dataFilterTmp = chartData.data.filter((d) => d.value > 0 || d.value);
+    } else {
+      dataFilterTmp = chartData.data
+        .map((d) => {
+          const filterStack = d.stack.filter((s) => s.value > 0 || s.value);
+          if (!filterStack.length) {
+            return false;
+          }
+          return {
+            ...d,
+            stack: filterStack,
+          };
+        })
+        .filter((x) => x);
+    }
+    return {
+      ...chartData,
+      data: dataFilterTmp,
+    };
+  }, [showEmptyValueOnStackedChart, chartData]);
 
   useEffect(() => {
     if (!isEmpty(selectedQuestion) || !isEmpty(selectedStack)) {
@@ -237,8 +271,6 @@ const MainChart = ({ current, question }) => {
     setSelectedStack(val ? selected : {});
   };
 
-  console.log(chartData);
-
   return (
     <Row
       align="middle"
@@ -297,11 +329,11 @@ const MainChart = ({ current, question }) => {
               </Col>
             </Row>
             <div className="chart-container">
-              {!isEmpty(chartData) && !loadingChartData ? (
+              {!isEmpty(filteredChartData) && !loadingChartData ? (
                 <Chart
                   title={chartTitle || ''}
-                  type={chartData.type}
-                  data={chartData.data}
+                  type={filteredChartData.type}
+                  data={filteredChartData.data}
                   height={
                     selectedStack?.id
                       ? chartData.data?.[0]?.stack?.length
@@ -321,6 +353,14 @@ const MainChart = ({ current, question }) => {
                       ],
                       x: chartText?.percentageText,
                     },
+                  }}
+                  emptyValueCheckboxSetting={{
+                    show: true,
+                    checked: showEmptyValueOnStackedChart,
+                    handleOnCheck: () =>
+                      setShowEmptyValueOnStackedChart(
+                        !showEmptyValueOnStackedChart
+                      ),
                   }}
                 />
               ) : loadingChartData ? (

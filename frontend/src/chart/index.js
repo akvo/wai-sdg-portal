@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Card } from 'antd';
+import { Row, Col, Card, Checkbox } from 'antd';
 import ReactECharts from 'echarts-for-react';
 import Bar from './Bar';
 import Line from './Line';
@@ -8,6 +8,8 @@ import Pie from './Pie';
 import JMPBarStack from './custom/JMPBarStack';
 import ODFLine from './custom/ODFLine';
 import SplitBar from './SplitBar';
+
+const { chartText } = window.i18n;
 
 export const generateOptions = ({ type, data, chartTitle }, extra) => {
   switch (type) {
@@ -30,6 +32,30 @@ export const generateOptions = ({ type, data, chartTitle }, extra) => {
   }
 };
 
+const EchartWrapper = ({ emptyValueCheckboxSetting, option, height }) => {
+  return (
+    <Row style={{ width: '100%' }}>
+      {emptyValueCheckboxSetting?.show && (
+        <Col span={24}>
+          <Checkbox
+            style={{ float: 'right', marginRight: '15px' }}
+            checked={emptyValueCheckboxSetting.checked}
+            onChange={emptyValueCheckboxSetting.handleOnCheck}
+          >
+            {chartText?.showEmptyValueCheckboxText}
+          </Checkbox>
+        </Col>
+      )}
+      <Col span={24}>
+        <ReactECharts
+          option={option}
+          style={{ height: height - 50, width: '100%' }}
+        />
+      </Col>
+    </Row>
+  );
+};
+
 const Chart = ({
   type,
   title = '',
@@ -42,6 +68,11 @@ const Chart = ({
   axis = null,
   styles = {},
   transform = true,
+  emptyValueCheckboxSetting = {
+    show: false,
+    checked: false,
+    handleOnCheck: () => {},
+  },
 }) => {
   if (transform) {
     data = data.map((x) => ({
@@ -65,18 +96,20 @@ const Chart = ({
         style={{ height: height, ...styles }}
       >
         <Card title={title}>
-          <ReactECharts
+          <EchartWrapper
+            emptyValueCheckboxSetting={emptyValueCheckboxSetting}
             option={option}
-            style={{ height: height - 50, width: '100%' }}
+            height={height}
           />
         </Card>
       </Col>
     );
   }
   return (
-    <ReactECharts
+    <EchartWrapper
+      emptyValueCheckboxSetting={emptyValueCheckboxSetting}
       option={option}
-      style={{ height: height - 50, width: '100%' }}
+      height={height}
     />
   );
 };
