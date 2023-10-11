@@ -339,7 +339,7 @@ const MainChart = ({ current, question }) => {
                       ? chartData.data?.[0]?.stack?.length
                         ? chartData.data?.[0]?.stack?.length <
                           chartData.data.length
-                          ? chartData.data.length * 100
+                          ? chartData.data.length * 130
                           : chartData.data?.[0]?.stack?.length * 175
                         : chartData.data.length * 100
                       : chartData.data.length * 100
