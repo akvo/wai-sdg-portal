@@ -30,8 +30,8 @@ const BarStack = (data, chartTitle, extra) => {
     name: s.name,
     itemStyle: { color: s.color || Color.color[si] },
   }));
-  const xAxis = uniq(data.map((x) => x.name));
-  const series = stacked.map((s, si) => {
+  const dataSource = uniq(data.map((x) => x.name));
+  const series = stacked.map((s) => {
     const temp = data.map((d) => {
       const val = d.stack.find((c) => c.name === s.name);
       return {
@@ -46,7 +46,7 @@ const BarStack = (data, chartTitle, extra) => {
       stack: 'count',
       label: {
         colorBy: 'data',
-        position: si % 2 === 0 ? 'left' : 'right',
+        position: 'insideRight',
         show: true,
         padding: 5,
         backgroundColor: 'rgba(0,0,0,.3)',
@@ -76,6 +76,7 @@ const BarStack = (data, chartTitle, extra) => {
     },
     grid: {
       top: '25%',
+      left: '15%',
       bottom: '23%',
       show: true,
       label: {
@@ -133,20 +134,20 @@ const BarStack = (data, chartTitle, extra) => {
         },
       },
     },
-    yAxis: {
-      type: 'value',
-      name: yAxisTitle || '',
-      nameTextStyle: { ...TextStyle },
-      nameLocation: 'middle',
-      nameGap: 50,
-    },
     xAxis: {
-      data: xAxis,
-      type: 'category',
+      type: 'value',
       name: xAxisTitle || '',
       nameTextStyle: { ...TextStyle },
       nameLocation: 'middle',
       nameGap: 50,
+    },
+    yAxis: {
+      data: dataSource,
+      type: 'category',
+      name: yAxisTitle || '',
+      nameTextStyle: { ...TextStyle },
+      nameLocation: 'end',
+      nameGap: 15,
       axisLabel: {
         color: '#222',
         ...TextStyle,

@@ -34,10 +34,11 @@ export const TextStyle = {
 
 export const AxisLabelFormatter = {
   formatter: function (params) {
+    const maxLength = 3;
     let newParamsName = String(params).split(' ');
-    if (newParamsName.length > 3) {
+    if (newParamsName.length > maxLength) {
       newParamsName = newParamsName.map((p, pi) => {
-        if (pi !== 0 && pi % 3 === 0) {
+        if (pi !== 0 && pi % maxLength === 0) {
           p += '\n';
         }
         return p;

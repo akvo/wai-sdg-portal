@@ -27,7 +27,7 @@ const Bar = (data, chartTitle, extra) => {
   const total = sumBy(data, 'value');
   data = sortBy(data, 'order');
   data = data.map((x) => ({ ...x, percentage: (x.value / total) * 100 }));
-  const labels = data.map((x) => x.name);
+  const dataSource = data.map((x) => x.name);
   const option = {
     ...Color,
     title: {
@@ -38,6 +38,7 @@ const Bar = (data, chartTitle, extra) => {
     },
     grid: {
       top: '25%',
+      left: '15%',
       show: true,
       label: {
         color: '#222',
@@ -92,20 +93,20 @@ const Bar = (data, chartTitle, extra) => {
         },
       },
     },
-    yAxis: {
-      type: 'value',
-      name: yAxisTitle || '',
-      nameTextStyle: { ...TextStyle },
-      nameLocation: 'middle',
-      nameGap: 50,
-    },
     xAxis: {
-      type: 'category',
-      data: labels,
+      type: 'value',
       name: xAxisTitle || '',
       nameTextStyle: { ...TextStyle },
       nameLocation: 'middle',
       nameGap: 50,
+    },
+    yAxis: {
+      type: 'category',
+      data: dataSource,
+      name: yAxisTitle || '',
+      nameTextStyle: { ...TextStyle },
+      nameLocation: 'end',
+      nameGap: 15,
       axisLabel: {
         color: '#222',
         ...TextStyle,
@@ -127,7 +128,7 @@ const Bar = (data, chartTitle, extra) => {
         barMaxWidth: 50,
         label: {
           colorBy: 'data',
-          position: 'top',
+          position: 'insideRight',
           show: true,
           padding: 5,
           backgroundColor: 'rgba(0,0,0,.3)',

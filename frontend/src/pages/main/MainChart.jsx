@@ -234,15 +234,17 @@ const MainChart = ({ current, question }) => {
                   title={chartTitle || ''}
                   type={chartData.type}
                   data={chartData.data}
-                  height={550}
+                  height={750}
                   wrapper={false}
                   extra={{
                     axisTitle: {
-                      x: [
-                        selectedQuestion?.name || null,
-                        selectedStack?.name || null,
-                      ],
-                      y: chartText?.percentageText,
+                      y: selectedStack?.name
+                        ? [
+                            selectedQuestion?.name || '',
+                            selectedStack?.name || '',
+                          ]
+                        : [selectedQuestion?.name || ''],
+                      x: chartText?.percentageText,
                     },
                   }}
                 />
