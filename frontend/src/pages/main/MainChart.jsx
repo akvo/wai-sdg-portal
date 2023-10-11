@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Row, Col, Space, Card, Select, Spin } from 'antd';
 
 import './main.scss';
@@ -23,8 +23,31 @@ const MainChart = ({ current, question }) => {
   const [selectedStack, setSelectedStack] = useState({});
   const [chartTitle, setChartTitle] = useState(null);
 
-  // Get question option only
-  question = question?.filter((q) => q.type === 'option');
+  // Get question option only to use on Main Chart
+  const questionOption = question?.filter((q) => q.type === 'option');
+
+  const chartQuestionOptions = useMemo(() => {
+    return questionOption
+      ?.filter((q) => q.id !== selectedStack?.id)
+      ?.map((q) => ({
+        label: upperFirst(q.name),
+        value: q.id,
+      }));
+  }, [questionOption, selectedStack]);
+
+  const chartStackQuestionOptions = useMemo(() => {
+    // add administration question to stack option
+    const questionAdministration = question?.filter(
+      (q) => q.type === 'administration'
+    );
+    const optionTemp = questionOption?.filter(
+      (q) => q.id !== selectedQuestion?.id
+    );
+    return [...questionAdministration, ...optionTemp]?.map((q) => ({
+      label: upperFirst(q.name),
+      value: q.id,
+    }));
+  }, [questionOption, selectedQuestion]);
 
   const revertChart = () => {
     setSelectedQuestion({});
@@ -34,12 +57,12 @@ const MainChart = ({ current, question }) => {
 
   useEffect(() => {
     if (isEmpty(selectedQuestion)) {
-      const defQuestion = question?.find(
+      const defQuestion = questionOption?.find(
         (q) => q.id === current?.default?.visualization
       );
       setSelectedQuestion(defQuestion);
     }
-  }, [question, selectedQuestion, current]);
+  }, [questionOption, selectedQuestion, current]);
 
   useEffect(() => {
     if (user && current?.formId) {
@@ -186,18 +209,14 @@ const MainChart = ({ current, question }) => {
               align="middle"
               gutter={[24, 24]}
             >
+              {/* Normal Selector */}
               <Col span={12}>
                 <Select
                   allowClear
                   showSearch
                   placeholder={mainText?.mainChartSelectOptionPlaceholder}
                   style={{ width: '100%' }}
-                  options={question
-                    ?.filter((q) => q.id !== selectedStack?.id)
-                    ?.map((q) => ({
-                      label: upperFirst(q.name),
-                      value: q.id,
-                    }))}
+                  options={chartQuestionOptions}
                   optionFilterProp="label"
                   filterOption={(input, option) =>
                     option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -206,18 +225,14 @@ const MainChart = ({ current, question }) => {
                   value={isEmpty(selectedQuestion) ? [] : [selectedQuestion.id]}
                 />
               </Col>
+              {/* Stack Selector */}
               <Col span={12}>
                 <Select
                   allowClear
                   showSearch
                   placeholder={mainText?.mainChartStackSelectOptionPlaceholder}
                   style={{ width: '100%' }}
-                  options={question
-                    ?.filter((q) => q.id !== selectedQuestion?.id)
-                    ?.map((q) => ({
-                      label: upperFirst(q.name),
-                      value: q.id,
-                    }))}
+                  options={chartStackQuestionOptions}
                   optionFilterProp="label"
                   filterOption={(input, option) =>
                     option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -238,12 +253,10 @@ const MainChart = ({ current, question }) => {
                   wrapper={false}
                   extra={{
                     axisTitle: {
-                      y: selectedStack?.name
-                        ? [
-                            selectedQuestion?.name || '',
-                            selectedStack?.name || '',
-                          ]
-                        : [selectedQuestion?.name || ''],
+                      y: [
+                        selectedQuestion?.name || null,
+                        selectedStack?.name || null,
+                      ],
                       x: chartText?.percentageText,
                     },
                   }}
