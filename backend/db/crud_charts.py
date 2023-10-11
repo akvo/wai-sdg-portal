@@ -1,10 +1,11 @@
 from sqlalchemy.orm import Session, aliased
-from sqlalchemy import and_, func, or_
+from sqlalchemy import and_, func, or_, cast, Integer
 from models.answer import Answer
 from models.data import Data
 from models.option import Option
 from models.views.view_data import ViewData
 from models.views.view_data_score import ViewDataScore
+from models.question import QuestionType
 from db import crud_question
 import collections
 from itertools import groupby
@@ -51,20 +52,44 @@ def get_chart_data(
     type = "BAR"
     if stack:
         type = "BARSTACK"
+        # check if stack is administration
+        adm_question = crud_question.get_question_by_id(
+            session=session, id=stack)
+        adm_question = adm_question.type == QuestionType.administration
+        # need to join to administration table
+        # if question/stack is administration
         answerStack = aliased(Answer)
-        answer = session.query(Answer.options, answerStack.options, func.count())
+        ans_columns = [
+            Answer.options, answerStack.options
+        ] if not adm_question else [
+            Answer.options, cast(answerStack.value, Integer)
+        ]
+        answer = session.query(*ans_columns, func.count())
         # filter
         answer = answer.filter(Answer.data.in_(data))
         answer = answer.join((answerStack, Answer.data == answerStack.data))
         answer = answer.filter(
             and_(Answer.question == question, answerStack.question == stack)
         )
-        answer = answer.group_by(Answer.options, answerStack.options)
+        answer = answer.group_by(*ans_columns)
         answer = answer.all()
-        answer = [
-            {"axis": a[0][0].lower(), "stack": a[1][0].lower(), "value": a[2]}
-            for a in answer
-        ]
+        # transform query value
+        answerTemp = answer
+        answer = []
+        for a in answerTemp:
+            if adm_question:
+                answer.append({
+                    "axis": a[0][0].lower(),
+                    "stack": a[1],
+                    "value": a[2]
+                })
+                continue
+            answer.append({
+                "axis": a[0][0].lower(),
+                "stack": a[1][0].lower(),
+                "value": a[2]
+            })
+        #
         temp = []
         answer.sort(key=lambda x: x["axis"])
         for k, v in groupby(answer, key=lambda x: x["axis"]):
@@ -72,7 +97,10 @@ def get_chart_data(
             counter = collections.Counter()
             for d in child:
                 counter.update(d)
-            child = [{"name": key, "value": val} for key, val in dict(counter).items()]
+            child = [
+                {"name": key, "value": val}
+                for key, val in dict(counter).items()
+            ]
             temp.append({"group": k, "child": child})
         answer = temp
     else:
