@@ -7,6 +7,7 @@ import BarStack from './BarStack';
 import Pie from './Pie';
 import JMPBarStack from './custom/JMPBarStack';
 import ODFLine from './custom/ODFLine';
+import SplitBar from './SplitBar';
 
 export const generateOptions = ({ type, data, chartTitle }, extra) => {
   switch (type) {
@@ -14,6 +15,8 @@ export const generateOptions = ({ type, data, chartTitle }, extra) => {
       return Line(data, chartTitle, extra);
     case 'BARSTACK':
       return BarStack(data, chartTitle, extra);
+    case 'SPLITBAR':
+      return SplitBar(data, chartTitle, extra);
     case 'PIE':
       return Pie(data, chartTitle, extra);
     case 'DOUGHNUT':

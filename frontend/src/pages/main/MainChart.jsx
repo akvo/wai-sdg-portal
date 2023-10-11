@@ -174,7 +174,6 @@ const MainChart = ({ current, question }) => {
                       : adm.id === c.name
                   );
                   return {
-                    ...val,
                     name: adm.name,
                     value: sumBy(val, 'value'),
                   };
@@ -200,7 +199,11 @@ const MainChart = ({ current, question }) => {
             });
           }
           setChartTitle(chartTitleTemp);
-          setChartData({ ...res.data, data: temp });
+          setChartData({
+            ...res.data,
+            type: res.data.type === 'BARSTACK' ? 'SPLITBAR' : res.data.type,
+            data: temp,
+          });
           setLoadingChartData(false);
         })
         .catch(() => {
@@ -233,6 +236,8 @@ const MainChart = ({ current, question }) => {
     const selected = question.find((q) => q.id === val);
     setSelectedStack(val ? selected : {});
   };
+
+  console.log(chartData);
 
   return (
     <Row
@@ -297,7 +302,16 @@ const MainChart = ({ current, question }) => {
                   title={chartTitle || ''}
                   type={chartData.type}
                   data={chartData.data}
-                  height={750}
+                  height={
+                    selectedStack?.id
+                      ? chartData.data?.[0]?.stack?.length
+                        ? chartData.data?.[0]?.stack?.length <
+                          chartData.data.length
+                          ? chartData.data.length * 100
+                          : chartData.data?.[0]?.stack?.length * 175
+                        : chartData.data.length * 100
+                      : chartData.data.length * 100
+                  }
                   wrapper={false}
                   extra={{
                     axisTitle: {

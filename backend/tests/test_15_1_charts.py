@@ -39,7 +39,6 @@ class TestChartsRoutes:
         )
         assert res.status_code == 200
         res = res.json()
-        print(res)
         assert res == {
             'type': 'BARSTACK',
             'data': [{
