@@ -8,6 +8,7 @@ import {
   NoData,
 } from '../chart-style.js';
 import uniq from 'lodash/uniq';
+import uniqBy from 'lodash/uniqBy';
 import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
 
@@ -23,11 +24,14 @@ const JMPBarStack = (data, chartTitle, extra) => {
     ['score']
   );
 
-  let stacked = data.find((d) => d?.stack?.length);
-  if (!stacked) {
+  let stacked = uniqBy(
+    data.flatMap((d) => d?.stack),
+    'name'
+  );
+  if (!stacked.length) {
     return NoData;
   }
-  stacked = stacked.stack.map((x) => ({ name: x.name, color: x.color }));
+  stacked = stacked.map((x) => ({ name: x.name, color: x.color }));
   const legends = stacked.map((s, si) => ({
     name: s.name,
     itemStyle: { color: s.color || Color.color[si] },

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import uniq from 'lodash/uniq';
@@ -60,6 +60,7 @@ const StackBarChart = ({
   const initLoading = totalPages > 1 ? true : false;
   const [chartValues, setChartValues] = useState(data);
   const [loading, setLoading] = useState(initLoading);
+  const [showEmptyValueChart, setShowEmptyValueChart] = useState(false);
 
   const paginationCallback = (allData) => {
     const { statusPercentages, scoreValues } = getAdmScores(
@@ -77,6 +78,25 @@ const StackBarChart = ({
     setChartValues(_chartValues);
     setLoading(false);
   };
+
+  const filteredChartValues = useMemo(() => {
+    if (showEmptyValueChart) {
+      return chartValues;
+    }
+    const filterTmp = chartValues
+      .map((d) => {
+        const filterStack = d.stack.filter((s) => s.value > 0 || s.value);
+        if (!filterStack.length) {
+          return false;
+        }
+        return {
+          ...d,
+          stack: filterStack,
+        };
+      })
+      .filter((x) => x);
+    return filterTmp;
+  }, [showEmptyValueChart, chartValues]);
 
   return (
     <div className="jmp-chart-container">
@@ -96,11 +116,22 @@ const StackBarChart = ({
             title=""
             subTitle=""
             type={'JMP-BARSTACK'}
-            data={chartValues}
+            data={filteredChartValues}
             wrapper={false}
             height={height < 320 ? 320 : height}
             extra={{
               selectedAdministration,
+            }}
+            emptyValueCheckboxSetting={{
+              show: true,
+              checked: showEmptyValueChart,
+              handleOnCheck: () => {
+                setLoading(true);
+                setShowEmptyValueChart(!showEmptyValueChart);
+                setTimeout(() => {
+                  setLoading(false);
+                }, 500);
+              },
             }}
           />
         )}

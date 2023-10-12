@@ -38,7 +38,7 @@ const EchartWrapper = ({ emptyValueCheckboxSetting, option, height }) => {
       {emptyValueCheckboxSetting?.show && (
         <Col span={24}>
           <Checkbox
-            style={{ float: 'right', marginRight: '15px' }}
+            style={{ float: 'right', margin: '0 15px 20px 0' }}
             checked={emptyValueCheckboxSetting.checked}
             onChange={emptyValueCheckboxSetting.handleOnCheck}
           >
