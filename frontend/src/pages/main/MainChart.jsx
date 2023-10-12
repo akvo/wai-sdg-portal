@@ -328,21 +328,25 @@ const MainChart = ({ current, question }) => {
                 />
               </Col>
             </Row>
-            <div className="chart-container">
+            <div
+              className="chart-container"
+              style={{ minHeight: '500px' }}
+            >
               {!isEmpty(filteredChartData) && !loadingChartData ? (
                 <Chart
                   title={chartTitle || ''}
                   type={filteredChartData.type}
                   data={filteredChartData.data}
                   height={
-                    selectedStack?.id
-                      ? chartData.data?.[0]?.stack?.length
-                        ? chartData.data?.[0]?.stack?.length <
-                          chartData.data.length
-                          ? chartData.data.length * 130
-                          : chartData.data?.[0]?.stack?.length * 175
-                        : chartData.data.length * 100
-                      : chartData.data.length * 100
+                    (chartData?.data?.length <= 5
+                      ? 500
+                      : chartData?.data?.length * 50) +
+                    (selectedStack?.id
+                      ? (selectedStack?.type === 'administration') &
+                        selectedAdministration.filter((x) => x).length
+                        ? administration.length * 50
+                        : 1000
+                      : 150)
                   }
                   wrapper={false}
                   extra={{

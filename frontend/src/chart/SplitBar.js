@@ -12,6 +12,7 @@ import {
   NoData,
 } from './chart-style.js';
 import uniq from 'lodash/uniq';
+import uniqBy from 'lodash/uniqBy';
 import isEmpty from 'lodash/isEmpty';
 import upperFirst from 'lodash/upperFirst';
 
@@ -25,7 +26,10 @@ const SplitBar = (data, chartTitle, extra) => {
   // Custom Axis Title
   const { xAxisTitle, yAxisTitle } = axisTitle(extra);
 
-  const stacked = data[0].stack.map((x) => ({ name: x.name, color: x.color }));
+  let stacked = data.flatMap((d) =>
+    d.stack.map((x) => ({ name: x.name, color: x.color }))
+  );
+  stacked = uniqBy(stacked, 'name');
   const legends = stacked.map((s, si) => ({
     name: s.name,
     itemStyle: { color: s.color || Color.color[si] },
@@ -35,7 +39,9 @@ const SplitBar = (data, chartTitle, extra) => {
   // remap series to split bar
   const series = stacked.map((s) => {
     const temp = data.map((d) => {
-      const val = d.stack.find((c) => c.name === s.name);
+      const val = d.stack.find(
+        (c) => c.name.toLowerCase() === s.name.toLowerCase()
+      );
       return {
         name: val?.name || null,
         value: val?.value || 0,
@@ -46,11 +52,12 @@ const SplitBar = (data, chartTitle, extra) => {
       name: s.name,
       type: 'bar',
       barGap: 0,
-      barMaxWidth: 30,
+      barWidth: 25,
+      barMaxWidth: 50,
       label: {
         show: true,
         formatter: '{a}: {c}',
-        // colorBy: 'data',
+        colorBy: 'data',
         position: 'insideLeft',
         padding: 5,
         backgroundColor: 'rgba(0,0,0,.3)',
@@ -79,7 +86,7 @@ const SplitBar = (data, chartTitle, extra) => {
       left: 'center',
     },
     grid: {
-      top: '200px',
+      top: '175px',
       left: '15%',
       bottom: '150px',
       show: true,

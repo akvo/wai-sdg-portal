@@ -37,7 +37,7 @@ const Bar = (data, chartTitle, extra) => {
       subtext: chartTitle?.subTitle,
     },
     grid: {
-      top: '25%',
+      top: '175px',
       left: '15%',
       show: true,
       label: {
@@ -125,6 +125,7 @@ const Bar = (data, chartTitle, extra) => {
           itemStyle: { color: v.color || Color.color[vi] },
         })),
         type: 'bar',
+        barWidth: 30,
         barMaxWidth: 50,
         label: {
           colorBy: 'data',

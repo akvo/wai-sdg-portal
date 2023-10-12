@@ -49,7 +49,7 @@ const EchartWrapper = ({ emptyValueCheckboxSetting, option, height }) => {
       <Col span={24}>
         <ReactECharts
           option={option}
-          style={{ height: height - 50, width: '100%' }}
+          style={{ minHeight: height - 50, width: '100%' }}
         />
       </Col>
     </Row>
@@ -60,7 +60,7 @@ const Chart = ({
   type,
   title = '',
   subTitle = '',
-  height = 450,
+  height = 550,
   span = 12,
   data,
   extra = {},
@@ -93,7 +93,7 @@ const Chart = ({
         sm={24}
         md={span * 2}
         lg={span}
-        style={{ height: height, ...styles }}
+        style={{ minHeight: height, ...styles }}
       >
         <Card title={title}>
           <EchartWrapper
