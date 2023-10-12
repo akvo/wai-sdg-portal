@@ -15,6 +15,7 @@ import uniq from 'lodash/uniq';
 import uniqBy from 'lodash/uniqBy';
 import isEmpty from 'lodash/isEmpty';
 import upperFirst from 'lodash/upperFirst';
+import sumBy from 'lodash/sumBy';
 
 const chartText = window?.i18n?.chartText;
 
@@ -37,14 +38,20 @@ const SplitBar = (data, chartTitle, extra) => {
   const dataSource = uniq(data.map((x) => x.name));
 
   // remap series to split bar
+  const total = sumBy(
+    data.flatMap((d) => d.stack),
+    'value'
+  );
   const series = stacked.map((s) => {
     const temp = data.map((d) => {
       const val = d.stack.find(
         (c) => c.name.toLowerCase() === s.name.toLowerCase()
       );
+      const percentage = val?.value ? (val.value / total) * 100 : 0;
       return {
         name: val?.name || null,
-        value: val?.value || 0,
+        value: percentage.toFixed(2),
+        count: val?.value || 0,
         itemStyle: { color: val?.color || s.color },
       };
     });
@@ -56,13 +63,15 @@ const SplitBar = (data, chartTitle, extra) => {
       barMaxWidth: 50,
       label: {
         show: true,
-        formatter: '{a}: {c}',
         colorBy: 'data',
         position: 'insideLeft',
         padding: 5,
         backgroundColor: 'rgba(0,0,0,.3)',
         ...TextStyle,
         color: '#fff',
+        formatter: (s) => {
+          return `${s.name}: ${s.data.count} (${s.value} %)`;
+        },
       },
       emphasis: {
         focus: 'series',
@@ -131,7 +140,12 @@ const SplitBar = (data, chartTitle, extra) => {
               table += '<tr>';
               table += '<td><b>' + upperFirst(series[i][0].name) + '</b></td>';
               for (var x = 0, y = series[i].length; x < y; x++) {
-                table += '<td>' + series[i][x].value + '</td>';
+                table +=
+                  '<td>' +
+                  series[i][x].count +
+                  ' (' +
+                  series[i][x].value +
+                  '%) </td>';
               }
               table += '</tr>';
             }
