@@ -129,9 +129,16 @@ jest.mock('../../../../util/api', () => {
   };
 });
 
+const mockHandleOnCheck = jest.fn();
 const mockChartComponent = jest.fn();
 // eslint-disable-next-line react/display-name
 jest.mock('../../../../chart', () => (props) => {
+  if (props?.emptyValueCheckboxSetting) {
+    // Modify emptyValueCheckboxSetting for testing purposes
+    props.emptyValueCheckboxSetting.show = true;
+    props.emptyValueCheckboxSetting.checked = false;
+    props.emptyValueCheckboxSetting.handleOnCheck = mockHandleOnCheck;
+  }
   mockChartComponent(props);
   return <mock-chartComponent />;
 });
@@ -181,13 +188,6 @@ describe('StackBarChart', () => {
               score: 8.071428571428571,
               stack: [
                 {
-                  color: '#ffda46',
-                  id: 0,
-                  name: 'No service',
-                  order: 1,
-                  value: 0,
-                },
-                {
                   color: '#fff176',
                   id: 1,
                   name: 'Limited',
@@ -210,13 +210,6 @@ describe('StackBarChart', () => {
               score: 7.551470588235295,
               stack: [
                 {
-                  color: '#ffda46',
-                  id: 0,
-                  name: 'No service',
-                  order: 1,
-                  value: 0,
-                },
-                {
                   color: '#fff176',
                   id: 1,
                   name: 'Limited',
@@ -233,7 +226,14 @@ describe('StackBarChart', () => {
               ],
             },
           ],
-          extra: { selectedAdministration: null },
+          emptyValueCheckboxSetting: {
+            checked: false,
+            handleOnCheck: mockHandleOnCheck,
+            show: true,
+          },
+          extra: {
+            selectedAdministration: null,
+          },
           height: 320,
           subTitle: '',
           title: '',
