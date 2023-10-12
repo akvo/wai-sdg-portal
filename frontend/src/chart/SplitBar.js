@@ -12,12 +12,14 @@ import {
   NoData,
 } from './chart-style.js';
 import uniq from 'lodash/uniq';
+import uniqBy from 'lodash/uniqBy';
 import isEmpty from 'lodash/isEmpty';
 import upperFirst from 'lodash/upperFirst';
+import sumBy from 'lodash/sumBy';
 
 const chartText = window?.i18n?.chartText;
 
-const BarStack = (data, chartTitle, extra) => {
+const SplitBar = (data, chartTitle, extra) => {
   if (isEmpty(data) || !data) {
     return NoData;
   }
@@ -25,41 +27,59 @@ const BarStack = (data, chartTitle, extra) => {
   // Custom Axis Title
   const { xAxisTitle, yAxisTitle } = axisTitle(extra);
 
-  const stacked = data[0].stack.map((x) => ({ name: x.name, color: x.color }));
+  let stacked = data.flatMap((d) =>
+    d.stack.map((x) => ({ name: x.name, color: x.color }))
+  );
+  stacked = uniqBy(stacked, 'name');
   const legends = stacked.map((s, si) => ({
     name: s.name,
     itemStyle: { color: s.color || Color.color[si] },
   }));
   const dataSource = uniq(data.map((x) => x.name));
+
+  // remap series to split bar
+  const total = sumBy(
+    data.flatMap((d) => d.stack),
+    'value'
+  );
   const series = stacked.map((s) => {
     const temp = data.map((d) => {
-      const val = d.stack.find((c) => c.name === s.name);
+      const val = d.stack.find(
+        (c) => c.name.toLowerCase() === s.name.toLowerCase()
+      );
+      const percentage = val?.value ? (val.value / total) * 100 : 0;
       return {
         name: val?.name || null,
-        value: val?.value || null,
+        value: percentage.toFixed(2),
+        count: val?.value || 0,
         itemStyle: { color: val?.color || s.color },
       };
     });
     return {
       name: s.name,
       type: 'bar',
-      stack: 'count',
+      barGap: 0,
+      barWidth: 25,
+      barMaxWidth: 50,
       label: {
-        colorBy: 'data',
-        position: 'insideRight',
         show: true,
+        colorBy: 'data',
+        position: 'insideLeft',
         padding: 5,
         backgroundColor: 'rgba(0,0,0,.3)',
         ...TextStyle,
         color: '#fff',
+        formatter: (s) => {
+          return `${s.name}: ${s.data.count} (${s.value} %)`;
+        },
       },
-      barMaxWidth: 50,
       emphasis: {
         focus: 'series',
       },
       data: temp,
     };
   });
+
   const option = {
     ...Color,
     title: {
@@ -75,9 +95,9 @@ const BarStack = (data, chartTitle, extra) => {
       left: 'center',
     },
     grid: {
-      top: '25%',
+      top: '175px',
       left: '15%',
-      bottom: '23%',
+      bottom: '150px',
       show: true,
       label: {
         color: '#222',
@@ -107,20 +127,25 @@ const BarStack = (data, chartTitle, extra) => {
         dataView: {
           ...DataView,
           optionToContent: function (opt) {
-            var xAxis = opt.xAxis.map((x) => x.data)[0];
+            var yAxis = opt.yAxis.map((x) => x.data)[0];
             var series = opt.series.map((x) => x.data);
             var table =
               '<table border="1" style="width:90%;text-align:center">';
             table += '<thead><tr><th></th>';
-            for (var a = 0, b = xAxis.length; a < b; a++) {
-              table += '<th>' + upperFirst(xAxis[a]) + '</th>';
+            for (var a = 0, b = yAxis?.length || 0; a < b; a++) {
+              table += '<th>' + upperFirst(yAxis[a]) + '</th>';
             }
             table += '</tr></thead><tbody>';
             for (var i = 0, l = series.length; i < l; i++) {
               table += '<tr>';
               table += '<td><b>' + upperFirst(series[i][0].name) + '</b></td>';
               for (var x = 0, y = series[i].length; x < y; x++) {
-                table += '<td>' + series[i][x].value + '</td>';
+                table +=
+                  '<td>' +
+                  series[i][x].count +
+                  ' (' +
+                  series[i][x].value +
+                  '%) </td>';
               }
               table += '</tr>';
             }
@@ -166,4 +191,4 @@ const BarStack = (data, chartTitle, extra) => {
   return option;
 };
 
-export default BarStack;
+export default SplitBar;

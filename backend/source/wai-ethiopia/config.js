@@ -2,9 +2,6 @@
 var site_name = "WAI Ethiopia";
 
 var features = {
-  chartFeature: {
-    stack: false,
-  },
   advancedFilterFeature: {
     isMultiSelect: true,
   },

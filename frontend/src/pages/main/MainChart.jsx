@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Row, Col, Space, Card, Select, Spin } from 'antd';
 
 import './main.scss';
@@ -10,10 +10,25 @@ import upperFirst from 'lodash/upperFirst';
 import isEmpty from 'lodash/isEmpty';
 import takeRight from 'lodash/takeRight';
 import reverse from 'lodash/reverse';
+import sumBy from 'lodash/sumBy';
 
-const { chartFeature } = window.features;
 const levels = window.map_config?.shapeLevels?.length;
 const { mainText, chartText } = window.i18n;
+
+const findLatestChildIds = (data, parentToFind) => {
+  const latestChildren = [];
+  data.forEach((item) => {
+    if (item.parent === parentToFind) {
+      const children = findLatestChildIds(data, item.id);
+      if (children.length > 0) {
+        latestChildren.push(...children);
+      } else {
+        latestChildren.push(item.id);
+      }
+    }
+  });
+  return latestChildren;
+};
 
 const MainChart = ({ current, question }) => {
   const { user, selectedAdministration, advanceSearchValue, administration } =
@@ -23,9 +38,34 @@ const MainChart = ({ current, question }) => {
   const [selectedQuestion, setSelectedQuestion] = useState({});
   const [selectedStack, setSelectedStack] = useState({});
   const [chartTitle, setChartTitle] = useState(null);
+  const [showEmptyValueOnStackedChart, setShowEmptyValueOnStackedChart] =
+    useState(false);
 
-  // Get question option only
-  question = question?.filter((q) => q.type === 'option');
+  // Get question option only to use on Main Chart
+  const questionOption = question?.filter((q) => q.type === 'option');
+
+  const chartQuestionOptions = useMemo(() => {
+    return questionOption
+      ?.filter((q) => q.id !== selectedStack?.id)
+      ?.map((q) => ({
+        label: upperFirst(q.name),
+        value: q.id,
+      }));
+  }, [questionOption, selectedStack]);
+
+  const chartStackQuestionOptions = useMemo(() => {
+    // add administration question to stack option
+    const questionAdministration = question?.filter(
+      (q) => q.type === 'administration'
+    );
+    const optionTemp = questionOption?.filter(
+      (q) => q.id !== selectedQuestion?.id
+    );
+    return [...questionAdministration, ...optionTemp]?.map((q) => ({
+      label: upperFirst(q.name),
+      value: q.id,
+    }));
+  }, [question, questionOption, selectedQuestion]);
 
   const revertChart = () => {
     setSelectedQuestion({});
@@ -35,18 +75,50 @@ const MainChart = ({ current, question }) => {
 
   useEffect(() => {
     if (isEmpty(selectedQuestion)) {
-      const defQuestion = question?.find(
+      const defQuestion = questionOption?.find(
         (q) => q.id === current?.default?.visualization
       );
       setSelectedQuestion(defQuestion);
     }
-  }, [question, selectedQuestion, current]);
+  }, [questionOption, selectedQuestion, current]);
 
   useEffect(() => {
     if (user && current?.formId) {
       revertChart();
     }
   }, [user, current]);
+
+  // filter stack chart data by show empty value checkbox
+  const filteredChartData = useMemo(() => {
+    if (isEmpty(chartData)) {
+      return chartData;
+    }
+    if (showEmptyValueOnStackedChart) {
+      return chartData;
+    }
+    // filter empty value
+    let dataFilterTmp = [];
+    if (chartData.type === 'BAR') {
+      dataFilterTmp = chartData.data.filter((d) => d.value > 0 || d.value);
+    } else {
+      dataFilterTmp = chartData.data
+        .map((d) => {
+          const filterStack = d.stack.filter((s) => s.value > 0 || s.value);
+          if (!filterStack.length) {
+            return false;
+          }
+          return {
+            ...d,
+            stack: filterStack,
+          };
+        })
+        .filter((x) => x);
+    }
+    return {
+      ...chartData,
+      data: dataFilterTmp,
+    };
+  }, [showEmptyValueOnStackedChart, chartData]);
 
   useEffect(() => {
     if (!isEmpty(selectedQuestion) || !isEmpty(selectedStack)) {
@@ -112,25 +184,60 @@ const MainChart = ({ current, question }) => {
               const group = res.data.data.find(
                 (d) => d.group.toLowerCase() === opt.name.toLowerCase()
               );
-              const child = group?.child.length
-                ? selectedStack.option.map((sopt) => {
-                    const val = group.child.find(
-                      (c) => c.name.toLowerCase() === sopt.name.toLowerCase()
-                    );
-                    return {
-                      ...sopt,
-                      value: val?.value || 0,
-                    };
-                  })
-                : selectedStack.option.map((sopt) => ({ ...sopt, value: 0 }));
+              // handle if selected stack is administration question
+              const isAdministrationQuestionSelected =
+                selectedStack?.type === 'administration';
+              let stack = group?.child || [];
+              // map the stack with administration values
+              if (isAdministrationQuestionSelected) {
+                let admTmp = administration.filter((adm) =>
+                  adminId ? adm.parent === adminId : !adm.parent
+                );
+                if (!admTmp.length && adminId) {
+                  admTmp = administration.filter((adm) => adm.id === adminId);
+                }
+                admTmp = admTmp.map((adm) => ({
+                  ...adm,
+                  child_ids: findLatestChildIds(administration, adm.id),
+                }));
+                // agregate stack value by admin
+                stack = admTmp.map((adm) => {
+                  const val = group?.child?.filter((c) =>
+                    adm.child_ids.length
+                      ? adm.child_ids.includes(c.name)
+                      : adm.id === c.name
+                  );
+                  return {
+                    name: adm.name,
+                    value: sumBy(val, 'value'),
+                  };
+                });
+              }
+              if (!isAdministrationQuestionSelected) {
+                stack = group?.child?.length
+                  ? selectedStack.option.map((sopt) => {
+                      const val = group.child.find(
+                        (c) => c.name.toLowerCase() === sopt.name.toLowerCase()
+                      );
+                      return {
+                        ...sopt,
+                        value: val?.value || 0,
+                      };
+                    })
+                  : selectedStack.option.map((sopt) => ({ ...sopt, value: 0 }));
+              }
               return {
                 ...opt,
-                stack: child,
+                stack: stack,
               };
             });
           }
           setChartTitle(chartTitleTemp);
-          setChartData({ ...res.data, data: temp });
+          setChartData({
+            ...res.data,
+            type: res.data.type === 'BARSTACK' ? 'SPLITBAR' : res.data.type,
+            data: temp,
+          });
           setLoadingChartData(false);
         })
         .catch(() => {
@@ -187,18 +294,14 @@ const MainChart = ({ current, question }) => {
               align="middle"
               gutter={[24, 24]}
             >
-              <Col span={chartFeature?.stack ? 12 : 24}>
+              {/* Normal Selector */}
+              <Col span={12}>
                 <Select
                   allowClear
                   showSearch
                   placeholder={mainText?.mainChartSelectOptionPlaceholder}
                   style={{ width: '100%' }}
-                  options={question
-                    ?.filter((q) => q.id !== selectedStack?.id)
-                    ?.map((q) => ({
-                      label: upperFirst(q.name),
-                      value: q.id,
-                    }))}
+                  options={chartQuestionOptions}
                   optionFilterProp="label"
                   filterOption={(input, option) =>
                     option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -207,49 +310,61 @@ const MainChart = ({ current, question }) => {
                   value={isEmpty(selectedQuestion) ? [] : [selectedQuestion.id]}
                 />
               </Col>
-              {chartFeature?.stack && (
-                <Col span={12}>
-                  <Select
-                    allowClear
-                    showSearch
-                    placeholder={
-                      mainText?.mainChartStackSelectOptionPlaceholder
-                    }
-                    style={{ width: '100%' }}
-                    options={question
-                      ?.filter((q) => q.id !== selectedQuestion?.id)
-                      ?.map((q) => ({
-                        label: upperFirst(q.name),
-                        value: q.id,
-                      }))}
-                    optionFilterProp="label"
-                    filterOption={(input, option) =>
-                      option.label.toLowerCase().indexOf(input.toLowerCase()) >=
-                      0
-                    }
-                    onChange={handleOnChangeChartStack}
-                    value={isEmpty(selectedStack) ? [] : [selectedStack.id]}
-                    disabled={isEmpty(selectedQuestion)}
-                  />
-                </Col>
-              )}
+              {/* Stack Selector */}
+              <Col span={12}>
+                <Select
+                  allowClear
+                  showSearch
+                  placeholder={mainText?.mainChartStackSelectOptionPlaceholder}
+                  style={{ width: '100%' }}
+                  options={chartStackQuestionOptions}
+                  optionFilterProp="label"
+                  filterOption={(input, option) =>
+                    option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                  }
+                  onChange={handleOnChangeChartStack}
+                  value={isEmpty(selectedStack) ? [] : [selectedStack.id]}
+                  disabled={isEmpty(selectedQuestion)}
+                />
+              </Col>
             </Row>
-            <div className="chart-container">
-              {!isEmpty(chartData) && !loadingChartData ? (
+            <div
+              className="chart-container"
+              style={{ minHeight: '500px' }}
+            >
+              {!isEmpty(filteredChartData) && !loadingChartData ? (
                 <Chart
                   title={chartTitle || ''}
-                  type={chartData.type}
-                  data={chartData.data}
-                  height={550}
+                  type={filteredChartData.type}
+                  data={filteredChartData.data}
+                  height={
+                    (chartData?.data?.length <= 5
+                      ? 500
+                      : chartData?.data?.length * 50) +
+                    (selectedStack?.id
+                      ? (selectedStack?.type === 'administration') &
+                        selectedAdministration.filter((x) => x).length
+                        ? administration.length * 50
+                        : 1000
+                      : 150)
+                  }
                   wrapper={false}
                   extra={{
                     axisTitle: {
-                      x: [
+                      y: [
                         selectedQuestion?.name || null,
                         selectedStack?.name || null,
                       ],
-                      y: chartText?.percentageText,
+                      x: chartText?.percentageText,
                     },
+                  }}
+                  emptyValueCheckboxSetting={{
+                    show: true,
+                    checked: showEmptyValueOnStackedChart,
+                    handleOnCheck: () =>
+                      setShowEmptyValueOnStackedChart(
+                        !showEmptyValueOnStackedChart
+                      ),
                   }}
                 />
               ) : loadingChartData ? (

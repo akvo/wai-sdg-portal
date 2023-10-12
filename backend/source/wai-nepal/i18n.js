@@ -71,6 +71,7 @@ var i18n = {
     btnSaveImage: "save image",
     countText: "Count",
     percentageText: "Percentage",
+    showEmptyValueCheckboxText: "Show Empty Value",
   },
   confirmationModalText: {
     submitText: {

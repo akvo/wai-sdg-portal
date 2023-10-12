@@ -30,6 +30,36 @@ class TestChartsRoutes:
         }
 
     @pytest.mark.asyncio
+    async def test_get_aggregated_chart_data_with_administration_stack(
+        self, app: FastAPI, session: Session, client: AsyncClient
+    ) -> None:
+        res = await client.get(
+            app.url_path_for("charts:get_aggregated_chart_data", form_id=1),
+            params={"question": 1, "stack": 2},
+        )
+        assert res.status_code == 200
+        res = res.json()
+        assert res == {
+            'type': 'BARSTACK',
+            'data': [{
+                'group': 'option 1',
+                'child': [{
+                    'name': 24,
+                    'value': 1
+                }]
+            }, {
+                'group': 'option 2',
+                'child': [{
+                    'name': 10,
+                    'value': 2
+                }, {
+                    'name': 24,
+                    'value': 1
+                }]
+            }]
+        }
+
+    @pytest.mark.asyncio
     async def test_get_aggregated_jmp_chart_data(
         self, app: FastAPI, session: Session, client: AsyncClient
     ) -> None:

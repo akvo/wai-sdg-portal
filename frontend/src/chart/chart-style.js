@@ -2,6 +2,20 @@ import upperFirst from 'lodash/upperFirst';
 
 const chartText = window?.i18n?.chartText;
 
+const formatAndCapitalizeNames = (params, maxLength = 3) => {
+  let newParamsName = String(params).split(' ');
+  if (newParamsName.length > maxLength) {
+    newParamsName = newParamsName.map((p, pi) => {
+      if (pi !== 0 && pi % maxLength === 0) {
+        p += '\n';
+      }
+      return p;
+    });
+  }
+  newParamsName = newParamsName.join(' ');
+  return upperFirst(newParamsName);
+};
+
 export const popupFormatter = (params) => {
   var value = (params.value + '').split('.');
   value = value[0].replace(/(\d{1,3})(?=(?:\d{3})+(?!\d))/g, '$1,');
@@ -34,17 +48,7 @@ export const TextStyle = {
 
 export const AxisLabelFormatter = {
   formatter: function (params) {
-    let newParamsName = String(params).split(' ');
-    if (newParamsName.length > 3) {
-      newParamsName = newParamsName.map((p, pi) => {
-        if (pi !== 0 && pi % 3 === 0) {
-          p += '\n';
-        }
-        return p;
-      });
-    }
-    newParamsName = newParamsName.join(' ');
-    return upperFirst(newParamsName);
+    return formatAndCapitalizeNames(params, 2);
   },
 };
 
@@ -146,14 +150,16 @@ export const Title = {
 
 export const axisTitle = (extra) => {
   // Custom Axis Title
+  const transform = (val) =>
+    Array.isArray(val)
+      ? val
+          ?.filter((it) => it)
+          .map((it) => upperFirst(it))
+          .join(' - ')
+      : val;
   const { x, y } = extra.axisTitle;
-  const xAxisTitle = Array.isArray(x)
-    ? x
-        ?.filter((it) => it)
-        .map((it) => upperFirst(it))
-        .join(' - ')
-    : x;
-  const yAxisTitle = upperFirst(y);
+  const xAxisTitle = formatAndCapitalizeNames(transform(x), 7);
+  const yAxisTitle = formatAndCapitalizeNames(transform(y), 7);
   return { xAxisTitle, yAxisTitle };
 };
 
