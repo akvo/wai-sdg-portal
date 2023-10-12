@@ -361,10 +361,15 @@ const MainChart = ({ current, question }) => {
                   emptyValueCheckboxSetting={{
                     show: true,
                     checked: showEmptyValueOnStackedChart,
-                    handleOnCheck: () =>
+                    handleOnCheck: () => {
+                      setLoadingChartData(true);
                       setShowEmptyValueOnStackedChart(
                         !showEmptyValueOnStackedChart
-                      ),
+                      );
+                      setTimeout(() => {
+                        setLoadingChartData(false);
+                      }, 500);
+                    },
                   }}
                 />
               ) : loadingChartData ? (
