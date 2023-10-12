@@ -123,7 +123,7 @@ const MainChart = ({ current, question }) => {
   }, [showEmptyValueOnStackedChart, chartData]);
 
   const childAdministrationFromFilteredData = useMemo(() => {
-    let res = filteredChartData?.data?.flatMap((x) => x.stack);
+    const res = filteredChartData?.data?.flatMap((x) => x.stack);
     return uniqBy(res, 'name');
   }, [filteredChartData]);
 
@@ -349,14 +349,17 @@ const MainChart = ({ current, question }) => {
                       ? 500
                       : chartData?.data?.length * 50) +
                     (selectedStack?.id
-                      ? (selectedStack?.type === 'administration') &
-                        selectedAdministration.filter((x) => x).length
-                        ? chartData?.data?.length *
-                          childAdministrationFromFilteredData.length *
-                          30
+                      ? selectedStack?.type === 'administration'
+                        ? selectedAdministration.filter((x) => x).length
+                          ? chartData?.data?.length *
+                            childAdministrationFromFilteredData.length *
+                            30
+                          : chartData?.data?.length *
+                            parentAdministration.length *
+                            40
                         : chartData?.data?.length *
-                          parentAdministration.length *
-                          40
+                          selectedStack?.option?.length *
+                          30
                       : 150)
                   }
                   wrapper={false}
