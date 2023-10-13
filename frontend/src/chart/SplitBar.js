@@ -49,7 +49,7 @@ const SplitBar = (data, chartTitle, extra) => {
       );
       const percentage = val?.value ? (val.value / total) * 100 : 0;
       return {
-        name: val?.name || null,
+        name: val?.name || s.name,
         value: percentage.toFixed(2),
         count: val?.value || 0,
         itemStyle: { color: val?.color || s.color },

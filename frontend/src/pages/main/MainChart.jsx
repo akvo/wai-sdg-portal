@@ -11,6 +11,7 @@ import isEmpty from 'lodash/isEmpty';
 import takeRight from 'lodash/takeRight';
 import reverse from 'lodash/reverse';
 import sumBy from 'lodash/sumBy';
+import uniqBy from 'lodash/uniqBy';
 
 const levels = window.map_config?.shapeLevels?.length;
 const { mainText, chartText } = window.i18n;
@@ -43,6 +44,7 @@ const MainChart = ({ current, question }) => {
 
   // Get question option only to use on Main Chart
   const questionOption = question?.filter((q) => q.type === 'option');
+  const parentAdministration = administration.filter((adm) => !adm.parent);
 
   const chartQuestionOptions = useMemo(() => {
     return questionOption
@@ -119,6 +121,11 @@ const MainChart = ({ current, question }) => {
       data: dataFilterTmp,
     };
   }, [showEmptyValueOnStackedChart, chartData]);
+
+  const childAdministrationFromFilteredData = useMemo(() => {
+    const res = filteredChartData?.data?.flatMap((x) => x.stack);
+    return uniqBy(res, 'name');
+  }, [filteredChartData]);
 
   useEffect(() => {
     if (!isEmpty(selectedQuestion) || !isEmpty(selectedStack)) {
@@ -342,10 +349,17 @@ const MainChart = ({ current, question }) => {
                       ? 500
                       : chartData?.data?.length * 50) +
                     (selectedStack?.id
-                      ? (selectedStack?.type === 'administration') &
-                        selectedAdministration.filter((x) => x).length
-                        ? administration.length * 50
-                        : 1000
+                      ? selectedStack?.type === 'administration'
+                        ? selectedAdministration.filter((x) => x).length
+                          ? chartData?.data?.length *
+                            childAdministrationFromFilteredData.length *
+                            30
+                          : chartData?.data?.length *
+                            parentAdministration.length *
+                            40
+                        : chartData?.data?.length *
+                          selectedStack?.option?.length *
+                          30
                       : 150)
                   }
                   wrapper={false}
@@ -361,10 +375,15 @@ const MainChart = ({ current, question }) => {
                   emptyValueCheckboxSetting={{
                     show: true,
                     checked: showEmptyValueOnStackedChart,
-                    handleOnCheck: () =>
+                    handleOnCheck: () => {
+                      setLoadingChartData(true);
                       setShowEmptyValueOnStackedChart(
                         !showEmptyValueOnStackedChart
-                      ),
+                      );
+                      setTimeout(() => {
+                        setLoadingChartData(false);
+                      }, 500);
+                    },
                   }}
                 />
               ) : loadingChartData ? (
