@@ -347,19 +347,19 @@ var landing_config = {
       chartList: [
         {
           question: null,
-          title: "Service level for drinking water in household",
+          title: "Service level for drinking water in households",
           path: "Water",
           order: 1,
         },
         {
           question: null,
-          title: "Service level for sanitation in household",
+          title: "Service level for sanitation in households",
           path: "Sanitation",
           order: 2,
         },
         {
           question: null,
-          title: "Service level for Hygiene in household",
+          title: "Service level for Hygiene in households",
           path: "Hygiene",
           order: 3,
         },
@@ -369,13 +369,51 @@ var landing_config = {
       form_id: 2,
       name: "Health Facilities",
       key: "health",
-      chartList: [],
+      chartList: [
+        {
+          question: null,
+          title: "Service level for water in health facilities",
+          path: "Water",
+          order: 1,
+        },
+        {
+          question: null,
+          title: "Service level for sanitation in health facilities",
+          path: "Sanitation",
+          order: 2,
+        },
+        {
+          question: null,
+          title: "Service level for Hygiene in health facilities",
+          path: "Hygiene",
+          order: 3,
+        },
+      ],
     },
     {
       form_id: 3,
       name: "Schools",
       key: "schools",
-      chartList: [],
+      chartList: [
+        {
+          question: null,
+          title: "Service level for drinking water in schools",
+          path: "Water",
+          order: 1,
+        },
+        {
+          question: null,
+          title: "Service level for sanitation in schools",
+          path: "Sanitation",
+          order: 2,
+        },
+        {
+          question: null,
+          title: "Service level for Hygiene in schools",
+          path: "Hygiene",
+          order: 3,
+        },
+      ],
     },
     {
       form_id: 4,

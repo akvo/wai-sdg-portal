@@ -251,22 +251,79 @@ var landing_config = {
   ],
   overviews: [
     {
-      form_id: 976564018,
-      name: "Schools",
-      question: 993004033,
-      option: "yes",
-      above_text: "Across the District",
-      number_text: "of ##total## schools have toilet",
-      explore: "#",
+      form_id: 574850091,
+      name: "Households",
+      key: "households",
+      chartList: [
+        {
+          question: null,
+          title: "Service level for drinking water in households",
+          path: "Water",
+          order: 1,
+        },
+        {
+          question: null,
+          title: "Service level for sanitation in households",
+          path: "Sanitation",
+          order: 2,
+        },
+        {
+          question: null,
+          title: "Service level for Hygiene in households",
+          path: "Hygiene",
+          order: 3,
+        },
+      ],
     },
     {
       form_id: 952774024,
       name: "Health Facilities",
-      question: 987364073,
-      option: "yes",
-      above_text: "Across the District",
-      number_text: "of ##total## hygiene stations available",
-      explore: "#",
+      key: "health",
+      chartList: [
+        {
+          question: null,
+          title: "Service level for water in health facilities",
+          path: "Water",
+          order: 1,
+        },
+        {
+          question: null,
+          title: "Service level for sanitation in health facilities",
+          path: "Sanitation",
+          order: 2,
+        },
+        {
+          question: null,
+          title: "Service level for Hygiene in health facilities",
+          path: "Hygiene",
+          order: 3,
+        },
+      ],
+    },
+    {
+      form_id: 976564018,
+      name: "Schools",
+      key: "schools",
+      chartList: [
+        {
+          question: null,
+          title: "Service level for drinking water in schools",
+          path: "Water",
+          order: 1,
+        },
+        {
+          question: null,
+          title: "Service level for sanitation in schools",
+          path: "Sanitation",
+          order: 2,
+        },
+        {
+          question: null,
+          title: "Service level for Hygiene in schools",
+          path: "Hygiene",
+          order: 3,
+        },
+      ],
     },
   ],
 };
