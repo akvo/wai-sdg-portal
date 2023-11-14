@@ -1,6 +1,7 @@
-import React from 'react';
-import { Row, Col, Card, Space, Tabs } from 'antd';
-// import api from '../../util/api';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Row, Col, Card, Space, Tabs, Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
+import api from '../../util/api';
 
 import './home.scss';
 import Map from '../../components/Map';
@@ -14,35 +15,36 @@ const { overviewSectionTitle, datasetSectionTitle } = window.i18n.home;
 
 const { TabPane } = Tabs;
 
-const OverviewChart = ({ item }) => {
-  const { path: category, title, order } = item;
-  // TODO
-  const data = [
-    {
-      name: 'decommissioned',
-      count: 29,
-      total: 100,
-      value: 29,
-    },
-    {
-      name: 'functional and not in use',
-      count: 22,
-      total: 100,
-      value: 22,
-    },
-    {
-      name: 'functional in use',
-      count: 25,
-      total: 100,
-      value: 25,
-    },
-    {
-      name: 'non-functional',
-      count: 24,
-      total: 100,
-      value: 24,
-    },
-  ];
+const OverviewChart = ({ item, formID }) => {
+  const { path: category, title, order, question } = item;
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
+
+  const getChartApi = useCallback(async () => {
+    setLoading(true);
+    try {
+      if (formID && question) {
+        const { data: apiData } = await api.get(
+          `/chart/pie-data/${formID}/${question}`
+        );
+        const { data: chartData } = apiData || {};
+        setData(chartData);
+        setLoading(false);
+      }
+      if (formID && category) {
+        // TODO
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error('error:', error);
+      setLoading(false);
+    }
+  }, [formID, question, category]);
+
+  useEffect(() => {
+    getChartApi();
+  }, [getChartApi]);
+
   return (
     <Col
       key={`${order}-${category}`}
@@ -51,8 +53,8 @@ const OverviewChart = ({ item }) => {
       order={order}
     >
       <Card
-        title={title}
-        className={`overview-item-card ${category}`}
+        title={upperFirst(title || '')}
+        className="overview-item-card"
       >
         <Row
           align="middle"
@@ -68,13 +70,17 @@ const OverviewChart = ({ item }) => {
               size="large"
               style={{ width: '100%' }}
             >
-              <div className="chart-title">{upperFirst(title)}</div>
-              <Chart
-                type="PIE"
-                data={data}
-                wrapper={false}
-                height={250}
-              />
+              <Spin
+                spinning={loading}
+                indicator={<LoadingOutlined />}
+              >
+                <Chart
+                  type="PIE"
+                  data={data}
+                  wrapper={false}
+                  height={250}
+                />
+              </Spin>
             </Space>
           </Col>
         </Row>
@@ -83,12 +89,13 @@ const OverviewChart = ({ item }) => {
   );
 };
 
-const OverviewColumn = ({ items }) => {
+const OverviewColumn = ({ items, formID }) => {
   return items.map((item, idx) => {
     return (
       <OverviewChart
         key={idx}
         item={item}
+        formID={formID}
       />
     );
   });
@@ -256,7 +263,10 @@ const Home = () => {
                       key={overview.key}
                     >
                       <Row gutter={16}>
-                        <OverviewColumn items={items} />
+                        <OverviewColumn
+                          items={items}
+                          formID={overview?.form_id}
+                        />
                       </Row>
                     </TabPane>
                   );
