@@ -1,78 +1,59 @@
-import React, { useEffect, useState } from 'react';
-import { Row, Col, Card, Space, Carousel, Image, Spin } from 'antd';
-import CountUp from 'react-countup';
-import api from '../../util/api';
+import React from 'react';
+import { Row, Col, Card, Space, Tabs } from 'antd';
+// import api from '../../util/api';
 
 import './home.scss';
 import Map from '../../components/Map';
 import Chart from '../../chart';
-import isEmpty from 'lodash/isEmpty';
+// import isEmpty from 'lodash/isEmpty';
 import upperFirst from 'lodash/upperFirst';
 
 const level2 = window.levels[0];
 const { jumbotron, datasetsInPortal, overviews } = window.landing_config;
 const { overviewSectionTitle, datasetSectionTitle } = window.i18n.home;
 
-const OverviewInfo = ({ item, order }) => {
-  const { type, category, data } = item;
-  const { above_text, number_text, value, total } = data;
-  let text = number_text;
-  if (text?.includes('##total##')) {
-    text = text.replace('##total##', total || '');
-  }
-  return (
-    <Col
-      key={`${type}-${category}`}
-      span={12}
-      className="overview-item-col"
-      order={order}
-    >
-      <Card className={`overview-item-card ${category}`}>
-        <Row
-          className="overview-item"
-          gutter={[24, 24]}
-          align="middle"
-          justify="center"
-        >
-          <Col
-            span={8}
-            align="center"
-          >
-            <Image
-              className="overview-icon"
-              width="100%"
-              src={`/icons/landing-${category}-icon.png`}
-              alt={category}
-              preview={false}
-            />
-          </Col>
-          <Col span={16}>
-            <div className="area">{above_text}</div>
-            <div className="count">
-              <CountUp
-                decimals={1}
-                end={value || 0}
-              />
-              %
-            </div>
-            <div className="text">{text}</div>
-          </Col>
-        </Row>
-      </Card>
-    </Col>
-  );
-};
+const { TabPane } = Tabs;
 
-const OverviewChart = ({ item, order }) => {
-  const { type, name, category, data, qname } = item;
+const OverviewChart = ({ item }) => {
+  const { path: category, title, order } = item;
+  // TODO
+  const data = [
+    {
+      name: 'decommissioned',
+      count: 29,
+      total: 100,
+      value: 29,
+    },
+    {
+      name: 'functional and not in use',
+      count: 22,
+      total: 100,
+      value: 22,
+    },
+    {
+      name: 'functional in use',
+      count: 25,
+      total: 100,
+      value: 25,
+    },
+    {
+      name: 'non-functional',
+      count: 24,
+      total: 100,
+      value: 24,
+    },
+  ];
   return (
     <Col
-      key={`${type}-${category}`}
-      span={12}
+      key={`${order}-${category}`}
+      span={8}
       className="overview-item-col"
       order={order}
     >
-      <Card className={`overview-item-card ${category}`}>
+      <Card
+        title={title}
+        className={`overview-item-card ${category}`}
+      >
         <Row
           align="middle"
           justify="center"
@@ -87,9 +68,7 @@ const OverviewChart = ({ item, order }) => {
               size="large"
               style={{ width: '100%' }}
             >
-              <div className="chart-title">
-                {qname ? upperFirst(qname) : upperFirst(name)}
-              </div>
+              <div className="chart-title">{upperFirst(title)}</div>
               <Chart
                 type="PIE"
                 data={data}
@@ -104,22 +83,12 @@ const OverviewChart = ({ item, order }) => {
   );
 };
 
-const OverviewColumn = ({ items, index }) => {
+const OverviewColumn = ({ items }) => {
   return items.map((item, idx) => {
-    if (item?.type === 'info') {
-      return (
-        <OverviewInfo
-          key={`${item?.type}-${idx}`}
-          item={item}
-          order={index % 2 === 0 ? 2 : 1}
-        />
-      );
-    }
     return (
       <OverviewChart
-        key={`${item?.type}-${idx}`}
+        key={idx}
         item={item}
-        order={index % 2 === 0 ? 1 : 2}
       />
     );
   });
@@ -156,57 +125,57 @@ const JumbotronInfo = ({ jumbotron }) => {
 };
 
 const Home = () => {
-  const [overviewData, setOverviewData] = useState([]);
+  // const [overviewData, setOverviewData] = useState([]);
 
-  useEffect(() => {
-    if (!isEmpty(overviews) && isEmpty(overviewData)) {
-      const apiCall = overviews?.map(({ form_id, question, option }) => {
-        const url = `chart/overviews/${form_id}/${question}/${option}`;
-        return api.get(url);
-      });
-      Promise.all(apiCall)
-        .then((res) => {
-          const allData = res?.map((r) => {
-            const { form, question, question_name, data } = r.data;
-            // find overview config
-            const overview = overviews?.find(
-              (x) => x.form_id === form && x.question === question
-            );
-            // map res data to add more overview config
-            const dataTmp = data.map((d) => {
-              const { above_text, number_text, explore, name } = overview;
-              const category = name
-                ? name.toLowerCase().split(' ').join('-')
-                : '';
-              if (d?.type === 'info') {
-                return {
-                  ...d,
-                  category: category,
-                  name: name,
-                  data: {
-                    ...d?.data,
-                    above_text,
-                    number_text,
-                    explore,
-                  },
-                };
-              }
-              return {
-                ...d,
-                category: category,
-                qname: question_name,
-                name: name,
-              };
-            });
-            return dataTmp;
-          });
-          return allData;
-        })
-        .then((res) => {
-          setOverviewData(res);
-        });
-    }
-  }, [overviewData]);
+  // useEffect(() => {
+  //   if (!isEmpty(overviews) && isEmpty(overviewData)) {
+  //     const apiCall = overviews?.map(({ form_id, question, option }) => {
+  //       const url = `chart/overviews/${form_id}/${question}/${option}`;
+  //       return api.get(url);
+  //     });
+  //     Promise.all(apiCall)
+  //       .then((res) => {
+  //         const allData = res?.map((r) => {
+  //           const { form, question, question_name, data } = r.data;
+  //           // find overview config
+  //           const overview = overviews?.find(
+  //             (x) => x.form_id === form && x.question === question
+  //           );
+  //           // map res data to add more overview config
+  //           const dataTmp = data.map((d) => {
+  //             const { above_text, number_text, explore, name } = overview;
+  //             const category = name
+  //               ? name.toLowerCase().split(' ').join('-')
+  //               : '';
+  //             if (d?.type === 'info') {
+  //               return {
+  //                 ...d,
+  //                 category: category,
+  //                 name: name,
+  //                 data: {
+  //                   ...d?.data,
+  //                   above_text,
+  //                   number_text,
+  //                   explore,
+  //                 },
+  //               };
+  //             }
+  //             return {
+  //               ...d,
+  //               category: category,
+  //               qname: question_name,
+  //               name: name,
+  //             };
+  //           });
+  //           return dataTmp;
+  //         });
+  //         return allData;
+  //       })
+  //       .then((res) => {
+  //         setOverviewData(res);
+  //       });
+  //   }
+  // }, [overviewData]);
 
   return (
     <Row className="home-container">
@@ -274,34 +243,26 @@ const Home = () => {
             span={24}
             className="overview-content-wrapper"
           >
-            <Carousel
-              autoplay
-              effect="fade"
-            >
-              {isEmpty(overviewData) && (
-                <div className="chart-loading">
-                  <Spin />
-                </div>
-              )}
-              {!isEmpty(overviewData) &&
-                overviewData?.map((items, i) => (
-                  <div key={`overview-${i}`}>
-                    <Row
-                      align="middle"
-                      justify="space-between"
-                      wrap={true}
-                      gutter={[24, 24]}
-                      className="overview-item-row"
+            <Card>
+              <Tabs
+                defaultActiveKey={overviews?.[0]?.name}
+                centered
+              >
+                {overviews?.map((overview) => {
+                  const items = overview?.chartList || [];
+                  return (
+                    <TabPane
+                      tab={overview.name}
+                      key={overview.key}
                     >
-                      <OverviewColumn
-                        key={`overview-column-${i}`}
-                        items={items}
-                        index={i}
-                      />
-                    </Row>
-                  </div>
-                ))}
-            </Carousel>
+                      <Row gutter={16}>
+                        <OverviewColumn items={items} />
+                      </Row>
+                    </TabPane>
+                  );
+                })}
+              </Tabs>
+            </Card>
           </Col>
         </Row>
       </Col>
