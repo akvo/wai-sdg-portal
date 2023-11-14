@@ -271,7 +271,11 @@ const Home = () => {
                       tab={overview.name}
                       key={overview.key}
                     >
-                      <Row gutter={16}>
+                      <Row
+                        gutter={16}
+                        type="flex"
+                        justify="center"
+                      >
                         <OverviewColumn
                           items={items}
                           formID={overview?.form_id}
