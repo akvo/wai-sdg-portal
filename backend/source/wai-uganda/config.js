@@ -23,6 +23,11 @@ var navigation_config = [
     childrens: null,
   },
   {
+    link: "clts",
+    name: "CLTS Plus",
+    childrens: null,
+  },
+  {
     link: "jmp",
     name: "JMP",
     childrens: [
@@ -77,6 +82,115 @@ var page_config = {
           {
             name: "Water point name",
             id: 85,
+          },
+        ],
+      },
+    ],
+  },
+  clts: {
+    title: "CLTS",
+    columns: [
+      {
+        title: "Name",
+        key: "name",
+      },
+      {
+        title: "ODF Status",
+        key: 557700349,
+      },
+      {
+        title: "Date Triggered",
+        key: 559830326,
+      },
+    ],
+    maps: {
+      shape: { id: 567440335, name: "Number of HHS" },
+      marker: { id: 557700349, title: "ODF Status" },
+    },
+    formId: 5,
+    rows: [
+      {
+        component: "PIE-CHART-GROUP",
+        chartList: [
+          {
+            type: "PIE",
+            question: 569090299,
+            name: "Water and Soap",
+          },
+          {
+            type: "PIE",
+            question: 571070202,
+            name: "No Visible Feces Found",
+          },
+          {
+            type: "PIE",
+            question: 573010345,
+            name: "Public Toilets",
+          },
+          {
+            type: "PIE",
+            question: 557710261,
+            name: "Toilets were Available for Pessangers",
+          },
+          { type: "PIE", question: 557700349, name: "ODF Status" },
+        ],
+      },
+    ],
+    tabs: [
+      {
+        name: "Progress",
+        component: "ODF-CHARTS",
+        selected: true,
+        showPagination: true,
+        chartSetting: {
+          name: 569070281,
+          startValue: 569070282,
+          startDate: 559830326,
+          endValue: 569090301,
+          endDate: 557690351,
+        },
+      },
+    ],
+    selectableMarkerDropdown: [
+      {
+        id: 557700349,
+        name: "Open Defecation Status",
+        hover: [
+          {
+            id: 569070281,
+            name: "Village Name",
+          },
+          {
+            id: 567440335,
+            name: "Number of households in the Village",
+          },
+        ],
+      },
+      {
+        id: 494780324,
+        name: "Implementing partner",
+        color: [
+          {
+            name: "Amref",
+            color: "#9FE07F",
+          },
+          {
+            name: "Amref and Local Government",
+            color: "#F67070",
+          },
+          {
+            name: "Other",
+            color: "fee08f",
+          },
+        ],
+        hover: [
+          {
+            id: 569070281,
+            name: "Village Name",
+          },
+          {
+            id: 567440335,
+            name: "Number of households in the Village",
           },
         ],
       },
