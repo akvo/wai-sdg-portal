@@ -686,9 +686,22 @@ var landing_config = {
         },
         {
           question: null,
-          title: "Service level for Hygiene in health facilities",
+          title: "Service level for hygiene in health facilities",
           path: "Hygiene",
           order: 3,
+        },
+        {
+          question: null,
+          title: "Service level for waste management in health facilities",
+          path: "Waste Management",
+          order: 4,
+        },
+        {
+          question: null,
+          title:
+            "Service level for environmental cleaning in health facilities",
+          path: "Environmental Cleaning",
+          order: 5,
         },
       ],
     },
@@ -731,6 +744,25 @@ var landing_config = {
         {
           question: 571050096,
           title: "Water Source Type",
+          path: null,
+          order: 1,
+        },
+      ],
+    },
+    {
+      form_id: 567420197,
+      name: "CLTS",
+      key: "clts",
+      chartList: [
+        {
+          question: 557700349,
+          title: "Open Defecation Status",
+          path: null,
+          order: 1,
+        },
+        {
+          question: 494780324,
+          title: "Implementing partner",
           path: null,
           order: 1,
         },
