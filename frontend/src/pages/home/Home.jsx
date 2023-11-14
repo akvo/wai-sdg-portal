@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Row, Col, Card, Space, Tabs, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
+import { chain, groupBy, sumBy } from 'lodash';
 import api from '../../util/api';
 
 import './home.scss';
@@ -19,6 +20,66 @@ const OverviewChart = ({ item, formID }) => {
   const { path: category, title, order, question } = item;
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const [pagination, setPagination] = useState({
+    current: 1,
+    totalPage: null,
+  });
+
+  const getJMPChartApi = useCallback(async () => {
+    if (formID && category) {
+      try {
+        if (
+          (pagination.totalPage && pagination.current < pagination.totalPage) ||
+          (!pagination.totalPage && loading)
+        ) {
+          const currentPage = pagination.totalPage
+            ? pagination.current + 1
+            : pagination.current;
+
+          const { data: apiData } = await api.get(
+            `/chart/jmp-data/${formID}/${category}?page=${currentPage}`
+          );
+          const { total_page: totalPage, data: chartData } = apiData || {};
+
+          const allData = chartData?.flatMap((cd) => cd?.child);
+          const allValues = chain(groupBy(allData, 'option'))
+            .map((v, k) => {
+              const { color } = v?.[0] || {};
+              const sumCategory = sumBy(v, 'count');
+              return {
+                name: k,
+                count: sumCategory,
+                itemStyle: {
+                  color,
+                },
+              };
+            })
+            .value();
+          const totalValues = sumBy(allValues, 'count');
+          const _data = allValues.map((a) => {
+            const percentage = Math.round((a.count / totalValues) * 100);
+            return {
+              ...a,
+              total: totalValues,
+              value: percentage,
+            };
+          });
+          setData(_data);
+          setPagination({
+            current: currentPage,
+            totalPage,
+          });
+        }
+      } catch (error) {
+        console.error('error:', error);
+        setLoading(false);
+      }
+    }
+
+    if (loading && pagination.current === pagination.totalPage) {
+      setLoading(false);
+    }
+  }, [formID, category, loading, pagination]);
 
   const getChartApi = useCallback(async () => {
     setLoading(true);
@@ -31,15 +92,15 @@ const OverviewChart = ({ item, formID }) => {
         setData(chartData);
         setLoading(false);
       }
-      if (formID && category) {
-        // TODO
-        setLoading(false);
-      }
     } catch (error) {
       console.error('error:', error);
       setLoading(false);
     }
-  }, [formID, question, category]);
+  }, [formID, question]);
+
+  useEffect(() => {
+    getJMPChartApi();
+  }, [getJMPChartApi]);
 
   useEffect(() => {
     getChartApi();
@@ -132,58 +193,6 @@ const JumbotronInfo = ({ jumbotron }) => {
 };
 
 const Home = () => {
-  // const [overviewData, setOverviewData] = useState([]);
-
-  // useEffect(() => {
-  //   if (!isEmpty(overviews) && isEmpty(overviewData)) {
-  //     const apiCall = overviews?.map(({ form_id, question, option }) => {
-  //       const url = `chart/overviews/${form_id}/${question}/${option}`;
-  //       return api.get(url);
-  //     });
-  //     Promise.all(apiCall)
-  //       .then((res) => {
-  //         const allData = res?.map((r) => {
-  //           const { form, question, question_name, data } = r.data;
-  //           // find overview config
-  //           const overview = overviews?.find(
-  //             (x) => x.form_id === form && x.question === question
-  //           );
-  //           // map res data to add more overview config
-  //           const dataTmp = data.map((d) => {
-  //             const { above_text, number_text, explore, name } = overview;
-  //             const category = name
-  //               ? name.toLowerCase().split(' ').join('-')
-  //               : '';
-  //             if (d?.type === 'info') {
-  //               return {
-  //                 ...d,
-  //                 category: category,
-  //                 name: name,
-  //                 data: {
-  //                   ...d?.data,
-  //                   above_text,
-  //                   number_text,
-  //                   explore,
-  //                 },
-  //               };
-  //             }
-  //             return {
-  //               ...d,
-  //               category: category,
-  //               qname: question_name,
-  //               name: name,
-  //             };
-  //           });
-  //           return dataTmp;
-  //         });
-  //         return allData;
-  //       })
-  //       .then((res) => {
-  //         setOverviewData(res);
-  //       });
-  //   }
-  // }, [overviewData]);
-
   return (
     <Row className="home-container">
       {/* Jumbotron */}
