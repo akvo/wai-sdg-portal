@@ -21,16 +21,21 @@ def get_jmp_table_view(session: Session, data: list, configs: list):
                 )
             )
             color = None
+            score = None
             if len(fl):
                 color = fl[0]["color"]
+                score = fl[0]["score"]
             categories.append(
                 {
                     "key": c["name"].lower(),
                     "value": c["category"],
                     "color": color,
+                    "score": score,
                 }
             )
-        d.update({"categories": categories})
+        jmp_score = sum(c["score"] for c in categories)
+        d.update({"categories": categories, "score": jmp_score})
+    data.sort(key=lambda x: x["score"], reverse=True)
     return data
 
 
