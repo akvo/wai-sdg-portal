@@ -49,6 +49,7 @@ class TestDataRoutes:
                 {"question": 4, "value": "Garut", "history": False},
             ],
             "categories": [],
+            "score": 0,
         }
 
     @pytest.mark.asyncio

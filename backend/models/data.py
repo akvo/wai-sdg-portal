@@ -40,11 +40,13 @@ class CategoryWithColor(TypedDict):
     key: str
     value: str
     color: Optional[str] = None
+    score: Optional[int] = None
 
 
 class DataDictWithHistory(DataDict):
     answer: List[AnswerDictWithHistory]
     categories: List[CategoryWithColor]
+    score: Optional[int] = None
 
 
 class SubmissionInfo(TypedDict):
