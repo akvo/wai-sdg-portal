@@ -34,7 +34,10 @@ const JMPBarStack = (data, chartTitle, extra) => {
   stacked = stacked.map((x) => ({ name: x.name, color: x.color }));
   const legends = stacked.map((s, si) => ({
     name: s.name,
-    itemStyle: { color: s.color || Color.color[si] },
+    itemStyle: {
+      color: s.color || Color.color[si],
+      whiteSpace: 'break-spaces',
+    },
   }));
   const xAxis = uniq(data.map((x) => x.name));
   const series = stacked.map((s) => {
@@ -77,8 +80,9 @@ const JMPBarStack = (data, chartTitle, extra) => {
       left: 'center',
     },
     grid: {
+      containLabel: true,
       top: '50px',
-      left: '120px',
+      left: 0,
       show: true,
       label: {
         color: '#222',
