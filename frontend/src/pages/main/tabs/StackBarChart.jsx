@@ -97,7 +97,7 @@ const StackBarChart = ({
     return filterTmp;
   }, [showEmptyValueChart, chartValues]);
 
-  const height = filteredChartValues.length * 60;
+  const height = filteredChartValues.length * 90;
 
   return (
     <div className="jmp-chart-container">
