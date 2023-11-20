@@ -147,8 +147,6 @@ const TabJMP = ({ formId, chartList, show }) => {
       ) : (
         <Col span={24}>
           {chartData?.map((c, ci) => {
-            const height =
-              (c?.data?.filter((x) => x?.stack?.length)?.length || 0) * 50;
             return [
               <Col
                 key={`jmp-chart-title-${ci}`}
@@ -162,7 +160,7 @@ const TabJMP = ({ formId, chartList, show }) => {
                 span={24}
               >
                 <StackBarChart
-                  {...{ ...c, height, chartScores }}
+                  {...{ ...c, chartScores }}
                   apiUrl={getApiUrl(c.question)}
                 />
               </Col>,

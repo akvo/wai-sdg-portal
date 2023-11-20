@@ -28,6 +28,7 @@ const Bar = (data, chartTitle, extra) => {
   data = sortBy(data, 'order');
   data = data.map((x) => ({ ...x, percentage: (x.value / total) * 100 }));
   const dataSource = data.map((x) => x.name);
+  const gridHeight = dataSource.length * 60;
   const option = {
     ...Color,
     title: {
@@ -44,6 +45,7 @@ const Bar = (data, chartTitle, extra) => {
         color: '#222',
         ...TextStyle,
       },
+      height: gridHeight,
     },
     tooltip: {
       show: true,

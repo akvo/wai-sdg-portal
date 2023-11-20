@@ -79,7 +79,7 @@ const SplitBar = (data, chartTitle, extra) => {
       data: temp,
     };
   });
-
+  const gridHeight = series?.flatMap((s) => s?.data)?.length * 35;
   const option = {
     ...Color,
     title: {
@@ -103,6 +103,7 @@ const SplitBar = (data, chartTitle, extra) => {
         color: '#222',
         ...TextStyle,
       },
+      height: gridHeight,
     },
     tooltip: {
       trigger: 'axis',

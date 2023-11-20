@@ -345,19 +345,19 @@ const MainChart = ({ current, question }) => {
                   type={filteredChartData.type}
                   data={filteredChartData.data}
                   height={
-                    (chartData?.data?.length <= 5
+                    (filteredChartData?.data?.length <= 5
                       ? 500
-                      : chartData?.data?.length * 50) +
+                      : filteredChartData?.data?.length * 60) +
                     (selectedStack?.id
                       ? selectedStack?.type === 'administration'
                         ? selectedAdministration.filter((x) => x).length
-                          ? chartData?.data?.length *
+                          ? filteredChartData?.data?.length *
                             childAdministrationFromFilteredData.length *
                             30
-                          : chartData?.data?.length *
+                          : filteredChartData?.data?.length *
                             parentAdministration.length *
                             40
-                        : chartData?.data?.length *
+                        : filteredChartData?.data?.length *
                           selectedStack?.option?.length *
                           30
                       : 150)

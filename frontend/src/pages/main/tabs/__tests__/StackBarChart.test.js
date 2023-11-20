@@ -56,7 +56,6 @@ const props = {
       ],
     },
   ],
-  height: 100,
   name: 'Water',
   question: 'water',
   selectedAdministration: null,
@@ -234,7 +233,6 @@ describe('StackBarChart', () => {
           extra: {
             selectedAdministration: null,
           },
-          height: 320,
           subTitle: '',
           title: '',
           type: 'JMP-BARSTACK',

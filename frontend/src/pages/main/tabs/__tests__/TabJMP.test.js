@@ -232,7 +232,6 @@ describe('TabJMP', () => {
               ],
             },
           ],
-          height: 100,
           name: 'Water',
           question: 'water',
           selectedAdministration: null,
