@@ -61,6 +61,7 @@ const JMPBarStack = (data, chartTitle, extra) => {
       data: temp,
     };
   });
+  const gridHeight = data.length * 60;
   const option = {
     ...Color,
     title: {
@@ -83,6 +84,7 @@ const JMPBarStack = (data, chartTitle, extra) => {
         color: '#222',
         ...TextStyle,
       },
+      height: gridHeight,
     },
     tooltip: {
       trigger: 'axis',
