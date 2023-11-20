@@ -40,7 +40,7 @@ const getAdmScores = (chartScores, data) => {
         (statusValues[administration][option] / totalPercent) * 100;
       const score = chartScores[option] || 0;
       scoreValues[administration].push((score * percent) / 100);
-      statusPercentages[administration][option] = percent;
+      statusPercentages[administration][option] = percent || 0;
     }
   }
   return {
@@ -51,7 +51,6 @@ const getAdmScores = (chartScores, data) => {
 
 const StackBarChart = ({
   apiUrl,
-  height,
   chartScores,
   totalPages,
   data,
@@ -98,6 +97,8 @@ const StackBarChart = ({
     return filterTmp;
   }, [showEmptyValueChart, chartValues]);
 
+  const height = filteredChartValues.length * 60;
+
   return (
     <div className="jmp-chart-container">
       <PaginationApi
@@ -118,7 +119,7 @@ const StackBarChart = ({
             type={'JMP-BARSTACK'}
             data={filteredChartValues}
             wrapper={false}
-            height={height < 320 ? 320 : height}
+            height={height}
             extra={{
               selectedAdministration,
             }}
