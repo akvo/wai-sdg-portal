@@ -79,7 +79,7 @@ const SplitBar = (data, chartTitle, extra) => {
       data: temp,
     };
   });
-  const gridHeight = data?.length * 35;
+  const gridHeight = series?.flatMap((s) => s?.data)?.length * 35;
   const option = {
     ...Color,
     title: {
