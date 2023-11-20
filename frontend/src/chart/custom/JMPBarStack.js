@@ -64,7 +64,7 @@ const JMPBarStack = (data, chartTitle, extra) => {
       data: temp,
     };
   });
-  const gridHeight = data.length * 60;
+  const gridHeight = data.length > 1 ? data.length * 60 : 120;
   const option = {
     ...Color,
     title: {
