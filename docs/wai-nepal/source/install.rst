@@ -162,7 +162,7 @@ Environment Variable Setup
      AUTH0_DOMAIN=your-domain.eu.auth0.com
      AUTH0_CLIENT_ID=acad34xxxxxxxx
      AUTH0_SECRET=938axxxxxxxxxxx
-     AUTH0_AUDIENCE=cdary8xxxxxxxx
+     AUTH0_AUDIENCE=https://your-domain.eu.auth0.com/api/v2/
      AUTH0_SPA_DOMAIN=https://your-domain.eu.auth0.com
      AUTH0_SPA_CLIENT_ID=b821y8xxxxxxxx
      STORAGE_LOCATION=/data/storage
@@ -173,7 +173,7 @@ Environment Variable Setup
    .. note::
       - Use **Domain** and **Client ID** field from your **Auth0 SPA application** for ``AUTH_SPA_DOMAIN`` and ``AUTH_SPA_CLIENT_ID``
       - Use **Domain**, **Secret** and **Client ID** field from your **Auth0 Backend application** for ``AUTH_DOMAIN``, ``AUTH_SECRET`` and ``AUTH_CLIENT_ID``.
-      - For ``AUTH0_AUDIENCE``, Go to your **Auth0 backend application**, click **APIs** Tab, expand **Auth0 Management API**. Use the **Grant ID** field.
+      - For ``AUTH0_AUDIENCE``, Go to your **Auth0 backend application**, click **APIs** Tab. Use the **API Identifier** field.
       - For ``CERTBOT_EMAIL``, fill in your administrator email to receive emails regarding Certbot SSL expiration.
 
 Run the Application
