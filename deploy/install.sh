@@ -29,6 +29,15 @@ ssl_registration () {
 }
 
 
+config_alter () {
+    source .env
+
+    # Update the values in the JavaScript config file
+    sed -i "s|AUTH0_DOMAIN = \".*\";|AUTH0_DOMAIN = \"$AUTH0_DOMAIN\";|" ../backend/source/$INSTANCE_NAME/config.js
+    sed -i "s|AUTH0_CLIENT_ID = \".*\";|AUTH0_CLIENT_ID = \"$AUTH0_CLIENT_ID\";|" ../backend/source/$INSTANCE_NAME/config.js
+}
+
+
 cleanup_artifact () {
     docker compose up --build documentation_build_cleanup
     docker compose up --build frontend_build_cleanup
@@ -57,4 +66,5 @@ start_build () {
 }
 
 ssl_registration
+config_alter
 start_build
