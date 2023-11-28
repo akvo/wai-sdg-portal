@@ -107,7 +107,7 @@ Create New SPA Application
 
 ************************
 
-**4. Fill the name field then Click Create**
+**4. Fill the name field, select 'Single Page Web Applications' on the application type, and then Click Create**
 
   .. image:: ../assets/auth0-steps/9696dc40-03ca-4d94-bd49-d0568aeac039.png
      :alt: Step 16 screenshot
@@ -179,7 +179,7 @@ Create New SPA Application
 
 ************************
 
-**10. Select Connections Tab**
+**10. Select Organizations Tab**
 
   .. image:: ../assets/auth0-steps/9032ed92-6ea2-4688-8117-016a1d0f0ef6.png
      :alt: Step 26 screenshot

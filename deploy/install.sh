@@ -33,8 +33,8 @@ config_alter () {
     source .env
 
     # Update the values in the JavaScript config file
-    sed -i "s|AUTH0_DOMAIN = \".*\";|AUTH0_DOMAIN = \"$AUTH0_DOMAIN\";|" ../backend/source/$INSTANCE_NAME/config.js
-    sed -i "s|AUTH0_CLIENT_ID = \".*\";|AUTH0_CLIENT_ID = \"$AUTH0_CLIENT_ID\";|" ../backend/source/$INSTANCE_NAME/config.js
+    sed -i "s|AUTH0_DOMAIN = \".*\";|AUTH0_DOMAIN = \"$AUTH0_SPA_DOMAIN\";|" ../backend/source/$INSTANCE_NAME/config.js
+    sed -i "s|AUTH0_CLIENT_ID = \".*\";|AUTH0_CLIENT_ID = \"$AUTH0_SPA_CLIENT_ID\";|" ../backend/source/$INSTANCE_NAME/config.js
 }
 
 
