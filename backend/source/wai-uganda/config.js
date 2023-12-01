@@ -309,6 +309,18 @@ var page_config = {
       marker: { id: "Water", title: "Water Service Level" },
     },
     formId: 1,
+    tabs: [
+      {
+        name: "JMP",
+        component: "JMP-CHARTS",
+        selected: true,
+        chartList: [
+          { question: "water", name: "Water Service Level" },
+          { question: "sanitation", name: "Sanitation Service Level" },
+          { question: "hygiene", name: "Hygiene Service Level" },
+        ],
+      },
+    ],
     selectableMarkerDropdown: [
       {
         id: "Water",
@@ -455,31 +467,105 @@ var landing_config = {
   ],
   overviews: [
     {
-      form_id: 4,
-      name: "Water Point",
-      question: 101,
-      option: "yes",
-      above_text: "Across the District",
-      number_text: "of ##total## water points are functional",
-      explore: "#",
+      form_id: 1,
+      name: "Households",
+      key: "households",
+      chartList: [
+        {
+          question: null,
+          title: "Service level for drinking water in households",
+          path: "Water",
+          order: 1,
+        },
+        {
+          question: null,
+          title: "Service level for sanitation in households",
+          path: "Sanitation",
+          order: 2,
+        },
+        {
+          question: null,
+          title: "Service level for Hygiene in households",
+          path: "Hygiene",
+          order: 3,
+        },
+      ],
     },
     {
       form_id: 2,
       name: "Health Facilities",
-      question: 32,
-      option: "basic",
-      above_text: "Across the District",
-      number_text: "of health facilities have basic water access",
-      explore: "#",
+      key: "health",
+      chartList: [
+        {
+          question: null,
+          title: "Service level for water in health facilities",
+          path: "Water",
+          order: 1,
+        },
+        {
+          question: null,
+          title: "Service level for sanitation in health facilities",
+          path: "Sanitation",
+          order: 2,
+        },
+        {
+          question: null,
+          title: "Service level for hygiene in health facilities",
+          path: "Hygiene",
+          order: 3,
+        },
+        {
+          question: null,
+          title: "Service level for waste management in health facilities",
+          path: "Waste Management",
+          order: 4,
+        },
+        {
+          question: null,
+          title:
+            "Service level for environmental cleaning in health facilities",
+          path: "Environmental Cleaning",
+          order: 5,
+        },
+      ],
     },
     {
       form_id: 3,
       name: "Schools",
-      question: 63,
-      option: "basic",
-      above_text: "Across the District",
-      number_text: "of schools have basic water access",
-      explore: "#",
+      key: "schools",
+      chartList: [
+        {
+          question: null,
+          title: "Service level for drinking water in schools",
+          path: "Water",
+          order: 1,
+        },
+        {
+          question: null,
+          title: "Service level for sanitation in schools",
+          path: "Sanitation",
+          order: 2,
+        },
+        {
+          question: null,
+          title: "Service level for Hygiene in schools",
+          path: "Hygiene",
+          order: 3,
+        },
+      ],
+    },
+    {
+      form_id: 4,
+      name: "Water Point",
+      key: "water",
+      chartList: [
+        {
+          question: 111,
+          title: "Functionality Status",
+          path: null,
+          order: 1,
+        },
+      ],
     },
   ],
 };

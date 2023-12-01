@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import uniq from 'lodash/uniq';
@@ -78,6 +78,24 @@ const StackBarChart = ({
     setLoading(false);
   };
 
+  const chartShorted = useMemo(() => {
+    return chartValues.map((c) => {
+      const _stack = c?.stack
+        ?.sort((a, b) => b.value - a.value)
+        ?.map((s, sx) => {
+          return {
+            ...s,
+            id: s.order,
+            order: sx + 1,
+          };
+        });
+      return {
+        ...c,
+        stack: _stack,
+      };
+    });
+  }, [chartValues]);
+
   return (
     <div className="jmp-chart-container">
       <PaginationApi
@@ -96,7 +114,7 @@ const StackBarChart = ({
             title=""
             subTitle=""
             type={'JMP-BARSTACK'}
-            data={chartValues}
+            data={chartShorted}
             wrapper={false}
             height={height < 320 ? 320 : height}
             extra={{
