@@ -119,6 +119,7 @@
       background: rgba(2, 136, 209, 0.06);
 
       .overview-item-col {
+        margin-bottom: 16px;
         .overview-icon {
           max-height: 200px;
           object-fit: contain;
@@ -181,33 +182,11 @@
         }
       }
 
-      .ant-carousel .slick-dots-bottom {
-        bottom: -3rem;
-      }
-
-      .ant-carousel .slick-dots li {
-        height: 12px;
-        width: 12px;
-      }
-
-      .ant-carousel .slick-dots li button {
-        display: block;
-        height: 12px;
-        width: 12px;
-        background: #0288d1;
-        border: 2px solid #0288d1;
-        border-radius: 50%;
-        opacity: 1;
-        transition: all 0.5s;
-      }
-
-      .ant-carousel .slick-dots li.slick-active {
-        width: 12px;
-      }
-
-      .ant-carousel .slick-dots li.slick-active button {
-        background: transparent;
-        opacity: 1;
+      .ant-card.overview-item-card .ant-card-head-title {
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-weight: 600;
       }
     }
   }
