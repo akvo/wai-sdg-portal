@@ -135,4 +135,5 @@ class TestHistoryRoutes:
                 },
             ],
             "categories": [],
+            "score": 0,
         }
