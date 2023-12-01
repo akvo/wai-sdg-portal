@@ -1,0 +1,330 @@
+{
+  "form": "CLTS",
+  "id": 5,
+  "question_groups": [
+    {
+      "question_group": "Location",
+      "questions": [
+        {
+          "question": "location",
+          "order": 1,
+          "required": true,
+          "type": "administration",
+          "meta": true,
+          "id": 10
+        }
+      ],
+      "id": 6
+    },
+    {
+      "question_group": "Village Information",
+      "questions": [
+        {
+          "id": 569070281,
+          "question": "Village",
+          "order": 1,
+          "meta": true,
+          "type": "text",
+          "required": true,
+          "options": null
+        },
+        {
+          "id": 567440335,
+          "question": "Number of households in the Village",
+          "order": 2,
+          "meta": false,
+          "type": "number",
+          "required": true,
+          "options": null
+        },
+        {
+          "id": 571070201,
+          "question": "GPS Location of Village",
+          "order": 3,
+          "meta": true,
+          "type": "geo",
+          "required": true,
+          "options": null
+        }
+      ],
+      "id": 7
+    },
+    {
+      "question_group": "CLTS Intervention Information",
+      "questions": [
+        {
+          "id": 494780324,
+          "question": "Implementing partner",
+          "order": 1,
+          "meta": false,
+          "type": "option",
+          "required": true,
+          "options": [
+            {
+              "name": "Amref",
+              "color": null,
+              "id": 97539
+            },
+            {
+              "name": "Amref and Local Government",
+              "color": null,
+              "id": 74953
+            },
+            {
+              "name": "Other",
+              "color": null,
+              "id": 74972
+            }
+          ]
+        },
+        {
+          "id": 559830326,
+          "question": "Date Triggered",
+          "order": 2,
+          "meta": false,
+          "type": "date",
+          "required": false,
+          "options": null
+        },
+        {
+          "id": 569070282,
+          "question": "Number of Latrines at Triggering?",
+          "order": 3,
+          "meta": false,
+          "type": "number",
+          "required": false,
+          "options": null
+        },
+        {
+          "id": 569090299,
+          "question": "Presence of Handwashing Facility with Water and Soap",
+          "order": 4,
+          "meta": false,
+          "type": "option",
+          "required": false,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null,
+              "id": 74991
+            },
+            {
+              "name": "No",
+              "color": null,
+              "id": 75003
+            }
+          ]
+        },
+        {
+          "id": 571070202,
+          "question": "No Visible Feces were Found in Environment",
+          "order": 5,
+          "meta": false,
+          "type": "option",
+          "required": false,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null,
+              "id": 75018
+            },
+            {
+              "name": "No",
+              "color": null,
+              "id": 75027
+            }
+          ]
+        },
+        {
+          "id": 557710260,
+          "question": "School Children had Access to Toilets in the Schools",
+          "order": 6,
+          "meta": false,
+          "type": "option",
+          "required": false,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null,
+              "id": 75042
+            },
+            {
+              "name": "No",
+              "color": null,
+              "id": 75051
+            }
+          ]
+        },
+        {
+          "id": 573010345,
+          "question": "Public Toilets were Available in Public Places",
+          "order": 7,
+          "meta": false,
+          "type": "option",
+          "required": false,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null,
+              "id": 97556
+            },
+            {
+              "name": "No",
+              "color": null,
+              "id": 97557
+            }
+          ]
+        },
+        {
+          "id": 557710261,
+          "question": "Toilets were Available for Passengers",
+          "order": 8,
+          "meta": false,
+          "type": "option",
+          "required": false,
+          "options": [
+            {
+              "name": "Yes",
+              "color": null,
+              "id": 75089
+            },
+            {
+              "name": "No",
+              "color": null,
+              "id": 75101
+            }
+          ]
+        },
+        {
+          "id": 557690351,
+          "question": "Date Verified",
+          "order": 9,
+          "meta": false,
+          "type": "date",
+          "required": false,
+          "options": null
+        },
+        {
+          "id": 569090301,
+          "question": "Number of Latrines at Verification Date",
+          "order": 10,
+          "meta": false,
+          "type": "number",
+          "required": false,
+          "options": null
+        },
+        {
+          "id": 583770042,
+          "question": "Latrine Type of Most Latrines at Verification Date",
+          "order": 11,
+          "meta": false,
+          "type": "option",
+          "required": false,
+          "options": [
+            {
+              "name": "Bucket",
+              "color": null,
+              "id": 75118
+            },
+            {
+              "name": "Container-based sanitation",
+              "color": null,
+              "id": 75127
+            },
+            {
+              "name": "Flush/pour flush to piped sewer system",
+              "color": null,
+              "id": 75137
+            },
+            {
+              "name": "Flush/pour flush to septic tank",
+              "color": null,
+              "id": 75146
+            },
+            {
+              "name": "Flush/pour flush to pit latrine",
+              "color": null,
+              "id": 59806
+            },
+            {
+              "name": "Flush/pour flush to open drain",
+              "color": null,
+              "id": 75309
+            },
+            {
+              "name": "Hanging toilet/latrine",
+              "color": null,
+              "id": 75323
+            },
+            {
+              "name": "Pit latrine with slab",
+              "color": null,
+              "id": 75332
+            },
+            {
+              "name": "Pit latrine without slab / open pit",
+              "color": null,
+              "id": 97584
+            },
+            {
+              "name": "Twin pit offset latrine",
+              "color": null,
+              "id": 59808
+            },
+            {
+              "name": "Twin pit with latrine slab",
+              "color": null,
+              "id": 97586
+            },
+            {
+              "name": "Twin pit without slab",
+              "color": null,
+              "id": 75378
+            },
+            {
+              "name": "Ventilated improved pit latrine (VIP) with slab",
+              "color": null,
+              "id": 75387
+            },
+            {
+              "name": "Other composting latrine",
+              "color": null,
+              "id": 75397
+            }
+          ]
+        },
+        {
+          "id": 557700349,
+          "question": "Open Defecation Status",
+          "order": 12,
+          "meta": false,
+          "type": "option",
+          "required": false,
+          "options": [
+            {
+              "name": "Open Defecation",
+              "color": null,
+              "id": 75413
+            },
+            {
+              "name": "Triggered",
+              "color": null,
+              "id": 75423
+            },
+            {
+              "name": "Declared ODF",
+              "color": null,
+              "id": 75430
+            },
+            {
+              "name": "Verified ODF",
+              "color": null,
+              "id": 75440
+            }
+          ]
+        }
+      ],
+      "id": 10
+    }
+  ]
+}
