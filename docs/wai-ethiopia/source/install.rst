@@ -13,7 +13,7 @@ System Requirements
     :System Memory: 4 GiB
     :CPU: 2 GHz Dual Core Processor
     :Storage: 25 GiB or more Disk
-    :Operating System: Ubuntu Server 22.04
+    :Operating System: Ubuntu Server 22.04 - x86_64 (AMD/Intel)
 
 **************************
 
