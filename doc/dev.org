@@ -1,0 +1,1143 @@
+:PROPERTIES:
+:ID:       c1264a2e-4026-4e15-839b-6ff3999b12cf
+:END:
+#+title: WAI Dev
+#+author: Deden Bangkit
+
+#+PROPERTY: header-args:sh    :exports both
+#+PROPERTY: header-args:sh+   :results drawer
+#+PROPERTY: header-args:sh+   :noweb strip-export
+#+PROPERTY: header-args:sql     :cache yes
+#+PROPERTY: header-args:sql+    :exports both
+#+PROPERTY: header-args:sql+    :engine postgresql
+#+PROPERTY: header-args:sql+    :dbhost localhost
+#+PROPERTY: header-args:sql+    :dbuser wai
+#+PROPERTY: header-args:sql+    :dbpassword password
+#+PROPERTY: header-args:sql+    :database wai-nepal
+#+PROPERTY: header-args :tangle data-model.sql
+#+STARTUP: showall
+
+* Frameworks
+** Backend & Workers: Fast API
+** Frontend: Javascript (React)
+* Dependencies
+** Backend Requirements
+#+name: Backend Requirements
+#+begin_src sh
+cat ../backend/requirements.txt
+#+end_src
+
+#+RESULTS: Backend Requirements
+:results:
+AkvoResponseGrouper==1.3.3a0
+alembic==1.6.5
+fastapi==0.67.0
+FastAPI-SQLAlchemy==0.2.1
+pydantic==1.8.2
+psycopg2-binary==2.9.1
+uvicorn==0.14.0
+fastapi-auth0==0.2.1
+PyJWT==2.3.0
+Faker==8.11.0
+pytest==6.2.4
+pytest-asyncio==0.15.1
+databases==0.4.3
+httpx==0.18.2
+asgi-lifespan==1.0.1
+openpyxl==3.0.5
+xlrd==1.2.0
+flake8==4.0.1
+xlwt==1.3.0
+pyhumps==3.0.2
+google-cloud-storage==1.42.3
+aiofiles==0.7.0
+alembic-utils==0.7.3
+python-multipart==0.0.5
+XlsxWriter==3.0.2
+fastapi-utils==0.2.1
+mailjet-rest==1.3.4
+Jinja2==3.0.3
+bs4==0.0.1
+lxml==4.6.4
+jsmin==3.0.0
+numpy==1.22.1
+pandas==1.4.0
+coveralls==3.3.1
+inquirer==2.9.2
+gevent==22.8.0
+memory-profiler==0.61.0
+:end:
+
+** Frontend Packages
+*** Frontend Dependencies
+#+begin_src sh
+cat ../frontend/package.json | jq .dependencies
+#+end_src
+
+#+RESULTS:
+:results:
+{
+  "@ant-design/icons": "^4.6.2",
+  "@auth0/auth0-react": "^1.6.0",
+  "akvo-react-form": "^2.1.0",
+  "akvo-react-form-editor": "^1.1.4",
+  "antd": "^4.18.3",
+  "axios": "^0.25.0",
+  "currency-formatter": "^1.5.8",
+  "d3-geo": "^3.0.1",
+  "d3-scale": "^4.0.0",
+  "echarts": "^5.2.2",
+  "echarts-for-react": "^3.0.2",
+  "html-to-image": "^1.8.5",
+  "leaflet": "^1.7.1",
+  "pullstate": "^1.23.0",
+  "react": "^17.0.2",
+  "react-countup": "^5.2.0",
+  "react-dom": "^17.0.2",
+  "react-leaflet": "^3.2.5",
+  "react-router-dom": "^5.2.0",
+  "react-scripts": "^5.0.0",
+  "swagger-ui-react": "^4.14.1",
+  "title-case": "^3.0.3",
+  "topojson-client": "^3.1.0",
+  "web-vitals": "^2.1.3"
+}
+:end:
+
+*** Frontend Dev Dependencies
+#+begin_src sh
+cat ../frontend/package.json | jq .devDependencies
+#+end_src
+
+#+RESULTS:
+:results:
+{
+  "@babel/core": "^7.16.12",
+  "@babel/eslint-parser": "^7.16.5",
+  "@babel/preset-react": "^7.16.7",
+  "@testing-library/dom": "^8.11.3",
+  "@testing-library/jest-dom": "^5.16.1",
+  "@testing-library/react": "^12.1.2",
+  "@testing-library/user-event": "^13.5.0",
+  "axios-mock-adapter": "^1.21.1",
+  "buffer": "^6.0.3",
+  "cross-env": "^7.0.3",
+  "eslint": "^8.7.0",
+  "eslint-config-prettier": "^8.3.0",
+  "eslint-plugin-export": "^0.1.2",
+  "eslint-plugin-jsx-a11y": "^6.5.1",
+  "eslint-plugin-prettier": "^4.0.0",
+  "http-proxy-middleware": "^2.0.2",
+  "jest-canvas-mock": "^2.4.0",
+  "prettier": "^2.5.1",
+  "react-test-renderer": "^17.0.2",
+  "sass": "^1.57.1",
+  "source-map-loader": "^4.0.0",
+  "yarn-audit-fix": "^9.3.1"
+}
+:end:
+
+** Custom Dependencies
+*** AkvoResponseGrouper
+
+Fast-API Response catalog for pre-computed query
+Github: https://github.com/akvo/Akvo-ResponseGrouper
+Pypi: https://pypi.org/project/AkvoResponseGrouper
+
+*** Akvo React Form
+
+Simple react component for building Webforms
+Github: https://github.com/akvo/akvo-react-form
+NPM: https://www.npmjs.com/package/akvo-react-form
+
+* Code Structure
+** Folder organization
+*** Backend
+**** Core
+**** DB
+**** Models
+**** Routes
+**** Seeder (CLI)
+**** Source
+**** Tasks
+**** Templates (Email)
+**** Tests
+**** Temporary Folder
+**** Util
+*** Frontend
+**** Chats
+**** Components
+**** Pages
+**** State Management
+**** Utilities
+** Design Pattern
+** Coding standards used
+*** Backend Code Formatting
+**** Setup
+#+name: Setup.cfg
+#+begin_src sh
+cat ../backend/setup.cfg
+#+end_src
+
+#+RESULTS: Setup.cfg
+:results:
+[flake8]
+max-line-length = 88
+ignore = E203, E266, E501, W503
+select = E,W,F
+
+[tool.black]
+line-length = 88
+:end:
+
+**** Flake8
+#+name: Run Code Formatter
+#+begin_src sh
+docker compose exec backend flake8
+#+end_src
+
+#+RESULTS: Run Code Formatter
+:results:
+:end:
+
+*** Frontend Code Format & Linter
+**** Prettier
+#+name: Prettier
+#+begin_src sh
+cat ../frontend/.prettierrc.json
+#+end_src
+
+#+RESULTS: Prettier
+:results:
+{
+  "trailingComma": "es5",
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": true,
+  "singleQuote": true,
+  "printWidth": 80,
+  "singleAttributePerLine": true
+}
+:end:
+
+**** Eslint
+#+name: Eslint Config
+#+begin_src sh
+cat ../frontend/.eslintrc.json
+#+end_src
+
+#+RESULTS: Eslint Config
+:results:
+{
+  "parser": "@babel/eslint-parser",
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "plugins": ["react", "react-hooks", "import", "export", "jest", "jsx-a11y"],
+  "parserOptions": {
+    "requireConfigFile": false,
+    "sourceType": "module",
+    "babelOptions": {
+      "presets": ["@babel/preset-react"]
+    }
+  },
+  "rules": {
+    "no-alert": "warn",
+    "no-console": [
+      "warn",
+      {
+        "allow": ["error", "info"]
+      }
+    ],
+    "no-undef": "warn",
+    "no-else-return": "warn",
+    "no-unused-vars": [
+      "warn",
+      {
+        "argsIgnorePattern": "^_"
+      }
+    ],
+    "no-undefined": "warn",
+    "no-unreachable": "warn",
+    "no-extra-semi": "warn",
+    "no-duplicate-case": "warn",
+    "no-useless-escape": "warn",
+    "no-multi-spaces": [
+      "warn",
+      {
+        "ignoreEOLComments": true
+      }
+    ],
+    "eqeqeq": "warn",
+    "semi": "warn",
+    "no-delete-var": "warn",
+    "prefer-const": "warn",
+    "prefer-arrow-callback": "error",
+    "react/prefer-stateless-function": "warn",
+    "react-hooks/rules-of-hooks": "warn",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-filename-extension": [
+      "error",
+      {
+        "extensions": [".js", ".jsx"]
+      }
+    ],
+    "curly": "error"
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true,
+    "es2021": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "**/*.spec.js",
+        "**/*.spec.jsx",
+        "**/*.test.jsx",
+        "**/*.test.js"
+      ],
+      "env": {
+        "jest": true
+      }
+    }
+  ]
+}
+:end:
+
+* Data Models
+** List of Database
+
+#+name:Database
+#+begin_src sql
+\d
+#+end_src
+
+#+RESULTS[4ae76b0d685904840146248ff2decb35f4dfa769]: Database
+| List of relations |                       |                   |       |
+|-------------------+-----------------------+-------------------+-------|
+| Schema            | Name                  | Type              | Owner |
+| public            | access                | table             | wai   |
+| public            | access_id_seq         | sequence          | wai   |
+| public            | administration        | table             | wai   |
+| public            | administration_id_seq | sequence          | wai   |
+| public            | alembic_version       | table             | wai   |
+| public            | answer                | table             | wai   |
+| public            | answer_id_seq         | sequence          | wai   |
+| public            | answer_search         | view              | wai   |
+| public            | ar_category           | materialized view | wai   |
+| public            | data                  | table             | wai   |
+| public            | data_id_seq           | sequence          | wai   |
+| public            | form                  | table             | wai   |
+| public            | form_id_seq           | sequence          | wai   |
+| public            | history               | table             | wai   |
+| public            | history_id_seq        | sequence          | wai   |
+| public            | jmp_history           | table             | wai   |
+| public            | jmp_history_id_seq    | sequence          | wai   |
+| public            | jobs                  | table             | wai   |
+| public            | jobs_id_seq           | sequence          | wai   |
+| public            | log                   | table             | wai   |
+| public            | log_id_seq            | sequence          | wai   |
+| public            | option                | table             | wai   |
+| public            | option_id_seq         | sequence          | wai   |
+| public            | organisation          | table             | wai   |
+| public            | organisation_id_seq   | sequence          | wai   |
+| public            | question              | table             | wai   |
+| public            | question_group        | table             | wai   |
+| public            | question_group_id_seq | sequence          | wai   |
+| public            | question_id_seq       | sequence          | wai   |
+| public            | score_view            | view              | wai   |
+| public            | user                  | table             | wai   |
+| public            | user_id_seq           | sequence          | wai   |
+
+** Database Details
+*** Administration
+#+name: Administration
+#+begin_src sql
+  SELECT column_name, data_type
+  FROM   information_schema.columns
+  WHERE  table_name = 'administration'
+  ORDER  BY ordinal_position;
+#+end_src
+
+#+RESULTS[bd167bd0278161ad926b8e177fc753c092622a09]: Administration
+| column_name | data_type         |
+|-------------+-------------------|
+| id          | integer           |
+| parent      | integer           |
+| name        | character varying |
+| long_name   | character varying |
+
+*** User
+#+name:User
+#+begin_src sql
+  SELECT column_name, data_type
+  FROM   information_schema.columns
+  WHERE  table_name = 'user'
+  ORDER  BY ordinal_position;
+#+end_src
+
+#+RESULTS[b17cc2828acede809cde1ec7cbff4c9ee055675e]: User
+| column_name          | data_type                   |
+|----------------------+-----------------------------|
+| id                   | integer                     |
+| email                | character varying           |
+| active               | boolean                     |
+| role                 | USER-DEFINED                |
+| created              | timestamp without time zone |
+| organisation         | integer                     |
+| name                 | character varying           |
+| __ts_vector__        | tsvector                    |
+| manage_form_passcode | boolean                     |
+
+*** Access
+#+name: Access
+#+begin_src sql
+  SELECT column_name, data_type
+  FROM   information_schema.columns
+  WHERE  table_name = 'access'
+  ORDER  BY ordinal_position;
+#+end_src
+
+#+RESULTS[7c7eb17e87545b2f20ba93220eee24f8a94ea5cf]: Access
+| column_name    | data_type |
+|----------------+-----------|
+| id             | integer   |
+| user           | integer   |
+| administration | integer   |
+
+*** Form
+
+#+name:Form
+#+begin_src sql
+  SELECT column_name, data_type
+  FROM   information_schema.columns
+  WHERE  table_name = 'form'
+  ORDER  BY ordinal_position;
+#+end_src
+
+#+RESULTS[f1a4f751862a017bb23b1015bf4fd87e4aab30e9]: Form
+| column_name      | data_type         |
+|------------------+-------------------|
+| id               | integer           |
+| name             | character varying |
+| description      | text              |
+| default_language | character varying |
+| languages        | ARRAY             |
+| translations     | ARRAY             |
+| version          | double precision  |
+| passcode         | character varying |
+
+*** Question Group
+
+#+name:Question Group
+#+begin_src sql
+  SELECT column_name, data_type
+  FROM   information_schema.columns
+  WHERE  table_name = 'question_group'
+  ORDER  BY ordinal_position;
+#+end_src
+
+#+RESULTS[e2c1528890bcf844961311491f29fad7266a08ec]: Question Group
+| column_name  | data_type         |
+|--------------+-------------------|
+| id           | integer           |
+| order        | integer           |
+| name         | character varying |
+| form         | integer           |
+| description  | text              |
+| repeatable   | boolean           |
+| repeat_text  | character varying |
+| translations | ARRAY             |
+
+*** Question
+
+#+name:Question
+#+begin_src sql
+  SELECT column_name, data_type
+  FROM   information_schema.columns
+  WHERE  table_name = 'question'
+  ORDER  BY ordinal_position;
+#+end_src
+
+#+RESULTS[29b7fc79004bdfcfb9f47364d76e998192133d5e]: Question
+| column_name    | data_type         |
+|----------------+-------------------|
+| id             | integer           |
+| order          | integer           |
+| name           | character varying |
+| form           | integer           |
+| meta           | boolean           |
+| type           | USER-DEFINED      |
+| question_group | integer           |
+| required       | boolean           |
+| rule           | jsonb             |
+| dependency     | ARRAY             |
+| tooltip        | jsonb             |
+| translations   | ARRAY             |
+| api            | jsonb             |
+| addons         | jsonb             |
+
+*** Data
+
+#+name:Data
+#+begin_src sql
+  SELECT column_name, data_type
+  FROM   information_schema.columns
+  WHERE  table_name = 'data'
+  ORDER  BY ordinal_position;
+#+end_src
+
+#+RESULTS[e57d37325035204ba76fd01b21659bb94ea18621]: Data
+| column_name    | data_type                   |
+|----------------+-----------------------------|
+| id             | integer                     |
+| name           | character varying           |
+| form           | integer                     |
+| administration | integer                     |
+| geo            | ARRAY                       |
+| created_by     | integer                     |
+| updated_by     | integer                     |
+| created        | timestamp without time zone |
+| updated        | timestamp without time zone |
+| submitter      | character varying           |
+
+*** Answer
+
+#+name:Answer
+#+begin_src sql
+  SELECT column_name, data_type
+  FROM   information_schema.columns
+  WHERE  table_name = 'answer'
+  ORDER  BY ordinal_position;
+#+end_src
+
+#+RESULTS[050da4fa0748ae533844d3d6ef68570c64a849a4]: Answer
+| column_name | data_type                   |
+|-------------+-----------------------------|
+| id          | integer                     |
+| question    | integer                     |
+| data        | integer                     |
+| value       | double precision            |
+| text        | text                        |
+| options     | ARRAY                       |
+| created_by  | integer                     |
+| updated_by  | integer                     |
+| created     | timestamp without time zone |
+| updated     | timestamp without time zone |
+
+*** Jobs
+#+name:Jobs
+#+begin_src sql
+  SELECT column_name, data_type
+  FROM   information_schema.columns
+  WHERE  table_name = 'jobs'
+  ORDER  BY ordinal_position;
+#+end_src
+
+#+RESULTS[4c13bbf2078594aaf21140ffd20349d75364912a]: Jobs
+| column_name | data_type                   |
+|-------------+-----------------------------|
+| id          | integer                     |
+| type        | USER-DEFINED                |
+| status      | USER-DEFINED                |
+| payload     | text                        |
+| info        | jsonb                       |
+| attempt     | integer                     |
+| created_by  | integer                     |
+| created     | timestamp without time zone |
+| available   | timestamp without time zone |
+
+** List of Materialized Views
+
+#+name Materialized Views
+#+begin_src sql
+select relname, relkind
+from pg_class
+where relkind = 'm';
+#+end_src
+
+#+RESULTS[458a25f70e2a760af78fa8672d74d8ee1748ab92]:
+| relname     | relkind |
+|-------------+---------|
+| ar_category | m       |
+
+** Pydantic Models
+#+name: Data Model
+#+begin_src sh
+ls -1 ../backend/models | grep -v "_"
+#+end_src
+
+#+RESULTS: Data Model
+:results:
+access.py
+administration.py
+answer.py
+data.py
+form.py
+history.py
+jobs.py
+log.py
+option.py
+organisation.py
+project.py
+question.py
+user.py
+views
+:end:
+
+* Error Management
+** HTTP Exceptions
+#+name: HTTP Exceptions
+#+begin_src sh
+ag status_code ../backend | uniq
+#+end_src
+
+#+RESULTS: HTTP Exceptions
+:results:
+        return res.status_code == 200
+        assert res.status_code == 200
+        data.status_code == 200
+        assert res.status_code == 204
+        assert res.status_code == 200
+        deleted_data.status_code == 401
+        assert res.status_code == 204
+        assert data.status_code == 404
+        assert res.status_code == 200
+        assert res404.status_code == 404
+        assert res.status_code == 200
+        assert res.status_code == 404
+        assert res.status_code == 200
+        assert res.status_code == 403
+        assert res.status_code == 200
+        assert res.status_code == 403
+        assert res.status_code == 204
+        assert res.status_code == 200
+    assert response.status_code == 200
+        assert res.status_code == 200
+        assert res.status_code == 400
+        assert res.status_code == 204
+        assert res.status_code == 200
+        assert res.status_code == 404
+        assert res.status_code == 200
+        assert res.status_code == 404
+        assert res.status_code == 200
+        assert res.status_code == 404
+        assert res.status_code == 200
+            assert res.status_code == 200
+            assert res.status_code == 204
+        assert res.status_code == 200
+        raise HTTPException(status_code=404, detail="Not Found")
+            raise HTTPException(status_code=404, detail="Not found")
+        raise HTTPException(status_code=406, detail="Not Acceptable")
+            raise HTTPException(status_code=404, detail="Not found")
+        raise HTTPException(status_code=404, detail="Not found")
+            raise HTTPException(status_code=404, detail=", ".join(dependency_errors))
+            return Response(status_code=HTTPStatus.METHOD_NOT_ALLOWED.value)
+            status_code=403, detail="You don't have data access, please contact admin"
+    return Response(status_code=HTTPStatus.NO_CONTENT.value)
+    status_code=HTTPStatus.NO_CONTENT,
+        return Response(status_code=HTTPStatus.BAD_REQUEST.value)
+    return Response(status_code=HTTPStatus.NO_CONTENT.value)
+        return Response(status_code=HTTPStatus.NOT_FOUND.value)
+        return Response(status_code=HTTPStatus.FORBIDDEN.value)
+        return Response(status_code=HTTPStatus.NOT_FOUND.value)
+        raise HTTPException(status_code=404, detail="Not found")
+        raise HTTPException(status_code=404, detail="Not Found")
+    status_code=HTTPStatus.NO_CONTENT,
+    return Response(status_code=HTTPStatus.NO_CONTENT.value)
+        raise HTTPException(status_code=404, detail="Not found")
+        raise HTTPException(status_code=404, detail="Forbidden")
+            raise HTTPException(status_code=404, detail="Not found")
+        raise HTTPException(status_code=404, detail="Not found")
+            raise HTTPException(status_code=404, detail="Not found")
+        raise HTTPException(status_code=404, detail="Not found")
+            status_code=404,
+    status_code=HTTPStatus.NO_CONTENT,
+    return Response(status_code=HTTPStatus.NO_CONTENT.value)
+    status_code=HTTPStatus.NO_CONTENT,
+    return Response(status_code=HTTPStatus.NO_CONTENT.value)
+                status_code=401,
+            raise HTTPException(status_code=404, detail="Not found")
+        raise HTTPException(status_code=404, detail="Not found")
+            status_code=404, detail=f"Question id {question_id} is not found"
+        raise HTTPException(status_code=404, detail="Not Valid Excel File")
+        raise HTTPException(status_code=404, detail="Not found")
+    status_code=HTTPStatus.NO_CONTENT,
+    return Response(status_code=HTTPStatus.NO_CONTENT.value)
+    if user.status_code != 200:
+        raise HTTPException(status_code=401, detail="Unauthorized")
+            status_code=401,
+        raise HTTPException(status_code=404, detail="Forbidden")
+            status_code=403,
+            raise HTTPException(status_code=400, detail="Bad Request")
+:end:
+
+** Error Handler
+* Authentication
+** Backend Middleware
+
+#+name: middleware.py
+#+begin_src sh
+cat ../backend/middleware.py
+#+end_src
+
+#+RESULTS: middleware.py
+:results:
+import re
+from pydantic import Field
+from typing import Optional
+import requests as r
+from fastapi import HTTPException
+from fastapi_auth0 import Auth0, Auth0User
+from os import environ, path
+from db import crud_user
+from models.user import UserRole
+from datetime import datetime
+
+AUTH0_DOMAIN = environ["AUTH0_DOMAIN"]
+AUTH0_CLIENT_ID = environ["AUTH0_CLIENT_ID"]
+AUTH0_SECRET = environ["AUTH0_SECRET"]
+AUTH0_AUDIENCE = environ["AUTH0_AUDIENCE"]
+TOKEN_TMP = "./tmp/token.txt"
+query_pattern = re.compile(r"[0-9]*\|(.*)")
+
+
+class CustomAuth0User(Auth0User):
+    email: Optional[str] = Field(None, alias="grand-type")
+
+
+auth = Auth0(
+    domain=AUTH0_DOMAIN,
+    api_audience=AUTH0_AUDIENCE,
+    auth0user_model=CustomAuth0User,
+    scopes={"read:email": "test"},
+)
+
+
+def get_token(generate=False):
+    if generate:
+        data = {
+            "client_id": AUTH0_CLIENT_ID,
+            "client_secret": AUTH0_SECRET,
+            "audience": AUTH0_AUDIENCE,
+            "grant_type": "client_credentials",
+        }
+        res = r.post(f"https://{AUTH0_DOMAIN}/oauth/token", data=data)
+        res = res.json()
+        with open(TOKEN_TMP, "w") as access:
+            access.write(res["access_token"])
+        return res["access_token"]
+    if path.exists(TOKEN_TMP):
+        with open(TOKEN_TMP, "r") as access:
+            access_token = access.read()
+        return access_token
+    return get_token(True)
+
+
+def get_auth0_user():
+    access_token = get_token()
+    fields = "email%2Cemail_verified%2Cpicture&include_fields=true"
+    user = r.get(
+        f"https://{AUTH0_DOMAIN}/api/v2/users?fields={fields}",
+        headers={"Authorization": "Bearer {}".format(access_token)},
+    )
+    if user.status_code != 200:
+        access_token = get_token(True)
+        return get_auth0_user()
+    return user.json()
+
+
+def verify_token(authenticated):
+    if datetime.now().timestamp() > authenticated.get("exp"):
+        raise HTTPException(status_code=401, detail="Unauthorized")
+    if not authenticated.get("email_verified"):
+        raise HTTPException(
+            status_code=401,
+            detail="Please check your email inbox to verify email account",
+        )
+    return authenticated
+
+
+def verify_user(authenticated, session):
+    authenticated = verify_token(authenticated)
+    user = crud_user.get_user_by_email(
+        session=session, email=authenticated.get("email")
+    )
+    if not user:
+        raise HTTPException(status_code=404, detail="Forbidden")
+    return user
+
+
+def verify_admin(authenticated, session):
+    user = verify_user(authenticated, session)
+    if user.role != UserRole.admin:
+        raise HTTPException(
+            status_code=403,
+            detail="You don't have data access, please contact admin",
+        )
+    return user
+
+
+def verify_editor(authenticated, session):
+    user = verify_user(authenticated, session)
+    if user.role not in [UserRole.admin, UserRole.editor]:
+        raise HTTPException(
+            status_code=403,
+            detail="You don't have data access, please contact admin",
+        )
+    return user
+
+
+def check_query(keywords):
+    keys = []
+    if not keywords:
+        return keys
+    for q in keywords:
+        if not query_pattern.match(q):
+            raise HTTPException(status_code=400, detail="Bad Request")
+        else:
+            keys.append(q.replace("|", "||"))
+    return keys
+:end:
+
+** Auth0 React
+#+begin_src sh
+ag auth0 ../frontend/src
+#+end_src
+
+#+RESULTS:
+:results:
+import { Auth0Provider } from '@auth0/auth0-react';
+  <Auth0Provider
+    domain={window.AUTH0_DOMAIN}
+    clientId={window.AUTH0_CLIENT_ID}
+  </Auth0Provider>,
+import { useAuth0 } from '@auth0/auth0-react';
+    useAuth0();
+    .find((x) => x.includes('_legacy_auth0.'))
+:end:
+
+* Task Management
+** Custom Jobs
+#+begin_src sh
+cat ../backend/worker.py
+#+end_src
+
+#+RESULTS:
+:results:
+import uvicorn
+from os import environ
+from datetime import datetime, timedelta
+from db.connection import engine, Base
+from db.connection import get_db_url
+from fastapi import FastAPI
+from fastapi_utils.session import FastAPISessionMaker
+from fastapi_utils.tasks import repeat_every
+from routes.jobs import jobs_route
+from templates.main import template_route
+from models.jobs import JobStatus
+from db.crud_jobs import pending, update, on_progress, is_not_busy
+
+# from tasks.main import do_task, force_remove_task
+from tasks.main import do_task
+from util.log import write_log
+
+TESTING = environ.get("TESTING")
+
+worker = FastAPI(
+    root_path="/worker",
+    title="Worker Service",
+    version="1.0.0",
+    contact={
+        "name": "Akvo",
+        "url": "https://akvo.org",
+        "email": "dev@akvo.org",
+    },
+    license_info={
+        "name": "AGPL3",
+        "url": "https://www.gnu.org/licenses/agpl-3.0.en.html",
+    },
+)
+
+worker.include_router(jobs_route)
+worker.include_router(template_route)
+Base.metadata.create_all(bind=engine)
+sessionmaker = FastAPISessionMaker(get_db_url())
+timeout = 60
+repeat_seconds = 10 if TESTING else 30
+
+
+@worker.get("/", tags=["Dev"])
+def read_main():
+    return "READY"
+
+
+@worker.get("/health-check", tags=["Dev"])
+def health_check():
+    return "OK"
+
+
+@worker.on_event("startup")
+@repeat_every(seconds=30)
+async def start() -> None:
+    with sessionmaker.context_session() as session:
+        pending_jobs = None
+        op_jobs = on_progress(session=session)
+        if is_not_busy(session=session):
+            pending_jobs = pending(session=session)
+        if op_jobs:
+            given_time = op_jobs.created + timedelta(minutes=timeout)
+            max_timeout = (datetime.now() - given_time).total_seconds() / 60.0
+            if max_timeout > timeout:
+                # force_remove_task(session=session, jobs=op_jobs.serialize)
+                write_log("ERROR", f"{op_jobs.id}: {op_jobs.type} is removed")
+        if pending_jobs:
+            jobs = update(
+                session=session, id=pending_jobs, status=JobStatus.on_progress
+            )
+            do_task(session=session, jobs=jobs)
+
+
+if __name__ == "__main__":
+    uvicorn.run(worker, host="0.0.0.0", port=5001, reload=False)
+:end:
+
+** Tasks
+#+begin_src sh
+ls -1 ../backend/tasks | grep -v "__"
+#+end_src
+
+#+RESULTS:
+:results:
+downloader.py
+main.py
+seed.py
+validation.py
+:end:
+
+*** Data Download
+*** Validation Seed Database
+
+* Tests
+** Tests Setup
+
+#+name: Test Setup
+#+begin_src sh
+cat ../backend/tests/conftest.py
+#+end_src
+
+#+RESULTS: Test Setup
+:results:
+import warnings
+import os
+import sys
+
+import pytest
+from asgi_lifespan import LifespanManager
+
+from fastapi import FastAPI
+from httpx import AsyncClient
+from alembic import command
+from alembic.config import Config
+from sqlalchemy import create_engine
+from sqlalchemy.orm import Session, sessionmaker
+
+from db.connection import Base, get_session, get_db_url
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(BASE_DIR)
+
+
+# Apply migrations at beginning and end of testing session
+@pytest.fixture(scope="session")
+def apply_migrations():
+    warnings.filterwarnings("ignore", category=DeprecationWarning)
+    os.environ["TESTING"] = "1"
+    config = Config("alembic.ini")
+    command.upgrade(config, "head")
+
+
+# Create a new application for testing
+@pytest.fixture
+def app(apply_migrations: None) -> FastAPI:
+    from core.config import app
+
+    engine = create_engine(get_db_url())
+    Base.metadata.create_all(bind=engine)
+    TestingSessionLocal = sessionmaker(
+        autocommit=False, autoflush=False, bind=engine
+    )
+
+    def override_get_db():
+        try:
+            db = TestingSessionLocal()
+            yield db
+        finally:
+            db.close()
+
+    app.dependency_overrides[get_session] = override_get_db
+    return app
+
+
+@pytest.fixture
+def worker(apply_migrations: None) -> FastAPI:
+    from worker import worker
+
+    os.environ["TESTING"] = "1"
+    engine = create_engine(get_db_url())
+    Base.metadata.create_all(bind=engine)
+    TestingSessionLocal = sessionmaker(
+        autocommit=False, autoflush=False, bind=engine
+    )
+
+    def override_get_db():
+        try:
+            db = TestingSessionLocal()
+            yield db
+        finally:
+            db.close()
+
+    worker.dependency_overrides[get_session] = override_get_db
+    return worker
+
+
+# Grab a reference to our database when needed
+@pytest.fixture
+def session() -> Session:
+    engine = create_engine(get_db_url())
+    Base.metadata.create_all(bind=engine)
+    TestingSessionLocal = sessionmaker(
+        autocommit=False, autoflush=False, bind=engine
+    )
+
+    return TestingSessionLocal()
+
+
+# Make requests in our tests
+@pytest.fixture
+async def client(app: FastAPI) -> AsyncClient:
+    async with LifespanManager(app):
+        async with AsyncClient(
+            app=app, base_url="http://testserver"
+        ) as client:
+            yield client
+
+
+# Make requests in our tests
+@pytest.fixture
+async def worker_client(worker: FastAPI) -> AsyncClient:
+    async with LifespanManager(worker):
+        async with AsyncClient(
+            app=worker, base_url="http://testworker"
+        ) as worker_client:
+            yield worker_client
+:end:
+
+#+RESULTS:
+
+** List of Tests
+
+#+begin_src sh
+ls -1 ../backend/tests | grep -v "__"
+#+end_src
+
+#+RESULTS:
+:results:
+conftest.py
+test_00_main.py
+test_01_auth.py
+test_02_administration.py
+test_03_form.py
+test_04_submission.py
+test_05_data.py
+test_06_maps.py
+test_07_history.py
+test_08_excel_validation.py
+test_09_bucket_upload.py
+test_10_stress_and_timeout.py
+test_11_jobs.py
+test_12_file_download_upload.py
+test_13_worker_service.py
+test_14_advanced_query.py
+test_15_1_charts.py
+test_15_delete_data.py
+test_16_mailer.py
+test_17_webform_editor.py
+test_18_hint.py
+test_19_delete.py
+test_20_submission_offline.py
+test_21_dependency_checker.py
+test_22_tasks_seed.py
+:end:
+
+** Running Tests
+
+#+name: Test
+#+begin_src sh
+docker compose exec backend pytest
+#+end_src
+
+#+RESULTS: Test
+:results:
+============================= test session starts ==============================
+platform linux -- Python 3.8.5, pytest-6.2.4, py-1.11.0, pluggy-0.13.1
+rootdir: /app
+plugins: Faker-8.11.0, asyncio-0.15.1, anyio-3.7.1
+collected 72 items
+
+tests/test_00_main.py .....                                              [  6%]
+tests/test_01_auth.py ....                                               [ 12%]
+tests/test_02_administration.py ..                                       [ 15%]
+tests/test_03_form.py ........                                           [ 26%]
+tests/test_04_submission.py ......                                       [ 34%]
+tests/test_05_data.py ..                                                 [ 37%]
+tests/test_06_maps.py .                                                  [ 38%]
+tests/test_07_history.py ...                                             [ 43%]
+tests/test_08_excel_validation.py ......                                 [ 51%]
+tests/test_09_bucket_upload.py ..                                        [ 54%]
+tests/test_10_stress_and_timeout.py .                                    [ 55%]
+tests/test_11_jobs.py ....                                               [ 61%]
+tests/test_12_file_download_upload.py .....                              [ 68%]
+tests/test_13_worker_service.py ....                                     [ 73%]
+tests/test_14_advanced_query.py ..                                       [ 76%]
+tests/test_15_1_charts.py ....                                           [ 81%]
+tests/test_15_delete_data.py ..                                          [ 84%]
+tests/test_16_mailer.py ..                                               [ 87%]
+tests/test_17_webform_editor.py ....                                     [ 93%]
+tests/test_18_hint.py .                                                  [ 94%]
+tests/test_19_delete.py .                                                [ 95%]
+tests/test_20_submission_offline.py .                                    [ 97%]
+tests/test_21_dependency_checker.py .                                    [ 98%]
+tests/test_22_tasks_seed.py .                                            [100%]
+
+=============================== warnings summary ===============================
+tests/test_02_administration.py::TestAdministrationRoute::test_seed_administration
+  /app/tests/test_02_administration.py:34: FutureWarning: The frame.append method is deprecated and will be removed from pandas in a future version. Use pandas.concat instead.
+    parents[["name", "parent"]]
+
+tests/test_08_excel_validation.py::TestExcelValidation::test_get_excel_template
+  /usr/local/lib/python3.8/site-packages/openpyxl/compat/numbers.py:41: DeprecationWarning: `np.float` is a deprecated alias for the builtin `float`. To silence this warning, use `float` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.float64` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    numpy.float,
+
+-- Docs: https://docs.pytest.org/en/stable/warnings.html
+======================= 72 passed, 2 warnings in 12.85s ========================
+:end:
+
+* Documentations
+** API Documentation (Swagger)
+http://localhost:3000/api/docs
+** Read the Docs
+http://localhost:3000/documentation
+** Readme
